@@ -1,0 +1,78 @@
+﻿#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+    app:
+        langs = 'cze,eng'
+        startProfil = 7
+        maxRecords = 10
+        limitMaxRecords = 100
+        sortBy = 'title,ASC'
+        importReport = FALSE
+        validator = TRUE
+        directSummary = TRUE 
+        directDetail = TRUE 
+        directXml = TRUE 
+        formSign = FALSE
+        defaultEditGroup = editor
+        defaultViewGroup = reader
+        mdDataType = "-1=>'semifinished',0=>'private',1=>'public',2=>'portal'"
+        adminIP = '127.0.0.1'
+    map:
+        hs_wms_cze = "http://gis.bnhelp.cz/ows/crtopo?SERVICE=WMS&VERSION=1.1.1&FORMAT=image/gif&layers=demis,sidla,doprava,voda,kraje,orp,hr_cr"
+        hs_wms_eng = "http://www2.demis.nl/wms/wms.asp?WMS=WorldMap&SERVICE=WMS&VERSION=1.1.1&FORMAT=image/jpeg&SRS=EPSG:4326&layers=Bathymetry,Topography,Hillshading,Coastlines,Builtup%20areas,Rivers,Streams,Waterbodies,Borders,Railroads,Highways,Roads,Trails,Settlements,Cities"
+        hs_initext = 12.0 48.5 18.9 51
+    contact:
+        title:
+            cze = "Katalog prostorových metadat"
+            eng = "Spatial Metadata Catalogue"
+        abstract:
+            eng = "Catalogue based on OGC Catalogue Service for Web (CSW) 2.0.2"
+            cze = "Katalog podle OGC CSW 2.0.2"
+        org:
+            eng = "Help Service, Ltd."
+            cze = "Help Service, s.r.o."
+        person = "Kafka"
+        position:
+            eng = "Main developer"
+            cze = "Vedoucí vývoje"
+        email = "micka@hsrs.cz"
+        delivery = "Husova 2117"
+        city = "Benešov"
+        postcode = "256 01"
+        phone = "+420 317 724 620"
+        www = "http://www.hsrs.cz"    
+
+php:
+    date.timezone: Europe/Prague
+
+
+application:
+    errorPresenter: Error
+    mapping:
+        *: Micka\Module\*\Presenters\*Presenter
+
+session:
+    expiration: 14 days
+
+
+services:
+    router: App\RouterFactory::createRouter
+    - App\Model\MdRepository
+    - App\Model\MdSuggest
+    - App\Model\CswModel
+    - App\Security\AuthorizatorFactory
+    -
+        class: Nette\Security\Permission
+        factory: @App\Security\AuthorizatorFactory::create
+
+extensions:
+    translation: Kdyby\Translation\DI\TranslationExtension
+
+translation:
+    default: cs
+#    fallback: [en]
+    resolvers:
+        header: off
+

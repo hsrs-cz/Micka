@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<userValues>
+    <translation lang="eng">
+  	  <title>Coordinate reference systems</title>
+	  <group>
+	  	<title></title>
+		<entry code="http://www.opengis.net/def/crs/EPSG/0/2065,">S-JTSK (2065)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/5514,">S-JTSK 3.quadrant (5514)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/28403,">S-42/3 (28403)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/28404,">S-42/4 (28404)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/4326,">WGS84 (4326)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/32633,">WGS84 UTM3 (32633)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/32634,">WGS84 UTM4 (32634)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/4258,">ETRS89 (4258) [INSPIRE]</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3034,">ETRS-LCC (3034) [INSPIRE]</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3035,">ETRS-LAEA (3035) [INSPIRE]</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3038,">ETRS-TM26 (3038)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3039,">ETRS-TM27 (3039)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3040,">ETRS-TM28 (3040)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3041,">ETRS-TM29 (3041)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3042,">ETRS-TM30 (3042)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3043,">ETRS-TM31 (3043)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3044,">ETRS-TM32 (3044)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3045,">ETRS-TM33 (3045)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3046,">ETRS-TM34 (3046)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3047,">ETRS-TM35 (3047)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3048,">ETRS-TM36 (3048)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3049,">ETRS-TM37 (3049)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3050,">ETRS-TM38 (3050)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3857,">Spherical Mercator (3857)</entry>
+	  </group>
+	</translation>
+
+    <translation lang="cze">
+  	  <title>Souřadnicové referenční systémy</title>
+	  <group>
+	  	<title></title>
+		<entry code="http://www.opengis.net/def/crs/EPSG/0/2065,">S-JTSK (2065)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/5514,">S-JTSK 3.kvadrant (5514)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/28403,">S-42/3 (28403)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/28404,">S-42/4 (28404)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/4326,">WGS84 (4326)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/32633,">WGS84 UTM3 (32633)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/32634,">WGS84 UTM4 (32634)</entry>
+	   	<entry code="http://www.opengis.net/def/crs/EPSG/0/4258,">ETRS89 (4258) [INSPIRE]</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3034,">ETRS-LCC (3034) [INSPIRE]</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3035,">ETRS-LAEA (3035) [INSPIRE]</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3038,">ETRS-TM26 (3038)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3039,">ETRS-TM27 (3039)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3040,">ETRS-TM28 (3040)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3041,">ETRS-TM29 (3041)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3042,">ETRS-TM30 (3042)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3043,">ETRS-TM31 (3043)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3044,">ETRS-TM32 (3044)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3045,">ETRS-TM33 (3045)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3046,">ETRS-TM34 (3046)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3047,">ETRS-TM35 (3047)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3048,">ETRS-TM36 (3048)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3049,">ETRS-TM37 (3049)</entry>
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3050,">ETRS-TM38 (3050)</entry>	  	
+	  	<entry code="http://www.opengis.net/def/crs/EPSG/0/3857,">Spherical Mercator (3857)</entry>	  	
+	  </group>
+	</translation>
+</userValues>	

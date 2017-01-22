@@ -1,0 +1,18 @@
+{* version 20140530 *}
+
+{if count($navigation) > 1}
+    {foreach $navigation as $row}
+        {if $iterator->last}<b>{/if}
+        {if $row['url'] != ''}
+            <a href="{$row['url']}">{$row['label']}</a>
+        {else}
+            {$row['label']}
+        {/if}
+        {if $row['value'] != ''} ({$row['value']}) {/if}
+        {if $iterator->last}
+            </b>
+        {else}
+            &gt;
+        {/if}
+    {/foreach}
+{/if}

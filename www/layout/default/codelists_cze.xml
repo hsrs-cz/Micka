@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<map>
+ 
+  <serviceType>
+    <value name="" code="0"></value>
+   	<value name="WMS" code="">WMS</value>
+   	<value name="ESRI" code="">ESRI</value>
+   	<value name="WFS" code="">WFS</value>
+  	<value name="WCS" code="">WCS</value>
+  	<value name="CSW" code="">CSW</value>
+  	<value name="WCST" code="">WCST</value>
+  	<value name="view" code="">INSPIRE prohlížecí</value>
+  	<value name="download" code="">INSPIRE stahovací</value>
+  	<value name="discovery" code="">INSPIRE vyhledeávací</value>
+  	<value name="transformation" code="">INSPIRE transformační</value>
+  	<value name="other" code="">jiné INSPIRE</value>  
+  	<value name="ESRI_FEATURE" code="">ESRI ArcGIS Feature</value>  
+  	<value name="ESRI_IMAGE" code="">ESRI ArcGIS Image</value>   
+  </serviceType>
+  
+  <applicationType>
+    <value name="" code="0"></value>
+   	<value name="Georeport" code="">Georeport</value>
+  	<value name="Map" code="">Mapová aplikace</value>
+  	<value name="NonMap" code="">Aplikace bez mapy</value>
+  </applicationType>
+  
+  <inspireType>
+    <value name="dataset" code="5">datová sada</value>
+    <value name="series" code="6">série</value>
+  </inspireType>
+  
+  <inspireServiceType>
+    <value name="" code="0"></value>
+    <value name="service" code="14">služba</value>
+    <value name="application" code="99">aplikace</value>
+  </inspireServiceType>
+
+  <crType>
+    <value name="" code="0"></value>
+    <value name="dataset" code="5">data</value>
+    <value name="service" code="14">služba</value>
+    <value name="application" code="99">aplikace</value>
+    <value name="featureCatalogue" code="99">katalog geoprvků</value>
+   </crType>
+  
+  <dataType>
+    <value name="" code="0"></value>
+  	<value name="data" code="">Digitální data</value>
+  	<value name="GREP" code="">Georeport</value>
+  	<value name="ESRI" code="">Mapová služba ESRI</value>
+  	<value name="WMS" code="">Mapová služba WMS</value>
+  	<value name="DB" code="">Databázová aplikace</value>
+  	<value name="MAP" code="">Mapová aplikace</value>
+  	<value name="DVD" code="">CD/DVD</value>
+  	<value name="print" code="">Vydáno tiskem</value>
+  </dataType>
+  
+  	<geology>
+    	<value name="" code="0"></value>
+  	    <value name="geologie" code="">geologie</value>
+		<value name="hydrogeologie" code="">hydrogeologie</value>
+		<value name="půdy" code="">půdy</value>
+		<value name="nerostné suroviny, surovinový informační systém" code="">nerostné suroviny, surovinový IS</value>
+		<value name="důlní díla" code="">důlní díla</value>
+		<value name="těžební odpady" code="">těžební odpady</value>
+		<value name="geohazardy" code="">geohazardy</value>
+		<value name="geofyzika" code="">geofyzika</value>
+		<value name="geochemie" code="">geochemie</value>
+		<value name="geologická prozkoumanost ČR" code="">geologická prozkoumanost ČR</value>
+		<value name="knihovny a archivy" code="">knihovny a archivy</value>		
+		<value name="vzdělávání a popularizace geologie" code="">vzdělávání a popularizace geologie</value>		
+		<value name="sbírky a hmotná dokumentace" code="">sbírky a hmotná dokumentace</value>		
+		<value name="kódovníky" code="">kódovníky</value>
+		<value name="inženýrská geologie" code="">inženýrská geologie</value>
+	</geology>
+  
+</map>

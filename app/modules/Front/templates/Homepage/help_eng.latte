@@ -1,0 +1,290 @@
+{block content}
+{dump}
+<style type="text/css">
+.odd {
+	text-align: justify;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+.odd img {
+	border:1px solid gray
+}
+.vysl {
+	font-style: italic;
+	margin-left:50%;
+	position:absolute;
+}
+table.cookbook {
+	border-collapse: collapse;
+}
+table.cookbook th {
+  font-weight: bold;
+  background: #F2EEDF;
+  border: solid 1px #B5B6A0;
+}
+table.cookbook td {
+	border: solid 1px #B5B6A0;
+	padding: 2px;
+	vertical-align: top;
+}
+</style>
+
+<div class="container panel panel-default">
+<h1>Micka - quick help</h1>
+<br />
+<ol>
+  <li><a href="#uvod">Foreword</a></li>
+  <li><a href="#vyhled">Metadata querying</a></li>
+  <li><a href="#edit">Metadata editing</a></li>
+  <li><a href="#admin">Administration</a></li>
+  <li><a href="#pokyny">Metadata filling guidelines</a></li>
+</ol>
+<br />
+<h2><a id="uvod"></a>1. Foreword </h2>
+<br />
+<div class="odd">Micka is the software for spatial data / services metadata management according to ISO, OGC and INSPIRE standards.</div>
+<br />
+<div class="md_label">Supported standards</div>
+<div class="odd">System is able to implement any standard based on XML document. For implementation separate administration modul is required <br />
+  These standards are implemented:
+  <ul>
+    <li>Spatial data metadata (ISO 19115)</li>
+    <li>Spatial services metadata (ISO 19119)</li>
+    <li>Feature catalog (ISO 19110)</li>
+    <li>Dublin Core metadata (ISO 15836)</li>
+  </ul>
+</div>
+<div class="md_label">Profiles</div>
+<div class="odd">Additional metadata elements and user metadata profiles can be used.
+  These profiles are default in the system:
+  <ul>
+    <li>ISO 19115 mandatory elements</li>
+    <li>ISO 19115 core elements</li>
+    <li>ISO 19115 full standard</li>
+    <li>INSPIRE 19115/19119</li>
+    <li>MICKA profile (INSPIRE + ISO core elements and some additional to cover the most user requirements)</li>
+    <li>User defined</li>
+  </ul>
+  The user may change the profile during editing. </div>
+<div class="md_label">Language environment </div>
+<div class="odd"> Application interface if multi-lingual, currently 12 languages are supported.
+
+<br />
+The offered language list is set in configuration file. The interface language may be selected by clicking the falg on the page header.
+  <br />
+Metadata itself may be also multilingual. The user defines main language and other languages during 
+record creation or record administration. In all cases UTF-8 codepage is used.  
+</div>
+
+<h2><a id="vyhled"></a>2. Metadata querying </h2>
+
+<div class="odd">
+The application enables basic metadata querying. More complex queries are enabled via catalogue service (OGC CSW 2.0.2), which is a part of the application.<br/><br/>
+Pressing <span class="md_menuitem"><a href="" target="main" style="width:100px"><img src="{$basePath}{$themePath}/img/bfind.gif"/> Search</a></span>on left menu this query form is activated.<br />
+  <br />
+  <img src="{$basePath}{$themePath}/img/help_input_eng.gif" border="0"/>
+  <br />
+</div>
+<div class="odd">Legend: <br />
+  <br />
+  <a id="slova"></a><strong>Words:</strong> Text searching. There are some possibilities:
+  <ul>
+    <li>In text - fulltext searching.</li>
+    <li>In keywords - only keywords searching. You may use thesaurus for searching.</li>
+  </ul>
+  <ul>
+    <li>Exact phrase - search for full entered text phrase in metadata.</li>
+    <li>Any word - Search metadata containing at least one of entered words</li>
+    <li>All words - Search metadata containing all words in any order</li>
+  </ul>
+  <p><a name="kateg" id="kateg"></a><strong>Topic category:</strong> Topic categories according to ISO 19115. <br />
+    <br />
+    <a name="cas" id="cas"></a><strong>Temporal extent :</strong> Time extent. Please, enter the date in the <span class="warning">YYYY[-MM[-DD]]</span> format, e.g. &quot;2006-02-19&quot;, &quot;2006-02&quot; or &quot;2006&quot;. <br />
+    <br />
+    <a name="stan" id="stan"></a><strong>Standard :</strong> Select standard name.<br />
+    <br />
+    <a name="jazyk" id="jazyk"></a><strong>Language :</strong> Set main metadata language.<br />
+    <br />
+    <a name="vyrez" id="vyrez"></a><strong>Extent :</strong> Set search extent. <br />
+    <br />
+    <a name="mapa" id="mapa"></a><strong>From map: </strong> Set search extent from map.<br /> 
+    <br />
+    <a name="vevyrezu" id="vevyrezu"></a><strong>Datasets fit the extent :</strong> Searches metadata with extent not wider than set search extent.<br />
+    <br />
+    Map control: <br />
+    <img src="{$basePath}{$themePath}/img/zoomin.gif" width="18" height="18" /> - Zoom in. Click or draw on the map.<br />
+    <img src="{$basePath}{$themePath}/img/zoomout.gif" width="18" height="18" /> - Zoom out. <br />
+    <img src="{$basePath}{$themePath}/img/pan.gif" width="18" height="18" /> - Pan. <br />
+    <img src="{$basePath}{$themePath}/img/rect.gif" width="18" height="18" /> - Set search extent. <br />
+    <img src="{$basePath}{$themePath}/img/maprect.gif" width="18" height="18" /> - Get search extent from map extent. <br />
+    <img src="{$basePath}{$themePath}/img/zoomall.gif" width="18" height="18" /> - Full extent. <br />
+    <br />
+    <span class="warning">ATTENTION! Query is intersection of all filled input fields (logical AND).</span><br />
+    <br />
+  </p>
+</div>
+<div class="odd">Results are displayed as: <br />
+  <br />
+  <table class="odp" cellspacing="1" width="100%">
+    <tbody>
+      <tr>
+        <td class="odp_rec">
+          <div style="float: right; width: 90px; text-align: right;"> 
+            <a href="#edit" class="abut1"><img src="{$basePath}{$themePath}/img/edit.gif" alt="Edit" style="border:0" /></a>
+            <a href="#edit" class="abut1"><img src="{$basePath}{$themePath}/img/xml.gif" alt="XML" style="border:0" /></a>
+            <a href="#edit" class="abut1"><img src="{$basePath}{$themePath}/img/copy.gif" alt="Duplicate" style="border:0" /></a>
+            <a href="#edit" class="abut1"><img src="{$basePath}{$themePath}/img/delete.gif" alt="Delete" style="border:0" /></a> 
+          </div>
+          <img src="{$basePath}{$themePath}/img/lyr.gif" alt="Edit" style="border:0" /><a href="#">Resource title </a> &lt;user&gt; <span class="md_dsfirm">(Metadata Contact Point)</span> </td>
+      </tr>
+      <tr>
+        <td class="odp_hodn">Abstract. </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+  where<br />
+  <ul>
+    <li><img src="{$basePath}{$themePath}/img/lyr.gif" style="border:0" /> is record type example. Record types may be distinguished by these icons:
+      <ul>
+      <li><img src="{$basePath}{$themePath}/img/lyr.gif" style="border:0" /> Spatial data Metadata (ISO 19115)</li>
+      <li><img src="{$basePath}{$themePath}/img/dc.gif" style="border:0" /> Dublin Core Metadata (ISO 15836)</li>
+      <li><img src="{$basePath}{$themePath}/img/serv.gif" style="border:0" /> Spatial Service Metadata (ISO 19119)</li>
+      <li><img src="{$basePath}{$themePath}/img/fc.gif" style="border:0" /> Feature Catalogue (ISO 19110)</li>
+      </ul>    
+    </li>
+    <li><strong>&lt;user&gt;</strong> is system user name of metadata record creator. It is displayed only when user has editing rights. </li>
+    <li><img src="{$basePath}{$themePath}/img/edit.gif" alt="Edit" style="border:0" /><img src="{$basePath}{$themePath}/img/xml.gif" alt="XML" style="border:0" /><img src="{$basePath}{$themePath}/img/copy.gif" alt="Duplicate" style="border:0" /><img src="{$basePath}{$themePath}/img/delete.gif" alt="Delete" style="border:0" /> 
+    are buttons for editing/deleting records.  They are displayed only when user has editing rights. </li>
+  </ul>
+  <span class="warning">Record types are distinguished by background color: <span class="md_privat"> private </span> / <span class="odp_rec"> <strong> public </strong> </span>.</span> More in <a href="#edit">metadata editing</a>. <br />
+  <br />
+  Clicking on record title the summary metadata are displayed. The full metadata may be displayed by clicking "View detail" on the Summary page.<br />
+  <br />
+  If more records are found, you may browse the listing pages on the bottom of the page. 
+</div>
+<br />
+
+
+<h2><a id="edit"></a>3. Metadata editing </h2>
+<div class="odd">
+Logged users can create, edit, import/export and delete metadata records accordint to their rights.
+{if $user->isInRole('writer')}
+<h3>New record creation :</h3>
+  <br />
+  Click: <span class="md_menuitem"><a href="#" style="width:100px"><img src="{$basePath}{$themePath}/img/bblank.gif" width="16" height="16"/> New record </a></span> on the left menu
+  New record creation dialog is displayed:<br />
+  <img src="{$basePath}{$themePath}/img/help_new_eng.gif" xstyle="float:left; margin-right:20px"/><br /><br />
+ Here you may set: 
+<ul>
+ <li>Standard</li>
+ <li>Access rights (the group for editing and the group for viewing)</li>
+ <li>Metadata laguages (According to ISO 19139 there is one primary laguage - left column, and one or more other languages - right column.</li>
+</ul> 
+ <br />
+ If you choose "Import from file / URL"
+ the import dialog is displayed:<br />
+ <img src="{$basePath}{$themePath}/img/help_import_eng.gif"/> <br /><br />
+ Please, fill here 
+ <ul>
+   <li>Select file for import or</li>
+   <li>Service URL. The GetCapabilities document will be imported from it.</li>
+ </ul>
+ (File import has a priority if both fields are filled.)<br><br>   
+ If you want to update existing records with another identifier (UUID), set the existing record uuid clicking [Select record for update]  button and clicking found record in serch window results.
+When importing  [ ESRI ISO metadata ] from file, you can choose Feature coatalogue to import dataset attribute table structrure from the metadata.
+<br/> 
+ Erase the selection with [ X ] button. <br /><br /> 
+ Switch "Existing record / Overwrite / Leave existing" volít, zda se má záznam naimportovat i pokud existuje či ne. <br />
+
+<h3>Existing record editing</h3>
+When the record is created it can be edited. This is the editing interface: 
+<br />
+
+  <img src="{$basePath}{$themePath}/img/help_edit_eng.gif" alt="" border="0" usemap="#Map2" />
+  <br />
+  <br />
+  Description of editing page elements: <br />
+  <br />
+  <a id="profil"></a><strong><br />
+  Profile</strong> - selection of the profile. The profiles may be switched during editing.<br />
+  <a name="oddil" id="profil"></a><strong><br />
+  Section </strong> - because full ISO 19115 record is too large, it is divided to sections. <br />
+  <a name="pole" id="profil"></a><strong><br />
+  Element names </strong> - copy tree structure of the standard. Color coding:
+  <div class="md_inpform">
+    <ul>
+      <li><span class="m">Mandatory elements</span> (<em>are mandatory in some context, e.g. if optional element A consist mandatory element B 
+      , it must be filled whenever element A is used </em>) There are only a few realy mandatory elements in ISO 19115 (mandatory core elements). The presence of INSPIRE mandatory/recommended elements is checked during editing/saving. </li>
+      <li><span class="c">Conditionaly mandatory elements</span> (<em>These alements are mandatory only in some cases, e.g. spatial extent must be set as bounding box / bounding polygon / description. </em>) </li>
+      <li class="o">optional elements </li>
+    </ul>
+  </div>
+  <a name="barvy" id="profil"></a><strong><br />
+  Form field types </strong> - data types are distinguished by color:
+   <ul>
+	<li><input class="T" value="Abcdefgh, ijkl, 123456 "> 
+	  - text fileds - may contain any alphanumeric characters. Generally length is limited to 4000 characters.</li>
+	<li><input class="N" value="999.999"> - numeric fileds - only digits and "." are allowed.</li>
+	<li><input class="D" value="2005-11-25"> 
+	- Date fields. Date formats according to ISO standard are allowed (&quot;YYYY&quot;, &quot;YYYY-MM&quot; or &quot;YYYY-MM-DD&quot;) </li>
+   </ul>
+  <a name="napoveda" id="profil"></a><strong><br />
+  Context help </strong> - If you Pokud place cursor on field label, the context help is displayed. It is taken from ISO 19115 standard and complemented by other sources.<br />
+   <br /> <a name="doplnky" id="profil"></a><strong>Selection from lists</strong> - 
+   the application offers controlled lists form standards but also choosing values from open lists (e.g. data formats), gazeeteers, thesauri etc localy stored or via web services. These extensions are usually enabled in poupup windows. 
+<span class="warning">ATTENTION! If you want to use these possibilities, opening windows must be enablen in your web browser.</span>
+<br /><br />
+<strong>Fileds checking</strong>: 
+Filed chceking panel is visible on th right upper corner of editing form. The INSPIRE profile is checked here. The record must be currently saved to see actual check status. ATTENTION! This chceking does not prevent user to save incomplete record and complete it during next session.
+<br />
+
+
+
+<h3>Record administration</h3>
+If the record is at least one saved, the <b>Record administration</b> hyperlink is displayed at page sub-heading.
+Clicking it the dialog window is open. Here you set:
+
+<ul>
+  <li>User group for editing</li>
+  <li>User goup for viewing</li>
+  <li>If the record is public (not authorised user can see it)</li>
+  <li>Multilinguality - what metadata language are used</li>
+</ul> 
+</div>
+<br />
+{/if}
+<h2><a id="admin"></a>4. Administration</h2>
+<div class="odd">
+  Administrators have acces to this part. 
+{if $user->isInRole('writer')} 
+  Available modules:
+  <ul>
+    <li>Metadata tree editing (Editing profiles)</li>
+    <li>Contact management(This module if available for editing user in "Add contact" dialog)</li>
+    <li>Bach INSPIRE check module</li>
+    <li>User management (access rights etc...)</li>    
+  </ul>
+{/if}
+</div>
+<br />
+<h2><a id="pokyny"></a>5. Metedata editing guidelines</h2>
+<div class="odd">
+Metadata editing requires some knowledge of standards, hence some education training or some consultation are recommneded. 
+
+{if $user->isInRole('writer')}
+For metadata editing profile MICKA which contains basic set of useful elements is recommended.
+<br />
+<br/>
+
+{/if}
+</div>
+</div>
+
+{block}
+
+
+{block content-js}
+{/block}

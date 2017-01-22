@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<capabilities xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns:inspire_com="http://inspire.ec.europa.eu/schemas/common/1.0">
+	<ows:ServiceIdentification>
+		<ows:Title>Metadatový Katalog HSRS</ows:Title>
+		<ows:Abstract>Katalogová služba - implementace CSW-2.0.2</ows:Abstract>
+		<ows:Keywords>
+			<ows:Keyword>CSW</ows:Keyword>
+			<ows:Keyword>Help Service</ows:Keyword>
+			<ows:Keyword>geospatial</ows:Keyword>
+			<ows:Keyword>catalogue</ows:Keyword>
+		</ows:Keywords>
+		<ows:ServiceType>CSW</ows:ServiceType>
+		<ows:ServiceTypeVersion>2.0.2</ows:ServiceTypeVersion>
+		<ows:Fees>NONE</ows:Fees>
+		<ows:AccessConstraints>Transakce pouze pro přihlášené uživatele</ows:AccessConstraints>
+	</ows:ServiceIdentification>
+
+	<ows:ServiceProvider>
+		<ows:ProviderName>Help Service Remote Sensing</ows:ProviderName>
+		<ows:ProviderSite xlink:href="http://www.bnhelp.cz"/>
+		<ows:ServiceContact>
+			<ows:IndividualName>Štěpán Kafka</ows:IndividualName>
+			<ows:PositionName>Hlavní vývojář</ows:PositionName>
+			<ows:ContactInfo>
+				<ows:Phone>
+					<ows:Voice>+420 123 456 789</ows:Voice>
+				</ows:Phone>
+				<ows:Address>
+					<ows:DeliveryPoint>Černoleská 1600</ows:DeliveryPoint>
+					<ows:City>Benešov</ows:City>
+					<ows:AdministrativeArea></ows:AdministrativeArea>
+					<ows:PostalCode>256 01</ows:PostalCode>
+					<ows:Country>cz</ows:Country>
+					<ows:ElectronicMailAddress>kafka@email.cz</ows:ElectronicMailAddress>
+				</ows:Address>
+				<ows:OnlineResource xlink:href="http://www.bnhelp.cz"/>
+				<ows:ContactInstructions>via e-mail</ows:ContactInstructions>
+			</ows:ContactInfo>
+			<ows:Role>resourceProvider</ows:Role>
+		</ows:ServiceContact>
+	</ows:ServiceProvider>
+	
+	<inspire_com:Conformity>
+		<inspire_com:Specification xsi:type="inspire_com:citationInspireInteroperabilityRegulation_cze">
+			<inspire_com:Title>NAŘÍZENÍ KOMISE (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat</inspire_com:Title>
+			<inspire_com:DateOfPublication>2010-12-08</inspire_com:DateOfPublication>
+			<inspire_com:URI>OJ:L:2010:323:0011:0102:CS:PDF</inspire_com:URI>
+			<inspire_com:ResourceLocator>
+				<inspire_com:URL>http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri=OJ:L:2010:323:0011:0102:CS:PDF</inspire_com:URL>
+				<inspire_com:MediaType>application/pdf</inspire_com:MediaType>
+			</inspire_com:ResourceLocator>
+		</inspire_com:Specification>
+		<inspire_com:Degree>notEvaluated</inspire_com:Degree>
+	</inspire_com:Conformity>
+		
+</capabilities>

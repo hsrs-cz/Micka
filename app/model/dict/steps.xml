@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- multilingualni vyplni se hodnota, 
+	ve vyberu se zobrazi hodnota nebo label. 
+	code je jen pro vazbu - musi byt v kazde jazykove mutaci stejne-->
+<userValues>
+  <translation lang="eng">
+  	  <title>Process step</title>
+	  <group></group>
+  </translation>	
+
+</userValues>

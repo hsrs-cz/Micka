@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<portal>
+  <messages lang='eng'>
+    <found>found</found>
+    <notFound>not found</notFound>
+    <map>map</map>
+    <changes>Micka changes</changes>
+    <dchanges>OGC Metadata Catalogue: Records changed or updates during last</dchanges>
+    <days>days</days>
+    
+    <identification>Identification</identification>
+    <date>Date</date>
+    <title>Title</title>
+    <abstract>Abstract</abstract>
+    <category>Category</category>
+    <keywords>Keywords</keywords>
+    <useLimitation>Use limitations</useLimitation>
+    <accessConstraints>Access Constraints</accessConstraints>
+    <contact>Contact</contact>
+    <spatial>Spatial representation</spatial>
+    <scale>Scale</scale>
+    <distance>Resolution</distance>
+    <temp>Temporal extent</temp>
+    <service>Service type</service>
+    <operatesOn>Operates on</operatesOn>
+    <coorSys>Coordinate System</coorSys>
+    <extent>Extent</extent>
+    <west>West</west>
+    <east>East</east>
+    <south>South</south>
+    <north>North</north>
+    <lineage>Lineage</lineage>
+    <quality>Quality</quality>
+    <distrib>Distribution</distrib>
+    <mdcontact>Metadata author</mdcontact>
+    <ident>Identifier</ident>
+    <hierarchy>Resource type</hierarchy>
+    <dateStamp>Date Stamp</dateStamp>
+    <fees>Fees</fees>
+    <ordering>Ordering instructions</ordering>
+    <format>Format</format>
+    <graphicOverview>Graphic Overview</graphicOverview>
+    
+  </messages>
+
+  <messages lang='cze'>
+    <found>nalezeno</found>
+    <notFound>nenalezeno</notFound>
+    <map>mapa</map>
+    <changes>Micka - změny</changes>
+    <dchanges>Katalogová služba OGC: Metadatové záznamy přidané nebo aktualizované během posledních</dchanges>
+    <days>dní</days>
+
+    <identification>Identifikace</identification>
+    <date>Datum</date>
+    <title>Název</title>
+    <abstract>Abstrakt</abstract>
+    <category>Kategorie</category>
+    <keywords>Klíč. slova</keywords>
+    <useLimitation>Omezení užití</useLimitation>
+    <accessConstraints>Omezení přístupu</accessConstraints>
+    <contact>Kontakt</contact>
+    <spatial>Prostor. reprezentace</spatial>
+    <scale>Měřítko</scale>
+    <distance>Rozlišení</distance>
+    <temp>Časový rozsah</temp>
+    <service>Typ služby</service>
+    <operatesOn>Pracuje nad</operatesOn>
+    <coorSys>Souřadnicový systém</coorSys>
+    <extent>Prostorový rozsah</extent>
+    <west>Západ</west>
+    <east>Východ</east>
+    <south>Jih</south>
+    <north>Sever</north>
+    <lineage>Rodokmen</lineage>
+    <quality>Kvalita</quality>
+    <distrib>Distribuce</distrib>
+    <mdcontact>Autor metadat</mdcontact>
+    <ident>Identifikátor</ident>
+    <hierarchy>Typ zdroje</hierarchy>
+    <dateStamp>Datum aktualizace</dateStamp>
+    <fees>Poplatky</fees>
+    <ordering>Objednání</ordering>
+    <format>Formát</format>
+    <graphicOverview>Náhled</graphicOverview>
+
+  </messages>
+
+</portal>

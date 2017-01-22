@@ -1,0 +1,45 @@
+/* 
+    Document   : micka_tmp
+    Created on : 24.10.2012, 15:31:21
+    Author     : hsrs
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#headBox {
+	width: 100%;
+	height: 100px;
+	margin-bottom: 5px;
+	background-color: #b9b9b9;
+}
+
+#menuBox {
+	width: 170px;
+	float: left;
+	position: fixed;
+	top: 100px;
+	height: 100%;
+	background: #EEEEEE;
+}
+
+#naviBox {
+	margin-left: 180px;
+}
+
+#dataBox {
+margin-left: 175px;
+}
+
+#footBox {
+width: 100%;
+margin-top: 5px;
+clear: both;
+}
+
+div.flash {
+	color: black;
+	background: #FFF9D7;
+	border: 1px solid #E2C822;
+	padding: 1em;
+	margin: 1em 0;
+}

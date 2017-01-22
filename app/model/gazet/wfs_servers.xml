@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wfsServers>
+  <server name="kraje" label="Kraje" href="http://gis.bnhelp.cz/ows/crwfs" xsl="gkraje2html.xsl" xslb="gkraje2bbox.xsl" typeName="kraje" propertyName="kraj_nazev" cp="windows-1250"/>
+  <server name="okresy" label="Okresy" href="http://gis.bnhelp.cz/ows/crwfs" xsl="gokresy2html.xsl" xslb="gokresy2bbox.xsl" typeName="okresy" propertyName="nazok" cp="windows-1250"/>
+  <server name="orp" label="ORP" href="http://gis.bnhelp.cz/ows/crwfs" xsl="gorp2html.xsl" xslb="gorp2bbox.xsl" typeName="orp" propertyName="nazob" cp="windows-1250"/>
+  <server name="obce" label="Obce" href="http://gis.bnhelp.cz/ows/crwfs" xsl="gobce2html.xsl" xslb="gobce2bbox.xsl" typeName="obce"  propertyName="NAZ_OBEC_P" cp="windows-1250"/>
+  <server name="world" label="World states" href="http://gis.bnhelp.cz/ows/crwfs" xsl="stateshtml.xsl" xslb="statesbbox.xsl" typeName="states" propertyName="NAME"/>
+  <!-- <server name="nuts1" label="NUTS 1 (EU states)" href="http://www.bnhelp.cz/cgi-bin/crwfs" xsl="gnuts1html.xsl" xslb="gnuts1bbox.xsl" typeName="nuts1" propertyName="ARRGCDL0"/>-->
+  <server name="nuts2" label="NUTS 2" href="http://gis.bnhelp.cz/ows/crwfs" xsl="gnuts2html.xsl" xslb="gnuts2bbox.xsl" typeName="nuts2" propertyName="nurgnm"/>
+  <server name="nuts3" label="NUTS 3" href="http://gis.bnhelp.cz/ows/crwfs" xsl="gnuts3html.xsl" xslb="gnuts3bbox.xsl" typeName="nuts3" propertyName="nurgnm"/>
+</wfsServers>

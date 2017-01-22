@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<userValues>
+  <translation lang="eng">
+  	<title>Service Type</title>
+	  <group>
+	  	<title>OGC Services</title>
+		<entry code="WMS">WMS (Web Map Service)</entry>
+		<!-- <entry code="WFS">WFS (Web Feature Service)</entry>
+		<entry code="WCS">WCS (Web Coverage Service)</entry>
+		<entry code="CSW">CSW (Catalogue Service for Web)</entry> 
+		<entry code="WPS">WPS (Web Processing Service)</entry> -->
+	  </group>
+      <group>
+	  	<title>INSPIRE Services</title>
+		<entry code="discovery">discovery</entry>
+		<entry code="view">view</entry>
+		<entry code="download">download</entry>
+		<entry code="transformation">transformation</entry>
+		<entry code="invoke">invoke</entry>
+		<entry code="other">other</entry>
+	  </group>
+      <group>
+	  	<title>ESRI services</title>
+		<entry code="ESRI_MAP">ArcGIS Image</entry>
+		<entry code="ESRI_IMS">ArcIMS Image</entry>
+	  </group>
+      <group>
+	  	<title>Application types</title>
+		<!-- <entry code="WMC">Web Map Context</entry>-->
+		<entry code="Georeport">Georeport</entry>
+		<entry code="Map">Map application</entry>
+		<entry code="NonMap">Non map application</entry>
+		<!-- <entry code="Complex">Complex application</entry>
+		<entry code="Other">Other</entry>-->
+	  </group>
+  </translation>
+
+  <translation lang="cze">
+  	  <title>Typ služby</title>
+	  <group>
+	  	<title>Služby OGC</title>
+		<entry code="WMS">WMS (Web Map Service)</entry>
+		<!-- <entry code="WFS">WFS (Web Feature Service)</entry>
+		<entry code="WCS">WCS (Web Coverage Service)</entry>
+		<entry code="CSW">CSW (Catalogue Service for Web)</entry> 
+		<entry code="WPS">WPS (Web Processing Service)</entry>-->
+	  </group>
+      <group>
+	  	<title>Služby INSPIRE</title>
+		<entry code="discovery">vyhledávací (discovery)</entry>
+		<entry code="view">prohlížecí (view)</entry>
+		<entry code="download">stahovací (download)</entry>
+		<entry code="transformation">transformační (transformation)</entry>
+		<entry code="invoke">spouštěcí (invoke)</entry>
+		<entry code="other">ostatní (other)</entry>
+	  </group>
+      <group>
+	  	<title>Služby ESRI</title>
+		<entry code="ESRI_MAP">ArcGIS Image (ESRI_MAP)</entry>
+		<entry code="ESRI_IMS">ArcIMS Image (ESRI_IMS)</entry>
+	  </group>
+      <group>
+	  	<title>Typy aplikací</title>
+		<!-- <entry code="WMC">Mapová kompozice (WMC)</entry>-->
+		<entry code="Georeport">Georeport (Georeport)</entry>
+		<entry code="Map">Mapová aplikace (Map)</entry>
+		<entry code="NonMap">Nemapová aplikace (NonMap)</entry>
+		<!-- <entry code="Complex">Komplexní (Complex)</entry>
+		<entry code="Other">Další (Other)</entry>-->
+	  </group>
+    </translation>
+</userValues>	

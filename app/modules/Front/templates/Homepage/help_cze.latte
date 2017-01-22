@@ -1,0 +1,413 @@
+{block content}
+
+<style type="text/css">
+.odd {
+	text-align: justify;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+.odd img {
+	border:1px solid gray
+}
+.vysl {
+	font-style: italic;
+	margin-left:50%;
+	position:absolute;
+}
+table.cookbook {
+	border-collapse: collapse;
+}
+table.cookbook th {
+  font-weight: bold;
+  background: #F2EEDF;
+  border: solid 1px #B5B6A0;
+}
+table.cookbook td {
+	border: solid 1px #B5B6A0;
+	padding: 2px;
+	vertical-align: top;
+}
+</style>
+<div class="container panel panel-default">
+<h1>Micka - nápověda</h1>
+<br />
+<ol>
+  <li><a href="#uvod">Úvod</a></li>
+  <li><a href="#vyhled">Vyhledávání záznamů</a></li>
+  <li><a href="#edit">Editování záznamů</a></li>
+  <li><a href="#admin">Administrace</a></li>
+  <li><a href="#pokyny">Pokyny k vyplňování metadat</a></li>
+</ol>
+<br />
+
+<h2><a id="uvod"></a>1. Úvod </h2>
+
+<p>Micka je systém pro práci s metadaty prostorových dat podle standardů ISO, OGC a INSPIRE.</p>
+
+<h3>Podporované standardy</h3>
+<p class="odd"> Systém je utvořen tak, že je možno  implementovat libovolný standard, který je reprezentován XML dokumentem. Pro vložení struktury standardu existuje zvláštní správcovský modul. <br />
+  V současné verzi jsou podporovány tyto standardy:
+  <ul>
+    <li>Metadata prostorových dat (ISO 19115)</li>
+    <li>Metadata webových služeb  (ISO 19119)</li>
+    <li>Katalog geoprvků (Feature catalog)(ISO 19110) - část potřebná pro popis geoprvků atributů datových sad </li>
+    <li>Metadata Dublin Core</li>
+  </ul>
+</p>
+
+<h3>Profily</h3>
+<p> Systém umožňuje  přidávat další nadstandardní metadatové položky 
+a pracovat s uživatelskými profily (podmnožinou položek).
+  Základem jsou tyto profily:
+  <ul>
+    <li>Povinné položky podle normy ISO </li>
+    <li>Jádro (core elements) podle normy ISO</li>
+    <li>Plný standard</li>
+    <li>Profil INSPIRE</li>
+    <li>Uživatelské profily</li>
+  </ul>
+  Mezi profily je možno přepínat během editování. 
+</p>
+
+<h3>Jazykové prostředí </h3>
+<p> Uživatelské prostředí je vícejazyčné, v současné době je podporováno 12 jazyků.
+Výběr jazyků je nastaven v konfiguračním souboru aplikace, proto nemusí být v aplikaci všechny přístupné. 
+Další jazyky je možno přidat na přání. Přepínat mezi jazyky je možno ťuknutím na odpovídající vlaječky 
+v postranní liště programu. </p>
+<p class="odd">
+  Samotná metadata je možno paralelně vyplňovat v různých jazycích podle volby uživatele. 
+  Ve všech případech je používána kódová stránka UTF-8. 
+</p>
+
+<a id="vyhled"></a>
+<h2>2. Vyhledávání záznamů </h2>
+
+<p>
+	Aplikace podporuje základní vyhledávání záznamů. 
+	Další možnosti vyhledávání jsou zpřístupněny pomocí katalogové služby OGC, která je součástí instalace (beží na adrese <micka path>/csw/index.php).
+	Na domovské stránce aplikace je tento vyhledávací formulář:  <br /><br />
+  	<img src="{$basePath}{$themePath}/img/help_input.png" border="0" usemap="#Map" />
+</p>
+
+<p>
+	Pro přihlášeného uživatele se zobrazí rozšířený formulář. 
+	Kritéria vyhledávání vycházejí z povinných položek katalogové služby, z INSPIRE a potřeb ČGS.
+
+    <div style="color:red">POZOR! Mezi všemi položkami vyhledávacího formuláře platí průnik (logické AND), pokud nejsou položky vyplněny, nejsou pro výběr uvažovány.</div><br />
+
+<p>
+	Po vyhledání se zobrazí seznam nalezených vět. 
+	Další akce jsou umožněny pomocí ikonek v záhlaví záznamu s kontextovou nápovědou.
+</p>
+<p>
+  	V případě více nalezených záznamů jsou výsledky jsou stránkovány, 
+  	na další/předchozí stranu přejdete pomocí ovládacích prvků na konci stránky.
+</p>
+
+
+<a id="edit"></a>
+<h2>3. Editování záznamů </h2>
+
+<p>
+	Přihlášení uživatelé mohou v různé míře podle svých práv vytvářet, importovat/exportovat a měnit metadatové záznamy.
+</p>
+{if $user->isInRole('writer')}
+
+<h3>Vytvoření nového záznamu:</h3>
+<p>  
+	V levém menu zvolte "<b>Nový záznam</b>".  
+  Zobrazí se dialog pro vytvoření nového záznamu:
+</p>
+  <img src="{$basePath}{$themePath}/img/help_new.png" xstyle="float:left; margin-right:20px"/><br /><br />
+
+<p>Zde nastavíte: 
+<ul>
+  <li>Odpovídající standard</li>
+  <li>Přístupová práva (která skupina uživatelů smí číst a která editovat)</li>
+  <li>Jazyky metadat (Podle ISO 19139 mají metadata jeden jazyk primární - v levém sloupci, a mohou mít několik daších jazyků - v pravém sloupci.</li>
+</ul>
+</p>
+<p>
+  Pokud ve výběru stadardu zvolíte Import ze souboru/URL. Poté se na stránce objeví dialog pro import:
+</p>
+  <img src="{$basePath}{$themePath}/img/help_import.gif"/> <br /><br />
+
+<p> Zde zadejte buď 
+  <ul>
+    <li>Výběr souboru pro import nebo</li>
+    <li>URL služby (OGC WMS/WFS/...), ze které se načte GetCapabilities dokument.</li>
+  </ul><br/> 
+  (Prioritu má import souboru.)
+</p> 
+
+<p> 
+ Pokud chcete aktualizovat již existující záznam s jiným identifikátorem, zadejte pomocí tlačítka [ Výběr záznamu pro update ] identifkátor existujícího záznamu.
+ Pokud importujete data ze souboru [ ESRI ISO metadata ], Můžete vybrat katalog geoprvků, do kterého naimportujete popis struktury datové sady.<br/> 
+ Tlačítkem [ X ] výběry zrušíte. <br /><br /> 
+ Přepínačem "Existující záznam přepsat / ponechat" volít, zda se má záznam naimportovat i pokud existuje či ne.
+</p>
+
+<h3>Editace existujícího záznamu</h3>
+
+<p>Jakmile je záznam vytvořen, je možné přistoupit k editaci. Tatkto vypadá editační rozhranní aplikace. 
+Význam jednotlivých prvků je popsán pod obrázkem.
+</p>
+
+  <img src="{$basePath}{$themePath}/img/help_edit.png" alt="" />
+  <br/>
+
+  <h3>Popis jednotlivých prvků formuláře pro editaci dat: </h3>
+
+<p>
+ <div class="md_inpform">
+    <ul>
+      <li><span class="m" style="display:inline">Povinné elementy</span> 
+	      (jsou povinné ovšem v určimém kontextu, např. pokud nepovinný element 
+	      A obsahuje povinný element B, znamená to, že pokud je vypněn jakýkoli 
+	      podřízený element k elementu A, musí být též vyplněni element B. 
+	      Příklad: pokud vyplníme cokoli v on-line informacích u kontaktního místa, 
+	      musí být vyplněna i elektronická adresa.) 
+	      Skutečně povinných položek je v normě velice málo a jsou obsaženy v povinném jádře. 
+	      Jejich kontrola probíhá při ukládání v režimu veřejného záznamu. 
+	  </li>
+      <li><span class="c" style="display:inline">Podmíněně povinné elementy</span> 
+      	(Tyto elementy jsou povinné za určitých okolností, např. prostorový rozsah musí být vyplněn buď 
+      	ohraničujícím obdélníkem, pokud tomu tak není, tak popisem rozsahu) 
+      </li>
+      <li class="o">Nepovinné elementy </li>
+    </ul>
+  </div>
+
+</p>
+
+<p> <b>Typy polí ve formuláří</b> - ve formuláři jsou odlišeny datové typy několika barvami:
+   <ul>
+	<li><input class="T" style="width:100px" value="Abcdefgh "> 
+	  - textové položky - mohou obsahovat libovolné znaky. Obecně mohou být libovolné délky</li>
+	<li><input class="N" value="999.999"> - číselné položky - mohou obsahovat jenom číslice</li>
+	<li><input class="D" value="25.9.2005"> 
+	- Položky obsahující datum. Mohou obsahovat datum ve formátu "RRRR", 
+	&quot;MM.RRRR&quot; nebo &quot;DD.MM.RRRR&quot; (pro češtinu). 
+	V ostatních jazycích je formát podle normy ISO (&quot;RRRR&quot;, &quot;RRRR-MM&quot; nebo &quot;RRRR-MM-DD&quot;) </li>
+   </ul>
+</p>
+   
+<p>
+	<b>Kontextová nápověda</b> - 
+	Pokud umístíte kurzor nad popisku pole, obejví se kontextová nápověda. 
+	Je převzatá přímo z definic jednotlivých položek normy, případně doplněna o další výklad.
+</p>
+
+<p>
+	<b>Výběr ze seznamů</b> -  
+   	systém má možnost definovat různé výběry z předdefinovaných hodnot, případně integraci 
+   	s dalšími programy (gazeeteery, thesaury) přes webové služby. Pomocí těchto tlačítek otevřete nové okno 
+   	pro komunikaci s pomocnými programy. 
+	<span class="warning">POZOR! Chcete-li využít tyto funkce, musíte být umožněno ve 
+	otvírání vyskakujících oken pro tuto doménu ve Vašem prohlížeči. </span>
+</p>
+
+<p>
+	<b>Kontrola položek</b>: 
+	Během editace se v pravém horním rohu zobrazuje panel, na kterém se objevují ještě nevyplňené položky podle 
+	požadavků směrnice INSPIRE. Po jejich vyplnění je nutno záznam průběžně <span class="warning">uložit</span> 
+	nebo aktualizovat pomocí <img src="{$basePath}{$themePath}/img/refresh_small.png" alt="" />, aby se 
+	zde zobrazila změna. Tato kontrola nebrání uživateli uložit záznam a doplnit jej později.
+</p>
+
+
+
+<h3>Administrace záznamu</h3>
+<p>
+	Pokud je záznam po vytvoření alespoň jednou uložen, objeví se v záhlaví odkaz <img src="{$basePath}{$themePath}/img/help_admin.png" alt="Administrace záznamu" />. 
+	Ťuknutím na něj otevřete dialogové okno, ve kterém je kdykoli možno nastavit 
+	<ul>
+	  <li>Skupinu uživatelů, která smí záznam editovat</li>
+	  <li>Skupinu uživatelů, která smí záznam prohlížet</li>
+	  <li>Jazyky, ve kterých budou vyplňovány multiliguální položky</li>
+	</ul> 
+</p>
+<p>
+	Přímo nad editačním formalářem je výběr pro nastavení stavu záznamu <img src="{$basePath}{$themePath}/img/help_public.png" alt="Administrace záznamu" />
+	<ul>
+	  <li>Rozpracovaný - záznam je neveřejný, nedokončený</li>
+	  <li>Neveřejný - záznam n´je neveřejný, měl by být hotový</li>
+	  <li>Veřejný - záznam je viditelný i pro nepřihlášené uživatele (včetně CSW)</li>
+	  <li>Portál - záznam je vybrán pro přístup z portálu ČGS</li>
+	</ul> 
+
+</p>
+
+{/if}
+<a id="admin"></a>
+<h2>4. Administrace</h2>
+
+<p>
+	Do menu administrace mají přístup pouze osoby s právy administrátora.
+</p>	
+{if $user->isInRole('writer')}
+  Zde jsou tyto funkce:
+
+    <h3>Harvestování</h3>
+  <p>Nastavení harvestování z jiných metadatových katalogů.
+  <img src=""/> 
+  </p>  
+        
+    <h3>Správa uživatelů</h3>    
+    <h3>Správa profilů</h3>
+    <h3>Hromadná editace</h3>
+    <h3>Přehled metadatových záznamů</h3>
+  
+  
+{/if}
+
+<a id="pokyny"></a>
+<h2>5. Pokyny k vyplňování metadat</h2>
+<p>
+Vyplňování metadat prostorových dat vyžaduje určitou znalost norem, 
+proto doporučujeme školení či osobní konzultace s autory programu před vlastním vyplňováním záznamů.
+
+{if $user->isInRole('writer')}
+	Pro vyplňování doporučujeme použít metadatový profil <b>Micka</b>, který obsahuje základní 
+	potřebnou množinu metadatových pvků.<br />
+	<br/>
+
+Popis položek profilu MICKA pro metadata prostorových dat:
+<table class="cookbook">
+<tr><th>Položka</th><th>Popis</th><th>Příklad</th></tr>
+<tr>
+	<td>jazyk metadat</td>
+	<td>jazyk, ve kterém je pořízen metadatový záznam (může být více jazyků, podle normy je jeden primární)</td>
+	<td>čeština</td>
+</tr>
+<tr>
+	<td>Identifikátor rodičovských metadat</td>
+	<td>Pokud je popisovaný objekt (např. datová sada) součástí jiné datové sady (superset), je zde uveden odpovídající identifikátor (UUID)</td>
+	<td>499a737a-221c-4941-b193-13a07f000001</td>
+</tr>
+<tr>
+	<td>metadata - kontakt</td>
+	<td>Ve většině případů kontaktní informace o straně, která spravuje tento metadatový záznam. Je možno vyplnit výběrem z předdefinovaného seznamu.</td>
+	<td>Help Service ...</td>
+</tr>
+<tr>
+	<td>Prostorová reprezentace // typ geometrie objektů</td>
+	<td>Geometrické typy obsažené v datech. Má význam jen u vektorových dat.</td>
+	<td>linie</td>
+</tr>
+<tr>
+	<td>Referenční systém</td>
+	<td>Kódy souřadnicových systémů, ve kterých je DS k dispozici. Výběr ze seznamu.</td>
+	<td>EPSG:4326</td>
+</tr>
+<tr>
+	<td>Identifikace/citace/název</td>
+	<td>Název popisovaného zdroje (jedinečný v rámci organizace)</td>
+	<td>HSTopo</td>
+</tr>
+<tr>
+	<td>kalendářní datum</td>
+	<td>Datum, pořízení či aktualizace zdroje (je nutno vyplnit položku událost, která udává o jaký typ data jde)</td>
+	<td>24.5.2006 - revize</td>
+</tr>
+<tr>
+	<td>abstrakt</td>
+	<td>Stručný popis zdroje - obdoba abstraktu odborného článku. Jde v podstatě o nejdůležitější položku metadat.</td>
+	<td>Základní topografická mapa středního měřítka... </td>
+</tr>
+<tr>
+	<td>účel vytvoření</td>
+	<td>Důvod, proč byl zdroj pořízen (legislativní, výzkumné projekty apod.)</td>
+	<td>ve vývoji ...</td>
+</tr>
+<tr>
+	<td>stav zpracování</td>
+	<td>V jakém stavu je zpracování zdroje. Výběr z číselníku.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>kontaktní místo</td>
+	<td>Kontakt na stranu spravující či pořizující vlastní zdroj (tedy ne metadata). Důležité je vyplnění odpovídající role.</td>
+	<td>Help Service ... správce</td>
+</tr>
+<tr>
+	<td>klíčová slova</td>
+	<td>Volná klíčová slova nebo vybraná z thesauru GEMET (vyplňtě alespoň jedno slovo z tohoto thesauru - vyplňuje se pomomcí vyskakovacího okna [&lt;&lt; Z výběru]). </td>
+	<td>přeprava, GEMET - Concepts, version 2.3</td>
+</tr>
+<tr>
+	<td>omezení</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>prostorová reprezentace</td>
+	<td>Určuje, zda jde o vetrorová či rastrová data (apod.). Výběr z číselníku.</td>
+	<td>vektor</td>
+</tr>
+<tr>
+	<td>prostorové rozlišení</td>
+	<td>Buď měřítko mapy nebo minimální vzdálenost pro rozlišení objektů (u rastrových dat uvádějte velikost pixelu.) Doporučujeme VŽDY uvést měřítko kvůli následným výběrům.</td>
+	<td>50000</td>
+</tr>
+<tr>
+	<td>jazyk zdroje</td>
+	<td>Jazyk, ve kterém jsou textové položky obsažené v datech. Nemá význam u rastrových dat.</td>
+	<td>čeština</td>
+</tr>
+<tr>
+	<td>znakový sada</td>
+	<td>Znaková sada, ve které je zdroj kódován. Nemá význam u rastrových nebo číselných dat. Původní číselník ISO bylo doplněn o windows-1250 a cp-852.</td>
+	<td>čeština</td>
+</tr>
+<tr>
+	<td>tématická kategorie</td>
+	<td>Základní tématické zatřídění podle normy ISO 19115.</td>
+	<td>lokace, navigace</td>
+</tr>
+<tr>
+	<td>rozsah / geografický rozsah</td>
+	<td>Prostorový rozsah zdroje - buď jako ohraničující obdélník nebo polygon. Vyberte z mapy nebo ze seznamu prostorových jednotek (gazetteeru).</td>
+	<td></td>
+</tr>
+<tr>
+	<td>rozsah / časový rozsah</td>
+	<td>Časový rozsah není datum aktualizace, ale časové vymezení platnosti zdroje. 
+	U leteckého snímku je to okamžik snímkování (uveďte okamžik), 
+	naopak u správního členění je to určité období, v němž je/bylo platné (uveďte počátek a konec). 
+	POZOR! Řada zdrojů je prlběžně aktualizována a je nemožné určit tento údaj.</td>
+	<td></td>
+</tr>
+<tr>
+	<td>Obsah / popis katalogu prvků</td>
+	<td>Norma neumožňuje popis struktury dat, ale je možné se odkázat na feature katalog (katalog prvků) a uvést, 
+	které prvky jsou ve zdroji obsaženy. Výběr se provádí zobrazením příslušného feature katalogu (pokud je v systému registrován) a výběrem prvků.</td>
+	<td>silnice, železnice</td>
+</tr>
+<tr>
+	<td>Distribuce / distribuční formát</td>
+	<td>Datový formát, ve kterém jsou data k dispozici.</td>
+	<td>SHP</td>
+</tr>
+<tr>
+	<td>Možnosti přenosu / on-line</td>
+	<td>Adresa, na které je zdroj nebo informace o něm k dispozici. V příoadě WMS uveďte funkci jako "download". Výběr protokolu z číselníku.</td>
+	<td>http://www.bnhelp.cz/ows/crtopo / OGC:WMS-1.1.1-http-get-capabilities / download</td>
+</tr>
+<tr>
+	<td>Jakost dat/ rodokmen/ zpráva</td>
+	<td>Uveďte všechny informace o procesech zpracování dat, které umožní přehled o kavalitě dat. </td>
+	<td>Digitalizace ...</td>
+</tr>
+</table>
+<br/><br/>
+{/if}
+</div>
+</div>
+{block}
+
+
+{block content-js}
+{/block}

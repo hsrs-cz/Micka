@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<messages>
+	<kontrola lang='eng'>
+		<nadpis>Elements checking</nadpis>
+		<mandatory>mandatory</mandatory>
+		<recommended>recommneded</recommended>
+		
+		<title>Identification / Title</title>
+		<abstract>Identification / Abstract</abstract>
+		<date>Identification / Date</date>
+		<dateType>Identification / dateType</dateType>
+		<temporalElement>Identification / Temporal Extent</temporalElement>
+		<geographicElement>Identification / Spatial Extent</geographicElement>
+		<language>Identification / Resoruce Language</language>
+		<keyword>Identification / Keywords</keyword>
+		<pointOfContact>Identification / Contact Point</pointOfContact>
+		<organisationName>Identification / Contact Point / Organisation and/or Person Name</organisationName>
+		<role>Identification / Contact Point / role </role>
+		<contactInfo>Identification / Contact Point / address or phone </contactInfo>
+		<accessConstraints>Identification / Acces Contraints </accessConstraints>
+		<useLimitation>Identification / Use Limitation </useLimitation>
+		<statement>Quality / Lineage Statement</statement>
+		<conformity_degree>Quality / report/  result / Degree of Conformity </conformity_degree>
+		<conformity_spec>Quality / report/ výsledek / Specification </conformity_spec>
+		<distribLinkage>Distribution / on-line/ Address </distribLinkage>
+		<topicCategory>Distribution / Topic Category</topicCategory>
+		<spatialResolution>Identification / Spatial Resolution</spatialResolution>
+		<serviceType>Service Identification / Service Type</serviceType>
+		<serviceTypeVersion>Identification / Service Type Version</serviceTypeVersion>
+		<operatesOn>Service Identification / Operates On</operatesOn>
+		<containsOperations>Identification / Cointains Operations</containsOperations>
+		<operationName>Identification / Cointains Operations / Connect Point / Operation / Operation Name </operationName>
+		<operation_linkage>Identification / Cointains Operations / Connect Point / Operation / Address </operation_linkage>
+		<DCP>Identification / Cointains Operations / Connect Point / Operation / DCP </DCP>
+		<md_contact>Metadata / Contacts</md_contact>
+		<md_organisationName>Metadata / Contacts / Organisation and/or Person Name</md_organisationName>
+		<md_role>Metadata / Contact / Role</md_role>
+		<md_contactInfo>Metadata / Contact / Address or Phone </md_contactInfo>
+		<hierarchyLevel>Metadata / Hierarchy Level</hierarchyLevel>
+		<hierarchyLevelService>Metadata / Hierarchy Level: MUST be service</hierarchyLevelService>
+		<dateStamp>Metadata / Date Stamp</dateStamp>
+		<md_lang>Metadata / Language</md_lang>
+		<gemet>Identification / keywords / GEMET</gemet>
+		<serviceInspire>Identification / keywords / INSPIRE services</serviceInspire>
+	</kontrola>
+
+	<kontrola lang='cze'>
+		<nadpis>Kontrola položek</nadpis>
+		<mandatory>povinné</mandatory>
+		<recommended>doporučené</recommended>
+		
+		<title>identifikace / název</title>
+		<abstract>identifikace / abstrakt</abstract>
+		<date>identifikace / kalendářní datum / datum</date>
+		<dateType>identifikace / kalendářní datum / událost</dateType>
+		<temporalElement>identifikace / rozsah / časový rozsah</temporalElement>
+		<geographicElement>identifikace / rozsah / geografický rozsah</geographicElement>
+		<language>identifikace / jazyk zdroje</language>
+		<keyword>identifikace / klíč. slova</keyword>
+		<pointOfContact>identifikace / kontaktní místo</pointOfContact>
+		<organisationName>identifikace / kontaktní místo / jméno organizace nebo osoby</organisationName>
+		<role>identifikace / kontaktní místo / role </role>
+		<contactInfo>identifikace / kontaktní místo / adresa nebo telefon </contactInfo>
+		<accessConstraints>identifikace / omezení / * / omezení přístupu </accessConstraints>
+		<useLimitation>identifikace / omezení / * / omezení užití </useLimitation>
+		<statement>jakost / rodokmen / zpráva</statement>
+		<conformity_degree>jakost / report/ výsledek / Stupeň souladu</conformity_degree>
+		<conformity_spec>jakost / report/ výsledek / Specifikace</conformity_spec>
+		<distribLinkage>distribuce / možnosti přenosu / on-line / adresa</distribLinkage>
+		<topicCategory>identifikace / tématická kategorie</topicCategory>
+		<spatialResolution>identifikace / prostorové rozlišení</spatialResolution>
+		<serviceType>identifikace služby / typ služby</serviceType>
+		<serviceTypeVersion>identifikace služby / verze typu služby</serviceTypeVersion>
+		<containsOperations>identifikace služby / obsahuje operace</containsOperations>
+		<operatesOn>identifikace služby / pracuje s daty</operatesOn>
+		<operationName>identifikace / obsahuje operace / bod připojení / operace / jméno operace </operationName>
+		<operation_linkage>identifikace / obsahuje operace / bod připojení / operace / adresa </operation_linkage>
+		<DCP>identifikace / obsahuje operace / bod připojení / operace / DCP </DCP>
+		<md_contact>metadata / kontakt</md_contact>
+		<md_organisationName>metadata / kontakt / jméno organizace nebo osoby</md_organisationName>
+		<md_role>metadata / kontakt / role</md_role>
+		<md_contactInfo>identifikace / kontaktní bod / adresa nebo telefon </md_contactInfo>
+		<hierarchyLevel>metadata / úroveň v hierarchii</hierarchyLevel>
+		<hierarchyLevelService>metadata / úroveň v hierarchii: MUSÍ být služba</hierarchyLevelService>
+		<dateStamp>metadata / datumové razítko</dateStamp>
+		<md_lang>metadata / jazyk</md_lang>
+		<gemet>identifikace / klíč.slova / GEMET</gemet>
+		<serviceInspire>identifikace / klíč.slova / služby INSPIRE</serviceInspire>
+	</kontrola>
+</messages>

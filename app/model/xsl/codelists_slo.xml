@@ -1,0 +1,607 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<map>
+  <DCP>
+    <value name="Java" code="">Java</value>
+    <value name="WebServices" code="">webové služby</value>
+    <value name="SQL" code="">SQL</value>
+    <value name="COM" code="">COM</value>
+    <value name="XML" code="">XML</value>
+    <value name="Corba" code="">Corba</value>
+  </DCP>
+  <LocalName>
+    <value name="transformation" code="">Transformácia</value>
+    <value name="other" code="">iné</value>
+    <value name="discovery" code="">Vyhľadávanie</value>
+    <value name="view" code="">Zobrazenie</value>
+    <value name="download" code="">Uloženie</value>
+    <value name="invoke" code="">Spúšťanie</value>
+  </LocalName>
+  <SV_CouplingType>
+    <value name="mixed" code="">zmiešaný</value>
+    <value name="loose" code="">voľný</value>
+    <value name="tight" code="">tesný</value>
+  </SV_CouplingType>
+  <accessConstraints>
+    <value name="copyright" code="1">copyright</value>
+    <value name="patent" code="2">patent</value>
+    <value name="patentPending" code="3">patent prerokúvaný, doteraz neudelený</value>
+    <value name="trademark" code="4">ochranná známka</value>
+    <value name="license" code="5">licencia</value>
+    <value name="intellectualPropertyRights" code="6">ochrana duševného vlastníctva</value>
+    <value name="restricted" code="7">verejne neprístupné</value>
+    <value name="otherRestrictions" code="8">ďalšie obmedzenia</value>
+  </accessConstraints>
+  <associationType>
+    <value name="crossReference" code="1">krížový odkaz</value>
+    <value name="largerWorkCitation" code="2">citácia väčšej práce</value>
+    <value name="partOfSeamlessDatabase" code="3">časť bezšvovej databázy</value>
+    <value name="source" code="4">zdroj</value>
+    <value name="stereoMate" code="5">stereo-pár</value>
+  </associationType>
+  <cellGeometry>
+    <value name="point" code="1">bod</value>
+    <value name="area" code="2">plocha</value>
+  </cellGeometry>
+  <characterSet>
+    <value name="8859part5" code="10">8859part5</value>
+    <value name="8859part6" code="11">8859part6</value>
+    <value name="usAscii" code="25">ASCII</value>
+    <value name="win1250" code="30">win-1250</value>
+    <value name="CP852" code="31">CP852</value>
+    <value name="utf8" code="4">UTF-8</value>
+    <value name="utf16" code="5">UTF-16</value>
+    <value name="8859part1" code="6">iso latin 1 (8859-1)</value>
+    <value name="8859part2" code="7">iso latin 2 (8859-2)</value>
+    <value name="8859part3" code="8">8859part3</value>
+    <value name="8859part4" code="9">8859part4</value>
+  </characterSet>
+  <classification>
+    <value name="unclassified" code="1">neklasifikované</value>
+    <value name="restricted" code="2">vyhradené</value>
+    <value name="confidential" code="3">dôverné</value>
+    <value name="secret" code="4">tajné</value>
+    <value name="topSecret" code="5">prísne tajné</value>
+  </classification>
+  <contentType>
+    <value name="image" code="1">obrázok</value>
+    <value name="thematicClassification" code="2">tématická klasifikácia</value>
+    <value name="physicalMeasurement" code="3">fyzické meranie</value>
+  </contentType>
+  <dataType>
+    <value name="class" code="1">trieda</value>
+    <value name="unionClass" code="10">unionClass</value>
+    <value name="metaClass" code="11">metaClass</value>
+    <value name="typeClass" code="12">typeClass</value>
+    <value name="characterString" code="13">znakový řeťazec</value>
+    <value name="integer" code="14">celé číslo</value>
+    <value name="association" code="15">asociácia</value>
+    <value name="codelist" code="2">sústava zásad</value>
+    <value name="enumeration" code="3">vymenovanie</value>
+    <value name="codelistElement" code="4">codelistElement</value>
+    <value name="abstractClass" code="5">abstractClass</value>
+    <value name="aggregateClass" code="6">aggregateClass</value>
+    <value name="specifiedClass" code="7">specifiedClass</value>
+    <value name="datatypeClass" code="8">datatypeClass</value>
+    <value name="interfaceClass" code="9">interfaceClass</value>
+  </dataType>
+  <dateType>
+    <value name="creation" code="1">vytvorenie</value>
+    <value name="publication" code="2">zverejnenie</value>
+    <value name="revision" code="3">revízia</value>
+  </dateType>
+  <dimensionName>
+    <value name="row" code="1">riadok</value>
+    <value name="column" code="2">stĺpec</value>
+    <value name="vertical" code="3">výškový</value>
+    <value name="track" code="4">dráha</value>
+    <value name="crossTrack" code="5">naprieč dráhe</value>
+    <value name="line" code="6">čiara</value>
+    <value name="sample" code="7">vzorka</value>
+    <value name="time" code="8">čas</value>
+  </dimensionName>
+  <evaluationMethodType>
+    <value name="directInternal" code="1">priamy vnútorný</value>
+    <value name="directExternal" code="2">priamy vonkajší</value>
+    <value name="indirect" code="3">nepriamy</value>
+  </evaluationMethodType>
+  <function>
+    <value name="download" code="1">download</value>
+    <value name="information" code="2">informácia</value>
+    <value name="offlineAccess" code="3">off-line prístup</value>
+    <value name="order" code="4">objednanie</value>
+    <value name="search" code="5">hľadanie</value>
+  </function>
+  <geometricObjectType>
+    <value name="complex" code="1">komplexný</value>
+    <value name="composite" code="2">zložený</value>
+    <value name="curve" code="3">čiara, krivka</value>
+    <value name="point" code="4">bod</value>
+    <value name="solid" code="5">teleso</value>
+    <value name="surface" code="6">plocha</value>
+  </geometricObjectType>
+  <imagingCondition>
+    <value name="blurredImage" code="1">rozmazaný obraz</value>
+    <value name="snow" code="10">sneh</value>
+    <value name="terrainMasking" code="11">maskované terénom</value>
+    <value name="cloud" code="2">oblaky</value>
+    <value name="degradingObliquity" code="3">degradujúci sklon</value>
+    <value name="fog" code="4">hmla</value>
+    <value name="heavySmokeOrDust" code="5">hustý dym alebo prach</value>
+    <value name="night" code="6">noc</value>
+    <value name="rain" code="7">dážď</value>
+    <value name="semiDarkness" code="8">šero</value>
+    <value name="shadow" code="9">tieň</value>
+  </imagingCondition>
+  <initiativeType>
+    <value name="campaign" code="1">kampaň</value>
+    <value name="process" code="10">proces</value>
+    <value name="program" code="11">program</value>
+    <value name="project" code="12">projekt</value>
+    <value name="study" code="13">štúdia</value>
+    <value name="task" code="14">úloha</value>
+    <value name="trial" code="15">skúšobný</value>
+    <value name="collection" code="2">zber</value>
+    <value name="exercise" code="3">úloha</value>
+    <value name="experiment" code="4">experiment</value>
+    <value name="investigation" code="5">vyhľadávanie</value>
+    <value name="mission" code="6">úloha</value>
+    <value name="sensor" code="7">snímač</value>
+    <value name="operation" code="8">operácia</value>
+    <value name="platform" code="9">platforma</value>
+  </initiativeType>
+  <language>
+    <value name="Bulgarian" code="bul">bulharčina</value>
+    <value name="Czech" code="cze">čeština</value>
+    <value name="Danish" code="dan">dánčina</value>
+    <value name="English" code="eng">angličtina</value>
+    <value name="Estonian" code="est">estónčina</value>
+    <value name="Finnish" code="fin">fínština</value>
+    <value name="French" code="fre">francúzština</value>
+    <value name="German" code="ger">nemčina</value>
+    <value name="Hungarian" code="hun">maďarčina</value>
+    <value name="Italian" code="ita">taliančina</value>
+    <value name="Latvian" code="lav">lotyština</value>
+    <value name="Lithuanian" code="lit">litovčina</value>
+    <value name="Maltese" code="mlt">maltština</value>
+    <value name="Norwegian" code="nor">nórčina</value>
+    <value name="Polish" code="pol">poľština</value>
+    <value name="Portuguese" code="por">portugalčina</value>
+    <value name="Romanian" code="rum">rumunčina</value>
+    <value name="Slovak" code="slo">slovenčina</value>
+    <value name="Slovenian" code="slv">slovinčina</value>
+    <value name="Spanish" code="spa">španielčina</value>
+    <value name="Swedish" code="swe">švédčina</value>
+  </language>
+  <maintenanceAndUpdateFrequency>
+    <value name="continual" code="1">priebežne</value>
+    <value name="irregular" code="10">nepravidelne</value>
+    <value name="notPlanned" code="11">neplánovane</value>
+    <value name="unknown" code="12">neznámy</value>
+    <value name="daily" code="2">denne</value>
+    <value name="weekly" code="3">týždenne</value>
+    <value name="fortnightly" code="4">1x za 14 dní</value>
+    <value name="monthly" code="5">mesačne</value>
+    <value name="quarterly" code="6">štvrťročne</value>
+    <value name="biannually" code="7">polročný</value>
+    <value name="annually" code="8">ročne</value>
+    <value name="asNeeded" code="9">podľa potreby</value>
+  </maintenanceAndUpdateFrequency>
+  <mediumFormat>
+    <value name="cpio" code="1">cpio</value>
+    <value name="tar" code="2">tar</value>
+    <value name="highSierra" code="3">highSierra</value>
+    <value name="iso9660" code="4">iso9660</value>
+    <value name="iso9660RockRidge" code="5">iso9660RockRidge</value>
+    <value name="iso9660AppleHFS" code="6">iso9660AppleHFS</value>
+  </mediumFormat>
+  <name>
+    <value name="cdRom" code="1">cdRom</value>
+    <value name="3580Cartridge" code="10">3580Cartridge</value>
+    <value name="4mmCartridgeTape" code="11">4mmCartridgeTape</value>
+    <value name="8mmCartridgeTape" code="12">8mmCartridgeTape</value>
+    <value name="1quarterInchCartridgeTape" code="13">1quarterInchCartridgeTape</value>
+    <value name="digitalLinearTape" code="14">digitalLinearTape</value>
+    <value name="onLine" code="15">on-line</value>
+    <value name="satellite" code="16">družica</value>
+    <value name="telephoneLink" code="17">telefónna linka</value>
+    <value name="hardcopy" code="18">kópia</value>
+    <value name="dvd" code="2">dvd</value>
+    <value name="dvdRom" code="3">dvdRom</value>
+    <value name="3halfInchFloppy" code="4">3halfInchFloppy</value>
+    <value name="5quarterInchFloppy" code="5">5quarterInchFloppy</value>
+    <value name="7trackTape" code="6">7trackTape</value>
+    <value name="9trackTape" code="7">9trackTape</value>
+    <value name="3480Cartridge" code="8">3480Cartridge</value>
+    <value name="3490Cartridge" code="9">3490Cartridge</value>
+  </name>
+  <obligation>
+    <value name="mandatory" code="1">povinný</value>
+    <value name="optional" code="2">voliteľný</value>
+    <value name="conditional" code="3">podmienený</value>
+  </obligation>
+  <pointInPixel>
+    <value name="center" code="1">center</value>
+    <value name="lowerLeft" code="2">ľavý dolný</value>
+    <value name="lowerRight" code="3">pravý dolný</value>
+    <value name="upperRight" code="4">pravý horný</value>
+    <value name="upperLeft" code="5">ľavý horný</value>
+  </pointInPixel>
+  <presentationForm>
+    <value name="documentDigital" code="1">digitálny dokument</value>
+    <value name="profileHardcopy" code="10">vytlačený profil</value>
+    <value name="tableDigital" code="11">digitálna tabuľka</value>
+    <value name="tableHardcopy" code="12">vytlačená tabuľka</value>
+    <value name="videoDigital" code="13">digitálny videozáznam</value>
+    <value name="videoHardcopy" code="14">analógový vidoezáznam</value>
+    <value name="documentHardcopy" code="2">vytlačený dokument</value>
+    <value name="imageDigital" code="3">digitálny obraz</value>
+    <value name="imageHardcopy" code="4">vytlačený obraz</value>
+    <value name="mapDigital" code="5">digitálna mapa</value>
+    <value name="mapHardcopy" code="6">vytlačená mapa</value>
+    <value name="modelDigital" code="7">digitálny model</value>
+    <value name="modelHardcopy" code="8">fyzický model</value>
+    <value name="profileDigital" code="9">digitálny profil</value>
+  </presentationForm>
+  <role>
+    <value name="resourceProvider" code="1">poskytovateľ zdroja</value>
+    <value name="publisher" code="10">vydavateľ</value>
+    <value name="author" code="11">autor</value>
+    <value name="custodian" code="2">správca</value>
+    <value name="owner" code="3">vlastník</value>
+    <value name="user" code="4">užívateľ</value>
+    <value name="distributor" code="5">distribútor</value>
+    <value name="originator" code="6">pôvodca</value>
+    <value name="pointOfContact" code="7">kontaktný bod</value>
+    <value name="principalInvestigator" code="8">zodpovedný za zber údajov a výskum</value>
+    <value name="processor" code="9">Spracovateľ</value>
+  </role>
+  <spatialRepresentationType>
+    <value name="vector" code="1">vektor</value>
+    <value name="grid" code="2">grid</value>
+    <value name="textTable" code="3">textová tabuľka</value>
+    <value name="tin" code="4">tin</value>
+    <value name="stereoModel" code="5">stereomodel</value>
+    <value name="video" code="6">video</value>
+  </spatialRepresentationType>
+  <status>
+    <value name="completed" code="1">kompletný</value>
+    <value name="historicalArchive" code="2">historický / archívny</value>
+    <value name="obsolete" code="3">zastaralý</value>
+    <value name="onGoing" code="4">prebiehajúci</value>
+    <value name="planned" code="5">plánovaný</value>
+    <value name="required" code="6">vyžadovaný</value>
+    <value name="underDevelopment" code="7">vo vývoji</value>
+  </status>
+  <topicCategory>
+    <value name="farming" code="1">poľnohospodárstvo</value>
+    <value name="imageryBaseMapsEarthCover" code="10">letecké snímky, základné mapy</value>
+    <value name="intelligenceMilitary" code="11">obrana, vojsko</value>
+    <value name="inlandWaters" code="12">vodné hospodárstvo</value>
+    <value name="location" code="13">lokalizácia, navigácia</value>
+    <value name="oceans" code="14">more</value>
+    <value name="planningCadastre" code="15">kataster, územné plánovanie</value>
+    <value name="society" code="16">spoločnosť</value>
+    <value name="structure" code="17">občianska vybavenosť</value>
+    <value name="transportation" code="18">doprava</value>
+    <value name="utilitiesCommunication" code="19">siete</value>
+    <value name="biota" code="2">biota</value>
+    <value name="boundaries" code="3">správne rozdelenie</value>
+    <value name="climatologyMeteorologyAtmosphere" code="4">ovzdušie, meteorológia</value>
+    <value name="economy" code="5">ekonomika</value>
+    <value name="elevation" code="6">výškopis</value>
+    <value name="environment" code="7">životné prostredie</value>
+    <value name="geoscientificInformation" code="8">geológia, geofyzika</value>
+    <value name="health" code="9">zdravie</value>
+  </topicCategory>
+  <topologyLevel>
+    <value name="geometryOnly" code="1">geometria (bez topológie)</value>
+    <value name="topology1D" code="2">1D (líniová sieť)</value>
+    <value name="planarGraph" code="3">plošný graf</value>
+    <value name="fullPlanarGraph" code="4">plný rovinný graf</value>
+    <value name="surfaceGraph" code="5">povrchový graf</value>
+    <value name="fullSurfaceGraph" code="6">plný povrchový graf</value>
+    <value name="topology3D" code="7">3D topológia</value>
+    <value name="fullTopology3D" code="8">plná 3D topológia</value>
+    <value name="abstract" code="9">abstraktný</value>
+  </topologyLevel>
+  <type>
+    <value name="discipline" code="1">disciplína</value>
+    <value name="place" code="2">lokalizácia</value>
+    <value name="stratum" code="3">vrstva</value>
+    <value name="temporal" code="4">čas</value>
+    <value name="theme" code="5">téma</value>
+    <value name="Project" code="">Projekt *</value>
+    <value name="Collection" code="">Skupina</value>
+    <value name="Dataset" code="">Dataset</value>
+    <value name="Event" code="">Udalosť</value>
+    <value name="Image" code="">Obrázok</value>
+    <value name="InteractiveResource" code="">Interaktívny zdroj</value>
+    <value name="MovingImage" code="">Pohyblivý obraz</value>
+    <value name="PhysicalObject" code="">Fyzický objekt</value>
+    <value name="Service" code="">Služba</value>
+    <value name="Software" code="">Program</value>
+    <value name="Sound" code="">Zvuk</value>
+    <value name="StillImage" code="">Statický obraz</value>
+    <value name="Text" code="">Text</value>
+  </type>
+  <unitOfMeasure>
+    <value name="mikrometer" code="">mikrometer</value>
+    <value name="nanometer" code="">nanometer</value>
+    <value name="yard" code="">yard</value>
+    <value name="mile" code="">míľa</value>
+    <value name="km" code="">kilometer</value>
+    <value name="m" code="">meter</value>
+    <value name="dm" code="">decimeter</value>
+    <value name="foot" code="">stopa</value>
+  </unitOfMeasure>
+  <uomName>
+    <value name="second" code="1">sekunda</value>
+    <value name="degrees" code="1">stupne</value>
+    <value name="minute" code="2">minúta</value>
+    <value name="minutes" code="2">minúty</value>
+    <value name="hour" code="3">hodina</value>
+    <value name="seconds" code="3">sekundy</value>
+    <value name="day" code="4">deň</value>
+    <value name="radians" code="4">radiány</value>
+    <value name="week" code="5">týždeň</value>
+    <value name="month" code="6">mesiac</value>
+    <value name="year" code="7">rok</value>
+  </uomName>
+  <updateScope>
+    <value name="attribute" code="1">atribút (inštancia)</value>
+    <value name="featureType" code="10">typ objektu / geoprvku</value>
+    <value name="propertyType" code="11">vlastnosť objektu</value>
+    <value name="fieldSession" code="12">oblasť spojenia</value>
+    <value name="software" code="13">software</value>
+    <value name="service" code="14">služba</value>
+    <value name="model" code="15">model</value>
+    <value name="tile" code="16">dlaždica / podmnožina</value>
+    <value name="application" code="17">aplikácia</value>
+    <value name="attributeType" code="2">atribút (trieda)</value>
+    <value name="collectionHardware" code="3">hardware zberu údajov</value>
+    <value name="collectionSession" code="4">inkasný úsek zberu údajov</value>
+    <value name="dataset" code="5">dataset</value>
+    <value name="series" code="6">séria</value>
+    <value name="nonGeographicDataset" code="7">dataset bez priestorovej zložky</value>
+    <value name="dimensionGroup" code="8">skupina rozmerov</value>
+    <value name="feature" code="9">objekt / geoprvok</value>
+  </updateScope>
+  <verification>
+    <value name="0" code="0">nie</value>
+    <value name="1" code="1">áno</value>
+  </verification>
+
+
+  <!-- pridano nad ramec ISO -->
+  <coordSys>
+    <value name="5221" code="">S-JTSK (3.kv.)</value>
+    <value name="5225" code="">S-JTSK/05 (3.kv.)</value>
+    <value name="4326" code="">WGS 84 (stupně)</value>
+    <value name="32633" code="">WGS 84 UTM (3.pás)</value>
+    <value name="32634" code="">WGS 84 UTM (4.pás)</value>
+    <value name="28403" code="">S-42 (3.pás)</value> 
+    <value name="28404" code="">S-42 (4.pás)</value> 
+    <value name="4258" code="">ETRS89 (stupně)</value> 
+    <value name="3034" code="">ETRS89 / LCC</value> 
+    <value name="3035" code="">ETRS89 / LAEA</value> 
+  </coordSys>
+  
+  <formats>
+    <value name="SHP" code="">ESRI Shapefile</value>
+    <value name="ESRI Coverage" code="">ESRI Coverage</value>
+    <value name="DGN" code="">DGN</value>
+    <value name="DWG" code="">DWG</value>
+    <value name="TopoL BLK" code="">TopoL BLK</value>
+    <value name="GML" code="">GML</value>
+    <value name="ESRI ArcSDE" code="">ESRI ArcSDE</value>
+    <value name="ORACLE SDO" code="">ORACLE SDO</value>
+    <value name="PostGIS" code="">PostGIS</value>
+    <value name="SQL" code="">Obecná SQL</value>    
+  </formats>
+  
+  <compliant>
+  	<value name="true" code="">ÁNO</value>
+  	<value name="false" code="">NIE</value>
+  </compliant>
+  
+  <specifications>
+    <!-- ANNEX I -->
+    <value name="INSPIRE Data Specification on Coordinate reference systems – Guidelines" code="" publication="2009-10-20">Súradnicové referenčné systémy</value>  
+    <value name="INSPIRE Data Specification on Geographical grid systems – Guidelines" code="" publication="2009-10-20">Sústavy súradnicových sietí</value>  
+    <value name="INSPIRE Data Specification on Geographical names – Guidelines" code="" publication="2009-10-20">Geografické názvoslovie</value>  
+    <value name="INSPIRE Data Specification on Administrative units – Guidelines" code="" publication="2009-10-20">Správne jednotky</value>  
+    <value name="INSPIRE Data Specification on Addresses – Guidelines" code="" publication="2009-10-20">Adresy</value>  
+    <value name="INSPIRE Data Specification on Cadastral parcels – Guidelines" code="" publication="2009-10-20">Parcely katastra nehnuteľností</value>  
+    <value name="INSPIRE Data Specification on Transport networks – Guidelines" code="" publication="2009-10-20">Dopravné siete</value>  
+    <value name="INSPIRE Data Specification on Hydrography – Guidelines" code="" publication="2009-10-20">Hydrografia</value>  
+    <value name="INSPIRE Data Specification on Protected sites – Guidelines" code="" publication="2009-10-20">Chránené území</value>  
+
+    <!-- ANNEX II -->
+    <value name="INSPIRE Data Specification on Elevation – Guidelines" code="" publication="2009-10-20">Výškové modely zemského povrchu</value>  
+    <value name="INSPIRE Data Specification on Land cover – Guidelines" code="" publication="2009-10-20">Krajinná pokrývka (land cover)</value>  
+    <value name="INSPIRE Data Specification on Orthoimagery – Guidelines" code="" publication="2009-10-20">Ortofotosnímky</value>  
+    <value name="INSPIRE Data Specification on Geology – Guidelines" code="" publication="2009-10-20">Geológia</value>  
+
+    <!-- ANNEX II -->
+    <value name="INSPIRE Data Specification on Statistical units – Guidelines" code="">Štatistické jednotky</value>  
+    <value name="INSPIRE Data Specification on Buildings – Guidelines" code="">Budovy</value>  
+    <value name="INSPIRE Data Specification on Soil – Guidelines" code="">Pôda</value>  
+    <value name="INSPIRE Data Specification on Land use – Guidelines" code="">Využitie územia</value>  
+    <value name="INSPIRE Data Specification on Human health and safety – Guidelines" code="">Ľudské zdravie a bezpečnosť</value>  
+    <value name="INSPIRE Data Specification on Utility and governmental services – Guidelines" code="">Verejné a štátne služby</value>  
+    <value name="INSPIRE Data Specification on Environmental monitoring Facilities – Guidelines" code="">Zariadenia na monitorovanie životného prostredia</value>  
+    <value name="INSPIRE Data Specification on Production and industrial facilities – Guidelines" code="">Výrobné a priemyselné zariadenia</value>  
+    <value name="INSPIRE Data Specification on Agricultural and aquaculture facilities – Guidelines" code="">Poľnohospodárske zariadenia a zariadenia akvakultúry</value>  
+    <value name="INSPIRE Data Specification on Population distribution and demography – Guidelines" code="">Rozmiestnenie obyvateľstva – demografia</value>  
+    <value name="INSPIRE Data Specification on Area management/restriction/regulation zones &amp; reporting units – Guidelines" code="">Spravované/obmedzené/regulované zóny a jednotky podávajúce správy</value>  
+    <value name="INSPIRE Data Specification on Natural risk zones – Guidelines" code="">Zóny prírodného rizika</value>  
+    <value name="INSPIRE Data Specification on Atmospheric conditions – Guidelines" code="">Atmosférické podmienky</value>  
+    <value name="INSPIRE Data Specification on Meteorological geographical features – Guidelines" code="">Meteorologické geografické prvky</value>  
+    <value name="INSPIRE Data Specification on Oceanographic geographical features – Guidelines" code="">Oceánografické geografické prvky</value>  
+    <value name="INSPIRE Data Specification on Sea regions – Guidelines" code="">Morské regióny</value>  
+    <value name="INSPIRE Data Specification on Bio-geographical regions – Guidelines" code="">Biogeografické regióny</value>  
+    <value name="INSPIRE Data Specification on Habitats and biotopes – Guidelines" code="">Habitaty a biotopy</value>  
+    <value name="INSPIRE Data Specification on Species distribution – Guidelines" code="">Výskyt druhov</value>  
+    <value name="INSPIRE Data Specification on Energy Resources – Guidelines" code="">Zdroje energie</value>  
+    <value name="INSPIRE Data Specification on Mineral Resources – Guidelines" code="">Ložiská nerastných surovín</value>  
+  </specifications>
+
+  <inspireKeywords>
+    <!-- ANNEX I -->
+    <value cenia="base" name="Súradnicové referenčné systémy" code="Coordinate reference systems" publication="2009-10-20">Súradnicové referenčné systémy</value>  
+    <value cenia="base" name="Sústavy súradnicových sietí" code="Geographical grid systems" publication="2009-10-20">Sústavy súradnicových sietí</value>  
+    <value cenia="base" name="Geografické názvoslovie" code="Geographical names" publication="2009-10-20">Geografické názvoslovie</value>  
+    <value cenia="division" name="Správne jednotky" code="Administrative units" publication="2009-10-20">Správne jednotky</value>  
+    <value cenia="division" name="Adresy" code="Addresses" publication="2009-10-20">Adresy</value>  
+    <value cenia="division" name="Parcely katastra nehnuteľností"  code="Cadastral parcels" publication="2009-10-20">Parcely katastra nehnuteľností</value>  
+    <value cenia="transport" name="Dopravné siete" code="Transport networks" publication="2009-10-20">Dopravné siete</value>  
+    <value cenia="water" name="Hydrografia" code="Hydrography" publication="2009-10-20">Hydrografia</value>  
+    <value cenia="environment" name="Chránené územia" code="Protected sites" publication="2009-10-20">Chránené územia</value>  
+
+    <!-- ANNEX II -->
+    <value cenia="base" name="Výškové modely zemského povrchu" code="Elevation" publication="2009-10-20">Výškové modely zemského povrchu</value>  
+    <value cenia="nature" name="Krajinná pokrývka (land cover)" code="Land cover" publication="2009-10-20">Krajinná pokrývka (land cover)</value>  
+    <value cenia="base" name="Ortofotosnímky" code="Orthoimagery" publication="2009-10-20">Ortofotosnímky</value>  
+    <value cenia="nature" name="Geológia" code="Geology" publication="2009-10-20">Geológia</value>  
+
+    <!-- ANNEX II -->
+    <value cenia="division" name="Štatistické jednotky" code="Statistical units">Štatistické jednotky</value>  
+    <value cenia="social" name="Budovy" code="Buildings">Budovy</value>  
+    <value cenia="nature" name="Pôda" code="Soil">Pôda</value>  
+    <value cenia="nature" name="Využitie územia" code="Land use">Využitie územia</value>  
+    <value cenia="social" name="Ľudské zdravie a bezpečnosť" code="Human health and safety">Ľudské zdravie a bezpečnosť</value>  
+    <value cenia="social" name="Verejné a štátne služby" code="Utility and governmental services">Verejné a štátne služby</value>  
+    <value cenia="environment" name="Zariadenia na monitorovanie životného prostredia" code="Environmental monitoring facilities">Zariadenia na monitorovanie životného prostredia</value>  
+    <value cenia="social" name="Výrobné a priemyselné zariadenia" code="Production and industrial facilities">Výrobné a priemyselné zariadenia</value>  
+    <value cenia="social" name="Poľnohospodárske zariadenia a zariadenia akvakultúry" code="Agricultural and aquaculture facilities">Poľnohospodárske zariadenia a zariadenia akvakultúry</value>  
+    <value cenia="social" name="Rozmiestnenie obyvateľstva – demografia" code="Population distribution &#8212; demography">Rozmiestnenie obyvateľstva – demografia</value>  
+    <value cenia="environment" name="Spravované/obmedzené/regulované zóny a jednotky podávajúce správy" code="Area management/restriction/regulation zones and reporting units">Spravované/obmedzené/regulované zóny a jednotky podávajúce správy</value>  
+    <value cenia="environment" name="Zóny prírodného rizika" code="Natural risk zones">Zóny prírodného rizika</value>  
+    <value cenia="environment" name="Atmosférické podmienky" code="Atmospheric conditions">Atmosférické podmienky</value>  
+    <value cenia="nature" name="Meteorologické geografické prvky" code="Meteorological geographical features">Meteorologické geografické prvky</value>  
+    <value cenia="water" name="Oceánografické geografické prvky" code="Oceanographic geographical features">Oceánografické geografické prvky</value>  
+    <value cenia="water" name="Morské regióny" code="Sea regions">Morské regióny</value>  
+    <value cenia="nature" name="Biogeografické regióny" code="Bio-geographical regions">Biogeografické regióny</value>  
+    <value cenia="nature" name="Habitaty a biotopy" code="Habitats and biotopes">Habitaty a biotopy</value>  
+    <value cenia="nature" name="Výskyt druhov" code="Species distribution">Výskyt druhov</value>  
+    <value cenia="social" name="Zdroje energie" code="Energy resources">Zdroje energie</value>  
+    <value cenia="social" name="Ložiská nerastných surovín" code="Mineral resources">Ložiská nerastných surovín</value>  
+  </inspireKeywords>
+
+  <serviceSpecifications>
+	<value name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata" publication="2008-12-04">Metaúdaje</value>
+	<value name="Corrigendum to INSPIRE Metadata Regulation published in the Official Journal of the European Union, L 328, page 83" publication="2009-12-15">Metaúdaje - corrigendum</value>
+    <value name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services" code="" publication="2009-10-20">Sieťové služby 976/2009</value>  
+    <value name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services" code="" publication="2009-10-20">Ukladacie a transformačné služby 1088/2010</value>  
+	<value name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions" publication="2010-03-30">Prístup k údajovým sadám a službám</value>
+	<value name="COMMISSION REGULATION (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services" publication="2010-12-08">Interoperabilita</value>
+  </serviceSpecifications>
+  
+  <serviceType>
+  	<value name="WMS" code="">WMS</value>
+  	<value name="WFS" code="">WFS</value>
+  	<value name="WCS" code="">WCS</value>
+  	<value name="CSW" code="">CSW</value>
+  	<value name="view" code="">INSPIRE zobrazovacia</value>
+  	<value name="download" code="">INSPIRE ukladacia</value>
+  	<value name="discovery" code="">INSPIRE vyhľadávacia</value>
+  	<value name="transformation" code="">INSPIRE transformačná</value>
+  	<value name="other" code="">iné</value>  
+  </serviceType>
+  
+  <inspireType>
+    <value name="dataset" code="5">údajová sada</value>
+    <value name="series" code="6">séria</value>
+  </inspireType>
+  
+<serviceKeyword>  
+  <value id="101" name="humanCatalogueViewer" qtip="Služba typu klient, která uživateli umožňuje interagovat s katalogem pro vyhledávání, prohlížení a řízení metadat o geografických datech nebo geografických službách.">Prohlížeč katalogu </value>
+  <value id="102" name="humanGeographicViewer" qtip="Aplikace umožňující zobrazovat mapy a pracovat s nimi.">Geografický (mapový) prohlížeč </value>
+  <value id="103" name="humanGeographicSpreadsheetViewer" qtip="Klientská služba umožňující uživateli interakci s více datovými objekty a požadovat výpočty podobně jako v aritmetické tabulce, ovšem s rozšířením na geografická data.">Geografický prohlížeč tabulek </value>
+  <value id="104" name="humanServiceEditor" qtip="Služba typu klient, která uživateli umožňuje ovládat geografické služby zpracování.">Editor služeb</value>
+  <value id="105" name="humanChainDefinitionEditor" qtip="Poskytuje interakci uživatele se službou definic řetězců služeb.">Editor definic řetězců  služeb</value>
+  <value id="106" name="humanWorkflowEnactmentManager" qtip="Poskytuje interakci uživatele se službou ustanovení toku pracovních činností.">Manažer ustanovení toku pracovních činností </value>
+  <value id="107" name="humanGeographicFeatureEditor" qtip="Geografický prohlížeč, který uživateli umožňuje interagovat s vektorovými daty.">Editor geografických prvků (feature)</value>
+  <value id="108" name="humanGeographicSymbolEditor" qtip="Služba typu klient, která člověku umožňuje zvolit a řídit knihovny značek.">Editor geografických značek </value>
+  <value id="109" name="humanFeatureGeneralizationEditor" qtip="Služba typu klient, která uživateli umožňuje upravovat kartografické charakteristiky vzhledu jevů nebo sbírky vzhledů jevů zjednodušením jeho vizualizace, kdežto jeho charakteristické prvky se zachovávají – prostorový ekvivalent zjednodušení.">Editor generalizace geografických prvků</value>
+  <value id="110" name="humanGeographicDataStructureViewer" qtip="Služba typu klient, která uživateli umožňuje zpřístupnit část datové sady, aby viděl její vnitřní strukturu.">Prohlížeč struktury geografických dat </value>
+
+  <value id="201" name="infoFeatureAccessService" qtip="Služba, která poskytuje přístup klienta do skladu vektrorových dat a jeho správa.">Služba zpřístupnění geografických prvků (WFS)</value>
+  <value id="202" name="infoMapAccessService" qtip="Služba, která poskytuje přístup klienta ke geografické grafice, tj. k obrazům geografických dat.">Služba zpřístupnění map (WMS)</value>
+  <value id="203" name="infoCoverageAccessService" qtip="Služba, která poskytuje přístup klienta k datům typu coverage.">Služba zpřístupnění coverage (WCS)</value>
+  <value id="204" name="infoSensorDescriptionService" qtip="SSlužba, která poskytuje popis senzoru pokrytí včetně místa a orientace senzoru, jakož i geometrické, dynamické a radiometrické charakteristiky senzoru pro účely geografického zpracování.">Služba popisu senzoru (SOS)</value>
+  <value id="205" name="infoProductAccessService" qtip="Služba, která poskytuje přístup ke skladu geografických produktů a umožňuje jeho správu.">Služba zpřístupnění produktu</value>
+  <value id="206" name="infoFeatureTypeService" qtip="Služba, která poskytuje přístup do skladu vektorových dat a jeho řízení.">Služby zpřístupnění typu geografického prvku</value>
+  <value id="207" name="infoCatalogueService" qtip="Služba, která poskytuje služby vyhledávání a řízení skladu metadat o instancích geografických dat.">Katalogová služba (CSW)</value>
+  <value id="208" name="infoRegistryService" qtip="Služba, která poskytuje přístup ke skladu metadat o typech geografických dat.">Rejstříková služba</value>
+  <value id="209" name="infoGazetteerService" qtip="Služba, která poskytuje přístup k adresáři instancí třídy nebo tříd jevů reálného světa obsahujícímu nějakou informaci o poloze.">Služba geografického rejstříku</value>
+  <value id="210" name="inforOrderHandlingService" qtip="Služba, která poskytuje klienta se schopností objednávat produkty od poskytovatele.">Služba zpracování objednávek</value>
+  <value id="211" name="infoStandingOrderService" qtip="Služba zpracování objednávek, která uživateli umožňuje požádat, aby byl produkt šířen na nějakém geografickém území tehdy, až bude k dispozici.">Služba trvalých objednávek</value>
+
+  <value id="301" name="taskChainDefinitionService" qtip="Služba k definování řetězce a schopná jej provést službou ustanovení toku pracovních činností.">Služba definování řetězce služeb</value>
+  <value id="302" name="taskWorkflowEnactmentService" qtip="Služba ustanovení toku pracovních činností interpretuje řetěz a řídí konkretizaci služeb a sekvenční zpracování aktivit.">Služba ustanovení toku pracovních činností</value>
+  <value id="303" name="taskSubscriptionService" qtip="Služba, která klientům umožňuje registrovat se pro oznamování událostí.">Subskripční služba </value>
+
+  <value id="401" name="spatialCoordinateConversionService" qtip="Služba přeměny souřadnic z jednoho souřadnicového systému do jiného souřadnicového systému, který je vztažen ke stejnému datu.">Služba konverze souřadnic</value>
+  <value id="402" name="spatialCoordinatetransformationService" qtip="Služba přeměny souřadnic ze souřadnicového referenčního systému založeného na jednom datu do souřadnicového referenčního systému založeného na druhém datu.">Služba transformace souřadnic </value>
+  <value id="403" name="spatialCoverageVectorConversionService" qtip="Služba přeměny prostorové reprezentace ze schématu pokrytí na vektorové schéma a naopak.">Služba konverze coverage/vektor </value>
+  <value id="404" name="spatialImageConversionService" qtip="Služba transformace souřadnic nebo konverze souřadnic k přeměně souřadnicového referenčního systému snímku.">Služba konverze souřadnic snímku</value>
+  <value id="405" name="spatialRectificationService" qtip="Služba, která promítá skloněný nebo šikmý snímek do zvolené roviny nebo jiné plochy.">Služba překreslení</value>
+  <value id="406" name="spatialOrthorectificationService" qtip="Služba překreslení, která odstraňuje zkreslení snímku způsobené kolísáním výšek území.">Služba diferenciálního překreslení</value>
+  <value id="407" name="spatialSensorGeometryModelAdjustmentService" qtip="Služba, která rektifikuje modely geometrie senzoru pro lepší vyrovnání snímku s jinými snímky a/nebo známými polohami v území.">Služba rektifikace modelu geometrie senzoru</value>
+  <value id="408" name="spatialGeometryModelConversionService" qtip="Služba, která převádí modely geometrie senzoru do odlišného, ale ekvivalentního modelu geometrie senzoru.">Služba konverze modelu geometrie obrazu</value>
+  <value id="409" name="spatialSubsettingService" qtip="Služba, která ze vstupu souvislé prostorové oblasti vybírá data buď podle geografického místa nebo podle souřadnic mříže.">Služba vytváření podmnožin </value>
+  <value id="410" name="spatialSamplingService" qtip="Služba, která vybírá ze vstupu data s použitím bezesporného vzorkovacího schématu buď podle geografického místa anebo podle souřadnic mříže.">Služba výběru</value>
+  <value id="411" name="spatialTilingChangeService" qtip="Služba, která mění dlaždicování geografických dat.">Služba změny dělení dlaždic</value>
+  <value id="412" name="spatialDimensionMeasurementService" qtip="Služba, která vypočítává rozměry objektů viditelné na snímku nebo v jiných geografických datech.">Služba měření rozměrů</value>
+  <value id="413" name="spatialFeatureManipulationService" qtip="Vlícování jednoho vzhledu jevu, snímku nebo jiné datové množiny nebo množiny souřadnic na jinou; opravování relativních posunů, rozdílů natočení, rozdílů měřítek a rozdílů v perspektivě; ověření, že všechny vzhledy jevů ve sbírce vzhledů jevů jsou topologicky bezesporné podle topologických pravidel sbírky vzhledů jevů a identifikování a/nebo opravení jakýchkoliv odhalených sporností.">Služby manipulace se geografickými prvky</value>
+  <value id="414" name="spatialFeatureMatchingService" qtip="SSlužba, jež zjišťuje, které vzhledy jevů a části vzhledů jevů z více zdrojů dat reprezentují tutéž entitu reálného světa, např. vyrovnání styků a omezené sjednocení.">Služba vyrovnání prvků (edgematching)</value>
+  <value id="415" name="spatialFeatureGeneralizationService" qtip="Služba, která ve sbírce vzhledů jevů redukuje prostorovou variaci za účelem zvýšení účinnosti komunikace neutralizací nežádoucích účinků zmenšení měřítka.">Služba generalizace geografických prvků</value>
+  <value id="416" name="spatialRouteDeterminationService" qtip="Služba určuje na základě vstupních parametrů a vlastností obsažených v kolekci geoprvků optimální cestu mezi dvěma specifikovanými body.">Služba zjištění trasy</value>
+  <value id="417" name="spatialPositioningService" qtip="Služba poskytovaná zařízením určení polohy pro použití, získání a jednoznačnou interpretaci polohové informace a ke zjištění, zda výsledky splňují požadavky užití.">Služba zjištění polohy</value>
+  <value id="418" name="spatialProximityAnalysisService" qtip="K udané poloze nebo geoprvku nalezne všechny objekty s danou množinou atributů, které jsou v uživatelem definované vzdálenosti od této polohy nebo od tohoto geoprvku.">Služba analýzy sousednosti</value>
+
+  <value id="501" name="thematicGeoparameterService" qtip="Služba pro odvozování aplikačně orientovaných kvantitativních výsledků, které nejsou dostupné ze samotných nezpracovaných dat.">Služba výpočtu geografických parametrů</value>
+  <value id="502" name="thematicClassificationService" qtip="Služba pro klasifikování oblastí geografických dat založené na tematických atributech.">Služba tematické klasifikace</value>
+  <value id="503" name="thematicFeatureGeneralizationService" qtip="Služba, která generalizuje typy vzhledů jevů do sbírek vzhledů jevů za účelem zvýšení účinnosti komunikace neutralizací nežádoucích účinků redukce dat.">Služba generalizace geografických prvků</value>
+  <value id="504" name="thematicSubsettingService" qtip="Služba, která z větších množin vybírá na základě tematických charakteristik určité prvky.">Služba vytváření podmnožin </value>
+  <value id="505" name="thematicSpatialCountingService" qtip="Služba, která počítá prvky.">Služba prostorového počítání</value>
+  <value id="506" name="thematicChangeDetectionService" qtip="Služba pro nalezení rozdílů mezi dvěma datovými sadami, které reprezentují totéž geografické území v různých časech.">Služba detekce změny</value>
+  <value id="507" name="thematicGeographicInformationExtractionService" qtip="Služby podporující vyjímání informace o vzhledech jevů a území z dálkově snímaných a skenovaných obrazů.">Služby vyjímání geografické informace</value>
+  <value id="508" name="thematicImageProcessingService" qtip="Služba pro změnu hodnot tematických atributů obrazu s použitím matematické funkce.">Služba zpracování obrazu</value>
+  <value id="509" name="thematicReducedResolutionGenerationService" qtip="Služba, která snižuje rozlišení obrazu.">Služba generování sníženého rozlišení</value>
+  <value id="510" name="thematicImageManipulationService" qtip="Služby pro manipulaci s datovými hodnotami v obrazech: barvy, kontrast, filtry, rozlišení, šum, radiometrické opravy ...">Služby manipulace s obrazy</value>
+  <value id="511" name="thematicUnderstandingService" qtip="Služby pro poskytování automatické detekce změn obrazů, odlišení navzájem ztotožněných obrazů, analýzu a zobrazení významnosti rozdílů a oblastně a modelově založené odlišení.">Služby porozumění obrazům</value>
+  <value id="512" name="thematicImageSynthesisService" qtip="Služby pro vytvoření nebo transformování obrazů s použitím počítačově založených prostorových modelů, transformací perspektivy a manipulací s charakteristikami obrazů za účelem zlepšení viditelnosti, zvýšení rozlišení a/nebo snížení účinku oblačnosti nebo oparu.">Služby syntézy obrazů</value>
+  <value id="513" name="thematicMultiBandImageManipulation" qtip="Služby, které upravují obraz s použitím více pásem obrazu.">Služby manipulace s vícepásmovými obrazy</value>
+  <value id="514" name="thematicObjectDetectionService" qtip="Služba pro detekci objektů reálného světa v obrazu.">Služba detekce objektů</value>
+  <value id="515" name="thematicGeoparsingService" qtip="Služba pro skenování textových dokumentů pro reference založené na místu, jako například názvů míst, adres, poštovních kódů, atd. v přípravě na přechod ke službě geografického kódování.">Služba geografické syntaktické analýzy</value>
+  <value id="516" name="thematicGeocodingService" qtip="Služba pro rozšíření textových referencí založených na místech o geografické souřadnice (nebo o nějaké jiné prostorové reference).">Služba geografického kódování </value>
+
+  <value id="601" name="temporalReferenceSystemTransformationService" qtip="Služba pro proměnu hodnot časových instancí z jednoho časového referenčního systému do jiného časového referenčního systému.">Služba transformace časových referenčních systémů</value>
+  <value id="602" name="temporalSubsettingService" qtip="Služba, která vybírá data ze vstupu ve spojitém intervalu na základě hodnot časových poloh.">Služba vytváření podmnožin</value>
+  <value id="603" name="temporalSamplingService" qtip="Služba, která vybírá data ze vstupu s použitím bezesporného vzorkovacího schématu založeného na hodnotách časových poloh.">Služba výběru</value>
+  <value id="604" name="temporalProximityAnalysisService" qtip="Služba, která k danému časovému intervalu nebo události nalézá všechny objekty s danou množinou atributů, které se nacházejí v uživatelem specifikovaném intervalu z tohoto intervalu nebo události.">Služba analýz časové sousednosti</value>
+
+  <value id="701" name="metadataStatisticalCalculationService" qtip="Služba pro výpočet statistik nad daty.">Služba statistických výpočtů</value>
+  <value id="702" name="metadataGeographicAnnotationService" qtip="Služby pro připojení pomocné informace k obrazu nebo vzhledu jevu ve sbírce prvků.">Geografické anotační služby</value>
+
+  <value id="801" name="comEncodingService" qtip="Služba, která stanoví implementaci kódovacího pravidla a určuje rozhraní pro kódovací a dekódovací funkčnost.">Služba kódování</value>
+  <value id="802" name="comTransferService" qtip="Služba, která stanoví implementaci jednoho nebo více přenosových protokolů, jež umožňuje přenos dat mezi distribuovanými informačními systémy nespřaženými nebo spřaženými komunikačními médii.">Služba přenosu</value>
+  <value id="803" name="comGeographicCompressionService" qtip="Služba, která převádí prostorové části sbírky vzhledů jevů do komprimované formy a z komprimované formy.">Geografická služba komprimace</value>
+  <value id="804" name="comGeographicFormatConversionService" qtip="Služba, která převádí z jednoho formátu geografických dat do jiného.">Geografická služba převodu formátu</value>
+  <value id="805" name="comMessagingService" qtip="Služba, která umožňuje více uživatelům současně pozorovat sbírky vzhledů jevů, vyjadřovat se k nim a požadovat jejich úpravy.">Služba zpracování zpráv</value>
+  <value id="806" name="comRemoteFileAndExecutableManagement" qtip="Služba, která poskytuje přístup ke podpůrné paměti geografických prvků, jakoby byla v místě klienta.">Služba vzdálených souborů a zpracování</value>
+</serviceKeyword>
+
+<cenia>
+	<value name="environment" code="environment">Životné prostredie</value>
+	<value name="water" code="water">Voda</value>
+	<value name="nature" code="nature">Prírodné prvky a javy</value>
+	<value name="social" code="social">Socioekonomické prvky a javy</value>
+	<value name="transport" code="transport">Doprava</value>
+	<value name="division" code="division">Správne členenie</value>
+	<value name="base" code="base">Podkladové údaje</value>
+</cenia>
+
+</map>

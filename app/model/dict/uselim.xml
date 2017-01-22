@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<userValues>
+	<translation lang="spa">
+		<title>INSPIRE predefined</title>
+		<group>
+			<title>Condiciones de acceso y el uso</title>
+			<entry id="1">No se aplican condiciones</entry>
+			<entry id="2">Condiciones desconocidas</entry>
+		</group>
+	</translation>
+	<translation lang="eng">
+		<title>INSPIRE predefined</title>
+		<group>
+			<title>Conditions for acces and use</title>
+			<entry id="1">no conditions apply</entry>
+			<entry id="2">conditions unknown</entry>
+		</group>
+	</translation>
+	<translation lang="cze">
+		<title>Předdefinované v INSPIRE</title>
+		<group>
+			<title>Podmínky pro přístup a užití</title>
+			<entry id="1">žádné podmínky neplatí</entry>
+			<entry id="2">podmínky nejsou známy</entry>
+		</group>
+	</translation>
+	<translation lang="slo">
+		<title>Preddefinované v INSPIRE</title>
+		<group>
+			<title>Podmienky pro prístup a užití</title>
+			<entry id="1">žádné podmienky neplatí</entry>
+			<entry id="2">podmienky nejsú známy</entry>
+		</group>
+	</translation>
+</userValues>

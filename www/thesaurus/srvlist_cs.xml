@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<items>
+<value id="100" text="Geografické služby interakce s člověkem" qtip="Aplikace pro koncového uživatele"> 
+  <value id="101" name="humanCatalogueViewer" qtip="Služba typu klient, která uživateli umožňuje interagovat s katalogem pro vyhledávání, prohlížení a řízení metadat o geografických datech nebo geografických službách.">Prohlížeč katalogu </value>
+  <value id="102" name="humanGeographicViewer" qtip="Aplikace umožňující zobrazovat mapy a pracovat s nimi.">Geografický (mapový) prohlížeč </value>
+  <value id="103" name="humanGeographicSpreadsheetViewer" qtip="Klientská služba umožňující uživateli interakci s více datovými objekty a požadovat výpočty podobně jako v aritmetické tabulce, ovšem s rozšířením na geografická data.">Geografický prohlížeč tabulek </value>
+  <value id="104" name="humanServiceEditor" qtip="Služba typu klient, která uživateli umožňuje ovládat geografické služby zpracování.">Editor služeb</value>
+  <value id="105" name="humanChainDefinitionEditor" qtip="Poskytuje interakci uživatele se službou definic řetězců služeb.">Editor definic řetězců  služeb</value>
+  <value id="106" name="humanWorkflowEnactmentManager" qtip="Poskytuje interakci uživatele se službou ustanovení toku pracovních činností.">Manažer ustanovení toku pracovních činností </value>
+  <value id="107" name="humanGeographicFeatureEditor" qtip="Geografický prohlížeč, který uživateli umožňuje interagovat s vektorovými daty.">Editor geografických prvků (feature)</value>
+  <value id="108" name="humanGeographicSymbolEditor" qtip="Služba typu klient, která člověku umožňuje zvolit a řídit knihovny značek.">Editor geografických značek </value>
+  <value id="109" name="humanFeatureGeneralizationEditor" qtip="Služba typu klient, která uživateli umožňuje upravovat kartografické charakteristiky vzhledu jevů nebo sbírky vzhledů jevů zjednodušením jeho vizualizace, kdežto jeho charakteristické prvky se zachovávají – prostorový ekvivalent zjednodušení.">Editor generalizace geografických prvků</value>
+  <value id="110" name="humanGeographicDataStructureViewer" qtip="Služba typu klient, která uživateli umožňuje zpřístupnit část datové sady, aby viděl její vnitřní strukturu.">Prohlížeč struktury geografických dat </value>
+</value>
+
+<value id="200" text="Geografické služby řízení modelů / informace" qtip="Mapové služby typu OGC: WMS,WFS,WCS,SOS, apod.">
+  <value id="201" name="infoFeatureAccessService" qtip="Služba, která poskytuje přístup klienta do skladu vektrorových dat a jeho správa.">Služba zpřístupnění geografických prvků (WFS)</value>
+  <value id="202" name="infoMapAccessService" qtip="Služba, která poskytuje přístup klienta ke geografické grafice, tj. k obrazům geografických dat.">Služba zpřístupnění map (WMS)</value>
+  <value id="203" name="infoCoverageAccessService" qtip="Služba, která poskytuje přístup klienta k datům typu coverage.">Služba zpřístupnění coverage (WCS)</value>
+  <value id="204" name="infoSensorDescriptionService" qtip="SSlužba, která poskytuje popis senzoru pokrytí včetně místa a orientace senzoru, jakož i geometrické, dynamické a radiometrické charakteristiky senzoru pro účely geografického zpracování.">Služba popisu senzoru (SOS)</value>
+  <value id="205" name="infoProductAccessService" qtip="Služba, která poskytuje přístup ke skladu geografických produktů a umožňuje jeho správu.">Služba zpřístupnění produktu</value>
+  <value id="206" name="infoFeatureTypeService" qtip="Služba, která poskytuje přístup do skladu vektorových dat a jeho řízení.">Služby zpřístupnění typu geografického prvku</value>
+  <value id="207" name="infoCatalogueService" qtip="Služba, která poskytuje služby vyhledávání a řízení skladu metadat o instancích geografických dat.">Katalogová služba (CSW)</value>
+  <value id="208" name="infoRegistryService" qtip="Služba, která poskytuje přístup ke skladu metadat o typech geografických dat.">Rejstříková služba</value>
+  <value id="209" name="infoGazetteerService" qtip="Služba, která poskytuje přístup k adresáři instancí třídy nebo tříd jevů reálného světa obsahujícímu nějakou informaci o poloze.">Služba geografického rejstříku</value>
+  <value id="210" name="inforOrderHandlingService" qtip="Služba, která poskytuje klienta se schopností objednávat produkty od poskytovatele.">Služba zpracování objednávek</value>
+  <value id="211" name="infoStandingOrderService" qtip="Služba zpracování objednávek, která uživateli umožňuje požádat, aby byl produkt šířen na nějakém geografickém území tehdy, až bude k dispozici.">Služba trvalých objednávek</value>
+</value>
+
+<value id="300" text="Geografické služby řízení toků pracovních činností" qtip="Seskupování služeb">
+  <value id="301" name="taskChainDefinitionService" qtip="Služba k definování řetězce a schopná jej provést službou ustanovení toku pracovních činností.">Služba definování řetězce služeb</value>
+  <value id="302" name="taskWorkflowEnactmentService" qtip="Služba ustanovení toku pracovních činností interpretuje řetěz a řídí konkretizaci služeb a sekvenční zpracování aktivit.">Služba ustanovení toku pracovních činností</value>
+  <value id="303" name="taskSubscriptionService" qtip="Služba, která klientům umožňuje registrovat se pro oznamování událostí.">Subskripční služba </value>
+ </value>
+
+<value id="400" text="Geografické služby zpracování – prostorové" qtip="Implementace prostorových analýz a správy dat">
+  <value id="401" name="spatialCoordinateConversionService" qtip="Služba přeměny souřadnic z jednoho souřadnicového systému do jiného souřadnicového systému, který je vztažen ke stejnému datu.">Služba konverze souřadnic</value>
+  <value id="402" name="spatialCoordinatetransformationService" qtip="Služba přeměny souřadnic ze souřadnicového referenčního systému založeného na jednom datu do souřadnicového referenčního systému založeného na druhém datu.">Služba transformace souřadnic </value>
+  <value id="403" name="spatialCoverageVectorConversionService" qtip="Služba přeměny prostorové reprezentace ze schématu pokrytí na vektorové schéma a naopak.">Služba konverze coverage/vektor </value>
+  <value id="404" name="spatialImageConversionService" qtip="Služba transformace souřadnic nebo konverze souřadnic k přeměně souřadnicového referenčního systému snímku.">Služba konverze souřadnic snímku</value>
+  <value id="405" name="spatialRectificationService" qtip="Služba, která promítá skloněný nebo šikmý snímek do zvolené roviny nebo jiné plochy.">Služba překreslení</value>
+  <value id="406" name="spatialOrthorectificationService" qtip="Služba překreslení, která odstraňuje zkreslení snímku způsobené kolísáním výšek území.">Služba diferenciálního překreslení</value>
+  <value id="407" name="spatialSensorGeometryModelAdjustmentService" qtip="Služba, která rektifikuje modely geometrie senzoru pro lepší vyrovnání snímku s jinými snímky a/nebo známými polohami v území.">Služba rektifikace modelu geometrie senzoru</value>
+  <value id="408" name="spatialGeometryModelConversionService" qtip="Služba, která převádí modely geometrie senzoru do odlišného, ale ekvivalentního modelu geometrie senzoru.">Služba konverze modelu geometrie obrazu</value>
+  <value id="409" name="spatialSubsettingService" qtip="Služba, která ze vstupu souvislé prostorové oblasti vybírá data buď podle geografického místa nebo podle souřadnic mříže.">Služba vytváření podmnožin </value>
+  <value id="410" name="spatialSamplingService" qtip="Služba, která vybírá ze vstupu data s použitím bezesporného vzorkovacího schématu buď podle geografického místa anebo podle souřadnic mříže.">Služba výběru</value>
+  <value id="411" name="spatialTilingChangeService" qtip="Služba, která mění dlaždicování geografických dat.">Služba změny dělení dlaždic</value>
+  <value id="412" name="spatialDimensionMeasurementService" qtip="Služba, která vypočítává rozměry objektů viditelné na snímku nebo v jiných geografických datech.">Služba měření rozměrů</value>
+  <value id="413" name="spatialFeatureManipulationService" qtip="Vlícování jednoho vzhledu jevu, snímku nebo jiné datové množiny nebo množiny souřadnic na jinou; opravování relativních posunů, rozdílů natočení, rozdílů měřítek a rozdílů v perspektivě; ověření, že všechny vzhledy jevů ve sbírce vzhledů jevů jsou topologicky bezesporné podle topologických pravidel sbírky vzhledů jevů a identifikování a/nebo opravení jakýchkoliv odhalených sporností.">Služby manipulace se geografickými prvky</value>
+  <value id="414" name="spatialFeatureMatchingService" qtip="SSlužba, jež zjišťuje, které vzhledy jevů a části vzhledů jevů z více zdrojů dat reprezentují tutéž entitu reálného světa, např. vyrovnání styků a omezené sjednocení.">Služba vyrovnání prvků (edgematching)</value>
+  <value id="415" name="spatialFeatureGeneralizationService" qtip="Služba, která ve sbírce vzhledů jevů redukuje prostorovou variaci za účelem zvýšení účinnosti komunikace neutralizací nežádoucích účinků zmenšení měřítka.">Služba generalizace geografických prvků</value>
+  <value id="416" name="spatialRouteDeterminationService" qtip="Služba určuje na základě vstupních parametrů a vlastností obsažených ve sbírce vzhledů jevů optimální cestu mezi dvěma specifikovanými body.">Služba zjištění trasy</value>
+  <value id="417" name="spatialPositioningService" qtip="Služba poskytovaná zařízením určení polohy pro použití, získání a jednoznačnou interpretaci polohové informace a ke zjištění, zda výsledky splňují požadavky užití.">Služba zjištění polohy</value>
+  <value id="418" name="spatialProximityAnalysisService" qtip="K udané poloze nebo geoprvku nalezne všechny objekty s danou množinou atributů, které jsou v uživatelem definované vzdálenosti od této polohy nebo od tohoto geoprvku.">Služba analýzy sousednosti</value>
+ </value>
+
+<value id="500" text="Geografické služby zpracování – tematické" qtip="Zpracování na základě atributů geografických dat">
+  <value id="501" name="thematicGeoparameterService" qtip="Služba pro odvozování aplikačně orientovaných kvantitativních výsledků, které nejsou dostupné ze samotných nezpracovaných dat.">Služba výpočtu geografických parametrů</value>
+  <value id="502" name="thematicClassificationService" qtip="Služba pro klasifikování oblastí geografických dat založené na tematických atributech.">Služba tematické klasifikace</value>
+  <value id="503" name="thematicFeatureGeneralizationService" qtip="Služba, která generalizuje typy vzhledů jevů do sbírek vzhledů jevů za účelem zvýšení účinnosti komunikace neutralizací nežádoucích účinků redukce dat.">Služba generalizace geografických prvků</value>
+  <value id="504" name="thematicSubsettingService" qtip="Služba, která z větších množin vybírá na základě tematických charakteristik určité prvky.">Služba vytváření podmnožin </value>
+  <value id="505" name="thematicSpatialCountingService" qtip="Služba, která počítá prvky.">Služba prostorového počítání</value>
+  <value id="506" name="thematicChangeDetectionService" qtip="Služba pro nalezení rozdílů mezi dvěma datovými sadami, které reprezentují totéž geografické území v různých časech.">Služba detekce změny</value>
+  <value id="507" name="thematicGeographicInformationExtractionService" qtip="Služby podporující vyjímání informace o vzhledech jevů a území z dálkově snímaných a skenovaných obrazů.">Služby vyjímání geografické informace</value>
+  <value id="508" name="thematicImageProcessingService" qtip="Služba pro změnu hodnot tematických atributů obrazu s použitím matematické funkce.">Služba zpracování obrazu</value>
+  <value id="509" name="thematicReducedResolutionGenerationService" qtip="Služba, která snižuje rozlišení obrazu.">Služba generování sníženého rozlišení</value>
+  <value id="510" name="thematicImageManipulationService" qtip="Služby pro manipulaci s datovými hodnotami v obrazech: barvy, kontrast, filtry, rozlišení, šum, radiometrické opravy ...">Služby manipulace s obrazy</value>
+  <value id="511" name="thematicUnderstandingService" qtip="Služby pro poskytování automatické detekce změn obrazů, odlišení navzájem ztotožněných obrazů, analýzu a zobrazení významnosti rozdílů a oblastně a modelově založené odlišení.">Služby porozumění obrazům</value>
+  <value id="512" name="thematicImageSynthesisService" qtip="Služby pro vytvoření nebo transformování obrazů s použitím počítačově založených prostorových modelů, transformací perspektivy a manipulací s charakteristikami obrazů za účelem zlepšení viditelnosti, zvýšení rozlišení a/nebo snížení účinku oblačnosti nebo oparu.">Služby syntézy obrazů</value>
+  <value id="513" name="thematicMultiBandImageManipulation" qtip="Služby, které upravují obraz s použitím více pásem obrazu.">Služby manipulace s vícepásmovými obrazy</value>
+  <value id="514" name="thematicObjectDetectionService" qtip="Služba pro detekci objektů reálného světa v obrazu.">Služba detekce objektů</value>
+  <value id="515" name="thematicGeoparsingService" qtip="SSlužba pro skenování textových dokumentů pro reference založené na místu, jako například názvů míst, adres, poštovních kódů, atd. v přípravě na přechod ke službě geografického kódování.">Služba geografické syntaktické analýzy</value>
+  <value id="516" name="thematicGeocodingService" qtip="Služba pro rozšíření textových referencí založených na místech o geografické souřadnice (nebo o nějaké jiné prostorové reference).">Služba geografického kódování </value>
+</value>
+
+<value id="600" text="Geografické služby zpracování – časové" qtip="Zpracování na základě časových atributů.">
+  <value id="601" name="temporalReferenceSystemTransformationService" qtip="Služba pro proměnu hodnot časových instancí z jednoho časového referenčního systému do jiného časového referenčního systému.">Služba transformace časových referenčních systémů</value>
+  <value id="602" name="temporalSubsettingService" qtip="Služba, která vybírá data ze vstupu ve spojitém intervalu na základě hodnot časových poloh.">Služba vytváření podmnožin</value>
+  <value id="603" name="temporalSamplingService" qtip="Služba, která vybírá data ze vstupu s použitím bezesporného vzorkovacího schématu založeného na hodnotách časových poloh.">Služba výběru</value>
+  <value id="604" name="temporalProximityAnalysisService" qtip="Služba, která k danému časovému intervalu nebo události nalézá všechny objekty s danou množinou atributů, které se nacházejí v uživatelem specifikovaném intervalu z tohoto intervalu nebo události.">Služba analýz časové sousednosti</value>
+</value>
+
+<value id="700" text="Geografické služby zpracování – metadata" qtip="Statistiky apod.">
+
+  <value id="701" name="metadataStatisticalCalculationService" qtip="Služba pro výpočet statistik nad daty.">Služba statistických výpočtů</value>
+  <value id="702" name="metadataGeographicAnnotationService" qtip="Služby pro připojení pomocné informace k obrazu nebo vzhledu jevu ve sbírce prvků.">Geografické anotační služby</value>
+</value>
+
+<value id="800" text="Geografické komunikační služby " qtip="Síťové služby - komunikace mezi servery...">
+  <value id="801" name="comEncodingService" qtip="Služba, která stanoví implementaci kódovacího pravidla a určuje rozhraní pro kódovací a dekódovací funkčnost.">Služba kódování</value>
+  <value id="802" name="comTransferService" qtip="Služba, která stanoví implementaci jednoho nebo více přenosových protokolů, jež umožňuje přenos dat mezi distribuovanými informačními systémy nespřaženými nebo spřaženými komunikačními médii.">Služba přenosu</value>
+  <value id="803" name="comGeographicCompressionService" qtip="Služba, která převádí prostorové části sbírky vzhledů jevů do komprimované formy a z komprimované formy.">Geografická služba komprimace</value>
+  <value id="804" name="comGeographicFormatConversionService" qtip="Služba, která převádí z jednoho formátu geografických dat do jiného.">Geografická služba převodu formátu</value>
+  <value id="805" name="comMessagingService" qtip="Služba, která umožňuje více uživatelům současně pozorovat sbírky vzhledů jevů, vyjadřovat se k nim a požadovat jejich úpravy.">Služba zpracování zpráv</value>
+  <value id="806" name="comRemoteFileAndExecutableManagement" qtip="Služba, která poskytuje přístup ke podpůrné paměti geografických prvků, jakoby byla v místě klienta.">Služba vzdálených souborů a zpracování</value>
+</value>
+</items>

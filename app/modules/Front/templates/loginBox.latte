@@ -1,0 +1,10 @@
+{if !$user->isLoggedIn() && $FORM_SIGN === TRUE}
+	<a n:href=":Front:Sign:in">{_messages.frontend.login}</a><br/>
+{else}
+	<span class="user-label">{_messages.frontend.logged}:</span> 
+    <b>{$user->identity->username}</b>
+	{if $FORM_SIGN === TRUE}
+		<a n:href=":Front:Sign:out">{_messages.frontend.logout}</a>
+	{/if}
+{/if}
+

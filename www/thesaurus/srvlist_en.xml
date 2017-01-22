@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<items>
+<value id="100" text="Geographic human interaction services">
+  <value id="101" name="humanCatalogueViewer" qtip="Client service that allows a user to interact with a catalogue to locate, browse, and manage metadata about geographic data or geographic services">Catalogue viewer</value>
+  <value id="102" name="humanGeographicViewer" qtip="Client service that allows a user to view one or more feature collections or coverages.">Geographic viewer</value>
+  <value id="103" name="humanGeographicSpreadsheetViewer" qtip="Client service that allows a user to interact with multiple data objects and to request calculations similar to an arithmetic spreadsheet but extended to geographic data.">Geographic spreadsheet viewer</value>
+  <value id="104" name="humanServiceEditor" qtip="Client service that allows a user to control geographic processing services.">Service editor</value>
+  <value id="105" name="humanChainDefinitionEditor" qtip="Provides user interaction with a chain definition service.">Chain definition editor</value>
+  <value id="106" name="humanWorkflowEnactmentManager" qtip="Provides user interaction with a workflow enactment service.">Workflow enactment manager</value>
+  <value id="107" name="humanGeographicFeatureEditor" qtip="Geographic viewer that allows a user to interact with feature data.">Geographic feature editor</value>
+  <value id="108" name="humanGeographicSymbolEditor" qtip="Client service that allows a human to select and manage symbol libraries">Geographic symbol editor</value>
+  <value id="109" name="humanFeatureGeneralizationEditor" qtip="Client service that allows a user to modify the cartographic characteristics of a feature or feature collection by simplifying its visualization, while maintaining its salient elements - the spatial equivalent of simplification.">Feature generalization editor</value>
+  <value id="110" name="humanGeographicDataStructureViewer" qtip="Client service that allows a user to access part of dataset to see its internal structure.">Geographic data-structure viewer</value>
+</value>
+
+<value id="200" text="Geographic model/information management service">
+  <value id="201" name="infoFeatureAccessService" qtip="Service that provides a client access to and management of a feature store">Feature access service (WFS)</value>
+  <value id="202" name="infoMapAccessService" qtip="Service that provides a client access to a geographic graphics, i.e., pictures of geographic data.">Map access service (WMS)</value>
+  <value id="203" name="infoCoverageAccessService" qtip="Service that provides a client access to and management of a coverage store.">Coverage access service (WCS)</value>
+  <value id="204" name="infoSensorDescriptionService" qtip="Service that provides the description of a coverage sensor, including sensor location and orientation, as well as the sensor's geometric, dynamic, and radiometric characteristics for geoprocessing purposes.">Sensor description service</value>
+  <value id="205" name="infoProductAccessService" qtip="Service that provides access to and management of a geographic product store.">Product access service</value>
+  <value id="206" name="infoFeatureTypeService" qtip="Service that provides a client access to and management of a store of feature type definitions.">Feature type service</value>
+  <value id="207" name="infoCatalogueService" qtip="Service that provides discovery and management services on a store of metadata about instances.">Catalogue service (CSW)</value>
+  <value id="208" name="infoRegistryService" qtip="Service that provides access to store of metadata about types.">Registry Service</value>
+  <value id="209" name="infoGazetteerService" qtip="Service that provides access to a directory of instances of a class or classes of real-world phenomena containing some information regarding position.">Gazetteer service</value>
+  <value id="210" name="inforOrderHandlingService" qtip="Service that provides a client with the ability to order products from a provider.">Order handling service</value>
+  <value id="211" name="infoStandingOrderService" qtip="Order handling service that allows a user to request that a product over a geographic area be disseminated when it becomes available.">Standing order service</value>
+</value>
+
+<value id="300" text="Geographic workflow/task management services">
+  <value id="301" name="taskChainDefinitionService" qtip="Service to define a chain and to enable it to be executed by the workflow enactment service">Chain definition service</value>
+  <value id="302" name="taskWorkflowEnactmentService" qtip="The workflow enactment service interprets a chain and controls the instantiation of services and sequencing of activities.">Workflow enactment ser</value>
+  <value id="303" name="taskSubscriptionService" qtip="Service to allow clients to register for notification about events.">Subscription service</value>
+</value>
+
+<value id="400" text="Geographic processing services – spatial">
+  <value id="401" name="spatialCoordinateConversionService" qtip="Service to change coordinates from one coordinate system to another coordinate system that is related to the same datum.">Coordinate conversion service</value>
+  <value id="402" name="spatialCoordinatetransformationService" qtip="Service to change coordinates from a coordinate reference system based on one datum to a coordinate reference system based on a second datum.">Coordinate transformation service</value>
+  <value id="403" name="spatialCoverageVectorConversionService" qtip="Service to change coordinates from a coordinate reference system based on one datum to a coordinate reference system based on a second datum.">Coverage/vector conversion service</value>
+  <value id="404" name="spatialImageConversionService" qtip="A coordinate transformation or coordinate conversion service to change the coordinate reference system for an image.">Image coordinate conversion service</value>
+  <value id="405" name="spatialRectificationService" qtip="Service for transforming an image into a perpendicular parallel projection and therefore a constant scale.">Rectification service</value>
+  <value id="406" name="spatialOrthorectificationService" qtip="A rectification service that removes image tilt and displacement due to terrain elevation.">Orthorectification service</value>
+  <value id="407" name="spatialSensorGeometryModelAdjustmentService" qtip="Service that adjusts sensor geometry models to improve the match of the image with other images and/or known ground positions.">Sensor geometry model adjustment service</value>
+  <value id="408" name="spatialGeometryModelConversionService" qtip="Service that converts sensor geometry models into a different but equivalent sensor geometry model.">Image geometry model conversion service</value>
+  <value id="409" name="spatialSubsettingService" qtip="Service that extracts data from an input in a continuous spatial region either by geographic location or by grid coordinates.">Subsetting service</value>
+  <value id="410" name="spatialSamplingService" qtip="Service that extracts data from an input using a consistent sampling scheme either by geographic location or by grid coordinates.">Sampling service</value>
+  <value id="411" name="spatialTilingChangeService" qtip="Service that changes the tiling of geographic data.">Tiling change service</value>
+  <value id="412" name="spatialDimensionMeasurementService" qtip="Service to compute dimensions of objects visible in an image or other geodata.">Dimension measurement service</value>
+  <value id="413" name="spatialFeatureManipulationService" qtip="Register one feature to another, an image, or another dataset or coordinate set; correcting for relative translation shifts, rotational differences, scale differences, and perspective differences. Verify that all features in the Feature Collection are topologically consistent according to the topology rules of the Feature Collection, and identifies and/or corrects any inconsistencies that are discovered">Feature manipulation services</value>
+  <value id="414" name="spatialFeatureMatchingService" qtip="Service that determines which features and portions of features represent the same real world entity from multiple data sources, e.g., edge matching and limited conflation.">Feature matching service</value>
+  <value id="415" name="spatialFeatureGeneralizationService" qtip="Service that reduces spatial variation in a feature collection to increase the effectiveness of communication by counteracting the undesirable effects of data reduction.">Feature generalization service</value>
+  <value id="416" name="spatialRouteDeterminationService" qtip="Service to determine the optimal path between two specified points based on the input parameters and properties contained in the Feature Collection.">Route determination service</value>
+  <value id="417" name="spatialPositioningService" qtip="Service provided by a position-providing device to use, obtain and unambiguously interpret position information, and determine whether the results meet the requirements of the use.">Positioning service</value>
+  <value id="418" name="spatialProximityAnalysisService" qtip="Given a position or geographic feature, finds all objects with a given set of attributes that are located within an user-specified distance of the position or feature.">Proximity analysis service</value>
+</value>
+
+<value id="500" text="Geographic processing services – thematic">
+  <value id="501" name="thematicGeoparameterService" qtip="Service to derive application-oriented quantitative results that are not available from the raw data itself.">Geoparameter calculation service</value>
+  <value id="502" name="thematicClassificationService" qtip="Service to classify regions of geographic data based on thematic attributes">Thematic classification service</value>
+  <value id="503" name="thematicFeatureGeneralizationService" qtip="Service that generalizes feature types in a feature collection to increase the effectiveness of communication by counteracting the undesirable effects of data reduction.">Feature generalization service</value>
+  <value id="504" name="thematicSubsettingService" qtip="Service that extracts data from an input based on parameter values.">Subsetting service</value>
+  <value id="505" name="thematicSpatialCountingService" qtip="Service that counts geographic features">Spatial counting service</value>
+  <value id="506" name="thematicChangeDetectionService" qtip="Service to find differences between two data sets that represent the same geographical area at different times.">Change detection service</value>
+  <value id="507" name="thematicGeographicInformationExtractionService" qtip="Services supporting the extraction of feature and terrain information from remotely sensed and scanned images">Geographic information extraction services</value>
+  <value id="508" name="thematicImageProcessingService" qtip="Service to change the values of thematic attributes of an image using a mathematical function.">Image processing service</value>
+  <value id="509" name="thematicReducedResolutionGenerationService" qtip="Service that reduces the resolution of an image.">Reduced resolution generation service</value>
+  <value id="510" name="thematicImageManipulationService" qtip="Services for manipulating data values in images: changing colour and contrast values, applying various filters, manipulating image resolution, noise removal, striping, systematic-radiometric corrections, atmospheric attenuation, changes in scene illumination, etc.">Image Manipulation Services</value>
+  <value id="511" name="thematicUnderstandingService" qtip="Services that provide automated image change detection, registered image differencing, significance-of-difference analysis and display, and area-based and model-based differencing.">Image understanding services</value>
+  <value id="512" name="thematicImageSynthesisService" qtip="Services for creating or transforming images using computer-based spatial models, perspective transformations, and manipulations of image characteristics to improve visibility, sharpen resolution, and/or reduce the effects of cloud cover or haze.">Image synthesis services</value>
+  <value id="513" name="thematicMultiBandImageManipulation" qtip="Services that modify an image using the multiple bands of the image.">Multi-band image manipulation</value>
+  <value id="514" name="thematicObjectDetectionService" qtip="Service to detect real-world objects in an image.">Object detection service</value>
+  <value id="515" name="thematicGeoparsingService" qtip="Service to scan text documents for location-based references, such as a place, names, addresses, postal codes, etc., in preparation for passage to a geocoding service.">Geoparsing service</value>
+  <value id="516" name="thematicGeocodingService" qtip="Service to augment location-based text references with geographic coordinates (or some other spatial reference).">Geocoding service</value>
+</value>
+
+<value id="600" text="Geographic processing services – temporal">
+  <value id="601" name="temporalReferenceSystemTransformationService" qtip="Service to change the values of temporal instances from one temporal reference system to another temporal reference system.">Temporal reference system transformation service</value>
+  <value id="602" name="temporalSubsettingService" qtip="Service that extracts data from an input in a continuous interval based on temporal position values.">Subsetting service</value>
+  <value id="603" name="temporalSamplingService" qtip="Service that extracts data from an input using a consistent sampling scheme based on temporal position values.">Sampling service</value>
+  <value id="604" name="temporalProximityAnalysisService" qtip="Given a temporal interval or event, find all objects with a given set of attributes that are located within an user-specified interval from the interval or event.">Temporal proximity analysis service</value>
+</value>
+
+<value id="700" text="Geographic processing services – metadata">
+  <value id="701" name="metadataStatisticalCalculationService" qtip="Service to calculate the statistics of a dataset">Statistical calculation service</value>
+  <value id="702" name="metadataGeographicAnnotationService" qtip="Services to add ancillary information to an image or a feature in a Feature Collection">Geographic annotation services</value>
+</value>
+
+<value id="800" text="Geographic communication services">
+  <value id="801" name="comEncodingService" qtip="Service that provides implementation of an encoding rule and provides an interface to encoding and decoding functionality.">Encoding service</value>
+  <value id="802" name="comTransferService" qtip="Service that provides implementation of one or more transfer protocols, which allows data transfer between distributed information systems over off-line or on-line communication media.">Transfer service</value>
+  <value id="803" name="comGeographicCompressionService" qtip="Service that converts spatial portions of a feature collection to and from compressed form">Geographic compression service</value>
+  <value id="804" name="comGeographicFormatConversionService" qtip="Service that converts from one geographic data format to another.">Geographic format conversion service</value>
+  <value id="805" name="comMessagingService" qtip="Service that allows multiple users to simultaneously view, comment about, and request edits of feature collections.">Messaging service</value>
+  <value id="806" name="comRemoteFileAndExecutableManagement" qtip="Service that provides access to secondary storage of geographic features as if it were local to the client.">Remote file and executable management</value>
+</value>
+</items>

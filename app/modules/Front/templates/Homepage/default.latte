@@ -1,0 +1,173 @@
+{block content}
+		<div class="container panel panel-default">
+		  <div class="row content">
+			
+			<!-- sidebar -->
+			<div id="sidebar" class="col-xs-12 col-md-4">
+				<div class="panel-body micka-form" style="padding:3px;">
+					<div  id="overmap"></div>                
+					<form id="search-form">
+
+					{* inside only 
+					<div class="checkbox">
+						<label for="res-type"><input class="form-control" type="checkbox" name="inside"/>{_messages.frontend.inside}</label>
+					</div> *}
+
+					<div class="form-group">
+						<input type="text" class="form-control" placeholder="{_messages.frontend.fulltext}" id="fulltext"/>
+						{* <span class="input-group-btn">
+							<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+						</span>*}
+					</div>  
+
+					{* resource type *}
+					<div class="form-group">
+						<label for="res-type" class="control-label">{_messages.frontend.res-type}</label>
+						<select id="res-type" class="form-control"  data-placeholder="type">
+                            <option value=""></option>
+                            <option value="data">{_messages.frontend.data}</option>
+                            <option value="service">{_messages.frontend.service}</option>
+                            <option value="application">{_messages.frontend.application}</option>
+                            <option value="featureCatalogue">{_messages.frontend.fc}</option>
+                        </select>
+					</div>
+					
+					 {* topic category *}
+					<div id="panel-topic" class="form-group">
+						<label for="topic" class="control-label">{_messages.frontend.topic_category}</label>
+						<select id="topic" multiple="multiple" class="form-control" data-placeholder="ISO {_messages.frontend.topic_category}"></select>
+					</div>
+
+					{* service type *}
+					<div id="panel-stype" class="form-group">
+						<label for="stype" class="control-label">Typ služby</label>
+						<select id="stype" multiple="multiple" class="form-control" data-placeholder="Service types"></select>
+					</div>
+
+					{* INSPIRE theme *}
+					<div class="form-group">
+						<label for="inspire" class="control-label">{_messages.frontend.inspire-theme}</label>
+						<select id="inspire" class="form-control" multiple="multiple" data-placeholder="INPSIRE"></select>
+					</div>
+					
+					{*  GEMET 
+					<div class="form-group">
+						<label for="message-text" class="control-label">GEMET</label>
+						<select id="gemet" class="form-control" multiple="multiple" data-placeholder="GEMET"></select>
+					</div> *}
+					
+					{*  Thesaurus 
+					<div class="form-group">
+						<label for="message-text" class="control-label">témata</label>
+						<select id="kw-2" class="form-control" multiple="multiple" data-placeholder="INPSIRE"></select>
+					</div> *}
+
+					{* Responsible party *}
+					<div class="form-group">
+						<label id="label-contact" for="contact" class="control-label">{_messages.frontend.contact}</label>
+						<select id="contact" class="form-control" multiple="multiple" data-placeholder="resource contact" aria-labelledby="label-contact"></select>
+					</div>
+					
+					{* Scale *}
+					<div id="panel-denominator" class="form-group">
+						<label id="label-denominator" for="denominator" class="control-label">{_messages.frontend.scale} 1:</label>
+						<select id="denominator" multiple="multiple" class="form-control" data-placeholder="měřítko" aria-labelledby="label-denominator"> </select>
+					</div>
+
+					{* Sort *}
+					<div class="form-group">
+						<label id="label-sort" for="denominator" class="control-label">{_messages.frontend.sort}</label><br/>
+						<select id="sort" class="form-control" data-reset="default" aria-labelledby="label-sort" style="width: 48%" >
+							<option value="title">{_messages.frontend.title}</option>
+							<option value="date">{_messages.frontend.last_update}</option>
+							<option value="bbox">{_messages.frontend.extent-similarity}</option>
+						</select>
+						<select id="sortdir" class="form-control" data-reset="default" aria-labelledby="label-sort" style="width: 48%" >
+							<option value="A">{_messages.frontend.ascending}</option>
+							<option value="D">{_messages.frontend.descending}</option>
+						</select>
+					</div>
+
+					</form>
+					<div class="panel-footer" style="text-align:center; padding: 10px 0 10px 0">
+						<button type="submit" class="btn btn-primary" onclick="searchForm.search();"><i class="fa fa-search fa-lg"></i> {_messages.frontend.search2} </button>
+						<button type="reset" class="btn btn-default" onclick="searchForm.clear();"><i class="fa fa-close fa-lg"></i> {_messages.frontend.clear}</button>
+					</div>
+				</div> {* panel- body *}
+
+                <div aria-label="..." class="panel-body text-center no-mobile">
+                        <a type="button" target="_blank" href="csw/?request=GetRecords&query={ifset $urlParams['query']}{urlencode($urlParams['query'])}{/ifset}&format=application/xml&MaxRecords=9999&StartPosition={ifset $urlParams['startposition']}{$urlParams['startposition']}{/ifset}&language={$appLang}&outputSchema=http://www.w3.org/2005/Atom" 
+                            class="btn btn-default" data-tooltip="tooltip" title="ATOM feed" data-container="body" data-placement="bottom" style="color:#D60">
+                            <i class="fa fa-feed fa-lg"></i> ATOM</a>
+                        <a type="button" href="csw/?request=GetRecords&query={ifset $urlParams['query']}{urlencode($urlParams['query'])}{/ifset}&format=application/xml&MaxRecords=9999&StartPosition={ifset $urlParams['startposition']}{$urlParams['startposition']}{/ifset}&language={$appLang}&outputSchema=http://www.w3.org/ns/dcat%23"  
+                            class="btn btn-default" data-tooltip="tooltip" title="GeoDCAT rdf/xml" data-container="body" data-placement="bottom" style="color:#090">
+                            <i class="fa fa-cube fa-lg"></i> DCAT</a>
+                        <a type="button" href="csw/?request=GetRecords&query={ifset $urlParams['query']}{urlencode($urlParams['query'])}{/ifset}&format=application/xml&MaxRecords=9999&StartPosition={ifset $urlParams['startposition']}{$urlParams['startposition']}{/ifset}&language={$appLang}&outputSchema=http://www.opengis.net/kml/2.2"
+                            class="btn btn-default" data-tooltip="tooltip" title="Google KML" data-container="body" data-placement="bottom" style="color:#03A">
+                            <i class="fa fa-globe fa-lg"></i> KML</a>
+                </div>    
+
+			</div> {* sidebar *}
+		
+			{* main area *}
+			<div id="results" class="container col-xs-12 col-md-8">
+				<div>
+					{* <ol class="breadcrumb">
+						<li class="active"><i class="fa fa-home fa-lg"></i></li>
+						<div aria-label="..." style="float: right">
+							<a href="{$basePath}/csw/?request=GetRecords&query={urlencode($urlParams['query'])}&format=application/xml&MaxRecords=9999&StartPosition={$urlParams['startposition']}&language={$MICKA_LANG}&outputSchema=http://www.w3.org/2005/Atom" class="head" data-tooltip="tooltip" title="ATOM" data-container="body" data-placement="bottom"><i class="fa fa-feed fa-lg"></i> </a>
+							<a href="{$basePath}/csw/?request=GetRecords&query={urlencode($urlParams['query'])}&format=application/xml&MaxRecords=9999&StartPosition={$urlParams['startposition']}&language={$MICKA_LANG}&outputSchema=http://www.w3.org/ns/dcat%23"  class="head" data-tooltip="tooltip" title="GeoDCAT rdf/xml" data-container="body" data-placement="bottom"><i class="fa fa-cube fa-lg"></i> </a>
+							<a href="{$basePath}/csw/?request=GetRecords&query={urlencode($urlParams['query'])}&format=application/xml&MaxRecords=9999&StartPosition={$urlParams['startposition']}&language={$MICKA_LANG}&outputSchema=http://www.opengis.net/kml/2.2" class="head" data-tooltip="tooltip" title="KML" data-container="body" data-placement="bottom"><i class="fa fa-globe fa-lg"></i> </a>
+						</div>
+					</ol> *}
+					<p>
+					{$records|noescape}
+					</p>
+				</div>
+			</div> {* results *}
+		</div> {* row *}
+	  </div> {* container *}
+
+  
+    {* autorization     
+    <div class="modal fade micka-user-dialog" tabindex="-1" role="dialog">
+        <form class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    Přihlášení
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <input id="user" type="text" class="form-control" placeholder="Jméno"/>
+                        <input id="pwd" type="password" class="form-control" placeholder="Heslo"/>
+                    </div>    
+                </div>
+                <div class="modal-footer bg-gray">
+                    <input type="submit" class="btn btn-primary" value="OK"/>
+                </div>           
+            </div>
+        </form>
+    </div> *}
+
+{/block}
+
+{block content-js}
+
+<script>
+    lang3 = {$appLang};
+	$(document).ready(function() {
+        HS.setLang(lang3);
+		searchForm = new SearchForm();
+		$( window ).unload(searchForm.saveCookie); 
+		searchForm.readCookie();
+		$('[data-tooltip="tooltip"]').tooltip();  
+		$('div.rec').on('mouseover', searchForm.hover);
+        //$('div.rec').on('mouseout', searchForm.unhover);
+	});
+</script>
+	
+{/block}
+

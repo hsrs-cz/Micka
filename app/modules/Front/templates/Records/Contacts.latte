@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Metadata - {_messages.frontend.contacts}</title>
+	<link rel="shortcut icon" href="{$basePath}{$themePath}/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="{$basePath}{$themePath}/micka.css">
+  <script type="text/javascript" src="{$basePath}/scripts/micka.js"></script>
+  <script type="text/javascript">
+		function md_delkont(id) {
+      		if(confirm({_messages.frontend.delete_record}+'?')) this.location=("?ak=md_contacts&action=delete&id="+id);
+		}
+  </script>
+</head>
+<body>
+<h2>{_messages.frontend.contacts}</h2>
+<br>
+<table class="sprava" width="100%">
+	<tr>
+		{if $mds != ''}
+		<th style="width:20px"></th>
+		{/if}
+		<th>{_messages.frontend.label}</th>
+		<th>{_messages.frontend.person}</th>
+		<th>{_messages.frontend.organisation}</th>
+		{if $user->loggedIn}
+			<th>&nbsp;</th>
+		{/if}
+	</tr>
+	{foreach $contacts as $contact}
+	<tr class="rowsel">
+		{if $mds != ''}
+		<td>
+			{if $mds == 'DC'}
+				<a href="javascript:opener.dc_kontakt1(
+					'',
+					'{$contact->cont_person}',
+					'{$contact->cont_organisation}',
+					'{$contact->cont_function}',
+					'{$contact->cont_phone}',
+					'{$contact->cont_fax}',
+					'{$contact->cont_point}',
+					'{$contact->cont_city}',
+					'{$contact->cont_adminarea}',
+					'{$contact->cont_postcode}',
+					'{$contact->cont_country}',
+					'{$contact->cont_email}',
+					'{$contact->cont_url}
+				'); window.close();">
+			{else}
+				<a href="javascript:opener.kontakt1(
+					'http://mysite.org/person/{$contact->cont_id}',
+					'{$contact->cont_person}',
+					'{$contact->cont_organisation}',
+					'{$contact->cont_organ_en}',
+					'{$contact->cont_function}',
+					'{$contact->cont_function_en}',
+					'{$contact->cont_phone}',
+					'{$contact->cont_fax}',
+					'{$contact->cont_point}',
+					'{$contact->cont_city}',
+					'{$contact->cont_adminarea}',
+					'{$contact->cont_postcode}',
+					'{$contact->cont_country}',
+					'{$contact->cont_email}',
+					'{$contact->cont_url}'
+				,{$contact->cont_id}); window.close();">
+			{/if}
+			<img src="{$basePath}{$themePath}/img/tick.png" title="Contact to MicKa"></a>
+		</td>
+		{/if}
+		<td>{$contact->cont_label}</td>
+		<td>{$contact->cont_person}</td>
+		<td>{$contact->cont_organisation}</td>
+	</tr>
+	{/foreach}
+</table>
+
+</body>
+</html>

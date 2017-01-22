@@ -1,0 +1,14 @@
+{block content}
+{$record|noescape}
+{/block}
+
+{block content-js}
+<script>
+	$(document).ready(function() {
+		this.overMap = new OverMap({} );
+		this.overMap.drawMetadata();
+		$('[data-tooltip="tooltip"]').tooltip();  
+	});
+</script>
+{/block}
+

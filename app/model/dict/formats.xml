@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Zde neni multilingualita - vyplni se code -->
+<userValues>
+  <translation lang="eng">
+	  <group>
+	  	<title>GIS vector</title>
+	  	<entry code="GML">Geography Markup Language (GML)</entry>
+	  	<entry code="SHP">ESRI Shapefile (SHP)</entry>
+	  	<entry code="ArcSDE">ESRI ArcSDE (ArcSDE)</entry>
+	  	<entry code="Geodatabase">ESRI Geodatabase (Geodatabase)</entry>
+	  	<entry code="MAPINFO">Mapinfo</entry>
+	  	<entry code="DGN">Microstation (DGN)</entry>
+	  	<entry code="DWG">AutoCAD (DWG)</entry>
+	  	<entry code="DXF">AutoCAD (DXF)</entry>
+	  	<entry code="ORACLE SDO">ORACLE SDO</entry>
+	  	<entry code="POSTGIS">PostgreSQL/Postgis (POSTGIS)</entry>
+	  	<entry code="DBF">DBF</entry>
+	  </group>
+	  <group>
+	    <title>GIS raster</title>
+	  	<entry code="image/tiff">TIFF</entry>
+	  	<entry code="image/geotiff">GeoTIFF</entry>
+	  	<entry code="image/mrsid">MrSID</entry>
+	  	<entry code="image/ecw">ECW</entry>
+	  	<entry code="image/jpeg">JPEG</entry>
+	  	<entry code="image/j2">JPEG 2000</entry>
+	  	<entry code="image/cit">CIT</entry>
+	  	<entry code="ESRI GRID">ESRI GRID</entry>
+	  </group>
+	  <group>
+	    <title>Other</title>
+	  	<entry code="application/doc">Word document (doc)</entry>
+	  	<entry code="application/pdf">pdf document (pdf)</entry>
+	  	<entry code="application/xml">xml document xml</entry>
+	  	<entry code="application/xsd">xml schema (xsd)</entry>
+	  </group>
+	</translation>
+  <translation lang="cze">
+	  <group>
+	  	<title>GIS vector</title>
+	  	<entry code="GML">Geografický značkovací jazyk (GML)</entry>
+	  	<entry code="SHP">ESRI Shapefile (SHP)</entry>
+	  	<entry code="ArcSDE">ESRI ArcSDE (ArcSDE)</entry>
+	  	<entry code="Geodatabase">ESRI Geodatabase (Geodatabase)</entry>
+	  	<entry code="MAPINFO">Mapinfo</entry>
+	  	<entry code="DGN">Microstation (DGN)</entry>
+	  	<entry code="DWG">AutoCAD (DWG)</entry>
+	  	<entry code="DXF">AutoCAD (DXF)</entry>
+	  	<entry code="ORACLE SDO">ORACLE SDO</entry>
+	  	<entry code="POSTGIS">PostgreSQL/Postgis (POSTGIS)</entry>
+	  	<entry code="DBF">DBF</entry>
+	  </group>
+	  <group>
+	    <title>GIS rastr</title>
+	  	<entry code="image/tiff">TIFF</entry>
+	  	<entry code="image/geotiff">GeoTIFF</entry>
+	  	<entry code="image/mrsid">MrSID</entry>
+	  	<entry code="image/ecw">ECW</entry>
+	  	<entry code="image/jpeg">JPEG</entry>
+	  	<entry code="image/j2">JPEG 2000</entry>
+	  	<entry code="image/cit">CIT</entry>
+	  	<entry code="ESRI GRID">ESRI GRID</entry>
+	  </group>
+	  <group>
+	    <title>Jiné</title>
+	  	<entry code="application/docx">dokument Word (docx)</entry>
+	  	<entry code="application/pdf">document pdf (pdf)</entry>
+	  	<entry code="application/xml">document xml (xml)</entry>
+	  	<entry code="application/xsd">xml schéma (xsd)</entry>
+	  </group>
+	</translation>
+</userValues>	  

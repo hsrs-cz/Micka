@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<userValues>
+  <translation lang="eng">
+  	  <title>Resource type CGS</title>
+	  <group>
+	  	<title>Czech version</title>
+		<entry code="WEB_cze">Web page (CS)</entry>
+		<entry code="ARCH_cze">Digital archive (CS)</entry>
+		<entry code="DVD_cze">DVD/CD (CS)</entry>
+		<entry code="WMS_cze">WMS (CS)</entry> 
+		<entry code="PRINT_cze">Shop - printed (CS)</entry> 
+		<entry code="ESRI-IMS_cze">ArcIMS (CS)</entry>
+		<entry code="ESRI-SRV_cze">ArcGIS (CS)</entry>
+		<entry code="MAP_cze">Map application (CS)</entry>
+		<entry code="DB_cze">Database application (CS)</entry>
+		<entry code="GREP_cze">Georeport (CS)</entry>
+		<entry code="CSW">CSW</entry> 
+	  </group>
+	  <group>
+	  	<title>English version</title>
+		<entry code="WEB_eng">Web page (EN)</entry>
+		<entry code="ARCH_eng">Digital archive (EN)</entry>
+		<entry code="PRINT_eng">Shop - printed (EN)</entry> 
+		<entry code="DVD_eng">DVD/CD (EN)</entry>
+		<entry code="WMS_eng">WMS (EN)</entry> 
+		<entry code="ESRI-IMS_eng">ArcIMS (EN)</entry>
+		<entry code="ESRI-SRV_eng">ArcGIS (EN)</entry>
+		<entry code="MAP_eng">Map application (EN)</entry>
+		<entry code="DB_eng">Database application (EN)</entry>
+		<entry code="GREP_eng">Georeport (EN)</entry>
+		<entry code="CSW">CSW</entry> 
+	  </group>
+	  <group>
+	  	<title>Access</title>
+		<entry code="INT">Internal</entry>
+		<entry code="OUT">Out of operation</entry>
+	  </group>
+	</translation>
+
+
+  <translation lang="cze">
+  	  <title>Typ zdroje CGS</title>
+	  <group>
+	  	<title>Česká verze</title>
+		<entry code="WEB_cze">Webová stránka (CS)</entry>
+		<entry code="ARCH_cze">Digitální archív (CS)</entry>
+		<entry code="PRINT_cze">Obchod - tisk (CS)</entry> 
+		<entry code="DVD_cze">Obchod - DVD/CD (CS)</entry>
+		<entry code="WMS_cze">WMS (CS)</entry> 
+		<entry code="ESRI-IMS_cze">ArcIMS (CS)</entry>
+		<entry code="ESRI-SRV_cze">ArcGIS (CS)</entry>
+		<entry code="MAP_cze">Mapová aplikace (CS)</entry>
+		<entry code="DB_cze">Databázová aplikace (CS)</entry>
+		<entry code="GREP_cze">Georeport (CS)</entry>
+		<entry code="CSW">CSW</entry> 
+	  </group>
+	  <group>
+	  	<title>Anglická verze</title>
+		<entry code="WEB_eng">Webová stránka (EN)</entry>
+		<entry code="ARCH_eng">Digitální archív (EN)</entry>
+		<entry code="PRINT_eng">Obchod - tisk (EN)</entry> 
+		<entry code="DVD_eng">Obchod - DVD/CD (EN)</entry>
+		<entry code="WMS_eng">WMS (EN)</entry> 
+		<entry code="ESRI-IMS_eng">ArcIMS (EN)</entry>
+		<entry code="ESRI-SRV_eng">ArcGIS (EN)</entry>
+		<entry code="MAP_eng">Mapová aplikace (EN)</entry>
+		<entry code="DB_eng">Databázová aplikace (EN)</entry>
+		<entry code="GREP_eng">Georeport (EN)</entry>
+		<entry code="CSW">CSW</entry> 
+	  </group>
+	  <group>
+	  	<title>Přístup</title>
+		<entry code="INT">Neveřejný</entry>
+		<entry code="OUT">Odstavený</entry>
+	  </group>
+	</translation>
+</userValues>	

@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<help>
+<title>Charakteristický a v rámci organizace jedinečný název datové sady. Položka 1.1 z nařízení 1205/2008.</title>
+<abstract>Stručné popisné shrnutí obsahu datové sady. Položka 1.2 z nařízení 1205/2008.</abstract>
+<scale>Měřítko mapy, ze které byla datová sada odvozena. Hodnota se vyjádří jako celé číslo vyjadřující jmenovatele měřítkového čísla. Položka 6.2 z nařízení 1205/2008. Snažte se tuto hodnotu uvádět vždy, pokud je to možné (kvlůli následnému vyhledávání). Alternativně lze uvést rozlišení.</scale>
+<distance>Přesnost/rozlišení zákresu datové sady v metrech. Hodnota rozlišení se vyjádří jako celočíselná hodnota od nuly do nekonečna. Položka 6.2 z nařízení 1205/2008.</distance>
+<lineage>Historie vzniku datové sady zejména s ohledem na kvalitu dat (např. způsob digitalizace, transformace apod.). Kde je to vhodné, může být uvedeno, zda se jedná o oficiální verzi a zda má právní platnost. Položka 6.1 z nařízení 1205/2008.</lineage>
+<purpose>Důvod vytvoření DS. Např. citace zákona, vyhlášky apod.</purpose>
+<keywords>Seznam dalších klíčových slov - uveďte každé na nový řádek. Položka 3.1 z nařízení 1205/2008.</keywords>
+<date>Datum zveřejnění, poslední revize nebo vytvoření dat. Alespoň jeden z těchto údajů musí být vyplněn. Datum zadávejte ve formátu "Den.Měsíc.Rok", např. 24.12.2006. Položka může být vícenásobná. Položky 5.2, 5.3, 5.4 z nařízení 1205/2008.</date>
+<date_0_type>Zvolený typ data</date_0_type>
+<spatialRepr>Prostorové vyjádření dat.</spatialRepr>
+<coordSys>Souřadnicový systém, ve kterém jsou data pořízena.</coordSys>
+<spatialExt>prvek určuje prostorový rozsah datové sady. Rozsah je možné zadat výřezem v mapě nebo přímým zadáním rohových souřadnic. Položka 4.1 z nařízení 1205/2008.</spatialExt>
+<extDescription>Textový popis rozsahu. Vypište např. správní území, které jsou daty pokryty.</extDescription>
+<extTime>Časový rozsah platnosti dat. Uveďte buď datum počátku a konce (např. platnost správních hranic), nebo jedno datum (např. u leteckých snímků). Položka 5.1 z nařízení 1205/2008.</extTime>
+<format_name>V jakém formátu jsou data uložena nebo distribuována</format_name>
+<format_ver>Verze formátu dat. Je nutno ji uvést, pokud uvádíte formát dat.</format_ver>
+<onLine>Internetová adresa, na které je možno data stáhnout, zobrazit nebo získat bližší informace.</onLine>
+<topic>Tématické zařazení dat, Můžete uvést více témat. POVINNÉ!!!</topic>
+<contactData>Kontantní informace na autora nebo správce dat. Položka 9.1 z nařízení 1205/2008.</contactData>
+<contactMetadata>Kontantní informace na autora metadat. </contactMetadata>
+<geom>Obsažené geometrické typy objektů. Jedna datová sada může obsahovat více geometrických typů, např. linie a body.</geom>
+<media>Nosič, na kterém jsou data předávána.</media>
+<mediaCount>Počet nosičů.</mediaCount>
+<spatialExt>Čtveřice zeměpisných souřadnic. Zadejte pod mapou nebo vyberte v mapě tažením obdélníku nebo odečtěte celý rozsah mapy ťuknutím na šipku pod mapou. Položka 4.1 z nařízení 1205/2008.</spatialExt>
+<licence>Text licence nebo URL na dokument</licence>
+<inspire>Zařazení datové sady k tématům INSPIRE. Výběr z číselníku. Položka 3.1 z nařízení 1205/2008.</inspire>
+<gemet>Klíčová slova z thesauru GEMET. Zadejte alespoň jedno klíčové slovo. Výběr z číselníku. Položky 3.1 a 3.2 z nařízení 1205/2008.</gemet>
+<fileIdentifier>Jednoznačný identifikátor metadatového záznamu. Typicky UUID. POZOR! Pod tímto identifikátorem jsou záznamy ukládány v katalogu.</fileIdentifier>
+<parentIdentifier>Identifikátor nadřízeného záznamu (např. série).</parentIdentifier>
+<identifier>Hodnota, která jednoznačně identifikuje zdroj. Identifikátor je uváděn jako URI v http formátu - označení organizace a kódu datové sady (např. http://organizace.cz/kod_datove_sady). Položka 1.5 z nařízení 1205/2008.</identifier>
+<access>Omezení veřejného přístupu k datové sadě. Typicky poplatky. Uveďte odkaz (URL) na licenci k datové sadě. Položka 8.2 z nařízení 1205/2008.</access>
+<limitation>Podmínky vztahující se k přístupu a použití datové sady. Pokud neplatí žádné podmínky, použije se "no conditions apply", pokud podmínky nejsou známy, použije se "conditions unknown". Položka 8.1 z nařízení 1205/2008.</limitation>
+<linkage>ULR zdroje</linkage>
+<protocol>Protokol, ve kterém zdroj pracuje, Vyberte z číselníku.</protocol>
+<online_0_function>Funkce zdroje</online_0_function>
+<distributor>Název organizace, která je zodpovědná za distribuci dat.</distributor>
+<compliant>Prvek uvádí, zde je datová sada v souladu se specifikacemi INSPIRE. Hodnota tohoto prvku je definována v části D.5 nařízení 1205/2008. Pokud nebyl soulad hodnocen, neuvádějte položku Specifikace. Položka 7.2 z nařízení 1205/2008.</compliant>
+<specification>Specifikace INSPIRE, vůči které je soulad datové sady hodnocen. Pokud soulad nebyl hodnocen, specifikaci neuvádějte. Položka 7.1 z nařízení 1205/2008.</specification>
+<organisation>Organizace</organisation>
+<delivetyPoint>Dodací místo</delivetyPoint>
+<city>Obec</city>
+<role>Role organizace vůči zdroji. Vyplňujte jako první "Kontaktní bod"</role>
+<maintenance>Četnost aktualizace zdroje.</maintenance>
+<coorSys>Souřadnicový systém, ve kterém jsou data k dispozici</coorSys>
+<spatial>Prostorová reprezentace</spatial>
+<hierarchyLevel>Typ zdroje, který je popisován metadaty. Hodnota tohoto prvku metadat je definována v části D.1 nařízení 1205/2008. Položka 1.3 z nařízení 1205/2008.</hierarchyLevel>
+<language>Jazyk, kterým jsou vyjádřeny prvky metadat. Položka 10.3 z nařízení 1205/2008.</language>
+<topicCategory>Tematická kategorie představuje nejhrubší klasifikaci napomáhající při seskupování a tematickém vyhledávání datových sad. Hodnoty jsou definovány v části D.2 nařízení 1205/2008. Položka 2.1 z nařízení 1205/2008.</topicCategory>
+<dataContact>Popis osoby nebo organizace odpovídající za vytvoření, řízení, údržbu a distribuci zdroje. Položka 9.1 z nařízení 1205/2008.</dataContact>
+<contact>Popis organizace odpovědné za vytvoření a údržbu metadat. Položka 10.1 z nařízení 1205/2008. Alespoň jedna uváděná organizace musí mít roli="Kontaktní bod"</contact>
+<operatesOn>Pokud je zdrojem služba založená na prostorových datech, určuje v relevantních případech tento prvek metadat cílový soubor či cílové soubory prostorových dat služby prostřednictvím jejich jedinečným identifikátorů zdroje (URI).</operatesOn>
+<mdlang>Jazyk, ve kterém jsou pořizována metadata. (Metadatové záznamy mohou být multilingvální, zde je vyznačen "hlavní jazyk".) Položka 10.3 z nařízení 1205/2008.</mdlang>
+</help>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<midas>
+  <keywords>
+    <theme code="101" iso="geoscientificInformation">Horninové prostředí, nerostné suroviny</theme>
+    <theme code="102" iso="geoscientificInformation">Půda</theme>
+    <theme code="103" iso="inlandWaters">Voda</theme>
+    <theme code="104" iso="climatologyMeteorologyAtmosphere">Ovzduší</theme>
+    <theme code="105" iso="biota">Fauna</theme>
+    <theme code="106" iso="biota">Flóra</theme>
+    <theme code="107" iso="environment">Ekologie, ochrana přírody</theme>
+    <theme code="201" iso="economy">Průmysl a energetika</theme>
+    <theme code="202" iso="farming">Zemědělství</theme>
+    <theme code="203" iso="economy">Lesnictví a myslivost</theme>
+    <theme code="204" iso="transportation">Doprava</theme>
+    <theme code="205" iso="society">Školství</theme>
+    <theme code="206" iso="society">Věda a výzkum</theme>
+    <theme code="207" iso="health">Zdravotnictví a soc. péče</theme>
+    <theme code="208" iso="economy">Bankovnictví, pojišťovnictví</theme>
+    <theme code="209" iso="economy">Obchod</theme>
+    <theme code="210" iso="environment">Odpady</theme>
+    <theme code="211" iso="society">Legislativa</theme>
+    <theme code="212" iso="economy">Hospodářství, ekonomika</theme>
+    <theme code="213" iso="economy">Podnikání</theme>
+    <theme code="214" iso="society">Veřejná správa, administrativa</theme>
+    <theme code="215" iso="utilitiesCommunication">Informační a komunikační technologie</theme>
+    <theme code="301" iso="intelligenceMilitary">Krizový management</theme>
+    <theme code="302" iso="intelligenceMilitary">Vojenství</theme>
+    <theme code="303" iso="intelligenceMilitary">Bezpečnost, ochrana, kriminalita</theme>
+    <theme code="401" iso="society">Volný čas</theme>
+    <theme code="402" iso="society">Cestovní ruch</theme>
+    <theme code="403" iso="structure">Občanská vybavenost, služby</theme>
+    <theme code="404" iso="utilitiesCommunication">Technická infrastruktura</theme>
+    <theme code="405" iso="planningCadastre">Územní rozvoj a plánování</theme>
+    <theme code="406" iso="society">Historie</theme>
+    <theme code="407" iso="society">Kulturní dědictví</theme>
+    <theme code="408" iso="planningCadastre">Limity území</theme>
+    <theme code="409" iso="society">Obyvatelstvo, demografie, statistika</theme>
+    <theme code="501" iso="planningCadastre">Majetek</theme>
+    <theme code="502" iso="planningCadastre">Katastr nemovitostí</theme>
+    <theme code="601" iso="imageryBaseMapsEarthCover">Základní mapy, mapová díla</theme>
+    <theme code="602" iso="planningCadastre">Geodetická měření</theme>
+    <theme code="603" iso="elevation">Výškopis</theme>
+    <theme code="604" iso="imageryBaseMapsEarthCover">Dálkový průzkum</theme>
+    <theme code="605" iso="location">Geokódování, lokalizace</theme>
+  </keywords>
+</midas>
