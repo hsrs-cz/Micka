@@ -1,7 +1,9 @@
 <?php
 namespace App\Model;
+use Nette;
 
-class MdFull {
+class MdFull  extends \BaseModel
+{
 	private $labels = array();
 	private $values = array();
 	private $detail = array();
@@ -14,143 +16,49 @@ class MdFull {
 	private $pmb;
 	private $smaz;
 	private $hierarchy = '';
-	private $mds = '';
     private $mark_http = FALSE;
     private $appLang = 'eng';
 
-	/**
-	 *  Určení jazyka, který se použije pro výběr dat.
-	 *  Priorita: 1. MICKA_LANG, 2. ENG, 3. první v pořadí
-	 *
-	 * @param string $langs seznam jazyků z tabulky MD.langs
-	 * @return string
-	 */
-	private function getLangValue($langs) {
-		if (substr_count($langs, MICKA_LANG) > 0) {
-			return MICKA_LANG;
-		}
-		if (getCountLang($langs) == 1) {
-			return $langs;
-		}
-		else {
-			$md_langs = getMdLangs($langs);
-			if (array_search('eng', $md_langs) === FALSE) {
-					return $md_langs[0];
-			}
-			else {
-				return 'eng';
-			}
-		}
+	public function startup()
+	{
+		parent::startup();
+	}
+    
+	private function getFullMdValues($recno, $appLang)
+	{
+        return $this->db->query("
+        	SELECT md_values.md_value, md_values.md_id, md_values.md_path,  md_values.lang, md_values.package_id, elements.form_code, elements.el_id, elements.from_codelist
+			FROM (elements RIGHT JOIN tree ON elements.el_id = tree.el_id) RIGHT JOIN md_values ON tree.md_id = md_values.md_id
+			WHERE md_values.recno=? AND (md_values.lang='xxx' OR md_values.lang='uri' OR md_values.lang=?)
+            ORDER BY tree.md_left, md_values.md_path
+            ", $recno,$appLang)->fetchAll();
 	}
 
-	function getMdMaster($uuid) {
-		$rs = array();
-		if ($uuid == '') {
-			return $rs;
-		}
-		$sql = array();
-		array_push($sql, "
-			SELECT md.recno, md.uuid, md.title, " . setNtext2Text('md_values.', 'md_value') . ", md_values.lang
-			FROM  md INNER JOIN md_values ON (md.recno = md_values.recno)
-				INNER JOIN tree ON (md_values.md_id = tree.md_id)
-				AND (md.md_standard = tree.md_standard)
-			WHERE tree.md_mapping = 'title' AND uuid=%s
-			ORDER BY recno
-		",$uuid);
-		$result = _executeSql('select', $sql, array('all'));
-		if (is_array($result) && count($result) > 0) {
-			$pom = array();
-			foreach ($result as $row) {
-				$pom['uuid'] = $row['UUID'];
-				$pom['text'] = $row['TITLE'];
-				if ($row['LANG'] == MICKA_LANG) {
-					$pom['text'] = $row['MD_VALUE'];
-					break;
-				}
-			}
-			array_push($rs, $pom);
-		}
-		return $rs;
-	}
-
-	function getMdSlave($uuid) {
-		$rs = array();
-		if ($uuid == '') {
-			return $rs;
-		}
-		$sql = array();
-		array_push($sql, "
-			SELECT md.recno, md.uuid
-			FROM (md INNER JOIN md_values ON md.recno = md_values.recno) INNER JOIN standard ON md.md_standard = standard.md_standard
-		");
-		if (DB_DRIVER == 'mssql') {
-			array_push($sql, "
-				WHERE md.md_standard=0 AND md_values.md_id=121 AND md_values.md_value like %s
-			", $uuid);
-		}
-		else {
-			array_push($sql, "
-				WHERE md.md_standard=0 AND md_values.md_id=121 AND md_values.md_value=%s
-			", $uuid);
-		}
-		array_push($sql, "
-			ORDER BY md_values.recno
-		");
-		$result = _executeSql('select', $sql, array('all'));
-		if (is_array($result) && count($result) > 0) {
-			foreach ($result as $row) {
-				$pom['uuid'] = $row['UUID'];
-				$pom['text'] = '';
-				$sql2 = array();
-				array_push($sql2, "
-					SELECT " . setNtext2Text('', 'md_value') . ",lang FROM md_values WHERE md_id=11 AND recno=%i
-				", $row['RECNO']);
-				$result2 = _executeSql('select', $sql2, array('all'));
-				foreach ($result2 as $row2) {
-					$pom['text'] = $row2['MD_VALUE'];
-					if ($row2['LANG'] == MICKA_LANG) {
-						$pom['text'] = $row2['MD_VALUE'];
-						break;
-					}
-				}
-				array_push($rs, $pom);
-			}
-		}
-		return $rs;
-	}
-
-	function getSpatialRep($recno) {
-		$rs = array();
-		$sql = array();
-		$param = '/MD_Metadata/spatialRepresentationInfo/MD_GridSpatialRepresentation%';
-
-		$sql[] = "
-			SELECT " . setNtext2Text('md_values.', 'md_value') . "
-			FROM (md_values INNER JOIN md ON md_values.recno = md.recno) INNER JOIN tree ON (md.md_standard = tree.md_standard) AND (md_values.md_id = tree.md_id)
-			WHERE md_values.recno=$recno AND tree.md_path_el like '$param'
-		";
-		$result = _executeSql('select', $sql, array('single'));
-		if ($result != '') {
-			$rs[0] = 'grid';
-		}
-		else {
-			$param = '/MD_Metadata/spatialRepresentationInfo/MD_VectorSpatialRepresentation/geometricObjects/geometricObjectType%';
-			$sql = array();
-			$sql[] = "
-				SELECT md_values.md_id," . setNtext2Text('md_values.', 'md_value') . "
-				FROM (md_values INNER JOIN md ON md_values.recno = md.recno) INNER JOIN tree ON (md.md_standard = tree.md_standard) AND (md_values.md_id = tree.md_id)
-				WHERE md_values.recno=$recno AND tree.md_path_el like '$param'";
-			$result = _executeSql('select', $sql, array('all'));
-			if (is_array($result) && count($result) > 0) {
-				foreach ($result as $row) {
-					$rs[] = $row['MD_VALUE'];
-				}
-			}
-		}
-		return $rs;
-	}
-
-	private function print_array($values, $level, $min_id, $level_inc=FALSE, $lang='xxx') {
+	private function getElementsLabel($mds,$appLang)
+	{
+        $tree = $this->db->query('SELECT md_left, md_right FROM tree WHERE md_id=0 AND md_standard=?', 
+                $mds == 10 ? 0 : $mds)->fetch();
+        $result = $this->db->query("
+			SELECT elements.el_id, elements.el_name, elements.el_short_name, elements.only_value, tree.md_id,
+				tree.md_level, tree.package_id, label.label_text, label.label_help
+			FROM (label INNER JOIN elements ON label.label_join = elements.el_id) INNER JOIN tree ON elements.el_id = tree.el_id
+			WHERE tree.md_left>=?  AND tree.md_right<=? AND label.lang=? AND label.label_type='EL' AND tree.md_standard=?
+            ORDER BY tree.md_left
+		", $tree->md_left, $tree->md_right, $appLang, $mds == 10 ? 0 : $mds)->fetchAll();
+        return $result;
+    }
+    
+    private function getCodeListLabel($appLang)
+    {
+        return $this->db->query("
+            SELECT label.label_text
+            FROM codelist INNER JOIN label ON codelist.codelist_id = label.label_join
+            WHERE label.label_type='CL' AND label.lang=?
+		", $appLang)->fetchAll();
+    }
+    
+	private function print_array($values, $level, $min_id, $level_inc=FALSE, $lang='xxx')
+    {
 		foreach ($values as $key => $item) {
 			if (is_array($item)) {
 				if ($key{0} != 'P' && $key > $min_id) {
@@ -204,74 +112,8 @@ class MdFull {
 		}
 	}
 
-	private function getMdValuesMdId($recno, $mds, $lang_data) {
-		$rs = FALSE;
-		$sql = array();
-		$value = '';
-		if ($mds == 10) {
-			$mds = 0;
-		}
-		array_push($sql, "
-			SELECT " . setNtext2Text('md_values.', 'md_value') . ", md_values.md_path, md_values.lang, md_values.md_id, md_values.package_id, elements.form_code, elements.from_codelist
-			FROM md INNER JOIN md_values ON (md.recno=md_values.recno) AND (md_values.recno=md.recno)
-				INNER JOIN tree ON (md_values.md_id=tree.md_id)
-				INNER JOIN elements ON (tree.el_id=elements.el_id)
-			WHERE md_values.md_id>-1 AND tree.md_standard=%i AND md_values.recno=%i
-				AND (md_values.lang='xxx' OR md_values.lang=%s)
-			ORDER BY md_values.md_path, md_values.lang
-		", $mds, $recno, $lang_data);
-		$result = _executeSql('select', $sql, array('all'));
-		foreach ($result as $row) {
-			$md_id = $row['MD_ID'];
-			$value = $row['MD_VALUE'];
-			switch ($row['FORM_CODE']) {
-				case 'D':
-					if (MICKA_LANG == 'cze') {
-						$value = dateIso2Cz($value);
-					}
-					break;
-				case 'C':
-					if (!$row['FROM_CODELIST'] == '') {
-						$el_id = $row['FROM_CODELIST'];
-					}
-					else {
-						$el_id = $row['EL_ID'];
-					}
-					// hierarchy
-					if ($mds == 0 && $md_id == 623) {
-						$this->hierarchy = $value;
-					}
-					$value = getLabelCodeList($value, $el_id);
-					break;
-				default:
-			}
-			if ($row['PACKAGE_ID'] == 7) {
-						$label = '$rs'. getMdPath($row['MD_PATH']) . "='" . $value . "';";
-						eval($label);
-			}
-			$rs[$md_id][] = $value;
-		}
-		return $rs;
-	}
-    
-    private function getLabelCodeList($value, $el_id) {
-        $rs = $value;
-        if ($value != '' && $el_id != '') {
-            $sql = array();
-            array_push($sql, "
-                SELECT label.label_text
-                FROM codelist INNER JOIN label ON codelist.codelist_id = label.label_join
-                WHERE codelist.el_id=%i AND label.label_type='CL' AND label.lang=%s AND codelist.codelist_name=%s
-            ", $el_id, MICKA_LANG, $value);
-            $result = _executeSql('select', $sql, array('single'));
-            if ($result != '') {
-                $rs = $result;
-            }
-        }
-        return $rs;
-    }
-
-	private function getRecordValueArray($record) {
+	private function getRecordValueArray($record)
+    {
 		$rs = array();
 		foreach($record as $neco){
 			foreach($neco as $zaseneco){
@@ -296,7 +138,8 @@ class MdFull {
 		return $rs;
 	}
 
-	private function getMdLabels($label, $pid = -1) {
+	private function getMdLabels($label, $pid = -1)
+    {
 		$rs = array();
 		$package_id = -1;
 		foreach($label as $n=>$row) {
@@ -312,7 +155,8 @@ class MdFull {
 		return $rs;
 	}
 
-	private function getMdValuesAll($values, $mds, $pid = -1, $hyper = -1) {
+	private function getMdValuesAll($values, $mds, $pid = -1, $hyper = -1)
+    {
 		$rs = array();
 		foreach($values as $row) {
             if ($mds == 0 && $pid != 0 && $row->package_id == 0) {
@@ -376,17 +220,21 @@ class MdFull {
 		return $rs;
 	}
 
-	public function getMdFullView($values, $labelEl, $labelCl) {
-        $mds = 0;
+	public function getMdFullView($recno, $mds, $appLang)
+    {
+        $this->appLang = $appLang;
+        $values = $this->getFullMdValues($recno, $appLang);
+        $labelEl = $this->getElementsLabel($mds, $appLang);
+        $labelCl = $this->getCodeListLabel($appLang);
+        
 		$this->labels  = $this->getMdLabels($labelEl, -2);
-		// všechny packages kromě MD_Metadata
+		// outside MD_Metadata
 		$this->values = $this->getRecordValueArray($this->getMdValuesAll($values, $mds, -1, 1));
 		$this->print_array($this->values, 0, 0);
-		// package MD_Metadata
+		// MD_Metadata
 		$this->values = $this->getRecordValueArray($this->getMdValuesAll($values, $mds, 0, 1));
 		$this->print_array($this->values, 0, -1, TRUE);
 		return $this->detail;
 	}
 
 }
-?>

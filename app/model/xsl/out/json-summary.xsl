@@ -80,9 +80,33 @@
 
     $json['records'][] =$rec;
 </xsl:template>	
-	
-	<!-- pro DC zaznamy -->
-  <xsl:template match="csw:Record" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/">
+
+<!-- Feature catalogue -->
+<xsl:template match="gfc:FC_FeatureCatalogue" xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+    <xsl:variable name="mdlang" select="../@lang"/>
+    $rec['trida']='fc';
+    $rec['title'] = '<xsl:call-template name="multi">
+			   		<xsl:with-param name="el" select="gmx:name"/>
+			   		<xsl:with-param name="lang" select="$lang"/>
+			   		<xsl:with-param name="mdlang" select="$mdlang"/>
+			  	</xsl:call-template>'; 
+    $rec['abstract'] = '<xsl:call-template name="multi">
+		   		<xsl:with-param name="el" select="gmx:scope"/>
+		   		<xsl:with-param name="lang" select="$lang"/>
+		   		<xsl:with-param name="mdlang" select="$mdlang"/>
+		  	</xsl:call-template>';
+    $rec['id'] = '<xsl:value-of select="../@uuid"/>';
+    $f = array();
+    <xsl:for-each select="gfc:featureType">    
+        $f['name'] = '<xsl:value-of select="*/gfc:typeName/*"/>';
+    </xsl:for-each>
+    $rec['features'][] = $f;
+    $json['records'][] =$rec;
+</xsl:template>	
+
+
+<!-- pro Dublin Core -->
+<xsl:template match="csw:Record" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/">
     <xsl:variable name="apos">'</xsl:variable>
 		$rec = array();
 	  	$rec['trida'] = '<xsl:value-of select="dc:type"/>';
@@ -93,11 +117,11 @@
 		$rec['link'] = '<xsl:value-of select="dc:identifier[substring(.,1,4)='http']"/>';
 		$rec['bbox'] = '<xsl:value-of select="ows:BoundingBox/ows:LowerCorner"/><xsl:text> </xsl:text><xsl:value-of select="ows:BoundingBox/ows:UpperCorner"/>';
    		$json['records'][] =$rec;
-	</xsl:template> 
+</xsl:template> 
 	
 
- <!-- pro multiligualni nazvy -->
-  <xsl:template name="multi">
+ <!-- multilingual fields -->
+<xsl:template name="multi">
     <xsl:param name="el"/>
     <xsl:param name="lang"/>
     <xsl:param name="mdlang"/>
@@ -111,7 +135,7 @@
     	  <xsl:value-of select="php:function('addslashes', normalize-space($el/gco:CharacterString))"/>
     	</xsl:otherwise>
     </xsl:choose>
-  </xsl:template>
+</xsl:template>
 
   
 </xsl:stylesheet>

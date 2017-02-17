@@ -1,17 +1,11 @@
 <?php
-namespace Micka\Module\Admin\Presenters;
+namespace AdminModule;
 
 use App\Model;
 
-/** @resource Admin:Homepage */
-class HomepagePresenter extends \Micka\Module\Base\Presenters\BasePresenter
+/** @resource Admin */
+class HomepagePresenter extends \BasePresenter
 {
-	/** @var Model\MdRepository */
-	private $md;
-
-
-
-
 	public function startup()
 	{
 		parent::startup();
@@ -21,7 +15,7 @@ class HomepagePresenter extends \Micka\Module\Base\Presenters\BasePresenter
 
 	/********************* view default *********************/
 
-    /** @resource Admin:Homepage */
+    /** @resource Admin */
 	public function renderDefault()
 	{
 	

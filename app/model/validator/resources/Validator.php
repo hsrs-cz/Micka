@@ -147,6 +147,13 @@ class Validator{
         //"gmd" => "http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd", // FIXME - uvest do validace
         "wms" => 'http://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd'
     );
+    var $icons = array(
+        "pass" => "check-square",
+        "warning" => "exclamation-triangle",
+        "fail" => "ban",
+        "notice" => "info-circle"
+        
+    );
     
     function __construct($type="gmd", $lang='eng'){
         if(!in_array($type, array("gmd", "gmd_inspire", "wms", "csw", "download"))) $type="gmd";
@@ -318,7 +325,7 @@ class Validator{
 				if(!$row['err']) $row['err'] = (string)$this->msg->msg->mv;
 				if($row['xpath']) $row['err'] .= " (" . $row['xpath'] . ")";
 			}
-			$output .= "<div class='row'><div class='hd ".$class."'>(" . $row['code'] . ")</div>";
+			$output .= '<div class="row"><div class="hd"><span class="'.$class.'"><i class="fa fa-'.$this->icons[$class].' fa-fw fa-lg"></i></span> (' . $row['code'] . ')</div>';
 			$output .= "<div class='msgs'><div class='title' id='VAL-".$row['code']."'>" . $row['description'] . "</div>";
 			if($row['value']) $output .= "<div class='value'>" . $row['value'] . "</div>";
 			if($row['err']) $output .= "<div class='msg-".$class."'>" . $row['err'] . "</div>";

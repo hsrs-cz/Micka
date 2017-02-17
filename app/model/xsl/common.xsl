@@ -9,101 +9,101 @@
 
 
   <xsl:template name="contact">
-  <xsl:param name="org"/>
-  <xsl:param name="mdLang"/>
-  <xsl:for-each select="$org/CI_ResponsibleParty">
-  <gmd:CI_ResponsibleParty>
-    <xsl:if test="id">
-      <xsl:attribute name="uuid"><xsl:value-of select="id"/></xsl:attribute>
-    </xsl:if>
-		<xsl:if test="individualName">
-			<gmd:individualName>
-				<gco:CharacterString><xsl:value-of select="individualName"/></gco:CharacterString>
-		  	</gmd:individualName>
-		</xsl:if>
-		<xsl:if test="organisationName">
-		  <xsl:call-template name="txt">
-				<xsl:with-param name="s" select="."/>                      
-			 	<xsl:with-param name="name" select="'organisationName'"/>                      
-				<xsl:with-param name="lang" select="$mdLang"/>                      
-			 </xsl:call-template>                                                              
-		</xsl:if>
-		<xsl:if test="positionName">
-		<gmd:positionName>
-			<gco:CharacterString><xsl:value-of select="positionName"/></gco:CharacterString>
-		</gmd:positionName>
-		</xsl:if>
-		<xsl:if test="contactInfo">
-			<gmd:contactInfo>
-				<gmd:CI_Contact>
-					<gmd:phone>
-						<gmd:CI_Telephone>
-							<xsl:for-each select="contactInfo/*/phone//voice">
-								<gmd:voice>
-									<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-								</gmd:voice>
-							</xsl:for-each>
-							<xsl:for-each select="contactInfo/*/phone//facsimile">
-								<gmd:facsimile>
-									<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-								</gmd:facsimile>
-							</xsl:for-each>
-						</gmd:CI_Telephone>
-					</gmd:phone>
-					<xsl:for-each select="contactInfo/*/address">
-						<gmd:address>
-							<gmd:CI_Address>
-								<xsl:for-each select="*/deliveryPoint">
-									<gmd:deliveryPoint>
-										<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-									</gmd:deliveryPoint>
-								</xsl:for-each>
-								<xsl:for-each select="*/city">
-									<gmd:city>
-										<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-									</gmd:city>
-								</xsl:for-each>
-								<xsl:for-each select="*/administrativeArea">
-									<gmd:administrativeArea>
-										<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-									</gmd:administrativeArea>
-								</xsl:for-each>
-								<xsl:for-each select="*/postalCode">
-									<gmd:postalCode>
-										<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-									</gmd:postalCode>
-								</xsl:for-each>
-								<xsl:for-each select="*/country">	
-									<gmd:country>
-										<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-									</gmd:country>
-								</xsl:for-each>
-								<xsl:for-each select="*/electronicMailAddress">
-									<gmd:electronicMailAddress>
-										<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-									</gmd:electronicMailAddress>
-								</xsl:for-each>
-							</gmd:CI_Address>
-						</gmd:address>
-					</xsl:for-each>
-					<xsl:for-each select="contactInfo/*/onlineResource">
-						<gmd:onlineResource>
-							<gmd:CI_OnlineResource>
-								<gmd:linkage>
-									<gmd:URL><xsl:value-of select="*/linkage"/></gmd:URL>
-								</gmd:linkage>
-							</gmd:CI_OnlineResource>
-						</gmd:onlineResource>
-					</xsl:for-each>
-				</gmd:CI_Contact>
-			</gmd:contactInfo>
-		</xsl:if>
-		<gmd:role>
-			<gmd:CI_RoleCode codeListValue="{role/CI_RoleCode}" codeList="./resources/codeList.xml#CI_RoleCode"><xsl:value-of select="role/CI_RoleCode"/></gmd:CI_RoleCode>
-		</gmd:role>
-	</gmd:CI_ResponsibleParty>
-  </xsl:for-each>  
-  </xsl:template>
+      <xsl:param name="org"/>
+      <xsl:param name="mdLang"/>
+      <xsl:for-each select="$org/CI_ResponsibleParty">
+      <gmd:CI_ResponsibleParty>
+        <xsl:if test="id">
+          <xsl:attribute name="uuid"><xsl:value-of select="id"/></xsl:attribute>
+        </xsl:if>
+            <xsl:if test="individualName">
+                <gmd:individualName>
+                    <gco:CharacterString><xsl:value-of select="individualName"/></gco:CharacterString>
+                </gmd:individualName>
+            </xsl:if>
+            <xsl:if test="organisationName">
+              <xsl:call-template name="txt">
+                    <xsl:with-param name="s" select="."/>                      
+                    <xsl:with-param name="name" select="'organisationName'"/>                      
+                    <xsl:with-param name="lang" select="$mdLang"/>                      
+                 </xsl:call-template>                                                              
+            </xsl:if>
+            <xsl:if test="positionName">
+            <gmd:positionName>
+                <gco:CharacterString><xsl:value-of select="positionName"/></gco:CharacterString>
+            </gmd:positionName>
+            </xsl:if>
+            <xsl:if test="contactInfo">
+                <gmd:contactInfo>
+                    <gmd:CI_Contact>
+                        <gmd:phone>
+                            <gmd:CI_Telephone>
+                                <xsl:for-each select="contactInfo/*/phone//voice">
+                                    <gmd:voice>
+                                        <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                    </gmd:voice>
+                                </xsl:for-each>
+                                <xsl:for-each select="contactInfo/*/phone//facsimile">
+                                    <gmd:facsimile>
+                                        <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                    </gmd:facsimile>
+                                </xsl:for-each>
+                            </gmd:CI_Telephone>
+                        </gmd:phone>
+                        <xsl:for-each select="contactInfo/*/address">
+                            <gmd:address>
+                                <gmd:CI_Address>
+                                    <xsl:for-each select="*/deliveryPoint">
+                                        <gmd:deliveryPoint>
+                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                        </gmd:deliveryPoint>
+                                    </xsl:for-each>
+                                    <xsl:for-each select="*/city">
+                                        <gmd:city>
+                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                        </gmd:city>
+                                    </xsl:for-each>
+                                    <xsl:for-each select="*/administrativeArea">
+                                        <gmd:administrativeArea>
+                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                        </gmd:administrativeArea>
+                                    </xsl:for-each>
+                                    <xsl:for-each select="*/postalCode">
+                                        <gmd:postalCode>
+                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                        </gmd:postalCode>
+                                    </xsl:for-each>
+                                    <xsl:for-each select="*/country">	
+                                        <gmd:country>
+                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                        </gmd:country>
+                                    </xsl:for-each>
+                                    <xsl:for-each select="*/electronicMailAddress">
+                                        <gmd:electronicMailAddress>
+                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                        </gmd:electronicMailAddress>
+                                    </xsl:for-each>
+                                </gmd:CI_Address>
+                            </gmd:address>
+                        </xsl:for-each>
+                        <xsl:for-each select="contactInfo/*/onlineResource">
+                            <gmd:onlineResource>
+                                <gmd:CI_OnlineResource>
+                                    <gmd:linkage>
+                                        <gmd:URL><xsl:value-of select="*/linkage"/></gmd:URL>
+                                    </gmd:linkage>
+                                </gmd:CI_OnlineResource>
+                            </gmd:onlineResource>
+                        </xsl:for-each>
+                    </gmd:CI_Contact>
+                </gmd:contactInfo>
+            </xsl:if>
+            <gmd:role>
+                <gmd:CI_RoleCode codeListValue="{role/CI_RoleCode}" codeList="./resources/codeList.xml#CI_RoleCode"><xsl:value-of select="role/CI_RoleCode"/></gmd:CI_RoleCode>
+            </gmd:role>
+        </gmd:CI_ResponsibleParty>
+      </xsl:for-each>  
+    </xsl:template>
 
 
   

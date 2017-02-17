@@ -40,29 +40,5 @@
 <xsl:include href="client/common_cli.xsl" />
 <xsl:include href="htmlList.xsl" />
 
-<xsl:template name="sorter">
-	<xsl:value-of select="$msg[@eng='sortby']"/>: <br/>
-	<xsl:variable name="url"></xsl:variable> 
-	<select id="sort-select" class="x-form-field x-form-text" style="height:21px; font-size:11px; padding-right:0px;" onchange="changeSort('sort-select','sortdir-select','{$CONSTRAINT}','{$lang}','{$MAXRECORDS}');">
-		<option value="title">
-  		    <xsl:if test="$SORTBY='title'"><xsl:attribute name="selected">selected</xsl:attribute></xsl:if>
-            <xsl:value-of select="$msg[@eng='title2']"/>
-        </option>
-		<option value="date"><xsl:if test="contains($SORTBY,'date')">
-            <xsl:attribute name="selected">selected</xsl:attribute></xsl:if>
-            <xsl:value-of select="$msg[@eng='update2']"/>
-        </option>
-		<option value="bbox">
-            <xsl:if test="contains($SORTBY,'bbox')"><xsl:attribute name="selected">selected</xsl:attribute></xsl:if>
-            <xsl:value-of select="$msg[@eng='sbbox']"/>
-        </option>
-	</select> 
-	<select id="sortdir-select" class="x-form-field x-form-text" style="height:21px; font-size:11px; padding-right:0px;" onchange="changeSort('sort-select','sortdir-select','{$CONSTRAINT}','{$lang}','{$MAXRECORDS}');">
-		<option value="A">
-			<xsl:if test="$SORTORDER='ASC'"><xsl:attribute name="selected">selected</xsl:attribute></xsl:if><xsl:value-of select="$msg[@eng='ASC']"/></option>
-		<option value="D"><xsl:if test="$SORTORDER='DESC'"><xsl:attribute name="selected">selected</xsl:attribute></xsl:if><xsl:value-of select="$msg[@eng='DESC']"/></option>
-	</select>
-</xsl:template>
-
 
 </xsl:stylesheet>

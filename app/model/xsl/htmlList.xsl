@@ -4,7 +4,7 @@
   xmlns:php="http://php.net/xsl" 
   xmlns:srv="http://www.isotc211.org/2005/srv"
   xmlns:gml="http://www.opengis.net/gml/3.2"   
-  xmlns:gmd="http://www.isotc211.org/2005/gmd" 
+  xmlns:gmd="http://www.isotc211.org/2005/gmd"
   xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0" 
   xmlns:dc="http://purl.org/dc/elements/1.1/" 
   xmlns:dct="http://purl.org/dc/terms/" 
@@ -38,24 +38,21 @@
 				<a href="?ak=detailall&amp;language={$lang}&amp;uuid={@uuid}" class="full" title="{$msg[@eng='fullMetadata']}"></a><xsl:text> </xsl:text> -->
 				<xsl:if test="@edit=1">
 					<xsl:if test="@md_standard=0 or @md_standard=10">
-						<a href="{$thisPath}/records/valid/{@uuid}" class="valid{@valid}" title="{$msg[@eng='validate']}"><xsl:choose>
+						<a href="{$thisPath}/record/valid/{@uuid}" class="valid{@valid}" title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
 						<xsl:when test="@valid=2"><i class="fa fa-check-circle fa-fw"></i></xsl:when>
 						<xsl:when test="@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
 						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
 						</xsl:choose></a>
 					</xsl:if>					
-					<a href="{$thisPath}/records/edit/{@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-					<a href="{$thisPath}/records/clone/{@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-					<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '{$MICKA_URL}/records/delete/{@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+					<a href="{$thisPath}/record/edit/{@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+					<a href="{$thisPath}/record/clone/{@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+					<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '{$thisPath}/record/delete/{@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 				</xsl:if>
 				<xsl:if test="@md_standard=0 or @md_standard=10">
 					<a href="{$thisPath}/csw/?service=CSW&amp;request=GetRecordById&amp;id={@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
 				
-				<xsl:choose>
-					<xsl:when test="$REWRITE"><a href="{$thisPath}/records/{@uuid}?format=application/xml" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a></xsl:when>
-					<xsl:otherwise><a href="{$MICKA_URL}?ak=xml&amp;uuid={@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a></xsl:otherwise>
-				</xsl:choose>
+                <a href="{$thisPath}/record/xml/{@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 		
 				<xsl:if test="$CB">
 					<xsl:text> </xsl:text>
@@ -74,10 +71,7 @@
     	<xsl:variable name="public"><xsl:if test="../@data_type=1"> public</xsl:if></xsl:variable>
 		<!-- nadpis -->
 		<div class="title{$public}">
-			<xsl:variable name="detURL"><xsl:choose>
-					<xsl:when test="$REWRITE">records/<xsl:value-of select="../@uuid"/>?language=<xsl:value-of select="$lang"/></xsl:when>
-					<xsl:otherwise>?ak=detail&amp;uuid=<xsl:value-of select="../@uuid"/></xsl:otherwise>
-				</xsl:choose></xsl:variable>		
+			<xsl:variable name="detURL">record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>		
 				<a href="{$thisPath}/{$detURL}" class="t" title="{$cl/updateScope/value[@name=$hlevel]}">
 				<xsl:call-template name="showres">
 					<xsl:with-param name="r" select="$hlevel"/>
@@ -122,7 +116,7 @@
 		<div class="bbar">
 			<xsl:if test="../@edit=1">
 				<xsl:variable name="publ">public<xsl:value-of select="../@data_type"/></xsl:variable>
-				<span class="{$publ}"><xsl:value-of select="$msg[@eng=$publ]"/></span>
+				<span class="{$publ}"><xsl:value-of select="$msg[@eng=$publ]"/><xsl:text>, </xsl:text></span>
 					<!-- <b><xsl:value-of select="../@create_user"/></b> -->
 				
 				<!--<xsl:call-template name="multi">
@@ -144,12 +138,14 @@
 
 	<!-- DC -->
 	<xsl:template match="csw:Record"> 
-		<xsl:variable name="detURL"><xsl:choose>
-				<xsl:when test="$REWRITE">records/<xsl:value-of select="../@uuid"/>?language=<xsl:value-of select="$lang"/></xsl:when>
-				<xsl:otherwise>?ak=detail&amp;uuid=<xsl:value-of select="../@uuid"/></xsl:otherwise>
-		</xsl:choose></xsl:variable>		
-	  	<div class="title">  
-			<a href="{$MICKA_URL}{$detURL}" class="t dc">	     
+		<xsl:variable name="detURL">record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>
+		<meta itemprop="box" id="i-{position()}" content="{ows:BoundingBox/ows:LowerCorner} {ows:BoundingBox/ows:UpperCorner}"/>		
+	  	<div class="title">
+            <xsl:call-template name="showres">
+                <xsl:with-param name="r" select="'dc'"/>
+                <xsl:with-param name="class" select="'fa-lg'"/>
+            </xsl:call-template>        
+			<a href="{$MICKA_URL}{$detURL}" class="t">	     
 	     		<xsl:value-of select="dc:title" />
 	    	</a> 
 	  	</div>
@@ -164,10 +160,7 @@
 	 	<xsl:variable name="mdlang" select="../@lang"/>
 
 	  	<div class="title">
-			<xsl:variable name="detURL"><xsl:choose>
-				<xsl:when test="$REWRITE">records/<xsl:value-of select="../@uuid"/>?language=<xsl:value-of select="$lang"/></xsl:when>
-				<xsl:otherwise>?ak=detail&amp;uuid=<xsl:value-of select="../@uuid"/></xsl:otherwise>
-			</xsl:choose></xsl:variable>		
+			<xsl:variable name="detURL">record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>		
 			<a href="{$MICKA_URL}{$detURL}" class="t" title="{$cl/updateScope/value[@name='fc']}">
 				<xsl:call-template name="showres">
 					<xsl:with-param name="r" select="'fc'"/>
@@ -178,7 +171,7 @@
 			   		<xsl:with-param name="el" select="gmx:name"/>
 			   		<xsl:with-param name="lang" select="$lang"/>
 			   		<xsl:with-param name="mdlang" select="$mdlang"/>
-			  	</xsl:call-template>				 
+			  	</xsl:call-template> 
 			</a> 
 	  	</div>
 	  	<div class="abstract">
@@ -186,12 +179,12 @@
 		   		<xsl:with-param name="el" select="gmx:scope"/>
 		   		<xsl:with-param name="lang" select="$lang"/>
 		   		<xsl:with-param name="mdlang" select="$mdlang"/>
-		  	</xsl:call-template>				 
+		  	</xsl:call-template>
 		</div>
 		<div class="bbar">
 			<xsl:if test="../@edit=1">
 				<xsl:variable name="publ">public<xsl:value-of select="../@data_type"/></xsl:variable>
-				<span class="{$publ}"><xsl:value-of select="$msg[@eng=$publ]"/></span>
+				<span class="{$publ}"><xsl:value-of select="$msg[@eng=$publ]"/><xsl:text>, </xsl:text></span>
 			<xsl:value-of select="$msg[@eng='Metadata Contact']"/>:
 			<a href="mailto:{gfc:producer/*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*}"><xsl:value-of select="gfc:producer/*/gmd:individualName"/></a>
 			<xsl:text>, </xsl:text> 

@@ -28,7 +28,6 @@ frontend:
     changes: "Changes, news"
     bugs: "Known bugs"
     support: "System support"
-    my_records: "My records"
     edited: "The record is edited by another user."
     recno: "recno"
     words: "Words"
@@ -126,7 +125,7 @@ frontend:
     descending: "descending"
     extent-similarity: "extent similarity"
     fc: "Feature catalogue"
-    full_metadata: "Full"
+    full_metadata: "Detailed"
     fulltext: "any text"
     inside: "Inside rectangle"
     inspire-theme: "INSPIRE theme"
@@ -145,8 +144,22 @@ frontend:
     cancel_edit: "Cancel edit"
     stop: "Stop"
     stop_edit: "Stop edit"
-
+    keywords: "Keywords"
+    fill: "Fill keywords"
+    list: "List"
+    loading: "Loading"
+    my_records: "My records"
+    for_inspire: "For INSPIRE"
+    status: "Record status"
+    contact2micka: "Contact to MicKa"
 
 lang:
     cze: "Czech"
     eng: "English"
+
+apperror:
+    postIncomplete: "record POST - incomplete data"
+    postUnknownAc: "rekord POST - unknown action"
+    noRecordFound: "Sorry, no record found."
+    noProfileFound: "Sorry, no profile found."
+    cantSaveNew: "Sorry, you can't save this new record."

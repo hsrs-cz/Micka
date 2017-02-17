@@ -14,7 +14,7 @@
   
     <xsl:variable name="mdLang">
       <xsl:choose>
-    	<xsl:when test="string-length(language)>0"><xsl:value-of select="language"/></xsl:when>
+    	<xsl:when test="string-length(language/*)>0"><xsl:value-of select="language/*"/></xsl:when>
     		<xsl:when test="string-length(*/identificationInfo/*/citation/*/title/@lang)>0"><xsl:value-of select="identificationInfo/*/citation/*/title/@lang"/></xsl:when>
     	<xsl:otherwise>cze</xsl:otherwise>
       </xsl:choose>
@@ -51,13 +51,13 @@
 
     <xsl:variable name="mdLang">
       <xsl:choose>
-    	<xsl:when test="string-length(language)>0"><xsl:value-of select="language"/></xsl:when>
+    	<xsl:when test="string-length(language/*)>0"><xsl:value-of select="language/*"/></xsl:when>
     		<xsl:when test="string-length(identificationInfo/*/citation/*/title/@lang)>0"><xsl:value-of select="identificationInfo/*/citation/*/title/@lang"/></xsl:when>
     	<xsl:otherwise>cze</xsl:otherwise>
       </xsl:choose>
     </xsl:variable>		
 
-	<xsl:variable name="mdLangs" select="@langs"/>
+	<!--xsl:variable name="mdLangs" select="@langs"/-->
 
    <xsl:variable name="schLoc">
    	 <xsl:choose>
@@ -526,26 +526,26 @@
 		    		</gmd:description>
 			    </xsl:for-each>
 			  
-				<xsl:if test="@x1!=''">
+				<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox">
 					<gmd:geographicElement>
 						<gmd:EX_GeographicBoundingBox>
 							<gmd:westBoundLongitude>
-								<gco:Decimal><xsl:value-of select="@x1"/></gco:Decimal>
+								<gco:Decimal><xsl:value-of select="westBoundLongitude"/></gco:Decimal>
 							</gmd:westBoundLongitude>
 							<gmd:eastBoundLongitude>
-								<gco:Decimal><xsl:value-of select="@x2"/></gco:Decimal>
+								<gco:Decimal><xsl:value-of select="eastBoundLongitude"/></gco:Decimal>
 							</gmd:eastBoundLongitude>
 							<gmd:southBoundLatitude>
-								<gco:Decimal><xsl:value-of select="@y1"/></gco:Decimal>
+								<gco:Decimal><xsl:value-of select="southBoundLatitude"/></gco:Decimal>
 							</gmd:southBoundLatitude>
 							<gmd:northBoundLatitude>
-								<gco:Decimal><xsl:value-of select="@y2"/></gco:Decimal>
+								<gco:Decimal><xsl:value-of select="northBoundLatitude"/></gco:Decimal>
 							</gmd:northBoundLatitude>
 						</gmd:EX_GeographicBoundingBox>
 					</gmd:geographicElement>
-				</xsl:if>
+				</xsl:for-each>
 			
-			<xsl:for-each select="identificationInfo//extent/*/geographicElement/EX_BoundingPolygon">		
+			<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_BoundingPolygon">		
 				<gmd:geographicElement>
 					<gmd:EX_BoundingPolygon>
 						<!-- TODO for multipolygon -->
@@ -1393,7 +1393,7 @@
   	xmlns:gco="http://www.isotc211.org/2005/gco"  	
   	>
   	<gfc:FC_FeatureCatalogue xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
-  		<xsl:variable name="mdLang" select="language"/>
+  		<xsl:variable name="mdLang" select="language/*"/>
 		<xsl:call-template name="ftxt">
 			<xsl:with-param name="s" select="name"/>                      
 			<xsl:with-param name="name" select="'name'"/>                      

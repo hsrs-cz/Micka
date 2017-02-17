@@ -1,0 +1,6 @@
+[submodule "www/scripts/jquery"]
+	path = www/scripts/jquery
+	url = git://github.com/jquery/jquery.git
+[submodule "www/scripts/select2"]
+	path = www/scripts/select2
+	url = git://github.com/select2/select2.git

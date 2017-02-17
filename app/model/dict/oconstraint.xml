@@ -23,4 +23,13 @@
 	  	<entry id="1.1">Bez obmedzenia</entry>
 	</group>
   </translation>
+
+  <translation lang="uri">
+  	<title></title>
+  	<group>
+	  	<title>INSPIRE předdefinované</title>
+	  	<entry id="1.1">http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/NoLimitations</entry>
+	</group>
+  </translation>
+
 </userValues>	  

@@ -4,13 +4,8 @@ namespace App\Model;
 
 use Nette;
 
-class MdEditForm
+class MdEditForm  extends \BaseModel
 {
-
-	/** @var Nette\Database\Context */
-	private $db;
-    private $user;
-    private $appParameters;
 	private $form_values = array();
 	private $form_data = array();
 	private $md_first_lang = 'eng';
@@ -23,20 +18,9 @@ class MdEditForm
     private $form_tree = array();
     public  $appLang = 'eng';
     
-	
-	public function __construct(Nette\Database\Context $db) 
-	{
-		$this->db = $db;
-	}
-
-    public function setIdentity($user)
+    public function setAppParameters($appParameters)
     {
-        $this->user = $user;
-    }
-    
-    public function setAppParameters($parameters)
-    {
-        $this->appParameters = $parameters;
+        $this->appParameters = $appParameters;
     }
 
 	private function setFormValuesArray($md_values) {
@@ -152,6 +136,11 @@ class MdEditForm
 		return $rs;
 	}
 
+    public function getValuesUri($recno) {
+		$sql = "SELECT md_path, md_value FROM edit_md_values WHERE recno=? AND lang='uri'";
+        return $this->db->query($sql, $recno)->fetchPairs();
+    }
+    
 	private function getButtonExe($button) {
 		$rs = array();
 		$rs['text'] = '';
@@ -238,7 +227,7 @@ class MdEditForm
 		return $this->db->query($sql)->fetchAll();;
 	}
     
-    private function getIsInspirePackage($mds, $profil) {
+    private function isInspirePackage($mds, $profil) {
         $rs = FALSE;
         if ($mds != '' && $profil != '') {
             $sql = "SELECT is_inspire FROM profil_names WHERE md_standard=? AND profil_id=?";
@@ -248,11 +237,54 @@ class MdEditForm
         }
         return $rs;
     }
+    
+    public function isProfil($mds, $profil_id) {
+        if ($this->db->query("SELECT profil_id FROM profil_names
+            WHERE is_vis=1 AND md_standard=? AND profil_id=?", $mds, $profil_id)->fetch()
+            == NULL) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+    
+    public function getEditLiteForm($recordModel, $profil_id, $editLiteTemplate) {
+        if ($editLiteTemplate == '') {
+            return '';
+        }
+		$template = __DIR__ . '/lite/resources/' . $editLiteTemplate . '.xsl';
+		require_once __DIR__ . '/CswClient.php';
+		require_once __DIR__ . '/lite/resources/Kote.php';
+		$cswClient = new \CSWClient();
+		$params = array();
+		$params['alabel'] = 'Administrace'; // label Administrace
+		$params['plabel'] = 'Veřejný'; // label Public
+		$params['recno'] = $recordModel->recno;
+		$params['uuid'] = $recordModel->uuid;
+		$params['data_type'] = $recordModel->data_type;
+		$params['publisher'] = $this->user->isInRole('publisher') ? 1 : 0;
+		$params['saver'] = 1;
+		$params['select_profil'] = $profil_id;
+		$params['mds'] = $recordModel->md_standard;;
+		$params['lang'] = MICKA_LANG;
+		$params['mickaURL'] = dirname($_SERVER['SCRIPT_NAME'])== '\\' ? '' : dirname($_SERVER['SCRIPT_NAME']);
+		return $cswClient->processTemplate($recordModel->pxml, $template, $params);
+    }
 
     public function getEditForm($mds, $recno, $md_langs, $profil, $package, $md_values) {
         $this->mds = $mds;
+        if ($mds == 1 || $mds == 2) {
+            $profil = -1;
+            $package = -1;
+            $md_id_start = -1;
+        }
+        if ($mds == 0 || $mds == 10) {
+            if ($profil > 0 && !$this->isProfil($mds, $profil)) {
+                throw new \Nette\Application\ApplicationException('noProfileFound');
+            }
+        }
 		$this->setMdLangsNew($md_langs);
-		$this->setCodeListArray($this->getIsInspirePackage($mds, $profil));
+		$this->setCodeListArray($this->isInspirePackage($mds, $profil));
         $this->setFormValuesArray($md_values);
         $this->setButtonLabelArray();
 		$md_id_start = -1;
@@ -275,7 +307,6 @@ class MdEditForm
         $this->getRepeatFormData(isset($this->form_values[0][0]) ? $this->form_values[0][0] : []);
         $this->getFormData($this->form_tree);
         $rs = $this->form_data;
-        //dump($this->form_data);exit;
         return $rs;
     }
     

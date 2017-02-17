@@ -62,8 +62,11 @@ function OverMap(config){
 	}
 	
 	this.clear = function(){
-		_overmap.searchfeatures.clear();
-        _overmap.selFeatures.clear();
+		if(_overmap.searchfeatures) _overmap.searchfeatures.clear();
+        if(_overmap.selFeatures) _overmap.selFeatures.clear();
+        if(config.handler){
+            config.handler(null);
+        }
 	}
 	
 	var drawBoxControl = createControl({
@@ -238,21 +241,21 @@ function OverMap(config){
     }
             
 	this.hover = function(o){
-		if(!this.flyr) return;
+		if(!_overmap.flyr) return;
 		var div;
-		this.selFeatures.forEach(function(e,i,a){
+		_overmap.selFeatures.forEach(function(e,i,a){
 			div = document.getElementById(a[i].getId());
 			if(div){
 				div.style.background=""; // TODO - configurable
 			}					
-		}, this);
-		this.selFeatures.clear();
-		this.selFeatures.un('add', this.hoverMap);
-		var f = this.flyr.getSource().getFeatureById(o.id);
+		}, _overmap);
+		_overmap.selFeatures.clear();
+		_overmap.selFeatures.un('add', _overmap.hoverMap);
+		var f = _overmap.flyr.getSource().getFeatureById(o.id);
 		if(f){
-			this.selFeatures.push(f);
+			_overmap.selFeatures.push(f);
 		}
-   		this.selFeatures.on('add', this.hoverMap);
+   		_overmap.selFeatures.on('add', _overmap.hoverMap);
 	}
 	
 	this.hoverMap = function(e) {

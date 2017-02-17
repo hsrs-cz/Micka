@@ -139,6 +139,35 @@
 	$rec['dateStamp'] = '<xsl:value-of select="gmd:dateStamp/*"/>';
     $json['records'][] = $rec;
 </xsl:template>	
+
+<!-- Feature catalogue -->
+<xsl:template match="gfc:FC_FeatureCatalogue" xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+    <xsl:variable name="mdlang" select="gmx:language/*/@codeListValue"/>
+    $rec = array();
+    $rec['trida']='fc';
+    $rec['title'] = '<xsl:call-template name="multi">
+			   		<xsl:with-param name="el" select="gmx:name"/>
+			   		<xsl:with-param name="lang" select="$lang"/>
+			   		<xsl:with-param name="mdlang" select="$mdlang"/>
+			  	</xsl:call-template>'; 
+    $rec['titles']['<xsl:value-of select="gmx:language/*/@codeListValue"/>'] = '<xsl:value-of select="gmx:name/gco:CharacterString"/>';
+    <xsl:for-each select="gmx:name/gmd:PT_FreeText">
+        $rec['titles']['<xsl:value-of select="substring-after(gmd:textGroup/*/@locale,'-')"/>'] = '<xsl:value-of select="gmd:textGroup/*"/>';
+    </xsl:for-each>
+    $rec['abstract'] = '<xsl:call-template name="multi">
+		   		<xsl:with-param name="el" select="gmx:scope"/>
+		   		<xsl:with-param name="lang" select="$lang"/>
+		   		<xsl:with-param name="mdlang" select="$mdlang"/>
+		  	</xsl:call-template>';
+    $rec['id'] = '<xsl:value-of select="../@uuid"/>';
+    $rec['date'] = '<xsl:value-of select="gmx:versionDate"/>';
+    $f = array();
+    <xsl:for-each select="gfc:featureType">    
+        $f[]['name'] = '<xsl:value-of select="*/gfc:typeName/*"/>';
+    </xsl:for-each>
+    $rec['features'] = $f;
+    $json['records'][] =$rec;
+</xsl:template>	
 	
 	<!-- pro DC zaznamy -->
   <xsl:template match="csw:Record" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/">

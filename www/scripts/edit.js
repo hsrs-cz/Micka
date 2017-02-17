@@ -1,6 +1,6 @@
 ﻿/******************************
- * MICKA 5.001
- * 2015-07-07
+ * MICKA 6.000
+ * 2017-02-20
  * javascript
  * Help Service Remote Sensing  
 ******************************/
@@ -12,7 +12,9 @@ var md_mapApp = getBbox;
 var md_pageOffset = 0;
 var messages = {};
 var confirmLeave = false;
-var initialExtent = [12.09, 48.55, 18.86, 51.06];
+var initialExtent = [12.09, 48.55, 18.86, 51.06]; // TODO - to config
+var thesActivated = false;
+var baseUrl = "";
 
 var micka = {
 };
@@ -143,13 +145,6 @@ function md_smaz(obj){
   for(var i=0;i<elementy.length;i++) md_setName(elementy[i], pom[0]+"_"+i+"_");
 }
 
-function md_menu(akce,recno,profil){
-  if(!parent.frames.mdMenu) return false;
-  if(typeof(recno)!="number")recno='';
-  s = 'micka_menu.php?ak='+akce+'&recno='+recno+'&prof='+profil;
-  if(parent.frames.mdMenu.location.href.indexOf(s)<0)
-    parent.frames.mdMenu.location.href=s;
-}
 
 function md_unload(e){
   	if(document.getElementById("md_inpform") && confirmLeave){  
@@ -165,7 +160,7 @@ function elementInViewport(el) {
         rect.left >= 0 &&
         rect.bottom <= window.innerHeight &&
         rect.right <= window.innerWidth 
-        )
+    )
 }
 
 function checkMenu(){
@@ -186,7 +181,7 @@ function md_scroll(el){
   }
   if(el){
 	  var e = el;
-	  var h = document.getElementById('headBox').offsetHeight;
+	  var h = document.getElementsByTagName('NAV')[0].offsetHeight;
 
 	  while(e=e.parentNode){
 		  if(e.tagName=='BODY') break;
@@ -266,81 +261,72 @@ function md_dexpand(obj){
 }
 
 
-function clickMenu(block, target){
+function clickMenu(afterpost, target){
   var me = window;
   confirmLeave = false;
   if(parent && parent.frames.main){
   	var me = parent.frames.main;
   } 
-  if(block=="cancel"){
-	  me.location="?ak=storno";
-	  return;
-  }
-  if(block==-19){ 
-	  md_pageOffset = me.document.body.scrollTop;
-  }	  
-  else{ 
-	  md_pageOffset = 0;
-  }
+  md_pageOffset = 0;
   me.confirmLeave = false;
-  if(block==-20) me.location = "?ak=mdview&ak1=cancel&recno="+me.document.forms['md_inpform'].recno.value;
-  else {
-	var form =me.document.forms['md_inpform'];
-  	form.target = "";
-  	if(typeof(target) != 'undefined'){
-  		form.target = target;
-  	}
-  	form.nextblock.value=block;
-  	// kontrola validity HTML5, pokud neni, ulozi se bez kontroly
-  	if(block==-1){
-  		if(!form.checkValidity || form.checkValidity()){
-  			form.submit();
-  		}
-  		else {
-  			for(f=0; f < form.elements.length; f++){
-  				if(!form.elements[f].validity.valid){
-  					md_scroll(form.elements[f]);
-  					break;
-  				}
-  			}
-  			//alert(HS.i18n('Please, fill mandatory elements'));
-  		}
-  	}
-  	else form.submit();
+  var form = me.document.forms['md_inpform'];
+  form.target = "";
+  if(typeof(target) !== 'undefined'){
+  	form.target = target;
   }
+  form.afterpost.value=afterpost;
+  // kontrola validity HTML5, pokud neni, ulozi se bez kontroly
+  if(afterpost === "end" || afterpost === "save"){
+  	if(!form.checkValidity || form.checkValidity()){
+  		form.submit();
+  	}
+  	else {
+  		for(f=0; f < form.elements.length; f++){
+  			if(!form.elements[f].validity.valid){
+  				md_scroll(form.elements[f]);
+  				break;
+  			}
+  		}
+  		//alert(HS.i18n('Please, fill mandatory elements'));
+  	}
+  }
+  else form.submit();
 }
 
-function clickLink(block, target){
-	if(block==-1){
+function clickLink(package, target){
+	if(package==-1){
 		scroll(0,0);
 	}
 	document.forms['md_inpform'].target='';
- 	document.forms['md_inpform'].nextblock.value=block;
+ 	document.forms['md_inpform'].nextpackage.value=package;
  	if(target){
  		document.forms['md_inpform'].target=target;
  	}	
+    document.forms['md_inpform'].afterpost.value='edit';
  	document.forms['md_inpform'].submit();
 }
 
-function clickProfil(id_profil, id_block){
+function clickProfil(id_profil, id_package){
 	confirmLeave = false;
 	document.forms['md_inpform'].target='';
 	if (id_profil > -1) {
-		document.forms['md_inpform'].nextblock.value=document.forms['md_inpform'].block.value;
+		document.forms['md_inpform'].nextpackage.value=document.forms['md_inpform'].package.value;
 		document.forms['md_inpform'].nextprofil.value = id_profil;
 	}
-	if (id_block > -1) {
-		document.forms['md_inpform'].nextblock.value = id_block;
+	if (id_package > -1) {
+		document.forms['md_inpform'].nextpackage.value = id_package;
 		document.forms['md_inpform'].nextprofil.value = document.forms['md_inpform'].profil.value;
 	}
+    document.forms['md_inpform'].afterpost.value='edit';
 	document.forms['md_inpform'].submit();
 }
 
 function selProfil(obj){
 	confirmLeave = false;
 	document.forms['md_inpform'].target='';
-	document.forms['md_inpform'].nextblock.value=document.forms['md_inpform'].block.value;
+	//document.forms['md_inpform'].nextpackage.value=document.forms['md_inpform'].package.value;
 	document.forms['md_inpform'].nextprofil.value=obj.value;
+    document.forms['md_inpform'].afterpost.value='edit';
 	document.forms['md_inpform'].submit();
 }
 
@@ -381,6 +367,12 @@ function chTextArea(e){
 }
 
 function start(){
+    $.fn.datepicker.defaults.language=HS.getLang(2);
+    $.fn.datepicker.defaults.todayHighlight = true;
+    $.fn.datepicker.defaults.forceParse = false;
+    if(lang=='cze') $.fn.datepicker.defaults.format = "dd.mm.yyyy";
+    else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
+    
 	var inpForm = document.getElementById("md_inpform");
 	if(inpForm){
 		confirmLeave = true;
@@ -396,38 +388,17 @@ function start(){
 		ta[i].onkeyup=chTextArea;
 		ta[i].change=chTextArea;
 	}
-	/*if(inpForm){
-		confirmLeave = true;
-		window.onbeforeunload = stopEdit
-	}	 */
-	if(parent && parent.frames.mdMenu){ 
-		window.scrollTo(0, parent.frames.mdMenu.md_pageOffset);
-	}
 	// rodicovsky element
 	var parent = document.getElementById("50");
 	if(parent && parent.value){
-		document.getElementById("parent-text").innerHTML = "...";
-		var ajax = new HTTPRequest;
-		ajax.get("csw/index.php?format=json&query=identifier%3D"+parent.value, "", drawParent, false); 
+		$("#parent-text").html("...");
+		$.ajax("../../csw/?format=json&query=" + encodeURIComponent("identifier="+parent.value))
+        .done(function(data){
+            $("#parent-text").html(data.title);
+        });
 	}
+    
 }
-
-var drawParent = function(r){
-	if(r.readyState == 4){
-		eval("result="+r.responseText);
-		if(result.records && result.records[0]){
-			document.getElementById("parent-text").innerHTML = result.records[0].title;
-		}
-	}  
-}
-
-/*function stopEdit(e){
-	if(confirmLeave) return 'You should stop editing before leaving !!!';  
-}
-
-function md_delrec(id){
-  if(confirm(Hs.i18n('Delete record') + ' ?')) this.location=("?ak=delete&recno="+id);
-}*/
 
 /* editovani */
 function getMyNodes(epom, nodename){
@@ -459,19 +430,26 @@ function flatNodes(epom, nodename, theClassName){
 function md_dexpand1(obj){
   var divs = flatNodes(obj, "DIV"); 
   var imgs = getMyNodes(obj, "IMG");
-  if(divs.length>0) divs[0].style.display='block';
+  if(divs.length>0) divs[1].style.display='block';
   if(imgs.length>0) imgs[0].src = imgs[0].src.substring(0, imgs[0].src.lastIndexOf("/")+1)+ MD_COLLAPSE; 
 }
 
 function kontakt(obj,type){
-  md_elem=obj.parentNode;
-  md_partyType=type;
-  dialogWindow = openDialog("kontakty", "?ak=md_contacts", ",width=500,height=500,scrollbars=yes");
-  md_dexpand1(md_elem);
+    md_elem=obj.parentNode;
+    md_partyType=type;
+    md_dexpand1(md_elem);
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdcontacts');
 }
 
 function kontakt1(id, osoba, org, org_en, fce, fce_en, phone, fax, ulice, mesto, admin, psc, zeme, email, url, adrId){
 	var inputs = flatNodes(md_elem, "INPUT"); 
+    // TODO temp hack 
+    if(inputs[0].id > 10000){
+        dc_kontakt1(osoba, org, fce, phone, fax, ulice, mesto, admin, psc, zeme, email, url);
+        $("#md-dialog").modal('hide');
+        return;
+    }
 	var selects = flatNodes(md_elem, "SELECT");
 	for(i=0;i<inputs.length;i++){
 		var v = inputs[i];
@@ -508,21 +486,128 @@ function kontakt1(id, osoba, org, org_en, fce, fce_en, phone, fax, ulice, mesto,
 			break;
 		}
 	}
-	if(dialogWindow!=null) dialogWindow.close();
+	$("#md-dialog").modal('hide');
 }
 
 function thes(obj){
-  md_elem = obj.parentNode;
-  md_dexpand1(md_elem);
-  var dialogWindow = openDialog("kontakty", "", ",width=400,height=500,scrollbars=no"); 
-  dialogWindow.focus();
-  var services = 'true';
-  if(document.forms[0].ftext) var path = 'false'; 
-  else{ 
-  	var path = 'true';
-  	if(obj.parentNode.parentNode.id.indexOf('_4752_')>-1) services = 'true';
-  }	
-  if(!dialogWindow.processResult) dialogWindow.location="thesaurus.php?path="+path+"&services="+services+"&lang="+lang;
+    $("#md-keywords").modal(); 
+    md_elem = obj.parentNode;
+    md_dexpand1(md_elem);
+    if(thesActivated) return;
+    thesActivated = true;
+    
+    var thes = {};
+    thes['gemet'] = $('#gemet').select2({
+		ajax: {
+			url: '/projects/kafka/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConceptsMatchingRegexByThesaurus?',
+			dataType: 'json',
+            data: function (params) {
+                var query = {
+                    thesaurus_uri: 'http://www.eionet.europa.eu/gemet/concept/',
+                    regex: encodeURI(params.term),
+                    language: HS.getLang(2),
+                    page: params.page
+                 }
+                return query;
+            },
+           processResults: function(data, page){
+                return {
+                    results: $.map(data, function(rec) {
+                        return { text: rec.preferredLabel.string, id: rec.uri };
+                    })  
+                }    
+            },
+			delay: 200,  
+			cache: false
+	   },
+        minimumInputLength: 3,            
+ 		language: HS.getLang(2),
+	    theme: 'bootstrap',
+	    allowClear: true
+	});
+
+    thes['inspire'] = $("#inspire").select2({
+		ajax: {
+			url: '/projects/kafka/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
+			dataType: 'json',
+			processResults: function(data, opts){
+                var data = $.map(data.suggestions, function(rec) {
+                    return { text: rec.name, id: rec.id, title: rec.desc, parent: rec.parentId };
+                })
+                return { results: data }
+            }, 
+			delay: 200,            
+			cache: true
+	   },
+	   theme: 'bootstrap',
+	   language: HS.getLang(2),
+	   allowClear: true
+	   
+	});    
+
+    $('#thes-inspire-ok').on('click', function(){
+        var uri = $("#inspire").val();
+        var terms = {};
+        var ll = langs.split('|');
+        var l2 = null;
+
+        for(i in ll){
+            l2 = HS.getCodeFromLanguage(ll[i],2);
+            if(l2.length==2){
+                var url = 'http://dev.bnhelp.cz/projects/kafka/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
+                $.ajax({url: url, context: {lang: ll[i]}})
+                .done(function(data){
+                    if(data.suggestions)  terms[this.lang] = data.suggestions[0].name;
+                    else terms[this.lang] = "";
+                    if(ll.length <= Object.keys(terms).length){
+                        fromThesaurus({
+                            thesName: 'GEMET - INSPIRE themes, version 1.0',
+                            thesDate: (ll[0]=='cze') ? '01.06.2008' : '2008-06-01',
+                            uri: uri,
+                            terms: terms
+                        });
+                        $("#md-keywords").modal('hide');
+                        return;
+                    }
+                })
+            }
+        }
+    });
+    
+   $('#thes-gemet-ok').on('click', function(){
+        var uri = $("#gemet").val();
+        var terms = {};
+        var ll = langs.split('|');
+        var l2 = null;
+        
+        //terms[HS.getLang(3)] = $("#inspire").text();
+        
+        for(i in ll){
+            l2 = HS.getCodeFromLanguage(ll[i],2);
+            if(l2.length==2){
+                var url = '/projects/kafka/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConcept?concept_uri='+uri+'&language='+l2;
+                $.ajax({
+                    url: url, 
+                    context: {lang: ll[i]}
+                })
+                .done(function(data){
+                    if(data.preferredLabel)  terms[this.lang] = data.preferredLabel.string;
+                    else terms[this.lang] = "";
+                    if(ll.length <= Object.keys(terms).length){
+                        fromThesaurus({ //TODO take from thesaurus
+                            thesName: 'GEMET - Concepts, version 3.1',
+                            thesDate: (ll[0]=='cze') ? '20.07.2012' : '2012-07-20',
+                            uri: uri,
+                            terms: terms
+                        });
+                        $("#md-keywords").modal('hide');
+                        return;
+                    }
+                })
+            }
+        }
+    });
+    
 }
 
 function fromThesaurus(data){
@@ -530,34 +615,8 @@ function fromThesaurus(data){
   var last = -1;
   var vyplneno=0;
   var mainLang = langs.substring(0,3);
-  var thesName = null; 
-  if(data.version.indexOf(",")>0){
-	  var version = data.version.split(",");
-	  thesName = version[0]+','+version[1];
-  }
-  else {
-	  var pos = data.version.lastIndexOf(" ");
-	  var version = new Array();
-	  version[0] = data.version.substring(0,pos);
-	  version[1] = data.version.substring(++pos);
-	  thesName = version[0]+','+version[1];
-	  // hack kvuli odlisnostem mezi GEMET a INSPIRE - uz nebude potreba :(
-	  if(data.version.substr(0,7)=="INSPIRE"){
-		  version[0] = "GEMET - INSPIRE themes";
-		  version[1] = "version 1.0";
-	  }
-  }
-  //kontrola citace thesauru
-  /*for(i=0;i<inputs.length;i++){
-    //ve vyhl. formulari
-    if(inputs[i].id=='ftext'){
-      inputs[i].value = data.terms[lang];
-  	  window.focus();
-      return;
-    }
-    else{
-    }
-  }*/
+  var thesName = data.thesName; 
+
 	var currThesNode = null;
 	var inputs = flatNodes(md_elem, "INPUT"); 
 	var selects = flatNodes(md_elem, "SELECT"); 
@@ -580,7 +639,7 @@ function fromThesaurus(data){
 		}
   	}
 	if(!currThesNode){
-		if(!confirm(messages.thes)) return;
+		if(!confirm(HS.i18n('Add new thesaurus')+'?')) return;
 		var currThesNode = md_pridej(flatNodes(md_elem, "A")[1]);
 	}
 	var inputs = flatNodes(currThesNode, "INPUT"); 
@@ -590,8 +649,8 @@ function fromThesaurus(data){
   for(i=0;i<inputs.length;i++){
 	  var ll = langs.split("|"); 
 	  for(var j in ll){
-		  if(inputs[i].id=='3600'+ll[j]) inputs[i].value=version[0]+','+version[1];
-		  else if(inputs[i].id=='3940') inputs[i].value=version[version.length-1]; 
+		  if(inputs[i].id=='3600'+ll[j]) inputs[i].value = thesName;
+		  else if(inputs[i].id=='3940') inputs[i].value = data.thesDate; 
 		  else if(inputs[i].id=='530'+ll[j]){
 			  last = i;
 			  if(inputs[i].value!="") vyplneno++;
@@ -623,20 +682,6 @@ function fromThesaurus(data){
 		  } 
 	  }
   }
-  // tady přidání URI
-  /*if(data.uri){
-	    d = md_pridej(inputs[inputs.length-1]);
-	    inputs = flatNodes(d, "INPUT");
-	    if(!elementInViewport(d)){
-	    	d.scrollIntoView(false);
-	    }	
-	    for(i=0;i<inputs.length;i++){
-	        if(inputs[i].id.substring(0,3)=='530'){
-	          inputs[i].value=data.uri;
-	          break; // opsti po vyplneni prvi jazykove verze
-	        }
-	    }    
-  }*/
   for(i=0;i<selects.length;i++){
     if(selects[i].id=='3950') selects[i].selectedIndex=2; // publication
   }
@@ -689,56 +734,95 @@ function thes1(thesaurus, term_id, langs, terms, date, tdate){
 }
 
 function fc(obj){
-  md_elem=obj.parentNode;
-  dialogWindow = openDialog("kontakty", "?ak=md_fc", ",width=300,height=500,scrollbars=yes");
-  md_dexpand1(md_elem);
+    md_elem=obj.parentNode;
+    md_dexpand1(md_elem);
+    $("#md-dialog").modal();
+    var html = '<div class="modal-header">'
+    +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+    +'<h4>'+HS.i18n('Select record')+'</h4></div>';
+    html += '<div class="modal-body"><select id="parent-select"></select><div id="fc-features"></div></div>';
+    html += '<div  class="modal-footer"><button id="fc-confirm" class="btn btn-primary">OK</button></div></div>';
+    $("#md-content").html(html);
+    $("#parent-select").select2({
+        ajax: {
+            url:  '../../csw/?format=application/json&elementsetname=full&lang='+lang,
+            dataType: 'json',
+            data: function(params){
+                q = "type='featureCatalogue'";
+                if(params.term) q += " and AnyText like '*"+ encodeURIComponent(params.term) + "*'";
+                return {
+                    query: q                   
+                };
+            },
+            processResults: function(data, page){
+                return {
+                    results: $.map(data.records, function(rec) {
+                        return { id: rec.id, text: rec.title, title: rec.abstract, f: rec.features, d: rec.date, titles: rec.titles };
+                    })  
+                }    
+            },
+            cache: false
+        },
+        language: HS.getLang(2),
+        allowClear: true,
+        theme: 'bootstrap',
+        maxSelectionLength: 1           
+    });
+    $("#parent-select").on('select2:select',function(e){
+        var data = e.params.data
+        var html = '';
+        for(i in data.f){
+            html += '<div><input type="checkbox" name="'+ data.f[i].name+'"> ' + data.f[i].name+'</div>';
+        }
+        $('#fc-features').html(html);
+        $('#fc-confirm').on('click', function(){
+            var ff = [];
+            $('#fc-features input:checked').each(function(i){
+                ff.push(this.name);
+            })
+            fc1({uuid: data.id, titles: data.titles, date: data.d, dateType: 'revision'}, ff)
+        });
+    });
+  
 }
 
-function fc1(fcObj, lyrs){
-  var lyrlist=lyrs.split(",");
-  var inputs = flatNodes(md_elem, "INPUT"); 
-  var selects = flatNodes(md_elem, "SELECT");
-  var fList = new Array();
-  //---vyplneni nazvu a uuid
-  /*if(fcObj.langs.indexOf("|")>0){
-    var langList = fcObj.langs.split("|");
-    var nameList = fcObj.titles.split("|");
-  }  
-  else{
-    var langList = [fcObj.langs];
-    var nameList = [fcObj.titles];
-  }*/  
-  for(var i=0; i<inputs.length; i++){
-    var v = inputs[i];
-    if(v.id.substr(0,4)=='3600'){ 
-    	v.value = '';
-    	for(var lang in fcObj.titles){
-    		if(lang && v.id==('3600'+lang)) v.value = fcObj.titles[lang];
-    	}
-    }   
-    else switch(v.id){
-      case '2370': fList.push(v); break;
-      case '2070': v.value = fcObj.uuid;
-      case '3940': if(fcObj.date[0]) v.value = fcObj.date[0][0];
+function fc1(fcObj, lyrlist){
+    console.log(fcObj);
+    var inputs = flatNodes(md_elem, "INPUT"); 
+    var selects = flatNodes(md_elem, "SELECT");
+    var fList = new Array();
+    //--- fc identification
+    for(var i=0; i<inputs.length; i++){
+        var v = inputs[i];
+        if(v.id.substr(0,4)=='3600'){ 
+            v.value = '';
+            for(var lang in fcObj.titles){
+                if(lang && v.id==('3600'+lang)) v.value = fcObj.titles[lang];
+            }
+        }   
+        else switch(v.id){
+          case '2370': fList.push(v); break;
+          case '2070': v.value = fcObj.uuid; break;
+          case '3940': if(fcObj.date[0]) v.value = fcObj.date; break;
+        }
     }
-  }
-  for(var i=0;i<selects.length;i++){
-	    var v = selects[i];
-  		if(v.id == '3950' && fcObj.date[0]) v.value = fcObj.date[0][1];	    
-  }
-  //---vyplneni vrstev
-  for(i=1;i<fList.length;i++){ 
-  	fList[i].parentNode.parentNode.removeChild(fList[i].parentNode);
-  }	
-  var f = fList[0];
-  f.value=lyrlist[0];
-  var inputs = getMyNodes(f.parentNode, "INPUT");
-  for(var i=1;i<lyrlist.length;i++)if(lyrlist[i]!=""){
-    var d = md_pridej(inputs[0]);
-    inputs = getMyNodes(d, "INPUT"); 
-    inputs[0].value=lyrlist[i]; 
-  }
-  if(dialogWindow!=null) dialogWindow.close();
+    for(var i=0;i<selects.length;i++){
+        var v = selects[i];
+        if(v.id == '3950' && fcObj.date[0]) v.value = fcObj.dateType;	    
+    }
+    //--- features
+    for(var i=1;i<fList.length;i++){ 
+        fList[i].parentNode.parentNode.removeChild(fList[i].parentNode);
+    }	
+    var f = fList[0];
+    f.value=lyrlist[0];
+    var inputs = getMyNodes(f.parentNode, "INPUT");
+    for(var i=1;i<lyrlist.length;i++)if(lyrlist[i]!=""){
+        var d = md_pridej(inputs[0]);
+        inputs = getMyNodes(d, "INPUT"); 
+        inputs[0].value=lyrlist[i]; 
+    }
+
 }
 
 function closeDialog(obj){
@@ -747,15 +831,18 @@ function closeDialog(obj){
 }
 
 function cover(obj){
-	micka.window(obj, {
-		title: 'Pokrytí území',
-		name: 'cover-div',
-		data: '<form onsubmit="return cover1()"><fieldset>'
+    
+    $("#md-dialog").modal();
+    var html = '<div class="modal-header">'
+    +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+    +'<h4>'+HS.i18n('Area coverage')+'</h4></div>';
+    html += '<div class="modal-body"><form onsubmit="return cover1()"><fieldset>'
 			+'<label>Procenta:</label><input id="cover-perc" type="number" required="required" min="0" max="100" value="100"/>'
 			+'<br/> <label>km2:</label><input type="number" id="cover-km" required="required" value="78866"/><br/>'
 			+'<label>Popis:</label><input id="cover-desc" value="Pokrytí území ČR"><br/><label>Description:</label><input id="cover-desc-en" value="Coverage of CR territory"/><br/>'
-			+'<input type="submit" value="OK"/></fieldset></form>'
-	})
+			+'<input type="submit" value="OK"/></fieldset></form></div>';       
+    $("#md-content").html(html);
+    
 }
 
 function cover1(){
@@ -794,9 +881,43 @@ function cover1(){
 }
 
 function find_parent(obj){
-  md_elem = obj.parentNode;
-  dialogWindow = openDialog("find", "?ak=md_search", ",width=500,height=500,scrollbars=yes");
-  dialogWindow.focus();
+    md_elem = obj.parentNode;
+    $("#md-dialog").modal();
+    var html = '<div class="modal-header">'
+    +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+    +'<h4>'+HS.i18n('Select record')+'</h4></div>';
+    html += '<div class="modal-body"><select id="parent-select"></select></div></div>';       
+    $("#md-content").html(html);
+    $("#parent-select").select2({
+        ajax: {
+            url:  '../../csw/?format=application/json&lang='+lang,
+            dataType: 'json',
+            data: function(params){
+                return {
+                    query: params.term ? "AnyText like '*"+ encodeURIComponent(params.term) + "*'" : ''
+                };
+            },
+            processResults: function(data, page){
+                return {
+                    results: $.map(data.records, function(rec) {
+                        return { id: rec.id, text: rec.title, title: rec.abstract };
+                    })  
+                }    
+            },
+            cache: false
+        },
+        language: HS.getLang(2),
+        allowClear: true,
+        theme: 'bootstrap',
+        maxSelectionLength: 1           
+    });
+    $("#parent-select").on('select2:select',function(e){
+        find_parent1({
+            uuid: $("#parent-select").val(),
+            title: $("#parent-select").text()
+        });
+        $("#md-dialog").modal('hide');
+    });
 }
 
 function find_parent1(data){
@@ -828,10 +949,6 @@ function find_parent1(data){
 		case '5902':
 		    var inputs = flatNodes(md_elem, "INPUT");
 		    for(var i=0;i<inputs.length;i++){
-		        /*if(data.idCode){
-		        	if(inputs[i].id.substr(0,4)=='3583') inputs[i].value=data.idCode;
-		        	else if(inputs[i].id.substr(0,4)=='3584') inputs[i].value=data.idNameSpace;
-		        }*/
 		      	if(inputs[i].id.substr(0,4)=='3600') inputs[i].value=data.title;
 		      	else if(inputs[i].id.substr(0,4)=='3650') inputs[i].value=data.uuid;
 		    }
@@ -857,7 +974,7 @@ function find_parent1(data){
 
 function find_fc(obj){
   md_elem = obj.parentNode;
-  dialogWindow = openDialog("find", "?ak=md_search&fc=1", ",width=500,height=500,scrollbars=yes"); 
+  dialogWindow = openDialog("find", baseUrl+"/suggest/mdsearch?fc=1", ",width=500,height=500,scrollbars=yes"); 
   dialogWindow.focus();
 }
 
@@ -873,7 +990,7 @@ function find_fc1(uuid, name){
 
 function find_record(obj){
   md_elem = obj.parentNode;
-  dialogWindow = openDialog("find", "?ak=md_search", ",width=500,height=500,scrollbars=yes"); 
+  dialogWindow = openDialog("find", baseUrl+"/suggest/mdsearch", ",width=500,height=500,scrollbars=yes"); 
   dialogWindow.focus();
 }
 
@@ -1076,9 +1193,10 @@ function swapi(o){
 }
 
 function formats(obj){
-  md_elem = obj.parentNode;
-  md_addMode = false;
-  openDialog('formats', '?ak=md_lists&type=formats&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=formats&lang='+lang);
 }
 
 function formats1(data){
@@ -1101,7 +1219,10 @@ function formats1(data){
 	      	if(inputs[i].type=='text'){
 	        	if(typeof(data)=="object"){
 	      			var lang = inputs[i].id.substr(inputs[i].id.length-3);
-	      			var f = data[lang].value;
+                    var f = false;
+                    if(data[lang]){
+                        f = data[lang].value;
+                    }    
 	      			if(!f) continue;
 	      		}
 	      		else f = data;
@@ -1110,18 +1231,21 @@ function formats1(data){
 	      	}   
 	    }   
 	}
+    $('#md-dialog').modal('hide');
 }
 
 function protocols(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
-    openDialog('protocol', '?ak=md_lists&type=protocol&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=protocol&lang='+lang);
 }
 
 function specif(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
-    openDialog('specif', '?ak=md_lists&type=specif&handler=specif1&multi=1&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=specif&handler=specif1&multi=1&lang='+lang);
 }
 
 function specif1(f){
@@ -1145,42 +1269,46 @@ function specif1(f){
 		}
 	}
 	// pro kote
-	var mainLang = document.forms[0].mdlang.value;
+    if( document.forms[0].mdlang) var mainLang = document.forms[0].mdlang.value;
 	var ta = flatNodes(md_elem.parentNode.parentNode, "TEXTAREA");
 	for(var i in ta){
 		if(ta[i].name.slice(-3)=='TXT') ta[i].value = f[mainLang].name;
 		else ta[i].value =  f[ta[i].name.slice(-3)].name;
 	}
-	checkFields();
+	//checkFields();
 }
 
 function hlname(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
-    openDialog('protocol', '?ak=md_lists&type=hlname&lang='+lang, 'width=400,height=500,scrollbars=yes');	
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=hlname&lang='+lang);
 }
-
 
 
 function fspec(obj){
 	md_elem = obj.parentNode;
-    openDialog('specif', '?ak=md_lists&type=fspec&multi=&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=fspec&multi=&lang='+lang);    
 }
 
 function fspec1(f){
 	var inputs = flatNodes(md_elem, "INPUT");
 	inputs[0].value = f;
+    $('#md-dialog').modal('hide');
 }
 
 function crs(obj){
 	md_elem = obj.parentNode;
-	openDialog('crs', '?ak=md_lists&type=crs&handler=crs1&lang='+lang, 'width=200,height=400,scrollbars=yes');
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=crs&handler=crs1&lang='+lang);
 }
 
 function dName(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
-    openDialog('dname', '?ak=md_lists&type=dname&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=dname&lang='+lang);    
 }
 
 function crs1(f){
@@ -1193,11 +1321,14 @@ function crs1(f){
       case '2081': v.value = pom[1]; break; 
     }     
   }
+  $('#md-dialog').modal('hide');
 }
 
-function dc_kontakt(obj){
-  md_elem = obj.parentNode;
-  dialogWindow = openDialog("kontakty", "ak=md_contacts&mds=DC", ",width=500,height=500");
+function dc_kontakt(obj, type){
+    md_elem=obj.parentNode;
+    md_partyType=type;
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdcontacts/?mds=DC');
 }
 
 function dc_kontakt1(osoba, org, fce, phone, fax, ulice, mesto, admin, psc, zeme, email, url){
@@ -1207,7 +1338,7 @@ function dc_kontakt1(osoba, org, fce, phone, fax, ulice, mesto, admin, psc, zeme
   s += org;
   s += ", "+mesto;
   if(zeme.trim()!="") s+= ", "+zeme.trim();
-  inputs[2].value = s;   
+  inputs[0].value = s;   
 }
 
 function dc_coverage(obj){
@@ -1247,12 +1378,12 @@ function dc_subject1(thesaurus, term_id, langs, terms, date, tdate){
 function dc_format(obj){
   md_elem = obj.parentNode;
   md_addMode = false;
-  dialogWindow = openDialog("kontakty", "?ak=md_lists&standard=DC&type=formats&lang="+lang, ",width=400,height=500,scrollbars=yes"); 
+  dialogWindow = openDialog("kontakty", baseUrl+"/suggest/mdlists/?standard=DC&type=formats&lang="+lang, ",width=400,height=500,scrollbars=yes"); 
 }
 
 function md_gazet(obj){
   md_elem = obj.parentNode.parentNode;
-  dialogWindow = openDialog("kontakty", "?ak=md_gazcli", ",width=300,height=500,scrollbars=yes"); 
+  dialogWindow = openDialog("kontakty", baseUrl+"/suggest/mdgazcli", ",width=300,height=500,scrollbars=yes"); 
 }
 
 function md_gazet1(bbox, first){
@@ -1313,7 +1444,7 @@ function clearForm(){
 //vyplneni labelu v seznamu kontaktu
 function fillLabel(o){
   if(o.value!="") return;
-  var label=(document.forms[0].pers.value);
+  var label=(document.forms[0].person.value);
   var za = "";
   if (label!=""){
     var carka = label.lastIndexOf(",");
@@ -1448,51 +1579,50 @@ function md_datePicker(id){
 }
 
 var md_constraint = function(obj){
-  md_elem = obj.parentNode;
-  md_addMode = false;
-  openDialog('protocol', '?ak=md_lists&type=uselim&multi=1&lang='+lang, 'width=400,height=500,scrollbars=yes');
-}
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=uselim&multi=1&lang='+lang);
+ }
 
 var md_serviceType = function(obj){
-  md_elem = obj.parentNode;
-  md_addMode = false;
-  openDialog('protocol', '?ak=md_lists&type=service&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=service&lang='+lang);
 }
 
 var md_lineage = function(obj){
-  md_elem = obj.parentNode;
-  md_addMode = false;
-  openDialog('protocol', '?ak=md_lists&type=lineage&multi=1&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=lineage&multi=1&lang='+lang);
 }
 
 var md_processStep = function(obj){
-  md_elem = obj.parentNode;
-  md_addMode = true;
-  openDialog('protocol', '?ak=md_lists&type=steps&multi=1&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    md_elem = obj.parentNode;
+    md_addMode = true;
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=steps&multi=1&lang='+lang);
 }
 
 var oconstraint = function(obj){
-  // md_elem = obj.parentNode;
-  md_addMode = false;
-  $.get('?ak=md_lists&type=oconstraint&multi=1&lang='+lang)
-  	.done(function(data){
-  		micka.window(obj,{
-  			title: 'Omezení',
-  			data: data
-  		});
-  	});
-  //openDialog('protocol', '?ak=md_lists&type=oconstraint&multi=1&lang='+lang, 'width=400,height=500,scrollbars=yes');
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $("#md-dialog").modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=oconstraint&multi=1&lang='+lang);
 }
 
-micka.fillValues = function(listType, code){
-	$.get("index.php?ak=md_lists&request=getValues&type="+listType+"&id="+code)
-		.done(function(data){
-			formats1(data);
-			closeDialog();
-		})
+micka.fillValues = function(listType, code, handler){
+	$.get(baseUrl+"/suggest/mdlists/?request=getValues&type="+listType+"&id="+code)
+	.done(function(data){
+        if(handler) handler(data);
+		else formats1(data);
+        $("#md-dialog").modal('hide');
+	})
 }
 
-var changeSort = function(id, ordid, constraint, lang, recs){
+/*var changeSort = function(id, ordid, constraint, lang, recs){
 	var o = document.getElementById(id);
 	if(!o) return;
 	var ord = document.getElementById(ordid);
@@ -1511,7 +1641,7 @@ var showLogin = function(){
 		} 	
 	}
 
-}
+}*/
 
 var checkId = function(o){
 	var nody = flatNodes(o.parentNode.parentNode, "INPUT");

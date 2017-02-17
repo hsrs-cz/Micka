@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MD_Metadata xmlns="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:ogc="http://www.opengis.net/ogc" xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gmd/metadataEntity.xsd">
+	<fileIdentifier>
+		<gco:CharacterString>3db2b700-b700-1db2-b2a8-c88088beb3f3</gco:CharacterString>
+	</fileIdentifier>
+	<language>
+		<LanguageCode codeList="./resources/codeList.xml#CI_LanguageCode" codeListValue="cze">cze</LanguageCode>
+	</language>
+	<characterSet>
+		<MD_CharacterSetCode codeList="./resources/codeList.xml#MD_CharacterSetCode" codeListValue="utf8">utf-8</MD_CharacterSetCode>
+	</characterSet>
+	<parentIdentifier>
+		<gco:CharacterString/>
+	</parentIdentifier>
+	<hierarchyLevel>
+		<MD_ScopeCode codeList="./resources/codeList.xml#MD_ScopeCode" codeListValue="dataset">dataset</MD_ScopeCode>
+	</hierarchyLevel>
+	<hierarchyLevelName>
+		<gco:CharacterString/>
+	</hierarchyLevelName>
+	<contact>
+		<CI_ResponsibleParty>
+			<individualName>
+				<gco:CharacterString>Štěpán Kafka</gco:CharacterString>
+			</individualName>
+			<organisationName>
+				<gco:CharacterString>Help Service Remote Sensing, spol. s r.o.</gco:CharacterString>
+			</organisationName>
+			<positionName>
+				<gco:CharacterString/>
+			</positionName>
+			<contactInfo>
+				<CI_Contact>
+					<phone>
+						<CI_Telephone>
+							<voice>
+								<gco:CharacterString>+420 327 514 118</gco:CharacterString>
+							</voice>
+						</CI_Telephone>
+					</phone>
+					<address>
+						<CI_Address>
+							<deliveryPoint>
+								<gco:CharacterString>Černoleská 1600</gco:CharacterString>
+							</deliveryPoint>
+							<city>
+								<gco:CharacterString>Benešov</gco:CharacterString>
+							</city>
+							<administrativeArea>
+								<gco:CharacterString/>
+							</administrativeArea>
+							<postalCode>
+								<gco:CharacterString/>
+							</postalCode>
+							<country>
+								<gco:CharacterString>CZ</gco:CharacterString>
+							</country>
+							<electronicMailAddress>
+								<gco:CharacterString>kafka@email.cz</gco:CharacterString>
+							</electronicMailAddress>
+						</CI_Address>
+					</address>
+					<onlineResource>
+						<CI_OnlineResource>
+							<linkage>
+								<URL>http://www.bnhelp.cz</URL>
+							</linkage>
+						</CI_OnlineResource>
+					</onlineResource>
+				</CI_Contact>
+			</contactInfo>
+			<role>
+				<CI_RoleCode codeListValue="author" codeList="./resources/codeList.xml#CI_RoleCode">author</CI_RoleCode>
+			</role>
+		</CI_ResponsibleParty>
+	</contact>
+	<dateStamp>
+		<gco:Date>2008-11-03</gco:Date>
+	</dateStamp>
+	<metadataStandardName>
+		<gco:CharacterString>ISO 19115/19119</gco:CharacterString>
+	</metadataStandardName>
+	<metadataStandardVersion>
+		<gco:CharacterString>2003/cor.1/2006</gco:CharacterString>
+	</metadataStandardVersion>
+	<locale>
+		<PT_Locale id="locale-eng">
+			<languageCode>
+				<LanguageCode codeList=".resources/gmxcodelists.xml#LanguageCode" codeListValue="eng"/>
+			</languageCode>
+			<characterEncoding>
+				<MD_CharacterSetCode codeList=".resources/gmxcodelists.xml#MD_CharacterSetCode" codeListValue="utf8"/>
+			</characterEncoding>
+		</PT_Locale>
+	</locale>
+	<spatialRepresentationInfo>
+		<MD_VectorSpatialRepresentation>
+			<geometricObjects>
+				<MD_GeometricObjects>
+					<geometricObjectType>
+						<MD_GeometricObjectTypeCode codeListValue="point" codeList="./resources/codeList.xml#MD_GeometricObjectTypeCode">point</MD_GeometricObjectTypeCode>
+					</geometricObjectType>
+				</MD_GeometricObjects>
+			</geometricObjects>
+		</MD_VectorSpatialRepresentation>
+	</spatialRepresentationInfo>
+	<referenceSystemInfo>
+		<MD_ReferenceSystem>
+			<referenceSystemIdentifier>
+				<RS_Identifier>
+					<code>
+						<gco:CharacterString>102067</gco:CharacterString>
+					</code>
+					<codeSpace>
+						<gco:CharacterString>EPSG</gco:CharacterString>
+					</codeSpace>
+				</RS_Identifier>
+			</referenceSystemIdentifier>
+		</MD_ReferenceSystem>
+	</referenceSystemInfo>
+	<identificationInfo>
+		<MD_DataIdentification>
+			<citation>
+				<CI_Citation>
+					<title xsi:type="PT_FreeText_PropertyType">
+						<gco:CharacterString>Adresní body</gco:CharacterString>
+						<PT_FreeText>
+							<textGroup>
+								<LocalisedCharacterString locale="locale_eng">Address points</LocalisedCharacterString>
+							</textGroup>
+						</PT_FreeText>
+					</title>
+					<alternateTitle xsi:type="PT_FreeText_PropertyType">
+						<gco:CharacterString>DBAM (DB_AM)</gco:CharacterString>
+					</alternateTitle>
+					<date>
+						<CI_Date>
+							<date>
+								<gco:Date>2006-04-30</gco:Date>
+							</date>
+							<dateType>
+								<CI_DateTypeCode codeListValue="revision" codeList="./resources/codeList.xml#CI_DateTypeCode">revision</CI_DateTypeCode>
+							</dateType>
+						</CI_Date>
+					</date>
+				</CI_Citation>
+			</citation>
+			<abstract xsi:type="PT_FreeText_PropertyType">
+				<gco:CharacterString>Adresní body ČSÚ</gco:CharacterString>
+				<PT_FreeText>
+					<textGroup>
+						<LocalisedCharacterString locale="locale_eng">Address point (house number) localization as definition point..</LocalisedCharacterString>
+					</textGroup>
+				</PT_FreeText>
+			</abstract>
+			<purpose xsi:type="PT_FreeText_PropertyType">
+				<gco:CharacterString>Sčítání</gco:CharacterString>
+				<PT_FreeText>
+					<textGroup>
+						<LocalisedCharacterString locale="locale_eng">Statistical register creation. Czech law 89/1995 Sb. about state statistic service.</LocalisedCharacterString>
+					</textGroup>
+				</PT_FreeText>
+			</purpose>
+			<status>
+				<MD_ProgressCode codeListValue="completed" codeList="./resources/codeList.xml#MD_ProgressCode">completed</MD_ProgressCode>
+			</status>
+			<pointOfContact>
+				<CI_ResponsibleParty>
+					<individualName>
+						<gco:CharacterString>Ing. Jiří Podzemský</gco:CharacterString>
+					</individualName>
+					<organisationName>
+						<gco:CharacterString>Český statistický úřad</gco:CharacterString>
+					</organisationName>
+					<positionName>
+						<gco:CharacterString/>
+					</positionName>
+					<contactInfo>
+						<CI_Contact>
+							<phone>
+								<CI_Telephone>
+									<voice>
+										<gco:CharacterString>274 053 115</gco:CharacterString>
+									</voice>
+								</CI_Telephone>
+							</phone>
+							<address>
+								<CI_Address>
+									<deliveryPoint>
+										<gco:CharacterString>Na padesátém 81</gco:CharacterString>
+									</deliveryPoint>
+									<city>
+										<gco:CharacterString>Praha 10</gco:CharacterString>
+									</city>
+									<administrativeArea>
+										<gco:CharacterString/>
+									</administrativeArea>
+									<postalCode>
+										<gco:CharacterString>100 82</gco:CharacterString>
+									</postalCode>
+									<country>
+										<gco:CharacterString>CZ</gco:CharacterString>
+									</country>
+									<electronicMailAddress>
+										<gco:CharacterString>jiri.podzemsky@czso.cz</gco:CharacterString>
+									</electronicMailAddress>
+								</CI_Address>
+							</address>
+							<onlineResource>
+								<CI_OnlineResource>
+									<linkage>
+										<URL>http://www.csu.cz</URL>
+									</linkage>
+								</CI_OnlineResource>
+							</onlineResource>
+						</CI_Contact>
+					</contactInfo>
+					<role>
+						<CI_RoleCode codeListValue="pointOfContact" codeList="./resources/codeList.xml#CI_RoleCode">pointOfContact</CI_RoleCode>
+					</role>
+				</CI_ResponsibleParty>
+			</pointOfContact>
+			<graphicOverview xlink:href="http://www.czso.cz/csu/rso.nsf/i/593F03F8C82F75B5C125707A002CDA6F/$File/pohled%20Plzeň_AM_2_01092005red.jpg" xlink:title="Pohled na adresní místa budov v">
+				<MD_BrowseGraphic>
+					<fileName>
+						<gco:CharacterString>http://www.czso.cz/csu/rso.nsf/i/593F03F8C82F75B5C125707A002CDA6F/$File/pohled%20Plzeň_AM_2_01092005red.jpg</gco:CharacterString>
+					</fileName>
+					<fileDescription xsi:type="PT_FreeText_PropertyType">
+						<gco:CharacterString>Pohled na adresní místa budov v</gco:CharacterString>
+					</fileDescription>
+					<fileType>
+						<gco:CharacterString/>
+					</fileType>
+				</MD_BrowseGraphic>
+			</graphicOverview>
+			<descriptiveKeywords>
+				<MD_Keywords>
+					<keyword>
+						<gco:CharacterString>demography &gt; human population &gt; composition of population</gco:CharacterString>
+					</keyword>
+					<keyword>
+						<gco:CharacterString>demografie &gt; populace lidská &gt; složení obyvatelstva</gco:CharacterString>
+					</keyword>
+					<thesaurusName>
+						<CI_Citation>
+							<title>
+								<gco:CharacterString>GEMET - Concepts, version 2.1</gco:CharacterString>
+							</title>
+							<date>
+								<CI_Date>
+									<date>
+										<gco:Date>2008-06-13</gco:Date>
+									</date>
+									<dateType>
+										<CI_DateTypeCode codeListValue="revision" codeList="./resources/codeList.xml#CI_DateTypeCode">revision</CI_DateTypeCode>
+									</dateType>
+								</CI_Date>
+							</date>
+						</CI_Citation>
+					</thesaurusName>
+				</MD_Keywords>
+			</descriptiveKeywords>
+			<descriptiveKeywords>
+				<MD_Keywords>
+					<keyword>
+						<gco:CharacterString/>
+					</keyword>
+					<keyword>
+						<gco:CharacterString>Statistical units</gco:CharacterString>
+					</keyword>
+					<keyword>
+						<gco:CharacterString>Statistické jednotky</gco:CharacterString>
+					</keyword>
+					<keyword>
+						<gco:CharacterString>Addresses</gco:CharacterString>
+					</keyword>
+					<keyword>
+						<gco:CharacterString>Adresy</gco:CharacterString>
+					</keyword>
+					<thesaurusName>
+						<CI_Citation>
+							<title>
+								<gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString>
+							</title>
+							<date>
+								<CI_Date>
+									<date>
+										<gco:Date>2008-06-01</gco:Date>
+									</date>
+									<dateType>
+										<CI_DateTypeCode codeListValue="revision" codeList="./resources/codeList.xml#CI_DateTypeCode">revision</CI_DateTypeCode>
+									</dateType>
+								</CI_Date>
+							</date>
+						</CI_Citation>
+					</thesaurusName>
+				</MD_Keywords>
+			</descriptiveKeywords>
+			<resourceConstraints>
+				<MD_LegalConstraints>
+					<useLimitation xsi:type="PT_FreeText_PropertyType">
+						<gco:CharacterString/>
+					</useLimitation>
+					<accessConstraints>
+						<MD_RestrictionCode codeListValue="copyright" codeList="./resources/codeList.xml#MD_RestrictionCode">copyright</MD_RestrictionCode>
+					</accessConstraints>
+					<useConstraints>
+						<MD_RestrictionCode codeListValue="" codeList="./resources/codeList.xml#MD_RestrictionCode"/>
+					</useConstraints>
+					<otherConstraints xsi:type="PT_FreeText_PropertyType">
+						<gco:CharacterString/>
+					</otherConstraints>
+				</MD_LegalConstraints>
+			</resourceConstraints>
+			<spatialRepresentationType>
+				<MD_SpatialRepresentationTypeCode codeListValue="vector" codeList="./resources/codeList.xml#MD_SpatialRepresentationTypeCode">vector</MD_SpatialRepresentationTypeCode>
+			</spatialRepresentationType>
+			<spatialResolution>
+				<MD_Resolution>
+					<equivalentScale>
+						<MD_RepresentativeFraction>
+							<denominator>
+								<gco:Integer>2880</gco:Integer>
+							</denominator>
+						</MD_RepresentativeFraction>
+					</equivalentScale>
+				</MD_Resolution>
+			</spatialResolution>
+			<language>
+				<LanguageCode codeList="./resources/codeList.xml#CI_LanguageCode" codeListValue="cze">cze</LanguageCode>
+			</language>
+			<topicCategory>
+				<MD_TopicCategoryCode>location</MD_TopicCategoryCode>
+			</topicCategory>
+			<topicCategory>
+				<MD_TopicCategoryCode>society</MD_TopicCategoryCode>
+			</topicCategory>
+			<extent>
+				<EX_Extent>
+					<description>
+						<gco:CharacterString>Česká republika</gco:CharacterString>
+					</description>
+					<geographicElement>
+						<EX_GeographicBoundingBox>
+							<westBoundLongitude>
+								<gco:Decimal>12.090618</gco:Decimal>
+							</westBoundLongitude>
+							<eastBoundLongitude>
+								<gco:Decimal>18.859911</gco:Decimal>
+							</eastBoundLongitude>
+							<southBoundLatitude>
+								<gco:Decimal>48.551933</gco:Decimal>
+							</southBoundLatitude>
+							<northBoundLatitude>
+								<gco:Decimal>51.055786</gco:Decimal>
+							</northBoundLatitude>
+						</EX_GeographicBoundingBox>
+					</geographicElement>
+					<temporalElement>
+						<EX_TemporalExtent>
+							<extent>
+								<gml:TimeInstant gml:id="T3db2b700-b700-1db2-b2a8-c88088beb3f3">
+									<gml:timePosition>2001-06-30</gml:timePosition>
+								</gml:TimeInstant>
+							</extent>
+						</EX_TemporalExtent>
+					</temporalElement>
+				</EX_Extent>
+			</extent>
+		</MD_DataIdentification>
+	</identificationInfo>
+	<distributionInfo>
+		<MD_Distribution>
+			<distributionFormat>
+				<MD_Format>
+					<name>
+						<gco:CharacterString>SHP</gco:CharacterString>
+					</name>
+					<version>
+						<gco:CharacterString>1.0</gco:CharacterString>
+					</version>
+				</MD_Format>
+			</distributionFormat>
+			<distributor>
+				<MD_Distributor>
+					<distributorContact>
+						<CI_ResponsibleParty>
+							<individualName>
+								<gco:CharacterString>Ing. Jiří Podzemský</gco:CharacterString>
+							</individualName>
+							<organisationName>
+								<gco:CharacterString>Český statistický úřad</gco:CharacterString>
+							</organisationName>
+							<positionName>
+								<gco:CharacterString/>
+							</positionName>
+							<contactInfo>
+								<CI_Contact>
+									<phone>
+										<CI_Telephone/>
+									</phone>
+									<address>
+										<CI_Address>
+											<deliveryPoint>
+												<gco:CharacterString/>
+											</deliveryPoint>
+											<city>
+												<gco:CharacterString/>
+											</city>
+											<administrativeArea>
+												<gco:CharacterString/>
+											</administrativeArea>
+											<postalCode>
+												<gco:CharacterString/>
+											</postalCode>
+											<country>
+												<gco:CharacterString/>
+											</country>
+										</CI_Address>
+									</address>
+									<onlineResource>
+										<CI_OnlineResource>
+											<linkage>
+												<URL/>
+											</linkage>
+										</CI_OnlineResource>
+									</onlineResource>
+								</CI_Contact>
+							</contactInfo>
+							<role>
+								<CI_RoleCode codeListValue="owner" codeList="./resources/codeList.xml#CI_RoleCode">owner</CI_RoleCode>
+							</role>
+						</CI_ResponsibleParty>
+					</distributorContact>
+					<distributionOrderProcess>
+						<MD_StandardOrderProcess>
+							<fees>
+								<gco:CharacterString>dle ceníku</gco:CharacterString>
+							</fees>
+							<orderingInstructions>
+								<gco:CharacterString>Písemnou objednávkou na Český</gco:CharacterString>
+							</orderingInstructions>
+						</MD_StandardOrderProcess>
+					</distributionOrderProcess>
+				</MD_Distributor>
+			</distributor>
+			<transferOptions>
+				<MD_DigitalTransferOptions>
+					<onLine>
+						<CI_OnlineResource>
+							<linkage>
+								<URL>http://www.csu.cz</URL>
+							</linkage>
+							<protocol>
+								<gco:CharacterString/>
+							</protocol>
+							<name>
+								<gco:CharacterString/>
+							</name>
+							<function>
+								<CI_OnLineFunctionCode codeListValue="order" codeList="">order</CI_OnLineFunctionCode>
+							</function>
+						</CI_OnlineResource>
+					</onLine>
+				</MD_DigitalTransferOptions>
+			</transferOptions>
+		</MD_Distribution>
+	</distributionInfo>
+	<dataQualityInfo>
+		<DQ_DataQuality>
+			<scope>
+				<DQ_Scope>
+					<level>
+						<MD_ScopeCode codeListValue="" codeList="./resources/codeList.xml#MD_ScopeCode"/>
+					</level>
+				</DQ_Scope>
+			</scope>
+			<lineage>
+				<LI_Lineage>
+					<statement xsi:type="PT_FreeText_PropertyType">
+						<gco:CharacterString>Kvalita je ucházející</gco:CharacterString>
+						<PT_FreeText>
+							<textGroup>
+								<LocalisedCharacterString locale="locale_eng">Here will be quality report.</LocalisedCharacterString>
+							</textGroup>
+						</PT_FreeText>
+					</statement>
+				</LI_Lineage>
+			</lineage>
+		</DQ_DataQuality>
+	</dataQualityInfo>
+</MD_Metadata>

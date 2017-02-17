@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html class="x-border-box">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>MICKA - {_messages.frontend.app_title}</title>
+	<link rel="shortcut icon" href="{$basePath}{$themePath}/favicon.ico">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
+	<link title="{_messages.frontend.app_title}" href="csw/opensearch.php" type="application/opensearchdescription+xml" rel="search">
+
+	<script language="javascript" src="{$basePath}/thesaurus/HS.js"></script>
+	<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>
+
+	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap/css/bootstrap.min.css" type="text/css"/>
+	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" type="text/css"/>
+	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>	
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
+	<link rel="stylesheet" href="{$basePath}/scripts/ol3/ol.css" type="text/css"/>
+    <link rel="stylesheet" href="{$basePath}/scripts/select2/css/select2.min.css" type="text/css"/>
+    <link rel="stylesheet" href="{$basePath}/scripts/select2/css/select2-bootstrap.min.css" type="text/css"/>
+    <link rel="stylesheet" href="{$basePath}{$themePath}/micka.css" type="text/css"/>   
+	<link rel="stylesheet" media="print" href="{$basePath}{$themePath}/micka_print.css">
+    <link rel="stylesheet" type="text/css" href="{$basePath}/scripts/calendar.css">
+
+    <link rel="stylesheet" href="{$basePath}{$themePath}/edit.css" type="text/css"/>	
+
+</head>
+<body id="micka-body">
+    <div class="page-container">
+    
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+           <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#micka-navbar">
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                         <span class="icon-bar"></span>
+                   </button>
+                    <div class="navbar-brand" data-tooltip="tooltip" data-container="body" data-placement="bottom" title="Micka">Micka</div>
+                </div>
+
+                <div class="collapse navbar-collapse" id="micka-navbar">
+                    <ul class="nav navbar-nav">
+                         <li>
+                            <a href="javascript:clickMenu('end')" data-tooltip="tooltip" title="{_messages.frontend.stop_edit}" data-container="body" data-placement="bottom">
+                                <i class="fa fa-check fa-lg"></i> {_messages.frontend.stop}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:clickMenu('save')" data-tooltip="tooltip" title="{_messages.frontend.save_edit}" data-container="body" data-placement="bottom">
+                                <i class="fa fa-floppy-o fa-lg"></i> {_messages.frontend.save}</a>
+                        </li>
+                        <li>
+                            <a n:href=":Catalog:Record:cancelEdit" data-tooltip="tooltip" title="{_messages.frontend.cancel_edit}" data-container="body" data-placement="bottom">
+                                <i class="fa fa-times fa-lg"></i> {_messages.frontend.cancel}</a>
+                        </li>                                
+                   </ul>
+                   <form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <label class="control-label">Profil</label>
+                            <select name="profile" class="form-control" data-placeholder="Profile" onchange="selProfil(this);">
+                                {foreach $profils as $key=>$value}
+                                    <option value="{$key}" {if $key == $selectProfil}selected{/if}>{$value}</option>
+                                {/foreach}    
+                            </select>
+                        </div>
+                     </form>
+                </div>    
+            </div>        
+        </nav>
+
+        {* FLASH *}
+        {foreach $flashes as $flash}
+            <div class="container alert alert-{$flash->type} alert-dismissible" role="alert">{$flash->message}</div>
+        {/foreach}
+
+<script type="text/javascript">
+	md_recno = {$record['recno']}; //FIXME - remove 
+	lang = {$appLang};
+	langs = {$record['langs']};
+	md_elem = null;
+	md_partyType = null;
+</script>
+
+<div class="container panel panel-default" style="padding-top: 50px;">
+    <h3>{_messages.frontend.new_record2}</h3>
+
+    <h1>
+    {if $record['mds'] == 0}<span class="dataset"><i class="fa fa-map fa-lg"></i></span>
+    {elseif $record['mds'] == 10 && $record['hierarchy'] != 'application'}<span class="service"><i class="fa fa-gears fa-lg"></i></span>
+    {elseif $record['mds'] == 10 && $record['hierarchy'] == 'application'}<span class="application"><i class="fa fa-desktop fa-lg"></i></span>
+    {elseif $record['mds'] == 2}<span class="fc"><i class="fa fa-sitemap fa-lg"></i></span>
+    {elseif $record['mds'] == 1}<span class="dc"><i class="fa fa-sun fa-lg"></i></span>
+    {/if}
+    {$record['title']}
+    </h1>
+
+    <div id="md-dialog" class="modal fade panel-default" role="dialog">
+        <div class="modal-dialog">
+            <div id="md-content" class="modal-content"></div>
+        </div>
+    </div>
+    
+    <div id="md-keywords" class="modal fade panel-default" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4>{_messages.frontend.keywords}</h4>
+                </div>
+                <div class="modal-body">
+                    {* INSPIRE theme *}
+					<label for="inspire" class="control-label">{_messages.frontend.inspire-theme}</label>
+					<div class="input-group">
+						<select id="inspire" class="form-control" data-placeholder="INPSIRE"></select>
+                       <span class="input-group-btn">
+                            <button id="thes-inspire-ok" class="btn btn-default" type="button">{_messages.frontend.fill}</button>
+                        </span>
+					</div>
+					
+					{*  GEMET *}
+					<label for="message-text" class="control-label">GEMET</label>
+					<div class="input-group">
+						<select id="gemet" class="form-control" data-placeholder="GEMET"></select>
+                        <span class="input-group-btn">
+                            <button id="thes-gemet-ok" class="btn btn-default" type="button">{_messages.frontend.fill}</button>
+                        </span>
+					</div> 
+                </div>
+            </div>
+        </div>
+    </div>    
+
+    <div style="padding:8px 0px 8px 0px;">
+        {if $record['recno'] > 0}
+           {* <a href="micka" style="background: url('{$basePath}{$themePath}/img/settings.png') no-repeat; padding-left:20px;" onclick="window.open('?ak=rec_admin&recno={$record['recno']|noescape}', '_blank', 'width=400,height=600,resizable=yes'); return false">{_messages.frontend.language}</a> *}
+        {/if}
+    </div>
+    {if $dataBox == ''}
+        <form id="md_inpform" class="md_inpform" action="{link Record:save $record['uuid']}" METHOD=POST>
+    {else}
+        <form id="md_inpform" action="index.php" method="post" onsubmit="return submitCheck();">
+    {/if}
+        <input type="hidden" name="afterpost" value="end">
+        <input type="hidden" name="profil" value="{$selectProfil}">
+        <input type="hidden" name="package" value="{$selectPackage}">
+        <input type="hidden" name="nextprofil" value="{$selectProfil}">
+        <input type="hidden" name="nextpackage" value="{$selectPackage}">
+        <input type="hidden" name="uuid" value="{$record['uuid']}">
+
+        {if $user->isLoggedIn() && $user->isInRole('publisher')}
+            <div style="margin-bottom:3px; font-weight: bold;">
+                {_messages.frontend.record}: 
+                <select name="data_type">
+                    {foreach $MdDataTypes as $key => $value}
+                        <option value="{$key}" {if $key == $dataType} selected="true"{/if}>{$value}</option>
+                    {/foreach}
+                </select>
+                {_messages.frontend.edit_group}: 
+                <select name="edit_group">
+                    {foreach $groups as $key => $value}
+                        {if $value == $edit_group}
+                        <option label="{$value}" value="{$value}" selected>{$value}</option>
+                        {else}
+                        <option label="{$value}" value="{$value}">{$value}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+                {_messages.frontend.view_group}: 
+                <select name="view_group">
+                    {foreach $groups as $key => $value}
+                        {if $value == $view_group}
+                        <option label="{$value}" value="{$value}" selected>{$value}</option>
+                        {else}
+                        <option label="{$value}" value="{$value}">{$value}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+            </div>
+        {/if}
+    {if $dataBox == ''}
+        {* Klasický formulář *}
+        <div class='t0'>
+        {foreach $formData as $form}
+            {if $form['value_lang'] != 'xxx'}
+                {var $recordlang = $form['value_lang']}
+            {else}
+                {var $recordlang = ''}
+            {/if}
+            {if $form['next_lang'] == 1}
+                {* Opakování pro další jazyk BEGIN *}
+                {* ***************************************************************************** *}
+                <br/>
+                {if $form['form_code'] == 'T' || $form['form_code'] == 'N'}
+                    <span class="c"></span>
+                    <span class="flg"><img src="{$basePath}{$themePath}/img/flags/{$form['value_lang']}.png" class="fl" title="{$form['value_lang']}"></span>
+                    <input type=text class="{$form['form_code']}" id="{$form['el_id']}{$recordlang}" name="{$form['form_code']}|{$form['value_lang']}|{$form['package_id']}|{$form['md_path']}" value="{$form['value']}">
+                {/if}
+                {* ****************************************************************************** *}
+                {if $form['form_code'] == 'A'}
+                    <img src="{$basePath}{$themePath}/img/flags/{$form['value_lang']}.png" class="fl" title="{$form['value_lang']}" style="vertical-align:top">
+                    <textarea name="{$form['form_code']}|{$form['value_lang']}|{$form['package_id']}|{$form['md_path']}">{$form['value']}</textarea>
+                {/if}
+                {* Opakování pro další jazyk END *}
+            {else}
+                    {if $form['start_div'] == 1}
+                        <div id="{$form['md_id']}_{$form['repeat']}_" class="t">
+                    {/if}
+
+                    {if $form['pack'] == 1}
+                        <img class="exp" src='{$basePath}{$themePath}/img/expand.gif' id="PA_{$form['md_path']}"  onClick="md_dexpand(this);">
+                    {/if}
+                    {if $form['pack'] == 2}
+                        <img class="exp" src='{$basePath}{$themePath}/img/collapse.gif' id="PA_{$form['md_path']}"  onClick="md_dexpand(this);">
+                    {/if}
+
+                    {* ***************************************************************************** *}
+                    {if $form['rb'] == 1}
+                        <input type=radio name="RB_{$form['rb_id']}" value="RB_{$form['md_path']}" onClick="md_expand(this);"{if $form['rb_checked'] == 1} checked{/if}>
+                    {/if}
+                        
+                    {if $form['mandt_code'] == 'M'}
+                        {var $mCode = 'm'}
+                        {var $req='required="required" '}
+                    {else}
+                        {var $mCode = $form['mandt_code']}
+                        {var $req=''}
+                    {/if}
+
+                    <span id="ins-{$form['inspire_code']|trim}" class="{$mCode}" data-tooltip="tooltip" title="{$form['help']}">{if $form['inspire_code'] !=''}({$form['inspire_code']}){/if} {$form['label']}</span>
+
+                    {if $form['rb'] == 1}
+                        <div id="RB_{$form['md_path']}" style="border: 0px none; padding-left: 0px;{if $form['rb_checked'] == 0} display: none;{/if}">
+                    {/if}
+                    {* ***************************************************************************** *}
+                    {if $form['form_code'] == 'T' || $form['form_code'] == 'N'}
+                        {if $form['el_id'] == 530}
+                            {* keywords hack *}
+                            <span class="flg"><img src='{$basePath}{$themePath}/img/uri.png' title="URI"></span>
+                            <input type=text class="{$form['form_code']}" id="{$form['el_id']}uri" name="{$form['form_code']}|uri|{$form['package_id']}|{$form['md_path']}" value="{ifset $valuesUri[$form['md_path']]}{$valuesUri[$form['md_path']]}{/ifset}">
+                            <a href="#" class="plus" onclick="md_pridej(this); return false;"><i class="fa fa-plus-square-o"></i></a>
+                            <a href="#" class="minus" onclick="md_smaz(this); return false;"><i class="fa fa-minus-square-o"></i></a>
+                            <br>
+                            <span class="c"></span>
+                        {/if}
+                        {if $form['md_id'] == 4742}
+                            {* distributionFormat hack *}
+                            <span class="flg"><img src='{$basePath}{$themePath}/img/uri.png' title="URI"></span>
+                            <input type=text class="{$form['form_code']}" id="{$form['el_id']}uri" name="{$form['form_code']}|uri|{$form['package_id']}|{$form['md_path']}" value="{ifset $valuesUri[$form['md_path']]}{$valuesUri[$form['md_path']]}{/ifset}">
+                            <br>
+                            <span class="c"></span>
+                        {/if}
+                        {if $form['el_id'] == 680}
+                            {* useLimitation hack *}
+                            <span class="flg"><img src='{$basePath}{$themePath}/img/uri.png' title="URI"></span>
+                            <input type=text class="{$form['form_code']}" id="{$form['el_id']}uri" name="{$form['form_code']}|uri|{$form['package_id']}|{$form['md_path']}" value="{ifset $valuesUri[$form['md_path']]}{$valuesUri[$form['md_path']]}{/ifset}">
+                            <br>
+                            <span class="c"></span>
+                        {/if}
+                        {if $form['el_id'] == 20}
+                            {* fileIdentifier - pouze pro čtení *}
+                            <span class="{$form['form_code']}" id="{$form['el_id']}{$recordlang}">{$form['value']}</span>
+                        {else}
+                            {if $form['value_lang'] != 'xxx'}
+                                <span class="flg"><img src='{$basePath}{$themePath}/img/flags/{$form['value_lang']}.png' title="{$form['value_lang']}"></span>
+                            {/if}
+                            <input {$req|noescape}type=text class="{$form['form_code']}" id="{$form['el_id']}{$recordlang}" name="{$form['form_code']}|{$form['value_lang']}|{$form['package_id']}|{$form['md_path']}" value="{$form['value']}">
+                        {/if}
+                    {/if}
+                    {* ****************************************************************************** *}
+                    {if $form['form_code'] == 'A'}
+                        <br>
+                        {if $form['value_lang'] != 'xxx'}
+                            <img src='{$basePath}{$themePath}/img/flags/{$form['value_lang']}.png' class="fl" title="{$form['value_lang']}" style="vertical-align:top">
+                        {/if}
+                            <textarea {$req|noescape}name="{$form['form_code']}|{$form['value_lang']}|{$form['package_id']}|{$form['md_path']}">{$form['value']}</textarea>
+                    {/if}
+                    {* ****************************************************************************** *}
+                    {if $form['form_code'] == 'D'}
+                        <input type=text {$req|noescape}class="{$form[form_code]}" id="{$form['el_id']}{$recordlang}" name="{$form['form_code']}|{$form['value_lang']}|{$form['package_id']}|{$form['md_path']}" value="{$form['value']}" data-provide="datepicker">
+                        {* <a href="javascript:md_datePicker('{$form['form_code']}|{$form['value_lang']}|{$form[package_id]}|{$form['md_path']}');"><i class="fa fa-calendar"></i></a> *}
+                    {/if}
+                    {* ***************************************************************************** *}
+                    {if $form['form_code'] == 'C'}
+                        <select {$req|noescape}name="{$form['form_code']}|{$form['value_lang']}|{$form['package_id']}|{$form['md_path']}" id="{$form['el_id']}"><option>{$form['value']|noescape}</select>
+                    {/if}
+                    {* ***************************************************************************** *}
+                    {if $form['form_code'] == 'L' || $form['form_code'] == ''}
+                        {* <!-- <span style="xmargin-left:200px; display:inline-block;">&nbsp;</span> --> *}
+                    {/if}
+
+                    {if $form['button_text'] != ''}
+                        <a href="javascript:void(0);" class="open" onClick="{$form['button_action']|noescape}; return false;" data-tooltip="tooltip" title="{$form['button_text']}"><i class="fa fa-folder-open fa-lg"></i></a>
+                    {/if}
+
+                    {* hack kvuli parentIdentifier - kafka *}
+                    {if $form['md_id'] == 121}
+                        <div style="margin-left:200px;" id="parent-text"></div>
+                    {/if}
+                    {if $form['max_nb'] != 1 && $form['md_id'] != 88}
+                        {* md_id=88: keywords hack*}
+                        <a href="#" class="plus" onclick="md_pridej(this); return false;"><i class="fa fa-plus-square-o"></i></a>
+                        <a href="#" class="minus" onclick="md_smaz(this); return false;"><i class="fa fa-minus-square-o"></i></a>
+                    {/if}
+                    {if $form['pack'] == 1}<div id="PB_{$form['md_path']}" style="display:none; padding-left:0px; border: 0px;">{/if}
+                    {if $form['pack'] == 2}<div id="PB_{$form['md_path']}" style="display:block; padding-left:0px; border: 0px;">{/if}
+                {/if}
+            {foreach $form['end_div'] as $d}
+                </div>
+            {/foreach}
+    {/foreach}
+    </div>
+
+    {else}
+        {* MICKA LITE *}
+        <div>
+            {$dataBox|noescape}
+        </div>
+    {/if}                    
+    <input type="hidden" name="ende" value="1">
+    <div class='te'></div>
+    </form>
+
+    {* VALIDACE *}
+    {if $record['mds'] == 0 || $record['mds'] == 10}
+        <div id="valid">
+            <img class="exp" onclick="md_dexpand(this);" src="{$basePath}{$themePath}/img/collapse.gif"/>
+            <span id="valid-label">
+                <a  href="#" onclick="clickMenu('valid')"><img src="{$basePath}{$themePath}/img/refresh_small.png"/>
+                <b>{_messages.frontend.validate}</b></a>
+            </span>
+            <div class="valid-block">
+                <div style="clear: both; margin-top:5px;"></div>
+                {foreach $mdControl as $row}
+                    {if $row['level']!='i' && $row['deepPass'] != TRUE}
+                        <div class="md-validrow" onclick="md_scroll('ins-{$row['code']|noescape}')">
+                            <div class="valid-id">{$row['code']}</div>
+                            <div class="valid-txt">
+                                {if $row['level'] == 'c' && $row['pass'] != TRUE}
+                                    <span class="c">{$row['description']}</span>
+                                {elseif $row['level'] == 'n' && $row['pass'] != TRUE}
+                                    <span class="n">{$row['description']}</span>
+                                {elseif $row['pass'] != TRUE}
+                                    <span class="m">{$row['description']}</span>
+                                {else} 
+                                    <span>{$row['description']}</span>		
+                                {/if}
+                                
+                                <span style="color:gray">{$row['err']}</span>
+                                {ifset $row['tests']}
+                                    {foreach $row['tests'] as $r}
+                                        {if $r['deepPass'] != TRUE}
+                                            <div style="margin-left:10px;"> {$r['code']}: 
+                                            {if $r['level'] == 'c' && $r['pass'] != TRUE}
+                                                <span class="c">{$r['description']}</span>
+                                            {elseif $r['pass'] != TRUE}
+                                                <span class="m">{$r['description']}</span>
+                                            {else} 
+                                                <span>{$r['description']}</span>		
+                                            {/if}
+                                            </div>
+                                        {/if}
+                                    {/foreach}
+                                {/ifset}
+                            </div>
+                        </div>	
+                    {/if}
+                {/foreach}
+            </div>
+        </div>
+    {/if}
+</div>
+
+<script src="{$basePath}/scripts/jquery/jquery-1.11.1.min.js"></script>
+<script src="{$basePath}/scripts/ol3/ol.js"></script>
+<script type="text/javascript" src="{$basePath}/scripts/select2/js/select2.full.js"></script>
+<script type="text/javascript" src="{$basePath}/scripts/select2/js/i18n/{$appLang2}.js"></script>
+<script type="text/javascript" src="{$basePath}/scripts/bootstrap/js/bootstrap.min.js" ></script>
+<script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js" ></script>
+<script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.{$appLang2}.min.js" ></script>
+<script type="text/javascript" src="/projects/metadata/trunk/scripts/calendar.js"></script>        
+<script type="text/javascript" src="{$basePath}/scripts/OverMap.js"></script>
+<script type="text/javascript" src="{$basePath}/scripts/edit.js"></script>
+ 
+<script>
+	$(document).ready(function() {
+        HS.setLang({$appLang});
+        $('[data-tooltip="tooltip"]').tooltip();  
+        start();
+	});
+    baseUrl = "{$baseUrl|noescape}";
+</script>
+
+</body>
+</html>

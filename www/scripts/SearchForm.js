@@ -38,7 +38,7 @@ SearchForm = function(){
 				$("#panel-topic").hide();
 				$("#panel-denominator").hide();
 				$("#panel-stype").hide();
-		}		
+		}
 	}
 	
 	// submit form on enter in fulltext field
@@ -52,17 +52,12 @@ SearchForm = function(){
 		theme: 'bootstrap',
 		allowClear: true,
 		placeholder: 'Typ zdroje',
-		minimumResultsForSearch: Infinity//,
-		/*data: [
-			{id: 'data', text: 'data'},
-			{id: 'service', text: 'service'},
-			{id: 'application', text: 'application'},
-			{id: 'fc', text: 'feature catalogue'},
-		]*/
+		minimumResultsForSearch: Infinity
 	});
 	
 	$('#res-type').on('select2:close', function(e){
-		changeType(e.target.value)
+		changeType(e.target.value);
+        _this.search();
 	});
 	
 	$('#kw-2').select2({
@@ -142,6 +137,8 @@ SearchForm = function(){
 		maxSelectionLength: 1
 	});
 
+	$('#contact').on('select2:close', function(e){ _this.search(); });
+    
 	$("#denominator").select2({
 		ajax: {
 			url: 'suggest',
@@ -168,6 +165,8 @@ SearchForm = function(){
 		maxSelectionLength: 1
 	});
 
+	$('#denominator').on('select2:close', function(e){ _this.search(); });
+    
 	$("#inspire").select2({
 		ajax: {
 			url: '/projects/kafka/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang=cs',
@@ -183,7 +182,9 @@ SearchForm = function(){
 	   
 	});    
 	
-	 $("#topic").select2({
+	$('#inspire').on('select2:close', function(e){ _this.search(); });
+    
+    $("#topic").select2({
 		ajax: {
 			url: 'suggest',
 			dataType: 'json',
@@ -208,7 +209,9 @@ SearchForm = function(){
 		theme: 'bootstrap'
 	});
 	
-	 $("#stype").select2({
+	$('#topic').on('select2:close', function(e){ _this.search(); });
+    
+    $("#stype").select2({
 		ajax: {
 			url: 'suggest',
 			dataType: 'json',
@@ -233,10 +236,36 @@ SearchForm = function(){
 		theme: 'bootstrap'
 	});
 
-	$("#sort").select2({ minimumResultsForSearch: Infinity, allowClear: false});
+	$('#stype').on('select2:close', function(e){ _this.search(); });
+
+	$("#md-status").select2({
+		data: [
+            {id: -1, text: HS.i18n('pending')},
+            {id:  0, text: HS.i18n('private')},
+            {id:  1, text: HS.i18n('public')},
+            {id:  2, text: HS.i18n('for portal')}
+	   ],
+	   //templateResult: templateResult,
+	   theme: 'bootstrap',
+	   language: HS.getLang(2),
+	   allowClear: true
+	   
+	});    
+	$("#md-status").on('select2:close', function(e){ _this.search(); });
+    
+    $("#sort").select2({ minimumResultsForSearch: Infinity, allowClear: false});
 	$("#sortdir").select2({ minimumResultsForSearch: Infinity, allowClear: false});
-	
-	this.overMap = new OverMap({drawBBOX: true});
+	$('#sort').on('select2:close', function(e){ _this.search(); });
+	$('#sortdir').on('select2:close', function(e){ _this.search(); });
+    $('#inside').on('change', function(e){ _this.search(); });
+    $('#md-inspire').on('change', function(e){ _this.search(); });
+    $('#md-my').on('change', function(e){ _this.search(); });
+        
+	this.overMap = new OverMap({
+        drawBBOX: true, handler: function(g){
+            _this.search();
+        }
+    });
 	this.overMap.drawMetadata();
 	
 	/*
@@ -253,13 +282,16 @@ SearchForm = function(){
 					data[o.id][$(this).val()] =  $(this).text();
 				});				
 			}
+            else if ($(o).prop('type')=='checkbox'){
+                data[o.id] = $(o).prop('checked');
+            }   
 			else {
 				if(o.id) data[o.id] = $(o).val();
 			}
 		});
 		data['map'] = _this.overMap.getState();
 		$.cookie('micka', data); 
-		//console.log('save cookie', data)
+		console.log('save cookie', data)
 		return false;				
 	}
 	
@@ -269,14 +301,14 @@ SearchForm = function(){
 	this.readCookie = function (){
 		var data = $.cookie('micka');
 		var f = null;
-		//console.log('read cookie', data);
 		if(data) $.each(data, function(field, d){
 			if(field=='map'){
 				_this.overMap.setState(d);
 			}
 			else {
 				f = $("#"+field);
-				if(typeof d == 'string'){ f.val(d); }
+                if (f.prop('type')=='checkbox') { f.prop('checked', d); }
+				else if(typeof d == 'string') { f.val(d); }
 				else {
 					if(f[0].length>0){
 						var vals = [];
@@ -311,6 +343,7 @@ SearchForm = function(){
 	* Collect the queryables and fires the search
 	*/
 	this.search = function(){
+        $("#wait").show();
 		result = "";
 		var type = $("#res-type").val();
 		if(type=='data') {
@@ -323,14 +356,25 @@ SearchForm = function(){
 		addVal('Subject', "#inspire");
 		addVal('Denominator', "#denominator");
 		addVal('OrganisationName', "#contact");
+        addVal('IsPublic', "#md-status");
 		var bbox = this.overMap.getBBox();
 		if(bbox) {
 			if(result) result +=" AND ";
-			result += "BBOX='" + bbox.join(' ') + "'";
+			result += "BBOX='" + bbox.join(' ');
+            if($('#inside').prop( "checked" )) result += ' 1';
+            result += "'";
 		}
+        if($('#md-inspire').prop( "checked" )){
+            if(result) result +=" AND ";
+            result += "HierarchyLevelName='http://geoportal.gov.cz/inspire'";
+        }
+        if($('#md-my').prop( "checked" )){
+            if(result) result +=" AND ";
+            result += "MdCreator='"+user+"'";
+        }
 		var sort = $('#sort').val() + ':' + $('#sortdir').val();
 		//this.saveCookie();
-		window.location = "?query=" + encodeURIComponent(result) + '&sort='+sort + '#results';
+		window.location = "?query=" + encodeURIComponent(result) + '&sortby='+sort + '&t=' + (Date.now()/1000|0) +'#results';
 	}
 	
 	/**
@@ -344,6 +388,8 @@ SearchForm = function(){
 			else $(o).val('').trigger('change.select2');
 		});
 		this.overMap.clear();
+        $('#inside').prop( "checked", false );
+        this.search();
 	}
 
 }

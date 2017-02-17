@@ -137,7 +137,7 @@
 				<xsl:when test="$r='nonGeographicDataset'"><i class="fa fa-database fa-fw {$class}"></i></xsl:when>
 				<xsl:when test="$r='application'"><i class="fa fa-desktop fa-fw {$class}"></i></xsl:when>
 				<xsl:when test="$r='fc'"><i class="fa fa-sitemap fa-fw {$class}"></i></xsl:when>
-				<xsl:when test="$r='dc'"><i class="fa fa-sun fa-fw {$class}"></i></xsl:when>
+				<xsl:when test="$r='dc'"><i class="fa fa-bullseye fa-fw {$class}"></i></xsl:when>
 				<xsl:otherwise><i class="fa fa-question fa-fw {$class}"></i></xsl:otherwise>
 			</xsl:choose>
 		</span>		

@@ -17,8 +17,8 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:template match="//gmd:MD_Metadata|//gmi:MI_Metadata">
 
-<xsl:variable name="codelists" select="document(concat('../../include/xsl/codelists_',$LANG,'.xml'))/map" />
-<xsl:variable name="specifications" select="document('../../include/dict/specif.xml')/userValues" />
+<xsl:variable name="codelists" select="document(concat('../../xsl/codelists_',$LANG,'.xml'))/map" />
+<xsl:variable name="specifications" select="document('../../dict/specif.xml')/userValues" />
 <xsl:variable name="labels" select="document(concat('labels-',$LANG,'.xml'))/map" />
 <xsl:variable name="srv" select="gmd:identificationInfo/srv:SV_ServiceIdentification != ''"/>
 <xsl:variable name="hierarchy" select="gmd:hierarchyLevel/*/@codeListValue"/>

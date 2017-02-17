@@ -1,9 +1,5 @@
 <?php
 
-namespace Micka\Module\Base\Presenters;
-
-use Nette;
-
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
     /** @persistent */
@@ -14,27 +10,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /** @var \Kdyby\Translation\LocaleResolver\SessionResolver  @inject */
     public $translatorSession;
     
+    protected $layoutTheme;
     public $appLang;
     public $mickaSession;
-    public $langCodes = [
-       "cs"=>"cze",
-       "da"=>"dan",
-       "en"=>"eng",
-       "fi"=>"fin",
-       "fr"=>"fre",
-       "de"=>"ger",
-       "hu"=>"hun",
-       "it"=>"ita",
-       "lv"=>"lav",
-       "no"=>"nor",
-       "pl"=>"pol",
-       "pt"=>"por",
-       "sk"=>"slo",
-       "sl"=>"slv",
-       "es"=>"spa",
-       "sv"=>"swe"          
-    ];
-
+    public $langCodes = [];
 
     public function startup()
 	{
@@ -45,10 +24,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $tmp_identity = $this->user;
         $tmp_appparameters = $this->context->parameters;
         
+        $this->layoutTheme = $this->context->parameters['app']['layoutTheme'];
+        $this->langCodes = $this->context->parameters['langCodes'];
         $this->appLang = isset($this->langCodes[$this->translator->getLocale()])
                 ? $this->langCodes[$this->translator->getLocale()]
                 : substr($this->context->parameters['app']['langs'],0,3);
-        
         $this->mickaSession = $this->getSession('mickaSection');
         
         define("CSW_LOG", '');
@@ -90,7 +70,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             // Check permissions for Action/handle methods
             $resource = Nette\Reflection\Method::from($this->presenter, $element->name)->getAnnotation('resource');
         } else {
-            // Nette\Application\UI\ComponentReflection
             // Check permissions for presenter access
             $resource = Nette\Reflection\ClassType::from($this->presenter)->getAnnotation('resource');
         }
@@ -99,7 +78,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         }
     }
     
-    /** @resource Front:Homepage:Default */
+    /** @resource Catalog:Guest */
     public function handleChangeLocale($locale)
     {
         $this->translatorSession->setLocale($locale);
@@ -113,6 +92,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->template->themePath = '/layout/default';
         $this->template->extjsPath = '/wwwlibs/ext/ext-4.2';
         $this->template->appLang = $this->appLang;
+        $this->template->appLang2 = $this->translator->getLocale();
         $this->template->action = $this->action;
         $this->template->navigation = [];
         $this->template->hs_initext = '';
@@ -120,4 +100,34 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	}
 
+    /**
+     * Formats layout template file names.
+     * @return array
+     */
+    public function formatLayoutTemplateFiles()
+    {
+        $name = $this->getName();
+        $presenter = substr($name, strrpos(':' . $name, ':'));
+        $dir = dirname($this->getReflection()->getFileName());
+        return array(
+            "$dir/templates/$this->layoutTheme/$presenter/@layout.latte",
+            "$dir/templates/$this->layoutTheme/@layout.latte"
+        );
+    }
+
+    /**
+     * Formats view template file names.
+     * @return array
+     */
+    public function formatTemplateFiles()
+    {
+
+        $name = $this->getName();
+        $presenter = substr($name, strrpos(':' . $name, ':'));
+        $dir = dirname($this->getReflection()->getFileName());
+        return array(
+            "$dir/templates/$this->layoutTheme/$presenter/$this->view.latte"
+        );
+
+    }
 }

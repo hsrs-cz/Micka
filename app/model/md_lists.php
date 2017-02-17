@@ -9,16 +9,15 @@ function getList($type, $lang, $withValues=false){
     if($type=='fspec'){
         @$xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists_$lang.xml");
         if(!$xml) $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists_eng.xml");
-        echo "<h1>".(string) $xml->inspireKeywords['title']."</h1>";
+        echo '<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4>'.(string) $xml->inspireKeywords['title'].'</h4>
+        </div><div class="modal-body">';
         $list = $xml->xpath("//inspireKeywords/value");
         foreach ($list as $entry){
-            echo "<a href=\"javascript:opener.fspec1('D.2.8.".$entry['n']." INSPIRE Data Specification on ".$entry['code']." - Guidelines', '".$entry['publication']."'); window.close();\">".(string) $entry."</a><br>";
+            echo "<a href=\"javascript:fspec1('D.2.8.".$entry['n']." INSPIRE Data Specification on ".$entry['code']." - Guidelines', '".$entry['publication']."'); window.close();\">".(string) $entry."</a><br>";
         }
-        /*echo "<br><h1>".(string) $xml->serviceSpecifications['title']."</h1>";
-        $list = $xml->xpath("//serviceSpecifications/value");
-        foreach ($list as $entry){
-            echo "<a href=\"javascript:opener.fspec1('".$entry['name']."'); window.close();\">".(string) $entry."</a> *<br>";
-        }*/
+        echo "</div>";
         return;
     }
 	@$xml = simplexml_load_file(APP_DIR . "/model/dict/$type.xml");
@@ -27,17 +26,22 @@ function getList($type, $lang, $withValues=false){
 	$langBranch = $xml->xpath("//translation[@lang='".$lang."']");
 	if(isset($langBranch[0]) === FALSE) $lang='eng';
 	$pageTitle = $xml->xpath("//translation[@lang='".$lang."']/title");
-	echo "<h2>".$pageTitle[0]."</h2>";
+    echo '<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4>'. $pageTitle[0].'</h4>
+        </div><div class="modal-body">';
 	foreach ($xml->xpath("//translation[@lang='".$lang."']/group") as $list) {
     	echo "<h3>".$list->title.'</h3>';
     	foreach ($list->entry as $entry){
     		// pouzije primarne label, kdyz neni, tak hodnotu
     		$value = $entry['label'];
     		if(!$value) $value = (string) $entry;
-    		if($withValues) echo "<a href=\"javascript:micka.fillValues('".$type."','".$entry['id']."');\">".$value."</a><br>";
+            $f = (isset($_REQUEST['handler']) && $_REQUEST['handler']) ? $_REQUEST['handler'] : 'false';
+    		if($withValues) echo "<a href=\"javascript:micka.fillValues('".$type."','".$entry['id']."', ".$f.");\">".$value."</a><br>";
     		else echo "<a href=\"javascript:kw('".$entry['code']."');\">".(string) $entry."</a><br>";
     	}
 	}
+    echo "</div>";
 }
 
 function getValues($type, $filter){
@@ -79,42 +83,16 @@ if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValues') {
 	exit;
 }
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" type="text/css" href="<?php echo substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/')) . '/layout/default'; ?>/micka.css" />
-<title>MICKA - <?php echo $title; ?></title>
-<script language="javascript" src="<?php echo WEB_SCRIPTPATH; ?>/scripts/ajax.js"></script>
 <script>
-function fillValues(listType,code){
-    var ajax = new HTTPRequest;
-    ajax.get("index.php?ak=md_lists&request=getValues&type="+listType+"&id="+code, "", fillValuesResponse, false);
-}
-
-var micka = {};
-micka.fillValues = function(listType,code){
-    var ajax = new HTTPRequest;
-    ajax.get("index.php?ak=md_lists&request=getValues&type="+listType+"&id="+code, "", fillValuesResponse, false);
-}
-
-function fillValuesResponse(r){
-	if(r.readyState == 4){
-		eval("var k="+r.responseText);
-		kw(k);
-	}
-}
-
 function kw(f){
-	<?php 
-	    if(isset($_REQUEST['handler']) && $_REQUEST['handler']) echo "opener.".htmlspecialchars($_REQUEST['handler'])."(f);";
-	    else echo "opener.formats1(f);";
-	?>
-  window.close();
+<?php 
+    if(isset($_REQUEST['handler']) && $_REQUEST['handler']) echo htmlspecialchars($_REQUEST['handler'])."(f);";
+    else echo "formats1(f);";
+?>
 }
 </script>
-</head>
-<body onload="javascript:focus();">
+       
+
 <?php
     $lang = htmlspecialchars($_REQUEST['lang']);
     if(!$lang) $lang='eng';
@@ -125,5 +103,5 @@ function kw(f){
     }
     echo getList(htmlspecialchars($_REQUEST['type']), $lang, $multi);
 ?>
-</body>
-</html>
+
+

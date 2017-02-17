@@ -1,18 +1,8 @@
 <?php
-/**
- * Metainformation catalogue
- * --------------------------------------------------
- *
- * Lib for MicKa
- *
- * @link       http://www.bnhelp.cz
- * @package    Micka
- * @category   Metadata
- * @version    20150225
- *
- */
+
 // pro XSLT - dotaz na metadata
-function getMetadata($s, $esn='summary'){
+function getMetadata($s, $esn='summary')
+{
     $s = stripslashes($s); // FIXME - nevim, co to udela, pokud je apostrof v retezci
 	$csw = new \Micka\Csw();
 	$params["CONSTRAINT"] = $s;
@@ -33,9 +23,44 @@ function getMetadata($s, $esn='summary'){
 	return $dom;
 }
 
+// pro XSLT - dotaz na metadata
+function getData($s)
+{
+    $dom = new DOMDocument();
+    $ch=curl_init($s);
+    //curl_setopt($ch, CURLOPT_COOKIE, session_name().'='.session_id() );
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5 ); 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // potlačena kontrola certifikátu
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    if(defined('CONNECTION_PROXY')){
+        $proxy = CONNECTION_PROXY;
+        if(defined('CONNECTION_PORT')) $proxy .= ':'. CONNECTION_PORT;
+        curl_setopt($ch, CURLOPT_PROXY, $proxy);
+    }
+    $result = curl_exec ($ch);
+    curl_close ($ch);
+    //file_put_contents(__DIR__ . "/../logs/csw-getData.xml", $s.$result);
+    if($result) $dom->loadXML($result);
+    return $dom;
+}
+
+// pro XSLT - extent mapy
+function drawMapExtent($size, $x1, $y1, $x2, $y2){
+    if(($x1 < $x2) && ($y1 < $y2)){
+        $xyRatio = cos(($y1 + $y2)/2/180*pi());  
+        //$width = round($size * $xyRatio * ($x2 - $x1) / ($y2 - $y1));
+        $height = round($size / $xyRatio * ($y2 - $y1) / ($x2 - $x1));
+        $wms = $GLOBALS['hs_wms']['eng'];
+        $wms .= "&BBOX=$x1,$y1,$x2,$y2&WIDTH=$size&HEIGHT=$height&REQUEST=GetMap&SRS=EPSG:4326";       
+        $bboxImg = $wms;
+    }  
+    return $bboxImg;
+}
 
 // pro XSLT - ceske datum
-function drawDate($date, $lang){
+function drawDate($date, $lang)
+{
 	if($lang=='cze' && strpos($date,"-")>0){
 		$pom = explode("-",$date);
 		$s = "";
@@ -47,8 +72,49 @@ function drawDate($date, $lang){
 	return $date;
 }
 
-function setMickaLog($message, $level, $modul) {
-	
+// pro XSLT - test uri pro DCAT 
+function isURI($s)
+{
+    if(in_array(substr($s,0,4), array('http', 'urn:'))){
+        return 'anyURI';
+    }
+    return 'string';
+}
+
+function applyTemplate($xmlSource, $xsltemplate, $user) {
+    //die($xmlSource);
+	$rs = FALSE;
+	if (File_Exists (__DIR__ . '/xsl/' . $xsltemplate)) {
+		$xp  = new XsltProcessor();
+		$xml = new DomDocument;
+		$xsl = new DomDocument;
+		$xml->loadXML($xmlSource);
+		$xsl->load(__DIR__ . '/xsl/' . $xsltemplate);
+		$xp->importStyleSheet($xsl);
+		//$xp->setParameter("","lang",$lang);
+		$xp->setParameter("","user",$user);
+		$rs = $xp->transformToXml($xml);
+	}
+	return $rs;
+}
+
+function mdControl($xmlSource, $appLang)
+{
+    //return array(); // TMP
+    if ($xmlSource == '') {
+        return array();
+    }
+    include("validator/resources/Validator.php");
+    $validator = new \Validator("gmd", $appLang);
+    $validator->run($xmlSource);
+    $a = $validator->asArray();
+    for($i=0;$i<count($a);$i++){
+        if (isset($a[$i]['description'])) {
+            $d = explode('(',$a[$i]['description']);
+            $a[$i]['description'] = $d[0];
+        }
+    }
+    return $a;
 }
 
 /**
@@ -134,12 +200,6 @@ function getWmsList($rs) {
 		}
 	}
 	return $rs;
-}
-
-function getUuid() {
-	$uuid = new \Micka\UUID;
-	$uuid->generate();
-	return $uuid->toRFC4122String();
 }
 
 function getHsWms($micka_lang, $hs_wms) {
@@ -405,6 +465,23 @@ function dateIso2Cz($datum) {
 		$d = (int)$pom[2];
 		$m = (int)$pom[1];
 		$datum = $d . '.' . $m . '.' . $pom[0];
+	}
+	return $datum;
+}
+
+function dateCz2Iso($datum) {
+	$pom = explode('.', $datum);
+	if (count($pom)==2) {
+		$m = $pom[0];
+		$m = ($m < 10  && strlen($m) == 1) ? "0$m" : $m ;
+		$datum = $pom[1] . '-' . $m;
+	}
+	if (count($pom) == 3) {
+		$d = (int)$pom[0];
+		$d = ($d < 10 && strlen($d) == 1) ? "0$d" : $d ;
+		$m = (int)$pom[1];
+		$m = ($m < 10  && strlen($m) == 1) ? "0$m" : $m ;
+		$datum = $pom[2] . '-' . $m . '-' . $d;
 	}
 	return $datum;
 }

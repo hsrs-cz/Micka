@@ -15,16 +15,7 @@
   <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes" />
 
   	<xsl:template match="/rec">
-  		<gmd:MD_Metadata>
-			<xsl:choose>
-				<xsl:when test="$USER = 'guest' or $USER =''">
-	   				<xsl:apply-templates select="*/*[name()!='gmi:acquisitionInformation']"/>
-	   			</xsl:when>
-	   			<xsl:otherwise>
-	   				<xsl:copy-of select="*/*[name()!='gmi:acquisitionInformation']" />
-	   			</xsl:otherwise>
-	   		</xsl:choose>
-   		</gmd:MD_Metadata>
+        <xsl:apply-templates select="*"/>
   	</xsl:template>
       
     <xsl:template match="@*|node()">

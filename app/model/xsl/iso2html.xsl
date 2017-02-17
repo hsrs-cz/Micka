@@ -115,26 +115,12 @@
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
 					<a href="csw/?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
-				<xsl:choose>
-					<xsl:when test="$REWRITE">	
-							<a href="records/{../@uuid}?format=application/xml" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
-						</xsl:when>
-					<xsl:otherwise>
-							<a href="?ak=xml&amp;uuid={../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
-					</xsl:otherwise>
-				</xsl:choose>
+				<a href="records/{../@uuid}?format=application/xml" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
 		</div>			
 		<xsl:if test="../@read=1">
 			<span class="icons">
-				<xsl:choose>
-					<xsl:when test="$REWRITE">	
-						<a href="records/{../@uuid}?detail=full&amp;language={$lang}" class="icons" title="{$msg[@eng='fullMetadata']}"><i class="fa fa-folder-o fa-fw"></i></a>
-					</xsl:when>
-					<xsl:otherwise>
-						<a href="?ak=detailall&amp;uuid={../@uuid}" class="icons" title="{$msg[@eng='fullMetadata']}"><i class="fa fa-folder-o fa-fw"></i></a>
-					</xsl:otherwise>
-				</xsl:choose>
+				<a href="records/{../@uuid}?detail=full&amp;language={$lang}" class="icons" title="{$msg[@eng='fullMetadata']}"><i class="fa fa-folder-o fa-fw"></i></a>
 			</span>		
 		</xsl:if>
 		<xsl:text> </xsl:text>
@@ -607,14 +593,7 @@
 						<xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:source">
 							<xsl:variable name="md" select="php:function('getData', string(*/gmd:sourceCitation/@xlink:href))"/>
 	  						<xsl:variable name="url">
-					            <xsl:choose>
-					  				<xsl:when test="$REWRITE">	
-					  					<xsl:value-of select="concat('records/',$md//gmd:fileIdentifier)"/>
-					  				</xsl:when>
-					  				<xsl:otherwise>
-					                	<xsl:value-of select="concat('?ak=detail&amp;uuid=',$md//gmd:fileIdentifier)"/>
-					  				</xsl:otherwise>
-					  			</xsl:choose>
+					            <xsl:value-of select="concat('records/',$md//gmd:fileIdentifier)"/>
 				            </xsl:variable>
 							
 							<div>
@@ -779,14 +758,7 @@
 			<div class="c">
 				<xsl:for-each select="$vazby//gmd:MD_Metadata">
 	                <xsl:variable name="url">
-	                    <xsl:choose>
-							<xsl:when test="$REWRITE">	
-								<xsl:value-of select="concat('page/',gmd:fileIdentifier)"/>
-							</xsl:when>
-							<xsl:otherwise>
-	                        	<xsl:value-of select="concat('?ak=detail&amp;uuid=',gmd:fileIdentifier)"/>
-							</xsl:otherwise>
-						</xsl:choose>
+	                    <xsl:value-of select="concat('page/',gmd:fileIdentifier)"/>
 	                </xsl:variable>
 	
 					<div><a href="{$url}" class="t {gmd:hierarchyLevel/*/@codeListValue}" title="{$cl/updateScope/value[@name=$vazby[position()]//gmd:hierarchyLevel/*/@codeListValue]}">
@@ -809,14 +781,7 @@
 				<div class="c">
 					<xsl:variable name="a" select="$pilink//gmd:hierarchyLevel/*/@codeListValue"/>
 	                <xsl:variable name="url">
-	                    <xsl:choose>
-							<xsl:when test="$REWRITE">	
-								<xsl:value-of select="concat('page/',$pilink//gmd:fileIdentifier)"/>
-							</xsl:when>
-							<xsl:otherwise>
-	                        	<xsl:value-of select="concat('?ak=xml&amp;uuid=',$pilink//gmd:fileIdentifier)"/>
-							</xsl:otherwise>
-						</xsl:choose>
+	                    <xsl:value-of select="concat('page/',$pilink//gmd:fileIdentifier)"/>
 	                </xsl:variable>
 
 					<a class="t {$a}" href="{$url}" title="{$cl/updateScope/value[@name=$a]}">
@@ -840,14 +805,7 @@
 					<xsl:for-each select="$subsets//gmd:MD_Metadata">
 						<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
   						<xsl:variable name="url">
-				            <xsl:choose>
-				  				<xsl:when test="$REWRITE">	
-				  					<xsl:value-of select="concat('page/',gmd:fileIdentifier)"/>
-				  				</xsl:when>
-				  				<xsl:otherwise>
-				                	<xsl:value-of select="concat('?ak=detail&amp;uuid=',gmd:fileIdentifier)"/>
-				  				</xsl:otherwise>
-				  			</xsl:choose>
+				            <xsl:value-of select="concat('page/',gmd:fileIdentifier)"/>
 			            </xsl:variable>
 
 						<div><a href="{$url}" class="t {$a}" title="{$cl/updateScope/value[@name=$a]}">
@@ -879,14 +837,7 @@
 						<xsl:for-each select="$siblinks//gmd:MD_Metadata[gmd:fileIdentifier/*!=$myid]">
 							<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
 							<xsl:variable name="url">
-                				<xsl:choose>
-    					  			<xsl:when test="$REWRITE">	
-    									<xsl:value-of select="concat('page/',gmd:fileIdentifier)"/>
-    								</xsl:when>
-    					   			<xsl:otherwise>
-                  						<xsl:value-of select="concat('?ak=detail&amp;uuid=',gmd:fileIdentifier)"/>
-    					   			</xsl:otherwise>
-    				    		</xsl:choose>
+                				<xsl:value-of select="concat('page/',gmd:fileIdentifier)"/>
               				</xsl:variable>
 
 							<div><a href="{$url}" class="t {$a}"  title="{$cl/updateScope/value[@name=$a]}">
@@ -913,14 +864,7 @@
 						<xsl:for-each select="$siblinks//gmd:MD_Metadata">
 							<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
 							<xsl:variable name="url">
-					        	<xsl:choose>
-					    			<xsl:when test="$REWRITE">	
-					    				<xsl:value-of select="concat('page/',normalize-space(gmd:fileIdentifier))"/>
-					    			</xsl:when>
-					    			<xsl:otherwise>
-					            	  	<xsl:value-of select="concat('?ak=detail&amp;uuid=',normalize-space(gmd:fileIdentifier))"/>
-					    			</xsl:otherwise>
-					    		</xsl:choose>
+					        	<xsl:value-of select="concat('page/',normalize-space(gmd:fileIdentifier))"/>
 					        </xsl:variable>
 
 							<div><a href="{$url}" class="t {$a}"  title="{$cl/updateScope/value[@name=$a]}">
@@ -952,14 +896,7 @@
 
 					<xsl:variable name="url">
 						<xsl:if test="gmd:featureCatalogueCitation/*/gmd:identifier">
-							<xsl:choose>
-								<xsl:when test="$REWRITE">	
-									<xsl:value-of select="concat( 'records/', gmd:featureCatalogueCitation/*/gmd:identifier, '?language=', $lang)"/>
-								</xsl:when>
-								<xsl:otherwise>
-									<xsl:value-of select="concat( '?ak=detailall&amp;uuid=', gmd:featureCatalogueCitation/*/gmd:identifier, '&amp;language=', $lang)"/>
-								</xsl:otherwise>
-							</xsl:choose>
+							<xsl:value-of select="concat( 'records/', gmd:featureCatalogueCitation/*/gmd:identifier, '?language=', $lang)"/>
 						</xsl:if>
 					</xsl:variable>
 

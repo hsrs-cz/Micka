@@ -111,7 +111,7 @@
 	<msg eng="Sort by">Řadit podle</msg>
 	<msg eng="title2">Title</msg>
 	<msg eng="update2">Metadata update</msg>
-	<msg eng="fullMetadata">Full</msg>
+	<msg eng="fullMetadata">Detailed</msg>
 	<msg eng="basicMetadata">Summary</msg>
 	<msg eng="Metadata Metadata">Metadata about metadata</msg>
 	<msg eng="fullMetadata">Full Metadata</msg>
@@ -124,7 +124,8 @@
 	<msg eng="Used">Used in</msg>
 	<msg eng="Bad">Record not found</msg>
 	<msg eng="Sources">Sources</msg>
-										
+	<msg eng="List">List</msg>
+    
 	<msg eng="edit">Edit</msg>
 	<msg eng="validate">Validate</msg>
 	<msg eng="clone">Clone</msg>

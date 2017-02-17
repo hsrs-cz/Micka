@@ -113,7 +113,7 @@
 	<msg eng="title2">Názvu</msg>
 	<msg eng="update2">Aktualizace metadat</msg>
 	<msg eng="basicMetadata">Přehled</msg>
-	<msg eng="fullMetadata">Vše</msg>
+	<msg eng="fullMetadata">Detail</msg>
 	<msg eng="sortby">Řadit podle</msg>
 	<msg eng="Contact email">Kontaktní email pro metadata</msg>
 	<msg eng="Supervisor">Odborný garant</msg>
@@ -123,6 +123,7 @@
 	<msg eng="Used">Použito v</msg>
 	<msg eng="Bad">Záznam nenalezen</msg>
 	<msg eng="Sources">Zdroje</msg>
+	<msg eng="List">Seznam</msg>
 										
 	<msg eng="edit">Editovat</msg>
 	<msg eng="validate">Validace</msg>

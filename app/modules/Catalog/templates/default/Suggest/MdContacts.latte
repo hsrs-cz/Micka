@@ -1,0 +1,64 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4>{_messages.frontend.contacts}</h4>
+ </div>   
+<div class="modal-body">
+<table class="sprava" width="100%">
+	<tr>
+		{if $mds != ''}
+		<th style="width:20px"></th>
+		{/if}
+		<th>{_messages.frontend.label}</th>
+		<th>{_messages.frontend.person}</th>
+		<th>{_messages.frontend.organisation}</th>
+	</tr>
+	{foreach $contacts as $contact}
+        {continueIf $contact->right == 'x'}
+	<tr class="rowsel">
+		{if $mds != ''}
+		<td>
+			{if $mds == 'DC'}
+				<a href="javascript:dc_kontakt1(
+					'',
+					'{$contact->person|trim}',
+					'{$contact->organisation|trim}',
+					'{$contact->function|trim}',
+					'{$contact->phone|trim}',
+					'{$contact->fax|trim}',
+					'{$contact->point|trim}',
+					'{$contact->city|trim}',
+					'{$contact->adminarea|trim}',
+					'{$contact->postcode|trim}',
+					'{$contact->country|trim}',
+					'{$contact->email|trim}',
+					'{$contact->url|trim}
+				'); window.close();">
+			{else}
+				<a href="javascript:kontakt1(
+					'http://mysite.org/person/{$contact->id}',
+					'{$contact->person|trim}',
+					'{$contact->organisation|trim}',
+					'{$contact->organisation_en|trim}',
+					'{$contact->org_function|trim}',
+					'{$contact->org_function_en|trim}',
+					'{$contact->phone|trim}',
+					'{$contact->fax|trim}',
+					'{$contact->point|trim}',
+					'{$contact->city|trim}',
+					'{$contact->adminarea|trim}',
+					'{$contact->postcode|trim}',
+					'{$contact->country|trim}',
+					'{$contact->email|trim}',
+					'{$contact->url|trim}'
+				,{$contact->id}); ">
+			{/if}
+			<img src="{$basePath}{$themePath}/img/tick.png" title="{_messages.frontend.contact2micka}"></a>
+		</td>
+		{/if}
+		<td>{$contact->tag|trim}</td>
+		<td>{$contact->person|trim}</td>
+		<td>{$contact->organisation|trim}</td>
+	</tr>
+	{/foreach}
+</table>
+</div>

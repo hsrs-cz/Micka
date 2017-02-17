@@ -32,4 +32,14 @@
 			<entry id="2">podmienky nejsú známy</entry>
 		</group>
 	</translation>
+
+	<translation lang="uri">
+		<title>URI</title>
+		<group>
+			<title>Podmienky pro prístup a užití</title>
+			<entry id="1">http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/NoConditionsApply</entry>
+			<entry id="2">http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/ConditionsUnknown</entry>
+		</group>
+	</translation>
+    
 </userValues>

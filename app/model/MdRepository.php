@@ -112,15 +112,18 @@ class MdRepository
     }
     
     public function getStandardsLabel($appLang, $all=FALSE) {
-        $union = $all 
-                ? "UNION SELECT 99, label_text FROM label 
-                   WHERE label.label_type='SD' AND label.lang='$appLang' AND label_join=99" 
-                : '';
-        return $this->db->query("
+        $tbl1 = $this->db->query("
 			SELECT standard.md_standard, label.label_text
 			FROM standard INNER JOIN label ON standard.md_standard = label.label_join
-            WHERE standard.is_vis=1 AND label.label_type='SD' AND label.lang=? $union
+            WHERE standard.is_vis=1 AND label.label_type='SD' AND label.lang=? 
+            ORDER BY standard.md_standard_order
 		", $appLang)->fetchPairs();
+        $tbl2 = $all
+                ? $this->db->query("SELECT 99, label_text FROM label 
+                    WHERE label.label_type='SD' AND label.lang=? AND label_join=99
+                    ", $appLang)->fetchPairs()
+                : [];
+        return $tbl1+$tbl2;
     }
     
     public function findMdById($id) {
@@ -285,17 +288,22 @@ class MdRepository
         return FALSE;
 	}
     
-    private function setNewEditMdRecord() {
+    private function setNewEditMdRecord($param) {
         $data['sid'] = session_id();
 		$data['recno'] = $this->getNewRecno();
         $data['uuid'] = getUuid();
-		$data['md_standard'] = 0;
-        $data['lang'] = 'cze|eng';
+		$data['md_standard'] = isset($param['standard']) ? $param['standard'] : 0;
+        $data['lang'] = isset($param['standard']) ? $param['standard'] : 0;
 		$data['data_type'] = -1;
 		$data['create_user'] = $this->user->identity->username;
 		$data['create_date'] = Date("Y-m-d");
-        $data['edit_group'] = $this->user->identity->username;
-        $data['view_group'] = $this->user->identity->username;
+        $data['edit_group'] = isset($param['group_e']) ? $param['group_e'] : $this->user->identity->username;
+        $data['view_group'] = isset($param['group_v']) ? $param['group_v'] : $this->user->identity->username;
+        $lang_main = (isset($param['lang_main']) && $param['lang_main'] != '') ? $param['lang_main'] : 'eng';
+        $data['lang'] = isset($param['languages']) ? implode($param['languages'],"|") : '';
+        if ($data['lang'] == '' && $lang_main != '') {
+            $data['lang'] = $lang_main;
+        }
         $this->db->query("INSERT INTO edit_md", $data);
         
 		if ($data['md_standard'] == 0 || $data['md_standard'] == 10) {
@@ -309,7 +317,7 @@ class MdRepository
                 'package_id'=>0
                 ], [
                 'recno'=>$data['recno'],
-                'md_value'=>'cze',
+                'md_value'=>$lang_main,
                 'md_id'=>5527,
                 'md_path'=>'0_0_39_0_5527_0',
                 'lang'=>'xxx',
@@ -329,7 +337,7 @@ class MdRepository
     
     public function createNewMdRecord($param) {
         $this->deleteEditMd();
-        return $this->setNewEditMdRecord();
+        return $this->setNewEditMdRecord($param);
     }
     
     public function setEditMdValues($formValues) {
@@ -344,7 +352,7 @@ class MdRepository
         $edit_group = isset($formValues['edit_group']) ? $formValues['edit_group'] : '';
         $view_group = isset($formValues['view_group']) ? $formValues['view_group'] : '';
         if ($recno < 1 || count($formValues) < 6 || $mds < 0) {
-            throw new \Nette\Application\AbortException;
+            //throw new \Nette\Application\AbortException;
         }
         $md = $this->findEditMdById($uuid);
         if (!$this->isRight2MdRecord($md, 'write')) {

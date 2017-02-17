@@ -26,20 +26,6 @@ class Csw{
     var $headers = array(HTTP_XML);
     var $isXML = true;
     var $error = null;
-    /*var $schemas = array(
-        "csw"	=> "http://www.opengis.net/cat/csw/2.0.2",
-        "gmd"	=> "http://www.isotc211.org/2005/gmd",
-        "native"=> "native",
-        "rss"	=> "http://www.georss.org/georss",
-        "atom"	=> "http://www.w3.org/2005/Atom",
-      	"kml"	=> "http://www.opengis.net/kml/2.2",
-      	"os"	=> "http://a9.com/-/spec/opensearch/1.1/",
-      	"rdf"	=> "http://www.w3.org/1999/02/22-rdf-syntax-ns",
-      	"oai_dc" => "http://www.openarchives.org/OAI/2.0/oai_dc/",
-      	"oai_marc" => "http://www.openarchives.org/OAI/1.1/oai_marc",
-      	"marc21" => "http://www.openarchives.org/OAI/2.0/",
-        "dcat" => "http://www.w3.org/ns/dcat"
-    );*/
 
     var $sch = array(
         "csw" => array(
@@ -835,7 +821,7 @@ class Csw{
   //---- dotaz do Micky cursor -----------------------------------------------
   // na vstupu index od 1
   //$export = new MdExport(MICKA_USER, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
-  $export = new \App\Model\MdSearch();
+  $export = new \App\Model\MdSearch($this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
   $count = $export->fetchXMLOpen($qstr, $flatParams);
   $returned = min(array($this->params['MAXRECORDS'], $count - $this->params['STARTPOSITION']+1));
   if($returned < 0) $returned = 0; 
@@ -1119,66 +1105,6 @@ class Csw{
     //$this->xp->setParameter('', 'url', "http://".$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME'])); 
   }
   
-  /*function rss(){
-    $dni = $this->params['DAYS'];
-    if(!$dni) $dni = 7;
-    $cas = date("Y-m-d", time()-($dni*3600*24));  
-    $request = "csw:GetRecords";
-    //$requestId = "micka";
-    //$resultType = "results";
-    //$typeNames = "rss";
-    //$debug = "0";
-      
-    $qstr[] = "_DATESTAMP_ >= '$cas'";
-    
-	$export = new MdExport($_SESSION['u'], $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $this->params['SORTBY']);
-	list($xmlstr, $head) = $export->getXML($qstr, array());
-
-    if($this->params['DEBUG']==2){
-    	echo $xmlstr; return; 
-    }
-    $this->xml->loadXML($xmlstr);   
-    $this->xsl->load(PHPPRG_DIR."/../xsl/micka2rss.xsl");
-    $this->xp->importStyleSheet($this->xsl);
-    $this->setParams($this->params);
-    $rss = $this->xp->transformToXML($this->xml);
-    return $rss; 
-  }*/
-
-	/*
-  // NOTE: pokud bude funkce potřeba, je nutno přepsat dotaz a zpracování SQL
-	function parties(){
-  	// TODO - nejak zabalit, neni prilis ciste
-  	$query = "";
-	if($_REQUEST['creator']) $query = " AND md.create_user='".$_REQUEST['creator']."'";
-	if($_REQUEST['query']){
-		$query .= " AND " . setSqlLike ('md_values.md_value', "'%" . $_REQUEST['query'] . "%'");
-	}
-	$sql="SELECT DISTINCT md_values.md_value 
-		FROM md INNER JOIN md_values ON md.recno = md_values.recno
-		WHERE md_values.md_id IN (187,5029) AND md.data_code<2 AND md.data_access='1'
-		$query 
-		ORDER BY md_values.md_value";
-	$result = $GLOBALS['db']->Execute($sql);
-	if ($result) {
-		$records = 0;
-		while (!$result->EOF) {
-			$records++;
-			if ($records > 1) {
-				$rs .= ', ';
-    		}
-			$rs .= '{id: \''.$records.'\', name: \'' . $result->fields["MD_VALUE"] . '\'}';
-			$result->MoveNext();
-		}
-	}
-	else {
-		echo "SQL ERROR: ";
-		echo $sql . '<br>';
-	}
-	$rs = '{numresults:' . $records . ', records:[' . $rs . ']}';
-	echo $rs;
-  }
-	*/
 
   function saveLog(){
     if(!$this->logFile) return;
@@ -1412,9 +1338,10 @@ class Csw{
     function cql2sql($cql){ 
         //spaces around operators
         $cql = preg_replace('/[!=><][=><]*/', ' ${0} ', $cql);
+        $cql = str_replace(array('csw:', 'gmd:', '"'), '', $cql);
         
         //mapping to inner queryables
-        $this->map = array('csw:'=>'', 'gmd:'=>'','"'=>'', 'anytext'=>'%', 
+        $this->map = array('anytext'=>'%', 
         	'modified'=>'_DATESTAMP_', 'language'=>'_LANGUAGE_', 'tempextent_begin'=>'_DATEB_', 
             'tempextent_end'=>'_DATEE_', 'hierarchylevelname'=>'@hlname', "type='featureCatalogue'"=>'_MDS_=2',
           	'type'=>'@type', 'hierarchylevel'=>'@type', 'servicetype'=>'@stype', 'identifier'=>'_UUID_', 
@@ -1455,5 +1382,6 @@ class Csw{
 
         return array($result);
     }
+
   
 } // class

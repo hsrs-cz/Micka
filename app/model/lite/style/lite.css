@@ -1,0 +1,79 @@
+
+td {vertical-align:top; font-family:sans-serif; font-size:12px;} 
+img {border: 0px}
+fieldset {border: 1px solid #E0E0E0; margin-top:10px;}
+legend {color: gray; font-weight:bold;}
+body {font-family:sans-serif; font-size:12px;}
+fieldset label {font-weight: normal; width:150px; display: inline-block; vertical-align: top; text-align:right; margin-right: 5px; font-weight: bold;}
+legend.mand, label.mand {color: #F27122;}
+legend.cond, label.cond {color: #009000}
+label.wide {width: 170px; text-align: left}
+label.short {width:100px}
+
+.inp { width:500px; background:#FFFFFF url(text-bg.gif) repeat-x; #F1EFE1; border:1px solid #C0C0C0;}
+.inpLL {width:780px}
+.inpL {width:700px}
+.inpS {width: 250px;}
+.inpS2 {width:180px;}
+.inpSS {width:100px;}
+.inpM {width:80px;}
+.date {width: 80px;}
+.num {width: 60px;}
+/*input.missing {background: url(missing-bg.gif)} */
+.missing {background: #FFE0A0}
+div {margin-bottom: 2px;}
+select {background:  url(text-bg.gif) repeat-x; border:1px solid #C0C0C0; }
+textarea {width:500px; height:60px; background: url(text-bg.gif) white repeat-x; border:1px solid #C0C0C0;font-family:sans-serif; font-size:11px;}
+span.mxx {color:red; font-size:18px; font-weight:bold; vertical-align:middle}
+th {text-align:right; font-size:12px; font-weight:normal; vertical-align:top; }
+.plus {width: 11px; display: inline-block; background: url(plus.png) 50% 50% no-repeat; cursor: pointer; }
+.minus {width: 11px; display: inline-block; background: url(minus.png) 50% 50% no-repeat; cursor: pointer; }
+.open {color: white; width: 20px; height: 16px; display: inline-block; background: url(open.gif) 50% 50% no-repeat; cursor: pointer; }
+div.cl {clear:both;}
+hr {border: 0px; border-top: 1px solid #e0e0e0;}
+span.help {width:18px; display: inline-block; background: url(information-gray.png) 100% 50% no-repeat; cursor: help;}
+div.tooltip {
+	position: fixed;
+	color: #606060;
+	font-weight:normal; 
+	display:none; 
+	width: 320px; 
+	padding: 10px; 
+	border: #C0C0C0 solid 1px; 
+	background: #F0F0F0;
+	white-space: normal;
+	text-align: left;
+	/*height: 300px;*/
+	border-radius: 5px; 
+	z-index:1000
+}
+div.tooltip p.pozn {font-style: italic;}
+div.regulation {color: #A00000; dont-size: 9px;}
+.tooltip h3 {margin: 0px 0px 5px 0px; color: black; forn-size:14px;}
+
+span.locale {padding-left:18px; background-repeat: no-repeat; background-position: 0px 3px; display:inline-block}
+
+.lang-cze {background-image: url(../../themes/default/img/flags/cze.png)}
+.lang-eng {background-image: url(../../themes/default/img/flags/eng.png)}
+.lang-fre {background-image: url(../../themes/default/img/flags/fre.png)}
+.lang-ger {background-image: url(../../themes/default/img/flags/ger.png)}
+.lang-pol {background-image: url(../../themes/default/img/flags/pol.png)}
+.lang-slo {background-image: url(../../themes/default/img/flags/slo.png)}
+.lang-spa {background-image: url(../../themes/default/img/flags/spa.png)}
+.lang-bul {background-image: url(../../themes/default/img/flags/bul.png)}
+.lang-dan {background-image: url(../../themes/default/img/flags/dan.png)}
+.lang-est {background-image: url(../../themes/default/img/flags/est.png)}
+.lang-fin {background-image: url(../../themes/default/img/flags/fin.png)}
+.lang-gre {background-image: url(../../themes/default/img/flags/gre.png)}
+.lang-hun {background-image: url(../../themes/default/img/flags/hun.png)}
+.lang-ita {background-image: url(../../themes/default/img/flags/ita.png)}
+.lang-lav {background-image: url(../../themes/default/img/flags/lav.png)}
+.lang-lit {background-image: url(../../themes/default/img/flags/lit.png)}
+.lang-nor {background-image: url(../../themes/default/img/flags/nor.png)}
+.lang-por {background-image: url(../../themes/default/img/flags/por.png)}
+.lang-rum {background-image: url(../../themes/default/img/flags/rum.png)}
+.lang-rus {background-image: url(../../themes/default/img/flags/rus.png)}
+.lang-slv {background-image: url(../../themes/default/img/flags/slv.png)}
+.lang-swe {background-image: url(../../themes/default/img/flags/swe.png)}
+.lang-tuk {background-image: url(../../themes/default/img/flags/tuk.png)}
+.lang-ukr {background-image: url(../../themes/default/img/flags/ukr.png)}

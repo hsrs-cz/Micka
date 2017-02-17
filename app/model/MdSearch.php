@@ -31,8 +31,8 @@ class MdSearch
 	private $sql_or = '';
 	private $search_uuid = FALSE;
 	private $sid = '';
-	private $may_edit = 0;
-	private $may_records = FALSE;
+	private $my_edit = 0;
+	private $my_records = FALSE;
 	private $ext_header = FALSE;
 	private $hits = FALSE;
 	private $bbox = null;
@@ -65,7 +65,7 @@ class MdSearch
 		}
 		$this->startPosition = $startPosition;
         $this->setMaxRecords($maxRecords);
-
+        
 		$this->sortBy = getSortBy($sortBy, $ret='array');
 	}
 
@@ -111,8 +111,12 @@ class MdSearch
 		}
 	}
 
-	private function setMayEdit($edit) {
-		$this->may_edit = $edit == 1 || $edit == TRUE ? 1 : 0;
+	private function setMyEdit($edit) {
+		$this->my_edit = $edit == 1 || $edit == TRUE ? 1 : 0;
+	}
+    
+	private function setMyRecords($create_user) {
+		$this->my_records = strpos($create_user, "'" . $this->user->getIdentity()->username . "'") == FALSE ? FALSE : TRUE;
 	}
     
 	private function setQueryIn($query) {
@@ -129,7 +133,7 @@ class MdSearch
         $group = $this->user->isLoggedIn() ? $this->user->getIdentity()->data['groups'] : ['guest'];
         $group = implode("','", array_values($group));
         $group = "'" . $group . "'";
-		if ($this->may_edit == 1 || $this->may_records === TRUE) {
+		if ($this->my_edit == 1 || $this->my_records === TRUE) {
 			$right = '';
 		} elseif ($this->user->isInRole('admin')) {
 			$right = '';
@@ -645,53 +649,18 @@ class MdSearch
 			if (isset($box[4])) {
 				$inside = $box[4];
 			};
-            $sdb = SPATIALDB == 0 ? '' : SPATIALDB;
-            
-			switch ($sdb) {
-				case "postgis":
-					// ogc:Within
-					if ($inside == 1) {
-						$pom_bbox = " md.the_geom @ GeomFromText('POLYGON(($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1))',-1)";
-					}
-					// ogc:Within - v opacnem poradi
-					else if ($inside == 11) {
-						$pom_bbox = " GeomFromText('POLYGON(($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1))',-1) @ md.the_geom";
-					}
-					// ogc:Intersects
-					else {
-						$pom_bbox = " md.the_geom && GeomFromText('POLYGON(($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1))',-1) AND Intersects(GeomFromText('POLYGON(($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1))',-1),md.the_geom)";
-					}
-					break;
-				case "postgis2":
-					// ogc:Within
-					if ($inside == 1) {
-						$pom_bbox = " md.the_geom @ ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0)";
-					}
-					// ogc:Within - v opacnem poradi
-					else if ($inside == 11) {
-						$pom_bbox = " ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0) @ md.the_geom";
-					}
-					// ogc:Intersects
-					else {
-						$pom_bbox = " md.the_geom && ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0) AND ST_Intersects(ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0),md.the_geom)";
-					}
-					break;
-				// jen se sloupcu tabulky MD
-				default: 
-					// ogc:Within
-					if ($inside == 1) {
-						$pom_bbox = " $x1 <= x1 AND $x2 >= x2 AND $y1 <= y1 AND $y2 >= y2";
-					}
-					// ogc:Within - v opacnem poradi
-					else if ($inside == 11) {
-						$pom_bbox = " $x1 >= x1 AND $x2 <= x2 AND $y1 >= y1 AND $y2 <= y2";
-					}
-					// ogc:Intersects
-					else {
-						$pom_bbox = " $x2 >= x1 AND $x1 <= x2 AND $y2 >= y1 AND $y1 <= y2";
-					}
-					break;
-			}
+            // ogc:Within
+            if ($inside == 1) {
+                $pom_bbox = " md.the_geom @ ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0)";
+            }
+            // ogc:Within - v opacnem poradi
+            else if ($inside == 11) {
+                $pom_bbox = " ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0) @ md.the_geom";
+            }
+            // ogc:Intersects
+            else {
+                $pom_bbox = " md.the_geom && ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0) AND ST_Intersects(ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0),md.the_geom)";
+            }
 		} else {
 			$this->setQueryError($data);
 			return $data;
@@ -789,7 +758,7 @@ class MdSearch
 	}
     
 	private function parserMdFieldMayedit($data) {
-		$this->setMayEdit(1);
+		$this->setMyEdit(1);
         $user = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
         $group = $this->user->isLoggedIn() ? $this->user->getIdentity()->data['groups'] : ['guest'];
         $group = implode("','", array_values($group));
@@ -808,7 +777,7 @@ class MdSearch
 			$group = str_replace('_GROUPS_ = ', '', $data);
 			$group = str_replace(",", "','", $group);
 			if ($this->user->isInRole('admin')) {
-				$this->setMayEdit(1);
+				$this->setMyEdit(1);
 				$rs = "(view_group IN($group) OR edit_group IN($group))";
 			} else {
 				$rs = "
@@ -919,7 +888,7 @@ class MdSearch
 	}
 	
 	private function parserMdFieldCreateUser($data) {
-		$this->setMayRecords($data);
+		$this->setMyRecords($data);
 		return str_replace('_CREATE_USER_', 'md.create_user', $data);
 	}
 	
@@ -1131,8 +1100,8 @@ class MdSearch
 
 	function getSql($type, $user, $ofs=0, $orderBy='' ) {
 		if ($this->bbox == NULL && is_array($orderBy) && $orderBy[0] == 'bbox') {
-            //$this->sortBy = getSortBy(SORT_BY, $ret='array');
-			$orderBy = '';
+            $this->sortBy = getSortBy($this->appParameters['app']['sortBy'], $ret='array');
+            $orderBy = '';
 		}
 		if ($orderBy == '') {
 			$orderBy = $this->sortBy;
@@ -1153,7 +1122,7 @@ class MdSearch
 			$selectBbox = ", " . $selectBbox . " AS bbox";
 		}
 		$sortBy_mdpath = '';
-        $sql_spol['md_select'] =  "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, last_update_date, edit_group, view_group, valid, prim, xmldata AS pxml, server_name".$this->for_inspire;
+        $sql_spol['md_select'] =  "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, last_update_date, edit_group, view_group, valid, prim, pxml, server_name".$this->for_inspire;
         $sql_spol['md_from'] = " FROM md WHERE (recno IN (SELECT recno FROM(";
         $sql_spol['md_order'] = "";
         $sql_spol['md_count'] =  "
@@ -1163,14 +1132,15 @@ class MdSearch
 		$sql_spol['md_where_end'] =  ")";
 		if ($type == 'count') {
 			if ($this->useOrderByXmlPath === TRUE) {
-                $sql_final = str_replace(
-                    'SELECT DISTINCT md.recno, md.last_update_date, md.title',
-                    'SELECT DISTINCT md.recno, md.last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title',
-                    $this->sql_final[0]
-                );
+                //$sql_final = str_replace(
+                //    'SELECT DISTINCT md.recno, md.last_update_date, md.title',
+                //    'SELECT DISTINCT md.recno, md.last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title',
+                //    $this->sql_final[0]
+                //);
 			} else {
-				$sql_final = $this->sql_final[0];
+				//$sql_final = $this->sql_final[0];
 			}
+            $sql_final = $this->sql_final[0];
 			$sql = "SELECT 	count(DISTINCT recno) AS Celkem FROM md WHERE (recno IN (SELECT recno FROM("
 						. $sql_final
 						. ') jojo))';
@@ -1178,8 +1148,11 @@ class MdSearch
             $sql_final = $this->sql_final[0];
             if ($this->useOrderByXmlPath === TRUE) {
                 $sql_final = str_replace(
+                //    'SELECT DISTINCT md.recno, md.last_update_date, md.title',
+                //    'SELECT DISTINCT md.recno, md.last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title',
+                //    $sql_final
                     'SELECT DISTINCT md.recno, md.last_update_date, md.title',
-                    'SELECT DISTINCT md.recno, md.last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title',
+                    'SELECT DISTINCT md.recno, md.last_update_date, md.title AS title',
                     $sql_final
                 );
                 $sql_spol['md_select'] .= ', COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title';
@@ -1233,7 +1206,7 @@ class MdSearch
 		
 		if ($this->search_uuid === TRUE) {
 			$rs['paginator']['records'] = 1;
-			$rs['sql'] = "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, last_update_date, edit_group, view_group, valid, prim, server_name, xmldata AS pxml".$this->for_inspire." FROM md";
+			$rs['sql'] = "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, last_update_date, edit_group, view_group, valid, prim, server_name, pxml".$this->for_inspire." FROM md";
             $right = $this->appParameters['app']['directSummary'] === TRUE 
                     || $this->appParameters['app']['directDetail'] === TRUE 
                     || $this->appParameters['app']['directXml'] === TRUE
@@ -1442,9 +1415,9 @@ class MdSearch
                         $row->pxml .
                         "</rec>";
                 }
-            $numberOfRecods = ['Matched' => 1, 'Return' => 1, 'Next' => 0];
-            $result = "<results numberOfRecordsMatched=\"".$numberOfRecods['Matched']."\" numberOfRecordsReturned=\"".$numberOfRecods['Return']."\" nextRecord=\"".$numberOfRecods['Next']."\" elementSet=\"brief\">"
-                    . $rs . "</results>";
+            //$numberOfRecods = ['Matched' => 1, 'Return' => 1, 'Next' => 0];
+            //$result = "<results numberOfRecordsMatched=\"".$numberOfRecods['Matched']."\" numberOfRecordsReturned=\"".$numberOfRecods['Return']."\" nextRecord=\"".$numberOfRecods['Next']."\" elementSet=\"brief\">" . $rs . "</results>";
+            $result = $rs;
         }
         return $result;
     }

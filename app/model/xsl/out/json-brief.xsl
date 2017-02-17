@@ -20,8 +20,7 @@
 <xsl:template match="gmd:MD_Metadata|gmi:MI_Metadata">
     <xsl:variable name="apos">'</xsl:variable>
   	<xsl:variable name="mdlang" select="gmd:language/*/@codeListValue"/>
-	$rec = array();
-    
+    $rec = array();
 	$rec['id'] = '<xsl:value-of select="normalize-space(gmd:fileIdentifier)"/>';	
    	$rec['type']='<xsl:value-of select="gmd:hierarchyLevel/*/@codeListValue"/>';
 
@@ -64,6 +63,24 @@
 		$rec['coverageKm'] = '<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'km')]/*/gmd:value/gco:Record"/>';
 		$rec['coveragePercent'] = '<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'percent')]/*/gmd:value/gco:Record"/>';
 
+    $json['records'][] =$rec;
+</xsl:template>	
+
+<!-- Feature catalogue -->
+<xsl:template match="gfc:FC_FeatureCatalogue" xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
+    <xsl:variable name="mdlang" select="../@lang"/>
+    $rec['trida']='fc';
+    $rec['title'] = '<xsl:call-template name="multi">
+			   		<xsl:with-param name="el" select="gmx:name"/>
+			   		<xsl:with-param name="lang" select="$lang"/>
+			   		<xsl:with-param name="mdlang" select="$mdlang"/>
+			  	</xsl:call-template>'; 
+    $rec['abstract'] = '<xsl:call-template name="multi">
+		   		<xsl:with-param name="el" select="gmx:scope"/>
+		   		<xsl:with-param name="lang" select="$lang"/>
+		   		<xsl:with-param name="mdlang" select="$mdlang"/>
+		  	</xsl:call-template>';
+    $rec['id'] = '<xsl:value-of select="../@uuid"/>';
     $json['records'][] =$rec;
 </xsl:template>	
 	
