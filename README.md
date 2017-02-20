@@ -1,2 +1,23 @@
 # Micka
-Geospatial metaqdata catalogue
+Geospatial metadata catalogue and metadata editing tool. 
+
+## Features
+- OGC CSW 2.0.2 ISO AP 1.0
+- ISO 19115/19119/19139
+- Feature Catalogue - ISO 19110
+- INSPIRE extended capabilities
+- Output: ISO 19139, JSON, GeoDCAT, ATOM, KML, HTML, RDFa
+- INSPIRE ATOM download service imlementation
+- Support for remote registries (e.g. ISNPIRE registry)
+
+## System requirements
+- Any web server with mod_rewrite enabled
+- PHP 5.6.x with XSL extension
+- PostgreSQL >= 9.2
+- Composer (https://getcomposer.org/) - for installaton some components.
+
+## Installation
+1. Download the code from github and put to any directory at your web.
+2. Run `composer install` at this directory. (It will install Nette and other PHP components.)
+3. Run SQL scripts located in install directory at PostgreSQL console or admin tool.
+4. Edit `app/config/local.neon` file for access to database, your contact details etc.
