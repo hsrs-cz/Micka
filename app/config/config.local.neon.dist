@@ -1,0 +1,73 @@
+parameters:
+    app:
+        layoutTheme = default
+        langs = 'cze,eng'
+        startProfil = 5
+        maxRecords = 10
+        limitMaxRecords = 100
+        sortBy = 'title,ASC'
+        importReport = FALSE
+        validator = TRUE
+        directSummary = TRUE 
+        directDetail = TRUE 
+        directXml = TRUE 
+        formSign = FALSE
+        defaultEditGroup = editor
+        defaultViewGroup = reader
+        mdDataType = "-1=>'semifinished',0=>'private',1=>'public',2=>'portal'"
+        adminIP = '127.0.0.1'
+    map:
+        hs_wms_cze = "http://gis.bnhelp.cz/ows/crtopo?SERVICE=WMS&VERSION=1.1.1&FORMAT=image/gif&layers=demis,sidla,doprava,voda,kraje,orp,hr_cr"
+        hs_wms_eng = "http://www2.demis.nl/wms/wms.asp?WMS=WorldMap&SERVICE=WMS&VERSION=1.1.1&FORMAT=image/jpeg&SRS=EPSG:4326&layers=Bathymetry,Topography,Hillshading,Coastlines,Builtup%20areas,Rivers,Streams,Waterbodies,Borders,Railroads,Highways,Roads,Trails,Settlements,Cities"
+        hs_initext = 12.0 48.5 18.9 51
+    contact:
+        title:
+            cze = "Katalog prostorových metadat."
+            eng = "Spatial Metadata Catalogue."
+        abstract:
+            eng = "Catalogue based on OGC Catalogue service 2.0.2 ISO AP 1.0"
+            cze = "Katalog prostorov7ch metadata podle OGC CSW 2.0.2 ISO AP 1.0".
+        org:
+            eng = "Your company name"
+            cze = "Název vaší organizace"
+        person = "Your name"
+        position:
+            eng = "Responsible preson"
+            cze = "Zodpovědná osoba"
+        email = ""
+        delivery = "your delivery point"
+        city = ""
+        postcode = ""
+        phone = ""
+        www = ""    
+    langCodes: 
+        cs: cze
+        da: dan
+        de: ger
+        en: eng
+        es: spa
+        fi: fin
+        fr: fre
+        hu: hun
+        it: ita
+        lv: lav
+        no: nor
+        pl: pol
+        pt: por
+        sk: slo
+        sl: slv
+        sv: swe
+
+database:
+    dsn: 'pgsql:host=your-server-name;dbname=your-database-name;port=5432'
+    user: 'your-username'
+    password: 'your-password'
+    debugger: true
+    options:
+        lazy: yes
+
+translation:
+    default: cs
+#    fallback: [en]
+    resolvers:
+        header: off
