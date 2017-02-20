@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <userValues>
   <translation lang="eng">
-  	  <title>Resource type CGS</title>
+  	  <title>Resource type predefined names</title>
 	  <group>
 	  	<title>Czech version</title>
 		<entry code="WEB_cze">Web page (CS)</entry>
@@ -30,16 +30,11 @@
 		<entry code="GREP_eng">Georeport (EN)</entry>
 		<entry code="CSW">CSW</entry> 
 	  </group>
-	  <group>
-	  	<title>Access</title>
-		<entry code="INT">Internal</entry>
-		<entry code="OUT">Out of operation</entry>
-	  </group>
 	</translation>
 
 
   <translation lang="cze">
-  	  <title>Typ zdroje CGS</title>
+  	  <title>Předdefinovaná jména zdrojů</title>
 	  <group>
 	  	<title>Česká verze</title>
 		<entry code="WEB_cze">Webová stránka (CS)</entry>
@@ -68,10 +63,6 @@
 		<entry code="GREP_eng">Georeport (EN)</entry>
 		<entry code="CSW">CSW</entry> 
 	  </group>
-	  <group>
-	  	<title>Přístup</title>
-		<entry code="INT">Neveřejný</entry>
-		<entry code="OUT">Odstavený</entry>
-	  </group>
+
 	</translation>
 </userValues>	
