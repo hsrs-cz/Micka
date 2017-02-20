@@ -988,7 +988,7 @@ function find_fc1(uuid, name){
   txt.innerHTML=name;
 }
 
-function find_record(obj){
+function Xfind_record(obj){
   md_elem = obj.parentNode;
   dialogWindow = openDialog("find", baseUrl+"/suggest/mdsearch", ",width=500,height=500,scrollbars=yes"); 
   dialogWindow.focus();
@@ -1056,7 +1056,7 @@ function getBbox(bbox, isPoly){
 }
 
 
-function openDialog(okno, url, win){
+function XopenDialog(okno, url, win){
   var win = window.open(url, okno, "toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,"+win);
   win.focus();
   return win;
@@ -1067,107 +1067,53 @@ function mapa(obj){
     var draw; // global so we can remove it later
     var features;
     var polygon = null;
-	//md_mapApp = getBbox;
-	//openDialog('micka_mapa','/mapserv/hsmap/hsmap.php?project=micka_map', 'width=360,height=270');
-	//openDialog('micka_mapa','mickaMap.php', 'width=360,height=270');
-	micka.window(obj,{
-		title: obj.title,
-		data: '<div id="overmap" style="width:330px; height:250px;"></div>'
-			+ '<div>' + HS.i18n('Set extent') + ' [Ctrl] + ' + HS.i18n('draw') + '</div>'
-			+ '<input type="checkbox" id="map-get-poly"> ' + HS.i18n('Draw polygon')
-	});
-	var input = flatNodes(md_elem,'INPUT', 'N');
-	var ext = []; 
-	// zpracovani polygonu
-	var poly = flatNodes(md_elem,'TEXTAREA');
-	if(poly.length>0 && poly[0].value != ""){
-		var wkt = new ol.format.WKT();
-		polygon = wkt.readFeature(poly[0].value, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
-		//ext = f.getGeometry().getExtent();
-		//f.setId('r-1');
-		//micka.flyr.getSource().addFeature(f);
-	} 
-	// zpracovani obdelniku
-	else if(input[0].value){
-		var y1 = parseFloat(input[2].value);
-		var y2 = parseFloat(input[3].value);
-		ext.push(parseFloat(input[0].value));
-		ext.push(Math.max(-85,y1));
-		ext.push(parseFloat(input[1].value));
-		ext.push(Math.min(85,y2));
-	}
-	else {
-		// asi docasu
-		ext = initialExtent;
-		input[0].value = ext[0];
-  		input[2].value = ext[1];
-  		input[1].value = ext[2];
-  		input[3].value = ext[3];
-	}
-  	micka.initMap({
-  		edit: true,
-  		extent: ext,
-  		polygon: polygon,
-  		handler: function(bbox){
-  			input[0].value = bbox[0].toFixed(3);
-  			input[2].value = bbox[1].toFixed(3);
-  			input[1].value = bbox[2].toFixed(3);
-  			input[3].value = bbox[3].toFixed(3);
-  		}
-  	});
-  	var polyCheck = document.getElementById('map-get-poly');
-  	if(polyCheck) polyCheck.onclick = function(){
-  		micka.mapfeatures.clear();
-  		if(this.checked){
-  			micka.overmap.getInteractions().forEach(function(el, i, a){
-  				//console.log(el, i, a);
-  				//console.log(el.getKeys());
-  			}, micka.overmap)
-  			//console.log(micka.overmap.getInteractions().items);
-  			/*features = new ol.Collection();
-  			var featureOverlay = new ol.layer.Vector({
-  			  source: new ol.source.Vector({features: features}),
-  			  style: new ol.style.Style({
-  			    fill: new ol.style.Fill({
-  			      color: 'rgba(255, 255, 255, 0.2)'
-  			    }),
-  			    stroke: new ol.style.Stroke({
-  			      color: '#ffcc33',
-  			      width: 2
-  			    }),
-  			    image: new ol.style.Circle({
-  			      radius: 7,
-  			      fill: new ol.style.Fill({
-  			        color: '#ffcc33'
-  			      })
-  			    })
-  			  })
-  			});*/
-  			//micka.overmap.addLayer(featureOverlay);
-  			function addInteraction() {
-	  			draw = new ol.interaction.Draw({
-	  			    features: micka.mapfeatures,
-	  			    type: 'Polygon'
-	  			});
-  			  	micka.overmap.addInteraction(draw);
-  			  	draw.on('drawstart', function(){
-  			  		micka.mapfeatures.clear();
-  			  	})
-  			  	draw.on('drawend', function(e){
-  			  		var g = e.feature.getGeometry().clone();
-  	  		        g.transform('EPSG:3857', 'EPSG:4326');
-  	  		        var wkt = new ol.format.WKT();
-  	  		    	var ta = flatNodes(md_elem,'TEXTAREA');
-  	  		    	ta[0].value= wkt.writeGeometry(g);
-  			  	})
-  			}
-  			addInteraction();
-
-  		}
-  		else {
-  			draw.setActive(false);
-  		}
-  	}
+    md_elem = obj.parentNode;
+    $("#md-dialog").modal();
+    $("#md-content").html('<div class="modal-body"><div id="overmap" style="width:100%; height:300px;"></div>'
+			+ '<div>' + HS.i18n('Set extent') + ' [Ctrl] + ' + HS.i18n('draw') + '</div></div>');
+    $("#md-dialog").on('hide.bs.modal', function (e) {
+        $("#md-dialog").off('shown.bs.modal');
+        $("#md-dialog").off('hide.bs.modal');
+    });       
+    $("#md-dialog").on('shown.bs.modal', function (e) {
+        var input = flatNodes(md_elem,'INPUT', 'N');
+        var ext = []; 
+        // zpracovani polygonu
+        var poly = flatNodes(md_elem,'TEXTAREA');
+        if(poly.length>0 && poly[0].value != ""){
+            var wkt = new ol.format.WKT();
+            polygon = wkt.readFeature(poly[0].value, {dataProjection: 'EPSG:4326', featureProjection: 'EPSG:3857'});
+        } 
+        // zpracovani obdelniku
+        else if(input[0].value){
+            var y1 = parseFloat(input[2].value);
+            var y2 = parseFloat(input[3].value);
+            ext.push(parseFloat(input[0].value));
+            ext.push(Math.max(-85,y1));
+            ext.push(parseFloat(input[1].value));
+            ext.push(Math.min(85,y2));
+        }
+        else {
+            // asi docasu
+            ext = initialExtent;
+            input[0].value = ext[0];
+            input[2].value = ext[1];
+            input[1].value = ext[2];
+            input[3].value = ext[3];
+        }
+        micka.initMap({
+            edit: true,
+            extent: ext,
+            polygon: polygon,
+            handler: function(bbox){
+                input[0].value = bbox[0].toFixed(3);
+                input[2].value = bbox[1].toFixed(3);
+                input[1].value = bbox[2].toFixed(3);
+                input[3].value = bbox[3].toFixed(3);
+                $("#md-dialog").modal('hide');
+            }
+        });
+    });
 }
 
 function uploadFile(obj){
