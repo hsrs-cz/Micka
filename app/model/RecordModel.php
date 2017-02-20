@@ -110,7 +110,9 @@ class RecordModel extends \BaseModel
     
     private function seMdValues($data)
     {
-         $this->db->query("INSERT INTO edit_md_values", $data);
+        if (count($data) > 0) {
+            $this->db->query("INSERT INTO edit_md_values", $data);
+        }
     }
     
     private function updateEditMD($recno)
@@ -476,8 +478,8 @@ class RecordModel extends \BaseModel
 	private function getIdElements()
     {
         // Move to CodeListModel
-        $data = $this->db->query("SELECT tree.md_id, tree.md_standard, elements.el_name
-            FROM elements JOIN tree ON (elements.el_id = tree.el_id)")->fetchAll();
+        $data = $this->db->query("SELECT standard_schema.md_id, standard_schema.md_standard, elements.el_name
+            FROM elements JOIN standard_schema ON (elements.el_id = standard_schema.el_id)")->fetchAll();
 		$rs = [];
         foreach ($data as $row) {
 			$mds = $row->md_standard;

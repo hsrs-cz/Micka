@@ -74,23 +74,23 @@ class MdRepository
 	{
         return $this->db->query("
         	SELECT md_values.md_value, md_values.md_id, md_values.md_path,  md_values.lang, md_values.package_id, elements.form_code, elements.el_id, elements.from_codelist
-			FROM (elements RIGHT JOIN tree ON elements.el_id = tree.el_id) RIGHT JOIN md_values ON tree.md_id = md_values.md_id
+			FROM (elements RIGHT JOIN standard_schema ON elements.el_id = standard_schema.el_id) RIGHT JOIN md_values ON standard_schema.md_id = md_values.md_id
 			WHERE md_values.recno=? AND (md_values.lang='xxx' OR md_values.lang='uri' OR md_values.lang=?)
-            ORDER BY tree.md_left, md_values.md_path
+            ORDER BY standard_schema.md_left, md_values.md_path
             ", $md->recno,$appLang)->fetchAll();
 	}
 
 	public function getElementsLabel($mds,$appLang)
 	{
-        $tree = $this->db->query('SELECT md_left, md_right FROM tree WHERE md_id=0 AND md_standard=?', 
+        $standard_schema = $this->db->query('SELECT md_left, md_right FROM standard_schema WHERE md_id=0 AND md_standard=?', 
                 $mds == 10 ? 0 : $mds)->fetch();
         $result = $this->db->query("
-			SELECT elements.el_id, elements.el_name, elements.el_short_name, elements.only_value, tree.md_id,
-				tree.md_level, tree.package_id, label.label_text, label.label_help
-			FROM (label INNER JOIN elements ON label.label_join = elements.el_id) INNER JOIN tree ON elements.el_id = tree.el_id
-			WHERE tree.md_left>=?  AND tree.md_right<=? AND label.lang=? AND label.label_type='EL' AND tree.md_standard=?
-            ORDER BY tree.md_left
-		", $tree->md_left, $tree->md_right, $appLang, $mds == 10 ? 0 : $mds)->fetchAll();
+			SELECT elements.el_id, elements.el_name, elements.el_short_name, elements.only_value, standard_schema.md_id,
+				standard_schema.md_level, standard_schema.package_id, label.label_text, label.label_help
+			FROM (label INNER JOIN elements ON label.label_join = elements.el_id) INNER JOIN standard_schema ON elements.el_id = standard_schema.el_id
+			WHERE standard_schema.md_left>=?  AND standard_schema.md_right<=? AND label.lang=? AND label.label_type='EL' AND standard_schema.md_standard=?
+            ORDER BY standard_schema.md_left
+		", $standard_schema->md_left, $standard_schema->md_right, $appLang, $mds == 10 ? 0 : $mds)->fetchAll();
         return $result;
     }
     

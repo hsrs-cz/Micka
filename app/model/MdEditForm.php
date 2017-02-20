@@ -6,6 +6,7 @@ use Nette;
 
 class MdEditForm  extends \BaseModel
 {
+    private $appParameters;
 	private $form_values = array();
 	private $form_data = array();
 	private $md_first_lang = 'eng';
@@ -14,8 +15,8 @@ class MdEditForm  extends \BaseModel
 	private $button_label = array();
 	private $mds;
     private $md_id_data = array();
-    private $tree_model = array();
-    private $form_tree = array();
+    private $standard_schema_model = array();
+    private $form_standard_schema = array();
     public  $appLang = 'eng';
     
     public function setAppParameters($appParameters)
@@ -162,7 +163,7 @@ class MdEditForm  extends \BaseModel
 		return $rs;
 	}
 
-	private function getMdTree($recno, $mds, $profil_id, $package_id, $md_id_start=-1) {
+	private function getMdStandardSchema($recno, $mds, $profil_id, $package_id, $md_id_start=-1) {
 		if ($mds == 10) {
 			$mds = 0;
 		}
@@ -176,53 +177,53 @@ class MdEditForm  extends \BaseModel
 						 elements.only_value,
 						 elements.form_ignore,
 						 elements.multi_lang,
-						 tree.md_id,
-						 tree.md_left,
-						 tree.md_right,
-						 tree.md_level,
-						 tree.mandt_code,
-						 tree.md_path,
-						 tree.max_nb,
-						 tree.button_exe,
-						 tree.package_id,
-                         tree.inspire_code,
+						 standard_schema.md_id,
+						 standard_schema.md_left,
+						 standard_schema.md_right,
+						 standard_schema.md_level,
+						 standard_schema.mandt_code,
+						 standard_schema.md_path,
+						 standard_schema.max_nb,
+						 standard_schema.button_exe,
+						 standard_schema.package_id,
+                         standard_schema.inspire_code,
 						 label.label_text,
 						 label.label_help
-			FROM (label INNER JOIN elements ON label.label_join = elements.el_id) INNER JOIN tree ON elements.el_id = tree.el_id
+			FROM (label INNER JOIN elements ON label.label_join = elements.el_id) INNER JOIN standard_schema ON elements.el_id = standard_schema.el_id
             WHERE label.label_type='EL'
-                AND tree.md_standard=$mds
+                AND standard_schema.md_standard=$mds
                 AND label.lang='$this->appLang'
         ";
 		if ($profil_id > -1) {
-			$sql .= " AND tree.md_id IN(SELECT md_id FROM profil WHERE profil_id=$profil_id)";
+			$sql .= " AND standard_schema.md_id IN(SELECT md_id FROM profil WHERE profil_id=$profil_id)";
 		}
 		if ($md_id_start > -1) {
-            $pom = $this->db->query("SELECT md_left, md_right FROM tree WHERE md_standard=? AND md_id=?", $mds, $md_id_start)->fetchAll();
+            $pom = $this->db->query("SELECT md_left, md_right FROM standard_schema WHERE md_standard=? AND md_id=?", $mds, $md_id_start)->fetchAll();
             foreach ($pom as $row) {
 				$md_left = $row->md_left;
 				$md_right  = $row->md_right;
-				$sql .= " AND tree.md_left>=$md_left  AND tree.md_right<=$md_right";
+				$sql .= " AND standard_schema.md_left>=$md_left  AND standard_schema.md_right<=$md_right";
             }
 		}
 		if ($profil_id == -1 && $package_id > -1 && $md_id_start == -1) {
             $pom = $this->db->query("
-                SELECT md_left, md_right FROM tree WHERE md_standard=? AND md_id=
+                SELECT md_left, md_right FROM standard_schema WHERE md_standard=? AND md_id=
                 (SELECT md_id FROM packages WHERE md_standard=? AND package_id=?)
             ", $mds, $mds, $package_id)->fetchAll();
             foreach ($pom as $row) {
 				$md_left = $row->md_left;
 				$md_right  = $row->md_right;
-				$sql .= " AND tree.md_left>=$md_left  AND tree.md_right<=$md_right";
+				$sql .= " AND standard_schema.md_left>=$md_left  AND standard_schema.md_right<=$md_right";
             }
 		}
 		if ($package_id > -1) {
-			$sql .=  " AND tree.package_id=$package_id";
+			$sql .=  " AND standard_schema.package_id=$package_id";
 		}
 		if ($mds == 1) {
-			$sql .= " ORDER BY tree.md_level,tree.md_left";
+			$sql .= " ORDER BY standard_schema.md_level,standard_schema.md_left";
 		}
 		else {
-			$sql .= " ORDER BY tree.md_left";
+			$sql .= " ORDER BY standard_schema.md_left";
 		}
 		return $this->db->query($sql)->fetchAll();;
 	}
@@ -294,24 +295,24 @@ class MdEditForm  extends \BaseModel
 		if ($mds == 0 && $profil == -1 && $package == 1) {
 			$md_id_start = 1;
 		}
-        $tree_source = $this->getMdTree($recno, $mds, $profil, $package, $md_id_start);
-        foreach ($tree_source as $row) {
+        $standard_schema_source = $this->getMdStandardSchema($recno, $mds, $profil, $package, $md_id_start);
+        foreach ($standard_schema_source as $row) {
             if ($row->md_left+1 == $row->md_right) {
                 $md_path = getMdPath($row->md_path);
-                $eval_text = '$this->tree_model' . $md_path . "=1;";
+                $eval_text = '$this->standard_schema_model' . $md_path . "=1;";
                 eval($eval_text);
             }
             $this->md_id_data[$row->md_id] = $row;
         }
-        $this->form_tree = $this->tree_model[0][0];
+        $this->form_standard_schema = $this->standard_schema_model[0][0];
         $this->getRepeatFormData(isset($this->form_values[0][0]) ? $this->form_values[0][0] : []);
-        $this->getFormData($this->form_tree);
+        $this->getFormData($this->form_standard_schema);
         $rs = $this->form_data;
         return $rs;
     }
     
-    private function getFormData($tree, $path='') {
-        foreach ($tree as $key_md_id => $row) {
+    private function getFormData($standard_schema, $path='') {
+        foreach ($standard_schema as $key_md_id => $row) {
             $end_div_rs = 0;
             $end_div_pack = 0;
             $end_div_rb = 0;
@@ -459,9 +460,9 @@ class MdEditForm  extends \BaseModel
                     if (count($md_id_data) > 0) {
                         $path_new = getMdPath(substr($path, 0,  0-(strlen($key_sequence)+1)));
                         if ($md_id_data->md_left+1 == $md_id_data->md_right) {
-                            $eval_label = '$this->form_tree' . $path_new . '['. $key_sequence . ']' . "=1;";
+                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=1;";
                         } else {
-                            $eval_label = '$this->form_tree' . $path_new . '['. $key_sequence . ']' . "=" . '$this->tree_model[0][0]' . getMdPath(substr($md_id_data->md_path, 4)) . ";";
+                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=" . '$this->standard_schema_model[0][0]' . getMdPath(substr($md_id_data->md_path, 4)) . ";";
                         }
                         eval ($eval_label);
                     }
@@ -482,4 +483,3 @@ class MdEditForm  extends \BaseModel
         return $subject;
     }    
 }
-?>

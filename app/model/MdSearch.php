@@ -263,7 +263,7 @@ class MdSearch
 		if ($mapping != '') {
 			if (count($this->type_mapping) == 0) {
 				$sql = "
-					SELECT md_id, md_mapping FROM tree WHERE md_mapping IS NOT NULL ORDER BY md_mapping
+					SELECT md_id, md_mapping FROM standard_schema WHERE md_mapping IS NOT NULL ORDER BY md_mapping
 				";
 				$dbres = $this->db->query($sql)->fetchAll();
 				foreach ($dbres as $row) {
