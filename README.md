@@ -8,7 +8,7 @@ Geospatial metadata catalogue and metadata editing tool.
 - INSPIRE extended capabilities
 - Output: ISO 19139, JSON, GeoDCAT, ATOM, KML, HTML, RDFa
 - INSPIRE ATOM download service imlementation
-- Support for remote registries (e.g. ISNPIRE registry)
+- Support for remote registries and thesauri (e.g. INSPIRE registry)
 
 ## System requirements
 - Any web server with mod_rewrite enabled
@@ -20,4 +20,5 @@ Geospatial metadata catalogue and metadata editing tool.
 1. Download the code from github and put to any directory at your web.
 2. Run `composer install` at this directory. (It will install Nette and other PHP components.)
 3. Run SQL scripts located in install directory at PostgreSQL console or admin tool.
-4. Edit `app/config/local.neon` file for access to database, your contact details etc.
+4. Rename `app/config/local.neon.dist` to `app/config/local.neon` and edit it for access to your database, your contact information etc.
+5. Make the directories `log` and `temp` writable for the web server
