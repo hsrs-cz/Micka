@@ -711,6 +711,11 @@
                         <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
                      </rdf:Description>   
  				</xsl:when>
+ 				<xsl:when test="substring(*/gmd:referenceSystemIdentifier/*/gmd:code/*,1,4)='http'">
+ 					<rdf:Description rdf:about="{*/gmd:referenceSystemIdentifier/*/gmd:code/*}" >
+                        <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>
+                     </rdf:Description>   
+ 				</xsl:when>
  				<xsl:when test="contains(*/gmd:referenceSystemIdentifier/*/gmd:codeSpace/*, 'EPSG')">
  					<rdf:Description rdf:about="http://www.opengis.net/def/crs/EPSG/0/{*/gmd:referenceSystemIdentifier/*/gmd:code/*}">
                         <dct:type rdf:resource="http://inspire.ec.europa.eu/glossary/SpatialReferenceSystem"/>

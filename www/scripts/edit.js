@@ -430,7 +430,7 @@ function flatNodes(epom, nodename, theClassName){
 function md_dexpand1(obj){
   var divs = flatNodes(obj, "DIV"); 
   var imgs = getMyNodes(obj, "IMG");
-  if(divs.length>0) divs[1].style.display='block';
+  if(divs.length>1) divs[1].style.display='block';
   if(imgs.length>0) imgs[0].src = imgs[0].src.substring(0, imgs[0].src.lastIndexOf("/")+1)+ MD_COLLAPSE; 
 }
 
@@ -499,7 +499,7 @@ function thes(obj){
     var thes = {};
     thes['gemet'] = $('#gemet').select2({
 		ajax: {
-			url: '/projects/kafka/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConceptsMatchingRegexByThesaurus?',
+			url: baseUrl +'/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConceptsMatchingRegexByThesaurus?',
 			dataType: 'json',
             data: function (params) {
                 var query = {
@@ -528,7 +528,7 @@ function thes(obj){
 
     thes['inspire'] = $("#inspire").select2({
 		ajax: {
-			url: '/projects/kafka/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
+			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json',
 			processResults: function(data, opts){
                 var data = $.map(data.suggestions, function(rec) {
@@ -554,7 +554,7 @@ function thes(obj){
         for(i in ll){
             l2 = HS.getCodeFromLanguage(ll[i],2);
             if(l2.length==2){
-                var url = 'http://dev.bnhelp.cz/projects/kafka/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
+                var url = baseUrl  + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
                 $.ajax({url: url, context: {lang: ll[i]}})
                 .done(function(data){
                     if(data.suggestions)  terms[this.lang] = data.suggestions[0].name;
@@ -585,7 +585,7 @@ function thes(obj){
         for(i in ll){
             l2 = HS.getCodeFromLanguage(ll[i],2);
             if(l2.length==2){
-                var url = '/projects/kafka/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConcept?concept_uri='+uri+'&language='+l2;
+                var url = baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConcept?concept_uri='+uri+'&language='+l2;
                 $.ajax({
                     url: url, 
                     context: {lang: ll[i]}
@@ -825,24 +825,24 @@ function fc1(fcObj, lyrlist){
 
 }
 
-function closeDialog(obj){
+/*function closeDialog(obj){
 	if(obj) $(obj).parent().remove();
 	else $('#md_dialog').remove();
-}
+}*/
 
 function cover(obj){
-    
+    md_elem=obj.parentNode;
     $("#md-dialog").modal();
     var html = '<div class="modal-header">'
     +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
     +'<h4>'+HS.i18n('Area coverage')+'</h4></div>';
-    html += '<div class="modal-body"><form onsubmit="return cover1()"><fieldset>'
-			+'<label>Procenta:</label><input id="cover-perc" type="number" required="required" min="0" max="100" value="100"/>'
-			+'<br/> <label>km2:</label><input type="number" id="cover-km" required="required" value="78866"/><br/>'
-			+'<label>Popis:</label><input id="cover-desc" value="Pokrytí území ČR"><br/><label>Description:</label><input id="cover-desc-en" value="Coverage of CR territory"/><br/>'
-			+'<input type="submit" value="OK"/></fieldset></form></div>';       
+    html += '<div class="modal-body">'
+			+'<label>'+HS.i18n('Percent')+'</label><input id="cover-perc" class="form-control" type="number" required="required" min="0" max="100" value="100"/>'
+			+'<label>km2:</label><input type="number" id="cover-km" class="form-control" required="required" value="78866"/>'
+			+'<label>'+HS.i18n('Description')+'</label><input id="cover-desc" class="form-control" value="Pokrytí území ČR">'
+            +'<label>'+HS.i18n('Description')+' - EN</label><input id="cover-desc-en" class="form-control" value="Coverage of CR territory"/>'
+			+'</div><div class="modal-footer"><button type="button" class="btn btn-primary" onClick="cover1();">OK</button></div>';       
     $("#md-content").html(html);
-    
 }
 
 function cover1(){
@@ -876,7 +876,7 @@ function cover1(){
 		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_1_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#km2';	
 		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_1_2101')>0) inputs[i].value= $('#cover-km').val();	
 	}
-	$("#cover-div").remove();
+	$("#md-dialog").modal('hide');
 	return false;
 }
 
@@ -1070,7 +1070,7 @@ function mapa(obj){
     md_elem = obj.parentNode;
     $("#md-dialog").modal();
     $("#md-content").html('<div class="modal-body"><div id="overmap" style="width:100%; height:300px;"></div>'
-			+ '<div>' + HS.i18n('Set extent') + ' [Ctrl] + ' + HS.i18n('draw') + '</div></div>');
+		+ '<div>' + HS.i18n('Set extent') + ' [Ctrl] + ' + HS.i18n('draw') + '</div></div>');
     $("#md-dialog").on('hide.bs.modal', function (e) {
         $("#md-dialog").off('shown.bs.modal');
         $("#md-dialog").off('hide.bs.modal');
