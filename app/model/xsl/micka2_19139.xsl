@@ -330,9 +330,11 @@
 			<xsl:for-each select="identificationInfo/*/resourceFormat">
 				<gmd:resourceFormat>
 					<gmd:MD_Format>
-						<gmd:name>
-							<gco:CharacterString><xsl:value-of select="*/name"/></gco:CharacterString>
-						</gmd:name>
+                        <xsl:call-template name="txt">
+                            <xsl:with-param name="s" select="*"/>                      
+                            <xsl:with-param name="name" select="'name'"/>                      
+                            <xsl:with-param name="lang" select="$mdLang"/>                   
+                        </xsl:call-template>
 						<gmd:version>
 							<gco:CharacterString><xsl:value-of select="*/version"/></gco:CharacterString>
 						</gmd:version>
@@ -794,9 +796,11 @@
 				  <xsl:for-each select="*/distributionFormat">
 					<gmd:distributionFormat>
 						<gmd:MD_Format>
-							<gmd:name>
-								<gco:CharacterString><xsl:value-of select="*/name"/></gco:CharacterString>
-							</gmd:name>
+							<xsl:call-template name="txt">
+                                <xsl:with-param name="s" select="*"/>                      
+                                <xsl:with-param name="name" select="'name'"/>                      
+                                <xsl:with-param name="lang" select="$mdLang"/>                   
+                            </xsl:call-template>
 							<gmd:version>
 								<gco:CharacterString><xsl:value-of select="*/version"/></gco:CharacterString>
 							</gmd:version>

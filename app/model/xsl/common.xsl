@@ -122,6 +122,7 @@
         
         <xsl:for-each select="$s/*[name()=$name]">
         	<xsl:choose>
+                <!-- multilingual with URI -->
         		<xsl:when test="lang[@code='uri'] and $count>2">
         			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
         				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="lang[@code=$lang]"/></gmx:Anchor>
@@ -134,6 +135,7 @@
 	        			</gmd:PT_FreeText>
         			</xsl:element>
         		</xsl:when>
+                <!-- multilingual without URI -->
         		<xsl:when test="not(lang[@code='uri']) and $count>1">
         			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
         				<gco:CharacterString><xsl:value-of select="lang[@code=$lang]"/></gco:CharacterString>
@@ -146,9 +148,10 @@
 	        			</gmd:PT_FreeText>
         			</xsl:element>
         		</xsl:when>
+                <!-- monolinugal with URI -->
         		<xsl:when test="lang[@code='uri']">
         			<xsl:element name="{$ns}:{$name}">
-        				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="lang[@code=$lang]"/></gmx:Anchor>
+        				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="lang[@code=$lang]|lang[@code='xxx']"/></gmx:Anchor>
         			</xsl:element>	
         		</xsl:when>
         		<xsl:otherwise>
