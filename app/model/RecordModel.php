@@ -510,7 +510,12 @@ class RecordModel extends \BaseModel
                     $eval_text_tmp .= '[' . $value . ']';
                 }
             }
-            if ($row->lang != 'xxx') {
+            if ($row->md_id == 4742) {
+                $eval_text_value = $eval_text_tmp . "['lang'][$i]['@value']=" . '"' . gpc_addslashes($row->md_value) . '";' . "\n";
+                $eval_text_atrrib = $eval_text_tmp . "['lang'][$i]['@attributes']['code']=" . '"' . $row->lang . '";' . "\n";
+                $i++;
+                $eval_text_tmp = $eval_text_value . $eval_text_atrrib;
+            } elseif ($row->lang != 'xxx') {
                 $eval_text_value = $eval_text_tmp . "['lang'][$i]['@value']=" . '"' . gpc_addslashes($row->md_value) . '";' . "\n";
                 $eval_text_atrrib = $eval_text_tmp . "['lang'][$i]['@attributes']['code']=" . '"' . $row->lang . '";' . "\n";
                 $i++;
