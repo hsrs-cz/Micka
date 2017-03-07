@@ -148,7 +148,7 @@ class Validator{
         "wms" => 'http://inspire.ec.europa.eu/schemas/inspire_vs/1.0/inspire_vs.xsd'
     );
     var $icons = array(
-        "pass" => "check-square",
+        "pass" => "check-circle",
         "warning" => "exclamation-triangle",
         "fail" => "ban",
         "notice" => "info-circle"
