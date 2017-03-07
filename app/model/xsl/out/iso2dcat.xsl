@@ -519,13 +519,17 @@
 				   			</xsl:call-template>
 	    					<vcard:hasEmail><xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/></vcard:hasEmail>
                             <xsl:for-each select="*/gmd:contactInfo/*/gmd:phone/*/gmd:voice">
-                                <vcard:tel><xsl:value-of select="*"/></vcard:tel>
+                                <vcard:hasTelephone rdf:parseType="Resource">
+                                    <vcard:hasValue rdf:resource="tel:{*}"/>
+                                    <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Voice"/>
+                                </vcard:hasTelephone>
                             </xsl:for-each>
                             <xsl:for-each select="*/gmd:contactInfo/*/gmd:address">
                                 <vcard:adr rdf:parseType="Resource">
                            	       <vcard:street-address><xsl:value-of select="*/gmd:deliveryPoint"/></vcard:street-address>
                                    <vcard:locality><xsl:value-of select="*/gmd:city"/></vcard:locality>
                            	       <vcard:postal-code><xsl:value-of select="*/gmd:postalCode"/></vcard:postal-code>
+                                   <xsl:for-each select="*/gmd:country"><vcard:country-name><xsl:value-of select="*"/></vcard:country-name></xsl:for-each>
                                 </vcard:adr>                                           
                             </xsl:for-each>
 	    				</foaf:Organisation>
@@ -541,14 +545,18 @@
 				   			</xsl:call-template>
 	    					<vcard:hasEmail><xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/></vcard:hasEmail>
                             <xsl:for-each select="*/gmd:contactInfo/*/gmd:phone/*/gmd:voice">
-                                <vcard:tel><xsl:value-of select="*"/></vcard:tel>
+                                <vcard:hasTelephone rdf:parseType="Resource">
+                                    <vcard:hasValue rdf:resource="tel:{*}"/>
+                                    <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Voice"/>
+                                </vcard:hasTelephone>
                             </xsl:for-each>
                             <xsl:for-each select="*/gmd:contactInfo/*/gmd:address">
                                 <vcard:adr rdf:parseType="Resource">
                            	       <vcard:street-address><xsl:value-of select="*/gmd:deliveryPoint"/></vcard:street-address>
                                    <vcard:locality><xsl:value-of select="*/gmd:city"/></vcard:locality>
                             	   <vcard:postal-code><xsl:value-of select="*/gmd:postalCode"/></vcard:postal-code>
-                                </vcard:adr>                                           
+                                   <xsl:for-each select="*/gmd:country"><vcard:country-name><xsl:value-of select="*"/></vcard:country-name></xsl:for-each>
+                               </vcard:adr>                                           
                             </xsl:for-each>
 	    				</foaf:Organisation>
 	    			</dct:rightsHolder>
@@ -563,13 +571,17 @@
 				   			</xsl:call-template>
 	    					<vcard:hasEmail><xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/></vcard:hasEmail>
                             <xsl:for-each select="*/gmd:contactInfo/*/gmd:phone/*/gmd:voice">
-                                <vcard:tel><xsl:value-of select="*"/></vcard:tel>
+                                <vcard:hasTelephone rdf:parseType="Resource">
+                                    <vcard:hasValue rdf:resource="tel:{*}"/>
+                                    <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Voice"/>
+                                </vcard:hasTelephone>
                             </xsl:for-each>
                             <xsl:for-each select="*/gmd:contactInfo/*/gmd:address">
                                 <vcard:adr rdf:parseType="Resource">
                            	       <vcard:street-address><xsl:value-of select="*/gmd:deliveryPoint"/></vcard:street-address>
                                    <vcard:locality><xsl:value-of select="*/gmd:city"/></vcard:locality>
                            	       <vcard:postal-code><xsl:value-of select="*/gmd:postalCode"/></vcard:postal-code>
+                                   <xsl:for-each select="*/gmd:country"><vcard:country-name><xsl:value-of select="*"/></vcard:country-name></xsl:for-each>
                                 </vcard:adr>                                           
                             </xsl:for-each>
 	    				</foaf:Organisation>
@@ -754,7 +766,10 @@
  			<vcard:hasEmail rdf:resource="mailto:{*}"/>
         </xsl:for-each>
         <xsl:for-each select="$c/gmd:contactInfo/*/gmd:phone/*/gmd:voice">
-        	<vcard:tel><xsl:value-of select="*"/></vcard:tel>
+            <vcard:hasTelephone rdf:parseType="Resource">
+                <vcard:hasValue rdf:resource="tel:{*}"/>
+                <rdf:type rdf:resource="http://www.w3.org/2006/vcard/ns#Voice"/>
+            </vcard:hasTelephone>
         </xsl:for-each>
         <xsl:for-each select="$c/gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage">        
   			<vcard:hasURL rdf:resource="{*}"/>
@@ -768,6 +783,7 @@
 	            	<vcard:street-address><xsl:value-of select="*/gmd:deliveryPoint/*"/></vcard:street-address>
 	                <vcard:locality><xsl:value-of select="*/gmd:city/*"/></vcard:locality>
 	                <vcard:postal-code><xsl:value-of select="*/gmd:postalCode/*"/></vcard:postal-code>
+                    <xsl:for-each select="*/gmd:country"><vcard:country-name><xsl:value-of select="*"/></vcard:country-name></xsl:for-each>
                 </vcard:Address>
             </vcard:hasAddress>                                           
       	</xsl:for-each>
