@@ -153,6 +153,14 @@ frontend:
     status: "Record status"
     contact2micka: "Contact to MicKa"
 
+management:
+    modules: "Administration"
+    contacts: "Contacts management"
+    identity: "Right management"
+    harvest: "Harvesting"
+    profiles: "Profiles management"
+    summary: "Metadata records overview"
+    
 lang:
     cze: "Czech"
     eng: "English"

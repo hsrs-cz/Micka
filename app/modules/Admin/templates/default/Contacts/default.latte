@@ -1,5 +1,10 @@
 {block content}
 <div class="container panel panel-default">
+<style>
+  a { color: #AAA; }
+  a:hover { text-decoration: none; color: #059; }
+</style>
+
 <h1>{_messages.frontend.contacts}</h1>
 
 <script type="text/javascript">
@@ -8,8 +13,7 @@
     }
 </script>
 
-<div class="modal-body">
-<table class="sprava" width="100%">
+<table class="table table-hover">
 	<tr>
 		<th>{_messages.frontend.label}</th>
 		<th>{_messages.frontend.person}</th>
@@ -25,18 +29,18 @@
 		<td>{$contact->person|trim}</td>
 		<td>{$contact->organisation|trim}</td>
 		{if $user->isLoggedIn()}
-			<td style="width:60px">
+			<td style="width:100px">
 				{if $contact->right == 'w'}
-					<a n:href=":Admin:Contacts:edit $contact->id">
-						<img src="{$basePath}{$themePath}/img/user_edit.png" title="{_messages.frontend.edit}">
+					<a n:href=":Admin:Contacts:edit $contact->id" title="{_messages.frontend.edit}">
+						<i class="fa fa-pencil fa-lg"></i>
 					</a>
 				{/if}
-				<a n:href=":Admin:Contacts:clone $contact->id">
-					<img src="{$basePath}{$themePath}/img/user_go.png" title="{_messages.frontend.copy}">
+				<a n:href=":Admin:Contacts:clone $contact->id" title="{_messages.frontend.copy}">
+					<i class="fa fa-clone fa-lg"></i>
 				</a>
 				{if $contact->right == 'w'}
-					<a href="javascript:md_delkont({$contact->id})">
-						<img src="{$basePath}{$themePath}/img/user_delete.png" title="{_messages.frontend.delete}">
+					<a href="javascript:md_delkont({$contact->id})" title="{_messages.frontend.delete}">
+						<i class="fa fa-trash fa-lg"></i>
 					</a>
 				{/if}
 			</td>
@@ -44,12 +48,13 @@
 	</tr>
 	{/foreach}
 </table>
+
 {if $user->loggedIn}
-    <br>
-    <a n:href=":Admin:Contacts:new">
-        <img src="{$basePath}{$themePath}/img/user_add.png" title="{_messages.frontend.new_record}">
+    <br/>
+    <a class="btn btn-primary" n:href=":Admin:Contacts:new" title="{_messages.frontend.new_record}">
+        <i class="fa fa-plus fa-fw"></i> {_messages.frontend.new_record}
     </a>
+    <br/><br/>
 {/if}
 </div>
 
-</div>

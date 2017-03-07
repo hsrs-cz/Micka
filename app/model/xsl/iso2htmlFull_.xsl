@@ -925,11 +925,6 @@
 				
 		<div class="icons">
 			<xsl:if test="../@edit=1">
-				<a href="{$MICKA_URL}/record/valid/{../@uuid}" class="valid{../@valid}" title="{$msg[@eng='validate']}"><xsl:choose>
-						<xsl:when test="../@valid=2"><i class="fa fa-check-circle fa-fw"></i></xsl:when>
-						<xsl:when test="../@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
-						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
-					</xsl:choose></a>
 				<a href="{$MICKA_URL}/record/edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
 				<a href="{$MICKA_URL}/record/clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
 				<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				

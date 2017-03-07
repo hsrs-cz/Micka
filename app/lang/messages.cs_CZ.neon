@@ -153,6 +153,14 @@ frontend:
     status: "Stav záznamu"
     contact2micka: "do MicKy"
 
+management:
+    modules: "Administrace"
+    contacts: "Správa kontaktů"
+    identity: "Práva"
+    harvest: "Harvestování"
+    profiles: "Správa profilů"
+    summary: "Přehled záznamů"
+    
 lang:
     cze: "Česky"
     eng: "Anglicky"
