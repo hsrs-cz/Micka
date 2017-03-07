@@ -2,3 +2,4 @@ app/config/config.local.neon
 www/registry_client/cache/*
 log/*
 vendor/*
+composer.lock
