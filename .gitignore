@@ -1,5 +1,6 @@
 app/config/config.local.neon
 www/registry_client/cache/*
 log/*
+temp/*
 vendor/*
 composer.lock
