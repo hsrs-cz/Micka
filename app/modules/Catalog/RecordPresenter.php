@@ -19,6 +19,7 @@ class RecordPresenter extends \BasePresenter
 	public function startup()
 	{
 		parent::startup();
+        $this->recordModel->setAppParameters($this->context->parameters);
 	}
     
     /** @resource Catalog:Guest */
@@ -146,8 +147,8 @@ class RecordPresenter extends \BasePresenter
     public function actionEdit($id) 
     {
         if($id == 'new') {
-            $post = $this->context->getByType('Nette\Http\Request')->getPost();
-            $this->recordModel->createNewMdRecord($post);
+            $httpRequest = $this->context->getByType('Nette\Http\Request');
+            $this->recordModel->createNewMdRecord($httpRequest);
             $mdr = $this->recordModel->getRecordMd();
             if ($mdr) {
                 $profil = $mdr->md_standard == 10 

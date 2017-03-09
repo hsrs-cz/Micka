@@ -7,6 +7,7 @@ use Nette;
 
 class RecordModel extends \BaseModel
 {
+    private $appParameters;
     private $recordMd = NULL;
     private $recordMdValues = [];
     private $typeTableMd = 'edit_md';
@@ -17,6 +18,11 @@ class RecordModel extends \BaseModel
 	{
 		parent::startup();
 	}
+    
+    public function setAppParameters($appParameters)
+    {
+        $this->appParameters = $appParameters;
+    }
     
     private function setRecordMdById($id, $typeTableMd, $right)
     {
@@ -108,9 +114,14 @@ class RecordModel extends \BaseModel
         return $recno > 1 ? $recno : 1;
     }
     
-    private function seMdValues($data)
+    private function seMdValues($data,$recno=0)
     {
         if (count($data) > 0) {
+            if ($recno > 0) {
+                foreach ($data as $key=>$value) {
+                    $data[$key]['recno'] = $recno;
+                }
+            }
             $this->db->query("INSERT INTO edit_md_values", $data);
         }
     }
@@ -204,43 +215,152 @@ class RecordModel extends \BaseModel
             $this->setEditMdValues2MdValues($editRecno, $recno);
         }
     }
-
-    private function setNewEditMdRecord($post)
-    {
-        $data['sid'] = session_id();
-		$data['recno'] = $this->getNewRecno('edit_md');
-        $data['uuid'] = $this->getUuid();
-		$data['md_standard'] = isset($post['standard']) ? $post['standard'] : 0;
-        $data['lang'] = isset($post['standard']) ? $post['standard'] : 0;
-		$data['data_type'] = -1;
-		$data['create_user'] = $this->user->identity->username;
-		$data['create_date'] = Date("Y-m-d");
-        $data['edit_group'] = isset($post['group_e']) ? $post['group_e'] : $this->user->identity->username;
-        $data['view_group'] = isset($post['group_v']) ? $post['group_v'] : $this->user->identity->username;
-        $lang_main = (isset($post['lang_main']) && $post['lang_main'] != '') ? $post['lang_main'] : 'eng';
-        $data['lang'] = isset($post['languages']) ? implode($post['languages'],"|") : '';
-        if ($data['lang'] == '' && $lang_main != '') {
-            $data['lang'] = $lang_main;
+    
+    private function setMdFromXml($data) {
+        if (array_key_exists('params', $data)
+            && array_key_exists('md', $data)
+            && array_key_exists('md_values', $data)
+            && array_key_exists('del_md_id', $data)
+        ) {
+            foreach ($data['md'] as $key => $value) {
+                if (isset($value['uuid']) && $value['uuid'] != '') {
+                    $this->setRecordMdById($value['uuid'], 'md', 'new');
+                    if ($this->recordMd) {
+                        //update
+                        if ($this->isRight2MdRecord('write') === FALSE) {
+                            $this->recordMd = NULL;
+                            throw new \Nette\Application\ApplicationException(
+                                'messages.import.notRightRecordUpdate');
+                        }
+                        if ($data['params']['update_type'] == 'all') {
+                            $this->findMdById($this->copyMd2EditMd(),'edit_md','write');
+                            $md['recno'] = $this->recordMd->recno;
+                            $md['uuid'] = rtrim($this->recordMd->uuid);
+                        } else {
+                            // skip
+                            throw new \Nette\Application\ApplicationException(
+                                'messages.import.recordUpdateSkip');
+                        }
+                    } else {
+                        //new
+                        $md = $data['params'];
+                        $md['uuid'] = $value['uuid'];
+                        $md['lang'] = $value['langs'];
+                        switch ($value['iso']) {
+                            case 'MD':
+                                $md['md_standard'] = 0;
+                                break;
+                            case 'MS':
+                            case 'MC':
+                                $md['md_standard'] = 10;
+                                break;
+                            case 'DC':
+                                $md['md_standard'] = 1;
+                                break;
+                            case 'FC':
+                                $md['md_standard'] = 2;
+                                break;
+                            default :
+                                // error
+                        }
+                        $this->db->query("INSERT INTO edit_md", $md);
+                    }
+                    $this->seMdValues($data['md_values'][$key], $md['recno']);
+                    $this->setRecordMdById($md['uuid'], 'edit_md', 'new');
+                    $this->recordMd->pxml = $this->xmlFromRecordMdValues();
+                    $this->applyXslTemplate2Xml('micka2one19139.xsl');
+                    $this->updateEditMD($this->recordMd->recno);
+                }
+            }
+        } elseif (array_key_exists('report', $data)) {
+            throw new \Nette\Application\ApplicationException(
+                'messages.import.incompletInputData');
         }
-        $this->db->query("INSERT INTO edit_md", $data);
-		if ($data['md_standard'] == 0 || $data['md_standard'] == 10) {
+    }
+
+    private function setNewEditMdRecord($httpRequest)
+    {
+        $post = $httpRequest->getPost();
+        $md = [];
+        $md['sid'] = session_id();
+		$md['recno'] = $this->getNewRecno('edit_md');
+        $md['uuid'] = $this->getUuid();
+		$md['md_standard'] = isset($post['standard']) ? $post['standard'] : 0;
+        $md['lang'] = isset($post['standard']) ? $post['standard'] : 0;
+		$md['data_type'] = -1;
+		$md['create_user'] = $this->user->identity->username;
+		$md['create_date'] = Date("Y-m-d");
+        $md['edit_group'] = isset($post['group_e']) ? $post['group_e'] : $this->user->identity->username;
+        $md['view_group'] = isset($post['group_v']) ? $post['group_v'] : $this->user->identity->username;
+        $lang_main = (isset($post['lang_main']) && $post['lang_main'] != '') ? $post['lang_main'] : 'eng';
+        $md['lang'] = isset($post['languages']) ? implode($post['languages'],"|") : '';
+        if ($md['lang'] == '' && $lang_main != '') {
+            $md['lang'] = $lang_main;
+        }
+        if ($md['md_standard'] == 99) {
+            $params = [];
+            $params['file_type'] = (isset($post['fileType']) && $post['fileType'] != '') ? $post['fileType'] : 'ISO19139';
+            $params['md_rec'] = (isset($post['md_rec']) && $post['md_rec'] != '') ? $post['md_rec'] : '';
+            $params['fc'] = (isset($post['fc']) && $post['fc'] != '') ? $post['fc'] : '';
+            $params['service_type'] = (isset($post['serviceType']) && $post['serviceType'] != '') ? $post['serviceType'] : 'WMS';
+            $params['url'] = (isset($post['url']) && $post['url'] != '') ? $post['url'] : '';
+            $params['url'] = ($params['url'] != '') ? str_replace('&amp;','&',$params['url']) : '';
+            $params['update_type'] = (isset($post['updateType']) && $post['updateType'] != '') ? $post['updateType'] : 'skip';
+            $files = $httpRequest->getFiles();
+            if (count($files) > 1) {
+                foreach ($files as $file) {
+                    if ($file->isOk()) {
+                        $fileName = __DIR__ . '/../../temp/upload/' . md5(uniqid(rand(), true)) . '.xml';
+                        $file->move($fileName);
+                        $mdXml2Array = new MdXml2Array();
+                        $dataFromXml = $mdXml2Array->getArrayMdFromXml(
+                            file_get_contents($fileName), 
+                            $params['file_type'],
+                            $md['lang'],
+                            $lang_main
+                        );
+                        $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+                        $arrayMdXml2MdValues->lang = $lang_main;
+                        $this->setMdFromXml(['params'=>$md+$params]+$arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml));
+                    } else {
+                        //error
+                    }
+                }
+            } elseif ($params['url'] != '') {
+                $mdXml2Array = new MdXml2Array();
+                $dataFromXml = $mdXml2Array->getArrayMdFromUrl(
+                    $params['url'], 
+                    $params['service_type'],
+                    $md['lang'],
+                    $lang_main
+                );
+                $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+                $arrayMdXml2MdValues->lang = $lang_main;
+                $this->setMdFromXml(['params'=>$md+$params]+$arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml));
+            } else {
+                // empty
+            }
+            return;
+	    }
+        $this->db->query("INSERT INTO edit_md", $md);
+		if ($md['md_standard'] == 0 || $md['md_standard'] == 10) {
             $this->db->query("INSERT INTO edit_md_values", [
                 [
-                'recno'=>$data['recno'],
-                'md_value'=>$data['uuid'],
+                'recno'=>$md['recno'],
+                'md_value'=>$md['uuid'],
                 'md_id'=>38,
                 'md_path'=>'0_0_38_0',
                 'lang'=>'xxx',
                 'package_id'=>0
                 ], [
-                'recno'=>$data['recno'],
+                'recno'=>$md['recno'],
                 'md_value'=>$lang_main,
                 'md_id'=>5527,
                 'md_path'=>'0_0_39_0_5527_0',
                 'lang'=>'xxx',
                 'package_id'=>0
                 ], [
-                'recno'=>$data['recno'],
+                'recno'=>$md['recno'],
                 'md_value'=>Date("Y-m-d"),
                 'md_id'=>44,
                 'md_path'=>'0_0_44_0',
@@ -249,7 +369,7 @@ class RecordModel extends \BaseModel
                 ]
             ]);
 		}
-        $this->setRecordMdById($data['uuid'], 'edit_md','new');
+        $this->setRecordMdById($md['uuid'], 'edit_md','new');
         $this->recordMd->pxml = $this->xmlFromRecordMdValues();
         $this->applyXslTemplate2Xml('micka2one19139.xsl');
         $this->updateEditMD($this->recordMd->recno);
@@ -358,10 +478,10 @@ class RecordModel extends \BaseModel
         return;
 	}
     
-    public function createNewMdRecord($post)
+    public function createNewMdRecord($httpRequest)
     {
         $this->deleteEditRecords();
-        return $this->setNewEditMdRecord($post);
+        return $this->setNewEditMdRecord($httpRequest);
     }
     
     private function getMdValuesFromForm($formData, $appLang)
