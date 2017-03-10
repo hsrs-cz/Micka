@@ -307,7 +307,7 @@ class RecordModel extends \BaseModel
             $params['url'] = ($params['url'] != '') ? str_replace('&amp;','&',$params['url']) : '';
             $params['update_type'] = (isset($post['updateType']) && $post['updateType'] != '') ? $post['updateType'] : 'skip';
             $files = $httpRequest->getFiles();
-            if (count($files) > 1) {
+            if (isset($files['soubor']) &&  count($files['soubor']) > 1) {
                 foreach ($files as $file) {
                     if ($file->isOk()) {
                         $fileName = __DIR__ . '/../../temp/upload/' . md5(uniqid(rand(), true)) . '.xml';
@@ -323,7 +323,8 @@ class RecordModel extends \BaseModel
                         $arrayMdXml2MdValues->lang = $lang_main;
                         $this->setMdFromXml(['params'=>$md+$params]+$arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml));
                     } else {
-                        //error
+                        throw new \Nette\Application\ApplicationException(
+                            'messages.import.errorFile');
                     }
                 }
             } elseif ($params['url'] != '') {
@@ -340,6 +341,7 @@ class RecordModel extends \BaseModel
             } else {
                 // empty
             }
+             exit;
             return;
 	    }
         $this->db->query("INSERT INTO edit_md", $md);
