@@ -26,6 +26,10 @@ class RecordModel extends \BaseModel
     
     private function setRecordMdById($id, $typeTableMd, $right)
     {
+        if ($id == '') {
+            $this->recordMd = NULL;
+            return;
+        }
         $this->typeTableMd = $typeTableMd == 'edit_md' ? 'edit_md' : 'md';
         if ($this->typeTableMd == 'edit_md') {
             $this->recordMd = $this->db->query(
@@ -216,6 +220,45 @@ class RecordModel extends \BaseModel
         }
     }
     
+    private function insertMdValuesBasic($md_standard, $recno, $uuid=NULL,$lang=NULL,$date=FALSE) {
+		if ($md_standard == 0 || $md_standard == 10) {
+            $values = [];
+            if ($uuid !== NULL) {
+                $values[] = [
+                    'recno'=>$recno,
+                    'md_value'=>$uuid,
+                    'md_id'=>38,
+                    'md_path'=>'0_0_38_0',
+                    'lang'=>'xxx',
+                    'package_id'=>0
+                ];
+            }
+            if ($lang !== NULL) {
+                $values[] = [
+                    'recno'=>$recno,
+                    'md_value'=>$lang,
+                    'md_id'=>5527,
+                    'md_path'=>'0_0_39_0_5527_0',
+                    'lang'=>'xxx',
+                    'package_id'=>0
+                ];
+            }
+            if ($date === TRUE) {
+                $values[] = [
+                    'recno'=>$recno,
+                    'md_value'=>Date("Y-m-d"),
+                    'md_id'=>44,
+                    'md_path'=>'0_0_44_0',
+                    'lang'=>'xxx',
+                    'package_id'=>0
+                ];
+            }
+            if (count($values) > 0) {
+                $this->db->query("INSERT INTO edit_md_values", $values);
+            }
+		}
+    }
+    
     private function setMdFromXml($data) {
         if (array_key_exists('params', $data)
             && array_key_exists('new_md', $data)
@@ -224,7 +267,7 @@ class RecordModel extends \BaseModel
             && array_key_exists('del_md_id', $data)
         ) {
             foreach ($data['md'] as $key => $value) {
-                if (isset($value['uuid']) && $value['uuid'] != '') {
+                if (isset($value['uuid'])) {
                     $this->setRecordMdById($value['uuid'], 'md', 'new');
                     if ($this->recordMd) {
                         //update
@@ -245,7 +288,6 @@ class RecordModel extends \BaseModel
                     } else {
                         //new
                         $md = $data['new_md'];
-                        $md['uuid'] = $value['uuid'];
                         $md['lang'] = $value['langs'];
                         switch ($value['iso']) {
                             case 'MD':
@@ -263,6 +305,11 @@ class RecordModel extends \BaseModel
                                 break;
                             default :
                                 // error
+                        }
+                        if ($value['uuid'] != '') {
+                            $md['uuid'] = $value['uuid'];
+                        } else {
+                            $this->insertMdValuesBasic($md['md_standard'], $md['recno'], $md['uuid'],NULL,TRUE);
                         }
                         $this->db->query("INSERT INTO edit_md", $md);
                     }
@@ -349,32 +396,7 @@ class RecordModel extends \BaseModel
             return;
 	    }
         $this->db->query("INSERT INTO edit_md", $md);
-		if ($md['md_standard'] == 0 || $md['md_standard'] == 10) {
-            $this->db->query("INSERT INTO edit_md_values", [
-                [
-                'recno'=>$md['recno'],
-                'md_value'=>$md['uuid'],
-                'md_id'=>38,
-                'md_path'=>'0_0_38_0',
-                'lang'=>'xxx',
-                'package_id'=>0
-                ], [
-                'recno'=>$md['recno'],
-                'md_value'=>$lang_main,
-                'md_id'=>5527,
-                'md_path'=>'0_0_39_0_5527_0',
-                'lang'=>'xxx',
-                'package_id'=>0
-                ], [
-                'recno'=>$md['recno'],
-                'md_value'=>Date("Y-m-d"),
-                'md_id'=>44,
-                'md_path'=>'0_0_44_0',
-                'lang'=>'xxx',
-                'package_id'=>0
-                ]
-            ]);
-		}
+        $this->insertMdValuesBasic($md['md_standard'], $md['recno'], $md['uuid'],$lang_main,TRUE);
         $this->setRecordMdById($md['uuid'], 'edit_md','new');
         $this->recordMd->pxml = $this->xmlFromRecordMdValues();
         $this->applyXslTemplate2Xml('micka2one19139.xsl');

@@ -4,7 +4,7 @@ namespace App\Model;
 class MdXml2Array
 {
     private $appParameters;
-    
+
   	var $xsl_files = Array(
 		"esri" => "esri2micka.xsl",
 		"isvs" => "midas2micka.xsl",
@@ -43,19 +43,8 @@ class MdXml2Array
 	        "fin" => "fi",
 	        "swe" => "sv"	        
 	);
-    
-    // konstruktor
-    /*
-    function __construct($debug=false){
-      define("BACKURL", "<p> <a href=\"javascript:history.back();\">&lt;&lt; back</a> </p>");
-      if(!extension_loaded("xsl")){
-        if(substr(PHP_OS,0,3)=="WIN") dl("php_xsl.dll");
-        else dl("php_xsl.so");
-      }
-      $this->debug = $debug;
-    }
-    */
-    
+
+
     public function startup()
     {
         parent::startup();
@@ -321,14 +310,14 @@ class MdXml2Array
     
     //---------------------------------------
   	/*
-    if (MICKA_CHARSET != 'UTF-8') {
+  	if (MICKA_CHARSET != 'UTF-8') {
   	  $data = iconv('UTF-8', MICKA_CHARSET . '//TRANSLIT', $data);
   	}
     */
   	//echo "<pre>".$data; exit;
     eval($data);
     // odstraneni Locale a dateTime
-    for($i=0; $i<isset($md['MD_Metadata']) ? count($md['MD_Metadata']) : 0; $i++){
+    for($i=0; $i<count($md['MD_Metadata']); $i++){
     	unset($md['MD_Metadata'][$i]['locale']);
     	if(isset($md['MD_Metadata'][$i]['dateStamp'][0]['@']) && strpos($md['MD_Metadata'][$i]['dateStamp'][0]['@'], 'T')){
             $pom = explode('T',$md['MD_Metadata'][$i]['dateStamp'][0]['@']); // FIXME quick hack
@@ -336,9 +325,8 @@ class MdXml2Array
         }
 
         // zpracovani polygonu
-        for($j=0; $j<count($md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement']); $j++){
-      	    if(isset($md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement'][$j]['EX_BoundingPolygon'][0]['polygon'][0]['@'])
-                && $md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement'][$j]['EX_BoundingPolygon'][0]['polygon'][0]['@']){
+        for($j=0; $j< isset($md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement']) ? count($md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement']) : 0; $j++){
+      	    if(isset($md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement'][$j]['EX_BoundingPolygon'][0]['polygon'][0]['@'])){
       		    $geom = explode(" ",$md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement'][$j]['EX_BoundingPolygon'][0]['polygon'][0]['@']);
       		    $result="";
       		    for($k=0; $k<count($geom); $k=$k+2){
@@ -348,13 +336,13 @@ class MdXml2Array
       		    $md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['extent'][0]['EX_Extent'][0]['geographicElement'][$j]['EX_BoundingPolygon'][0]['polygon'][0]['@'] = "MULTIPOLYGON(((".$result.")))";
       	    }
         }
-        
         // doplnění překladu INSPIRE
         // --- multiligvalni klic. slova
-        $lang = $md['MD_Metadata'][$i]["language"][0]["LanguageCode"][0]['@'];
+        $lang = isset($md['MD_Metadata'][$i]["language"][0]["LanguageCode"][0]['@'])
+                ? $md['MD_Metadata'][$i]["language"][0]["LanguageCode"][0]['@']
+                : '';
         if(!$lang) $lang='eng';
-        if(isset($md['MD_Metadata'][$i]['identificationInfo'][0]['SV_ServiceIdentification'])
-            && $md['MD_Metadata'][$i]['identificationInfo'][0]['SV_ServiceIdentification']){
+        if(isset($md['MD_Metadata'][$i]['identificationInfo'][0]['SV_ServiceIdentification'])){
             $this->multiKeywords($md['MD_Metadata'][$i]['identificationInfo'][0]['SV_ServiceIdentification'][0]['descriptiveKeywords'], $lang);
         }
         else {
@@ -443,9 +431,8 @@ class MdXml2Array
 		//if($lang=='eng') return;
 		// --- cyklus pres thesaury
 		for($i=0; $i<count($keywords); $i++){
-		    for($j=0; $j<count($keywords[$i]['MD_Keywords'][0]['keyword']); $j++){
-		        if(isset($keywords[$i]['MD_Keywords'][0]['keyword'][$j]['gmx:Anchor'])
-                    && $keywords[$i]['MD_Keywords'][0]['keyword'][$j]['gmx:Anchor']){
+		    for($j=0; $j< isset($keywords[$i]['MD_Keywords'][0]['keyword']) ? count($keywords[$i]['MD_Keywords'][0]['keyword']) : 0; $j++){
+		        if(isset($keywords[$i]['MD_Keywords'][0]['keyword'][$j]['gmx:Anchor'])){
 		            $keywords[$i]['MD_Keywords'][0]['keyword'][$j]['@uri'] = $keywords[$i]['MD_Keywords'][0]['keyword'][$j]['gmx:Anchor'][0]['href'][0]['@'];
 		            $keywords[$i]['MD_Keywords'][0]['keyword'][$j]['@'] = $keywords[$i]['MD_Keywords'][0]['keyword'][$j]['gmx:Anchor'][0]['@'];
 		            unset($keywords[$i]['MD_Keywords'][0]['keyword'][$j]['gmx:Anchor']);
@@ -675,14 +662,19 @@ class MdXml2Array
     if(strpos($s,'NetworkLink>')) exit("<br><br>Network links in KML are not supported yet.");
     if(!@$xml->loadXML($s)) exit("<br><br>Not valid service!  " . $url);
     if($service == 'XML'){
-        $md = array();
-        $md["MD_Metadata"][0] = $this->xml2array($xml, false, array("URL"=>$url));
+        $tmp_md = $this->xml2array($xml, false, array("URL"=>$url));
+        if (array_key_exists('MD_Metadata', $tmp_md)) {
+            $md = $tmp_md;
+        } else {
+            $md = [];
+            $md["MD_Metadata"][0] = $tmp_md;
+        }
     }
     else {
         $xslName = __DIR__."/xsl/".strtolower($service).".xsl"; // vyber sablony
         $md = $this->xml2array($xml, $xslName, array("URL"=>$url));
     }
-    if(!$md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@']) {
+    if(!isset($md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'])) {
     	$md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'] = $lang;
     }
     $url1 = isset($md["MD_Metadata"][0]["distributionInfo"][0]["MD_Distribution"][0]["transferOptions"][0]["MD_DigitalTransferOptions"][0]["onLine"][0]["CI_OnlineResource"][0]["linkage"][0]["@"])
@@ -712,19 +704,7 @@ class MdXml2Array
 			}
 		}
     }
-    return $md;
-    /*
-	// ulozeni dat
-	$c = new MdImport();
-	$c->setTableMode($this->table_mode);
-	$c->mds = $mds; 
-	$c->setDataType($public); // nastavení veřejného záznamu
-	$c->lang = $lang; // pokud není v datech, použije se toto nastavení jazyka
-	//$c->stop_error = true; // pokud dojde k chybě při importu pokračuje 
-	$c->stop_error = false; // pokud dojde k chybě při importu pokračuje 
-	$rs = $c->dataToMd($md,'update');
-	return $rs;
-     */
+     return $md;
   } // konec funkce importService
 
 } // konec class MetadataImport
