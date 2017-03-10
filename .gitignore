@@ -1,6 +1,6 @@
-app/config/config.local.neon
-www/registry_client/cache/*
-log/*
-temp/*
-vendor/*
+php/app/config/config.local.neon
+php/www/registry_client/cache/*
+php/log/*
+php/temp/*
+php/vendor/*
 composer.lock
