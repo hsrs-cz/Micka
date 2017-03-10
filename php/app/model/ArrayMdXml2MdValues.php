@@ -53,6 +53,25 @@ class ArrayMdXml2MdValues extends \BaseModel
 		return $rs;
 	}
 	
+	private function setReport($recno, $mode, $text) {
+        $text = str_replace(
+            array("['", "[0]", "']"),
+            array("/","",""),
+            $text 
+        );
+        if ($recno > -1) {
+            switch ($mode) {
+                case 'info':
+                case 'error':
+                    $this->md[$recno]['report'] = isset($this->md[$recno]['report'])
+                        ? $this->md[$recno]['report'] . "$text\n"
+                        : "$text\n";
+                    break;
+                default:
+            }
+        }
+	}
+    
 	private function setStandardSchema() 
     {
 		$eval_text = '';
@@ -354,7 +373,7 @@ class ArrayMdXml2MdValues extends \BaseModel
 	private function setMd() {
 		if (array_key_exists('MD_Metadata', $this->arrayXml)) {
 			foreach ($this->arrayXml['MD_Metadata'] as $x=>$md) {
-				$this->md[$x]['iso'] = array_key_exists('SV_ServiceIdentification', $md['identificationInfo'][0]) ? 'MS' : 'MD';
+				$this->md[$x]['iso'] = isset($md['identificationInfo'][0]['SV_ServiceIdentification']) ? 'MS' : 'MD';
 				if ($this->md[$x]['iso'] == 'MS' 
                     && isset($this->arrayXml['MD_Metadata'][$x]['hierarchyLevelName'][0]['@'])
                     && $this->arrayXml['MD_Metadata'][$x]['hierarchyLevelName'][0]['@'] == 'MapContext') {
