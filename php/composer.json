@@ -19,12 +19,10 @@
 		"nette/utils": "^2.4",
 		"latte/latte": "^2.4",
 		"tracy/tracy": "^2.4",
-		"kdyby/translation": "^2.3",
-
+		"kdyby/translation": "@dev",
 		"ublaboo/datagrid": "^5.0"
 	},
 	"require-dev": {
 		"nette/tester": "^1.6"
-	},
-	"minimum-stability": "stable"
+	}
 }
