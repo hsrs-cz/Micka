@@ -218,6 +218,7 @@ class RecordModel extends \BaseModel
     
     private function setMdFromXml($data) {
         if (array_key_exists('params', $data)
+            && array_key_exists('new_md', $data)
             && array_key_exists('md', $data)
             && array_key_exists('md_values', $data)
             && array_key_exists('del_md_id', $data)
@@ -243,7 +244,7 @@ class RecordModel extends \BaseModel
                         }
                     } else {
                         //new
-                        $md = $data['params'];
+                        $md = $data['new_md'];
                         $md['uuid'] = $value['uuid'];
                         $md['lang'] = $value['langs'];
                         switch ($value['iso']) {
@@ -307,7 +308,7 @@ class RecordModel extends \BaseModel
             $params['url'] = ($params['url'] != '') ? str_replace('&amp;','&',$params['url']) : '';
             $params['update_type'] = (isset($post['updateType']) && $post['updateType'] != '') ? $post['updateType'] : 'skip';
             $files = $httpRequest->getFiles();
-            if (isset($files['soubor']) &&  count($files['soubor']) > 1) {
+            if (isset($files['soubor']) &&  count($files['soubor']) > 0) {
                 foreach ($files as $file) {
                     if ($file->isOk()) {
                         $fileName = __DIR__ . '/../../temp/upload/' . md5(uniqid(rand(), true)) . '.xml';
@@ -321,7 +322,9 @@ class RecordModel extends \BaseModel
                         );
                         $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
                         $arrayMdXml2MdValues->lang = $lang_main;
-                        $this->setMdFromXml(['params'=>$md+$params]+$arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml));
+                        $this->setMdFromXml(['new_md' => $md]
+                                + ['params' => $params]
+                                + $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml));
                     } else {
                         throw new \Nette\Application\ApplicationException(
                             'messages.import.errorFile');
@@ -337,11 +340,12 @@ class RecordModel extends \BaseModel
                 );
                 $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
                 $arrayMdXml2MdValues->lang = $lang_main;
-                $this->setMdFromXml(['params'=>$md+$params]+$arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml));
+                $this->setMdFromXml(['new_md' => $md]
+                        + ['params' => $params]
+                        + $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml));
             } else {
                 // empty
             }
-             exit;
             return;
 	    }
         $this->db->query("INSERT INTO edit_md", $md);
