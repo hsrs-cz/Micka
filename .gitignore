@@ -3,4 +3,4 @@ php/www/registry_client/cache/*
 php/log/*
 php/temp/*
 php/vendor/*
-composer.lock
+php/composer.lock
