@@ -26,7 +26,7 @@ parameters:
             eng = "Spatial Metadata Catalogue."
         abstract:
             eng = "Catalogue based on OGC Catalogue service 2.0.2 ISO AP 1.0"
-            cze = "Katalog prostorov7ch metadata podle OGC CSW 2.0.2 ISO AP 1.0"
+            cze = "Katalog prostorových metadat podle OGC CSW 2.0.2 ISO AP 1.0"
         org:
             eng = "Your company name"
             cze = "Název vaší organizace"
