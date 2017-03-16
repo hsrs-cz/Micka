@@ -174,4 +174,6 @@ apperror:
 
 import:
     recordUpdateSkip: "Záznam již existuje. Import zastaven." 
-
+    notRightRecordUpdate: "Nemáte práva aktualizovat záznam."
+    incompletInputData: "Vstupní data nejsou kompletní."
+    errorFile: "Importovaný soubor je vadný."

@@ -174,3 +174,6 @@ apperror:
     
 import:
     recordUpdateSkip: "Record already exists. Import stopped." 
+    notRightRecordUpdate: "You do not have rights to update the record."
+    incompletInputData: "Input data record is not complete."
+    errorFile: "Import file is corrupt."
