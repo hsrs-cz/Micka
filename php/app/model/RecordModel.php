@@ -9,6 +9,8 @@ class RecordModel extends \BaseModel
 {
     private $appParameters;
     private $recordMd = NULL;
+    private $geomMd = [];
+    private $titleMd = [];
     private $recordMdValues = [];
     private $typeTableMd = 'edit_md';
     private $profil_id = -1;
@@ -132,26 +134,39 @@ class RecordModel extends \BaseModel
     
     private function updateEditMD($recno)
     {
-        /*
-		'data_type';
-		'edit_group';
-		'view_group';
-        'last_update_user';
-        'last_update_date';
-        'x1';
-        'y1';
-        'x2';
-        'y2';
-        'the_geom geometry';
-        'range_begin';
-        'range_end';
-        'md_update';
-        'title';
-        'valid';
-        'prim';
-        */
+        $data = [];
+        $data['data_type'] = $this->recordMd->data_type; 
+        $data['edit_group'] = $this->recordMd->edit_group; 
+        $data['view_group'] = $this->recordMd->view_group;
+        $data['last_update_user'] = $this->user->identity->username;
+        $data['last_update_date'] = Date("Y-m-d");
+        $this->setGeomMd2recordMd();    
+        $data['x1'] = $this->recordMd->x1 != '' ? $this->recordMd->x1 : NULL;
+        $data['x2'] = $this->recordMd->x2 != '' ? $this->recordMd->x2 : NULL;
+        $data['y1'] = $this->recordMd->y1 != '' ? $this->recordMd->y1 : NULL;
+        $data['y2'] = $this->recordMd->y2 != '' ? $this->recordMd->y2 : NULL;
+        $this->setTitleMd2recordMd();
+        $data['title'] = $this->recordMd->title != '' ? $this->recordMd->title : NULL;
+        //$data['range_begin'] = $this->recordMd->range_begin != '' ? $this->recordMd->range_begin : NULL;
+        //$data['range_end'] = $this->recordMd->range_end != '' ? $this->recordMd->range_end : NULL;
+        //$data['md_update'] = $this->recordMd->md_update != '' ? $this->recordMd->md_update : NULL;
+        //$data['valid'] = $this->recordMd->valid != '' ? $this->recordMd->valid : NULL;
+        //$data['prim'] = $this->recordMd->prim != '' ? $this->recordMd->prim : NULL;
+        $this->db->query('UPDATE edit_md SET ? WHERE sid=? AND recno=?', $data, session_id(), $recno);
+        $x1 = $data['x1'];
+        $x2 = $data['x2'];
+        $y1 = $data['y1'];
+        $y2 = $data['y2'];
+        if ($this->recordMd->the_geom != '') {
+            $this->db->query("UPDATE edit_md SET the_geom=ST_GeomFromText('?',0)
+                    WHERE sid='".session_id()."' AND recno=?", $this->recordMd->the_geom, $recno);
+        } elseif ($x1 != NULL && $x2 != NULL && $y1 != NULL && $y2 != NULL) {
+            $this->db->query("UPDATE edit_md SET 
+                    the_geom=ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0)
+                    WHERE sid='".session_id()."' AND recno=?", $recno);
+        }
         $xml = $this->recordMd->pxml == '' ? NULL : str_replace("'", "&#39;", $this->recordMd->pxml);
-        $this->db->query("UPDATE edit_md SET pxml=XMLPARSE(DOCUMENT ?) 
+        $this->db->query("UPDATE edit_md SET pxml=XMLPARSE(DOCUMENT ?)
                 WHERE sid='".session_id()."' AND recno=?", $xml, $recno);
     }
     
@@ -166,7 +181,18 @@ class RecordModel extends \BaseModel
                 FROM edit_md WHERE recno=?"
                 , $mdRecno, $editRecno);
         } else {
-            $sql = "UPDATE md SET pxml=edit.pxml FROM edit_md edit
+            $sql = "UPDATE md SET 
+                        last_update_user=edit.last_update_user,
+                        last_update_date=edit.last_update_date,
+                        pxml=edit.pxml,
+                        lang=edit.lang,
+                        data_type=edit.data_type,
+                        edit_group=edit.edit_group, view_group=edit.view_group,
+                        x1=edit.x1, y1=edit.y1, x2=edit.x2, y2=edit.y2, the_geom=edit.the_geom,
+                        range_begin=edit.range_begin, range_end=edit.range_end,
+                        md_update=edit.md_update,
+                        title=edit.title
+                    FROM edit_md edit
                     WHERE edit.recno=? AND md.recno=? AND edit.sid='".session_id()."'";
             $this->db->query($sql,$editRecno,$recno);
         }
@@ -512,18 +538,179 @@ class RecordModel extends \BaseModel
         return $this->setNewEditMdRecord($httpRequest);
     }
     
+    private function setGeomMd2recordMd() {
+        $x1 = $this->geomMd['x1'];
+        $x2 = $this->geomMd['x2'];
+        $y1 = $this->geomMd['y1'];
+        $y2 = $this->geomMd['y2'];
+        $poly = $this->geomMd['poly'];
+        $dc_geom = $this->geomMd['dc_geom'];
+        
+        $rs = array();
+        $rs['x1'] = NULL;
+        $rs['x2'] = NULL;
+        $rs['y1'] = NULL;
+        $rs['y2'] = NULL;
+        $rs['the_geom'] = NULL;
+        if ($x1 != '' && $x2 != '' && $y1 != '' && $y2 !='') {
+            $rs['x1'] = $x1;
+            $rs['x2'] = $x2;
+            $rs['y1'] = $y1;
+            $rs['y2'] = $y2;
+        } elseif($poly != '') {
+            $pom = str_replace("MULTIPOLYGON(((", "", $poly);
+            $pom = str_replace(")", "", $pom);
+            $pom = str_replace("(", "", $pom);
+            $apoly = explode(",", $pom);
+            $pom = explode(" ", $apoly[0]);
+            $x2 = $pom[0];
+            $x1 = $x2;
+            $y2 = $pom[1];
+            $y1 = $y2;
+            foreach ($apoly as $bod) {
+                $pom = explode(" ", $bod);
+                $x1 = min($x1, $pom[0]);
+                $x2 = max($x2, $pom[0]);
+                $y1 = min($y1, $pom[1]);
+                $y2 = max($y2, $pom[1]);
+            }
+            $rs['x1'] = $x1;
+            $rs['x2'] = $x2;
+            $rs['y1'] = $y1;
+            $rs['y2'] = $y2;
+            $rs['the_geom'] = $poly;
+        } elseif($dc_geom != '') {
+            $pom = explode(';',$dc_geom);
+            if (count($pom) == 4) {
+                foreach ($pom as $value) {
+                    if (strpos('a'.$value,'westlimit:') > 0) {
+                        $x1 =ltrim(strstr($value,":"),":");
+                    }
+                    elseif (strpos('a'.$value,'eastlimit:') > 0) {
+                        $x2 = ltrim(strstr($value,":"),":");
+                    }
+                    elseif (strpos('a'.$value,'southlimit:') > 0) {
+                        $y1 = ltrim(strstr($value,":"),":");
+                    }
+                    elseif (strpos('a'.$value,'northlimit:') > 0) {
+                        $y2 = ltrim(strstr($value,":"),":");
+                    }
+                    if ($x1 != '' && $x2 != '' && $y1 != '' && $y2 !='') {
+                        $rs['x1'] = $x1;
+                        $rs['x2'] = $x2;
+                        $rs['y1'] = $y1;
+                        $rs['y2'] = $y2;
+                    }
+                }
+            }
+        }
+        $this->recordMd->x1 = $rs['x1'];
+        $this->recordMd->x2 = $rs['x2'];
+        $this->recordMd->y1 = $rs['y1'];
+        $this->recordMd->y2 = $rs['y2'];
+        $this->recordMd->the_geom = $rs['the_geom'];
+    }
+    
+    private function setMdTitle($data) {
+        $this->titleMd['title'] = $data['md_value'];
+    }
+    
+    private function setTitleMd2recordMd() {
+        $this->recordMd->title = $this->titleMd['title_lang_main'] 
+                ? $this->titleMd['title_lang_main'] 
+                : $this->titleMd['title'];
+    }
+    
+    private function setValue2RecorMd($data) {
+        switch ($this->recordMd->md_standard) {
+            case 0:
+                if ($data['md_id'] == 497) {
+                    $this->geomMd['x1'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 498) {
+                    $this->geomMd['x2'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 499) {
+                    $this->geomMd['y1'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 500) {
+                    $this->geomMd['y2'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 503) {
+                    $this->geomMd['poly'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 11) {
+                    $this->setMdTitle($data);
+                }
+                break;
+            case 10:
+                if ($data['md_id'] == 5133) {
+                    $this->geomMd['x1'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 5134) {
+                    $this->geomMd['x2'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 5135) {
+                    $this->geomMd['y1'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 5136) {
+                    $this->geomMd['y2'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 5140) {
+                    $this->geomMd['poly'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 5063) {
+                    $this->setMdTitle($data);
+                }
+                break;
+            case 1:
+                if ($data['md_id'] == 14) {
+                    $this->geomMd['dc_geom'] = $data['md_value'];
+                }
+                if ($data['md_id'] == 11) {
+                    $this->setMdTitle($data);
+                }
+                break;
+            case 2:
+                if ($data['md_id'] == 11) {
+                    $this->setMdTitle($data);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    
     private function getMdValuesFromForm($formData, $appLang)
     {
+        $this->geomMd['x1'] = NULL;
+        $this->geomMd['x2'] = NULL;
+        $this->geomMd['y1'] = NULL;
+        $this->geomMd['y2'] = NULL;
+        $this->geomMd['poly'] = NULL;
+        $this->geomMd['dc_geom'] = NULL;
+        $this->titleMd['title'] = NULL;
+        $this->titleMd['title_lang_main'] = NULL;
+        
         $editMdValues = [];
 		foreach ($formData as $key => $value) {
 			if ( $key == 'nextpackage' ||
 				 $key == 'nextprofil' ||
 				 $key == 'afterpost' ||
-				 $key == 'data_type' ||
-				 $key == 'edit_group' ||
-				 $key == 'view_group' ||
 				 $key == 'uuid' ||
 				 $key == 'ende') {
+				continue;
+			}
+			if ($key == 'data_type') {
+                $this->recordMd->data_type = $value;
+				continue;
+			}
+			if ($key == 'edit_group') {
+                $this->recordMd->edit_group = $value;
+				continue;
+			}
+			if ($key == 'view_group') {
+                $this->recordMd->view_group = $value;
 				continue;
 			}
 			if ($key == 'package') {
@@ -564,6 +751,7 @@ class RecordModel extends \BaseModel
                         $data['lang'] != '' &&
                         $data['package_id'] != '') {
                     array_push($editMdValues, $data);
+                    $this->setValue2RecorMd($data);
                 }
 			}
 		}
