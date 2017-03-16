@@ -171,3 +171,6 @@ apperror:
     noRecordFound: "Sorry, no record found."
     noProfileFound: "Sorry, no profile found."
     cantSaveNew: "Sorry, you can't save this new record."
+    
+import:
+    recordUpdateSkip: "Record already exists. Import stopped." 

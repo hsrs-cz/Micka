@@ -171,3 +171,7 @@ apperror:
     noRecordFound: "Požadovaný záznam nebyl nalezen."
     noProfileFound: "Požadovaný profil nebyl nalezen."
     cantSaveNew: "Nepodařilo se vytvořit nový záznam."
+
+import:
+    recordUpdateSkip: "Záznam již existuje. Import zastaven." 
+

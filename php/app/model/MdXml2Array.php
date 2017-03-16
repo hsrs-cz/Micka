@@ -630,17 +630,18 @@ class MdXml2Array
     $xp  = new \XsltProcessor();
     $xml = new \DomDocument;
     $xsl = new \DomDocument;
+    $c = curl_init($url);
+    curl_setopt($c, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+    curl_setopt($c, CURLOPT_FOLLOWLOCATION, 1);
+    curl_setopt($c, CURLOPT_MAXREDIRS, 20);
     if(defined('CONNECTION_PROXY')){
-	    $c = curl_init($url);
-	    curl_setopt($c, CURLOPT_RETURNTRANSFER, TRUE);
-	    curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
-	    curl_setopt($c, CURLOPT_FOLLOWLOCATION, 1);
-	    curl_setopt($c, CURLOPT_MAXREDIRS, 20);
         $proxy = CONNECTION_PROXY;
         if(defined('CONNECTION_PORT')) $proxy .= ':'. CONNECTION_PORT;
-		curl_setopt($c, CURLOPT_PROXY, $proxy);	
-		$s = curl_exec($c);    
-    } else @$s = file_get_contents($url);
+		curl_setopt($c, CURLOPT_PROXY, $proxy);
+    }
+	$s = curl_exec($c); 
+    curl_close($c);
     //die ($service);
     if(strpos($url,'.kmz')!==false){
         $tmp = __DIR__ .'/../../logs/'.time().'.zip';
