@@ -71,8 +71,7 @@ class RecordPresenter extends \BasePresenter
         }
         $mdr = $this->recordModel->findMdById($id,'md','read');
         if (!$mdr) {
-            throw new \Nette\Application\ApplicationException(
-                $this->translator->translate('messages.apperror.noRecordFound'));
+            throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
         $mdf = new \App\Model\MdFull($this->context->getByType('Nette\Database\Context'), $this->user);
         $this->template->values = $mdf->getMdFullView($mdr->recno, $mdr->md_standard, $appLang);
@@ -85,8 +84,7 @@ class RecordPresenter extends \BasePresenter
     {
         $mdr = $this->recordModel->findMdById($id,'md','read');
         if (!$mdr) {
-            throw new \Nette\Application\ApplicationException(
-                $this->translator->translate('messages.apperror.noRecordFound'));
+            throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         } else {
             $httpResponse = $this->context->getService('httpResponse');
             $httpResponse->setContentType('application/xml');
@@ -118,10 +116,8 @@ class RecordPresenter extends \BasePresenter
     public function actionSave($id) 
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
-        //dump($post);        $this->terminate();
         if (!array_key_exists('ende', $post) || $post['ende'] != 1) {
-            throw new \Nette\Application\ApplicationException(
-                    $this->translator->translate('messages.apperror.postIncomplete'));
+            throw new \Nette\Application\ApplicationException('messages.apperror.postIncomplete');
         }
         $this->recordModel->setFormMdValues($id, $post, $this->appLang);
         switch ($post['afterpost']) {
@@ -155,20 +151,16 @@ class RecordPresenter extends \BasePresenter
                         ? $this->context->parameters['app']['startProfil']+100 
                         : $this->context->parameters['app']['startProfil'];
                 $this->redirect(':Catalog:Record:edit', [rtrim($mdr->uuid), 'profil'=>$profil, 'package'=>-1]);
-            }
-            else {
-                throw new \Nette\Application\ApplicationException(
-                    $this->translator->translate('messages.apperror.cantSaveNew'));
+            } else {
+                throw new \Nette\Application\ApplicationException('messages.apperror.cantSaveNew');
             }
         } else {
             if ($this->getParameter('profil') == NULL) {
                 $mdr = $this->recordModel->findMdById($id,'md','edit');
                 if ($mdr) {
                     $this->recordModel->copyMd2EditMd();
-                }
-                else {
-                    throw new \Nette\Application\ApplicationException(
-                        $this->translator->translate('messages.apperror.noRecordFound'));
+                } else {
+                    throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
                 }
             }
         }
@@ -231,8 +223,7 @@ class RecordPresenter extends \BasePresenter
             $this->template->profils = $mcl->getMdProfils($this->appLang,$mds);
             $this->template->packages = $mcl->getMdPackages($this->appLang, $mds, $profil);
         } else {
-            throw new \Nette\Application\ApplicationException(
-                $this->translator->translate('messages.apperror.noRecordFound'));
+            throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
     }
         
@@ -260,8 +251,7 @@ class RecordPresenter extends \BasePresenter
                     : $this->context->parameters['app']['startProfil'];
             $this->redirect(':Catalog:Record:edit', [$uuid, 'profil'=>$profil, 'package'=>-1]);
         } else {
-            throw new \Nette\Application\ApplicationException(
-                $this->translator->translate('messages.apperror.noRecordFound'));
+            throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
     }
     

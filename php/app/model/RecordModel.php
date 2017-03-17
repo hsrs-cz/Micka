@@ -26,6 +26,16 @@ class RecordModel extends \BaseModel
         $this->appParameters = $appParameters;
     }
     
+    private function initialVariables() {
+        $this->geomMd['x1'] = NULL;
+        $this->geomMd['x2'] = NULL;
+        $this->geomMd['y1'] = NULL;
+        $this->geomMd['y2'] = NULL;
+        $this->geomMd['poly'] = NULL;
+        $this->geomMd['dc_geom'] = NULL;
+        $this->titleMd['title'] = NULL;
+        $this->titleMd['title_lang_main'] = NULL;
+    }
     private function setRecordMdById($id, $typeTableMd, $right)
     {
         if ($id == '') {
@@ -534,6 +544,7 @@ class RecordModel extends \BaseModel
     
     public function createNewMdRecord($httpRequest)
     {
+        $this->initialVariables();
         $this->deleteEditRecords();
         return $this->setNewEditMdRecord($httpRequest);
     }
@@ -683,14 +694,7 @@ class RecordModel extends \BaseModel
     
     private function getMdValuesFromForm($formData, $appLang)
     {
-        $this->geomMd['x1'] = NULL;
-        $this->geomMd['x2'] = NULL;
-        $this->geomMd['y1'] = NULL;
-        $this->geomMd['y2'] = NULL;
-        $this->geomMd['poly'] = NULL;
-        $this->geomMd['dc_geom'] = NULL;
-        $this->titleMd['title'] = NULL;
-        $this->titleMd['title_lang_main'] = NULL;
+        $this->initialVariables();
         
         $editMdValues = [];
 		foreach ($formData as $key => $value) {
