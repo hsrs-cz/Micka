@@ -176,18 +176,31 @@
                         {/if}
                     {/foreach}
                 </select>
+                {_messages.frontend.language}:
+                <a type="button" href="#" class="open" data-toggle="modal" data-target="#md-languages-dialog" data-tooltip="tooltip" title="Vybrat">
+                    <i class="fa fa-folder-open fa-lg"></i>
+                </a>
             </div>
         {/if}
-        <div style="margin-bottom:3px; font-weight: bold;">
-            {_messages.frontend.language}:<br> 
-            {foreach $allLanguages as $key => $value}
-                <label>
-                    <input type="checkbox" name="select_langs[]" value="{$key}" {foreach $selectLanguages as $lang}{if $key == $lang}checked="checked"{/if}{/foreach} />{$value}
-                </label>
-            {/foreach}
-            <a  href="#" onclick="clickMenu('valid')"><img src="{$basePath}{$themePath}/img/refresh_small.png"/>
-                <b>{_messages.frontend.refresh}</b></a>
-        </div>
+
+        <div id="md-languages-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div id="md-content" class="modal-content">
+                    <div class="modal-body">                
+                        {foreach $allLanguages as $key => $value}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="select_langs[]" value="{$key}" {foreach $selectLanguages as $lang}{if $key == $lang}checked="checked"{/if}{/foreach} />{$value}
+                                </label>
+                            </div>
+                        {/foreach}
+                    </div>
+                    <div class="modal-footer">
+                        <a type="button" class="btn btn-primary" onclick="clickMenu('valid')"> OK </a>    
+                    </div>
+                </div>    
+            </div>
+        </div>   
 
     {if $dataBox == ''}
         {* Klasický formulář *}
