@@ -1,3 +1,4 @@
+{dump}
 <!DOCTYPE html>
 <html class="x-border-box">
 <head>
@@ -177,6 +178,17 @@
                 </select>
             </div>
         {/if}
+        <div style="margin-bottom:3px; font-weight: bold;">
+            {_messages.frontend.language}:<br> 
+            {foreach $allLanguages as $key => $value}
+                <label>
+                    <input type="checkbox" name="select_langs[]" value="{$key}" {foreach $selectLanguages as $lang}{if $key == $lang}checked="checked"{/if}{/foreach} />{$value}
+                </label>
+            {/foreach}
+            <a  href="#" onclick="clickMenu('valid')"><img src="{$basePath}{$themePath}/img/refresh_small.png"/>
+                <b>{_messages.frontend.refresh}</b></a>
+        </div>
+
     {if $dataBox == ''}
         {* Klasický formulář *}
         <div class='t0'>

@@ -761,58 +761,46 @@ class RecordModel extends \BaseModel
 		}
 		return $editMdValues;
     }
+    
+    private function setLang2RecordMd($selectLanguages) {
+        if (count($selectLanguages) == 1) {
+            
+        }
+        return [];
+    }
 
 
     public function setFormMdValues($id, $post, $appLang)
     {
         $mdr = $this->findMdById($id, 'edit_md', 'edit');
         if (!$mdr) {
-            // Error
+            throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
-        if (array_key_exists('fileIdentifier_0_TXT', $post)) {
-            // Micka Lite
-    		require(__DIR__ . '/CswClient.php');
-        	require(__DIR__ . '/lite/resources/Kote.php');
-            require(__DIR__ . '/micka_lib_php5.php');
-            $cswClient = new CSWClient();
-            $input = Kote::processForm(beforeSaveRecord($post));
-            $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>'cze');
-            $xmlstring = $cswClient->processTemplate($input, WWW_DIR . '/lite/resources/kote2iso.xsl', $params);
-            $importer = new MetadataImport();
-            $importer->setTableMode('tmp');
-            $md = array();
-            $md['file_type'] = 'WMS';
-            $md['edit_group'] = MICKA_USER;
-            $md['view_group'] = MICKA_USER;
-            $md['mds'] = 0;
-            $md['lang'] = 'cze';
-            $lang_main = 'cze';
-            $md['update_type'] = 'lite';
-            $report = $importer->import(
-                            $xmlstring,
-                            'WMS',
-                            MICKA_USER,
-                            $md['edit_group'],
-                            $md['view_group'],
-                            $md['mds']=0, // co to je?
-                            $md['lang'], // co to je?
-                            $lang_main,
-                            $params=false,
-                            $md['update_type']
-            );
+        $report = [];
+        if (isset($post['select_langs'])) {
+            $selectLangs = $post['select_langs'];
+            unset($post['select_langs']);
         } else {
-            $editMdValues = $this->getMdValuesFromForm($post, $appLang);
-            $this->deleteEditMdValuesByProfil(
-                    $this->recordMd->recno,
-                    $this->recordMd->md_standard, 
-                    $this->profil_id, 
-                    $this->package_id);
-            $this->seMdValues($editMdValues);
-            $this->recordMd->pxml = $this->xmlFromRecordMdValues();
-            $this->applyXslTemplate2Xml('micka2one19139.xsl');
-            $this->updateEditMD($this->recordMd->recno);
+            $selectLangs = [];
+            $report = [
+                'message' => '1 lang',
+                'type' => 'error'
+                ];
         }
-        return;
+        $editMdValues = $this->getMdValuesFromForm($post, $appLang);
+        $this->deleteEditMdValuesByProfil(
+                $this->recordMd->recno,
+                $this->recordMd->md_standard, 
+                $this->profil_id, 
+                $this->package_id);
+        $this->seMdValues($editMdValues);
+        if (count($selectLangs > 0)) {
+            $report = $this->setLang2RecordMd($selectLangs);
+        }
+        $this->recordMd->pxml = $this->xmlFromRecordMdValues();
+        $this->applyXslTemplate2Xml('micka2one19139.xsl');
+        $this->updateEditMD($this->recordMd->recno);
+        return $report;
     }
     
 	private function getIdElements()

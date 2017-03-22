@@ -119,7 +119,10 @@ class RecordPresenter extends \BasePresenter
         if (!array_key_exists('ende', $post) || $post['ende'] != 1) {
             throw new \Nette\Application\ApplicationException('messages.apperror.postIncomplete');
         }
-        $this->recordModel->setFormMdValues($id, $post, $this->appLang);
+        $report = $this->recordModel->setFormMdValues($id, $post, $this->appLang);
+        if (count($report) > 0) {
+            $this->flashMessage($report['message'], $report['type']);
+        }
         switch ($post['afterpost']) {
             case 'end':
                 $this->recordModel->setEditRecord2Md();
@@ -222,6 +225,8 @@ class RecordPresenter extends \BasePresenter
                     : [];
             $this->template->profils = $mcl->getMdProfils($this->appLang,$mds);
             $this->template->packages = $mcl->getMdPackages($this->appLang, $mds, $profil);
+            $this->template->allLanguages = $mcl->getLangsLabel($this->appLang);
+            $this->template->selectLanguages = explode('|',$rmd->lang);
         } else {
             throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
