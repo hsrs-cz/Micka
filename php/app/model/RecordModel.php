@@ -9,10 +9,11 @@ class RecordModel extends \BaseModel
 {
     private $appParameters;
     private $recordMd = NULL;
-    private $geomMd = [];
-    private $titleMd = [];
     private $recordMdValues = [];
     private $typeTableMd = 'edit_md';
+    private $geomMd = [];
+    private $titleMd = [];
+    private $langMd = NULL;
     private $profil_id = -1;
     private $package_id = -1;
     
@@ -150,6 +151,9 @@ class RecordModel extends \BaseModel
         $data['view_group'] = $this->recordMd->view_group;
         $data['last_update_user'] = $this->user->identity->username;
         $data['last_update_date'] = Date("Y-m-d");
+        if ($this->langMd !== NULL) {
+            $data['lang'] = $this->langMd; 
+        }
         $this->setGeomMd2recordMd();    
         $data['x1'] = $this->recordMd->x1 != '' ? $this->recordMd->x1 : NULL;
         $data['x2'] = $this->recordMd->x2 != '' ? $this->recordMd->x2 : NULL;
@@ -762,11 +766,34 @@ class RecordModel extends \BaseModel
 		return $editMdValues;
     }
     
-    private function setLang2RecordMd($selectLanguages) {
-        if (count($selectLanguages) == 1) {
-            
+    private function setLang2RecordMd($select_langs) {
+        $md_langs = explode('|', $this->recordMd->lang);
+        $common_langs = array_intersect($md_langs, $select_langs);
+        if (count($common_langs) === 0) {
+            return ['message' => '0 lang', 'type' => 'error'];
         }
-        return [];
+        $add_langs = array_diff($select_langs, $common_langs);
+        $del_langs = array_diff($md_langs, $select_langs);
+
+        if (count($add_langs) === 0 && count($del_langs) === 0) {
+            return [];
+        }
+        
+        $report = [];
+        if (count($add_langs) > 0) {
+            $report = [
+                'message' => 'add_langs:',
+                'type' => 'info'
+            ];
+        }
+        if (count($del_langs) > 0) {
+            $report = [
+                'message' => 'del_langs:',
+                'type' => 'info'
+            ];
+        }
+        $this->langMd = implode('|', $select_langs);
+        return $report;
     }
 
 
@@ -776,16 +803,11 @@ class RecordModel extends \BaseModel
         if (!$mdr) {
             throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
-        $report = [];
         if (isset($post['select_langs'])) {
-            $selectLangs = $post['select_langs'];
+            $select_langs = $post['select_langs'];
             unset($post['select_langs']);
         } else {
-            $selectLangs = [];
-            $report = [
-                'message' => '1 lang',
-                'type' => 'error'
-                ];
+            $select_langs = [];
         }
         $editMdValues = $this->getMdValuesFromForm($post, $appLang);
         $this->deleteEditMdValuesByProfil(
@@ -794,9 +816,7 @@ class RecordModel extends \BaseModel
                 $this->profil_id, 
                 $this->package_id);
         $this->seMdValues($editMdValues);
-        if (count($selectLangs > 0)) {
-            $report = $this->setLang2RecordMd($selectLangs);
-        }
+        $report = $this->setLang2RecordMd($select_langs);
         $this->recordMd->pxml = $this->xmlFromRecordMdValues();
         $this->applyXslTemplate2Xml('micka2one19139.xsl');
         $this->updateEditMD($this->recordMd->recno);
