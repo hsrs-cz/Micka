@@ -45,7 +45,7 @@ function getContents($url){
 		curl_setopt($c, CURLOPT_PROXY, $proxy);	
 	}
     $result = curl_exec($c);    
-    file_put_contents(__DIR__ . "/../../include/logs/a.xml", $result);
+    file_put_contents(__DIR__ . "/../../../../log/a.xml", $result);
     return $result;
 }
 
@@ -186,10 +186,10 @@ class Validator{
 		$valid = @$this->xml->loadXML($xmlString);
 		//die($valid);
 		if($valid) {
-		    $schema = $this->schemas[$this->type];
+		    //$schema = $this->schemas[$this->type];
 		    //die('-----------> ' . $schema);
-		    if($schema){
-		        if(!$this->xml->schemaValidate($schema)){
+		    if(isset($this->schemas[$this->type])){
+		        if(!$this->xml->schemaValidate($this->schemas[$this->type])){
 		            $this->xsdErrors = $this->getXsdErrors();
 		            //var_dump($this->xsdErrors); die;
 		        }
@@ -253,7 +253,7 @@ class Validator{
 		}
         if($root){
             //$tests = array_merge($tests, $this->xsdErrors);
-            if($this->xsdErrors) foreach($this->xsdErrors as $t){
+            if(isset($this->xsdErrors)) foreach($this->xsdErrors as $t){
                 $tests[] = $t;
                 if( $t['level'] != 'i'){
                     if($t['pass']) $this->pass++;

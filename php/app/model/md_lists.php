@@ -74,9 +74,9 @@ if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValues') {
 	$type = htmlspecialchars($_REQUEST['type']);
 	$code = htmlspecialchars($_REQUEST['id']);
 	$filter = "//entry[@id='".$code."']";
-	$q = htmlspecialchars($_REQUEST['q']);
-	if($q) {
-	    $filter = "//entry[contains(.,'".$q."')]";
+	//$q = htmlspecialchars($_REQUEST['q']);
+	if(isset($_REQUEST['q'])) {
+	    $filter = "//entry[contains(.,'".htmlspecialchars($_REQUEST['q'])."')]";
 	}
     header("Content-type: application/json; charset=utf-8");
 	echo json_encode(getValues($type, $filter));
