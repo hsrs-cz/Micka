@@ -57,7 +57,7 @@
       	<link rel="describedby" type="application/xml" href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
       	
       	<!-- links to detail Atom description -->
-      	<link rel="alternate" type="application/atom+xml" href="{$thisPath}/csw/index.php?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
+      	<link rel="alternate" type="application/atom+xml" href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
       	
       	<!-- download link for pre-defined dataset -->
       	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">

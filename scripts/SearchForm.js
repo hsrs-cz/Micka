@@ -6,6 +6,7 @@ SearchForm = function(){
 	$.cookie.json = true;
 	var result = "";	
 	_this = this;
+    var baseURL = (window.location.pathname.replace('/'+HS.getLang(2)+'/',''));
 
 	function processResults(data, opts){
 		var data = $.map(data.suggestions, function(rec) {
@@ -62,7 +63,7 @@ SearchForm = function(){
 	
 	$('#kw-2').select2({
 		ajax: {
-			url: '/projects/kafka/registry_client/?uri=http://inspire.ec.europa.eu/codelist/EndusePotentialValue&lang=cs',
+			url: baseURL + '/registry_client/?uri=http://inspire.ec.europa.eu/codelist/EndusePotentialValue&lang=cs',
 			dataType: 'json',
 			processResults: processResults, 
 			delay: 200,            
@@ -169,7 +170,7 @@ SearchForm = function(){
     
 	$("#inspire").select2({
 		ajax: {
-			url: '/projects/kafka/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang=cs',
+			url: baseURL + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json',
 			processResults: processResults, 
 			delay: 200,            

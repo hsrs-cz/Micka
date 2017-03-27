@@ -59,9 +59,9 @@
 	  			</xsl:call-template>
 	  		</xsl:if>	
 	  		<div>Metadata:
-	  			<a href="{$thisPath}/../page/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-	  			<a href="{$thisPath}/index.php?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-	  			<a href="{$thisPath}/index.php?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+	  			<a href="{$thisPath}/page/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+	  			<a href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+	  			<a href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 	  		</div>
 		  	<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	  	</subtitle>
@@ -69,10 +69,10 @@
 		<!-- link to download service ISO 19139 metadata -->
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-	    		<link href="{$thisPath}/index.php?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
+	    		<link href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<link href="{$thisPath}/../records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>
+				<link href="{$thisPath}/records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	  	
@@ -181,8 +181,8 @@
 			  		</xsl:if>	
 			  		<div>Metadata:
 			  			<a href="{$thisPath}/../page/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-			  			<a href="{$thisPath}/index.php?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-			  			<a href="{$thisPath}/index.php?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+			  			<a href="{$thisPath}/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+			  			<a href="{$thisPath}/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 			  		</div>
 			  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 			  	</summary>
