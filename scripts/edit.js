@@ -537,7 +537,7 @@ function thes(obj){
                 return { results: data }
             }, 
 			delay: 200,            
-			cache: true
+			cache: false
 	   },
 	   theme: 'bootstrap',
 	   language: HS.getLang(2),
@@ -555,11 +555,14 @@ function thes(obj){
             l2 = HS.getCodeFromLanguage(ll[i],2);
             if(l2.length==2){
                 var url = baseUrl  + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
+                //console.log(url);
                 $.ajax({url: url, context: {lang: ll[i]}})
                 .done(function(data){
+                    //console.log(data);
                     if(data.suggestions)  terms[this.lang] = data.suggestions[0].name;
                     else terms[this.lang] = "";
                     if(ll.length <= Object.keys(terms).length){
+                        //console.log(terms);
                         fromThesaurus({
                             thesName: 'GEMET - INSPIRE themes, version 1.0',
                             thesDate: (ll[0]=='cze') ? '01.06.2008' : '2008-06-01',

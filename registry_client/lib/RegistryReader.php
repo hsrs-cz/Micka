@@ -19,16 +19,19 @@ class RegistryReader{
     function getData($uri){
         $_uri = str_replace(array("/", ":"), array("_", "_"), $uri . '.' . $this->lang . '.json');
         $data = null;
+        $this->cached = 0;
         // 1. snazi se ze session
-        if($_SESSION['regreader'][$_uri]){
+        /*if($_SESSION['regreader'][$_uri]){
             $data = $_SESSION['regreader'][$_uri];
+            $this->cached=2;
         }
         // 2. snazi se z cache
-        else{
+        else*/{
             $data = @file_get_contents($this->dir .'/cache/' . $_uri);
             if($data){
                 $data = json_decode($data,1)['result'];
                 $_SESSION['regreader'][$_uri] = $data;
+                $this->cached = 1;
             }
         }
      
@@ -138,5 +141,47 @@ class RegistryReader{
         }
     } // end query
     
- 
+     function queryById($id, $deep=false){
+        if($deep) {
+            if($id){
+                $data = $this->data;
+                $q = strtolower($q);
+                $d = array();
+                foreach($data as $key=>$row){
+                    if($key == $id){
+                        $d[] = $row;
+                        // prida vsechny podrizene
+                        if($row['children']) foreach($row['children'] as $ch) $d[] = $ch;
+                    }
+                    // hleda v podrizenych
+                    else {
+                        $first = true;
+                        if($row['children']) foreach($row['children'] as $ch){
+                           if($ch[$id]){
+                               if($first) $d[] = $row;
+                               $d[] = $ch;
+                           }    
+                        }
+                    }
+                }
+                return $d;
+            }
+            return $this->flatData();            
+        }
+        else {
+            $data = $this->flatData();
+            //var_dump($data);
+            if($id){
+                $q = strtolower($q);
+                $d = array();
+                foreach($data as $row){
+                    if($row['id'] == $id){
+                        $d[] = $row;
+                    }
+                }
+                return $d;
+            }
+            return $data;
+        }        
+    }
 }
