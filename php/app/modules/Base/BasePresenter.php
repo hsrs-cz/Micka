@@ -23,6 +23,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $tmp_nbcontext = $this->context->getByType('Nette\Database\Context');
         $tmp_identity = $this->user;
         $tmp_appparameters = $this->context->parameters;
+        $tmp_appparameters['appDefaultLocale'] = $this->translator->getDefaultLocale();
+        $tmp_appparameters['appLocale'] = $this->translator->getLocale();
         
         $this->layoutTheme = $this->context->parameters['app']['layoutTheme'];
         $this->langCodes = $this->context->parameters['langCodes'];
