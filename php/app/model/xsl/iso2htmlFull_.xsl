@@ -62,6 +62,7 @@
 	xmlns:xlink="http://www.w3.org/1999/xlink" 
 	xmlns:gco="http://www.isotc211.org/2005/gco">
 		<xsl:variable name="hlevel" select="gmd:hierarchyLevel/*/@codeListValue"/>
+        <xsl:variable name="fid" select="gmd:fileIdentifier/*"/>
 		<xsl:variable name="srv">
 			<xsl:choose>
 				<xsl:when test="name(gmd:identificationInfo/*)='srv:SV_ServiceIdentification'">1</xsl:when>
@@ -75,14 +76,14 @@
 		<li><xsl:value-of select="$msg[@eng='basicMetadata']"/></li>
 		<li>		
 			<xsl:if test="../@read=1">
-				<a href="{$MICKA_URL}/record/full/{../@uuid}" class="icons" title="{$msg[@eng='fullMetadata']}">
+				<a href="{$MICKA_URL}/{$LANG2}record/full/{../@uuid}" class="icons" title="{$msg[@eng='fullMetadata']}">
 							<xsl:value-of select="$msg[@eng='fullMetadata']"/></a>					
 			</xsl:if>
 		</li>						
 		<div class="icons">
 		  	<xsl:variable name="wmsURL" select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(gmd:protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			<xsl:if test="gmd:identificationInfo/*/srv:serviceType/*='download'">
-				<a href="{$MICKA_URL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" title="Atom"><i class="fa fa-feed fa-fw"></i></a>
+				<a href="{$MICKA_URL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={$fid}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" title="Atom"><i class="fa fa-feed fa-fw"></i></a>
 			</xsl:if>
 			<xsl:if test="string-length($wmsURL)>0">
 				<xsl:choose>
@@ -96,13 +97,13 @@
 				<xsl:text> </xsl:text>
 			</xsl:if>
 			<xsl:if test="../@edit=1">
-				<a href="{$MICKA_URL}/record/valid/{../@uuid}" class="valid{../@valid}" title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
+				<a href="{$MICKA_URL}/{$LANG2}record/valid/{../@uuid}" class="valid{../@valid}" title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
 						<xsl:when test="../@valid=2"><i class="fa fa-check-circle fa-fw"></i></xsl:when>
 						<xsl:when test="../@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
 						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
 					</xsl:choose></a>
-				<a href="{$MICKA_URL}/record/edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-				<a href="{$MICKA_URL}/record/clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+				<a href="{$MICKA_URL}/{$LANG2}record/edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+				<a href="{$MICKA_URL}/{$LANG2}record/clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
 				<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 			</xsl:if>
 			<xsl:if test="../@read=1">
@@ -692,7 +693,7 @@
 		<div rel="http://xmlns.com/foaf/0.1/isPrimaryTopicOf" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
 			 <div class="micka-row">	
 				<label><xsl:value-of select="$msg[@eng='MDIdentifier']"/></label>
-				<div class="c"><xsl:value-of select="gmd:fileIdentifier"/></div>
+				<div class="c" id="file-identifier"><xsl:value-of select="$fid"/></div>
 			</div>
 			<xsl:if test="gmd:parentIdentifier!=''">
 				<xsl:variable name="pilink" select="php:function('getMetadata', concat('identifier=', $apos, gmd:parentIdentifier/*, $apos))"/>
@@ -730,12 +731,12 @@
 		<!-- ===VAZBY=== -->
 		
 		<!-- sluzby -->
-		<xsl:variable name="vazby" select="php:function('getMetadata', concat('uuidRef=',gmd:fileIdentifier/*))"/>
+		<xsl:variable name="vazby" select="php:function('getMetadata', concat('uuidRef=',$fid))"/>
 		<div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Used']"/></label>
 			<div class="c">
 				<xsl:for-each select="$vazby//gmd:MD_Metadata">
-	                <xsl:variable name="url"><xsl:value-of select="concat('',gmd:fileIdentifier)"/></xsl:variable>
+	                <xsl:variable name="url"><xsl:value-of select="gmd:fileIdentifier"/></xsl:variable>
 	
 					<div><a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$vazby[position()]//gmd:hierarchyLevel/*/@codeListValue]}">
 						<xsl:call-template name="showres">
@@ -775,8 +776,12 @@
 			</div>
 		</xsl:if>
 		
+        <!-- children - on client 
+        <div class="micka-row">
+            <label><xsl:value-of select="$msg[@eng='Children']"/></label>
+        </div> -->
 		<!-- children -->
-		<xsl:variable name="subsets" select="php:function('getMetadata', concat('ParentIdentifier=', $apos, gmd:fileIdentifier/*, $apos))"/>		
+		<xsl:variable name="subsets" select="php:function('getMetadata', concat('ParentIdentifier=', $apos, $fid, $apos))"/>		
 		<xsl:if test="$subsets//gmd:MD_Metadata">
 			<div class="micka-row">
 				<label><xsl:value-of select="$msg[@eng='Children']"/></label>
@@ -785,17 +790,23 @@
 						<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
   						<xsl:variable name="url"><xsl:value-of select="concat('',gmd:fileIdentifier)"/></xsl:variable>
 
-						<div><a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
-							<xsl:call-template name="showres">
-								<xsl:with-param name="r" select="$a"/>
-							</xsl:call-template>
+						<div>
+                            <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
+                                <xsl:call-template name="showres">
+                                    <xsl:with-param name="r" select="$a"/>
+                                </xsl:call-template>
 
-							<xsl:call-template name="multi">
-								<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
-								<xsl:with-param name="lang" select="$lang"/>
-								<xsl:with-param name="mdlang" select="$mdlang"/>
-							</xsl:call-template>							 
-						</a></div>
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+                                    <xsl:with-param name="lang" select="$lang"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                </xsl:call-template>							 
+                            </a>
+							<xsl:call-template name="subsets">
+								<xsl:with-param name="fid" select="gmd:fileIdentifier"/>
+								<xsl:with-param name="level" select="0"/>
+							</xsl:call-template>
+                        </div>
 					</xsl:for-each>
 					<xsl:if test="$subsets//csw:SearchResults/@numberOfRecordsMatched &gt; 25">
 						<div>
@@ -806,7 +817,7 @@
 			</div>	
 		</xsl:if>
 		
-		<!-- siblinks -->
+		<!-- siblinks 
 		<xsl:if test="gmd:parentIdentifier!=''">
 			<xsl:variable name="siblinks" select="php:function('getMetadata', concat('ParentIdentifier=',$apos, gmd:parentIdentifier/*,$apos))"/>
 			<xsl:if test="count($siblinks) &gt; 1">
@@ -831,9 +842,9 @@
 					</xsl:for-each>
 				</div></div>
 			</xsl:if>
-		</xsl:if>
+		</xsl:if>-->
 
-		<!-- 1.6 sluzby - operatesOn NOVA VERZE -->
+		<!-- 1.6 services - operatesOn -->
 		<xsl:if test="gmd:identificationInfo/srv:SV_ServiceIdentification">
 			<div class="micka-row">
 				<label><xsl:value-of select="$msg[@eng='Use']"/></label>
@@ -1179,7 +1190,7 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<!-- pro kontakty -->
+	<!-- for contacts -->
 	<xsl:template match="gmd:CI_ResponsibleParty">
 		<div typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
 			<xsl:if test="gmd:organisationName">
@@ -1225,6 +1236,56 @@
 			 <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]"/></b>
 		 </div> 
 	</xsl:template>
-	
+
+	<xsl:template name="subsets">
+		<xsl:param name="fid"/>
+		<xsl:param name="level"/>
+		<xsl:variable name="subsets" select="php:function('getMetadata', concat('ParentIdentifier=', $apos, $fid, $apos))"/>		
+		<xsl:if test="$subsets//gmd:MD_Metadata">
+			<div style="margin-left:20px;">
+                <xsl:for-each select="$subsets//gmd:MD_Metadata">
+                    <xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
+                    <xsl:variable name="url">
+                    <xsl:choose>
+                            <xsl:when test="$REWRITE">	
+                                <xsl:value-of select="concat($MICKA_URL,'/records/',gmd:fileIdentifier)"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                        <xsl:value-of select="concat($MICKA_URL,'?ak=detail&amp;uuid=',gmd:fileIdentifier)"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                </xsl:variable>
+
+                    <div>
+                        <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
+                            <xsl:call-template name="showres">
+                                <xsl:with-param name="r" select="$a"/>
+                            </xsl:call-template>
+
+                            <xsl:call-template name="multi">
+                                <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+                                <xsl:with-param name="lang" select="$lang"/>
+                                <xsl:with-param name="mdlang" select="$mdlang"/>
+                            </xsl:call-template>							 
+                        </a>
+                        <xsl:choose>
+                            <xsl:when test="$level &lt; 6">
+                                <xsl:call-template name="subsets">
+                                    <xsl:with-param name="fid" select="gmd:fileIdentifier"/>
+                                    <xsl:with-param name="level" select="$level+1"/>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:otherwise><div>Many nesting levels! Stopped.</div></xsl:otherwise>	
+                        </xsl:choose>
+                    </div>
+                </xsl:for-each>
+                <xsl:if test="$subsets//csw:SearchResults/@numberOfRecordsMatched &gt; 25">
+                    <div>
+                        <a href="{$MICKA_URL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}">See all <xsl:value-of select="$subsets//csw:SearchResults/@numberOfRecordsMatched"/> children ...</a>
+                    </div>
+                </xsl:if>
+            </div>
+		</xsl:if>
+	</xsl:template>
 
 </xsl:stylesheet>

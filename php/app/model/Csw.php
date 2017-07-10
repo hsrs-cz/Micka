@@ -461,6 +461,8 @@ class Csw{
     $this->params['MICKA_URL'] = rtrim($this->params['MICKA_URL'],'/');
     $this->params['buffered'] = isset($params['buffered']) ? $params['buffered'] : '';
     $this->params['thisPath'] = dirname($this->params['thisURL']);
+    $this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ?
+        $this->appParameters['appLocale'].'/' : '';
     if(!isset($this->params['CB'])) {
         $this->params['CB'] = "";
         if(isset($_SESSION["micka"]["cb"])) $this->params['CB'] .= $_SESSION["micka"]["cb"]; 
@@ -500,7 +502,7 @@ class Csw{
       case 'getrecordbyid': $result = $this->getRecordById(); break;
       case 'transaction': $result = $this->transaction(); break;
       case 'harvest': 
-        prihlaseni(null, null);
+        prihlaseni(null, null); //TODO - change 
         getProj();
         if(canAction('w')) $result = $this->harvest(true); break;
       case 'getharvest': $result = $this->harvest(false); break;
