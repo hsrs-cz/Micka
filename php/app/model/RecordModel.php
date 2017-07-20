@@ -873,6 +873,7 @@ class RecordModel extends \BaseModel
             }
             $eval_text .= $eval_text_tmp;
         }
+        $eval_text .= getMdOtherLangs($this->recordMd->lang, 'xxx', '$vysl' . "['".$elements_label[$mds][0]."'][0]['langs']");
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['uuid']='".rtrim($this->recordMd->uuid)."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['langs']='".(substr_count($this->recordMd->lang,'|')+1)."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['updated']='".$this->recordMd->create_date."';\n";
@@ -882,7 +883,6 @@ class RecordModel extends \BaseModel
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
-        //echo $xml->saveXML(); die;
         return $xml->saveXML();
     }
     

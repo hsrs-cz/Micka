@@ -173,7 +173,6 @@ function getCountLang($langs) {
  * @return array
  */
 function getMdLangs($md_langs) {
-	//setMickaLog("md_langs=$md_langs", 'DEBUG', 'micka_lib.getMdLangs.start');
 	$rs = array();
 	if (is_array($md_langs)) {
 		$rs = $md_langs;
@@ -181,7 +180,6 @@ function getMdLangs($md_langs) {
 	else {
 		$rs = explode('|',$md_langs);
 	}
-	//setMickaLog($rs, 'DEBUG', 'micka_lib.getMdLangs.return');
 	return $rs;
 }
 
@@ -191,6 +189,19 @@ function getUniqueMdLangs($langs, $md_langs) {
 	$md_langs = array_merge($md_langs, $langs);
 	$md_langs = array_unique($md_langs);
 	return implode('|', $md_langs);
+}
+
+function getMdOtherLangs($langs, $main_lang, $vysl) {
+	$rs = '';
+	$langs = getMdLangs($langs);
+	if (count($langs) > 1) {
+        foreach ($langs as $key => $value) {
+            if ($value != $main_lang) {
+                $rs .= $vysl . "[$key]"."['lang']='" . $value . "';\n";
+            }
+        }
+    }
+	return $rs;
 }
 
 function getWmsList($rs) {
