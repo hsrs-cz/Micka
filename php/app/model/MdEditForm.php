@@ -187,6 +187,7 @@ class MdEditForm  extends \BaseModel
 						 standard_schema.button_exe,
 						 standard_schema.package_id,
                          standard_schema.inspire_code,
+                         standard_schema.is_uri,
 						 label.label_text,
 						 label.label_help
 			FROM (label INNER JOIN elements ON label.label_join = elements.el_id) INNER JOIN standard_schema ON elements.el_id = standard_schema.el_id
@@ -362,6 +363,7 @@ class MdEditForm  extends \BaseModel
                     $form_row['value'] = $this->getFormValue(($md_id_data->md_left+1)-$md_id_data->md_right, $md_id_data->form_code, $md_id_data->from_codelist, $md_id_data->el_id, $form_row['value_lang'], '0_0_'.$path);
                     $form_row['mandt_code'] = $md_id_data->mandt_code;
                     $form_row['inspire_code'] = $md_id_data->inspire_code;
+                    $form_row['is_uri'] = $md_id_data->is_uri;
                     $form_row['label'] = $md_id_data->label_text;
                     $form_row['help'] = $md_id_data->label_help;
                     $form_row['max_nb'] = $md_id_data->max_nb;
