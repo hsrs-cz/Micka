@@ -1773,9 +1773,9 @@ micka.initMap=function(config){
 }
 
 micka.addBBox = function(b, id){
-	var g = new ol.geom.Polygon.fromExtent(b);
+	var g = new ol.geom.Polygon.fromExtent([parseFloat(b[0]), parseFloat(b[1]), parseFloat(b[2]), parseFloat(b[3])]);
 	g.transform('EPSG:4326', 'EPSG:3857');
-	b = new ol.Feature({geometry: g	});
+	b = new ol.Feature({geometry: g});
 	b.setId(id);
 	micka.flyr.getSource().addFeature(b);
 	return g.getExtent();
@@ -1856,4 +1856,34 @@ micka.window = function(obj, par){
 		+'<h1>'+par.title+'</h1>'+par.data+'</div>');
 }
 
+XXXmicka.duplicate = function(){
+    var dold = this.parentNode;
+    var dnew = dold.cloneNode(true);
+    var dalsi = dold.nextSibling;
+    if(dalsi==null) dold.parentNode.appendChild(dnew); 
+    else dold.parentNode.insertBefore(dnew,dalsi);
+    var pom = dold.id.split("_");
+    var elementy = md_getSimilar(dold.parentNode, pom[0]);
+    md_removeDuplicates(dnew);
 
+    for(var i=0;i<elementy.length;i++) md_setName(elementy[i], pom[0]+"_"+i+"_");
+
+    // --- vycisteni ---
+    var nody = flatNodes(dnew, "INPUT");
+    for(var i=0;i<nody.length;i++) if(nody[i].type=="text") nody[i].value = "";
+
+    nody = flatNodes(dnew, "SELECT");
+    for(var i=0;i<nody.length;i++) nody[i].selectedIndex=0;
+    $(nody).removeClass("select2-hidden-accessible");
+    $(nody).parent().children('span').remove();
+    $(nody).select2();
+
+    nody = flatNodes(dnew, "TEXTAREA");
+    for(var i=0;i<nody.length;i++) nody[i].value="";
+
+    var d = getMyNodes(dnew, "DIV");
+    if(d[0]) d[0].style.display='block';
+
+    window.scrollBy(0,dold.clientHeight);
+    return dnew;
+}

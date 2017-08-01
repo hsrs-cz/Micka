@@ -17,7 +17,7 @@ else {
 $json = json_encode(array(
     "query"=>$query, 
     "cached"=>$r->cached ,
-    "suggestions"=>$data)
+    "results"=>$data)
 );
 header('Content-Type: application/json;charset=utf-8');
 echo $json;

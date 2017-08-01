@@ -8,18 +8,13 @@
 	<link rel="shortcut icon" href="{$basePath}{$themePath}/favicon.ico">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 	<link title="{_messages.frontend.app_title}" href="csw/opensearch.php" type="application/opensearchdescription+xml" rel="search">
-
-	<script language="javascript" src="{$basePath}/thesaurus/HS.js"></script>
-	<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>
-
 	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap/css/bootstrap.min.css" type="text/css"/>
 	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" type="text/css"/>
 	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
 	<link rel="stylesheet" href="{$basePath}/scripts/ol3/ol.css" type="text/css"/>
-    <link rel="stylesheet" href="{$basePath}/scripts/select2/css/select2.min.css" type="text/css"/>
-    <link rel="stylesheet" href="{$basePath}/scripts/select2/css/select2-bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="{$basePath}{$themePath}/micka.css" type="text/css"/>   
+    <link rel="stylesheet" href="{$basePath}/scripts/select2/css/select2.min.css" type="text/css">
+    <link rel="stylesheet" href="{$basePath}/scripts/select2/css/select2-bootstrap.min.css" type="text/css">    <link rel="stylesheet" href="{$basePath}{$themePath}/micka.css" type="text/css"/>   
 	<link rel="stylesheet" media="print" href="{$basePath}{$themePath}/micka_print.css">
 
     <link rel="stylesheet" href="{$basePath}{$themePath}/edit.css" type="text/css"/>	
@@ -382,6 +377,8 @@
     {/if}
 </div>
 
+<script language="javascript" src="{$basePath}/thesaurus/HS.js"></script>
+<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>
 <script src="{$basePath}/scripts/jquery/jquery-1.11.1.min.js"></script>
 <script src="{$basePath}/scripts/ol3/ol.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/select2/js/select2.full.js"></script>
@@ -391,15 +388,89 @@
 <script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.{$appLang2}.min.js" ></script>       
 <script type="text/javascript" src="{$basePath}/scripts/OverMap.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/edit.js"></script>
- 
-<script>
+
+{if $dataBox == ''}
+{else}
+    <script type="text/javascript" src="{$basePath}/scripts/lite.js"></script>
+    <script>
 	$(document).ready(function() {
         HS.setLang({$appLang});
-        $('[data-tooltip="tooltip"]').tooltip();  
-        start();
+        baseUrl = "{$baseUrl|noescape}";
+        lite.init();
+
+        var id = $("#parent-identifier").data("val");
+        if(id){
+            //console.log(id);
+            $.ajax({
+                url:  '../../suggest/metadata?lang='+lang+'&id='+id,
+                dataType: 'json' 
+            })
+            .done(function(data){
+                
+                //var data = cswResults(data);
+                //console.log(data.results[0]);
+                $("#parent-identifier").select2({
+                    //data: cswResults(data),
+                    data: [{ id:data.records[0].id, text:data.records[0].title }],
+                    ajax: {
+                        url:  '../../suggest/metadata?lang='+lang,
+                        dataType: 'json',
+                        processResults: cswResults,
+                        cache: false
+                    },
+                    language: HS.getLang(2),
+                    allowClear: true,
+                    theme: 'bootstrap',
+                    maxSelectionLength: 1           
+                });
+                $("#parent-identifier").trigger('change');
+            });
+        }
+        else {
+            $("#parent-identifier").select2({
+                //data:data.records[0],
+                ajax: {
+                    url:  '../../suggest/metadata?lang='+lang,
+                    dataType: 'json',
+                    processResults: cswResults,
+                    cache: false
+                },
+                language: HS.getLang(2),
+                allowClear: true,
+                theme: 'bootstrap',
+                maxSelectionLength: 1           
+            });
+
+        }
+        
+        var xmin=$('#xmin');
+        var ymin=$('#ymin');
+        var xmax=$('#xmax');
+        var ymax=$('#ymax');
+        micka.initMap({
+            edit: true,
+            extent: [xmin.val(), ymin.val(), xmax.val(), ymax.val()],
+            //polygon: polygon,
+            handler: function(bbox){
+                $(xmin).val(bbox[0].toFixed(3));
+                $(ymin).val(bbox[1].toFixed(3));
+                $(xmax).val(bbox[2].toFixed(3));
+                $(ymax).val(bbox[3].toFixed(3));
+            }
+        });
+
+        
 	});
-    baseUrl = "{$baseUrl|noescape}";
-</script>
+    
+    var cswResults = function(data, page){
+        return {
+            results: $.map(data.records, function(rec) {
+                return { id: rec.id, text: rec.title, title: rec.abstract };
+            })  
+        }    
+    };
+    </script>
+{/if} 
 
 </body>
 </html>

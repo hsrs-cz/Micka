@@ -155,8 +155,8 @@
         			</xsl:element>	
         		</xsl:when>
         		<xsl:otherwise>
-        			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
-        				<gco:CharacterString><xsl:value-of select="lang[@code=$lang]"/></gco:CharacterString>
+        			<xsl:element name="{$ns}:{$name}">
+        				<gco:CharacterString><xsl:value-of select="lang[@code=$lang]|."/></gco:CharacterString>
         			</xsl:element>	
         		</xsl:otherwise>
         	</xsl:choose>

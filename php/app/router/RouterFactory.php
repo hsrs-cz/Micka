@@ -30,7 +30,7 @@ class RouterFactory
         $router[] = new Route('[<locale=cs cs|en>/]page[/<id>]', ['module' => 'Catalog', 'presenter' => 'Page', 'action' => 'default']);
         $router[] = new Route('[<locale=cs cs|en>/]suggest/mdcontacts', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'MdContacts']);
         $router[] = new Route('[<locale=cs cs|en>/]suggest/mdlists', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'MdLists']);
-        $router[] = new Route('[<locale=cs cs|en>/]suggest/mdsearch', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'MdSearch']);
+        $router[] = new Route('[<locale=cs cs|en>/]suggest/metadata', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'Metadata']);
         $router[] = new Route('[<locale=cs cs|en>/]suggest/mdupload', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'MdUpload']);
         $router[] = new Route('[<locale=cs cs|en>/]suggest/mdgazcli', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'MdGazcli']);
         $router[] = new Route('[<locale=cs cs|en>/]suggest', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'default']);

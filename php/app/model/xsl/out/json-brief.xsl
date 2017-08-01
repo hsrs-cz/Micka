@@ -34,35 +34,6 @@
 		      	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
 		  	</xsl:call-template>';
-	$rec['online'] = array();
-	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
-		$l['url'] = '<xsl:value-of disable-output-escaping="yes" select="php:function('addslashes', normalize-space(*/gmd:linkage/gmd:URL))"/>';
-		$l['protocol'] = '<xsl:value-of select="normalize-space(*/gmd:protocol)"/>';
-        $rec['online'][] = $l;
-	</xsl:for-each>
-	<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName!=''">
-		$rec['imgURL'] = '<xsl:value-of select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName"/>';
-	</xsl:if>		
-	<xsl:if test="gmd:identificationInfo//gmd:westBoundLongitude">		
-		$rec['bbox'] = [<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:westBoundLongitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:southBoundLatitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:eastBoundLongitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:northBoundLatitude)"/>];
-	</xsl:if>
-	$rec['contact']['organisationName'] = '<xsl:call-template name="multi">
-		    	<xsl:with-param name="el" select="gmd:contact/*/gmd:organisationName"/>
-		    	<xsl:with-param name="lang" select="$lang"/>
-		    	<xsl:with-param name="mdlang" select="$mdlang"/>
-		  	</xsl:call-template>';
-		$rec['inspireKeywords'] = array();
-		<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/*/gmd:keyword[gco:CharacterString!='']">
-			$rec['inspireKeywords'][] = '<xsl:value-of select="gco:CharacterString"/>';
-		</xsl:for-each> 
-		<xsl:variable name="degree" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[contains(gmd:specification/*/gmd:title, 'INSPIRE') or contains(gmd:specification/*/gmd:title, 'Commission')]/gmd:pass/*"/>
-		$rec['degree'] = <xsl:choose>
-			<xsl:when test="$degree!=''"><xsl:value-of select="$degree"/>;</xsl:when>
-			<xsl:otherwise>null;</xsl:otherwise>
-		</xsl:choose>	
-		$rec['coverageKm'] = '<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'km')]/*/gmd:value/gco:Record"/>';
-		$rec['coveragePercent'] = '<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'percent')]/*/gmd:value/gco:Record"/>';
-
     $json['records'][] =$rec;
 </xsl:template>	
 

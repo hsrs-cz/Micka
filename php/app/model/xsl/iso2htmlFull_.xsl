@@ -737,12 +737,10 @@
 			<div class="c">
 				<xsl:for-each select="$vazby//gmd:MD_Metadata">
 	                <xsl:variable name="url"><xsl:value-of select="gmd:fileIdentifier"/></xsl:variable>
-	
 					<div><a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$vazby[position()]//gmd:hierarchyLevel/*/@codeListValue]}">
 						<xsl:call-template name="showres">
 							<xsl:with-param name="r" select="gmd:hierarchyLevel/*/@codeListValue"/>
 						</xsl:call-template>
-
 						<xsl:call-template name="multi">
 							<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 							<xsl:with-param name="lang" select="$lang"/>
@@ -789,13 +787,11 @@
 					<xsl:for-each select="$subsets//gmd:MD_Metadata">
 						<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
   						<xsl:variable name="url"><xsl:value-of select="concat('',gmd:fileIdentifier)"/></xsl:variable>
-
 						<div>
                             <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
                                 <xsl:call-template name="showres">
                                     <xsl:with-param name="r" select="$a"/>
                                 </xsl:call-template>
-
                                 <xsl:call-template name="multi">
                                     <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
                                     <xsl:with-param name="lang" select="$lang"/>
@@ -855,7 +851,6 @@
 						<xsl:for-each select="$siblinks//gmd:MD_Metadata">
 							<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
 							<xsl:variable name="url"><xsl:value-of select="concat('',normalize-space(gmd:fileIdentifier))"/></xsl:variable>
-
 							<div><a href="{$url}" class="t"  title="{$cl/updateScope/value[@name=$a]}">
 								<xsl:call-template name="showres">
 									<xsl:with-param name="r" select="$a"/>

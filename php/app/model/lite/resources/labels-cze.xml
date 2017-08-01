@@ -327,6 +327,18 @@ ESRI ArcGIS Server SOAP: http://&lt;host&gt;/&lt;instance&gt;/services/&lt;servi
 			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - za položkou. URL odkaz</p>
 		</help>
 	</msg>
+    <msg name="url">
+        <label>URL</label>
+    </msg>
+    <msg name="function">
+        <label>Funkce</label>
+    </msg>
+	<msg name="protocol">
+		<label>Protokol</label>
+	</msg>
+	<msg name="description">
+		<label>Popis</label>
+	</msg>
 	<msg name="distributor">
 		<label>Distributor</label>
 		<help>Název organizace, která je zodpovědná za distribuci dat.</help>

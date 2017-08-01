@@ -153,19 +153,30 @@
     <value name="eng" code="eng" code2="en">English</value>
     <value name="fre" code="fre" code2="fr">French</value>
     <value name="ger" code="ger" code2="de">German</value>
-    <value name="ita" code="ita" code2="it">Italian</value>
-    <value name="lav" code="lav" code2="lv">Latvian</value>
     <value name="pol" code="pol" code2="pl">Polish</value>
-    <value name="slv" code="slv">Slovene</value>
-    <value name="slo" code="slo">Slovak</value>
+    <value name="ita" code="ita" code2="it">Italian</value>
+    <value name="slv" code="slv" code2="sl">Slovene</value>
+    <value name="slo" code="slo" code2="sk">Slovak</value>
+    <value name="lav" code="lav" code2="lv">Latvian</value>
     <value name="swe" code="swe" code2="sv">Swedish</value>
-    <value name="por" code="por">Portuguese</value>
-    <value name="nor" code="nor">Norwei</value>
-    <value name="dan" code="dan">Danish</value>
-    <value name="hun" code="hun">Hungarian</value>
-    <value name="spa" code="spa">Spanish</value>
-    <value name="fin" code="fin">Finnish</value>    
-    <value name="dut" code="dut">Dutch</value>
+    <value name="por" code="por" code2="pt">Portuguese</value>
+    <value name="nor" code="nor" code2="no">Norwei</value>
+    <value name="dan" code="dan" code2="da">Danish</value>
+    <value name="hun" code="hun" code2="hu">Hungarian</value>
+    <value name="spa" code="spa" code2="es">Spanish</value>
+    <value name="fin" code="fin" code2="fi">Finnish</value>
+    <value name="dut" code="dut" code2="nl">Dutch</value>
+    
+    <value name="alb" code="alb" code2="sq">Albanian</value>
+    <value name="bul" code="bul" code2="bg">Bulgarian</value>
+    <value name="gre" code="gre" code2="el">Greek</value>
+    <value name="hrv" code="hrv" code2="hr">Croatian</value>
+    <value name="lit" code="lit" code2="lt">Lithuanian</value>
+    <value name="rum" code="rum" code2="ro">Romanian</value>
+    <value name="bos" code="bos" code2="bs">Bosnian</value>
+    <value name="srp" code="srp" code2="sr">Serbian</value>
+    <value name="ukr" code="ukr" code2="uk">Ukrainian</value>
+    <value name="zxx" code="zxx" code2="">no language</value>
   </language>
   <maintenanceAndUpdateFrequency>
     <value name="continual" code="1">continual</value>
@@ -454,21 +465,21 @@
 
   <serviceSpecifications title="European Commission Regulations">
 	<value name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata" 
-        code="Metadata" uri="CELEX:32008R1205" publication="2008-12-04">Metadata</value>
+        code="Metadata" uri="http://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">Metadata</value>
 	<value name="Corrigendum to INSPIRE Metadata Regulation published in the Official Journal of the European Union, L 328, page 83" 
         code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value>
     <value name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services" 
-        code="Interoperability" uri="CELEX:32010R1089" publication="2010-12-08">Interoperability</value>
+        code="Interoperability" uri="http://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">Interoperability</value>
     <value name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services" 
-        code="Download" uri="CELEX:32010R1088" publication="2010-12-08">Download and transofrmation services</value>  
+        code="Download" uri="http://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">Download and transofrmation services</value>  
 	<value name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services" 
-        code="Network" uri="CELEX:32009R0976" publication="2009-10-20">Network services</value>  
+        code="Network" uri="http://data.europa.eu/eli/reg/2009/976" publication="2009-10-20">Network services</value>  
 	<value name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions" 
-        code="Access" uri="CELEX:32010R0268" publication="2010-03-30">Access to spatial data sets and services</value>
+        code="Access" uri="http://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">Access to spatial data sets and services</value>
   	<value name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)" 
-        code="Monitoring" uri="CELEX:32009D0442" publication="2009-06-11">Monitoring and reporting</value>
+        code="Monitoring" uri="http://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">Monitoring and reporting</value>
   	<value name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)" 
-        code="INSPIRE" uri="CELEX:32010R1089" publication="2007-03-14">INSPIRE Directive</value>  
+        code="INSPIRE" uri="http://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">INSPIRE Directive</value>  
   </serviceSpecifications>
   
   <serviceType>
@@ -616,7 +627,6 @@
 <specRole>
     <value name="primary" code="99">primary provider</value>
     <value name="custodian" code="2">custodian</value>
-
     <value name="publisher" code="10">publisher</value>
     <value name="owner" code="3">owner</value>
     <value name="user" code="4">user</value>
@@ -637,4 +647,96 @@
     <value name="percent" code="percent">percent</value>
     <value name="units" code="units">units</value>
 </units>
+
+<protocol>
+    <value code="WWW:LINK-1.0-http--link">WWW - link</value> 
+    <value code="WWW:DOWNLOAD-1.0-http--download">WWW - download</value> 
+    <value code="WWW:LINK-1.0-http--rss">RSS</value> 
+    <value code="WWW:LINK-1.0-http--atom">ATOM</value> 
+    <value code="WWW:DOWNLOAD-1.0-ftp--download">FTP</value> 
+    <value code="OGC:WMS-1.0.0-http-get-capabilities">WMS 1.0.0</value> 
+    <value code="OGC:WMS-1.1.0-http-get-capabilities">WMS 1.1.0</value> 
+    <value code="OGC:WMS-1.1.1-http-get-capabilities">WMS 1.1.1</value> 
+    <value code="OGC:WMS-1.3.0-http-get-capabilities">WMS 1.3.0</value> 
+    <value code="OGC:WFS-1.0.0-http-get-capabilities">WFS 1.0.0 / Get</value> 
+    <value code="OGC:WFS-1.0.0-http-post-capabilities">WFS 1.0.0 / Post</value> 
+    <value code="OGC:WFS-1.1.0-http-get-capabilities">WFS 1.1.0 / Get</value> 
+    <value code="OGC:WFS-1.1.0-http-post-capabilities">WFS 1.1.0 / Post</value> 
+    <value code="OGC:WFS-2.0.0-http-get-capabilities">WFS 2.0.0 / Get</value> 
+    <value code="OGC:WFS-2.0.0-http-post-capabilities">WFS 2.0.0 / Post</value> 
+    <value code="OGC:CSW-2.0.2-http-get-capabilities">CSW 2.0.2 / Get</value> 
+    <value code="OGC:CSW-2.0.2-http-post-capabilities">CSW 2.0.2 / Post</value> 
+    <value code="ESRI:AIMS--http-get-image">ESRI ArcIMS image service</value> 
+    <value code="ESRI:AIMS--http-get-feature">ESRI ArcIMS feature service</value> 
+    <value code="ESRI:AIMS--http--configuration">ArcIMS Map Service (*.AXL)</value> 
+    <value code="ESRI:MAP-10.2-http-rest">ESRI ArcGIS MAP REST</value> 
+    <value code="ESRI:MAP-10.2-http-soap">ESRI ArcGIS MAP SOAP</value> 
+    <value code="ESRI:FEATURE--http-rest">ESRI ArcGIS FEATURE REST</value> 
+    <value code="ESRI:FEATURE--http-soap">ESRI ArcGIS FEATURE SOAP</value> 
+    <value code="ESRI:GEOCODE--http-rest">ESRI ArcGIS GEOCODE REST</value> 
+    <value code="ESRI:GEOCODE--http-soap">ESRI ArcGIS GEOCODE SOAP</value> 
+    <value code="ESRI:GEODATA--http-rest">ESRI ArcGIS GEODATA REST</value> 
+    <value code="ESRI:GEODATA--http-soap">ESRI ArcGIS GEODATA SOAP</value> 
+    <value code="ESRI:GEOMETRY--http-rest">ESRI ArcGIS GEOMETRY REST</value> 
+    <value code="ESRI:GEOMETRY--http-soap">ESRI ArcGIS GEOMETRY SOAP</value> 
+    <value code="ESRI:GP--http-rest">ESRI ArcGIS Geoprocessing REST</value> 
+    <value code="ESRI:GP--http-soap">ESRI ArcGIS Geoprocessing SOAP</value> 
+    <value code="ESRI:GLOBE--http-rest">ESRI ArcGIS GLOBE REST</value> 
+    <value code="ESRI:GLOBE--http-soap">ESRI ArcGIS GLOBE SOAP</value> 
+    <value code="ESRI:IMAGE--http-rest">ESRI ArcGIS IMAGE REST</value> 
+    <value code="ESRI:IMAGE--http-soap">ESRI ArcGIS IMAGE SOAP</value> 
+    <value code="ESRI:NA--http-rest">ESRI ArcGIS Network Analysis REST</value> 
+    <value code="ESRI:NA--http-soap">ESRI ArcGIS Network Analysis SOAP</value> 
+</protocol>
+
+<extents>
+    <value bbox="9.53 46.373 17.16 49.021" uri="http://publications.europa.eu/resource/authority/country/AUT">Austria</value>
+    <value bbox="2.545 49.498 6.407 51.506" uri="http://publications.europa.eu/resource/authority/country/BEL">Belgium</value>
+    <value bbox="22.362 41.236 28.591 44.213" uri="http://publications.europa.eu/resource/authority/country/BGR">Bulgaria</value>
+    <value bbox="13.590 42.217 19.677 46.563" uri="http://publications.europa.eu/resource/authority/country/HRV">Croatia</value>
+    <value bbox="32.27 34.563 34.587 35.696" uri="http://publications.europa.eu/resource/authority/country/CYP">Cyprus</value>
+    <value bbox="12.09 48.552 18.859 51.056" uri="http://publications.europa.eu/resource/authority/country/CZE">Czech Republic</value>
+    <value bbox="8.074 54.56 15.193 57.752" uri="http://publications.europa.eu/resource/authority/country/DNK">Denmark</value>
+    <value bbox="21.772 57.51 28.209 59.686" uri="http://publications.europa.eu/resource/authority/country/EST">Estonia</value>
+    <value bbox="-9.756 35.789 32.080 71.205" uri="http://publications.europa.eu/resource/authority/country/EUR">European Union</value>
+    <value bbox="19.303 59.766 31.586 70.093" uri="http://publications.europa.eu/resource/authority/country/FIN">Finland</value>
+    <value bbox="-61.981 -21.342 55.832 51.09" uri="http://publications.europa.eu/resource/authority/country/FRA">France</value>
+    <value bbox="5.866 47.271 15.041 55.058" uri="http://publications.europa.eu/resource/authority/country/DEU">Germany</value>
+    <value bbox="19.374 34.804 29.642 41.749" uri="http://publications.europa.eu/resource/authority/country/GRC">Greece</value>
+    <value bbox="16.113 45.738 22.897 48.586" uri="http://publications.europa.eu/resource/authority/country/HUN">Hungary</value>
+    <value bbox="-10.470 51.444 -5.372 55.383" uri="http://publications.europa.eu/resource/authority/country/IRL">Ireland</value>
+    <value bbox="6.626 35.493 18.519 47.093" uri="http://publications.europa.eu/resource/authority/country/ITA">Italy</value>
+    <value bbox="20.97 55.675 28.242 58.086" uri="http://publications.europa.eu/resource/authority/country/LVA">Latvia</value>
+    <value bbox="20.953 53.899 26.836 56.45" uri="http://publications.europa.eu/resource/authority/country/LTU">Lithuania</value>
+    <value bbox="5.735 49.448 6.53 50.183" uri="http://publications.europa.eu/resource/authority/country/LUX">Luxembourg</value>
+    <value bbox="14.19 35.806 14.575 36.08" uri="http://publications.europa.eu/resource/authority/country/MLT">Malta</value>
+    <value bbox="3.358 50.751 7.227 53.554" uri="http://publications.europa.eu/resource/authority/country/NLD">Netherlands</value>
+    <value bbox="4.61 57.972 31.167 71.186" uri="http://publications.europa.eu/resource/authority/country/NOR">Norway</value>
+    <value bbox="14.123 49.003 24.145 54.836" uri="http://publications.europa.eu/resource/authority/country/POL">Poland</value>
+    <value bbox="-31.296 32.638 -6.19 42.155" uri="http://publications.europa.eu/resource/authority/country/PRT">Portugal</value>
+    <value bbox="20.269 43.62 29.678 48.259" uri="http://publications.europa.eu/resource/authority/country/ROU">Romania</value>
+    <value bbox="16.832 47.732 22.565 49.614" uri="http://publications.europa.eu/resource/authority/country/SVK">Slovakia</value>
+    <value bbox="13.375 45.422 16.61 46.877" uri="http://publications.europa.eu/resource/authority/country/SVN">Slovenia</value>
+    <value bbox="-18.161 27.636 4.327 43.789" uri="http://publications.europa.eu/resource/authority/country/ESP">Spain</value>
+    <value bbox="10.984 55.336 24.166 69.06" uri="http://publications.europa.eu/resource/authority/country/SWE">Sweden</value>
+    <value bbox="5.956 45.818 10.492 47.809" uri="http://publications.europa.eu/resource/authority/country/CHE">Switzerland</value>
+    <value bbox="-8.647 49.883 1.762 60.846" uri="http://publications.europa.eu/resource/authority/country/GBR">United Kingdom</value>
+</extents>
+
+<accessCond>
+	<value name="no conditions to access and use" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">No conditions apply to access and use.</value>
+	<value name="conditions to access and use unknown" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">The conditions applying to access and use are unknown.</value>
+</accessCond>
+
+<limitationsAccess>
+	<value name="public access limited according to Article 13(1)(a) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.</value>
+	<value name="public access limited according to Article 13(1)(b) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b">Public access to spatial data sets and services would adversely affect international relations, public security or national defence.</value>
+	<value name="public access limited according to Article 13(1)(c) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c">Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.</value>
+	<value name="public access limited according to Article 13(1)(d) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d">Public access to spatial data sets and services would adversely affect the confidentiality of commercial or industrial information, where such confidentiality is provided for by national or Community law to protect a legitimate economic interest, including the public interest in maintaining statistical confidentiality and tax secrecy.</value>
+	<value name="public access limited according to Article 13(1)(e) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e">Public access to spatial data sets and services would adversely affect intellectual property rights.</value>
+	<value name="public access limited according to Article 13(1)(f) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f">Public access to spatial data sets and services would adversely affect the confidentiality of personal data and/or files relating to a natural person where that person has not consented to the disclosure of the information to the public, where such confidentiality is provided for by national or Community law.</value>
+	<value name="public access limited according to Article 13(1)(g) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g">Public access to spatial data sets and services would adversely affect the interests or protection of any person who supplied the information requested on a voluntary basis without being under, or capable of being put under, a legal obligation to do so, unless that person has consented to the release of the information concerned.</value>
+	<value name="public access limited according to Article 13(1)(h) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h">Public access to spatial data sets and services would adversely affect the protection of the environment to which such information relates, such as the location of rare species.</value>
+</limitationsAccess>
+
 </map>

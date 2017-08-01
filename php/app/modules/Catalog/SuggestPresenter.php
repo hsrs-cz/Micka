@@ -28,7 +28,7 @@ class SuggestPresenter extends \BasePresenter
         $params = [];
         $params['lang'] = $this->getParameter('lang');
         $params['creator'] = $this->getParameter('creator');
-        $params['query'] = $this->getParameter('query');
+        $params['query'] = $this->getParameter('q');
         $params['type'] = $this->getParameter('type');
         $params['role'] = $this->getParameter('role');
         
@@ -65,18 +65,36 @@ class SuggestPresenter extends \BasePresenter
     }
     
     /** @resource Catalog:Editor */
-	public function renderMdSearch()
+	public function renderMetadata()
 	{
-        $params = array('TEMPLATE' => 'micka2htmlList_', 'FORMAT' => 'text/html');
-        if ($this->getParameter('type') == 'featureCatalogue') {
-            $params['QUERY'] = "type='featureCatalogue'";
-        } elseif ($this->getParameter('id') != '') {
+        // direct accesss
+        $params = [];
+        $params['lang'] = $this->getParameter('lang');
+        $params['query'] = $this->getParameter('q');
+        $params['id'] = $this->getParameter('id');
+        $params['type'] = 'title';
+        
+        $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
+            $this->suggestModel->getAnswer($params), 
+            "application/json;charset=utf-8"
+        ));
+        // using catalogue service 
+        /*$params = array('OUTPUTSCHEMA' => 'json', 'QUERY' => '', 'ELEMENTSETNAME' => 'brief');
+        if ($this->getParameter('id') != '') {
             $params['ID'] = $this->getParameter('id');
         } else {
-            $params['QUERY'] = "";
+            if ($this->getParameter('type') == 'featureCatalogue') {
+                $params['QUERY'] = "type='featureCatalogue'";
+            }
+            if($this->getParameter('q')){
+                if($params['QUERY'] !='') $params['QUERY'] .= ' AND ';
+                $params['QUERY'] = "Title like '".$this->getParameter('q')."*'";
+            }
         }
         $csw = new \Micka\Csw;
-        $this->template->records = $csw->run($csw->dirtyParams($params));
+        $params = $csw->dirtyParams($params);
+        //$this->template->records = 
+        $csw->run($params);*/
     }
     
     /** @resource Catalog:Editor */
@@ -84,6 +102,7 @@ class SuggestPresenter extends \BasePresenter
 	{
         $this->template->mds = 'MD';
         $contactsModel = new \App\AdminModel\ContactsModel($this->context->getByType('Nette\Database\Context'), $this->user);
+        var_dump($contactsModel->findMdContacts());
         $this->template->contacts = $contactsModel->findMdContacts();
     }
     

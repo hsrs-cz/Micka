@@ -46,7 +46,7 @@ img.exp {
 
 textarea {background: #FFF; font-family: sans-serif; font-size: 11px; width:500px; height:100px; border: solid 1px #DDD; border-radius: 3px; padding: 2px;}
 input {font-size: 11px;}
-input.D {background: #FFF0E0; width:70px; border: solid 1px #DDD; left:200px; border-radius: 3px; padding: 2px;}
+input.D {background: #FFF0E0; width:90px; border: solid 1px #DDD; left:200px; border-radius: 3px; padding: 2px;}
 input.N {background: #F0F0FF; width:80px; border: solid 1px #DDD; left:200px; border-radius: 3px; padding: 2px;}
 input.T {background: #FFF; width:400px; border: solid 1px #DDD; left:200px; border-radius: 3px; padding: 2px;}
 
@@ -55,10 +55,10 @@ textarea:required:not(:valid), input:required:not(:valid), select:required:not(:
 	border: solid 1px #E00;
 }
 
-a.plus {color: green; }
-a.minus {color:red; }
+.plus {color: green; cursor: pointer}
+.minus {color:red; cursor: pointer}
 a.open {color: #E80  }
-a.plus:hover, a.minus:hover, a.open:hover {text-decoration: none; color:#07D;}  
+.plus:hover, .minus:hover, a.open:hover {text-decoration: none; color:#07D;}  
 
 span.m {color: red; width:200px; display: inline-block;  }
 span.c {color: #00A000; width:200px; display: inline-block; }
@@ -89,4 +89,37 @@ select {border: 1px solid #DDD; font-size:11px; border-radius: 3px; padding: 2px
 	float: right;
 	cursor: pointer;
 	background: url(img/storno.png) no-repeat;
+}
+
+label {
+    width: 300px;
+}
+
+xspan.locale {
+    display: inline-block;
+    width: 600px;
+}
+
+.sel2 {
+    width:100%;
+}
+
+.eng {background-image: url(img/flags/eng.png); }
+.cze {background-image: url(img/flags/cze.png); }
+
+
+input.txt, textarea.txt {
+    padding-left: 23px;
+    background-position: 4px 10px; 
+    background-repeat: no-repeat ;
+}
+
+label.inp2 {
+    padding-left: 30pt;
+    font-weight: normal;
+}
+
+.tooltip-inner {
+    max-width: 500px;
+    text-align: left;
 }

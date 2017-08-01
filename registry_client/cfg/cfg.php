@@ -31,5 +31,12 @@ $config=array(
                         FILTER ( NOT EXISTS {?id skos:broader ?b .} ) 
                     } 
                 }  "
+    ),
+
+    // --- EU Countries
+    "http://publications.europa.eu/resource/authority/country"=>array(
+        "adapter"=> "skos",
+        "url" => "http://publications.europa.eu/mdr/resource/authority/country/skos/countries-skos.rdf"
     )
+    
 );

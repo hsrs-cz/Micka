@@ -216,9 +216,11 @@
 		<gmd:MD_ReferenceSystem>
 			<gmd:referenceSystemIdentifier>
 				<gmd:RS_Identifier>
-					<gmd:code>
-						<gco:CharacterString><xsl:value-of select="*/referenceSystemIdentifier/*/code"/></gco:CharacterString>
-					</gmd:code>
+                    <xsl:call-template name="txt">
+                        <xsl:with-param name="s" select="*/referenceSystemIdentifier/*"/>                      
+                        <xsl:with-param name="name" select="'code'"/>                      
+                        <xsl:with-param name="lang" select="$mdLang"/>                    
+                    </xsl:call-template>
 					<xsl:if test="*/referenceSystemIdentifier/*/codeSpace">
 						<gmd:codeSpace>
 							<gco:CharacterString><xsl:value-of select="*/referenceSystemIdentifier/*/codeSpace"/></gco:CharacterString>
@@ -486,7 +488,7 @@
 					
 	<xsl:for-each select="identificationInfo/*/language">
     	<gmd:language>
-		    <gmd:LanguageCode codeList="{$cl}#CI_LanguageCode" codeListValue="{.}"><xsl:value-of select="."/></gmd:LanguageCode>
+		    <gmd:LanguageCode codeList="{$cl}#CI_LanguageCode" codeListValue="{normalize-space(.)}"><xsl:value-of select="normalize-space(.)"/></gmd:LanguageCode>
 		</gmd:language>
 	</xsl:for-each>
 

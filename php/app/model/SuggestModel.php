@@ -38,7 +38,7 @@ class SuggestModel
         $contact_role = $params['role'] !== NULL ? $params['role'] : '';
 
         $user = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
-        $admin = $this->user->isInRole('Admin');
+        $admin = $this->user->isInRole('admin');
         $group = $this->user->isLoggedIn() ? $this->user->getIdentity()->data['groups'] : ['guest'];
         $group = implode("','", array_values($group));
         $group = "'" . $group . "'";
@@ -155,7 +155,7 @@ class SuggestModel
                 ";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
-            case 'topics':
+            case 'topic':
                 $sql = "
                         SELECT codelist_name as recno, label_text as md_value, lang
                         FROM codelist LEFT JOIN label ON codelist.codelist_id = label.label_join
@@ -169,11 +169,43 @@ class SuggestModel
                 }
                 $rs = array();
                 foreach($result as $row) {
-                    $rs[] = array('id'=>$row->recno,"name"=>$row->md_value);
+                    $rs[] = array('id'=>$row->recno,"title"=>$row->md_value);
                 }
                 $rs = array('numresults'=>count($rs),'records'=>$rs);
                 return $rs;
 
+                break;
+            case 'title':
+                $l = ''; $l1='';
+                 if($query_lang != ''){
+                    $l = " AND md_values.lang='$query_lang'";
+                    $l1 = " AND abstr.lang='$query_lang'";
+                }    
+                $sql = "
+                    SELECT trim(uuid) as id, md_values.md_value, abstr.md_value as abstract 
+                    FROM md 
+                    JOIN md_values ON (md.recno=md_values.recno  $l) 
+                    JOIN md_values as abstr ON (md.recno=abstr.recno AND abstr.md_id IN (4,5061) $l1)
+                    WHERE md_values.md_id IN (11,5063) AND $right                    
+                ";
+                if($creator != '') {
+                    $sql .= " AND md.create_user='$creator'";
+                }
+                if(isset($params['id'])){
+                    $sql .= " AND uuid='".$params['id']."'";
+                }
+                elseif($query != '') {
+                    $sql .= " AND md_values.md_value ILIKE '". $query . "%'";
+                }
+                $sql .= "
+                ORDER BY md_value";
+                $result = $this->db->query($sql)->fetchAll();
+                foreach($result as $row) {
+                    $rs[] = array('id'=>$row->id,"title"=>$row->md_value,"abstract"=>$row->abstract);
+                }
+                $rs = array('numresults'=>count($rs),'records'=>$rs);
+                return $rs;
+                 
                 break;
             case 'serviceType':
                 $sql = "SELECT  count(*) as count, md_value

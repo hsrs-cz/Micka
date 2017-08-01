@@ -9,6 +9,7 @@
     <value name="underDevelopment" code="7">ve vývoji</value>
     <value name="completed" code="1">kompletní</value>
   </status>
+  
   <spatialRepresentationType>
     <value name="vector" code="1">vektor</value>
     <value name="video" code="6">video</value>
@@ -17,6 +18,7 @@
     <value name="textTable" code="3">textová tabulka</value>
     <value name="grid" code="2">rastr (grid)</value>
   </spatialRepresentationType>
+  
   <language>
     <value name="cze" code="cze" code2="cs">čeština</value>
     <value name="eng" code="eng" code2="en">angličtina</value>
@@ -45,7 +47,9 @@
     <value name="bos" code="bos" code2="bs">bosenština</value>
     <value name="srp" code="srp" code2="sr">srbština</value>
     <value name="ukr" code="ukr" code2="uk">ukrajinština</value>
+    <value name="zxx" code="zxx" code2="">žádný</value>
   </language>
+  
   <characterSet>
     <value name="usAscii" code="25">ASCII</value>
     <value name="8859part6" code="11">8859part6</value>
@@ -59,6 +63,7 @@
     <value name="win1250" code="30">win-1250</value>
     <value name="CP852" code="31">CP852</value>
   </characterSet>
+  
   <topicCategory>
     <value name="farming" code="1">Zemědělství</value>
     <value name="biota" code="2">Biota</value>
@@ -80,6 +85,7 @@
     <value name="transportation" code="18">Doprava</value>
     <value name="utilitiesCommunication" code="19">Veřejné služby/komunikace</value>
   </topicCategory>
+  
   <Type>
     <value name="place" code="2">lokalizace</value>
     <value name="stratum" code="3">vrstva</value>
@@ -87,6 +93,7 @@
     <value name="theme" code="5">téma</value>
     <value name="discipline" code="1">disciplína</value>
   </Type>
+  
   <associationType>
     <value name="largerWorkCitation" code="2">citace větší práce</value>
     <value name="crossReference" code="1">křížový odkaz</value>
@@ -94,6 +101,7 @@
     <value name="source" code="4">zdroj</value>
     <value name="partOfSeamlessDatabase" code="3">část bezešvé databáze</value>
   </associationType>
+  
   <initiativeType>
     <value name="investigation" code="5">investigation</value>
     <value name="experiment" code="4">experiment</value>
@@ -111,6 +119,7 @@
     <value name="platform" code="9">platforma</value>
     <value name="mission" code="6">mission</value>
   </initiativeType>
+  
   <accessConstraints>
     <value name="trademark" code="4">ochranná známka</value>
     <value name="patentPending" code="3">patent v řízení</value>
@@ -121,6 +130,7 @@
     <value name="license" code="5">licence</value>
     <value name="intellectualPropertyRights" code="6">ochrana duševního vlastnictví</value>
   </accessConstraints>
+  
   <classification>
     <value name="secret" code="4">tajné</value>
     <value name="restricted" code="2">vyhrazené</value>
@@ -128,11 +138,13 @@
     <value name="confidential" code="3">důvěrné</value>
     <value name="topSecret" code="5">přísně tajné</value>
   </classification>
+  
   <evaluationMethodType>
     <value name="directExternal" code="2">přímý vnější</value>
     <value name="indirect" code="3">nepřímý</value>
     <value name="directInternal" code="1">přímý vnitřní</value>
   </evaluationMethodType>
+  
   <maintenanceAndUpdateFrequency>
     <value name="unknown" code="12">neznámý</value>
     <value name="continual" code="1">průběžně</value>
@@ -147,6 +159,7 @@
     <value name="irregular" code="10">nepravidelně</value>
     <value name="notPlanned" code="11">neplánovaně</value>
   </maintenanceAndUpdateFrequency>
+  
   <updateScope>
     <value name="fieldSession" code="12">mise v terénu</value>
     <value name="service" code="14">služba</value>
@@ -166,10 +179,12 @@
     <value name="featureType" code="10">geoprvek - typ/třída</value>
     <value name="application" code="99">aplikace</value>
   </updateScope>
+  
   <cellGeometry>
     <value name="area" code="2">plocha</value>
     <value name="point" code="1">bod</value>
   </cellGeometry>
+  
   <pointInPixel>
     <value name="upperRight" code="4">pravý horní</value>
     <value name="lowerRight" code="3">pravý dolní</value>
@@ -177,6 +192,7 @@
     <value name="center" code="1">center</value>
     <value name="upperLeft" code="5">levý horní</value>
   </pointInPixel>
+  
   <topologyLevel>
     <value name="topology1D" code="2">1D (liniová síť 'snadjezdy')</value>
     <value name="planarGraph" code="3">planární graf (liniová síť bez 'nadjezdů')</value>
@@ -188,6 +204,7 @@
     <value name="abstract" code="9">abstraktní (bez geom. realizace)</value>
     <value name="geometryOnly" code="1">geometrie (bez topologie)</value>
   </topologyLevel>
+  
   <dimensionName>
     <value name="row" code="1">řádek</value>
     <value name="vertical" code="3">výškový</value>
@@ -198,6 +215,7 @@
     <value name="time" code="8">čas</value>
     <value name="column" code="2">sloupec</value>
   </dimensionName>
+  
   <geometricObjectType>
     <value name="composite" code="2">složený</value>
     <value name="point" code="4">bod</value>
@@ -206,11 +224,13 @@
     <value name="complex" code="1">complexní</value>
     <value name="curve" code="3">linie, křivka</value>
   </geometricObjectType>
+  
   <contentType>
     <value name="image" code="1">obrázek</value>
     <value name="physicalMeasurement" code="3">fyzické měření</value>
     <value name="thematicClassification" code="2">tématická klasifikace</value>
   </contentType>
+  
   <imagingCondition>
     <value name="terrainMasking" code="11">maskováno terénem</value>
     <value name="rain" code="7">déšť</value>
@@ -224,6 +244,7 @@
     <value name="snow" code="10">sníh</value>
     <value name="shadow" code="9">stín</value>
   </imagingCondition>
+  
   <name>
     <value name="cdRom" code="1">CD</value>
     <value name="dvd" code="2">DVD</value>
@@ -244,6 +265,7 @@
     <value name="satellite" code="16">satelit</value>
     <value name="telephoneLink" code="17">telefonní linka</value>
   </name>
+  
   <mediumFormat>
     <value name="cpio" code="1">cpio</value>
     <value name="iso9660RockRidge" code="5">iso9660RockRidge</value>
@@ -252,11 +274,13 @@
     <value name="tar" code="2">tar</value>
     <value name="iso9660" code="4">iso9660</value>
   </mediumFormat>
+  
   <obligation>
     <value name="conditional" code="3">podmíněný</value>
     <value name="optional" code="2">volitelný</value>
     <value name="mandatory" code="1">povinný</value>
   </obligation>
+  
   <dataType>
     <value name="unionClass" code="10">unionClass</value>
     <value name="association" code="15">asociace</value>
@@ -274,6 +298,7 @@
     <value name="specifiedClass" code="7">specifiedClass</value>
     <value name="datatypeClass" code="8">datatypeClass</value>
   </dataType>
+  
   <unitOfMeasure>
     <value name="mikrometer" code="">mikrometr</value>
     <value name="kilometer" code="">kilometr</value>
@@ -284,6 +309,7 @@
     <value name="foot" code="">stopa</value>
     <value name="nanometer" code="">nanometr</value>
   </unitOfMeasure>
+  
   <presentationForm>
     <value name="mapDigital" code="5">mapa digitální</value>
     <value name="imageDigital" code="3">obraz digitální</value>
@@ -300,6 +326,7 @@
     <value name="mapHardcopy" code="6">mapa vytištěná...</value>
     <value name="imageHardcopy" code="4">obraz vytištěný...</value>
   </presentationForm>
+  
   <role>
     <value name="publisher" code="10">vydavatel</value>
     <value name="custodian" code="2">správce</value>
@@ -313,11 +340,13 @@
     <value name="resourceProvider" code="1">poskytovatel zdroje</value>
     <value name="author" code="11">autor</value>
   </role>
+  
   <dateType>
     <value name="publication" code="2" dc="issued">zveřejnění</value>
     <value name="revision" code="3" dc="modified">revize</value>
     <value name="creation" code="1" dc="created">vytvoření</value>
   </dateType>
+  
   <function>
     <value name="download" code="1">download</value>
     <value name="information" code="2">informace</value>
@@ -325,6 +354,7 @@
     <value name="search" code="5">hledání</value>
     <value name="order" code="4">objednání</value>
   </function>
+  
   <uomName>
     <value name="minutes" code="2">minuty</value>
     <value name="seconds" code="3">vteřiny</value>
@@ -338,6 +368,7 @@
     <value name="second" code="1">vteřina</value>
     <value name="month" code="6">měsíc</value>
   </uomName>
+  
   <type>
     <value name="Image" code="">Obrázek</value>
     <value name="Dataset" code="">Datová sada</value>
@@ -353,6 +384,7 @@
     <value name="Project" code="">Projekt *</value>
     <value name="Collection" code="">Skupina</value>
   </type>
+  
   <couplingType>
     <value name="tight" code="">těsný</value>
     <value name="mixed" code="">smíšený</value>
@@ -404,8 +436,7 @@
   	<value name="true" code="">ANO</value>
   	<value name="false" code="">NE</value>
   	<value name="" code="">NEHODNOCENO</value>
-  	</compliant>
-  
+  </compliant> 
 
   <inspireKeywords title="Datová témata INSPIRE">
     <!-- ANNEX I -->
@@ -449,24 +480,24 @@
     <value uri="http://inspire.ec.europa.eu/theme/mr" cenia="social" name="Nerostné suroviny" code="Mineral resources" publication="2013-10-12" n="III.21">III.21 Nerostné suroviny</value>  
   </inspireKeywords>
 
-  <serviceSpecifications title="Nařízení komise">
+  <specifications title="Nařízení komise">
 	<value name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat" 
-        code="Metadata"  uri="CELEX:32008R1205" publication="2008-12-04">Metadata</value>
-	<value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat" 
-        code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value>
+        code="Metadata"  uri="http://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">Metadata</value>
+	<!--value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat" 
+        code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value-->
 	<value name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat" 
-        code="Interoperability"  uri="CELEX:32010R1089" publication="2010-12-08">Interoperabilita</value>
+        code="Interoperability"  uri="http://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">Interoperabilita</value>
     <value name="Nařízení Komise (EU) č. 1088/2010 ze dne 23. listopadu 2010, kterým se mění nařízení (ES) č. 976/2009, pokud jde o služby stahování dat a transformační služby" 
-        code="Download" uri="CELEX:32010R1088" publication="2010-12-08">Stahovací a transformační služby 1088/2010</value>  
-	<value name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby" 
-        code="Network" uri="CELEX:32009R0976"  publication="2009-10-20">Síťové služby</value>  
-	<value name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" 
-        code="Access" uri="CELEX:32010R0268" publication="2010-03-30">Přístup k datovým sadám a službám</value>
-  	<value name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" 
-        code="Monitoring" uri="CELEX:32009D0442" publication="2009-06-11">Monitoring ...</value>
-  	<value name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" 
-        code="INSPIRE" uri="CELEX:32010R1089" publication="2007-03-14">SMĚRNICE INSPIRE</value>
-  	</serviceSpecifications>
+        code="Download" uri="http://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">Stahovací a transformační služby 1088/2010</value>  
+    <value name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby" 
+        code="Network" uri="http://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">Síťové služby</value>  
+    <value name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" 
+        code="Access" uri="http://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">Přístup k datovým sadám a službám</value>
+    <value name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" 
+        code="Monitoring" uri="http://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">Monitoring ...</value>
+    <value name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" 
+        code="INSPIRE" uri="http://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">SMĚRNICE INSPIRE</value>
+  </specifications>
 
   <serviceType>
   	<value name="WMS" code="">WMS</value>
@@ -633,5 +664,96 @@
     <value name="percent" code="percent">procenta</value>
     <value name="units" code="units">jednotky</value>
 </units>
+
+<protocol>
+    <value code="WWW:LINK-1.0-http--link">WWW - link</value> 
+    <value code="WWW:DOWNLOAD-1.0-http--download">WWW - download</value> 
+    <value code="WWW:LINK-1.0-http--rss">RSS</value> 
+    <value code="WWW:LINK-1.0-http--atom">ATOM</value> 
+    <value code="WWW:DOWNLOAD-1.0-ftp--download">FTP</value> 
+    <value code="OGC:WMS-1.0.0-http-get-capabilities">WMS 1.0.0</value> 
+    <value code="OGC:WMS-1.1.0-http-get-capabilities">WMS 1.1.0</value> 
+    <value code="OGC:WMS-1.1.1-http-get-capabilities">WMS 1.1.1</value> 
+    <value code="OGC:WMS-1.3.0-http-get-capabilities">WMS 1.3.0</value> 
+    <value code="OGC:WFS-1.0.0-http-get-capabilities">WFS 1.0.0 / Get</value> 
+    <value code="OGC:WFS-1.0.0-http-post-capabilities">WFS 1.0.0 / Post</value> 
+    <value code="OGC:WFS-1.1.0-http-get-capabilities">WFS 1.1.0 / Get</value> 
+    <value code="OGC:WFS-1.1.0-http-post-capabilities">WFS 1.1.0 / Post</value> 
+    <value code="OGC:WFS-2.0.0-http-get-capabilities">WFS 2.0.0 / Get</value> 
+    <value code="OGC:WFS-2.0.0-http-post-capabilities">WFS 2.0.0 / Post</value> 
+    <value code="OGC:CSW-2.0.2-http-get-capabilities">CSW 2.0.2 / Get</value> 
+    <value code="OGC:CSW-2.0.2-http-post-capabilities">CSW 2.0.2 / Post</value> 
+    <value code="ESRI:AIMS--http-get-image">ESRI ArcIMS image service</value> 
+    <value code="ESRI:AIMS--http-get-feature">ESRI ArcIMS feature service</value> 
+    <value code="ESRI:AIMS--http--configuration">ArcIMS Map Service (*.AXL)</value> 
+    <value code="ESRI:MAP-10.2-http-rest">ESRI ArcGIS MAP REST</value> 
+    <value code="ESRI:MAP-10.2-http-soap">ESRI ArcGIS MAP SOAP</value> 
+    <value code="ESRI:FEATURE--http-rest">ESRI ArcGIS FEATURE REST</value> 
+    <value code="ESRI:FEATURE--http-soap">ESRI ArcGIS FEATURE SOAP</value> 
+    <value code="ESRI:GEOCODE--http-rest">ESRI ArcGIS GEOCODE REST</value> 
+    <value code="ESRI:GEOCODE--http-soap">ESRI ArcGIS GEOCODE SOAP</value> 
+    <value code="ESRI:GEODATA--http-rest">ESRI ArcGIS GEODATA REST</value> 
+    <value code="ESRI:GEODATA--http-soap">ESRI ArcGIS GEODATA SOAP</value> 
+    <value code="ESRI:GEOMETRY--http-rest">ESRI ArcGIS GEOMETRY REST</value> 
+    <value code="ESRI:GEOMETRY--http-soap">ESRI ArcGIS GEOMETRY SOAP</value> 
+    <value code="ESRI:GP--http-rest">ESRI ArcGIS Geoprocessing REST</value> 
+    <value code="ESRI:GP--http-soap">ESRI ArcGIS Geoprocessing SOAP</value> 
+    <value code="ESRI:GLOBE--http-rest">ESRI ArcGIS GLOBE REST</value> 
+    <value code="ESRI:GLOBE--http-soap">ESRI ArcGIS GLOBE SOAP</value> 
+    <value code="ESRI:IMAGE--http-rest">ESRI ArcGIS IMAGE REST</value> 
+    <value code="ESRI:IMAGE--http-soap">ESRI ArcGIS IMAGE SOAP</value> 
+    <value code="ESRI:NA--http-rest">ESRI ArcGIS Network Analysis REST</value> 
+    <value code="ESRI:NA--http-soap">ESRI ArcGIS Network Analysis SOAP</value> 
+</protocol>
+
+<extents>
+    <value bbox="9.53 46.373 17.16 49.021" uri="http://publications.europa.eu/resource/authority/country/AUT">Rakousko</value>
+    <value bbox="2.545 49.498 6.407 51.506" uri="http://publications.europa.eu/resource/authority/country/BEL">Belgie</value>
+    <value bbox="22.362 41.236 28.591 44.213" uri="http://publications.europa.eu/resource/authority/country/BGR">Bulharsko</value>
+    <value bbox="13.590 42.217 19.677 46.563" uri="http://publications.europa.eu/resource/authority/country/HRV">Chorvatsko</value>
+    <value bbox="32.27 34.563 34.587 35.696" uri="http://publications.europa.eu/resource/authority/country/CYP">Kypr</value>
+    <value bbox="12.09 48.552 18.859 51.056" uri="http://publications.europa.eu/resource/authority/country/CZE">Česká republika</value>
+    <value bbox="8.074 54.56 15.193 57.752" uri="http://publications.europa.eu/resource/authority/country/DNK">Dánsko</value>
+    <value bbox="21.772 57.51 28.209 59.686" uri="http://publications.europa.eu/resource/authority/country/EST">Estonsko</value>
+    <value bbox="-9.756 35.789 32.080 71.205" uri="http://publications.europa.eu/resource/authority/country/EUR">Evropská unie</value>
+    <value bbox="19.303 59.766 31.586 70.093" uri="http://publications.europa.eu/resource/authority/country/FIN">Finsko</value>
+    <value bbox="-61.981 -21.342 55.832 51.09" uri="http://publications.europa.eu/resource/authority/country/FRA">Francie</value>
+    <value bbox="5.866 47.271 15.041 55.058" uri="http://publications.europa.eu/resource/authority/country/DEU">Německo</value>
+    <value bbox="19.374 34.804 29.642 41.749" uri="http://publications.europa.eu/resource/authority/country/GRC">Řecko</value>
+    <value bbox="16.113 45.738 22.897 48.586" uri="http://publications.europa.eu/resource/authority/country/HUN">Maďarsko</value>
+    <value bbox="-10.470 51.444 -5.372 55.383" uri="http://publications.europa.eu/resource/authority/country/IRL">Irsko</value>
+    <value bbox="6.626 35.493 18.519 47.093" uri="http://publications.europa.eu/resource/authority/country/ITA">Itálie</value>
+    <value bbox="20.97 55.675 28.242 58.086" uri="http://publications.europa.eu/resource/authority/country/LVA">Lotyšsko</value>
+    <value bbox="20.953 53.899 26.836 56.45" uri="http://publications.europa.eu/resource/authority/country/LTU">Litva</value>
+    <value bbox="5.735 49.448 6.53 50.183" uri="http://publications.europa.eu/resource/authority/country/LUX">Lucembursko</value>
+    <value bbox="14.19 35.806 14.575 36.08" uri="http://publications.europa.eu/resource/authority/country/MLT">Malta</value>
+    <value bbox="3.358 50.751 7.227 53.554" uri="http://publications.europa.eu/resource/authority/country/NLD">Nizozemí</value>
+    <value bbox="4.61 57.972 31.167 71.186" uri="http://publications.europa.eu/resource/authority/country/NOR">Norsko</value>
+    <value bbox="14.123 49.003 24.145 54.836" uri="http://publications.europa.eu/resource/authority/country/POL">Polsko</value>
+    <value bbox="-31.296 32.638 -6.19 42.155" uri="http://publications.europa.eu/resource/authority/country/PRT">Portugalsko</value>
+    <value bbox="20.269 43.62 29.678 48.259" uri="http://publications.europa.eu/resource/authority/country/ROU">Rumunsko</value>
+    <value bbox="16.832 47.732 22.565 49.614" uri="http://publications.europa.eu/resource/authority/country/SVK">Slovensko</value>
+    <value bbox="13.375 45.422 16.61 46.877" uri="http://publications.europa.eu/resource/authority/country/SVN">Slovinsko</value>
+    <value bbox="-18.161 27.636 4.327 43.789" uri="http://publications.europa.eu/resource/authority/country/ESP">Španělsko</value>
+    <value bbox="10.984 55.336 24.166 69.06" uri="http://publications.europa.eu/resource/authority/country/SWE">Švédsko</value>
+    <value bbox="5.956 45.818 10.492 47.809" uri="http://publications.europa.eu/resource/authority/country/CHE">Švýcarsko</value>
+    <value bbox="-8.647 49.883 1.762 60.846" uri="http://publications.europa.eu/resource/authority/country/GBR">Spojené kralovství</value>
+</extents>
+
+<accessCond>
+	<value name="no conditions to access and use" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">No conditions apply to access and use.</value>
+	<value name="conditions to access and use unknown" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">The conditions applying to access and use are unknown.</value>
+</accessCond>
+
+<limitationsAccess>
+	<value name="public access limited according to Article 13(1)(a) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.</value>
+	<value name="public access limited according to Article 13(1)(b) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b">Public access to spatial data sets and services would adversely affect international relations, public security or national defence.</value>
+	<value name="public access limited according to Article 13(1)(c) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c">Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.</value>
+	<value name="public access limited according to Article 13(1)(d) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d">Public access to spatial data sets and services would adversely affect the confidentiality of commercial or industrial information, where such confidentiality is provided for by national or Community law to protect a legitimate economic interest, including the public interest in maintaining statistical confidentiality and tax secrecy.</value>
+	<value name="public access limited according to Article 13(1)(e) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e">Public access to spatial data sets and services would adversely affect intellectual property rights.</value>
+	<value name="public access limited according to Article 13(1)(f) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f">Public access to spatial data sets and services would adversely affect the confidentiality of personal data and/or files relating to a natural person where that person has not consented to the disclosure of the information to the public, where such confidentiality is provided for by national or Community law.</value>
+	<value name="public access limited according to Article 13(1)(g) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g">Public access to spatial data sets and services would adversely affect the interests or protection of any person who supplied the information requested on a voluntary basis without being under, or capable of being put under, a legal obligation to do so, unless that person has consented to the release of the information concerned.</value>
+	<value name="public access limited according to Article 13(1)(h) of the INSPIRE Directive" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h">Public access to spatial data sets and services would adversely affect the protection of the environment to which such information relates, such as the location of rare species.</value>
+</limitationsAccess>
 
 </map>
