@@ -98,6 +98,13 @@
 			<p>Time period covered by the content of the dataset.</p>
 		</help>
 	</msg>
+	<msg name="extentId">
+		<label>CZ-14 Geographic identifier</label>
+		<help>
+			<h3>Geographic identifier</h3>
+			<p> Codelist </p>
+		</help>
+	</msg>
 	<msg name="Extent">
 		<label>Extent</label>
 	</msg>
@@ -158,9 +165,9 @@
 		</help>
 	</msg>
 	<msg name="dataContact">
-		<label>9 Responsible Organisation</label>
+		<label>9.1 Responsible Organisation</label>
 		<help>
-			<h3>9 Responsible Organisation</h3>
+			<h3>9.1 Responsible Organisation</h3>
 			<p>Organisation responsible for creating, management, maintenance and distribution of the resource.</p> 
 		</help>
 	</msg>
@@ -189,9 +196,9 @@
 		</help>
 	</msg>
 	<msg name="fileIdentifier">
-		<label>CZ-1 File Identifier</label>
+		<label>11. File Identifier</label>
 		<help>
-			<h3>CZ-1 File Identifier</h3>
+			<h3>11 File Identifier</h3>
 			<p>Unique identifier of metadata record.</p> 
 			<p class="pozn">String, typically UUID.</p>		
 		</help>
@@ -317,6 +324,13 @@ against which data is being evaluated.</p>
 			<p>If not stated, whole dataset is meant.</p>
 		</help>
 	</msg>
+	<msg name="dqScope">
+		<label>12 Data quality scope</label>
+		<help>
+			<h3>12 Data quality scope</h3>
+			<p>Oblast dat, jichž se údržba týká, např. dlaždice. Není-li uvedeno, je míněná celá datová sada.</p>
+		</help>
+	</msg>
 	<msg name="maintenanceNote">
 		<label>CZ-6 Údržba - poznámka</label>
 		<help>
@@ -433,6 +447,10 @@ against which data is being evaluated.</p>
 		<label>Organisation</label>
 		<help>Organisation name</help>
 	</msg>
+	<msg name="individualName">
+		<label>Person</label>
+		<help>Person name</help>
+	</msg>
 	<msg name="Metadata">
 		<label>Metadata on metadata</label>
 		<help></help>
@@ -447,6 +465,10 @@ against which data is being evaluated.</p>
 	</msg>
 	<msg name="Quality">
 		<label>Quality</label>
+		<help></help>
+	</msg>
+	<msg name="Conformity">
+		<label>7. Conformity</label>
 		<help></help>
 	</msg>
 	<msg name="metadataStandardName">

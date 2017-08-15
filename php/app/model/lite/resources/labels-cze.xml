@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <labels>
 	<msg name="fileIdentifier">
-		<label>CZ-1 Identifikátor metadatového záznamu</label>
+		<label>11. Identifikátor metadatového záznamu</label>
 		<help>
-			<h3>CZ-1 Identifikátor metadatového záznamu (File Identifier)</h3>
+			<h3>11 Identifikátor metadatového záznamu (File Identifier)</h3>
 			<p>Identifikátor metadatového záznamu je automaticky generovaný.</p> 
 			<p class="pozn">Hodnota je znakový řetězec. Typicky UUID. Jde o unikátní klíč v katalogu.</p>		
 		</help>
@@ -97,6 +97,13 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 			<p>Seznam dalších klíčových slov - uveďte každé na nový řádek.</p>
 		</help>
 	</msg>
+	<msg name="theme">
+		<label>3.1 Téma INSPIRE</label>
+		<help>
+			<h3>3.1 Dalčí klíčová slova</h3>
+			<p>Seznam dalších klíčových slov - uveďte každé na nový řádek.</p>
+		</help>
+	</msg>
 	<msg name="date">
 		<label>5a Referenční datum</label>
 		<help>
@@ -119,9 +126,9 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 		</help>
 	</msg>
 	<msg name="coorSys">
-		<label>IO-1 Souřadnicový ref. systém</label>
+		<label>IOD-1 Souřadnicový ref. systém</label>
 		<help>
-			<h3>IO-1 Souřadnicový referenční systém (Coordinate Reference System) </h3>
+			<h3>Souřadnicový referenční systém (Coordinate Reference System) </h3>
 			<p>Popis souřadnicového referenčního systému používaného (souřadnicových referenčních systémů používaných) v datové sadě. </p>
 			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. </p>		
 		</help>
@@ -133,6 +140,13 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 			<p> Prvek určuje prostorový rozsah zdroje a uvádí se jako ohraničení. Ohraničení se vyjadřuje pomocí západní a východní zeměpisné délky a jižní a severní zeměpisné šířky ve stupních desetinné soustavy s přesností nejméně na dvě desetinná místa. Použijte desetinnou tečku. K určení ohraničení můžete použít mapu a její nástroje viz. ikony nad mapou.
 			</p>
 			</help>
+	</msg>
+	<msg name="extentId">
+		<label>CZ-14 Geografický identifikátor</label>
+		<help>
+			<h3>Identifikátor určující geografický rozsah (Geographic identifier)</h3>
+			<p> Výběr z číselníku </p>
+		</help>
 	</msg>
 	<msg name="timeExtent">
 		<label>5b Časový rozsah</label>
@@ -228,9 +242,9 @@ Výběr z číselníku.</p>
 		</help>
 	</msg>
 	<msg name="dataContact">
-		<label>9 Odpovědná organizace</label>
+		<label>9.1 Odpovědná organizace</label>
 		<help>
-			<h3>9 Zodpovědná organizace (Responsible Organisation)</h3>
+			<h3>9.1 Zodpovědná organizace (Responsible Organisation)</h3>
 			<p>Organizace odpovídající za vytvoření, řízení, údržbu a distribuci zdroje. </p> 
 			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod poslední částí této komplexní položky „Zodpovědná organizace“.</p>
 		</help>
@@ -246,9 +260,9 @@ Výběr z číselníku.</p>
 		</help>
 	</msg>
 	<msg name="inspire">
-		<label>3.1 Klíčové slovo</label>
+		<label>3.1 Téma INSPIRE</label>
 		<help>
-			<h3>3.1 Hodnota klíčového slova (Keyword value) </h3>
+			<h3>3.1 Téma INPSPIRE (Keyword value) </h3>
 			<p>Zařazení datové sady k tématům INSPIRE. Jedno z klíčových slov musí být INSPIRE téma ze slovníku gemet viz. číselník.</p>
 		</help>
 	</msg>
@@ -441,6 +455,13 @@ Výběr z číselníku.
 			<p>Oblast dat, jichž se údržba týká, např. dlaždice. Není-li uvedeno, je míněná celá datová sada.</p>
 		</help>
 	</msg>
+	<msg name="dqScope">
+		<label>12 Úroveň popisu kvality</label>
+		<help>
+			<h3>CZ-5 Úroveň popisu kvality (Data quality scope)</h3>
+			<p>Oblast dat, jichž se údržba týká, např. dlaždice. Není-li uvedeno, je míněná celá datová sada.</p>
+		</help>
+	</msg>
 	<msg name="maintenanceNote">
 		<label>CZ-6 poznámka</label>
 		<help>
@@ -567,6 +588,10 @@ Volný text.</p>
 		<label>Organizace</label>
 		<help>Název organizace</help>
 	</msg>
+	<msg name="individualName">
+		<label>Osoba</label>
+		<help>Jméno osoby</help>
+	</msg>
 	<msg name="Metadata">
 		<label>Metadata metadat</label>
 		<help></help>
@@ -581,6 +606,10 @@ Volný text.</p>
 	</msg>
 	<msg name="Quality">
 		<label>Kvalita</label>
+		<help></help>
+	</msg>
+	<msg name="Conformity">
+		<label>7. Soulad</label>
 		<help></help>
 	</msg>
 	<msg name="metadataStandardName">

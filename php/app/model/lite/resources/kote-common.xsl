@@ -87,22 +87,6 @@
 	
 	<!-- validace --> 
 
-	<!-- <xsl:choose>
-		<xsl:when test="$validator/test[@code=$valid and @level='c']//err">
-			<div style="color:#00A000;margin-left:105px">
-				<xsl:value-of select="$validator/test[@code=$valid]//err/.."/>
-				<xsl:value-of select="$validator/test[@code=$valid]//err"/>
-			</div>
-		</xsl:when> 
-		<xsl:when test="$validator/test[@code=$valid]//err!=''">
-			<div style="background:#FF5050;margin-left:105px">
-				<xsl:value-of select="$validator/test[@code=$valid]//err"/>
-				<xsl:value-of select="$validator/test[@code=$valid]//err"/>
-			</div>
-		</xsl:when>  
-	</xsl:choose> -->
-
-
 	<fieldset id="{concat($name, '_',$i,'_')}">
         <div class="row">
             <xsl:call-template name="drawLabel">
@@ -114,30 +98,39 @@
 		<xsl:variable name="getParty">
 		  <xsl:if test="$publisher=1">getParty(this);</xsl:if>
 		</xsl:variable>
+
+        <xsl:call-template name="drawInput">
+            <xsl:with-param name="path" select="concat($name,'_',$i,'_individualName')"/>
+            <xsl:with-param name="name" select="'individualName'"/>
+            <xsl:with-param name="value" select="$root/*/gmd:individualName"/>
+            <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
+            <xsl:with-param name="valid" select="$valid"/>
+        </xsl:call-template>
+
 		
 		<xsl:choose>
-		<xsl:when test="$publisher=1">
-  		<xsl:call-template name="drawInput">
-  		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_organisationName')"/>
-  		  	<xsl:with-param name="name" select="'organisationName'"/>
-  			  <xsl:with-param name="value" select="$root/*/gmd:organisationName"/>
-  			  <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
-  			  <xsl:with-param name="action" select="'getParty(this)'"/>
-  			  <xsl:with-param name="langs" select="$langs"/>
-  			  <xsl:with-param name="valid" select="$valid"/>
-  		</xsl:call-template>
-  	</xsl:when>
-    <xsl:otherwise>
-  		<xsl:call-template name="drawInput">
-  		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_organisationName')"/>
-  		  	<xsl:with-param name="name" select="'organisationName'"/>
-  			  <xsl:with-param name="value" select="$root/*/gmd:organisationName"/>
-  			  <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
-  			  <xsl:with-param name="langs" select="$langs"/>
-  			  <xsl:with-param name="valid" select="$valid"/>
-  			</xsl:call-template>    
-    </xsl:otherwise>
-    </xsl:choose>	
+            <xsl:when test="$publisher=1">
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="path" select="concat($name,'_',$i,'_organisationName')"/>
+                    <xsl:with-param name="name" select="'organisationName'"/>
+                    <xsl:with-param name="value" select="$root/*/gmd:organisationName"/>
+                    <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
+                    <xsl:with-param name="action" select="'getParty(this)'"/>
+                    <xsl:with-param name="langs" select="$langs"/>
+                    <xsl:with-param name="valid" select="$valid"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="path" select="concat($name,'_',$i,'_organisationName')"/>
+                    <xsl:with-param name="name" select="'organisationName'"/>
+                    <xsl:with-param name="value" select="$root/*/gmd:organisationName"/>
+                    <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
+                    <xsl:with-param name="langs" select="$langs"/>
+                    <xsl:with-param name="valid" select="$valid"/>
+                    </xsl:call-template>    
+            </xsl:otherwise>
+        </xsl:choose>	
 
 		<!-- 
 
@@ -226,10 +219,10 @@
 	<xsl:param name="valid"/>
 	<xsl:param name="langs" select="0"/>
 	<xsl:param name="req" select="''"/>
-	
+	<xsl:param name="tags" select="0"/>
 	
 	<!-- class pro label -->
-	<xsl:variable name="lclass">
+	<xsl:variable name="lclassI">
 		<xsl:choose>
 			<xsl:when test="contains($class,'mandatory')">mand</xsl:when>
 			<xsl:when test="contains($class,'cond')">cond</xsl:when>
@@ -337,22 +330,6 @@
 			
 			<!-- SELECT -->
 			<xsl:when test="$codes!=''">
-				<!--select id="{$name}-sel" name="{$path}" class="{$class}">
-					<xsl:if test="$req">
-						<xsl:attribute name="required">required</xsl:attribute>
-					</xsl:if>
-					<option value=""></option>
-					<xsl:for-each select="$codelist/*[name()=$codes]/value">
-			  			<xsl:choose>
-			  				<xsl:when test="@name=normalize-space($value) or @uri=normalize-space($value)">
-			  					<option value="{@name}" selected="selected"><xsl:value-of select="."/></option>
-			  				</xsl:when>
-			  				<xsl:otherwise>
-			  					<option value="{@name}"><xsl:value-of select="."/></option>
-			  				</xsl:otherwise>
-			  			</xsl:choose>		
-			  		</xsl:for-each>
-				</select-->
                 
                 <select id="{$name}-sel" name="{$path}" class="sel2 {$class}">
                     <xsl:if test="$req">
@@ -363,6 +340,9 @@
                     </xsl:if>
                     <xsl:if test="$multi=0">
                         <xsl:attribute name="data-allow-clear">true</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$tags=1">
+                        <xsl:attribute name="data-tags">true</xsl:attribute>
                     </xsl:if>
                         
                     <!-- codelist loop -->
@@ -376,10 +356,10 @@
                         </xsl:variable>
                          <xsl:choose>
                             <xsl:when test="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]">
-                                <option value="{$c}" selected="'selected'"><xsl:value-of select="$r"/></option>
+                                <option value="{$c}"  title="{$r/@qtip}" selected="'selected'"><xsl:value-of select="$r"/></option>
                             </xsl:when>
                             <xsl:otherwise>
-                                <option value="{$c}"><xsl:value-of select="$r"/></option>
+                                <option value="{$c}" title="{$r/@qtip}"><xsl:value-of select="$r"/></option>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:for-each>
