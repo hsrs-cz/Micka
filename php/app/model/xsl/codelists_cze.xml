@@ -71,7 +71,7 @@
     <value name="climatologyMeteorologyAtmosphere" code="4">Klimatologie/meteorologie/atmosféra</value>    
     <value name="economy" code="5">Hospodářství</value>
     <value name="elevation" code="6">Nadmořská výška</value>
-    <value name="environment" code="7">Životní prostředíí</value>
+    <value name="environment" code="7">Životní prostředí</value>
     <value name="geoscientificInformation" code="8">Geologicko-vědecké informace</value>
     <value name="health" code="9">Zdraví</value>
     <value name="imageryBaseMapsEarthCover" code="10">Obrazová data/základní mapy/pokryv Země</value>

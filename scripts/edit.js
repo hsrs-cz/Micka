@@ -1,4 +1,4 @@
-﻿/******************************
+/******************************
  * MICKA 6.000
  * 2017-02-20
  * javascript
@@ -1856,7 +1856,7 @@ micka.window = function(obj, par){
 		+'<h1>'+par.title+'</h1>'+par.data+'</div>');
 }
 
-XXXmicka.duplicate = function(){
+micka.duplicate = function(){
     var dold = this.parentNode;
     var dnew = dold.cloneNode(true);
     var dalsi = dold.nextSibling;

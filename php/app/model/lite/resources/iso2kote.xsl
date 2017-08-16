@@ -29,15 +29,15 @@
 <xsl:template match="*">
 
 
-<xsl:variable name="serv" select="string-length(gmd:identificationInfo/srv:SV_ServiceIdentification)>0 or $mds=10"/>
-<xsl:variable name="codeListsLang" select="document(concat('../../xsl/codelists_' ,$mlang, '.xml'))/map" />
-<xsl:variable name="langs" select="//gmd:locale" />
+    <xsl:variable name="serv" select="string-length(gmd:identificationInfo/srv:SV_ServiceIdentification)>0 or $mds=10"/>
+    <xsl:variable name="codeListsLang" select="document(concat('../../xsl/codelists_' ,$mlang, '.xml'))/map" />
+    <xsl:variable name="langs" select="//gmd:locale" />
 
-<!-- Jazyky -->
+    <!-- Jazyky -->
 
-<xsl:for-each select="$langs">
-	<input type="hidden" name="locale_{position()-1}" value="{*/gmd:languageCode/*/@codeListValue}"/>
-</xsl:for-each>
+    <xsl:for-each select="$langs">
+        <input type="hidden" name="locale_{position()-1}" value="{*/gmd:languageCode/*/@codeListValue}"/>
+    </xsl:for-each>
 
 
 <!-- IDENTIFIKACE -->
@@ -45,20 +45,18 @@
 	<xsl:call-template name="drawInput">
 		<xsl:with-param name="value" select="//gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 		<xsl:with-param name="name" select="'title'"/>
-		<xsl:with-param name="class" select="'mandatory'"/>
 		<xsl:with-param name="valid" select="'1.1'"/>
 		<xsl:with-param name="langs" select="$langs"/>
-		<xsl:with-param name="req" select="'1'"/>
+		<xsl:with-param name="req" select="1"/>
 	</xsl:call-template>
 
 	<xsl:call-template name="drawInput">
 		<xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:abstract"/>
 		<xsl:with-param name="name" select="'abstract'"/>
 		<xsl:with-param name="type" select="'textarea'"/>
-		<xsl:with-param name="class" select="'mandatory'"/>
 		<xsl:with-param name="valid" select="'1.2'"/>
 		<xsl:with-param name="langs" select="$langs"/>
-		<xsl:with-param name="req" select="'1'"/>
+		<xsl:with-param name="req" select="1"/>
 	</xsl:call-template>
 	
     <!-- 1.3 hierarchy level -->	
@@ -68,9 +66,8 @@
                 <xsl:with-param name="value" select="gmd:hierarchyLevel/*/@codeListValue"/>
                 <xsl:with-param name="name" select="'hierarchyLevel'"/>
                 <xsl:with-param name="codes" select="'inspireServiceType'"/>
-                <xsl:with-param name="class" select="'mandatory'"/>
                 <xsl:with-param name="valid" select="'1.3'"/>
-                <xsl:with-param name="req" select="'1'"/>
+                <xsl:with-param name="req" select="1"/>
             </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
@@ -78,9 +75,8 @@
                 <xsl:with-param name="value" select="gmd:hierarchyLevel/*/@codeListValue"/>
                 <xsl:with-param name="name" select="'hierarchyLevel'"/>
                 <xsl:with-param name="codes" select="'inspireType'"/>
-                <xsl:with-param name="class" select="'mandatory'"/>
                 <xsl:with-param name="valid" select="'1.3'"/>
-                <xsl:with-param name="req" select="'1'"/>
+                <xsl:with-param name="req" select="1"/>
             </xsl:call-template>
         </xsl:otherwise>
     </xsl:choose>
@@ -95,8 +91,7 @@
                     <xsl:with-param name="valid" select="'1.6'"/>
                     <xsl:with-param name="dupl" select="1"/>
                 </xsl:call-template>
-                
-            </div>    
+            </div>           
             <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'url'"/>
                 <xsl:with-param name="value" select="*/gmd:linkage"/> 
@@ -107,14 +102,14 @@
                 <xsl:with-param name="name" select="'function'"/>
                 <xsl:with-param name="value" select="*/gmd:function/*/@codeListValue"/> 
                 <xsl:with-param name="codes" select="'function'"/>
-                <xsl:with-param name="class" select="'cond inp2'"/>
+                <xsl:with-param name="class" select="'cond inp2 short'"/>
                 <xsl:with-param name="valid" select="'1.4'"/>
            </xsl:call-template>
            <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'protocol'"/>
                 <xsl:with-param name="value" select="*/gmd:protocol"/>
                 <xsl:with-param name="codes" select="'protocol'"/>
-                <xsl:with-param name="class" select="'cond inp2'"/>   
+                <xsl:with-param name="class" select="'cond inp2 short'"/>   
                 <xsl:with-param name="valid" select="'1.4'"/>
             </xsl:call-template>
             <xsl:call-template name="drawInput">
@@ -406,9 +401,8 @@
 			  	<xsl:with-param name="path" select="concat('Date_',position()-1,'_type')"/>
 			    <xsl:with-param name="value" select="*/gmd:dateType/*/@codeListValue"/>
 			    <xsl:with-param name="codes" select="'dateType'"/>
-			    <xsl:with-param name="class" select="'mandatory inp2'"/>
-			    <xsl:with-param name="lclass" select="'short'"/>
-			    <xsl:with-param name="req" select="'1'"/>
+			    <xsl:with-param name="class" select="'inp2 short'"/>
+			    <xsl:with-param name="req" select="1"/>
 			</xsl:call-template>
         </fieldset>
   	</xsl:if>
@@ -516,7 +510,7 @@
 					  	<xsl:with-param name="path" select="concat('specification_',position()-1,'_compliant')"/>
 					    <xsl:with-param name="value" select="*/gmd:pass/gco:Boolean"/>
 					    <xsl:with-param name="codes" select="'compliant'"/>
-					    <xsl:with-param name="class" select="'cond inp2'"/>
+					    <xsl:with-param name="class" select="'short inp2'"/>
 					    <xsl:with-param name="valid" select="'7.2'"/>
 					</xsl:call-template>
 			</fieldset>
@@ -618,7 +612,7 @@
             <xsl:with-param name="req" select="'1'"/>   
         </xsl:call-template>
 
-        <!-- IOD-3 encoding (distribution format) -->
+        <!-- IOD-3 encoding (distribution format) 
         <xsl:call-template name="drawInput">
             <xsl:with-param name="name" select="'format'"/>
             <xsl:with-param name="value" select="gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"/>
@@ -628,8 +622,45 @@
             <xsl:with-param name="valid" select="'IO-1'"/>
             <xsl:with-param name="req" select="'1'"/> 
             <xsl:with-param name="tags" select="1"/>            
-        </xsl:call-template>
+        </xsl:call-template>-->
 
+        <fieldset>
+            <xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat|/.">
+                <xsl:if test="*/gmd:name/*!='' or (string-length(*/gmd:name/*)=0 and position()=last())">
+                     <div class="row">
+                        <xsl:call-template name="drawLabel">
+                            <xsl:with-param name="name" select="'format'"/>
+                            <xsl:with-param name="dupl" select="1"/>
+                        </xsl:call-template>	
+                    </div>
+                        
+                    <xsl:call-template name="drawInput">
+                        <xsl:with-param name="name" select="'format'"/>
+                        <xsl:with-param name="path" select="concat('format_',(position()-1),'_name')"/>
+                        <xsl:with-param name="value" select="*/gmd:name"/>
+                        <xsl:with-param name="codes" select="'format'"/>
+                        <xsl:with-param name="class" select="'inp2 mandatory'"/>
+                        <xsl:with-param name="action" select="'getFormats(this)'"/> 
+                        <xsl:with-param name="valid" select="'IO-3'"/>  
+                    </xsl:call-template>
+                    <xsl:call-template name="drawInput">
+                        <xsl:with-param name="name" select="'format_version'"/>
+                        <xsl:with-param name="path" select="concat('format_',(position()-1),'_version')"/>
+                        <xsl:with-param name="value" select="*/gmd:version"/>
+                        <xsl:with-param name="class" select="'inp2 mandatory'"/>  
+                    </xsl:call-template>
+                    <!--xsl:call-template name="drawInput">
+                        <xsl:with-param name="name" select="'format_specification'"/>
+                        <xsl:with-param name="path" select="concat('format_',(position()-1),'_specification')"/>
+                        <xsl:with-param name="value" select="*/gmd:specification"/>
+                        <xsl:with-param name="class" select="'inp2'"/>
+                        <xsl:with-param name="action" select="'fspec(this)'"/>  
+                    </xsl:call-template-->
+
+                </xsl:if>
+            </xsl:for-each>	    
+        </fieldset>
+        
         <!-- IOD-6 spatial representation type -->
         <xsl:call-template name="drawInput">
             <xsl:with-param name="name" select="'spatial'"/>
@@ -791,50 +822,6 @@
     	</xsl:call-template>
     </fieldset>
 </xsl:if>
-
-<fieldset>
- 	<xsl:if test="not($serv)">
-    	<xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat|/.">
-    		<xsl:if test="*/gmd:name/*!='' or (string-length(*/gmd:name/*)=0 and position()=last())">
-    		      <div id="{concat('format_',(position()-1),'_')}" style="margin:0px;" class="cl">
-    				<hr/>
-    	 	 		<xsl:call-template name="drawInput">
-    				  	<xsl:with-param name="name" select="'format'"/>
-    				  	<xsl:with-param name="path" select="concat('format_',(position()-1),'_name')"/>
-    				    <xsl:with-param name="value" select="*/gmd:name"/>
-    				    <xsl:with-param name="class" select="'inpSS mandatory'"/>
-    				    <xsl:with-param name="action" select="'getFormats(this)'"/> 
-    				    <xsl:with-param name="valid" select="'IO-3'"/>  
-    			  	</xsl:call-template>
-    		 		<xsl:call-template name="drawInput">
-    				  	<xsl:with-param name="name" select="'format_version'"/>
-    				  	<xsl:with-param name="path" select="concat('format_',(position()-1),'_version')"/>
-    				    <xsl:with-param name="value" select="*/gmd:version"/>
-    				    <xsl:with-param name="class" select="'inpSS mandatory'"/>  
-    			  	</xsl:call-template>
-    		 		<xsl:call-template name="drawInput">
-    				  	<xsl:with-param name="name" select="'format_specification'"/>
-    				  	<xsl:with-param name="path" select="concat('format_',(position()-1),'_specification')"/>
-    				    <xsl:with-param name="value" select="*/gmd:specification"/>
-    				    <xsl:with-param name="class" select="'inp'"/>
-    				    <xsl:with-param name="action" select="'fspec(this)'"/>  
-    			  	</xsl:call-template>
-
-    		    </div>
-    		</xsl:if>
-    	</xsl:for-each>	    
-    </xsl:if>
-  	<div class="cl"></div>
-   
- 	<!-- <xsl:call-template name="drawInput">
-	  	<xsl:with-param name="name" select="'distributor'"/>
-	    <xsl:with-param name="values" select="gmd:distributionInfo/*/gmd:distributor/*/gmd:distributorContact/*/gmd:organisationName"/>
-	    <xsl:with-param name="multi" select="2"/> 
-	    <xsl:with-param name="class" select="'cond'"/>   
-	</xsl:call-template>
-  -->
-  
-</fieldset>
 
 
 <xsl:if test="not($serv)">

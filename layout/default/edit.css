@@ -123,3 +123,7 @@ label.inp2 {
     max-width: 500px;
     text-align: left;
 }
+
+.short {
+    width:180px;
+}

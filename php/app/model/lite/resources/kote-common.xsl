@@ -195,8 +195,8 @@
 		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_role')"/>
 			<xsl:with-param name="value" select="$root/*/gmd:role/*/@codeListValue"/>
 			<xsl:with-param name="codes" select="'role'"/>
-			<xsl:with-param name="class" select="'mandatory inp2'"/>
-			<xsl:with-param name="req" select="'1'"/>
+			<xsl:with-param name="class" select="'short inp2'"/>
+			<xsl:with-param name="req" select="1"/>
 		</xsl:call-template>		  	
 
 	</fieldset>
