@@ -809,18 +809,31 @@ class RecordModel extends \BaseModel
         } else {
             $select_langs = [];
         }
-        $editMdValues = $this->getMdValuesFromForm($post, $appLang);
-        $this->deleteEditMdValuesByProfil(
-                $this->recordMd->recno,
-                $this->recordMd->md_standard, 
-                $this->profil_id, 
-                $this->package_id);
-        $this->seMdValues($editMdValues);
-        $report = $this->setLang2RecordMd($select_langs);
-        $this->recordMd->pxml = $this->xmlFromRecordMdValues();
-        $this->applyXslTemplate2Xml('micka2one19139.xsl');
-        $this->updateEditMD($this->recordMd->recno);
+        if (array_key_exists('mickaLite', $post)) {
+            //Micka Lite
+            $this->setFromMickaLite($post);
+        } else {
+            $editMdValues = $this->getMdValuesFromForm($post, $appLang);
+            $this->deleteEditMdValuesByProfil(
+                    $this->recordMd->recno,
+                    $this->recordMd->md_standard, 
+                    $this->profil_id, 
+                    $this->package_id);
+            $this->seMdValues($editMdValues);
+            $report = $this->setLang2RecordMd($select_langs);
+            $this->recordMd->pxml = $this->xmlFromRecordMdValues();
+            $this->applyXslTemplate2Xml('micka2one19139.xsl');
+            $this->updateEditMD($this->recordMd->recno);
+        }
         return $report;
+    }
+    
+    private function setFromMickaLite($post) {
+		$cswClient = new \CswClient();
+        $input = \Kote::processForm(beforeSaveRecord($post));
+        $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>'cze');
+        $xmlstring = $cswClient->processTemplate($input, __DIR__ . '/lite/resources/kote2iso.xsl', $params);
+        exit;
     }
     
 	private function getIdElements()
