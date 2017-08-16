@@ -131,9 +131,9 @@
         {/if}
     </div>
     {if $dataBox == ''}
-        <form id="md_inpform" class="md_inpform" action="{link Record:save $record['uuid']}" METHOD=POST>
+        <form id="md_inpform" class="md_inpform" action="{link Record:save $record['uuid']}" method="post">
     {else}
-        <form id="md_inpform" action="index.php" method="post" onsubmit="return submitCheck();">
+        <form id="md_inpform" action="{link Record:save $record['uuid']}" method="post" onsubmit="return submitCheck();">
     {/if}
         <input type="hidden" name="afterpost" value="end">
         <input type="hidden" name="profil" value="{$selectProfil}">
