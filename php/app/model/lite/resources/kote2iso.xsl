@@ -658,7 +658,9 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                             <gmd:description>
                                                 <gco:CharacterString>
                                                     <xsl:value-of select="description"/>
-                                                    mimeType="<xsl:value-of select="mime"/>"
+                                                    <xsl:if test="mime">
+                                                        mimeType="<xsl:value-of select="mime"/>"
+                                                    </xsl:if>
                                                 </gco:CharacterString>
                                             </gmd:description>
                                         </xsl:otherwise>
