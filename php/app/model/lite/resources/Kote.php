@@ -20,6 +20,7 @@ function getMime($s){
     if(!$s) return '';
     $p = '/mime=(.+?)(\s|$)/';
     preg_match($p, $s, $m);
+    if(!$m) return '';
     return str_replace('"','',$m[1]);
 }
 // --- string without mime
