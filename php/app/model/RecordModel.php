@@ -233,6 +233,17 @@ class RecordModel extends \BaseModel
         return;
     }
 
+    private function deleteEditMdValuesByLite($editRecno, $mds, $del_md_id) {
+		if ($mds == 0 || $mds == 10) {
+            if (isset($del_md_id[38])) {
+                unset($del_md_id[38]);
+            }
+		}
+        $sql = "DELETE FROM edit_md_values WHERE recno=? AND md_id IN (?)";
+        $this->db->query($sql, $editRecno, array_keys($del_md_id));
+        return;
+    }
+    
     private function setEditMdValues2MdValues($editRecno, $recno)
     {
         $this->db->query("
@@ -811,7 +822,14 @@ class RecordModel extends \BaseModel
         }
         if (array_key_exists('mickaLite', $post)) {
             //Micka Lite
-            $this->setFromMickaLite($post);
+            $this->initialVariables();
+            $editMdValues = $this->setFromMickaLite($post);
+            $this->deleteEditMdValuesByLite(
+                    $this->recordMd->recno, 
+                    $this->recordMd->md_standard, 
+                    $editMdValues['del_md_id'][0]);
+            $this->seMdValues($editMdValues['md_values'][0], $this->recordMd->recno);
+            
         } else {
             $editMdValues = $this->getMdValuesFromForm($post, $appLang);
             $this->deleteEditMdValuesByProfil(
@@ -820,24 +838,46 @@ class RecordModel extends \BaseModel
                     $this->profil_id, 
                     $this->package_id);
             $this->seMdValues($editMdValues);
-            $report = $this->setLang2RecordMd($select_langs);
-            $this->recordMd->pxml = $this->xmlFromRecordMdValues();
-            $this->applyXslTemplate2Xml('micka2one19139.xsl');
-            $this->updateEditMD($this->recordMd->recno);
         }
+        $report = $this->setLang2RecordMd($select_langs);
+        $this->recordMd->pxml = $this->xmlFromRecordMdValues();
+        $this->applyXslTemplate2Xml('micka2one19139.xsl');
+        $this->updateEditMD($this->recordMd->recno);
         return $report;
     }
     
     private function setFromMickaLite($post) {
-        //echo "<pre>"; var_dump($post); die;
 		$cswClient = new \CswClient();
         $kote = new \Kote();
         $input = $kote->processForm(beforeSaveRecord($post));
         $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>'cze');
         $xmlstring = $cswClient->processTemplate($input, __DIR__ . '/lite/resources/kote2iso.xsl', $params);
-   		header('Content-Type: application/xml'); 
-        echo $xmlstring;  
-        exit;
+        $md = [];
+        $md['sid'] = session_id();
+		$md['recno'] = $this->getNewRecno('edit_md');
+        $md['uuid'] = $this->getUuid();
+		$md['md_standard'] = isset($post['standard']) ? $post['standard'] : 0;
+        $md['lang'] = isset($post['standard']) ? $post['standard'] : 0;
+		$md['data_type'] = -1;
+		$md['create_user'] = $this->user->identity->username;
+		$md['create_date'] = Date("Y-m-d");
+        $md['edit_group'] = isset($post['group_e']) ? $post['group_e'] : $this->user->identity->username;
+        $md['view_group'] = isset($post['group_v']) ? $post['group_v'] : $this->user->identity->username;
+        $lang_main = (isset($post['lang_main']) && $post['lang_main'] != '') ? $post['lang_main'] : 'eng';
+        $md['lang'] = isset($post['languages']) ? implode($post['languages'],"|") : '';
+        if ($md['lang'] == '' && $lang_main != '') {
+            $md['lang'] = $lang_main;
+        }
+        $mdXml2Array = new MdXml2Array();
+        $dataFromXml = $mdXml2Array->getArrayMdFromXml(
+            $xmlstring, 
+            'ISO19139',
+            $md['lang'],
+            $lang_main
+        );
+        $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+        $arrayMdXml2MdValues->lang = $lang_main;
+        return $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
     }
     
 	private function getIdElements() {
