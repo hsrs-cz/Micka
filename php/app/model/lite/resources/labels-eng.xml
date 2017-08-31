@@ -135,24 +135,31 @@
 			<p class="pozn">If not stated, the Territory of Czech republic is meant.</p>
 		</help>
 	</msg>
-		<msg name="format">
-		<label>CZ-6 Format</label>
+	<msg name="encoding">
+		<label>IOD-3 Encoding (format)</label>
 		<help>
-			<h3>CZ-6 Distribution Format</h3>
+			<h3>Distribution Format</h3>
+			<p>Format in which the data are stored or distributed.</p>
+		</help>
+	</msg>
+		<msg name="format">
+		<label>Format</label>
+		<help>
+			<h3>Distribution Format</h3>
 			<p>Format in which the data are stored or distributed.</p>
 		</help>
 	</msg>
 	<msg name="format_version">
 		<label>Version</label>
 		<help>
-			<h3>CZ-6 Distribution Format Version</h3>
+			<h3>Distribution Format Version</h3>
 			<p>Data format version. It is mandatory if data format is given.</p>
 		</help>
 	</msg>
 	<msg name="format_specification">
 		<label>Specification</label>
 		<help>
-			<h3>CZ-6 Specification</h3>
+			<h3>Specification</h3>
 			<p>INSPIRE Spatial data theme specification citation.</p>
 		</help>
 	</msg>
@@ -180,10 +187,10 @@
 		    </p>
 		</help>
 	</msg>
-	<msg name="inspire">
-		<label>3 INSPIRE Keyword</label>
+	<msg name="inspireTheme">
+		<label>3 INSPIRE Theme</label>
 		<help>
-			<h3>3 INSPIRE keyword</h3>
+			<h3>INSPIRE keyword</h3>
 			<p>INSPIRE data theme</p>
 		</help>
 	</msg>
@@ -234,22 +241,22 @@
 			<p class="pozn"></p>
 		</help>
 	</msg>
-	<msg name="access">
+	<msg name="accessCond">
+		<label>8.1. Access and use</label>
+		<help>
+			<h3>8.1. Conditions applying to access and use</h3>
+			<p>restrictions on the access and use of a resource or
+metadata.
+			</p>
+		</help>
+	</msg>
+	<msg name="limitationsAccess">
 		<label>8.2. Licence</label>
 		<help>
 			<h3>8.2. Limitations on public access</h3>
 			<p>access constraints applied to assure the protection of
 privacy or intellectual property, and any special restrictions
 or limitations on obtaining the resource. 
-			</p>
-		</help>
-	</msg>
-	<msg name="uselim">
-		<label>8.1. Access and use</label>
-		<help>
-			<h3>8.1. Conditions applying to access and use</h3>
-			<p>restrictions on the access and use of a resource or
-metadata.
 			</p>
 		</help>
 	</msg>
@@ -262,6 +269,21 @@ metadata.
 a resource is available, provide link to a contact point where more information about the resource is available. For services a link to the service capabilities document.
 			</p>
 		</help>
+	</msg>
+    <msg name="url">
+        <label>URL</label>
+    </msg>
+    <msg name="function">
+        <label>Function</label>
+    </msg>
+	<msg name="protocol">
+		<label>Protocol</label>
+	</msg>
+	<msg name="name">
+		<label>Name</label>
+	</msg>
+	<msg name="description">
+		<label>Description</label>
 	</msg>
 	<msg name="compliant">
 		<label>7.2 Compliance</label>
@@ -294,7 +316,7 @@ against which data is being evaluated.</p>
 		</help>
 	</msg>
 	<msg name="Maintenance">
-		<label>Maintenance</label>
+		<label>CZ-4 Maintenance</label>
 		<help>
 			<h3>CZ-4 Resource Maintenance</h3>
 			<p>Informace o četnosti aktualizací. Pokud v číselníku není vhodný interval, zvolte „neznámý“ a vyplňte následující položku Úroveň údržby a aktualizace (uživ.).</p>
@@ -368,15 +390,15 @@ against which data is being evaluated.</p>
 			</p>
 		</help>
 	</msg>
-	<msg name="operatesOn_href">
+	<msg name="operatesOn-href">
 		<label>URL</label>
 		<help>Resource metadata URL</help>
 	</msg>			
-	<msg name="operatesOn_uuid">
+	<msg name="operatesOn-uuid">
 		<label>ID</label>
 		<help>XML Identifier of Identification element in resource metadata.</help>
 	</msg>			
-	<msg name="operatesOn_title">
+	<msg name="operatesOn-title">
 		<label>Název</label>
 		<help>Language (monoligual) for xlink:title</help>
 	</msg>			
@@ -616,5 +638,43 @@ against which data is being evaluated.</p>
 	<msg name="bbox-help">
 		<label>Set bounding box wihth Ctrl + mouse draw</label>
 	</msg>
-			    
+
+	<msg name="sds">
+		<label>IOS-1 Category</label>
+		<help>
+			<h3>Category of spatial data interoperable service</h3> 
+		</help>
+	</msg>
+    
+	<msg name="serviceQuality">
+		<label>IOS-2.1 Quality of service</label>
+		<help>
+			<h3>Three criteria for minimum quality of service shall be given to comply with Annex VI of [Regulation 1089/2010]: Availability, Performance and Capacity</h3> 
+		</help>
+	</msg>
+	<msg name="availability">
+		<label>Availability</label>
+		<help>
+			<h3>Lower limit of the percentage of time the service is estimated to be available on a yearly basis.</h3> 
+		</help>
+	</msg>
+	<msg name="performance">
+		<label>Performance [s]</label>
+		<help>
+			<h3>It describes how fast a request to the spatial data service can be completed.</h3> 
+		</help>
+	</msg>
+	<msg name="capacity">
+		<label>Capacity</label>
+		<help>
+			<h3>It describes the maximum number of simultaneous requests that can be completed with the declared performance.</h3> 
+		</help>
+	</msg>
+	<msg name="accessPoint">
+		<label>Access point</label>
+		<help>
+			<h3>If the address is the access point</h3> 
+		</help>
+	</msg>
+    
 </labels>

@@ -393,30 +393,30 @@
   
   <!-- pridano nad ramec ISO -->
   <coordSys>
-	<value name="http://www.opengis.net/def/crs/EPSG/0/2065">S-JTSK (2065)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/5514">S-JTSK 3.kvadrant (5514)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/28403">S-42/3 (28403)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/28404">S-42/4 (28404)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/4326">WGS84 (4326)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/32633">WGS84 UTM3 (32633)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/32634">WGS84 UTM4 (32634)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/4258">ETRS89 (4258) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3034">ETRS-LCC (3034) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3035">ETRS-LAEA (3035) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3038">ETRS-TM26 (3038)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3039">ETRS-TM27 (3039)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3040">ETRS-TM28 (3040)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3041">ETRS-TM29 (3041)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3042">ETRS-TM30 (3042)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3043">ETRS-TM31 (3043)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3044">ETRS-TM32 (3044)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3045">ETRS-TM33 (3045) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3046">ETRS-TM34 (3046) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3047">ETRS-TM35 (3047)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3048">ETRS-TM36 (3048)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3049">ETRS-TM37 (3049)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3050">ETRS-TM38 (3050)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3857">Spherical Mercator (3857)</value>
+	<value uri="http://www.opengis.net/def/crs/EPSG/0/2065">S-JTSK (2065)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/5514">S-JTSK 3.kvadrant (5514)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/28403">S-42/3 (28403)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/28404">S-42/4 (28404)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/4326">WGS84 (4326)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/32633">WGS84 UTM3 (32633)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/32634">WGS84 UTM4 (32634)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/4258">ETRS89 (4258) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3034">ETRS-LCC (3034) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3035">ETRS-LAEA (3035) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3038">ETRS-TM26 (3038)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3039">ETRS-TM27 (3039)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3040">ETRS-TM28 (3040)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3041">ETRS-TM29 (3041)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3042">ETRS-TM30 (3042)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3043">ETRS-TM31 (3043)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3044">ETRS-TM32 (3044)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3045">ETRS-TM33 (3045) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3046">ETRS-TM34 (3046) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3047">ETRS-TM35 (3047)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3048">ETRS-TM36 (3048)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3049">ETRS-TM37 (3049)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3050">ETRS-TM38 (3050)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3857">Spherical Mercator (3857)</value>
   </coordSys>
   
   <formats>
@@ -435,83 +435,77 @@
   <compliant>
   	<value name="true" code="">ANO</value>
   	<value name="false" code="">NE</value>
-  	<value name="" code="">NEHODNOCENO</value>
+  	<value name="nil" code="">NEHODNOCENO</value>
   </compliant> 
 
   <inspireKeywords title="Datová témata INSPIRE">
     <!-- ANNEX I -->
-    <value uri="http://inspire.ec.europa.eu/theme/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">I.1 Souřadnicové referenční systémy</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/gg" cenia="base" name="Zeměpisné soustavy souřadnicových sítí" code="Geographical grid systems" publication="2010-05-03" n="I.2">I.2 Zeměpisné soustavy souřadnicových sítí</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/gn" cenia="base" name="Zeměpisné názvy" code="Geographical names" publication="2010-05-03" n="I.3">I.3 Zeměpisné názvy</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/au" cenia="division" name="Správní jednotky" code="Administrative units" publication="2010-05-03" n="I.4">I.4 Správní jednotky</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ad" cenia="division" name="Adresy" code="Addresses" publication="2010-05-03" n="I.5">I.5 Adresy</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/cp" cenia="division" name="Katastrální parcely" code="Cadastral parcels" publication="2010-05-03" n="I.6">I.6 Katastrální parcely</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/tn" cenia="transport" name="Dopravní sítě" code="Transport networks" publication="2010-05-03" n="I.7">I.7 Dopravní sítě</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/hy" cenia="water" name="Vodopis" code="Hydrography" publication="2010-05-03" n="I.8">I.8 Vodopis</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ps" cenia="environment" name="Chráněná území" code="Protected sites" publication="2010-05-03" n="I.9">I.9 Chráněná území</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">I.1 Souřadnicové referenční systémy</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/gg" cenia="base" name="Zeměpisné soustavy souřadnicových sítí" code="Geographical grid systems" publication="2010-05-03" n="I.2">I.2 Zeměpisné soustavy souřadnicových sítí</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/gn" cenia="base" name="Zeměpisné názvy" code="Geographical names" publication="2010-05-03" n="I.3">I.3 Zeměpisné názvy</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/au" cenia="division" name="Správní jednotky" code="Administrative units" publication="2010-05-03" n="I.4">I.4 Správní jednotky</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ad" cenia="division" name="Adresy" code="Addresses" publication="2010-05-03" n="I.5">I.5 Adresy</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/cp" cenia="division" name="Katastrální parcely" code="Cadastral parcels" publication="2010-05-03" n="I.6">I.6 Katastrální parcely</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/tn" cenia="transport" name="Dopravní sítě" code="Transport networks" publication="2010-05-03" n="I.7">I.7 Dopravní sítě</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/hy" cenia="water" name="Vodopis" code="Hydrography" publication="2010-05-03" n="I.8">I.8 Vodopis</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ps" cenia="environment" name="Chráněná území" code="Protected sites" publication="2010-05-03" n="I.9">I.9 Chráněná území</value>  
 
     <!-- ANNEX II -->
-    <value uri="http://inspire.ec.europa.eu/theme/el" cenia="base" name="Nadmořská výška" code="Elevation" publication="2013-10-12" n="II.1">II.1 Nadmořská výška</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/lc" cenia="nature" name="Krajinný pokryv" code="Land cover" publication="2013-10-12" n="II.2">II.2 Krajinný pokryv</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/oi" cenia="base" name="Ortofotosnímky" code="Orthoimagery" publication="2013-10-12" n="II.3">II.3 Ortofotosnímky</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ge" cenia="nature" name="Geologie" code="Geology" publication="2013-10-12" n="II.4">II.4 Geologie</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/el" cenia="base" name="Nadmořská výška" code="Elevation" publication="2013-10-12" n="II.1">II.1 Nadmořská výška</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/lc" cenia="nature" name="Krajinný pokryv" code="Land cover" publication="2013-10-12" n="II.2">II.2 Krajinný pokryv</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/oi" cenia="base" name="Ortofotosnímky" code="Orthoimagery" publication="2013-10-12" n="II.3">II.3 Ortofotosnímky</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ge" cenia="nature" name="Geologie" code="Geology" publication="2013-10-12" n="II.4">II.4 Geologie</value>  
 
     <!-- ANNEX III -->
-    <value uri="http://inspire.ec.europa.eu/theme/su" cenia="division" name="Statistické jednotky" code="Statistical units" publication="2013-10-12" n="III.1">III.1 Statistické jednotky</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/bu" cenia="social" name="Budovy" code="Buildings" publication="2013-10-12" n="III.2">III.2 Budovy</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/so" cenia="nature" name="Půda" code="Soil" publication="2013-10-12" n="III.3">III.3 Půda</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/lu" cenia="nature" name="Využití území" code="Land use" publication="2013-10-12" n="III.4">III.4 Využití území</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/hh" cenia="social" name="Lidské zdraví a bezpečnost" code="Human health and safety" publication="2013-10-12" n="III.5">III.5 Lidské zdraví a bezpečnost</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/us" cenia="social" name="Veřejné služby a služby veřejné správy" code="Utility and governmental services" publication="2013-10-12" n="III.6">III.6 Veřejné služby a služby veřejné správy</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ef" cenia="environment" name="Zařízení pro sledování životního prostředí" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">III.7 Zařízení pro sledování životního prostředí</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/pf" cenia="social" name="Výrobní a průmyslová zařízení" code="Production and industrial facilities" publication="2013-10-12" n="III.8">III.8 Výrobní a průmyslová zařízení</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/af" cenia="social" name="Zemědělská a akvakulturní zařízení" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">III.9 Zemědělská a akvakulturní zařízení</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/pd" cenia="social" name="Rozložení obyvatelstva – demografie" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">III.10 Rozložení obyvatelstva – demografie</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/am" cenia="environment" name="Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení" code="Area management/restriction/regulation zones and reporting units" publication="2009-10-20" n="III.11">III.11 Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/nz" cenia="environment" name="Oblasti ohrožené přírodními riziky" code="Natural risk zones" publication="2013-10-12" n="III.12">III.12 Oblasti ohrožené přírodními riziky</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ac" cenia="environment" name="Stav ovzduší" code="Atmospheric conditions" publication="2013-10-12" n="III.13">III.13 Stav ovzduší</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/mf" cenia="nature" name="Zeměpisné meteorologické prvky" code="Meteorological geographical features" publication="2013-10-12" n="III.14">III.14 Zeměpisné meteorologické prvky</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/of" cenia="water" name="Zeměpisné oceánografické prvky" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">III.15 Zeměpisné oceánografické prvky</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/sr" cenia="water" name="Mořské oblasti" code="Sea regions" publication="2013-10-12" n="III.16">III.16 Mořské oblasti</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/br" cenia="nature" name="Bioregiony" code="Bio-geographical regions" publication="2013-10-12" n="III.17">III.17 Bioregiony</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/hb" cenia="nature" name="Stanoviště a biotopy" code="Habitats and biotopes" publication="2013-10-12" n="III.18">III.18 Stanoviště a biotopy</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/sd" cenia="nature" name="Rozložení druhů" code="Species distribution" publication="2013-10-12" n="III.19">III.19 Rozložení druhů</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/er" cenia="social" name="Energetické zdroje" code="Energy resources" publication="2013-10-12" n="III.20">III.20 Energetické zdroje</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/mr" cenia="social" name="Nerostné suroviny" code="Mineral resources" publication="2013-10-12" n="III.21">III.21 Nerostné suroviny</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/su" cenia="division" name="Statistické jednotky" code="Statistical units" publication="2013-10-12" n="III.1">III.1 Statistické jednotky</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/bu" cenia="social" name="Budovy" code="Buildings" publication="2013-10-12" n="III.2">III.2 Budovy</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/so" cenia="nature" name="Půda" code="Soil" publication="2013-10-12" n="III.3">III.3 Půda</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/lu" cenia="nature" name="Využití území" code="Land use" publication="2013-10-12" n="III.4">III.4 Využití území</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/hh" cenia="social" name="Lidské zdraví a bezpečnost" code="Human health and safety" publication="2013-10-12" n="III.5">III.5 Lidské zdraví a bezpečnost</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/us" cenia="social" name="Veřejné služby a služby veřejné správy" code="Utility and governmental services" publication="2013-10-12" n="III.6">III.6 Veřejné služby a služby veřejné správy</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ef" cenia="environment" name="Zařízení pro sledování životního prostředí" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">III.7 Zařízení pro sledování životního prostředí</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/pf" cenia="social" name="Výrobní a průmyslová zařízení" code="Production and industrial facilities" publication="2013-10-12" n="III.8">III.8 Výrobní a průmyslová zařízení</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/af" cenia="social" name="Zemědělská a akvakulturní zařízení" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">III.9 Zemědělská a akvakulturní zařízení</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/pd" cenia="social" name="Rozložení obyvatelstva – demografie" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">III.10 Rozložení obyvatelstva – demografie</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/am" cenia="environment" name="Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení" code="Area management/restriction/regulation zones and reporting units" publication="2009-10-20" n="III.11">III.11 Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/nz" cenia="environment" name="Oblasti ohrožené přírodními riziky" code="Natural risk zones" publication="2013-10-12" n="III.12">III.12 Oblasti ohrožené přírodními riziky</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ac" cenia="environment" name="Stav ovzduší" code="Atmospheric conditions" publication="2013-10-12" n="III.13">III.13 Stav ovzduší</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/mf" cenia="nature" name="Zeměpisné meteorologické prvky" code="Meteorological geographical features" publication="2013-10-12" n="III.14">III.14 Zeměpisné meteorologické prvky</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/of" cenia="water" name="Zeměpisné oceánografické prvky" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">III.15 Zeměpisné oceánografické prvky</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/sr" cenia="water" name="Mořské oblasti" code="Sea regions" publication="2013-10-12" n="III.16">III.16 Mořské oblasti</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/br" cenia="nature" name="Bioregiony" code="Bio-geographical regions" publication="2013-10-12" n="III.17">III.17 Bioregiony</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/hb" cenia="nature" name="Stanoviště a biotopy" code="Habitats and biotopes" publication="2013-10-12" n="III.18">III.18 Stanoviště a biotopy</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/sd" cenia="nature" name="Rozložení druhů" code="Species distribution" publication="2013-10-12" n="III.19">III.19 Rozložení druhů</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/er" cenia="social" name="Energetické zdroje" code="Energy resources" publication="2013-10-12" n="III.20">III.20 Energetické zdroje</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/mr" cenia="social" name="Nerostné suroviny" code="Mineral resources" publication="2013-10-12" n="III.21">III.21 Nerostné suroviny</value>  
   </inspireKeywords>
 
   <specifications title="Nařízení komise">
 	<value name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat" 
-        code="Metadata"  uri="http://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">Metadata</value>
+        code="Metadata"  uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">Metadata</value>
 	<!--value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat" 
         code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value-->
 	<value name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat" 
-        code="Interoperability"  uri="http://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">Interoperabilita</value>
+        code="Interoperability"  uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">Interoperabilita</value>
     <value name="Nařízení Komise (EU) č. 1088/2010 ze dne 23. listopadu 2010, kterým se mění nařízení (ES) č. 976/2009, pokud jde o služby stahování dat a transformační služby" 
-        code="Download" uri="http://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">Stahovací a transformační služby 1088/2010</value>  
+        code="Download" uri="https://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">Stahovací a transformační služby 1088/2010</value>  
     <value name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby" 
-        code="Network" uri="http://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">Síťové služby</value>  
+        code="Network" uri="https://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">Síťové služby</value>  
     <value name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" 
-        code="Access" uri="http://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">Přístup k datovým sadám a službám</value>
+        code="Access" uri="https://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">Přístup k datovým sadám a službám</value>
     <value name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" 
-        code="Monitoring" uri="http://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">Monitoring ...</value>
+        code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">Monitoring ...</value>
     <value name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" 
-        code="INSPIRE" uri="http://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">SMĚRNICE INSPIRE</value>
+        code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">SMĚRNICE INSPIRE</value>
   </specifications>
 
   <serviceType>
-  	<value name="WMS" code="">WMS</value>
-  	<value name="WFS" code="">WFS</value>
-  	<value name="WCS" code="">WCS</value>
-  	<value name="CSW" code="">CSW</value>
-  	<value name="WCST" code="">WCST</value>
-  	<value name="view" code="">INSPIRE prohlížecí</value>
-  	<value name="download" code="">INSPIRE stahovací</value>
-  	<value name="discovery" code="">INSPIRE vyhledeávací</value>
-  	<value name="transformation" code="">INSPIRE transformační</value>
-  	<value name="other" code="">jiné INSPIRE</value>  
-  	<value name="ESRI_FEATURE" code="">ESRI ArcGIS Feature Service</value>  
-  	<value name="ESRI_IMAGE" code="">ESRI ArcGIS Image Service</value>  
+  	<value name="view" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/view" code="">prohlížecí</value>
+  	<value name="download" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download" code="">stahovací</value>
+  	<value name="discovery" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/discovery" code="">vyhledeávací</value>
+  	<value name="transformation" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/transformation" code="">transformační</value>
+  	<value name="invoke" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/invoke" code="">vyvolání</value>
+  	<value name="other" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other" code="">jiné</value>   
   </serviceType>
   
   <applicationType>
@@ -666,10 +660,10 @@
 </units>
 
 <protocol>
-    <value code="WWW:LINK-1.0-http--link">WWW - link</value> 
-    <value code="WWW:DOWNLOAD-1.0-http--download">WWW - download</value> 
-    <value code="WWW:LINK-1.0-http--rss">RSS</value> 
-    <value code="WWW:LINK-1.0-http--atom">ATOM</value> 
+    <value uri="link" code="WWW:LINK-1.0-http--link">WWW - link</value> 
+    <value uri="download" code="WWW:DOWNLOAD-1.0-http--download">WWW - download</value> 
+    <value uri="rss" code="WWW:LINK-1.0-http--rss">RSS</value> 
+    <value uri="atom" code="WWW:LINK-1.0-http--atom">ATOM</value> 
     <value code="WWW:DOWNLOAD-1.0-ftp--download">FTP</value> 
     <value code="OGC:WMS-1.0.0-http-get-capabilities">WMS 1.0.0</value> 
     <value code="OGC:WMS-1.1.0-http-get-capabilities">WMS 1.1.0</value> 
@@ -707,46 +701,56 @@
 </protocol>
 
 <extents>
-    <value bbox="9.53 46.373 17.16 49.021" uri="http://publications.europa.eu/resource/authority/country/AUT">Rakousko</value>
-    <value bbox="2.545 49.498 6.407 51.506" uri="http://publications.europa.eu/resource/authority/country/BEL">Belgie</value>
-    <value bbox="22.362 41.236 28.591 44.213" uri="http://publications.europa.eu/resource/authority/country/BGR">Bulharsko</value>
-    <value bbox="13.590 42.217 19.677 46.563" uri="http://publications.europa.eu/resource/authority/country/HRV">Chorvatsko</value>
-    <value bbox="32.27 34.563 34.587 35.696" uri="http://publications.europa.eu/resource/authority/country/CYP">Kypr</value>
-    <value bbox="12.09 48.552 18.859 51.056" uri="http://publications.europa.eu/resource/authority/country/CZE">Česká republika</value>
-    <value bbox="8.074 54.56 15.193 57.752" uri="http://publications.europa.eu/resource/authority/country/DNK">Dánsko</value>
-    <value bbox="21.772 57.51 28.209 59.686" uri="http://publications.europa.eu/resource/authority/country/EST">Estonsko</value>
-    <value bbox="-9.756 35.789 32.080 71.205" uri="http://publications.europa.eu/resource/authority/country/EUR">Evropská unie</value>
-    <value bbox="19.303 59.766 31.586 70.093" uri="http://publications.europa.eu/resource/authority/country/FIN">Finsko</value>
-    <value bbox="-61.981 -21.342 55.832 51.09" uri="http://publications.europa.eu/resource/authority/country/FRA">Francie</value>
-    <value bbox="5.866 47.271 15.041 55.058" uri="http://publications.europa.eu/resource/authority/country/DEU">Německo</value>
-    <value bbox="19.374 34.804 29.642 41.749" uri="http://publications.europa.eu/resource/authority/country/GRC">Řecko</value>
-    <value bbox="16.113 45.738 22.897 48.586" uri="http://publications.europa.eu/resource/authority/country/HUN">Maďarsko</value>
-    <value bbox="-10.470 51.444 -5.372 55.383" uri="http://publications.europa.eu/resource/authority/country/IRL">Irsko</value>
-    <value bbox="6.626 35.493 18.519 47.093" uri="http://publications.europa.eu/resource/authority/country/ITA">Itálie</value>
-    <value bbox="20.97 55.675 28.242 58.086" uri="http://publications.europa.eu/resource/authority/country/LVA">Lotyšsko</value>
-    <value bbox="20.953 53.899 26.836 56.45" uri="http://publications.europa.eu/resource/authority/country/LTU">Litva</value>
-    <value bbox="5.735 49.448 6.53 50.183" uri="http://publications.europa.eu/resource/authority/country/LUX">Lucembursko</value>
-    <value bbox="14.19 35.806 14.575 36.08" uri="http://publications.europa.eu/resource/authority/country/MLT">Malta</value>
-    <value bbox="3.358 50.751 7.227 53.554" uri="http://publications.europa.eu/resource/authority/country/NLD">Nizozemí</value>
-    <value bbox="4.61 57.972 31.167 71.186" uri="http://publications.europa.eu/resource/authority/country/NOR">Norsko</value>
-    <value bbox="14.123 49.003 24.145 54.836" uri="http://publications.europa.eu/resource/authority/country/POL">Polsko</value>
-    <value bbox="-31.296 32.638 -6.19 42.155" uri="http://publications.europa.eu/resource/authority/country/PRT">Portugalsko</value>
-    <value bbox="20.269 43.62 29.678 48.259" uri="http://publications.europa.eu/resource/authority/country/ROU">Rumunsko</value>
-    <value bbox="16.832 47.732 22.565 49.614" uri="http://publications.europa.eu/resource/authority/country/SVK">Slovensko</value>
-    <value bbox="13.375 45.422 16.61 46.877" uri="http://publications.europa.eu/resource/authority/country/SVN">Slovinsko</value>
-    <value bbox="-18.161 27.636 4.327 43.789" uri="http://publications.europa.eu/resource/authority/country/ESP">Španělsko</value>
-    <value bbox="10.984 55.336 24.166 69.06" uri="http://publications.europa.eu/resource/authority/country/SWE">Švédsko</value>
-    <value bbox="5.956 45.818 10.492 47.809" uri="http://publications.europa.eu/resource/authority/country/CHE">Švýcarsko</value>
-    <value bbox="-8.647 49.883 1.762 60.846" uri="http://publications.europa.eu/resource/authority/country/GBR">Spojené kralovství</value>
+    <value x1="9.53" y1="46.373" x2="17.16" y2="49.021" uri="https://publications.europa.eu/resource/authority/country/AUT">Rakousko</value>
+    <value x1="2.545" y1="49.498" x2="6.407" y2="51.506" uri="https://publications.europa.eu/resource/authority/country/BEL">Belgie</value>
+    <value x1="22.362" y1="41.236" x2="28.591" y2="44.213" uri="https://publications.europa.eu/resource/authority/country/BGR">Bulharsko</value>
+    <value x1="13.590" y1="42.217" x2="19.677" y2="46.563" uri="https://publications.europa.eu/resource/authority/country/HRV">Chorvatsko</value>
+    <value x1="32.27" y1="34.563" x2="34.587" y2="35.696" uri="https://publications.europa.eu/resource/authority/country/CYP">Kypr</value>
+    <value x1="12.09" y1="48.552" x2="18.859" y2="51.056" uri="https://publications.europa.eu/resource/authority/country/CZE">Česká republika</value>
+    <value x1="8.074" y1="54.56" x2="15.193" y2="57.752" uri="https://publications.europa.eu/resource/authority/country/DNK">Dánsko</value>
+    <value x1="21.772" y1="57.51" x2="28.209" y2="59.686" uri="https://publications.europa.eu/resource/authority/country/EST">Estonsko</value>
+    <value x1="-9.756" y1="35.789" x2="32.080" y2="71.205" uri="https://publications.europa.eu/resource/authority/country/EUR">Evropská unie</value>
+    <value x1="19.303" y1="59.766" x2="31.586" y2="70.093" uri="https://publications.europa.eu/resource/authority/country/FIN">Finsko</value>
+    <value x1="-61.981" y1="-21.342" x2="55.832" y2="51.09" uri="https://publications.europa.eu/resource/authority/country/FRA">Francie</value>
+    <value x1="5.866" y1="47.271" x2="15.041" y2="55.058" uri="https://publications.europa.eu/resource/authority/country/DEU">Německo</value>
+    <value x1="19.374" y1="34.804" x2="29.642" y2="41.749" uri="https://publications.europa.eu/resource/authority/country/GRC">Řecko</value>
+    <value x1="16.113" y1="45.738" x2="22.897" y2="48.586" uri="https://publications.europa.eu/resource/authority/country/HUN">Maďarsko</value>
+    <value x1="-10.470" y1="51.444" x2="-5.372" y2="55.383" uri="https://publications.europa.eu/resource/authority/country/IRL">Irsko</value>
+    <value x1="6.626" y1="35.493" x2="18.519" y2="47.093" uri="https://publications.europa.eu/resource/authority/country/ITA">Itálie</value>
+    <value x1="20.97" y1="55.675" x2="28.242" y2="58.086" uri="https://publications.europa.eu/resource/authority/country/LVA">Lotyšsko</value>
+    <value x1="20.953" y1="53.899" x2="26.836" y2="56.45" uri="https://publications.europa.eu/resource/authority/country/LTU">Litva</value>
+    <value x1="5.735" y1="49.448" x2="6.53" y2="50.183" uri="https://publications.europa.eu/resource/authority/country/LUX">Lucembursko</value>
+    <value x1="14.19" y1="35.806" x2="14.575" y2="36.08" uri="https://publications.europa.eu/resource/authority/country/MLT">Malta</value>
+    <value x1="3.358" y1="50.751" x2="7.227" y2="53.554" uri="https://publications.europa.eu/resource/authority/country/NLD">Nizozemí</value>
+    <value x1="4.61" y1="57.972" x2="31.167" y2="71.186" uri="https://publications.europa.eu/resource/authority/country/NOR">Norsko</value>
+    <value x1="14.123" y1="49.003" x2="24.145" y2="54.836" uri="https://publications.europa.eu/resource/authority/country/POL">Polsko</value>
+    <value x1="-31.296" y1="32.638" x2="-6.19" y2="42.155" uri="https://publications.europa.eu/resource/authority/country/PRT">Portugalsko</value>
+    <value x1="20.269" y1="43.62" x2="29.678" y2="48.259" uri="https://publications.europa.eu/resource/authority/country/ROU">Rumunsko</value>
+    <value x1="16.832" y1="47.732" x2="22.565" y2="49.614" uri="https://publications.europa.eu/resource/authority/country/SVK">Slovensko</value>
+    <value x1="13.375" y1="45.422" x2="16.61" y2="46.877" uri="https://publications.europa.eu/resource/authority/country/SVN">Slovinsko</value>
+    <value x1="-18.161" y1="27.636" x2="4.327" y2="43.789" uri="https://publications.europa.eu/resource/authority/country/ESP">Španělsko</value>
+    <value x1="10.984" y1="55.336" x2="24.166" y2="69.06" uri="https://publications.europa.eu/resource/authority/country/SWE">Švédsko</value>
+    <value x1="5.956" y1="45.818" x2="10.492" y2="47.809" uri="https://publications.europa.eu/resource/authority/country/CHE">Švýcarsko</value>
+    <value x1="-8.647" y1="49.883" x2="1.762" y2="60.846" uri="https://publications.europa.eu/resource/authority/country/GBR">Spojené kralovství</value>
 </extents>
 
+<!-- 8.1 -->
 <accessCond>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply" qtip="No conditions apply to access and use.">no conditions to access and use</value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown" qtip="The conditions applying to access and use are unknown.">conditions to access and use unknown</value>
+	<value name="" uri="http://creativecommons.org/licenses/by/4.0" qtip="">Creative Commons BY 4.0</value>
+	<value name="" uri="http://creativecommons.org/licenses/by-sa/4.0" qtip="">Creative Commons BY-SA 4.0</value>
+	<value name="" uri="http://creativecommons.org/licenses/by-nd/4.0" qtip="">Creative Commons BY-ND 4.0</value>
+	<value name="" uri="http://creativecommons.org/licenses/by-nc/4.0" qtip="">Creative Commons BY-NC 4.0</value>
+	<value name="" uri="http://creativecommons.org/licenses/by-nc-sa/4.0" qtip="">Creative Commons BY-NC-SA 4.0</value>
+	<value name="" uri="http://creativecommons.org/licenses/by-nc-nd/4.0" qtip="">Creative Commons BY-NC-ND 4.0</value>
+	<value name="" uri="http://creativecommons.org/cc0" qtip="">Creative Commons CC0</value>
 </accessCond>
 
+<!-- 8.2 -->
 <limitationsAccess>
-	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" qtip="There are no limitations on public access to spatial data sets and services.">no limitations to public access</value>
+	<value name="" uri="http://opendata.gov.cz/definition/opendata" qtip="Otevřená data ČR.">Otevřená data</value>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" qtip="There are no limitations on public access to spatial data sets and services.">žádné omezení veřejného přístupu</value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">public access limited according to Article 13(1)(a) of the INSPIRE Directive</value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" qtip="Public access to spatial data sets and services would adversely affect international relations, public security or national defence.">public access limited according to Article 13(1)(b) of the INSPIRE Directive</value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c" qtip="Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.">public access limited according to Article 13(1)(c) of the INSPIRE Directive</value>
@@ -758,8 +762,34 @@
 </limitationsAccess>
 
 <format>
-	<value name="x-shapefile" uri="http://inspire.ec.europa.eu/media-types/application/x-shapefile" qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</value>
-	<value name="gml+xml" uri="http://www.iana.org/assignments/media-types/application/gml+xml" qtip="GML.">GML</value>
+	<value code="x-shapefile" uri="https://inspire.ec.europa.eu/media-types/application/x-shapefile" qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</value>
+	<value code="gml+xml" uri="https://www.iana.org/assignments/media-types/application/gml+xml" qtip="GML.">GML</value>
+	<value code="x-gmz" uri="https://inspire.ec.europa.eu/media-types/application/x-gmz" qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</value>
+	<value code="vnd.google-earth.kml+xml" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kml+xml" qtip="Google Earth KML">KML</value>
+	<value code="vnd.google-earth.kmz" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kmz" qtip="Google Earth KMZ">KMZ</value>
+	<value code="x-ascii-grid" uri="https://inspire.ec.europa.eu/media-types/application/x-ascii-grid" qtip="ASCII GRID">ASCII GRID</value>
+	<value code="x-ecw" uri="https://inspire.ec.europa.eu/media-types/application/x-ecw" qtip="Enhanced Compressed Wavelet (ECW) file">ECW</value>
+	<value code="x-filegdb" uri="https://inspire.ec.europa.eu/media-types/application/x-filegdb" qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</value>
+	<value code="x-las" uri="https://inspire.ec.europa.eu/media-types/application/x-las" qtip="The media type shall be used for the LASer file format (LAS).">LAS</value>
+	<value code="xml" uri="https://www.iana.org/assignments/media-types/application/xml" qtip="Any XML odkument.">XML</value>
 </format>
+
+<sds>
+	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable" qtip="">vyvolatelné</value>
+	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable" qtip="">interoperabilní</value>
+	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised" qtip="">harmonizované</value>
+</sds>
+
+<serviceQuality>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/QualityOfServiceCriteriaCode/availability" qtip="procento času, kdy je služba k dispozici">dostupnost</value>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/QualityOfServiceCriteriaCode/performance" qtip="jak rychle může být dokončen požadavek na službu prostorových dat">výkonnost</value>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/QualityOfServiceCriteriaCode/capacity" qtip="– maximální počet současných požadavků, které lze provést s deklarovaným výkonem">kapacita</value>
+</serviceQuality>
+
+<obligatory>
+	<value name="gestor" qtip="">gestor</value>
+    <value name="spolugestor" qtip="">spolugestor</value>
+    <value name="garant" qtip="">garant</value>
+</obligatory>
 
 </map>

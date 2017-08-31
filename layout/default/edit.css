@@ -104,21 +104,28 @@ xspan.locale {
     width:100%;
 }
 
-.eng {background-image: url(img/flags/eng.png); }
 .cze {background-image: url(img/flags/cze.png); }
+.eng {background-image: url(img/flags/eng.png); }
+.fra {background-image: url(img/flags/fra.png); }
+.ger {background-image: url(img/flags/ger.png); }
 
 
 input.txt, textarea.txt {
     padding-left: 23px;
-    background-position: 4px 10px; 
+    background-position: 4px 8px; 
     background-repeat: no-repeat ;
+}
+
+label.inp3 {
+    padding-left: 50pt;
+    font-weight: normal;
+    font-style: italic;
 }
 
 label.inp2 {
     padding-left: 30pt;
     font-weight: normal;
 }
-
 .tooltip-inner {
     max-width: 500px;
     text-align: left;
@@ -126,4 +133,18 @@ label.inp2 {
 
 .short {
     width:180px;
+}
+
+.form-control {
+    height: 28px;
+    margin: 2px 0 2px 0;
+    padding: 3px 6px 3px 6px;
+}
+
+label.mand {
+    color: #A00 !important;
+}
+
+label.cond {
+    color: #060;
 }

@@ -423,63 +423,63 @@
 
   <inspireKeywords title="INSPIRE Data Themes">
    <!-- ANNEX I -->
-    <value uri="http://inspire.ec.europa.eu/theme/rs" name="Coordinate reference systems" code="Coordinate reference systems" publication="2010-05-03" n="I.1">Coordinate reference systems</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/gg" name="Geographical grid systems" code="Geographical grid systems" publication="2010-05-03" n="I.2">Geographical grid systems</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/gn" name="Geographical names" code="Geographical names" publication="2010-05-03" n="I.3">Geographical names</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/au" name="Administrative units" code="Administrative units" publication="2010-05-03" n="I.4">Administrative units</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ad" name="Addresses" code="Addresses" publication="2010-05-03" n="I.5">Addresses</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/cp" name="Cadastral parcels" code="Cadastral parcels" publication="2010-05-03" n="I.6">Cadastral parcels</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/tn" name="Transport networks" code="Transport networks" publication="2010-05-03" n="I.7">Transport networks</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/hy" name="Hydrography" code="Hydrography" publication="2010-05-03" n="I.8">Hydrography</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ps" name="Protected sites" code="Protected sites" publication="2010-05-03" n="I.9">Protected sites</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/rs" name="Coordinate reference systems" code="Coordinate reference systems" publication="2010-05-03" n="I.1">Coordinate reference systems</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/gg" name="Geographical grid systems" code="Geographical grid systems" publication="2010-05-03" n="I.2">Geographical grid systems</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/gn" name="Geographical names" code="Geographical names" publication="2010-05-03" n="I.3">Geographical names</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/au" name="Administrative units" code="Administrative units" publication="2010-05-03" n="I.4">Administrative units</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ad" name="Addresses" code="Addresses" publication="2010-05-03" n="I.5">Addresses</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/cp" name="Cadastral parcels" code="Cadastral parcels" publication="2010-05-03" n="I.6">Cadastral parcels</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/tn" name="Transport networks" code="Transport networks" publication="2010-05-03" n="I.7">Transport networks</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/hy" name="Hydrography" code="Hydrography" publication="2010-05-03" n="I.8">Hydrography</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ps" name="Protected sites" code="Protected sites" publication="2010-05-03" n="I.9">Protected sites</value>  
                                                       
     <!-- ANNEX II -->
-    <value uri="http://inspire.ec.europa.eu/theme/el" name="Elevation" code="Elevation" publication="2013-10-12" n="II.1">Elevation</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/lc" name="Land cover" code="Land cover" publication="2013-10-12" n="II.2">Land cover</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/oi" name="Orthoimagery" code="Orthoimagery" publication="2013-10-12" n="II.3">Orthoimagery</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ge" name="Geology" code="Geology" publication="2013-10-12" n="II.4">Geology</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/el" name="Elevation" code="Elevation" publication="2013-10-12" n="II.1">Elevation</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/lc" name="Land cover" code="Land cover" publication="2013-10-12" n="II.2">Land cover</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/oi" name="Orthoimagery" code="Orthoimagery" publication="2013-10-12" n="II.3">Orthoimagery</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ge" name="Geology" code="Geology" publication="2013-10-12" n="II.4">Geology</value>  
                                                       
     <!-- ANNEX III -->
-    <value uri="http://inspire.ec.europa.eu/theme/su" name="Statistical units" code="Statistical units" publication="2013-10-12" n="III.1">Statistical units</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/bu" name="Buildings" code="Buildings" publication="2013-10-12" n="III.2">Buildings</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/so" name="Soil" code="Soil" publication="2013-10-12" n="III.3">Soil</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/lu" name="Land use" code="Land use" publication="2013-10-12" n="III.4">Land use</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/hh" name="Human health and safety" code="Human health and safety" publication="2013-10-12" n="III.5">Human health and safety</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/us" name="Utility and governmental services" code="Utility and governmental services" publication="2013-10-12" n="III.6">Utility and governmental services</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ef" name="Environmental monitoring facilities" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">Environmental monitoring facilities</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/pf" name="Production and industrial facilities" code="Production and industrial facilities" publication="2013-10-12" n="III.8">Production and industrial facilities</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/af" name="Agricultural and aquaculture facilities" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">Agricultural and aquaculture facilities</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/pd" name="Population distribution &#8212; demography" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">Population distribution &#8212; demography</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/am" name="Area management/restriction/regulation zones and reporting units" code="Area management/restriction/regulation zones and reporting units" publication="2013-10-12" n="III.11">Area management/restriction/regulation zones and reporting units</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/nz" name="Natural risk zones" code="Natural risk zones" publication="2013-10-12" n="III.12">Natural risk zones</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/ac" name="Atmospheric conditions" code="Atmospheric conditions" publication="2013-10-12" n="III.13">Atmospheric conditions</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/mf" name="Meteorological geographical features" code="Meteorological geographical features" publication="2013-10-12" n="III.14">Meteorological geographical features</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/of" name="Oceanographic geographical features" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">Oceanographic geographical features</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/sr" name="Sea regions" code="Sea regions" publication="2013-10-12" n="III.16">Sea regions</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/br" name="Bio-geographical regions" code="Bio-geographical regions" publication="2013-10-12" n="III.17">Bio-geographical regions</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/hb" name="Habitats and biotopes" code="Habitats and biotopes" publication="2013-10-12" n="III.18">Habitats and biotopes</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/sd" name="Species distribution" code="Species distribution" publication="2013-10-12" n="III.19">Species distribution</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/er" name="Energy resources" code="Energy resources" publication="2013-10-12" n="III.20">Energy resources</value>  
-    <value uri="http://inspire.ec.europa.eu/theme/mr" name="Mineral resources" code="Mineral resources" publication="2013-10-12" n="III.21">Mineral resources</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/su" name="Statistical units" code="Statistical units" publication="2013-10-12" n="III.1">Statistical units</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/bu" name="Buildings" code="Buildings" publication="2013-10-12" n="III.2">Buildings</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/so" name="Soil" code="Soil" publication="2013-10-12" n="III.3">Soil</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/lu" name="Land use" code="Land use" publication="2013-10-12" n="III.4">Land use</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/hh" name="Human health and safety" code="Human health and safety" publication="2013-10-12" n="III.5">Human health and safety</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/us" name="Utility and governmental services" code="Utility and governmental services" publication="2013-10-12" n="III.6">Utility and governmental services</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ef" name="Environmental monitoring facilities" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">Environmental monitoring facilities</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/pf" name="Production and industrial facilities" code="Production and industrial facilities" publication="2013-10-12" n="III.8">Production and industrial facilities</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/af" name="Agricultural and aquaculture facilities" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">Agricultural and aquaculture facilities</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/pd" name="Population distribution &#8212; demography" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">Population distribution &#8212; demography</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/am" name="Area management/restriction/regulation zones and reporting units" code="Area management/restriction/regulation zones and reporting units" publication="2013-10-12" n="III.11">Area management/restriction/regulation zones and reporting units</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/nz" name="Natural risk zones" code="Natural risk zones" publication="2013-10-12" n="III.12">Natural risk zones</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/ac" name="Atmospheric conditions" code="Atmospheric conditions" publication="2013-10-12" n="III.13">Atmospheric conditions</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/mf" name="Meteorological geographical features" code="Meteorological geographical features" publication="2013-10-12" n="III.14">Meteorological geographical features</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/of" name="Oceanographic geographical features" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">Oceanographic geographical features</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/sr" name="Sea regions" code="Sea regions" publication="2013-10-12" n="III.16">Sea regions</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/br" name="Bio-geographical regions" code="Bio-geographical regions" publication="2013-10-12" n="III.17">Bio-geographical regions</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/hb" name="Habitats and biotopes" code="Habitats and biotopes" publication="2013-10-12" n="III.18">Habitats and biotopes</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/sd" name="Species distribution" code="Species distribution" publication="2013-10-12" n="III.19">Species distribution</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/er" name="Energy resources" code="Energy resources" publication="2013-10-12" n="III.20">Energy resources</value>  
+    <value uri="https://inspire.ec.europa.eu/theme/mr" name="Mineral resources" code="Mineral resources" publication="2013-10-12" n="III.21">Mineral resources</value>  
   </inspireKeywords>
 
   <serviceSpecifications title="European Commission Regulations">
 	<value name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata" 
-        code="Metadata" uri="http://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">Metadata</value>
+        code="Metadata" uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">Metadata</value>
 	<value name="Corrigendum to INSPIRE Metadata Regulation published in the Official Journal of the European Union, L 328, page 83" 
         code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value>
     <value name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services" 
-        code="Interoperability" uri="http://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">Interoperability</value>
+        code="Interoperability" uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">Interoperability</value>
     <value name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services" 
-        code="Download" uri="http://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">Download and transofrmation services</value>  
+        code="Download" uri="https://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">Download and transofrmation services</value>  
 	<value name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services" 
-        code="Network" uri="http://data.europa.eu/eli/reg/2009/976" publication="2009-10-20">Network services</value>  
+        code="Network" uri="https://data.europa.eu/eli/reg/2009/976" publication="2009-10-20">Network services</value>  
 	<value name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions" 
-        code="Access" uri="http://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">Access to spatial data sets and services</value>
+        code="Access" uri="https://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">Access to spatial data sets and services</value>
   	<value name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)" 
-        code="Monitoring" uri="http://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">Monitoring and reporting</value>
+        code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">Monitoring and reporting</value>
   	<value name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)" 
-        code="INSPIRE" uri="http://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">INSPIRE Directive</value>  
+        code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">INSPIRE Directive</value>  
   </serviceSpecifications>
   
   <serviceType>
@@ -690,37 +690,37 @@
 </protocol>
 
 <extents>
-    <value bbox="9.53 46.373 17.16 49.021" uri="http://publications.europa.eu/resource/authority/country/AUT">Austria</value>
-    <value bbox="2.545 49.498 6.407 51.506" uri="http://publications.europa.eu/resource/authority/country/BEL">Belgium</value>
-    <value bbox="22.362 41.236 28.591 44.213" uri="http://publications.europa.eu/resource/authority/country/BGR">Bulgaria</value>
-    <value bbox="13.590 42.217 19.677 46.563" uri="http://publications.europa.eu/resource/authority/country/HRV">Croatia</value>
-    <value bbox="32.27 34.563 34.587 35.696" uri="http://publications.europa.eu/resource/authority/country/CYP">Cyprus</value>
-    <value bbox="12.09 48.552 18.859 51.056" uri="http://publications.europa.eu/resource/authority/country/CZE">Czech Republic</value>
-    <value bbox="8.074 54.56 15.193 57.752" uri="http://publications.europa.eu/resource/authority/country/DNK">Denmark</value>
-    <value bbox="21.772 57.51 28.209 59.686" uri="http://publications.europa.eu/resource/authority/country/EST">Estonia</value>
-    <value bbox="-9.756 35.789 32.080 71.205" uri="http://publications.europa.eu/resource/authority/country/EUR">European Union</value>
-    <value bbox="19.303 59.766 31.586 70.093" uri="http://publications.europa.eu/resource/authority/country/FIN">Finland</value>
-    <value bbox="-61.981 -21.342 55.832 51.09" uri="http://publications.europa.eu/resource/authority/country/FRA">France</value>
-    <value bbox="5.866 47.271 15.041 55.058" uri="http://publications.europa.eu/resource/authority/country/DEU">Germany</value>
-    <value bbox="19.374 34.804 29.642 41.749" uri="http://publications.europa.eu/resource/authority/country/GRC">Greece</value>
-    <value bbox="16.113 45.738 22.897 48.586" uri="http://publications.europa.eu/resource/authority/country/HUN">Hungary</value>
-    <value bbox="-10.470 51.444 -5.372 55.383" uri="http://publications.europa.eu/resource/authority/country/IRL">Ireland</value>
-    <value bbox="6.626 35.493 18.519 47.093" uri="http://publications.europa.eu/resource/authority/country/ITA">Italy</value>
-    <value bbox="20.97 55.675 28.242 58.086" uri="http://publications.europa.eu/resource/authority/country/LVA">Latvia</value>
-    <value bbox="20.953 53.899 26.836 56.45" uri="http://publications.europa.eu/resource/authority/country/LTU">Lithuania</value>
-    <value bbox="5.735 49.448 6.53 50.183" uri="http://publications.europa.eu/resource/authority/country/LUX">Luxembourg</value>
-    <value bbox="14.19 35.806 14.575 36.08" uri="http://publications.europa.eu/resource/authority/country/MLT">Malta</value>
-    <value bbox="3.358 50.751 7.227 53.554" uri="http://publications.europa.eu/resource/authority/country/NLD">Netherlands</value>
-    <value bbox="4.61 57.972 31.167 71.186" uri="http://publications.europa.eu/resource/authority/country/NOR">Norway</value>
-    <value bbox="14.123 49.003 24.145 54.836" uri="http://publications.europa.eu/resource/authority/country/POL">Poland</value>
-    <value bbox="-31.296 32.638 -6.19 42.155" uri="http://publications.europa.eu/resource/authority/country/PRT">Portugal</value>
-    <value bbox="20.269 43.62 29.678 48.259" uri="http://publications.europa.eu/resource/authority/country/ROU">Romania</value>
-    <value bbox="16.832 47.732 22.565 49.614" uri="http://publications.europa.eu/resource/authority/country/SVK">Slovakia</value>
-    <value bbox="13.375 45.422 16.61 46.877" uri="http://publications.europa.eu/resource/authority/country/SVN">Slovenia</value>
-    <value bbox="-18.161 27.636 4.327 43.789" uri="http://publications.europa.eu/resource/authority/country/ESP">Spain</value>
-    <value bbox="10.984 55.336 24.166 69.06" uri="http://publications.europa.eu/resource/authority/country/SWE">Sweden</value>
-    <value bbox="5.956 45.818 10.492 47.809" uri="http://publications.europa.eu/resource/authority/country/CHE">Switzerland</value>
-    <value bbox="-8.647 49.883 1.762 60.846" uri="http://publications.europa.eu/resource/authority/country/GBR">United Kingdom</value>
+    <value bbox="9.53 46.373 17.16 49.021" uri="https://publications.europa.eu/resource/authority/country/AUT">Austria</value>
+    <value bbox="2.545 49.498 6.407 51.506" uri="https://publications.europa.eu/resource/authority/country/BEL">Belgium</value>
+    <value bbox="22.362 41.236 28.591 44.213" uri="https://publications.europa.eu/resource/authority/country/BGR">Bulgaria</value>
+    <value bbox="13.590 42.217 19.677 46.563" uri="https://publications.europa.eu/resource/authority/country/HRV">Croatia</value>
+    <value bbox="32.27 34.563 34.587 35.696" uri="https://publications.europa.eu/resource/authority/country/CYP">Cyprus</value>
+    <value bbox="12.09 48.552 18.859 51.056" uri="https://publications.europa.eu/resource/authority/country/CZE">Czech Republic</value>
+    <value bbox="8.074 54.56 15.193 57.752" uri="https://publications.europa.eu/resource/authority/country/DNK">Denmark</value>
+    <value bbox="21.772 57.51 28.209 59.686" uri="https://publications.europa.eu/resource/authority/country/EST">Estonia</value>
+    <value bbox="-9.756 35.789 32.080 71.205" uri="https://publications.europa.eu/resource/authority/country/EUR">European Union</value>
+    <value bbox="19.303 59.766 31.586 70.093" uri="https://publications.europa.eu/resource/authority/country/FIN">Finland</value>
+    <value bbox="-61.981 -21.342 55.832 51.09" uri="https://publications.europa.eu/resource/authority/country/FRA">France</value>
+    <value bbox="5.866 47.271 15.041 55.058" uri="https://publications.europa.eu/resource/authority/country/DEU">Germany</value>
+    <value bbox="19.374 34.804 29.642 41.749" uri="https://publications.europa.eu/resource/authority/country/GRC">Greece</value>
+    <value bbox="16.113 45.738 22.897 48.586" uri="https://publications.europa.eu/resource/authority/country/HUN">Hungary</value>
+    <value bbox="-10.470 51.444 -5.372 55.383" uri="https://publications.europa.eu/resource/authority/country/IRL">Ireland</value>
+    <value bbox="6.626 35.493 18.519 47.093" uri="https://publications.europa.eu/resource/authority/country/ITA">Italy</value>
+    <value bbox="20.97 55.675 28.242 58.086" uri="https://publications.europa.eu/resource/authority/country/LVA">Latvia</value>
+    <value bbox="20.953 53.899 26.836 56.45" uri="https://publications.europa.eu/resource/authority/country/LTU">Lithuania</value>
+    <value bbox="5.735 49.448 6.53 50.183" uri="https://publications.europa.eu/resource/authority/country/LUX">Luxembourg</value>
+    <value bbox="14.19 35.806 14.575 36.08" uri="https://publications.europa.eu/resource/authority/country/MLT">Malta</value>
+    <value bbox="3.358 50.751 7.227 53.554" uri="https://publications.europa.eu/resource/authority/country/NLD">Netherlands</value>
+    <value bbox="4.61 57.972 31.167 71.186" uri="https://publications.europa.eu/resource/authority/country/NOR">Norway</value>
+    <value bbox="14.123 49.003 24.145 54.836" uri="https://publications.europa.eu/resource/authority/country/POL">Poland</value>
+    <value bbox="-31.296 32.638 -6.19 42.155" uri="https://publications.europa.eu/resource/authority/country/PRT">Portugal</value>
+    <value bbox="20.269 43.62 29.678 48.259" uri="https://publications.europa.eu/resource/authority/country/ROU">Romania</value>
+    <value bbox="16.832 47.732 22.565 49.614" uri="https://publications.europa.eu/resource/authority/country/SVK">Slovakia</value>
+    <value bbox="13.375 45.422 16.61 46.877" uri="https://publications.europa.eu/resource/authority/country/SVN">Slovenia</value>
+    <value bbox="-18.161 27.636 4.327 43.789" uri="https://publications.europa.eu/resource/authority/country/ESP">Spain</value>
+    <value bbox="10.984 55.336 24.166 69.06" uri="https://publications.europa.eu/resource/authority/country/SWE">Sweden</value>
+    <value bbox="5.956 45.818 10.492 47.809" uri="https://publications.europa.eu/resource/authority/country/CHE">Switzerland</value>
+    <value bbox="-8.647 49.883 1.762 60.846" uri="https://publications.europa.eu/resource/authority/country/GBR">United Kingdom</value>
 </extents>
 
 <accessCond>
@@ -729,7 +729,7 @@
 </accessCond>
 
 <limitationsAccess>
-	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" qtip="There are no limitations on public access to spatial data sets and services.">no limitations to public access</value>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations" qtip="There are no limitations on public access to spatial data sets and services.">no limitations to public access</value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a" qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">public access limited according to Article 13(1)(a) of the INSPIRE Directive</value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b" qtip="Public access to spatial data sets and services would adversely affect international relations, public security or national defence.">public access limited according to Article 13(1)(b) of the INSPIRE Directive</value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c" qtip="Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.">public access limited according to Article 13(1)(c) of the INSPIRE Directive</value>
@@ -741,8 +741,34 @@
 </limitationsAccess>
 
 <format>
-	<value name="x-shapefile" uri="http://inspire.ec.europa.eu/media-types/application/x-shapefile" qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</value>
-	<value name="gml+xml" uri="http://www.iana.org/assignments/media-types/application/gml+xml" qtip="GML.">GML</value>
+	<value name="x-shapefile" uri="https://inspire.ec.europa.eu/media-types/application/x-shapefile" qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</value>
+	<value name="gml+xml" uri="https://www.iana.org/assignments/media-types/application/gml+xml" qtip="GML.">GML</value>
+	<value name="x-gmz" uri="https://inspire.ec.europa.eu/media-types/application/x-gmz" qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</value>
+	<value name="vnd.google-earth.kml+xml" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kml+xml" qtip="Google Earth KML">KML</value>
+	<value name="vnd.google-earth.kmz" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kmz" qtip="Google Earth KMZ">KMZ</value>
+	<value name="x-ascii-grid" uri="https://inspire.ec.europa.eu/media-types/application/x-ascii-grid" qtip="ASCII GRID">ASCII GRID</value>
+	<value name="x-ecw" uri="https://inspire.ec.europa.eu/media-types/application/x-ecw" qtip="Enhanced Compressed Wavelet (ECW) file">ECW</value>
+	<value name="x-filegdb" uri="https://inspire.ec.europa.eu/media-types/application/x-filegdb" qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</value>
+	<value name="x-las" uri="https://inspire.ec.europa.eu/media-types/application/x-las" qtip="The media type shall be used for the LASer file format (LAS).">LAS</value>
+	<value name="xml" uri="https://www.iana.org/assignments/media-types/application/xml" qtip="Any XML odkument.">XML</value>
 </format>
+
+<sds>
+	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable" qtip="">invocable</value>
+	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable" qtip="">interoperable</value>
+	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised" qtip="">harmonised</value>
+</sds>
+
+<serviceQuality>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/QualityOfServiceCriteriaCode/availability" qtip="The maximum time in which a typical request to the Spatial Data Service can be carried out in a off-peak load situation">availability</value>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/QualityOfServiceCriteriaCode/performance" qtip="">performance</value>
+	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/QualityOfServiceCriteriaCode/capacity" qtip="">capacity</value>
+</serviceQuality>
+
+<obligatory>
+	<value name="gestor" uri="" qtip="">gestor</value>
+    <value name="spolugestor" uri="" qtip="">spolugestor</value>
+    <value name="garant" uri="" qtip="">garant</value>
+</obligatory>
 
 </map>

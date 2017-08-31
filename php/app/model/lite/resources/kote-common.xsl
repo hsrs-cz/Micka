@@ -6,7 +6,9 @@
 	xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gml="http://www.opengis.net/gml/3.2" 
 	xmlns:xlink="http://www.w3.org/1999/xlink" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:gmx="http://www.isotc211.org/2005/gmx"
     xmlns:exsl="http://exslt.org/common"
+    xmlns:php="http://php.net/xsl"
     extension-element-prefixes="exsl"    
 >
 <xsl:output method="html" encoding="utf-8"/>
@@ -78,7 +80,6 @@
 <xsl:template name="party">
 	<xsl:param name="root"/>
 	<xsl:param name="name"/>
-	<xsl:param name="i"/>
 	<xsl:param name="title"/>
 	<xsl:param name="codeLists"/>
 	<xsl:param name="valid"/>
@@ -87,23 +88,23 @@
 	
 	<!-- validace --> 
 
-	<fieldset id="{concat($name, '_',$i,'_')}">
+	<fieldset>
         <div class="row">
             <xsl:call-template name="drawLabel">
                 <xsl:with-param name="name" select="$name"/>
                 <xsl:with-param name="class" select="'mand'"/>
+                <xsl:with-param name="dupl" select="1"/>
             </xsl:call-template>
-            <span class="duplicate"></span>	
         </div>        
 		<xsl:variable name="getParty">
 		  <xsl:if test="$publisher=1">getParty(this);</xsl:if>
 		</xsl:variable>
 
         <xsl:call-template name="drawInput">
-            <xsl:with-param name="path" select="concat($name,'_',$i,'_individualName')"/>
+            <xsl:with-param name="path" select="concat($name,'-individualName[]')"/>
             <xsl:with-param name="name" select="'individualName'"/>
             <xsl:with-param name="value" select="$root/*/gmd:individualName"/>
-            <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
+            <xsl:with-param name="class" select="'inpS inp2'"/>
             <xsl:with-param name="valid" select="$valid"/>
         </xsl:call-template>
 
@@ -111,24 +112,26 @@
 		<xsl:choose>
             <xsl:when test="$publisher=1">
                 <xsl:call-template name="drawInput">
-                    <xsl:with-param name="path" select="concat($name,'_',$i,'_organisationName')"/>
+                    <xsl:with-param name="path" select="concat($name,'-organisationName[]')"/>
                     <xsl:with-param name="name" select="'organisationName'"/>
                     <xsl:with-param name="value" select="$root/*/gmd:organisationName"/>
                     <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
                     <xsl:with-param name="action" select="'getParty(this)'"/>
                     <xsl:with-param name="langs" select="$langs"/>
                     <xsl:with-param name="valid" select="$valid"/>
+                    <xsl:with-param name="req" select="1"/>
                 </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:call-template name="drawInput">
-                    <xsl:with-param name="path" select="concat($name,'_',$i,'_organisationName')"/>
+                    <xsl:with-param name="path" select="concat($name,'-organisationName[]')"/>
                     <xsl:with-param name="name" select="'organisationName'"/>
                     <xsl:with-param name="value" select="$root/*/gmd:organisationName"/>
                     <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
                     <xsl:with-param name="langs" select="$langs"/>
                     <xsl:with-param name="valid" select="$valid"/>
-                    </xsl:call-template>    
+                    <xsl:with-param name="req" select="1"/>
+                </xsl:call-template>    
             </xsl:otherwise>
         </xsl:choose>	
 
@@ -139,35 +142,35 @@
 	 	-->
 
 		<xsl:call-template name="drawInput">
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_deliveryPoint')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-deliveryPoint[]')"/>
 		  	<xsl:with-param name="name" select="'deliveryPoint'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint"/>
 			<xsl:with-param name="class" select="'inpS inp2'"/>
 		</xsl:call-template>
 
 		<xsl:call-template name="drawInput">
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_city')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-city[]')"/>
 		  	<xsl:with-param name="name" select="'city'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:address/*/gmd:city"/>
 			<xsl:with-param name="class" select="'inpS inp2'"/>
 		</xsl:call-template>
 
 		<xsl:call-template name="drawInput">
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_postalCode')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-postalCode[]')"/>
 		  	<xsl:with-param name="name" select="'postalCode'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:address/*/gmd:postalCode"/>
 			<xsl:with-param name="class" select="'inpSS inp2'"/>
 		</xsl:call-template>
 
 		<xsl:call-template name="drawInput">
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_country')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-country[]')"/>
 		  	<xsl:with-param name="name" select="'country'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:address/*/gmd:country"/>
 			<xsl:with-param name="class" select="'inpSS inp2'"/>
 		</xsl:call-template>
 
 		<xsl:call-template name="drawInput">
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_phone')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-phone[]')"/>
 		  	<xsl:with-param name="name" select="'phone'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:phone/*/gmd:voice"/>
 			<xsl:with-param name="multi" select="2"/>
@@ -175,15 +178,17 @@
 		</xsl:call-template>
 
 		<xsl:call-template name="drawInput">
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_email')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-email[]')"/>
 		  	<xsl:with-param name="name" select="'email'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/>
 			<xsl:with-param name="multi" select="2"/>
-			<xsl:with-param name="class" select="'inpS mandatory inp2'"/>
+            <xsl:with-param name="type" select="'email'"/>
+			<xsl:with-param name="class" select="'mandatory inp2'"/>
+            <xsl:with-param name="req" select="1"/>
 		</xsl:call-template>
 
 		<xsl:call-template name="drawInput">
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_www')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-www[]')"/>
 		  	<xsl:with-param name="name" select="'www'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage"/>
 			<xsl:with-param name="multi" select="2"/>
@@ -192,15 +197,15 @@
 		
 		<xsl:call-template name="drawInput">
 		  	<xsl:with-param name="name" select="$role"/>
-		  	<xsl:with-param name="path" select="concat($name,'_',$i,'_role')"/>
+		  	<xsl:with-param name="path" select="concat($name,'-role[]')"/>
 			<xsl:with-param name="value" select="$root/*/gmd:role/*/@codeListValue"/>
 			<xsl:with-param name="codes" select="'role'"/>
 			<xsl:with-param name="class" select="'short inp2'"/>
 			<xsl:with-param name="req" select="1"/>
 		</xsl:call-template>		  	
-
+        
 	</fieldset>
-	
+
 </xsl:template>
 
 
@@ -220,23 +225,24 @@
 	<xsl:param name="langs" select="0"/>
 	<xsl:param name="req" select="''"/>
 	<xsl:param name="tags" select="0"/>
+    <xsl:param name="placeholder" select="''"/>
 	
 	<!-- class pro label -->
 	<xsl:variable name="lclassI">
 		<xsl:choose>
-			<xsl:when test="contains($class,'mandatory')">mand</xsl:when>
-			<xsl:when test="contains($class,'cond')">cond</xsl:when>
+			<xsl:when test="contains($class,'mandatory') or $req=1"> mand</xsl:when>
+			<xsl:when test="contains($class,'cond')"> cond</xsl:when>
 			<xsl:otherwise></xsl:otherwise>
 		</xsl:choose>
 		<xsl:if test="$lclass!=''"><xsl:text> </xsl:text><xsl:value-of select="$lclass"/></xsl:if>
 	</xsl:variable>
 
     <xsl:variable name="flag"><xsl:if test="$langs">txt <xsl:value-of select="/*/gmd:language/*/@codeListValue"/></xsl:if></xsl:variable>
-			
+    
 	<div id="{$path}" class="row">
 		<xsl:if test="$labels/msg[@name=$name]/label!=''">
             <div class="col-xs-12 col-md-4">
-                <label for="{$name}" class="{$class}" id="V-{$valid}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
+                <label for="{$name}" class="{$class}{$lclassI}" id="V-{$valid}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
                     <xsl:value-of select="$labels/msg[@name=$name]/label"/>
                 </label>
             </div>
@@ -245,12 +251,19 @@
 		<xsl:variable name="cl"><xsl:choose>
 			<xsl:when test="$langs">lang-<xsl:value-of select="$mlang"/></xsl:when>
 		</xsl:choose></xsl:variable>
+
+		<xsl:variable name="TXT"><xsl:choose>
+			<xsl:when test="$langs">[TXT]</xsl:when>
+		</xsl:choose></xsl:variable>
+        
+        <xsl:variable name="pth"><xsl:value-of select="$path"/><xsl:if test="$multi &gt; 1">[]</xsl:if></xsl:variable>
+        
 		<div class="col-xs-12 col-md-8 {$cl}">
 			<xsl:choose>
 
 			<!-- TEXAREA -->
 			<xsl:when test="$type='textarea'">
-                <textarea name="{$path}TXT" class="form-control {$flag} {$class}">
+                <textarea name="{$path}{$TXT}" class="form-control {$flag} {$class}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
@@ -262,21 +275,30 @@
 			<xsl:when test="$type='boolean'">
 				<xsl:choose>
 					<xsl:when test="$value='1' or value='true'">
-						<input type="checkbox" name="{$path}" checked="true">
+						<input type="checkbox" name="{$pth}" checked="true">
 						<xsl:if test="$req">
 							<xsl:attribute name="required">required</xsl:attribute>
 						</xsl:if>
 						</input>
 					</xsl:when>
 					<xsl:otherwise>
-						<input type="checkbox" name="{$path}"/>
+						<input type="checkbox" name="{$pth}"/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
 			
 			<!-- INPUT - plain -->
 			<xsl:when test="$type='plain'">
-				<input name="{$path}TXT" class="form-control {$class}" value="{$value}">
+				<input name="{$pth}" class="form-control {$class}" value="{$value}">
+					<xsl:if test="$req">
+						<xsl:attribute name="required">required</xsl:attribute>
+					</xsl:if>
+				</input>			
+			</xsl:when>
+
+			<!-- INPUT - email -->
+			<xsl:when test="$type='email'">
+				<input name="{$pth}" class="form-control {$class}" value="{$value}" type="email">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -285,7 +307,7 @@
 
 			<!-- DATE  -->
 			<xsl:when test="$type='date'">
-				<input name="{$path}" class="form-control D {$class}" value="{$value}" data-provide="datepicker" xpattern="^(19|20)\d\d([-](0[1-9]|1[012]))?([-](0[1-9]|[12][0-9]|3[01]))?$">
+				<input name="{$pth}" class="form-control D {$class}" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" xpattern="^(19|20)\d\d([-](0[1-9]|1[012]))?([-](0[1-9]|[12][0-9]|3[01]))?$">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -294,7 +316,7 @@
 
 			<!-- REAL -->
 			<xsl:when test="$type='real'">
-				<input name="{$path}TXT" class="inp num {$class}" value="{$value}" pattern="[-+]?[0-9]*\.?[0-9]*">
+				<input name="{$pth}" class="form-control num short {$class}" value="{$value}" pattern="[-+]?[0-9]*\.?[0-9]*">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -303,7 +325,7 @@
 
 			<!-- INTEGER -->
 			<xsl:when test="$type='integer'">
-				<input name="{$path}TXT" class="inp num {$class}" value="{$value}" pattern="[-+]?[0-9]*">
+				<input name="{$pth}" class="form-control num short {$class}" value="{$value}" pattern="[-+]?[0-9]*">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -312,8 +334,28 @@
 
 			<!-- SELECT pres code -->
 			<xsl:when test="$type='cselect'">
-				<select id="{$name}-sel" name="{$path}" class="{$class}">
-					<option value=""></option>
+				<select id="{$name}-sel" name="{$pth}" class="sel2 {$class}">
+                   <xsl:if test="$req">
+                        <xsl:attribute name="required">required</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$multi &gt; 1">
+                        <xsl:attribute name="multiple">true</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$multi=0">
+                        <xsl:attribute name="data-allow-clear">true</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$tags=1">
+                        <xsl:attribute name="data-tags">true</xsl:attribute>
+                    </xsl:if>
+                    <xsl:attribute name="data-placeholder">
+                        <xsl:choose>
+                        <xsl:when test="$placeholder">
+                            <xsl:value-of select="$placeholder"/>
+                        </xsl:when>
+                        <xsl:otherwise>Vyberte ...</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <xsl:if test="string-length($value)=0"><option></option></xsl:if>
 					<!-- cyklus pres ciselnik -->
 					<xsl:for-each select="$codelist/*[name()=$codes]/value">
 			  			<xsl:choose>
@@ -331,7 +373,7 @@
 			<!-- SELECT -->
 			<xsl:when test="$codes!=''">
                 
-                <select id="{$name}-sel" name="{$path}" class="sel2 {$class}">
+                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
@@ -344,7 +386,15 @@
                     <xsl:if test="$tags=1">
                         <xsl:attribute name="data-tags">true</xsl:attribute>
                     </xsl:if>
-                        
+                    <xsl:attribute name="data-placeholder">
+                        <xsl:choose>
+                        <xsl:when test="$placeholder">
+                            <xsl:value-of select="$placeholder"/>
+                        </xsl:when>
+                        <xsl:otherwise>Vyberte ...</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    <xsl:if test="string-length($value)=0"><option></option></xsl:if>
                     <!-- codelist loop -->
                     <xsl:for-each select="$codeLists/*[name()=$codes]/value">
                         <xsl:variable name="r" select="."/>
@@ -368,7 +418,7 @@
 
 			<!-- INPUT - TEXT -->
 			<xsl:otherwise>
-                <input name="{$path}TXT" class="form-control {$flag} {$class}" value="{normalize-space($value/*)}">
+                <input name="{$pth}{$TXT}" class="form-control {$flag} {$class}" value="{normalize-space($value/*)}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
@@ -390,7 +440,7 @@
 			<xsl:when test="$langs and $type='textarea'">
 				<xsl:for-each select="$langs">
 					<xsl:variable name="pos" select="position()"/>
-                    <textarea class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" name="{$path}TXT{*/gmd:languageCode/*/@codeListValue}">
+                    <textarea class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]">
                         <xsl:if test="$value"><xsl:value-of select="$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]"/></xsl:if>
                     </textarea>
 				</xsl:for-each>
@@ -400,10 +450,10 @@
 					<xsl:variable name="pos" select="position()"/>
                     <xsl:choose>
                         <xsl:when test="$value">
-                            <input name="{$path}TXT{*/gmd:languageCode/*/@codeListValue}" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}"/>
+                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <input name="{$path}TXT{*/gmd:languageCode/*/@codeListValue}" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value=""/>
+                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value=""/>
                         </xsl:otherwise>
                     </xsl:choose>	
 				</xsl:for-each>
@@ -513,6 +563,11 @@
 	<xsl:param name="t"/>
 	
 	<xsl:choose>
+		<xsl:when test="count($t/*)=0">
+			<xsl:element name="gmd:{$name}">
+				<gco:CharacterString><xsl:value-of select="$t"/></gco:CharacterString>
+			</xsl:element>	
+		</xsl:when>
 		<xsl:when test="count($t/*)=1">
 			<xsl:element name="gmd:{$name}">
 				<gco:CharacterString><xsl:value-of select="$t/TXT"/></gco:CharacterString>
@@ -523,9 +578,9 @@
 				<gco:CharacterString><xsl:value-of select="$t/TXT"/></gco:CharacterString>
 				<gmd:PT_FreeText> 
 					<xsl:for-each select="$t/*[name()!='TXT']">		
-		      			<textGroup>
-		        			<LocalisedCharacterString locale="#locale-{substring(name(),4)}"><xsl:value-of select="."/></LocalisedCharacterString>
-		      			</textGroup>
+		      			<gmd:textGroup>
+		        			<gmd:LocalisedCharacterString locale="#locale-{name()}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
+		      			</gmd:textGroup>
 		    		</xsl:for-each>
 				</gmd:PT_FreeText>
 			</xsl:element>		
@@ -533,5 +588,38 @@
 	</xsl:choose>
 </xsl:template>
 
+<xsl:template name="uriOut">
+	<xsl:param name="name"/>
+	<xsl:param name="codes"/>
+	<xsl:param name="t"/>
+    <xsl:param name="attrib" select="''"/>
+	
+    <xsl:variable name="row" select="$codes/value[@uri=string($t)]"/>
+    <xsl:variable name="n">
+        <xsl:choose>
+            <xsl:when test="contains($name, ':')"><xsl:value-of select="$name"/></xsl:when>
+            <xsl:otherwise>gmd:<xsl:value-of select="$name"/></xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:element name="{$n}">
+        <xsl:choose>
+            <xsl:when test="$row">               
+                <gmx:Anchor xlink:href="{$t}">
+                    <xsl:choose>
+                        <xsl:when test="$attrib">
+                            <xsl:value-of select="$row/@*[name()=$attrib]"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="$row"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </gmx:Anchor>
+            </xsl:when>
+            <xsl:otherwise>
+                <gco:CharacterString><xsl:value-of select="$t"/></gco:CharacterString>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:element>
+</xsl:template>
 
 </xsl:stylesheet>

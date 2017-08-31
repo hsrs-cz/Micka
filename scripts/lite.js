@@ -9,6 +9,12 @@ var lite = {
         $('[data-tooltip="tooltip"]').tooltip();
         $('.sel2').select2();
         this.createDuplicate();
+        $.fn.datepicker.defaults.language=HS.getLang(2);
+        $.fn.datepicker.defaults.todayHighlight = true;
+        $.fn.datepicker.defaults.forceParse = false;
+        if(lang=='cze') $.fn.datepicker.defaults.format = "dd.mm.yyyy";
+        else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
+
         //micka.initMap({});
     },
     
@@ -38,28 +44,22 @@ var lite = {
     
     removeNode: function(){
         if(!confirm("Smazat ?")) return;
-        var toDel = this.parentNode.parentNode;
+        var toDel = this.parentNode.parentNode.parentNode.parentNode;
         var cont = toDel.parentNode;
-        var pos = toDel.id.lastIndexOf("_");
-        var pom = toDel.id.substring(0,pos);
-        pos = pom.lastIndexOf("_");
-        pom = pom.substring(0,pos);
-        var elements = md_getSimilarNodes(cont, pom);
-        // odstraneni elementu
-        if(elements.length>1){ 
+        // remove node
+        if($(cont).children('fieldset').length>1){ 
             cont.removeChild(toDel);
         }
         // vymazani obsahu pro prvni
         else {
-            $(elements).find('input').val('');
-            $(elements).find('select').val('');
+            $(toDel).find('input').val('');
+            var sel  = $(toDel).find('.sel2');
+            $(sel).removeClass("select2-hidden-accessible");
+            $(sel).parent().children('span').remove();
+            $(sel).val('');
+            $(sel).select2();
         }	
-        elements = md_getSimilarNodes(cont, pom[0]);
-        for(var i=0;i<elements.length;i++) md_setName(elements[i], pom[0]+"_"+i+"_"); 
-        checkFields();
     }
-
-
 
 }
 

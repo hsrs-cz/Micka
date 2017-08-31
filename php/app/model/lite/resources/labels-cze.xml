@@ -3,15 +3,14 @@
 	<msg name="fileIdentifier">
 		<label>11. Identifikátor metadatového záznamu</label>
 		<help>
-			<h3>11 Identifikátor metadatového záznamu (File Identifier)</h3>
-			<p>Identifikátor metadatového záznamu je automaticky generovaný.</p> 
-			<p class="pozn">Hodnota je znakový řetězec. Typicky UUID. Jde o unikátní klíč v katalogu.</p>		
+			<h3>Identifikátor metadatového záznamu (File Identifier)</h3>
+			<p>Identifikátor metadatového záznamu je automaticky generovaný. Typicky UUID. Jde o unikátní klíč v katalogu.</p> 	
 		</help>
 	</msg>
 	<msg name="inspireEU">
 		<label>CZ-11 Harvestovat na geoportál EU</label>
 		<help>
-			<h3>CZ-11 Harvestovat na geoportál EU</h3>
+			<h3>Zda harvestovat na geoportál EU</h3>
 			<p>Označuje, zda bude záznam harvestován na evropský INSPIRE geoportál (Podléhá dalšímu schválení správcem národního geoportálu). 
 			    Pokud není označen, bude prezentován pouze na národním geoportálu. </p> 
 			<p class="pozn">Hodnota je podle národního profilu http://geoportal.gov.cz/inspire</p>		
@@ -28,7 +27,7 @@
 	<msg name="title">
 		<label>1.1 Název</label>
 		<help>
-			<h3>1.1 Název (Resource title)</h3>
+			<h3>Název (Resource title)</h3>
 			<p>Charakteristický, často jedinečný název, pod kterým je zdroj znám. Měl by být unikátní v rámci organizace. </p>
 			<p class="pozn">Hodnota je volný text.</p>
 		</help>
@@ -36,7 +35,7 @@
 	<msg name="abstract">
 		<label>1.2 Abstrakt</label>
 		<help>
-			<h3>1.2 Abstrakt (Resource abstract)</h3>
+			<h3>Abstrakt (Resource abstract)</h3>
 			<p> Stručné popisné shrnutí obsahu zdroje.</p>
 			<p class="pozn">Hodnota je volný text.</p> 
 		</help>
@@ -44,7 +43,7 @@
 	<msg name="hierarchyLevel">
 		<label>1.3 Typ</label>
 		<help>
-			<h3>1.3 Typ (Resource type)</h3>
+			<h3>Typ (Resource type)</h3>
 			<p>Typ zdroje, který je popisován metadaty. Pro data bude použito pouze “datová sada (dataset)” nebo „série (series)“, pro služby „služba (service)“. </p> 
 			<p>Výběr z číselníku.</p> 
 		</help>
@@ -52,7 +51,7 @@
 	<msg name="scale">
 		<label>6.2a Prostor. rozlišení - měřítko</label>
 		<help>
-			<h3>6.2a Prostorové rozlišení - měřítko (Spatial resolution)</h3>
+			<h3>Prostorové rozlišení - měřítko (Spatial resolution)</h3>
 			<p>Měřítko mapy, ze které byla vektorová datová sada odvozena.
 Hodnota se vyjádří jako celé číslo vyjadřující jmenovatele měřítkového čísla. Snažte se tuto hodnotu uvádět vždy, pokud je to možné, kvůli následnému vyhledávání. Alternativně lze uvést rozlišení-vzdálenost.
 Povinné u datových souborů a sérií datových souborů, jestliže lze stanovit odpovídající měřítko.
@@ -65,7 +64,7 @@ Volný text.
 	<msg name="distance">
 		<label>6.2b Prostor. rozlišení - vzdál.</label>
 		<help>
-			<h3>6.2b Prostorové rozlišení - vzdálenost (Spatial resolution)</h3>
+			<h3>Prostorové rozlišení - vzdálenost (Spatial resolution)</h3>
 			<p>Přesnost/rozlišení rastrové datové sady v metrech.
 Hodnota rozlišení se vyjádří jako celočíselná hodnota od nuly do nekonečna.
 Povinné u datových souborů a sérií datových souborů, jestliže lze stanovit odpovídající hodnotu rozlišení
@@ -76,7 +75,7 @@ Povinné u datových souborů a sérií datových souborů, jestliže lze stanov
 	<msg name="lineage">
 		<label>6.1 Původ</label>
 		<help>
-			<h3>6.1 Původ (Lineage)</h3>
+			<h3>Původ (Lineage)</h3>
 			<p>Vyjádření historie zpracování a/nebo celkové kvality datové sady nebo série. 
 Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen a jeho kvalita zajištěna, zda se jedná o oficiální verzi (pokud existuje více verzí) a zda má právní platnost.
 </p>
@@ -97,10 +96,10 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 			<p>Seznam dalších klíčových slov - uveďte každé na nový řádek.</p>
 		</help>
 	</msg>
-	<msg name="theme">
-		<label>3.1 Téma INSPIRE</label>
+	<msg name="inspireTheme">
+		<label>3 Téma INSPIRE</label>
 		<help>
-			<h3>3.1 Dalčí klíčová slova</h3>
+			<h3>Klíčová slova INSPIRE</h3>
 			<p>Seznam dalších klíčových slov - uveďte každé na nový řádek.</p>
 		</help>
 	</msg>
@@ -201,8 +200,16 @@ Pokud bude tato položka vyplněna, musí se vyplnit i položka „CZ-10 Plocha 
 			<p class="pozn">Není-li tato položka vyplněna, je míněno celé území ČR. Volný text.</p>
 		</help>
 	</msg>
+	<msg name="encoding">
+		<label>IOD-3 Kódování (formát)</label>
+		<help>
+			<h3>Kódování (Encoding) - Distribuční formát</h3>
+			<p>Informace o distribučním formátu (distribučních formátech) datové sady nebo série prostorových dat (v jakém formátu jsou data uložena nebo distribuována).</p>
+			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. </p>		
+		</help>
+	</msg>
 	<msg name="format">
-		<label>IO-3a Distribuční formát</label>
+		<label>Distribuční formát</label>
 		<help>
 			<h3>IO-3a Kódování (Encoding) - Distribuční formát</h3>
 			<p>Informace o distribučním formátu (distribučních formátech) datové sady nebo série prostorových dat (v jakém formátu jsou data uložena nebo distribuována).</p>
@@ -210,7 +217,7 @@ Pokud bude tato položka vyplněna, musí se vyplnit i položka „CZ-10 Plocha 
 		</help>
 	</msg>
 	<msg name="format_version">
-		<label>IO-3b Verze</label>
+		<label>Verze</label>
 		<help>
 			<h3>IO-3b Kódování (Encoding) - Verze formátu (Distribution version format)</h3>
 			<p>Verzi formátu dat je nutno uvést, pokud uvádíte distribuční formát dat!
@@ -221,7 +228,7 @@ Např. pokud uvedete distribuční formát „Shapefile“, pak jeho verze bude 
 		</help>
 	</msg>
 	<msg name="format_specification">
-		<label>IO-3c Specifikace formátu</label>
+		<label>Specifikace formátu</label>
 		<help>
 			<h3>IO-3c Specifikace formátu (IO-3 Kódování (Encoding) - Specifikace formátu)</h3>
 			<p>Podle INSPIRE specifikací dat se doporučuje uvádět i citaci specifikace, kde je kódování popsáno. 
@@ -259,13 +266,6 @@ Výběr z číselníku.</p>
 		<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod poslední částí této komplexní položky „Zodpovědná organizace“.</p>
 		</help>
 	</msg>
-	<msg name="inspire">
-		<label>3.1 Téma INSPIRE</label>
-		<help>
-			<h3>3.1 Téma INPSPIRE (Keyword value) </h3>
-			<p>Zařazení datové sady k tématům INSPIRE. Jedno z klíčových slov musí být INSPIRE téma ze slovníku gemet viz. číselník.</p>
-		</help>
-	</msg>
 	<msg name="gemet">
 		<label>3.1 GEMET</label>		
 		<help>
@@ -301,22 +301,22 @@ Může obsahovat např. kódy verzí nebo rok aktualizace apod. např.CZ-0016480
 			<p class="pozn"></p>
 		</help>
 	</msg>
-	<msg name="access">
-		<label>8.2. Omezení věřejného přístupu</label>
-		<help>
-			<h3>8.2. Omezení věřejného přístupu (Limitations on public access)</h3>
-			<p>Omezení veřejného přístupu k datové sadě. V souladu s českou legislativou zde budou uvedeny <b>informace o licencích</b> tj. vložte text licence nebo uveďte odkaz (URL) licence k datové sadě.
-			</p>
-			<p class="pozn">Volný text nebo URL odkaz</p>
-		</help>
-	</msg>
-	<msg name="uselim">
+	<msg name="accessCond">
 		<label>8.1. Podmínky pro přístup a užití</label>
 		<help>
 			<h3>8.1. Podmínky pro přístup a užití (Conditions applying to access and use)</h3>
 			<p>Podmínky vztahující se k přístupu a užití datové sady. 
 Vyplňte textový popis nebo URL dokumentu s podmínkami. Pokud neplatí žádné podmínky, použije se fráze „žádné podmínky neplatí“, pokud podmínky nejsou známy, použije se “podmínky nejsou známy“.
 <b>Uveďte zde zvláště informace o poplatcích.</b>
+			</p>
+			<p class="pozn">Volný text nebo URL odkaz</p>
+		</help>
+	</msg>
+	<msg name="limitationsAccess">
+		<label>8.2. Omezení věřejného přístupu</label>
+		<help>
+			<h3>8.2. Omezení věřejného přístupu (Limitations on public access)</h3>
+			<p>Omezení veřejného přístupu k datové sadě. V souladu s českou legislativou zde budou uvedeny <b>informace o licencích</b> tj. vložte text licence nebo uveďte odkaz (URL) licence k datové sadě.
 			</p>
 			<p class="pozn">Volný text nebo URL odkaz</p>
 		</help>
@@ -349,6 +349,9 @@ ESRI ArcGIS Server SOAP: http://&lt;host&gt;/&lt;instance&gt;/services/&lt;servi
     </msg>
 	<msg name="protocol">
 		<label>Protokol</label>
+	</msg>
+	<msg name="name">
+		<label>Název</label>
 	</msg>
 	<msg name="description">
 		<label>Popis</label>
@@ -420,7 +423,7 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		</help>
 	</msg>
 	<msg name="Maintenance">
-		<label>Údržba</label>
+		<label>CZ-4 Údržba</label>
 		<help>
 			<h3>Úroveň údržby a aktualizace (Resource Maintenance) </h3>
 			<p>Informace o četnosti aktualizací. Pokud v číselníku není vhodný interval, zvolte „neznámý“ a vyplňte následující položku Úroveň údržby a aktualizace (uživ.).</p>
@@ -473,9 +476,9 @@ Výběr z číselníku.
 		Souřadnicový systém, ve kterém jsou data k dispozici
 	</coorSys>
 	<msg name="spatial">
-		<label>IO-6 Typ prostorové reprezentace</label>
+		<label>IOD-6 Typ prostorové reprezentace</label>
 		<help>
-			<h3>IO-6 Typ prostorové reprezentace (Spatial Representation Type) </h3>
+			<h3>Typ prostorové reprezentace (Spatial Representation Type) </h3>
 			<p>Metoda použitá k prostorové reprezentaci geografické informace (např. vektor).</p>
 			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. Výběr z číselníku. </p>
 		</help>
@@ -489,9 +492,9 @@ Výběr z číselníku.
 		</help>
 	</msg>
 	<msg name="characterSet">
-		<label>IO-5 Kódování znaků</label>
+		<label>IOD-5 Kódování znaků</label>
 		<help>
-			<h3>IO-5 Kódování znaků (Character encoding)</h3>
+			<h3>Kódování znaků (Character encoding)</h3>
 			<p>Kódování znaků používané v datové sadě.</p>
             <p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. Výběr z číselníku. </p>
 		</help>
@@ -506,20 +509,20 @@ Výběr z číselníku.
 </p>
 		</help>
 	</msg>
-	<msg name="operatesOn_href">
+	<msg name="operatesOn-href">
 		<label>URL</label>
 		<help>
 			<p>Adresa odkazující na metadata zdroje (XML)</p>
 			<p class="pozn"></p>
 		</help>
 	</msg>			
-	<msg name="operatesOn_uuid">
+	<msg name="operatesOn-uuid">
 		<label>ID</label>
 		<help>Identifikátor MD_DataIdentification v XML s metadaty #
 		<p class="pozn">Zopakovaný z URL</p>		
 		</help>
 	</msg>			
-	<msg name="operatesOn_title">
+	<msg name="operatesOn-title">
 		<label>Název</label>
 		<help>Název zdrojové datové sady (v metadatech dat je to 1.1 Název (Resource title))</help>
 	</msg>			
@@ -635,9 +638,9 @@ Volný text.</p>
 	</msg> 
 
 	<msg name="Topological">
-		<label>IO-4 Topologická správnost</label>
+		<label>IOD-4 Topologická správnost</label>
 		<help>
-			<h3>IO-4 Topologická správnost (Topological consistency)</h3>
+			<h3>Topologická správnost (Topological consistency)</h3>
 			<p class="pozn">Položka není obecně povinná a bude vyplňována jen pro některá témata</p> 
 		</help>
 	</msg>
@@ -757,5 +760,68 @@ Volný text.</p>
 	<msg name="bbox-help">
 		<label>Zadejte výřez v mapě pomocí Ctrl + tažením myši</label>
 	</msg>
+
+	<msg name="sds">
+		<label>IOS-1 Kategorie</label>
+		<help>
+			<h3>Kategorie interoperabilních služeb prostorových dat</h3> 
+		</help>
+	</msg>
 	
+	<msg name="serviceQuality">
+		<label>IOS-2.1 Kvalita služby</label>
+		<help>
+			<h3>Kritéria pro minimální kvalitu interoperabilní služby, kterou odhaduje osoba nebo organizace odpovědná za interoperabilní službu prostorových dat a o které se očekává, že bude platná po určitou dobu</h3> 
+		</help>
+	</msg>
+	<msg name="availability">
+		<label>Dostupnost [%]</label>
+		<help>
+			<h3>Procento času, kdy je služba k dispozici</h3> 
+		</help>
+	</msg>
+	<msg name="performance">
+		<label>Výkonnost [s]</label>
+		<help>
+			<h3>Jak rychle může být dokončen požadavek na službu prostorových dat</h3> 
+		</help>
+	</msg>
+	<msg name="capacity">
+		<label>Kapacita</label>
+		<help>
+			<h3>Maximální počet současných požadavků, které lze provést s deklarovaným výkonem</h3> 
+		</help>
+	</msg>
+
+	<msg name="accessPoint">
+		<label>Přístupový bod</label>
+		<help>
+			<h3>Adresa harmonizované služby</h3> 
+		</help>
+	</msg>
+	<msg name="obligatory">
+		<label>IO-13 Povinný subjekt</label>
+		<help>
+			<h3>Identifikace povinných subjektů INSPIRE </h3> 
+		</help>
+	</msg>
+	<msg name="operation">
+		<label>IOS-3 Operace</label>
+		<help>
+			<h3>Metadats operací</h3> 
+		</help>
+	</msg>
+	<msg name="operationName">
+		<label>Název operace</label>
+		<help>
+			<h3></h3> 
+		</help>
+	</msg>
+	<msg name="mime">
+		<label>Formát</label>
+		<help>
+			<h3>Mime formát zdroje</h3> 
+		</help>
+	</msg>
+    
 </labels>

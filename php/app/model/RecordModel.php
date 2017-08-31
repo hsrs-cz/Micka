@@ -829,15 +829,18 @@ class RecordModel extends \BaseModel
     }
     
     private function setFromMickaLite($post) {
+        //echo "<pre>"; var_dump($post); die;
 		$cswClient = new \CswClient();
-        $input = \Kote::processForm(beforeSaveRecord($post));
+        $kote = new \Kote();
+        $input = $kote->processForm(beforeSaveRecord($post));
         $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>'cze');
         $xmlstring = $cswClient->processTemplate($input, __DIR__ . '/lite/resources/kote2iso.xsl', $params);
+   		header('Content-Type: application/xml'); 
+        echo $xmlstring;  
         exit;
     }
     
-	private function getIdElements()
-    {
+	private function getIdElements() {
         // Move to CodeListModel
         $data = $this->db->query("SELECT standard_schema.md_id, standard_schema.md_standard, elements.el_name
             FROM elements JOIN standard_schema ON (elements.el_id = standard_schema.el_id)")->fetchAll();

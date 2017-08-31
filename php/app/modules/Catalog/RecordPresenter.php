@@ -116,6 +116,8 @@ class RecordPresenter extends \BasePresenter
     public function actionSave($id) 
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
+        //var_dump($post);
+        //$this->terminate();
         if (!array_key_exists('ende', $post) || $post['ende'] != 1) {
             throw new \Nette\Application\ApplicationException('messages.apperror.postIncomplete');
         }

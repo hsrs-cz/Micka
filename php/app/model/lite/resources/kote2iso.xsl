@@ -1,17 +1,24 @@
 <xsl:stylesheet version="1.0" 
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:sch="http://www.ascc.net/xml/schematron" 
+xmlns:gmd="http://www.isotc211.org/2005/gmd" 
+xmlns:sch="http://www.ascc.net/xml/schematron" 
 xmlns:gco="http://www.isotc211.org/2005/gco" 
 xmlns:srv="http://www.isotc211.org/2005/srv"
 xmlns:gsr="http://www.isotc211.org/2005/gsr" 
-xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gts="http://www.isotc211.org/2005/gts" 
-xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" 
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd
+xmlns:gss="http://www.isotc211.org/2005/gss" 
+xmlns:gts="http://www.isotc211.org/2005/gts" 
+xmlns:gml="http://www.opengis.net/gml" 
+xmlns:xlink="http://www.w3.org/1999/xlink"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"  
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:gmx="http://www.isotc211.org/2005/gmx"
+xmlns:php="http://php.net/xsl"
+xsi:schemaLocation="http://www.isotc211.org/2005/gmd
 http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	<xsl:output method="xml" encoding="UTF-8"/>
     <xsl:include href="kote-common.xsl" />
 
-    <xsl:variable name="cl">http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml</xsl:variable>
+    <xsl:variable name="cl">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml</xsl:variable>
 
 	<xsl:template match="/md">
 
@@ -30,13 +37,9 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     </xsl:variable>	
 	
 	<xsl:variable name="mdlang" select="mdlang"/>
-	<xsl:variable name="codeLists1" select="document(concat('../../include/xsl/codelists_' ,mdlang, '.xml'))/map" />
+	<xsl:variable name="lcodes" select="document(concat('../../xsl/codelists_' ,mdlang, '.xml'))/map" />
 	
-		<gmd:MD_Metadata 
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform" 
-xmlns="http://www.isotc211.org/2005/gmd" xmlns:sch="http://www.ascc.net/xml/schematron" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.isotc211.org/2005/gmd
-http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"    
-    >
+<gmd:MD_Metadata>
 	<gmd:fileIdentifier>
 		<gco:CharacterString><xsl:value-of select="fileIdentifier"/></gco:CharacterString>
 	</gmd:fileIdentifier>
@@ -61,7 +64,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 			</xsl:otherwise>
 		</xsl:choose>		
 	</gmd:hierarchyLevel>
-    <xsl:for-each select="hlName">
+    <xsl:for-each select="hlName/item">
         <gmd:hierarchyLevelName>
             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
         </gmd:hierarchyLevelName>     
@@ -76,7 +79,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 	    	<gmd:hierarchyLevelName><gco:CharacterString></gco:CharacterString></gmd:hierarchyLevelName>
 	    </xsl:when>
     </xsl:choose>
-	<xsl:for-each select="contact">
+	<xsl:for-each select="contact/item">
 		<gmd:contact>
 			<xsl:call-template name="contact">
 				<xsl:with-param name="party" select="."/>
@@ -92,7 +95,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
                 <gco:CharacterString><xsl:value-of select="metadataStandardName"/></gco:CharacterString>
             </xsl:when>    
             <xsl:otherwise>    
-		          <gco:CharacterString>ISO 19115/19119</gco:CharacterString>
+		          <gco:CharacterString>ISO 19115/INSPIRE_TG2/CZ4</gco:CharacterString>
             </xsl:otherwise>
          </xsl:choose>         
 	</gmd:metadataStandardName>
@@ -138,19 +141,16 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
      </xsl:if>
 	-->
 	<!-- ================================ ref. system =============================== -->
-	<xsl:for-each select="coorSys">
+	<xsl:for-each select="coorSys/item">
 		<gmd:referenceSystemInfo>
 			<gmd:MD_ReferenceSystem>
 				<gmd:referenceSystemIdentifier>
 					<gmd:RS_Identifier>
-						<gmd:code>
-							<gco:CharacterString>
-								<xsl:value-of select="."/>
-							</gco:CharacterString>
-						</gmd:code>
-						<!--gmd:codeSpace>
-							<gco:CharacterString>urn:ogc:def:crs:EPSG</gco:CharacterString>
-						</gmd:codeSpace-->
+                        <xsl:call-template name="uriOut">
+                            <xsl:with-param name="name" select="'code'"/>
+                            <xsl:with-param name="codes" select="$lcodes/coordSys"/>
+                            <xsl:with-param name="t" select="."/>
+                        </xsl:call-template>
 					</gmd:RS_Identifier>
 				</gmd:referenceSystemIdentifier>
 			</gmd:MD_ReferenceSystem>
@@ -168,12 +168,12 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 								<xsl:with-param name="name" select="'title'"/>
 								<xsl:with-param name="t" select="title"/>
 							</xsl:call-template>
-							<xsl:for-each select="Date">
+							<xsl:for-each select="date/item">
 								<gmd:date>
 									<gmd:CI_Date>
 										<gmd:date>
 											<gco:Date>
-												<xsl:value-of select="date"/>
+												<xsl:value-of select="php:function('date2iso', string(date))"/>
 											</gco:Date>
 										</gmd:date>
 										<gmd:dateType>
@@ -182,16 +182,13 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 									</gmd:CI_Date>
 								</gmd:date>
 							</xsl:for-each>
-							<xsl:for-each select="identifier">
+							<xsl:for-each select="identifier/item">
 								<gmd:identifier>
-									<gmd:RS_Identifier>
+									<gmd:MD_Identifier>
 										<gmd:code>
-											<gco:CharacterString><xsl:value-of select="code"/></gco:CharacterString>
+											<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
 										</gmd:code>
-										<gmd:codeSpace>
-											<gco:CharacterString><xsl:value-of select="codeSpace"/></gco:CharacterString>
-										</gmd:codeSpace>
-									</gmd:RS_Identifier>
+									</gmd:MD_Identifier>
 								</gmd:identifier>
 							</xsl:for-each>
 						</gmd:CI_Citation>
@@ -223,7 +220,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 							</MD_ProgressCode>
 						</status>
 					</xsl:for-each>  -->
-					<xsl:for-each select="dataContact">
+					<xsl:for-each select="dataContact/item">
 						<gmd:pointOfContact>
 							<xsl:call-template name="contact">
 								<xsl:with-param name="party" select="."/>
@@ -264,13 +261,16 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 							</gmd:MD_MaintenanceInformation>
 						</gmd:resourceMaintenance>
 					</xsl:for-each-->					
-					<xsl:if test="normalize-space(inspire)!=''">
+					<xsl:if test="normalize-space(inspireTheme)!=''">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>						
-	              				<xsl:for-each select="inspire">
-	    							<gmd:keyword>
-	  							  		<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-	  						  		</gmd:keyword>
+	              				<xsl:for-each select="inspireTheme/item">
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'keyword'"/>
+                                        <xsl:with-param name="codes" select="$lcodes/inspireKeywords"/>
+                                        <xsl:with-param name="t" select="."/>
+                                        <xsl:with-param name="attrib" select="'name'"/>
+                                    </xsl:call-template>
 	  							</xsl:for-each>
 	  							<gmd:thesaurusName>
 	  								<gmd:CI_Citation>
@@ -371,34 +371,47 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
                     </xsl:if>
 
 					<!-- omezeni -->
-					<gmd:resourceConstraints>
-						<gmd:MD_Constraints>
-							<xsl:call-template name="txtOut">
-								<xsl:with-param name="name" select="'useLimitation'"/>
-								<xsl:with-param name="t" select="uselim"/>
-							</xsl:call-template>					
-						</gmd:MD_Constraints>
-					</gmd:resourceConstraints>
-					
-					<gmd:resourceConstraints>
-						<gmd:MD_LegalConstraints>
-							<xsl:if test="access!=''">
-								<gmd:accessConstraints>
-									<MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
-								</gmd:accessConstraints>	
-							</xsl:if>
-							<xsl:call-template name="txtOut">
-								<xsl:with-param name="name" select="'otherConstraints'"/>
-								<xsl:with-param name="t" select="access"/>
-							</xsl:call-template>
-						</gmd:MD_LegalConstraints>
-					</gmd:resourceConstraints>
-					
-					<gmd:spatialRepresentationType>
-						<gmd:MD_SpatialRepresentationTypeCode codeListValue="{spatial}" codeList="{$cl}#MD_SpatialRepresentationTypeCode">
-							<xsl:value-of select="spatial"/>
-						</gmd:MD_SpatialRepresentationTypeCode>
-					</gmd:spatialRepresentationType>
+                    <xsl:if test="accessCond">
+                        <gmd:resourceConstraints>
+                            <gmd:MD_LegalConstraints>
+                                <gmd:accessConstraints>
+                                    <MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+                                </gmd:accessConstraints>	
+                                <xsl:for-each select="accessCond/item">
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'otherConstraints'"/>
+                                        <xsl:with-param name="codes" select="$lcodes/accessCond"/>
+                                        <xsl:with-param name="t" select="."/>
+                                    </xsl:call-template>
+                                </xsl:for-each>
+                            </gmd:MD_LegalConstraints>
+                        </gmd:resourceConstraints>
+					</xsl:if>
+
+                    <xsl:if test="limitationsAccess">
+                        <gmd:resourceConstraints>
+                            <gmd:MD_LegalConstraints>
+                                <gmd:accessConstraints>
+                                    <MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+                                </gmd:accessConstraints>	
+                                <xsl:for-each select="limitationsAccess/item">
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'otherConstraints'"/>
+                                        <xsl:with-param name="codes" select="$lcodes/limitationsAccess"/>
+                                        <xsl:with-param name="t" select="."/>
+                                    </xsl:call-template>
+                                </xsl:for-each>
+                            </gmd:MD_LegalConstraints>
+                        </gmd:resourceConstraints>
+					</xsl:if>
+                    
+                    <xsl:if test="not($serv)">
+                        <gmd:spatialRepresentationType>
+                            <gmd:MD_SpatialRepresentationTypeCode codeListValue="{spatial}" codeList="{$cl}#MD_SpatialRepresentationTypeCode">
+                                <xsl:value-of select="spatial"/>
+                            </gmd:MD_SpatialRepresentationTypeCode>
+                        </gmd:spatialRepresentationType>
+                    </xsl:if>
 					
 					<xsl:for-each select="scale">
 						<gmd:spatialResolution>
@@ -434,15 +447,17 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 	 					  <gmd:MD_CharacterSetCode codeListValue="{.}" codeList=""><xsl:value-of select="."/></gmd:MD_CharacterSetCode>
 	          			</gmd:characterSet>
           			</xsl:for-each>
-					<xsl:for-each select="topicCategory">
+					<xsl:for-each select="topicCategory/item">
 						<gmd:topicCategory>
 							<gmd:MD_TopicCategoryCode><xsl:value-of select="."/></gmd:MD_TopicCategoryCode>
 						</gmd:topicCategory>
 					</xsl:for-each>
 					<xsl:for-each select="serviceType">
-						<srv:serviceType>
-							<gco:LocalName><xsl:value-of select="."/></gco:LocalName>
-						</srv:serviceType>
+                        <xsl:call-template name="uriOut">
+                            <xsl:with-param name="name" select="'srv:serviceType'"/>
+                            <xsl:with-param name="codes" select="$lcodes/serviceType"/>
+                            <xsl:with-param name="t" select="."/>
+                        </xsl:call-template>
 					</xsl:for-each>
 					<xsl:for-each select="serviceTypeVersion">
 						<srv:serviceTypeVersion><xsl:value-of select="."/></srv:serviceTypeVersion>
@@ -457,23 +472,57 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 									</gco:CharacterString>
 								</gmd:description>
 							</xsl:if>
-							<gmd:geographicElement>
-								<gmd:EX_GeographicBoundingBox>
-									<gmd:westBoundLongitude>
-										<gco:Decimal><xsl:value-of select="xmin"/></gco:Decimal>
-									</gmd:westBoundLongitude>
-									<gmd:eastBoundLongitude>
-										<gco:Decimal><xsl:value-of select="xmax"/></gco:Decimal>
-									</gmd:eastBoundLongitude>
-									<gmd:southBoundLatitude>
-										<gco:Decimal><xsl:value-of select="ymin"/></gco:Decimal>
-									</gmd:southBoundLatitude>
-									<gmd:northBoundLatitude>
-										<gco:Decimal><xsl:value-of select="ymax"/></gco:Decimal>
-									</gmd:northBoundLatitude>
-								</gmd:EX_GeographicBoundingBox>
-							</gmd:geographicElement>
-							<xsl:for-each select="tempExt">
+                            <!-- bbox -->
+                            <xsl:if test="not(extentId/item)">
+                                <gmd:geographicElement>
+                                    <gmd:EX_GeographicBoundingBox>
+                                        <gmd:westBoundLongitude>
+                                            <gco:Decimal><xsl:value-of select="xmin"/></gco:Decimal>
+                                        </gmd:westBoundLongitude>
+                                        <gmd:eastBoundLongitude>
+                                            <gco:Decimal><xsl:value-of select="xmax"/></gco:Decimal>
+                                        </gmd:eastBoundLongitude>
+                                        <gmd:southBoundLatitude>
+                                            <gco:Decimal><xsl:value-of select="ymin"/></gco:Decimal>
+                                        </gmd:southBoundLatitude>
+                                        <gmd:northBoundLatitude>
+                                            <gco:Decimal><xsl:value-of select="ymax"/></gco:Decimal>
+                                        </gmd:northBoundLatitude>
+                                    </gmd:EX_GeographicBoundingBox>
+                                </gmd:geographicElement>
+                            </xsl:if>
+                            
+                            <!-- Geographic identifier -->
+                            <xsl:for-each select="extentId/item">
+                                <xsl:variable name="code" select="."/>
+                                <xsl:variable name="row" select="$lcodes/extents/value[@uri=$code]"/>
+                                <gmd:geographicElement>
+                                    <gmd:geographicIdentifier>
+                                        <gmd:MD_Identifier>
+                                            <gmd:code>
+                                                <gmx:Anchor xlink:href="{$code}"><xsl:value-of select="$row"/></gmx:Anchor>
+                                            </gmd:code>
+                                        </gmd:MD_Identifier>
+                                    </gmd:geographicIdentifier>
+                                </gmd:geographicElement>
+                                <gmd:geographicElement>
+                                    <gmd:EX_GeographicBoundingBox>
+                                        <gmd:westBoundLongitude>
+                                            <gco:Decimal><xsl:value-of select="$row/@x1"/></gco:Decimal>
+                                        </gmd:westBoundLongitude>
+                                        <gmd:eastBoundLongitude>
+                                            <gco:Decimal><xsl:value-of select="$row/@y1"/></gco:Decimal>
+                                        </gmd:eastBoundLongitude>
+                                        <gmd:southBoundLatitude>
+                                            <gco:Decimal><xsl:value-of select="$row/@x2"/></gco:Decimal>
+                                        </gmd:southBoundLatitude>
+                                        <gmd:northBoundLatitude>
+                                            <gco:Decimal><xsl:value-of select="$row/@y2"/></gco:Decimal>
+                                        </gmd:northBoundLatitude>
+                                    </gmd:EX_GeographicBoundingBox>
+                                </gmd:geographicElement>
+                            </xsl:for-each>
+							<xsl:for-each select="tempExt/item">
 								<gmd:temporalElement>
 									<gmd:EX_TemporalExtent>
 										<gmd:extent>
@@ -485,10 +534,6 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
     														<xsl:value-of select="from"/>
     													</gml:timePosition>
     												</gml:TimeInstant>
-    												<gml:TimePeriod>
-    													<gml:beginPosition><x/></gml:beginPosition>
-    													<gml:endPosition><x/></gml:endPosition>
-    												</gml:TimePeriod>
     											</xsl:when>
                                                 <!-- oba casove udaje -->
     											<xsl:otherwise>
@@ -511,12 +556,36 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 							</xsl:for-each>
 						</gmd:EX_Extent>
 					</xsl:element>
-					<xsl:if test="$serv!=''">
+					<xsl:if test="$serv">
 						<srv:couplingType>
 							<srv:SV_CouplingType codeListValue="{couplingType}" codeList="{$cl}#SV_CouplingType"/>
 						</srv:couplingType>
-						<xsl:for-each select="operatesOn">
-							<srv:operatesOn xlink:title="{titleTXT}" uuidref="{uuid}" xlink:href="{hrefTXT}#_{uuidTXT}"/>
+                        <xsl:for-each select="operation/item">
+                            <srv:containsOperations>
+                                <srv:SV_OperationMetadata>
+                                    <srv:operationName>
+                                        <gco:CharacterString><xsl:value-of select="name"/></gco:CharacterString>
+                                    </srv:operationName>
+                                    <srv:DCP>
+                                        <srv:DCPList codeList="*/DCPList" codeListValue="WebServices"/>
+                                    </srv:DCP>
+                                    <srv:connectPoint>
+                                        <gmd:CI_OnlineResource>
+                                            <gmd:linkage>
+                                                <gmd:URL><xsl:value-of select="url"/></gmd:URL>
+                                            </gmd:linkage>
+                                            <xsl:call-template name="uriOut">
+                                                <xsl:with-param name="name" select="'protocol'"/>
+                                                <xsl:with-param name="codes" select="$lcodes/protocol"/>
+                                                <xsl:with-param name="t" select="protocol"/>
+                                            </xsl:call-template>
+                                        </gmd:CI_OnlineResource>
+                                    </srv:connectPoint>
+                                </srv:SV_OperationMetadata>
+                            </srv:containsOperations>
+                        </xsl:for-each>                        
+						<xsl:for-each select="operatesOn/items">
+							<srv:operatesOn xlink:title="{title}" uuidref="{uuid}" xlink:href="{href}#_{uuid}"/>
 						</xsl:for-each>
 					</xsl:if>
 				</xsl:element>
@@ -525,14 +594,14 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 			<!-- ================================ Distribuce ===============================-->
 			<gmd:distributionInfo>
 				<gmd:MD_Distribution>
-					<xsl:for-each select="format">
+					<xsl:for-each select="format/item">
 						<gmd:distributionFormat>
 							<gmd:MD_Format>
-								<gmd:name>
-									<gco:CharacterString>
-										<xsl:value-of select="name"/>
-									</gco:CharacterString>
-								</gmd:name>
+                                <xsl:call-template name="uriOut">
+                                    <xsl:with-param name="name" select="'name'"/>
+                                    <xsl:with-param name="codes" select="$lcodes/format"/>
+                                    <xsl:with-param name="t" select="name"/>
+                                </xsl:call-template>
 								<gmd:version>
 									<gco:CharacterString>
 										<xsl:value-of select="version"/>
@@ -564,22 +633,43 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 					</xsl:for-each>
 					<gmd:transferOptions>
 						<gmd:MD_DigitalTransferOptions>
-  						  <xsl:for-each select="linkage">
+  						  <xsl:for-each select="linkage/item">
   							<gmd:onLine>
   								<gmd:CI_OnlineResource>
   									<gmd:linkage>
   										<gmd:URL>
-  											<xsl:value-of select="."/>
+  											<xsl:value-of select="url"/>
   										</gmd:URL>
   									</gmd:linkage>
-  									<!-- <protocol>
-  									   <gco:CharacterString><xsl:value-of select="protocol"/></gco:CharacterString>
-  									</protocol>
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'protocol'"/>
+                                        <xsl:with-param name="codes" select="$lcodes/protocol"/>
+                                        <xsl:with-param name="t" select="protocol"/>
+                                    </xsl:call-template>
+                                    <xsl:call-template name="txtOut">
+                                        <xsl:with-param name="name" select="'name'"/>
+                                        <xsl:with-param name="t" select="name"/>
+                                    </xsl:call-template>
+                                    <xsl:choose>
+                                        <xsl:when test="accessPoint">
+                                            <gmd:description>
+                                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">accessPoint</gmx:Anchor>
+                                            </gmd:description>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <gmd:description>
+                                                <gco:CharacterString>
+                                                    <xsl:value-of select="description"/>
+                                                    mimeType="<xsl:value-of select="mime"/>"
+                                                </gco:CharacterString>
+                                            </gmd:description>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
   									<function>
   										<CI_OnLineFunctionCode codeListValue="{function}" codeList="{$cl}#CI_OnLineFunctionCode">
   											<xsl:value-of select="function"/>
   										</CI_OnLineFunctionCode>
-  									</function> -->
+  									</function>
   								</gmd:CI_OnlineResource>
   							</gmd:onLine>
   						</xsl:for-each>
@@ -624,7 +714,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
                             </gmd:DQ_DomainConsistency>
                         </gmd:report>
                     </xsl:if-->
-					<xsl:for-each select="specification">
+					<xsl:for-each select="specification/item">
 						<xsl:variable name="spec" select="."/>
 	  					<gmd:report>
 	  						<gmd:DQ_DomainConsistency xsi:type="DQ_DomainConsistency_Type">
@@ -632,17 +722,16 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 	  								<gmd:DQ_ConformanceResult xsi:type="DQ_ConformanceResult_Type">
 	  									<gmd:specification>
 	  										<gmd:CI_Citation>
-	  											<xsl:call-template name="txtOut">
-													<xsl:with-param name="name" select="'title'"/>
-													<xsl:with-param name="t" select="title"/>
-												</xsl:call-template>
-	  											<!-- <gmd:title>
-  											       <gco:CharacterString><xsl:value-of select="$codeLists1/serviceSpecifications/value[normalize-space(@code)=normalize-space($spec/code)]/@name"/></gco:CharacterString>
-	  											</gmd:title> -->
+                                                <xsl:call-template name="uriOut">
+                                                    <xsl:with-param name="name" select="'title'"/>
+                                                    <xsl:with-param name="codes" select="$lcodes/specifications"/>
+                                                    <xsl:with-param name="t" select="uri"/>
+                                                    <xsl:with-param name="attrib" select="'name'"/>
+                                                </xsl:call-template>
 	  											<gmd:date>
 	  												<gmd:CI_Date>
                        							        <gmd:date>
-                                                            <gco:Date><xsl:value-of select="$codeLists1/serviceSpecifications/value[normalize-space(@name)=normalize-space($spec/title/TXT)]/@publication"/></gco:Date>
+                                                            <gco:Date><xsl:value-of select="$lcodes/specifications/value[@uri=$spec/uri]/@publication"/></gco:Date>
                                                         </gmd:date>
                                                         <gmd:dateType>
 	  														<gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
@@ -676,7 +765,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 	  										</xsl:choose>
 	  									</gmd:explanation>
 	  									<gmd:pass>
-											<gco:Boolean><xsl:value-of select="$spec/compliant"/></gco:Boolean>
+											<gco:Boolean><xsl:if test="$spec/compliant='true' or $spec/compliant='false'"><xsl:value-of select="$spec/compliant"/></xsl:if></gco:Boolean>
 	  									</gmd:pass>
 	  								</gmd:DQ_ConformanceResult>
 	  							</gmd:result>
@@ -699,9 +788,11 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 										</gmd:code>
 									</gmd:RS_Identifier>
 								</gmd:measureIdentification>
-								<gmd:measureDescription>
-									<gco:CharacterString><xsl:value-of select="coverageDesc"/></gco:CharacterString>
-								</gmd:measureDescription>
+                                <xsl:call-template name="uriOut">
+                                    <xsl:with-param name="name" select="'measureDescription'"/>
+                                    <xsl:with-param name="codes" select="$lcodes/extents"/>
+                                    <xsl:with-param name="t" select="coverageDesc"/>
+                                </xsl:call-template>
 								<!--  <gmd:dateTime>
 									<gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
 								</gmd:dateTime>-->
@@ -726,7 +817,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 	  				</xsl:if>
 	  				
 					<!-- IO- Topologicka spravnost -->
-					<xsl:for-each select="topological[string-length(normalize-space(name))>0]">
+					<xsl:for-each select="topological/item[string-length(normalize-space(name))>0]">
 						<xsl:variable name="topol" select="."/>
 	  					<gmd:report>
 	  						<gmd:DQ_TopologicalConsistency xsi:type="DQ_TopologicalConsistency_Type">
@@ -785,15 +876,84 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd"
 	  						</gmd:DQ_TopologicalConsistency>
 	  					</gmd:report>
 	  				</xsl:if>
-
-					<gmd:lineage>
-						<gmd:LI_Lineage>
-                            <xsl:call-template name="txtOut">
-						      <xsl:with-param name="name" select="'statement'"/>
-						      <xsl:with-param name="t" select="lineage"/>
-					       </xsl:call-template>					
-						</gmd:LI_Lineage>
-					</gmd:lineage>
+                    
+					<!-- IO-2 pro služby -->
+                    <xsl:if test="availability">
+						<xsl:variable name="topol" select="."/>
+	  					<gmd:report>
+	  						<gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                                <gmd:nameOfMeasure>
+                                    <gmx:Anchor xlink:href="{$lcodes/serviceQuality/value[1]/@uri}"><xsl:value-of select="$lcodes/serviceQuality/value[1]"/></gmx:Anchor>
+                                </gmd:nameOfMeasure>
+                                <gmd:measureDescription>
+                                    <gco:CharacterString><xsl:value-of select="$lcodes/serviceQuality/value[1]/@qtip"/></gco:CharacterString>
+                                </gmd:measureDescription>
+                                <gmd:result>
+                                    <gmd:DQ_QuantitativeResult>
+                                        <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/> 
+                                        <gmd:value>
+                                        	<gco:Record xsi:type="xs:double"><xsl:value-of select="availability"/></gco:Record> 
+                                    	</gmd:value>
+                                	</gmd:DQ_QuantitativeResult>
+                            	</gmd:result>
+	  						</gmd:DQ_ConceptualConsistency>
+	  					</gmd:report>
+                    </xsl:if>
+					<!-- IO-2 pro služby -->
+                    <xsl:if test="performance">
+						<xsl:variable name="topol" select="."/>
+	  					<gmd:report>
+	  						<gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                                <gmd:nameOfMeasure>
+                                    <gmx:Anchor xlink:href="{$lcodes/serviceQuality/value[2]/@uri}"><xsl:value-of select="$lcodes/serviceQuality/value[2]"/></gmx:Anchor>
+                                </gmd:nameOfMeasure>
+                                <gmd:measureDescription>
+                                    <gco:CharacterString><xsl:value-of select="$lcodes/serviceQuality/value[2]/@qtip"/></gco:CharacterString>
+                                </gmd:measureDescription>
+                                <gmd:result>
+                                    <gmd:DQ_QuantitativeResult>
+                                        <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#second"/> 
+                                        <gmd:value>
+                                        	<gco:Record xsi:type="xs:double"><xsl:value-of select="performance"/></gco:Record> 
+                                    	</gmd:value>
+                                	</gmd:DQ_QuantitativeResult>
+                            	</gmd:result>
+	  						</gmd:DQ_ConceptualConsistency>
+	  					</gmd:report>
+                    </xsl:if>
+					<!-- IO-2 pro služby -->
+                    <xsl:if test="capacity">
+						<xsl:variable name="topol" select="."/>
+	  					<gmd:report>
+	  						<gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                                <gmd:nameOfMeasure>
+                                    <gmx:Anchor xlink:href="{$lcodes/serviceQuality/value[3]/@uri}"><xsl:value-of select="$lcodes/serviceQuality/value[3]"/></gmx:Anchor>
+                                </gmd:nameOfMeasure>
+                                <gmd:measureDescription>
+                                    <gco:CharacterString><xsl:value-of select="$lcodes/serviceQuality/value[3]/@qtip"/></gco:CharacterString>
+                                </gmd:measureDescription>
+                                <gmd:result>
+                                    <gmd:DQ_QuantitativeResult>
+                                        <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#count"/> 
+                                        <gmd:value>
+                                        	<gco:Record xsi:type="xs:double"><xsl:value-of select="capacity"/></gco:Record> 
+                                    	</gmd:value>
+                                	</gmd:DQ_QuantitativeResult>
+                            	</gmd:result>
+	  						</gmd:DQ_ConceptualConsistency>
+	  					</gmd:report>
+                    </xsl:if>
+                    
+                    <xsl:if test="not($serv)">
+                        <gmd:lineage>
+                            <gmd:LI_Lineage>
+                                <xsl:call-template name="txtOut">
+                                  <xsl:with-param name="name" select="'statement'"/>
+                                  <xsl:with-param name="t" select="lineage"/>
+                               </xsl:call-template>					
+                            </gmd:LI_Lineage>
+                        </gmd:lineage>
+                    </xsl:if>
 					
 				</gmd:DQ_DataQuality>
 			</gmd:dataQualityInfo>

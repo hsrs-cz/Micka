@@ -1,38 +1,61 @@
 <?php
 
+// --- Czech date to ISO
+function date2iso($d){
+  if(!strpos($d, ".")) return $d;
+  $pom = explode(".",$d);
+  for($i=0;$i<count($pom);$i++) if(strlen($pom[$i])<2) $pom[$i]="0".$pom[$i];
+  return implode('-', array_reverse($pom));
+}
+	
+// --- Czech date to ISO
+function iso2date($d, $lang=''){
+  if(!strpos($d, "-") or $lang!='cze') return $d;
+  $pom = explode("-",$d);
+  return implode('.', array_reverse($pom));
+}
+
+// --- mime type string
+function getMime($s){
+    $p = '/mime=(.+?)(\s|$)/';
+    preg_match($p, $s, $m);
+    return str_replace('"','',$m[1]);
+}
+// --- string without mime
+function noMime($s){
+    $p = '/mime=(.+?)(\s|$)/';
+    $r = '';
+    return trim(preg_replace($p, $r, $s));
+}
+
 class Kote{
-
-  static function is_assoc($array) {
-    foreach(array_keys($array) as $key) {
-      if (!is_numeric($key)) return TRUE;
+    public function __construct(){
+        
     }
-    return FALSE;
-  }
+    
+    function is_assoc($array) {
+        foreach(array_keys($array) as $key) {
+          if (!is_numeric($key)) return TRUE;
+        }
+        return FALSE;
+    }
 
-	static function array2xml($parentNode, $a){
+	function array2xml($parentNode, $node){
 		$xml = '';
-		while(list($name, $val) = each ($a)){
+		foreach($node as $name=>$val){
 		    $numeric = is_numeric($name);
-		    if($numeric) $name=$parentNode;
+		    if($numeric) $name='item';
 	    	if(is_array($val)){
-	    	    if($numeric){
-	    		     $val = Kote::array2xml($name, $val);
-	    		     $xml .= "<$name>$val</$name>";
-	    		  }   
-	    		  else {
-	    		     $xml .= Kote::array2xml($name, $val);
-            	}   
+    		    $val = $this->array2xml($name, $val);
 	    	}
-	    	else{
-	    		if($val) $xml .= "<$name>$val</$name>";
-	    		else $xml .= "<$name> </$name>";
-	    	}
+            if($val) $xml .= "<$name>$val</$name>";
+            else $xml .= "<$name> </$name>";
 		}
 		return $xml;
 	}
 	
 	// vzato z Micky
-	static function getMdPath($md_path) {
+	function getMdPath($md_path) {
 		$rs = '';
 		if (substr($md_path, strlen($md_path)-1) == '_') {
 			// odstranění posledního podtržítka
@@ -44,16 +67,8 @@ class Kote{
 		return $rs;
 	}
 	
-	// --- prevod ceskeho data na ISO
-	static function date2iso($d){
-	  if(!strpos($d, ".")) return $d;
-	  $pom = explode(".",$d);
-	  for($i=0;$i<count($pom);$i++) if(strlen($pom[$i])<2) $pom[$i]="0".$pom[$i];
-	  return $pom[2]."-".$pom[1]."-".$pom[0];
-	}
-	
 	// --- odesle multipart formular
-	static function postFileForm($destination, $fileContent){
+	function postFileForm($destination, $fileContent){
 		$showXml = false; //pripraveno
 		$eol = "\r\n";
 		$mime_boundary=md5(time());
@@ -82,23 +97,42 @@ class Kote{
 	  	return file_get_contents($destination, FILE_TEXT, $ctx);  
 	}
 	
-	static function processForm($data){
-		$out = "";
+	function processForm($data){
+		$out = array();
 		while(list($key,$val)=each($data)){
-			$out .= '$'.'md'.Kote::getMdPath(htmlspecialchars($key))."='". htmlspecialchars(str_replace('\\', '\\\\', $val), ENT_QUOTES) ."';
-			";
+            // process the compound elements
+            if(strpos($key,'-')) {               
+                $k = explode('-', $key);
+                $lcount = count($data['locale']);
+                $lastLang = '';
+                $j=-1;
+                for($i=0; $i<count($val); $i++){                    
+                    if(is_array($val[$i])){
+                        foreach($val[$i] as $k2=>$v2){
+                            if($k2 && (in_array($k2, $data['locale'])||$k2='TXT')) {
+                                if($k2=='TXT') $j++;
+                                $out[$k[0]][$j][$k[1]][$k2] = htmlspecialchars(str_replace('\\', '\\\\', $v2));
+                            }
+                            else $out[$k[0]][$i][$k[1]][$k2] = htmlspecialchars(str_replace('\\', '\\\\', $v2));
+                        }
+                    }
+                    else $out[$k[0]][$i][$k[1]] = htmlspecialchars(str_replace('\\', '\\\\', $val[$i]));
+                }
+            } 
+            else $out[$key]=$val;
 		}
-		//die($out);
-		eval ($out);
+        
+        //echo "<pre>"; var_dump($out); die();
+        
+		//eval ($out);
 		//var_dump($md);
-		$md["keywords"] = isset($data["keywords"]) ? explode("\n",$data["keywords"]) : '';
-		$md["gemet"] = isset($data["gemet"]) ? explode("\n",$data["gemet"]) : '';
+		//$md["keywords"] = isset($data["keywords"]) ? explode("\n",$data["keywords"]) : '';
+		//$md["gemet"] = isset($data["gemet"]) ? explode("\n",$data["gemet"]) : '';
 		//$md["inspire"] = isset($data["inspire"]) ? explode("\n",$data["inspire"]) : '';
-		$md["x"] = '';
+		//$md["x"] = '';
 		$xmlString = '<?xml version="1.0" encoding="utf-8" ?'.'><md>';
-		$xmlString .= Kote::array2xml('', $md)."</md>";
-		//header('Content-Type: application/xml');
-		//echo $xmlString;  exit;
+		$xmlString .= $this->array2xml('md', $out)."</md>";
+		//header('Content-Type: application/xml'); echo $xmlString;  exit;
 		return $xmlString; 
 	}
 
