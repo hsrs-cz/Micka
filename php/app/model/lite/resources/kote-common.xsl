@@ -594,7 +594,7 @@
 	<xsl:param name="t"/>
     <xsl:param name="attrib" select="''"/>
 	
-    <xsl:variable name="row" select="$codes/value[@uri=string($t)]"/>
+    <xsl:variable name="row" select="$codes/value[@uri=normalize-space($t)]"/>
     <xsl:variable name="n">
         <xsl:choose>
             <xsl:when test="contains($name, ':')"><xsl:value-of select="$name"/></xsl:when>

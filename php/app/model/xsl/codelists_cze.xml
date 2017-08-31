@@ -419,19 +419,6 @@
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3857">Spherical Mercator (3857)</value>
   </coordSys>
   
-  <formats>
-    <value name="SHP" code="">ESRI Shapefile</value>
-    <value name="ESRI Coverage" code="">ESRI Coverage</value>
-    <value name="DGN" code="">DGN</value>
-    <value name="DWG" code="">DWG</value>
-    <value name="TopoL BLK" code="">TopoL BLK</value>
-    <value name="GML" code="">GML</value>
-    <value name="ESRI ArcSDE" code="">ESRI ArcSDE</value>
-    <value name="ORACLE SDO" code="">ORACLE SDO</value>
-    <value name="PostGIS" code="">PostGIS</value>
-    <value name="SQL" code="">Obecná SQL</value>    
-  </formats>
-  
   <compliant>
   	<value name="true" code="">ANO</value>
   	<value name="false" code="">NE</value>

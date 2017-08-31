@@ -376,48 +376,36 @@
   
   <!-- pridano nad ramec ISO -->
   <coordSys>
-	<value name="http://www.opengis.net/def/crs/EPSG/0/2065">S-JTSK (2065)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/5514">S-JTSK 3.quadrant (5514)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/28403">S-42/3 (28403)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/28404">S-42/4 (28404)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/4326">WGS84 (4326)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/32633">WGS84 UTM3 (32633)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/32634">WGS84 UTM4 (32634)</value>
-   	<value name="http://www.opengis.net/def/crs/EPSG/0/4258">ETRS89 (4258) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3034">ETRS-LCC (3034) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3035">ETRS-LAEA (3035) [INSPIRE]</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3038">ETRS-TM26 (3038)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3039">ETRS-TM27 (3039)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3040">ETRS-TM28 (3040)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3041">ETRS-TM29 (3041)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3042">ETRS-TM30 (3042)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3043">ETRS-TM31 (3043)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3044">ETRS-TM32 (3044)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3045">ETRS-TM33 (3045)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3046">ETRS-TM34 (3046)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3047">ETRS-TM35 (3047)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3048">ETRS-TM36 (3048)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3049">ETRS-TM37 (3049)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3050">ETRS-TM38 (3050)</value>
-  	<value name="http://www.opengis.net/def/crs/EPSG/0/3857">Spherical Mercator (3857)</value>
+	<value uri="http://www.opengis.net/def/crs/EPSG/0/2065">S-JTSK (2065)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/5514">S-JTSK 3.quadrant (5514)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/28403">S-42/3 (28403)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/28404">S-42/4 (28404)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/4326">WGS84 (4326)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/32633">WGS84 UTM3 (32633)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/32634">WGS84 UTM4 (32634)</value>
+   	<value uri="http://www.opengis.net/def/crs/EPSG/0/4258">ETRS89 (4258) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3034">ETRS-LCC (3034) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3035">ETRS-LAEA (3035) [INSPIRE]</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3038">ETRS-TM26 (3038)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3039">ETRS-TM27 (3039)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3040">ETRS-TM28 (3040)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3041">ETRS-TM29 (3041)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3042">ETRS-TM30 (3042)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3043">ETRS-TM31 (3043)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3044">ETRS-TM32 (3044)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3045">ETRS-TM33 (3045)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3046">ETRS-TM34 (3046)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3047">ETRS-TM35 (3047)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3048">ETRS-TM36 (3048)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3049">ETRS-TM37 (3049)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3050">ETRS-TM38 (3050)</value>
+  	<value uri="http://www.opengis.net/def/crs/EPSG/0/3857">Spherical Mercator (3857)</value>
   </coordSys>
   
-  <formats>
-    <value name="SHP" code="">ESRI Shapefile</value>
-    <value name="ESRI Coverage" code="">ESRI Coverage</value>
-    <value name="DGN" code="">DGN</value>
-    <value name="DWG" code="">DWG</value>
-    <value name="TopoL BLK" code="">TopoL BLK</value>
-    <value name="GML" code="">GML</value>
-    <value name="ESRI ArcSDE" code="">ESRI ArcSDE</value>
-    <value name="ORACLE SDO" code="">ORACLE SDO</value>
-    <value name="PostGIS" code="">PostGIS</value>
-    <value name="SQL" code="">Obecná SQL</value>    
-  </formats>
-
   <compliant>
   	<value name="true" code="">YES</value>
   	<value name="false" code="">NO</value>
+    <value name="nil" code="">NEHODNOCENO</value>
   </compliant>
         
 
@@ -463,7 +451,7 @@
     <value uri="https://inspire.ec.europa.eu/theme/mr" name="Mineral resources" code="Mineral resources" publication="2013-10-12" n="III.21">Mineral resources</value>  
   </inspireKeywords>
 
-  <serviceSpecifications title="European Commission Regulations">
+  <specifications title="European Commission Regulations">
 	<value name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata" 
         code="Metadata" uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">Metadata</value>
 	<value name="Corrigendum to INSPIRE Metadata Regulation published in the Official Journal of the European Union, L 328, page 83" 
@@ -480,21 +468,15 @@
         code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">Monitoring and reporting</value>
   	<value name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)" 
         code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">INSPIRE Directive</value>  
-  </serviceSpecifications>
+  </specifications>
   
   <serviceType>
-  	<value name="WMS" code="">WMS</value>
-  	<value name="WFS" code="">WFS</value>
-  	<value name="WCS" code="">WCS</value>
-  	<value name="CSW" code="">CSW</value>
-  	<value name="WCST" code="">WCST</value>
-  	<value name="view" code="">INSPIRE View</value>
-  	<value name="download" code="">INSPIRE Download</value>
-  	<value name="discovery" code="">INSPIRE Discovery</value>
-  	<value name="transformation" code="">INSPIRE Transformation</value>
-  	<value name="other" code="">other INSPIRE</value>  
-  	<value name="ESRI_FEATURE" code="">ESRI ArcGIS Feature Service</value>  
-  	<value name="ESRI_IMAGE" code="">ESRI ArcGIS Image Service</value>  
+  	<value name="view" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/view" code="">view</value>
+  	<value name="download" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/download" code="">download</value>
+  	<value name="discovery" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/discovery" code="">discovery</value>
+  	<value name="transformation" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/transformation" code="">transformation</value>
+  	<value name="invoke" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/invoke" code="">invoke</value>
+  	<value name="other" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other" code="">other</value>   
   </serviceType>
 
   <applicationType>

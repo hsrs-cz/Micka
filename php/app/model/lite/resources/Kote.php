@@ -17,12 +17,14 @@ function iso2date($d, $lang=''){
 
 // --- mime type string
 function getMime($s){
+    if(!$s) return '';
     $p = '/mime=(.+?)(\s|$)/';
     preg_match($p, $s, $m);
     return str_replace('"','',$m[1]);
 }
 // --- string without mime
 function noMime($s){
+    if(!$s) return '';
     $p = '/mime=(.+?)(\s|$)/';
     $r = '';
     return trim(preg_replace($p, $r, $s));
@@ -103,7 +105,6 @@ class Kote{
             // process the compound elements
             if(strpos($key,'-')) {               
                 $k = explode('-', $key);
-                $lcount = count($data['locale']);
                 $lastLang = '';
                 $j=-1;
                 for($i=0; $i<count($val); $i++){                    
