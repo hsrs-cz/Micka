@@ -108,6 +108,14 @@ xspan.locale {
 .eng {background-image: url(img/flags/eng.png); }
 .fra {background-image: url(img/flags/fra.png); }
 .ger {background-image: url(img/flags/ger.png); }
+.hun {background-image: url(img/flags/hun.png); }
+.ita {background-image: url(img/flags/ita.png); }
+.nor {background-image: url(img/flags/nor.png); }
+.pol {background-image: url(img/flags/pol.png); }
+.rum {background-image: url(img/flags/rum.png); }
+.slo {background-image: url(img/flags/slo.png); }
+.srp {background-image: url(img/flags/srp.png); }
+.swe {background-image: url(img/flags/swe.png); }
 
 
 input.txt, textarea.txt {

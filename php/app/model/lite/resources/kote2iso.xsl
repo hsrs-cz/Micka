@@ -22,12 +22,10 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 
 	<xsl:template match="/md">
 
-	<xsl:variable name="serv">
-	   	<xsl:choose>
+	<xsl:variable name="serv"><xsl:choose>
     		<xsl:when test="iso='19119'">srv:</xsl:when>
     		<xsl:otherwise></xsl:otherwise>
-    	</xsl:choose>
-	</xsl:variable>
+    	</xsl:choose></xsl:variable>
 	
     <xsl:variable name="ser">
     	<xsl:choose>
@@ -556,7 +554,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							</xsl:for-each>
 						</gmd:EX_Extent>
 					</xsl:element>
-					<xsl:if test="$serv">
+					<xsl:if test="$serv!=''">
 						<srv:couplingType>
 							<srv:SV_CouplingType codeListValue="{couplingType}" codeList="{$cl}#SV_CouplingType"/>
 						</srv:couplingType>
