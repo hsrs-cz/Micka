@@ -495,13 +495,15 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                 <xsl:variable name="code" select="."/>
                                 <xsl:variable name="row" select="$lcodes/extents/value[@uri=$code]"/>
                                 <gmd:geographicElement>
-                                    <gmd:geographicIdentifier>
-                                        <gmd:MD_Identifier>
-                                            <gmd:code>
-                                                <gmx:Anchor xlink:href="{$code}"><xsl:value-of select="$row"/></gmx:Anchor>
-                                            </gmd:code>
-                                        </gmd:MD_Identifier>
-                                    </gmd:geographicIdentifier>
+                                    <gmd:EX_GeographicDescription>
+                                        <gmd:geographicIdentifier>
+                                            <gmd:MD_Identifier>
+                                                <gmd:code>
+                                                    <gmx:Anchor xlink:href="{$code}"><xsl:value-of select="$row"/></gmx:Anchor>
+                                                </gmd:code>
+                                            </gmd:MD_Identifier>
+                                        </gmd:geographicIdentifier>
+                                    </gmd:EX_GeographicDescription>
                                 </gmd:geographicElement>
                                 <gmd:geographicElement>
                                     <gmd:EX_GeographicBoundingBox>
@@ -509,10 +511,10 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                             <gco:Decimal><xsl:value-of select="$row/@x1"/></gco:Decimal>
                                         </gmd:westBoundLongitude>
                                         <gmd:eastBoundLongitude>
-                                            <gco:Decimal><xsl:value-of select="$row/@y1"/></gco:Decimal>
+                                            <gco:Decimal><xsl:value-of select="$row/@x2"/></gco:Decimal>
                                         </gmd:eastBoundLongitude>
                                         <gmd:southBoundLatitude>
-                                            <gco:Decimal><xsl:value-of select="$row/@x2"/></gco:Decimal>
+                                            <gco:Decimal><xsl:value-of select="$row/@y1"/></gco:Decimal>
                                         </gmd:southBoundLatitude>
                                         <gmd:northBoundLatitude>
                                             <gco:Decimal><xsl:value-of select="$row/@y2"/></gco:Decimal>
@@ -658,9 +660,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                             <gmd:description>
                                                 <gco:CharacterString>
                                                     <xsl:value-of select="description"/>
-                                                    <xsl:if test="mime">
-                                                        mimeType="<xsl:value-of select="mime"/>"
-                                                    </xsl:if>
+                                                    <xsl:if test="normalize-space(mime)"> mimeType="<xsl:value-of select="mime"/>"</xsl:if>
                                                 </gco:CharacterString>
                                             </gmd:description>
                                         </xsl:otherwise>

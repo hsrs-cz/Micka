@@ -1150,6 +1150,11 @@
 					<gmd:MD_ReferenceSystem>
 						<gmd:referenceSystemIdentifier>
 							<gmd:RS_Identifier>
+                                <xsl:call-template name="txt">
+									<xsl:with-param name="s" select="*/referenceSystemIdentifier/*"/>                      
+									<xsl:with-param name="name" select="'code'"/>                      
+									<xsl:with-param name="lang" select="$mdLang"/>                     
+								</xsl:call-template>
 								<gmd:code>
 									<gco:CharacterString><xsl:value-of select="*/referenceSystemIdentifier/*/code"/></gco:CharacterString>
 								</gmd:code>
