@@ -220,15 +220,19 @@ class RecordModel extends \BaseModel
     
     private function deleteEditMdValuesByProfil($editRecno, $mds, $profil_id, $package_id) {
         $sql = "DELETE FROM edit_md_values WHERE recno=?";
-        if ($profil_id > -1) {
-            $sql .= " AND md_id IN(SELECT md_id FROM profil WHERE profil_id=$profil_id)";
-        }
+		if ($mds == 0 || $mds == 10) {
+			$sql .= " AND md_id<>38";
+            if ($profil_id > -1) {
+                $sql .= " AND md_id IN(
+                    SELECT standard_schema.md_id 
+                    FROM standard_schema INNER JOIN elements ON elements.el_id = standard_schema.el_id
+                    WHERE standard_schema.md_standard=0 AND elements.form_ignore=0 
+                    AND standard_schema.md_id IN(SELECT md_id FROM profil WHERE profil_id=$profil_id))";
+            }
+		}
         if ($package_id > -1) {
             $sql .= " AND package_id=$package_id";
         }
-		if ($mds == 0 || $mds == 10) {
-			$sql .= " AND md_id<>38";
-		}
         $this->db->query($sql, $editRecno);
         return;
     }
@@ -883,13 +887,13 @@ class RecordModel extends \BaseModel
     
 	private function getIdElements() {
         // Move to CodeListModel
-        $data = $this->db->query("SELECT standard_schema.md_id, standard_schema.md_standard, elements.el_name
+        $data = $this->db->query("SELECT standard_schema.md_id, standard_schema.md_standard, elements.el_name,
+            standard_schema.is_uri
             FROM elements JOIN standard_schema ON (elements.el_id = standard_schema.el_id)")->fetchAll();
 		$rs = [];
         foreach ($data as $row) {
-			$mds = $row->md_standard;
-			$id = $row->md_id;
-			$rs[$mds][$id] = $row->el_name;
+			$rs[$row->md_standard][$row->md_id][0] = $row->el_name;
+			$rs[$row->md_standard][$row->md_id][1] = $row->is_uri;
 		}
 		return $rs;
 	}
@@ -909,18 +913,13 @@ class RecordModel extends \BaseModel
             $eval_text_tmp = '$vysl';
             foreach ($path_arr as $key=>$value) {
                 if ($key%2 == 0) {
-                    $eval_text_tmp .= "['" . $elements_label[$mds][$value] . "']";
+                    $eval_text_tmp .= "['" . $elements_label[$mds][$value][0] . "']";
                 }
                 else {
                     $eval_text_tmp .= '[' . $value . ']';
                 }
             }
-            if ($row->md_id == 4742) {
-                $eval_text_value = $eval_text_tmp . "['lang'][$i]['@value']=" . '"' . gpc_addslashes($row->md_value) . '";' . "\n";
-                $eval_text_atrrib = $eval_text_tmp . "['lang'][$i]['@attributes']['code']=" . '"' . $row->lang . '";' . "\n";
-                $i++;
-                $eval_text_tmp = $eval_text_value . $eval_text_atrrib;
-            } elseif ($row->lang != 'xxx') {
+            if ($elements_label[$mds][$row->md_id][1] == 1 || $row->lang != 'xxx') {
                 $eval_text_value = $eval_text_tmp . "['lang'][$i]['@value']=" . '"' . gpc_addslashes($row->md_value) . '";' . "\n";
                 $eval_text_atrrib = $eval_text_tmp . "['lang'][$i]['@attributes']['code']=" . '"' . $row->lang . '";' . "\n";
                 $i++;
@@ -930,14 +929,14 @@ class RecordModel extends \BaseModel
             }
             $eval_text .= $eval_text_tmp;
         }
-        $eval_text .= getMdOtherLangs($this->recordMd->lang, 'xxx', '$vysl' . "['".$elements_label[$mds][0]."'][0]['langs']");
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['uuid']='".rtrim($this->recordMd->uuid)."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['langs']='".(substr_count($this->recordMd->lang,'|')+1)."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['updated']='".$this->recordMd->create_date."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['x1']='".$this->recordMd->x1."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['x2']='".$this->recordMd->x2."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['y1']='".$this->recordMd->y1."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
+        $eval_text .= getMdOtherLangs($this->recordMd->lang, 'xxx', '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['langs']");
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['uuid']='".rtrim($this->recordMd->uuid)."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['langs']='".(substr_count($this->recordMd->lang,'|')+1)."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['updated']='".$this->recordMd->create_date."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x1']='".$this->recordMd->x1."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x2']='".$this->recordMd->x2."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y1']='".$this->recordMd->y1."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
         return $xml->saveXML();

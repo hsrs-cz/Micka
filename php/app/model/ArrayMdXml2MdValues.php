@@ -118,13 +118,13 @@ class ArrayMdXml2MdValues extends \BaseModel
             $md_value = str_replace('\"', '"', $md_value);
 			$record['md_value'] = $md_value;
 			$record['md_path'] = '0_' . $md_path;
-			if ($multi_lang == 0) {
-				$record['lang'] = 'xxx';
-			}
-			elseif ($multi_lang == 1 && $md_lang != 'xxx') {
+			if ($md_lang == 'uri') {
 				$record['lang'] = $md_lang;
-			}
-			else {
+			} elseif ($multi_lang == 0) {
+				$record['lang'] = 'xxx';
+			} elseif ($multi_lang == 1 && $md_lang != 'xxx') {
+				$record['lang'] = $md_lang;
+			} else {
 				$record['lang'] = $this->md[$recno]['lang'];
 			}
 			$record['package_id'] = $package_id;
@@ -316,6 +316,10 @@ class ArrayMdXml2MdValues extends \BaseModel
                         $elements .= "['" . $key . "']";
                         $path_el .= "['" . $key . "']";
                         $pom = $this->getElementsData($path_el);
+                        if (count($pom) === 0) {
+                            \Tracy\Debugger::log('Standard schema - not found: ' . $path_el, 'IMPORT');
+                            throw new \Nette\Application\ApplicationException('messages.import.errorFile');
+                        }
                         $path_md .= $pom['md_id'] . "_";
                     }
                 }
@@ -437,6 +441,7 @@ class ArrayMdXml2MdValues extends \BaseModel
 	}
     
 	public function getMdFromArrayXml($arrayXml) {
+        //echo '<pre>'; print_r($arrayXml); echo '</pre>'; exit();
         $rs = [];
 		if (is_array($arrayXml) === FALSE) {
 			$rs['report'] = 'input data is not array';

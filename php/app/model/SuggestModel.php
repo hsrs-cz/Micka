@@ -31,11 +31,11 @@ class SuggestModel
         $recno = '';
         $orderBy = TRUE;
 
-        $query_lang = $params['lang'] !== NULL ? $params['lang'] : '';
-        $creator = $params['creator'] !== NULL ? $params['creator'] : '';
-        $query = $params['query'] !== NULL ? $params['query'] : '';
-        $contact_type = $params['type'] !== NULL ? $params['type'] : 'org';
-        $contact_role = $params['role'] !== NULL ? $params['role'] : '';
+        $query_lang = isset($params['lang']) && $params['lang'] !== NULL ? $params['lang'] : '';
+        $creator = isset($params['creator']) && $params['creator'] !== NULL ? $params['creator'] : '';
+        $query = isset($params['query']) && $params['query'] !== NULL ? $params['query'] : '';
+        $contact_type = isset($params['type']) && $params['type'] !== NULL ? $params['type'] : 'org';
+        $contact_role = isset($params['role']) && $params['role'] !== NULL ? $params['role'] : '';
 
         $user = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
         $admin = $this->user->isInRole('admin');
