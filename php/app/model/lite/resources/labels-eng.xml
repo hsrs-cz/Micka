@@ -539,10 +539,18 @@ against which data is being evaluated.</p>
 		</help>
 	</msg>
 
-	<msg name="topologicalDesr">
-		<label>Description</label>
+	<msg name="topologicalMethodType">
+		<label>Method type</label>
 		<help>
-			<h3>IO-4c Measure description</h3>
+			<h3>IO-4b Evaluation method type</h3>
+			<p></p> 
+		</help>
+	</msg>
+
+	<msg name="topologicalDesr">
+		<label>Evaluation method</label>
+		<help>
+			<h3>IO-4c Evaluation method description</h3>
 			<p></p> 
 		</help>
 	</msg>

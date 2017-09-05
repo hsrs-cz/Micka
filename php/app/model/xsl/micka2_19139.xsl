@@ -610,9 +610,11 @@
 										</xsl:for-each>
 									</gmd:CI_Citation>
 								</xsl:if>
-								<gmd:code>
-									<gco:CharacterString><xsl:value-of select="geographicIdentifier/*/code"/></gco:CharacterString>
-								</gmd:code>
+                                <xsl:call-template name="txt">
+                                    <xsl:with-param name="s" select="geographicIdentifier/*"/>                      
+                                    <xsl:with-param name="name" select="'code'"/>                      
+                                    <xsl:with-param name="lang" select="$mdLang"/>                   
+                                </xsl:call-template>
 								<xsl:if test="geographicIdentifier/*/codeSpace">
 									<gmd:codeSpace><xsl:value-of select="geographicIdentifier/*/codeSpace"/></gmd:codeSpace>
 								</xsl:if>
@@ -925,10 +927,22 @@
 									</gmd:RS_Identifier>
 								</gmd:measureIdentification>
 							</xsl:if>
-							<xsl:if test="*/measureDescription!=''">
+							<xsl:if test="*/measureDescription">
 								<xsl:call-template name="txt">
 				      				<xsl:with-param name="s" select="*"/>                      
 				      				<xsl:with-param name="name" select="'measureDescription'"/>                      
+				      				<xsl:with-param name="lang" select="$mdLang"/>                     
+				      			</xsl:call-template>
+							</xsl:if>
+                            <xsl:if test="*/evaluationMethodType/*">
+                                <gmd:evaluationMethodType>
+                                    <gmd:DQ_EvaluationMethodTypeCode codeList="{$cl}#DQ_EvaluationMethodTypeCode" codeListValue="{*/evaluationMethodType/*}"><xsl:value-of select="*/evaluationMethodType/*"/></gmd:DQ_EvaluationMethodTypeCode>
+                                </gmd:evaluationMethodType>
+                            </xsl:if>
+							<xsl:if test="*/evaluationMethodDescription">
+								<xsl:call-template name="txt">
+				      				<xsl:with-param name="s" select="*"/>                      
+				      				<xsl:with-param name="name" select="'evaluationMethodDescription'"/>                      
 				      				<xsl:with-param name="lang" select="$mdLang"/>                     
 				      			</xsl:call-template>
 							</xsl:if>
@@ -1568,6 +1582,11 @@ xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/g
 						<gmd:CI_PresentationFormCode codeListValue="{CI_PresentationFormCode}" codeList="{$clx}#CI_PresentationFormCode"><xsl:value-of select="CI_PresentationFormCode"/></gmd:CI_PresentationFormCode>
 					  </gmd:presentationForm>
 					</xsl:for-each>
+                    <xsl:call-template name="txt">
+                        <xsl:with-param name="s" select="$cit"/>                      
+                        <xsl:with-param name="name" select="'otherCitationDetails'"/>                      
+                        <xsl:with-param name="lang" select="$mdLang"/>                      
+                    </xsl:call-template>
 				</gmd:CI_Citation>
   </xsl:template> 
 

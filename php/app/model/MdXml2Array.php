@@ -277,7 +277,6 @@ class MdXml2Array
       	"['MD_Identifier']",
       	"'false'", "'true'", // predpokladam, ze jde o boolean
       	"MI_Metadata",
-        "['RS_Identifier'][0]['code'][0]['gmx:Anchor'][0]['href'][0]",
         "['gmx:Anchor'][0]['href'][0]['@']",
         "['gmx:Anchor'][0]",
         "[graphicOverview][0][href]", // TODO pro vice
@@ -289,7 +288,6 @@ class MdXml2Array
       	"['RS_Identifier']",
       	"0", "1",
       	"MD_Metadata",
-        "['RS_Identifier'][0]['code'][0]",
         "['@uri']",
         "",
         "[graphicOverview][0][MD_BrowseGraphic][0][fileName]",

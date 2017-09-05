@@ -661,10 +661,18 @@ Volný text.</p>
 		</help>
 	</msg>
 
-	<msg name="topologicalDesr">
-		<label>Popis</label>
+	<msg name="topologicalMethodType">
+		<label>Typ měření</label>
 		<help>
-			<h3>IO-4c Popis měření</h3>
+			<h3>IO-4b Typ metody měření</h3>
+			<p></p> 
+		</help>
+	</msg>
+
+	<msg name="topologicalDesr">
+		<label>Metoda měření</label>
+		<help>
+			<h3>IO-4c Popis metody měření</h3>
 			<p></p> 
 		</help>
 	</msg>

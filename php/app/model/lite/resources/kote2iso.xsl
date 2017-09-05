@@ -23,14 +23,14 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	<xsl:template match="/md">
 
 	<xsl:variable name="serv"><xsl:choose>
-    		<xsl:when test="iso='19119'">srv:</xsl:when>
-    		<xsl:otherwise></xsl:otherwise>
-    	</xsl:choose></xsl:variable>
+        <xsl:when test="iso='19119'">srv</xsl:when>
+        <xsl:otherwise>gmd</xsl:otherwise></xsl:choose>
+    </xsl:variable>
 	
     <xsl:variable name="ser">
     	<xsl:choose>
     		<xsl:when test="iso='19119'">srv:SV_ServiceIdentification</xsl:when>
-    		<xsl:otherwise>MD_DataIdentification</xsl:otherwise>
+    		<xsl:otherwise>gmd:MD_DataIdentification</xsl:otherwise>
     	</xsl:choose>
     </xsl:variable>	
 	
@@ -189,6 +189,9 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 									</gmd:MD_Identifier>
 								</gmd:identifier>
 							</xsl:for-each>
+                            <gmd:otherCitationDetails>
+                                <gco:CharacterString><xsl:value-of select="obligatory"/></gco:CharacterString>
+                            </gmd:otherCitationDetails>
 						</gmd:CI_Citation>
 					</gmd:citation>
 					<xsl:call-template name="txtOut">
@@ -225,7 +228,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							</xsl:call-template>
 						</gmd:pointOfContact>
 					</xsl:for-each>
-					<xsl:for-each select="maintenance">
+					<xsl:for-each select="maintenance/item">
 						<gmd:resourceMaintenance>
 							<gmd:MD_MaintenanceInformation>
 								<gmd:maintenanceAndUpdateFrequency>
@@ -237,11 +240,12 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	                                </gmd:userDefinedMaintenanceFrequency>
  								</xsl:if>
  								<xsl:for-each select="scope">
- 									<gmd:updateScope><gmd:MD_ScopeCode codeListValue='{.}'/></gmd:updateScope>
+ 									<gmd:updateScope><gmd:MD_ScopeCode codeList="{$cl}#MD_ScopeCode" codeListValue='{.}'/></gmd:updateScope>
  								</xsl:for-each>
- 								<xsl:for-each select="note">
- 									<gmd:maintenanceNote><xsl:value-of select="."/></gmd:maintenanceNote>
- 								</xsl:for-each>
+                                <xsl:call-template name="txtOut">
+                                    <xsl:with-param name="name" select="'maintenanceNote'"/>
+                                    <xsl:with-param name="t" select="note"/>
+                                </xsl:call-template>
 							</gmd:MD_MaintenanceInformation>
 						</gmd:resourceMaintenance>
 					</xsl:for-each>				
@@ -346,7 +350,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
   										<gco:CharacterString><xsl:value-of select="title"/></gco:CharacterString>
   									</gmd:title>
   									<gmd:date><gmd:CI_Date>
-  										<gmd:date><gco:Date><xsl:value-of select="date"/></gco:Date></gmd:date>
+  										<gmd:date><gco:Date><xsl:value-of select="php:function('date2iso', string(date))"/></gco:Date></gmd:date>
   										<gmd:dateType><gmd:CI_DateTypeCode codeListValue="{dateType}" codeList="{$cl}#CI_DateTypeCode"><xsl:value-of select="dateType"/></gmd:CI_DateTypeCode></gmd:dateType>
   									</gmd:CI_Date></gmd:date>
   								</gmd:CI_Citation>
@@ -373,7 +377,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>
                                 <gmd:accessConstraints>
-                                    <MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+                                    <gmd:MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
                                 </gmd:accessConstraints>	
                                 <xsl:for-each select="accessCond/item">
                                     <xsl:call-template name="uriOut">
@@ -390,7 +394,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>
                                 <gmd:accessConstraints>
-                                    <MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
+                                    <gmd:MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
                                 </gmd:accessConstraints>	
                                 <xsl:for-each select="limitationsAccess/item">
                                     <xsl:call-template name="uriOut">
@@ -403,7 +407,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                         </gmd:resourceConstraints>
 					</xsl:if>
                     
-                    <xsl:if test="not($serv)">
+                    <xsl:if test="$serv='gmd'">
                         <gmd:spatialRepresentationType>
                             <gmd:MD_SpatialRepresentationTypeCode codeListValue="{spatial}" codeList="{$cl}#MD_SpatialRepresentationTypeCode">
                                 <xsl:value-of select="spatial"/>
@@ -411,7 +415,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                         </gmd:spatialRepresentationType>
                     </xsl:if>
 					
-					<xsl:for-each select="scale">
+					<xsl:for-each select="denominator">
 						<gmd:spatialResolution>
 							<gmd:MD_Resolution>
 								<gmd:equivalentScale>
@@ -435,7 +439,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							</gmd:MD_Resolution>
 						</gmd:spatialResolution>
 					</xsl:for-each>
-					<xsl:for-each select="language">
+					<xsl:for-each select="language/item">
 		  				<gmd:language>
 	 					  <gmd:LanguageCode codeListValue="{.}" codeList=""><xsl:value-of select="."/></gmd:LanguageCode>
 	          			</gmd:language>
@@ -461,7 +465,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 						<srv:serviceTypeVersion><xsl:value-of select="."/></srv:serviceTypeVersion>
 					</xsl:for-each>
 					<!--  rozsah -->
-					<xsl:element name="{$serv}extent">
+					<xsl:element name="{$serv}:extent">
 						<gmd:EX_Extent>
 							<xsl:if test="string-length(extentDescription)>0">
 								<gmd:description>
@@ -531,7 +535,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     											<xsl:when test="from=to or string-length(normalize-space(to))=0">
     												<gml:TimeInstant gml:id="TI{position()}">
     													<gml:timePosition>
-    														<xsl:value-of select="from"/>
+    														<xsl:value-of select="php:function('date2iso', string(from))"/>
     													</gml:timePosition>
     												</gml:TimeInstant>
     											</xsl:when>
@@ -542,10 +546,10 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     												</gml:TimeInstant>
     												<gml:TimePeriod gml:id="TP{position()}">
     													<gml:beginPosition>
-    														<xsl:value-of select="from"/>
+    														<xsl:value-of select="php:function('date2iso', string(from))"/>
     													</gml:beginPosition>
     													<gml:endPosition>
-    														<xsl:value-of select="to"/>
+    														<xsl:value-of select="php:function('date2iso', string(to))"/>
     													</gml:endPosition>
     												</gml:TimePeriod>
     											</xsl:otherwise>
@@ -556,7 +560,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							</xsl:for-each>
 						</gmd:EX_Extent>
 					</xsl:element>
-					<xsl:if test="$serv!=''">
+					<xsl:if test="$serv='srv'">
 						<srv:couplingType>
 							<srv:SV_CouplingType codeListValue="{couplingType}" codeList="{$cl}#SV_CouplingType"/>
 						</srv:couplingType>
@@ -665,11 +669,11 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                             </gmd:description>
                                         </xsl:otherwise>
                                     </xsl:choose>
-  									<function>
-  										<CI_OnLineFunctionCode codeListValue="{function}" codeList="{$cl}#CI_OnLineFunctionCode">
+  									<gmd:function>
+  										<gmd:CI_OnLineFunctionCode codeListValue="{function}" codeList="{$cl}#CI_OnLineFunctionCode">
   											<xsl:value-of select="function"/>
-  										</CI_OnLineFunctionCode>
-  									</function>
+  										</gmd:CI_OnLineFunctionCode>
+  									</gmd:function>
   								</gmd:CI_OnlineResource>
   							</gmd:onLine>
   						</xsl:for-each>
@@ -775,7 +779,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  					
 
 					<!-- CZ-7 Pokrytí -->
-					<xsl:if test="coverageArea>0 or coveragePercent>0">
+					<xsl:if test="coveragePercent>0">
 						<gmd:report>
 							<gmd:DQ_CompletenessOmission>
 								<gmd:nameOfMeasure>
@@ -796,6 +800,8 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 								<!--  <gmd:dateTime>
 									<gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
 								</gmd:dateTime>-->
+                                <xsl:variable name="c" select="normalize-space(coverageDesc)"/>
+                                <xsl:variable name="area" select="$lcodes/extents/value[@uri=$c]/@area"/>
 								<gmd:result>
 									<gmd:DQ_QuantitativeResult>
 										<gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/>
@@ -808,7 +814,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 									<gmd:DQ_QuantitativeResult>
 										<gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#km2"/>
 										<gmd:value>
-											<gco:Record><xsl:value-of select="coverageArea"/></gco:Record>
+											<gco:Record><xsl:value-of select="$area * coveragePercent div 100"/></gco:Record>
 										</gmd:value>
 									</gmd:DQ_QuantitativeResult>
 								</gmd:result>
@@ -816,11 +822,11 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 						</gmd:report>
 	  				</xsl:if>
 	  				
-					<!-- IO- Topologicka spravnost -->
+					<!-- IOD-4 Topological consistency -->
 					<xsl:for-each select="topological/item[string-length(normalize-space(name))>0]">
 						<xsl:variable name="topol" select="."/>
 	  					<gmd:report>
-	  						<gmd:DQ_TopologicalConsistency xsi:type="DQ_TopologicalConsistency_Type">
+	  						<gmd:DQ_TopologicalConsistency xsi:type="gmd:DQ_TopologicalConsistency_Type">
                                 <gmd:nameOfMeasure>
                                     <gco:CharacterString><xsl:value-of select="name"/></gco:CharacterString> 
                                 </gmd:nameOfMeasure>                               
@@ -831,12 +837,15 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  									</gmd:code>
 	  								</gmd:RS_Identifier>
 	  							</gmd:measureIdentification>
+                                <gmd:evaluationMethodType>
+                                    <gmd:DQ_EvaluationMethodTypeCode codeList="{$cl}#DQ_EvaluationMethodTypeCode" codeListValue="{mtype}"><xsl:value-of select="mtype"/></gmd:DQ_EvaluationMethodTypeCode>
+                                </gmd:evaluationMethodType>
                                 <xsl:call-template name="txtOut">
-						              <xsl:with-param name="name" select="'measureDescription'"/>
+						              <xsl:with-param name="name" select="'evaluationMethodDescription'"/>
 						          <xsl:with-param name="t" select="descr"/>
 					            </xsl:call-template>					
                                 <gmd:dateTime>
-                                    <gco:DateTime><xsl:value-of select="date"/>T00:00:00</gco:DateTime> 
+                                    <gco:DateTime><xsl:value-of select="php:function('date2iso', string(date))"/>T00:00:00</gco:DateTime> 
                                 </gmd:dateTime>
                                 <gmd:result>
                                     <gmd:DQ_QuantitativeResult>
@@ -845,7 +854,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                         	<gco:Record><xsl:value-of select="value"/></gco:Record> 
                                     	</gmd:value>
                                 	</gmd:DQ_QuantitativeResult>
-                            		<gmd:DQ_ConformanceResult>
+                            		<!--gmd:DQ_ConformanceResult>
                             			<gmd:specification>
                             				<gmd:CI_Citation>
                             					<gmd:title>
@@ -865,12 +874,12 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                             			<gmd:pass>
                             				<gco:Boolean><xsl:value-of select="pass"/></gco:Boolean>
                             			</gmd:pass>
-                            		</gmd:DQ_ConformanceResult>
+                            		</gmd:DQ_ConformanceResult-->
                             	</gmd:result>
 	  						</gmd:DQ_TopologicalConsistency>
 	  					</gmd:report>
 	  				</xsl:for-each>
-	  				<xsl:if test="string-length(normalize-space(topological/name))=0">
+	  				<xsl:if test="string-length(normalize-space(topological/item/name))=0">
 	  					<gmd:report>
 	  						<gmd:DQ_TopologicalConsistency> 
 	  						</gmd:DQ_TopologicalConsistency>
@@ -944,16 +953,14 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  					</gmd:report>
                     </xsl:if>
                     
-                    <xsl:if test="not($serv)">
-                        <gmd:lineage>
-                            <gmd:LI_Lineage>
-                                <xsl:call-template name="txtOut">
-                                  <xsl:with-param name="name" select="'statement'"/>
-                                  <xsl:with-param name="t" select="lineage"/>
-                               </xsl:call-template>					
-                            </gmd:LI_Lineage>
-                        </gmd:lineage>
-                    </xsl:if>
+                    <gmd:lineage>
+                        <gmd:LI_Lineage>
+                            <xsl:call-template name="txtOut">
+                              <xsl:with-param name="name" select="'statement'"/>
+                              <xsl:with-param name="t" select="lineage"/>
+                           </xsl:call-template>					
+                        </gmd:LI_Lineage>
+                    </gmd:lineage>
 					
 				</gmd:DQ_DataQuality>
 			</gmd:dataQualityInfo>
@@ -967,11 +974,11 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 		<xsl:param name="party"/>
 
 		<gmd:CI_ResponsibleParty>
-			<!-- <gmd:individualName>
+			<gmd:individualName>
 				<gco:CharacterString>
 					<xsl:value-of select="$party/individualName"/>
 				</gco:CharacterString>
-			</gmd:individualName> -->
+			</gmd:individualName>
 			<xsl:call-template name="txtOut">
 				<xsl:with-param name="name" select="'organisationName'"/>
 				<xsl:with-param name="t" select="$party/organisationName"/>

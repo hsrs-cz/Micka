@@ -449,9 +449,9 @@
 	 	<xsl:call-template name="drawInput">
 		  	<xsl:with-param name="name" select="'lineage'"/>
 		    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement"/>
-		    <xsl:with-param name="class" select="'mandatory'"/>
             <xsl:with-param name="langs" select="$langs"/>
 		    <xsl:with-param name="type" select="'textarea'"/> 
+            <xsl:with-param name="req" select="1"/>
 		</xsl:call-template>
 
         <!-- 12 data quality scope -->
@@ -499,7 +499,7 @@
     
     <!-- 7 -->
     <div>
-        <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'http://data.europa.eu/eli/')]|/.">
+        <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'https://data.europa.eu/eli/')]|/.">
             <xsl:if test="string-length(*/gmd:specification)>0 or (string-length(*/gmd:specification)=0 and position()=last())">
                 <fieldset>
                     <div class="row">
@@ -687,6 +687,7 @@
                             <xsl:with-param name="name" select="'Topological'"/>
                             <xsl:with-param name="class" select="'info'"/>
                             <xsl:with-param name="valid" select="'IO-4'"/>
+                            <xsl:with-param name="dupl" select="1"/>
                         </xsl:call-template>		
                     </div>
                     <xsl:call-template name="drawInput">
@@ -694,7 +695,6 @@
                         <xsl:with-param name="path" select="'topological-name[]'"/>
                         <xsl:with-param name="value" select="gmd:nameOfMeasure"/>
                         <xsl:with-param name="class" select="'inp2'"/>
-                        
                     </xsl:call-template>
 
                     <xsl:call-template name="drawInput">
@@ -705,9 +705,17 @@
                     </xsl:call-template>
 
                     <xsl:call-template name="drawInput">
+                        <xsl:with-param name="name" select="'topologicalMethodType'"/>
+                        <xsl:with-param name="path" select="'topological-mtype[]'"/>
+                        <xsl:with-param name="value" select="gmd:evaluationMethodType/*"/>
+                        <xsl:with-param name="codes" select="'evaluationMethodType'"/>
+                        <xsl:with-param name="class" select="'inp2 short'"/>
+                    </xsl:call-template>
+
+                    <xsl:call-template name="drawInput">
                         <xsl:with-param name="name" select="'topologicalDesr'"/>
                         <xsl:with-param name="path" select="'topological-descr[]'"/>
-                        <xsl:with-param name="value" select="gmd:measureDescription"/>
+                        <xsl:with-param name="value" select="gmd:evaluationMethodDescription"/>
                         <xsl:with-param name="class" select="'inp2'"/>
                         <xsl:with-param name="langs" select="$langs"/>
                         <xsl:with-param name="type" select="'textarea'"/>
@@ -743,7 +751,7 @@
                         <xsl:with-param name="codes" select="'units'"/>
                     </xsl:call-template>
                     
-                    <div class="row">
+                    <!--div class="row">
                         <xsl:call-template name="drawLabel">
                             <xsl:with-param name="name" select="'topologicalKResult'"/>
                             <xsl:with-param name="class" select="'info inp2'"/>
@@ -758,7 +766,6 @@
                         <xsl:with-param name="action" select="'fspec(this)'"/>  
                     </xsl:call-template>
 
-                    <!-- date --> 
                     <xsl:call-template name="drawInput">
                         <xsl:with-param name="name" select="'topologicalSpecDate'"/>
                         <xsl:with-param name="path" select="'topological-specDate[]'"/>
@@ -788,7 +795,7 @@
                         <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"/>
                         <xsl:with-param name="class" select="'short inp3'"/>
                         <xsl:with-param name="codes" select="'compliant'"/>
-                    </xsl:call-template>
+                    </xsl:call-template-->
                         
                         <!-- <xsl:for-each select="gmd:result|/.">
                             <xsl:if test="string-length(*/gmd:value)>0 or(position()=1)">
@@ -937,7 +944,7 @@
                     <xsl:with-param name="name" select="'parentIdentifier'"/>
                 </xsl:call-template>			
                 <div class="col-xs-12 col-md-8">
-                    <select id="parent-identifier" data-val="{gmd:parentIdentifier}" data-placeholder="vyberte"></select>
+                    <select name="parentIdentifier" id="parent-identifier" data-val="{gmd:parentIdentifier}"></select>
                 </div>
             </div>
 	  	</xsl:otherwise>
@@ -982,7 +989,7 @@
                 <xsl:call-template name="drawInput">
                     <xsl:with-param name="name" select="'maintenanceScope'"/>
                     <xsl:with-param name="value" select="*/gmd:updateScope/*/@codeListValue"/>
-                    <xsl:with-param name="codes" select="'updateScope'"/>
+                    <xsl:with-param name="codes" select="$typeList"/>
                     <xsl:with-param name="path" select="'maintenance-scope[]'"/>	    
                     <xsl:with-param name="multi" select="1"/>
                     <xsl:with-param name="class" select="'inp2 short'"/>
@@ -1037,23 +1044,13 @@
             </xsl:call-template>	
     	</div>
         
-    	<!-- plocha -->
+    	<!-- plocha 
     	<xsl:call-template name="drawInput">
     	  	<xsl:with-param name="name" select="'coverageArea'"/>
     	    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_CompletenessOmission/gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/*/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'#km2')]/*/gmd:value"/>
     	    <xsl:with-param name="multi" select="1"/>
     	    <xsl:with-param name="class" select="'inpSS inp2'"/>
-    	    <!--  xsl:with-param name="action" select="'cover(this)'"/-->
-    	</xsl:call-template>
-    
-    	<!-- % -->
-    	<xsl:call-template name="drawInput">
-    	  	<xsl:with-param name="name" select="'coveragePercent'"/>
-    	    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_CompletenessOmission/gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/*/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'#percent')]/*/gmd:value"/>
-    	    <xsl:with-param name="multi" select="1"/>
-    	    <xsl:with-param name="class" select="'inpSS inp2'"/>
-    	    <xsl:with-param name="valid" select="'CZ-10'"/>
-    	</xsl:call-template>
+    	</xsl:call-template>-->
     
     	<!-- uzemi -->
     	<xsl:call-template name="drawInput">
@@ -1064,6 +1061,16 @@
     	    <xsl:with-param name="class" select="'inp2'"/>
     	    <xsl:with-param name="valid" select="'CZ-10'"/>
     	</xsl:call-template>
+
+    	<!-- % -->
+    	<xsl:call-template name="drawInput">
+    	  	<xsl:with-param name="name" select="'coveragePercent'"/>
+    	    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_CompletenessOmission/gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/*/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'#percent')]/*/gmd:value"/>
+    	    <xsl:with-param name="type" select="real"/>
+    	    <xsl:with-param name="class" select="'inp2 short'"/>
+    	    <xsl:with-param name="valid" select="'CZ-10'"/>
+    	</xsl:call-template>
+    
     </fieldset>
 </xsl:if>
 
