@@ -504,7 +504,6 @@
   	<value name="Other" code="">Ostatní</value>
   </applicationType>
   
-  
   <inspireType>
     <value name="dataset" code="5">datová sada</value>
     <value name="series" code="6">série</value>

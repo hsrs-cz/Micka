@@ -372,13 +372,13 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     					</gmd:descriptiveKeywords>
                     </xsl:if>
 
-					<!-- omezeni -->
+					<!-- 8.1 Conditions Access and use -->
                     <xsl:if test="accessCond">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>
-                                <gmd:accessConstraints>
+                                <gmd:useConstraints>
                                     <gmd:MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
-                                </gmd:accessConstraints>	
+                                </gmd:useConstraints>	
                                 <xsl:for-each select="accessCond/item">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'otherConstraints'"/>
@@ -390,6 +390,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                         </gmd:resourceConstraints>
 					</xsl:if>
 
+                    <!-- 8.2 Limitations -->
                     <xsl:if test="limitationsAccess">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>

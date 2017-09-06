@@ -853,9 +853,11 @@
 									<gmd:linkage>
 										<gmd:URL><xsl:value-of select="*/linkage"/></gmd:URL>
 									</gmd:linkage>								
-									<gmd:protocol>
-										<gco:CharacterString><xsl:value-of select="*/protocol"/></gco:CharacterString>
-									</gmd:protocol>
+                                    <xsl:call-template name="txt">
+                			  			<xsl:with-param name="s" select="*"/>                      
+                			  			<xsl:with-param name="name" select="'protocol'"/>                      
+                			  			<xsl:with-param name="lang" select="$mdLang"/>                     
+            			  			</xsl:call-template>
 									<xsl:if test='*/name'>
 										<gmd:name>
 											<gco:CharacterString><xsl:value-of select="*/name"/></gco:CharacterString>
@@ -929,9 +931,9 @@
 							</xsl:if>
 							<xsl:if test="*/measureDescription">
 								<xsl:call-template name="txt">
-				      				<xsl:with-param name="s" select="*"/>                      
-				      				<xsl:with-param name="name" select="'measureDescription'"/>                      
-				      				<xsl:with-param name="lang" select="$mdLang"/>                     
+				      				<xsl:with-param name="s" select="*"/>
+				      				<xsl:with-param name="name" select="'measureDescription'"/>
+				      				<xsl:with-param name="lang" select="$mdLang"/>
 				      			</xsl:call-template>
 							</xsl:if>
                             <xsl:if test="*/evaluationMethodType/*">
@@ -941,8 +943,8 @@
                             </xsl:if>
 							<xsl:if test="*/evaluationMethodDescription">
 								<xsl:call-template name="txt">
-				      				<xsl:with-param name="s" select="*"/>                      
-				      				<xsl:with-param name="name" select="'evaluationMethodDescription'"/>                      
+				      				<xsl:with-param name="s" select="*"/>
+				      				<xsl:with-param name="name" select="'evaluationMethodDescription'"/>
 				      				<xsl:with-param name="lang" select="$mdLang"/>                     
 				      			</xsl:call-template>
 							</xsl:if>

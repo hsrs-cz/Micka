@@ -845,6 +845,7 @@ class RecordModel extends \BaseModel
         }
         $report = $this->setLang2RecordMd($select_langs);
         $this->recordMd->pxml = $this->xmlFromRecordMdValues();
+        //header('Content-Type: application/xml'); echo $this->recordMd->pxml;  exit;
         $this->applyXslTemplate2Xml('micka2one19139.xsl');
         $this->updateEditMD($this->recordMd->recno);
         return $report;
