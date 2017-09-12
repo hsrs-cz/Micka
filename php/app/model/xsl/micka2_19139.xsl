@@ -504,9 +504,9 @@
 		</gmd:topicCategory>
 	</xsl:for-each>
 		
-    <xsl:for-each select="identificationInfo/*/serviceType/LocalName">
+    <xsl:for-each select="identificationInfo/*/serviceType">
         <srv:serviceType>
-          <gco:LocalName><xsl:value-of select="."/></gco:LocalName> 
+          <gco:LocalName ><xsl:value-of select="LocalName/*"/></gco:LocalName> 
         </srv:serviceType>
     </xsl:for-each>
     <xsl:for-each select="identificationInfo/*/serviceTypeVersion">
@@ -910,11 +910,11 @@
 				<xsl:for-each select="*/report">
 					<gmd:report>
 					   <xsl:element name="gmd:{name(*)}">
-					   		<xsl:for-each select="*/nameOfMeasure">
-						   		<gmd:nameOfMeasure>
-						   			<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-						   		</gmd:nameOfMeasure>
-							</xsl:for-each>
+                            <xsl:call-template name="txt">
+                                <xsl:with-param name="s" select="*"/>                      
+                                <xsl:with-param name="name" select="'nameOfMeasure'"/>                      
+                                <xsl:with-param name="lang" select="$mdLang"/>                     
+                            </xsl:call-template>
 					   		<xsl:if test=".//code!=''">
 								<gmd:measureIdentification>
 									<gmd:RS_Identifier>

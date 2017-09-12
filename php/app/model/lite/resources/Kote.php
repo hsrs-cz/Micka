@@ -2,7 +2,7 @@
 
 // --- Czech date to ISO
 function date2iso($d){
-  if(!strpos($d, ".")) return $d;
+  if(!strpos($d, ".")) return trim($d);
   $pom = explode(".",$d);
   for($i=0;$i<count($pom);$i++) if(strlen($pom[$i])<2) $pom[$i]="0".$pom[$i];
   return implode('-', array_reverse($pom));

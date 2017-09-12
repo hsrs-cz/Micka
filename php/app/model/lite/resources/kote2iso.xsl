@@ -276,7 +276,9 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  							</xsl:for-each>
 	  							<gmd:thesaurusName>
 	  								<gmd:CI_Citation>
-	  									<gmd:title><gco:CharacterString>GEMET - INSPIRE themes, version 1.0</gco:CharacterString></gmd:title>
+	  									<gmd:title>
+                                            <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+                                        </gmd:title>
 	  									<gmd:date><gmd:CI_Date>
 	  										<gmd:date><gco:Date>2008-06-01</gco:Date></gmd:date>
 	  										<gmd:dateType><gmd:CI_DateTypeCode codeListValue="publication" codeList="{$cl}#CI_DateTypeCode">publication</gmd:CI_DateTypeCode></gmd:dateType>
@@ -290,9 +292,12 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>						
 	              				<xsl:for-each select="inspireService">
-	    							<gmd:keyword>
-	  							  		<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-	  						  		</gmd:keyword>
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'keyword'"/>
+                                        <xsl:with-param name="codes" select="$lcodes/serviceKeyword"/>
+                                        <xsl:with-param name="t" select="."/>
+                                        <xsl:with-param name="attrib" select="'name'"/>
+                                    </xsl:call-template>
 	  							</xsl:for-each>
 	  							<gmd:thesaurusName>
 	  								<gmd:CI_Citation>
@@ -456,11 +461,9 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 						</gmd:topicCategory>
 					</xsl:for-each>
 					<xsl:for-each select="serviceType">
-                        <xsl:call-template name="uriOut">
-                            <xsl:with-param name="name" select="'srv:serviceType'"/>
-                            <xsl:with-param name="codes" select="$lcodes/serviceType"/>
-                            <xsl:with-param name="t" select="."/>
-                        </xsl:call-template>
+                        <srv:serviceType>
+                            <gco:LocalName><xsl:value-of select="."/></gco:LocalName>
+                        </srv:serviceType>
 					</xsl:for-each>
 					<xsl:for-each select="serviceTypeVersion">
 						<srv:serviceTypeVersion><xsl:value-of select="."/></srv:serviceTypeVersion>
@@ -536,14 +539,14 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     											<xsl:when test="from=to or string-length(normalize-space(to))=0">
     												<gml:TimeInstant gml:id="TI{position()}">
     													<gml:timePosition>
-    														<xsl:value-of select="php:function('date2iso', string(from))"/>
-    													</gml:timePosition>
+                                                            <xsl:value-of select="php:function('date2iso', string(from))"/>
+                                                        </gml:timePosition>
     												</gml:TimeInstant>
     											</xsl:when>
                                                 <!-- oba casove udaje -->
     											<xsl:otherwise>
     												<gml:TimeInstant>
-    													<gml:timePosition><x/></gml:timePosition>
+    													<gml:timePosition></gml:timePosition>
     												</gml:TimeInstant>
     												<gml:TimePeriod gml:id="TP{position()}">
     													<gml:beginPosition>

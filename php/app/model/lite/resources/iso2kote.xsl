@@ -286,7 +286,6 @@
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[substring(*/gmd:thesaurusName/*/gmd:title/gco:CharacterString,1,15) = 'GEMET - INSPIRE']/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="2"/>
-                <xsl:with-param name="req" select="1"/>
                 <xsl:with-param name="valid" select="'3.1'"/>
             </xsl:call-template> 
             
@@ -874,21 +873,21 @@
         </div>
         <xsl:call-template name="drawInput">
             <xsl:with-param name="name" select="'availability'"/>
-            <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality[1]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record "/>
+            <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[1]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
             <xsl:with-param name="valid" select="'IOS-2'"/>
             <xsl:with-param name="class" select="'inp2'"/>
             <xsl:with-param name="type" select="'real'"/>
         </xsl:call-template>
         <xsl:call-template name="drawInput">
             <xsl:with-param name="name" select="'performance'"/>
-            <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality[2]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record "/>
+            <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[2]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
             <xsl:with-param name="valid" select="'IOS-2'"/>
             <xsl:with-param name="class" select="'inp2'"/>
             <xsl:with-param name="type" select="'real'"/>
         </xsl:call-template>
         <xsl:call-template name="drawInput">
             <xsl:with-param name="name" select="'capacity'"/>
-            <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality[3]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record "/>
+            <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[3]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
             <xsl:with-param name="valid" select="'IOS-2'"/>
             <xsl:with-param name="class" select="'inp2'"/>
             <xsl:with-param name="type" select="'real'"/>

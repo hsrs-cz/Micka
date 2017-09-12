@@ -938,6 +938,7 @@ class RecordModel extends \BaseModel
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x2']='".$this->recordMd->x2."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y1']='".$this->recordMd->y1."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
+        //var_dump($eval_text); exit;
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
         return $xml->saveXML();
