@@ -1,4 +1,4 @@
--- version 7.2.15
+-- version 20170914
 
 CREATE TABLE codelist
 (
@@ -151,6 +151,7 @@ CREATE TABLE standard_schema
   md_path_el character varying,
   md_mapping character(10),
   inspire_code character(5),
+  is_uri numeric(1,0),
   CONSTRAINT tree_idx PRIMARY KEY (md_standard, md_id)
 );
 CREATE INDEX standard_schema_idx_el_id ON standard_schema USING btree(el_id);
