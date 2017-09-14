@@ -394,6 +394,7 @@
                         <xsl:otherwise>Vyberte ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
+                    <!-- blank value -->
                     <xsl:if test="string-length($value)=0"><option></option></xsl:if>
                     <!-- codelist loop -->
                     <xsl:for-each select="$codeLists/*[name()=$codes]/value">
@@ -418,7 +419,7 @@
 
 			<!-- INPUT - TEXT -->
 			<xsl:otherwise>
-                <input name="{$pth}{$TXT}" class="form-control {$flag} {$class}" value="{normalize-space($value/*)}">
+                <input name="{$pth}{$TXT}" class="form-control {$flag} {$class}" value="{normalize-space($value/gco:CharacterString|$value/gmx:Anchor)}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>

@@ -110,28 +110,47 @@
                         <xsl:with-param name="class" select="'inp2'"/>
                         <xsl:with-param name="langs" select="$langs"/>
                     </xsl:call-template>
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'description'"/>
-                        <xsl:with-param name="path" select="'linkage-description[]'"/>
-                        <xsl:with-param name="value" select="php:function('noMime',string(*/gmd:description/*))"/>
-                        <xsl:with-param name="class" select="'inp2'"/>
-                        <xsl:with-param name="type" select="'plain'"/>
-                        <xsl:with-param name="valid" select="'1.4'"/>
-                    </xsl:call-template>
+                    <div class="row">
+                        <xsl:call-template name="drawLabel">
+                            <xsl:with-param name="name" select="'description'"/>
+                            <xsl:with-param name="path" select="'linkage-description[]'"/>
+                            <xsl:with-param name="class" select="'inp2'"/>
+                            <xsl:with-param name="valid" select="'1.4'"/>
+                        </xsl:call-template>
+                        <div class="col-xs-12 col-md-8">
+                            <xsl:variable name="value" select="*/gmd:description"/>
+                            <input name="linkage-description[][TXT]" class="form-control txt {/*/gmd:language/*/@codeListValue} inp2" value="{php:function('noMime',string(*/gmd:description/*))}"/>
+                            <xsl:for-each select="$langs">
+                                <xsl:variable name="pos" select="position()"/>
+                                <xsl:choose>
+                                    <xsl:when test="$value">
+                                        <input name="linkage-description[][{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue}" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <input name="linkage-description[][{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue}" value=""/>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            
+                            </xsl:for-each>
+                        </div>
+                    </div>
                     <xsl:call-template name="drawInput">
                         <xsl:with-param name="name" select="'mime'"/>
                         <xsl:with-param name="path" select="'linkage-mime[]'"/>
-                        <xsl:with-param name="value" select="php:function('getMime',string(*/gmd:description))"/>
+                        <xsl:with-param name="value" select="php:function('getMime',string(*/gmd:description/*))"/>
                         <xsl:with-param name="class" select="'inp2'"/>
                         <xsl:with-param name="type" select="'cselect'"/>
                         <xsl:with-param name="multi" select="0"/>
                         <xsl:with-param name="codes" select="'format'"/>
                         <xsl:with-param name="valid" select="'1.4'"/>
                     </xsl:call-template>
+                    <xsl:variable name="ap">
+                        <xsl:if test="*/gmd:description/*/@xlink:href">1</xsl:if>
+                    </xsl:variable>
                     <xsl:call-template name="drawInput">
                         <xsl:with-param name="name" select="'accessPoint'"/>
                         <xsl:with-param name="path" select="'linkage-accessPoint[]'"/>
-                        <xsl:with-param name="value" select="*/gmd:pass/gco:Boolean"/>
+                        <xsl:with-param name="value" select="$ap"/>
                         <xsl:with-param name="codes" select="'compliant'"/>
                         <xsl:with-param name="class" select="'short inp2'"/>
                         <xsl:with-param name="valid" select="'7.2'"/>
@@ -274,23 +293,23 @@
             <!-- services taxonomy -->
             <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'inspireService'"/>
-                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/gco:CharacterString,'19119')]/*/gmd:keyword"/>
+                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*,'19119')]/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'serviceKeyword'"/>
                 <xsl:with-param name="class" select="'mandatory'"/>
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template>
 
-            <!-- INPSPIRE themes -->
+            <!-- INSPIRE themes -->
             <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'inspireTheme'"/>
-                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[substring(*/gmd:thesaurusName/*/gmd:title/gco:CharacterString,1,15) = 'GEMET - INSPIRE']/*/gmd:keyword"/>
+                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[substring(*/gmd:thesaurusName/*/gmd:title/*,1,15) = 'GEMET - INSPIRE']/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="2"/>
                 <xsl:with-param name="valid" select="'3.1'"/>
             </xsl:call-template> 
             
             <!-- other KW with thesaurus -->
-            <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[not(contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'19119')) and not(contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'INSPIRE')) and string-length(gmd:thesaurusName/*/gmd:title)>0]">
+            <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[not(contains(gmd:thesaurusName/*/gmd:title/*,'19119')) and not(contains(gmd:thesaurusName/*/gmd:title/*,'INSPIRE')) and string-length(gmd:thesaurusName/*/gmd:title)>0]">
                 <xsl:variable name="i" select="position()-1"/>
                 <input type="hidden" name="othes-title" value="{gmd:thesaurusName/*/gmd:title}"/>
                 <input type="hidden" name="othes-date" value="{gmd:thesaurusName/*/gmd:date/*/gmd:date/*}"/>
@@ -304,15 +323,6 @@
                 </xsl:for-each>  
             </xsl:for-each>
             
-      		<!-- other free KW -->
-        	<xsl:call-template name="drawInput">
-        		<xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[string-length(gmd:thesaurusName/*/gmd:title)=0]/gmd:keyword"/>
-        		<xsl:with-param name="name" select="'fkw'"/>
-        		<xsl:with-param name="class" select="'inp'"/>
-        		<xsl:with-param name="langs" select="$langs"/>
-                <xsl:with-param name="multi" select="2"/>
-        	</xsl:call-template>
-    		
     	</xsl:when>
     
     	<xsl:otherwise>
@@ -320,7 +330,7 @@
             <!-- INSPIRE themes -->
             <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'inspireTheme'"/>
-                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/gco:CharacterString, 'GEMET - INSPIRE')]/*/gmd:keyword"/>
+                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'GEMET - INSPIRE')]/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="2"/>
                 <xsl:with-param name="valid" select="'3.1'"/>
@@ -328,7 +338,7 @@
 
                 
        		<!-- ostatni KW s thesaurem-->
-            <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[substring(gmd:thesaurusName/*/gmd:title/gco:CharacterString,1,15) != 'GEMET - INSPIRE' and string-length(gmd:thesaurusName/*/gmd:title)>0]">
+            <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[substring(gmd:thesaurusName/*/gmd:title/*,1,15) != 'GEMET - INSPIRE' and string-length(gmd:thesaurusName/*/gmd:title/*)>0]">
                 <xsl:variable name="i" select="position()-1"/>
                 <input type="hidden" name="othes_{$i}_title" value="{gmd:thesaurusName/*/gmd:title/gco:CharacterString}"/>
                 <input type="hidden" name="othes_{$i}_date" value="{gmd:thesaurusName/*/gmd:date/*/gmd:date/*}"/>
@@ -343,17 +353,32 @@
                 </xsl:for-each>  
             </xsl:for-each>
 		
-      		<!-- ostatni KW volna -->
-        	<xsl:call-template name="drawInput">
-        		<xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[string-length(gmd:thesaurusName/*/gmd:title)=0]/gmd:keyword"/>
-        		<xsl:with-param name="name" select="'fkw'"/>
-        		<xsl:with-param name="class" select="'inp'"/>
-        		<xsl:with-param name="langs" select="$langs"/>
-                <xsl:with-param name="multi" select="2"/>
-        	</xsl:call-template>
 
         </xsl:otherwise>
     </xsl:choose>
+
+    <!-- other free KW -->
+    <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)=0]/*/gmd:keyword|/."> 
+        <xsl:if test="gco:CharacterString|gmx:Anchor!='' or (gco:CharacterString|gmx:Anchor='' and position()=last())">
+
+            <fieldset>
+                <div class="row">
+                    <xsl:call-template name="drawLabel">
+                        <xsl:with-param name="name" select="'fkw'"/>
+                        <xsl:with-param name="class" select="'mand wide'"/>
+                        <xsl:with-param name="dupl" select="1"/>
+                    </xsl:call-template>			
+                </div>
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="value" select="."/>
+                    <xsl:with-param name="name" select="'fkw'"/>
+                    <xsl:with-param name="path" select="'fkw-keyword[]'"/>
+                    <xsl:with-param name="class" select="'inp2'"/>
+                    <xsl:with-param name="langs" select="$langs"/>
+                </xsl:call-template>
+            </fieldset>
+        </xsl:if>
+    </xsl:for-each>
 
 
 	<xsl:variable name="kwg">
@@ -457,8 +482,9 @@
 	 	<xsl:call-template name="drawInput">
 		  	<xsl:with-param name="name" select="'dqScope'"/>
 		    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:scope/*/gmd:level/*/@codeListValue"/>
-		    <xsl:with-param name="class" select="'mandatory'"/>
+		    <xsl:with-param name="class" select="'short'"/>
 		    <xsl:with-param name="codes" select="$typeList"/> 
+            <xsl:with-param name="req" select="1"/>
 		</xsl:call-template>
     </xsl:if>
     
@@ -1025,7 +1051,6 @@
             <xsl:with-param name="value" select="gmd:identificationInfo/*/srv:couplingType/*/@codeListValue"/>
             <xsl:with-param name="codes" select="'couplingType'"/>
             <xsl:with-param name="multi" select="2"/> 
-            <xsl:with-param name="class" select="'mandatory'"/>
             <xsl:with-param name="valid" select="'CZ-9'"/>   
         </xsl:call-template>
     </xsl:if>
@@ -1056,7 +1081,7 @@
     	  	<xsl:with-param name="name" select="'coverageDesc'"/>
     	    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_CompletenessOmission/gmd:measureIdentification/*/gmd:code='CZ-COVERAGE']/*/gmd:measureDescription"/>
     	    <xsl:with-param name="codes" select="'extents'"/>
-            <xsl:with-param name="req" select="0"/>
+            <xsl:with-param name="multi" select="0"/>
     	    <xsl:with-param name="class" select="'inp2'"/>
     	    <xsl:with-param name="valid" select="'CZ-10'"/>
     	</xsl:call-template>

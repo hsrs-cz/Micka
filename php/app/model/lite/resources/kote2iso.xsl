@@ -364,13 +364,13 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 					   </gmd:descriptiveKeywords>
 					</xsl:for-each>
 
-					<xsl:if test="normalize-space(fkw)!=''">
+					<xsl:if test="normalize-space(fkw/item)!=''">
                         <gmd:descriptiveKeywords>
-    						<gmd:MD_Keywords>						
-                  				<xsl:for-each select="fkw">
+    						<gmd:MD_Keywords>
+                  				<xsl:for-each select="fkw/item">
                                     <xsl:call-template name="txtOut">
     						          <xsl:with-param name="name" select="'keyword'"/>
-    						          <xsl:with-param name="t" select="."/>
+    						          <xsl:with-param name="t" select="keyword"/>
     					           </xsl:call-template>					
       							</xsl:for-each>
     						</gmd:MD_Keywords>	
@@ -658,21 +658,38 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                         <xsl:with-param name="name" select="'name'"/>
                                         <xsl:with-param name="t" select="name"/>
                                     </xsl:call-template>
-                                    <xsl:choose>
-                                        <xsl:when test="accessPoint">
-                                            <gmd:description>
-                                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">accessPoint</gmx:Anchor>
-                                            </gmd:description>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <gmd:description>
+                                    <gmd:description>
+                                        <xsl:choose>
+                                            <xsl:when test="accessPoint">
+                                                <xsl:variable name="v">
+                                                    <xsl:value-of select="description/TXT"/>
+                                                    <xsl:if test="normalize-space(mime)"> mimeType="<xsl:value-of select="mime"/>"</xsl:if>
+                                                </xsl:variable>
+                                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/OnLineDescriptionCode/accessPoint">
+                                                    <xsl:choose>
+                                                        <xsl:when test="($v)"><xsl:value-of select="$v"/></xsl:when>
+                                                        <xsl:otherwise>accessPoint</xsl:otherwise>
+                                                    </xsl:choose>
+                                                </gmx:Anchor>
+                                            </xsl:when>
+                                            <xsl:otherwise>
                                                 <gco:CharacterString>
-                                                    <xsl:value-of select="description"/>
+                                                    <xsl:value-of select="description/TXT"/>
                                                     <xsl:if test="normalize-space(mime)"> mimeType="<xsl:value-of select="mime"/>"</xsl:if>
                                                 </gco:CharacterString>
-                                            </gmd:description>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                        <xsl:if test="description/*[name()!='TXT']">
+                                            <gmd:PT_FreeText> 
+                                                <gmd:textGroup>
+                                                    <xsl:for-each select="description/*[name()!='TXT']">		
+                                                        <gmd:LocalisedCharacterString locale="#locale-{name()}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
+                                                    </xsl:for-each>
+                                                </gmd:textGroup>
+                                            </gmd:PT_FreeText>
+                                        </xsl:if>
+                                    </gmd:description>
+                                    
   									<gmd:function>
   										<gmd:CI_OnLineFunctionCode codeListValue="{function}" codeList="{$cl}#CI_OnLineFunctionCode">
   											<xsl:value-of select="function"/>
@@ -783,49 +800,84 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  					
 
 					<!-- CZ-7 Pokrytí -->
-					<xsl:if test="coveragePercent>0">
-						<gmd:report>
-							<gmd:DQ_CompletenessOmission>
-								<gmd:nameOfMeasure>
-									<gco:CharacterString>Pokrytí</gco:CharacterString>
-								</gmd:nameOfMeasure>
-								<gmd:measureIdentification>
-									<gmd:RS_Identifier>
-										<gmd:code>
-											<gco:CharacterString>CZ-COVERAGE</gco:CharacterString>
-										</gmd:code>
-									</gmd:RS_Identifier>
-								</gmd:measureIdentification>
-                                <xsl:call-template name="uriOut">
-                                    <xsl:with-param name="name" select="'measureDescription'"/>
-                                    <xsl:with-param name="codes" select="$lcodes/extents"/>
-                                    <xsl:with-param name="t" select="coverageDesc"/>
-                                </xsl:call-template>
-								<!--  <gmd:dateTime>
-									<gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
-								</gmd:dateTime>-->
-                                <xsl:variable name="c" select="normalize-space(coverageDesc)"/>
-                                <xsl:variable name="area" select="$lcodes/extents/value[@uri=$c]/@area"/>
-								<gmd:result>
-									<gmd:DQ_QuantitativeResult>
-										<gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/>
-										<gmd:value>
-											<gco:Record><xsl:value-of select="coveragePercent"/></gco:Record>
-										</gmd:value>
-									</gmd:DQ_QuantitativeResult>
-								</gmd:result>
-								<gmd:result>
-									<gmd:DQ_QuantitativeResult>
-										<gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#km2"/>
-										<gmd:value>
-											<gco:Record><xsl:value-of select="$area * coveragePercent div 100"/></gco:Record>
-										</gmd:value>
-									</gmd:DQ_QuantitativeResult>
-								</gmd:result>
-							</gmd:DQ_CompletenessOmission>
-						</gmd:report>
-	  				</xsl:if>
-	  				
+                    <xsl:choose>
+                        <xsl:when test="coveragePercent">
+                            <gmd:report>
+                                <gmd:DQ_CompletenessOmission>
+                                    <gmd:nameOfMeasure>
+                                        <gco:CharacterString>Pokrytí</gco:CharacterString>
+                                    </gmd:nameOfMeasure>
+                                    <gmd:measureIdentification>
+                                        <gmd:RS_Identifier>
+                                            <gmd:code>
+                                                <gco:CharacterString>CZ-COVERAGE</gco:CharacterString>
+                                            </gmd:code>
+                                        </gmd:RS_Identifier>
+                                    </gmd:measureIdentification>
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'measureDescription'"/>
+                                        <xsl:with-param name="codes" select="$lcodes/extents"/>
+                                        <xsl:with-param name="t" select="coverageDesc"/>
+                                    </xsl:call-template>
+                                    <!--  <gmd:dateTime>
+                                        <gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
+                                    </gmd:dateTime>-->
+                                    <xsl:variable name="c" select="normalize-space(coverageDesc)"/>
+                                    <xsl:variable name="area" select="$lcodes/extents/value[@uri=$c]/@area"/>
+                                    <gmd:result>
+                                        <gmd:DQ_QuantitativeResult>
+                                            <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/>
+                                            <gmd:value>
+                                                <gco:Record><xsl:value-of select="coveragePercent"/></gco:Record>
+                                            </gmd:value>
+                                        </gmd:DQ_QuantitativeResult>
+                                    </gmd:result>
+                                    <gmd:result>
+                                        <gmd:DQ_QuantitativeResult>
+                                            <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#km2"/>
+                                            <gmd:value>
+                                                <gco:Record><xsl:value-of select="$area * coveragePercent div 100"/></gco:Record>
+                                            </gmd:value>
+                                        </gmd:DQ_QuantitativeResult>
+                                    </gmd:result>
+                                </gmd:DQ_CompletenessOmission>
+                            </gmd:report>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <gmd:report>
+                                <gmd:DQ_CompletenessOmission>
+                                    <gmd:nameOfMeasure>
+                                        <gco:CharacterString></gco:CharacterString>
+                                    </gmd:nameOfMeasure>
+                                    <gmd:measureIdentification>
+                                        <gmd:RS_Identifier>
+                                            <gmd:code>
+                                                <gco:CharacterString></gco:CharacterString>
+                                            </gmd:code>
+                                        </gmd:RS_Identifier>
+                                    </gmd:measureIdentification>
+                                    <gmd:measureDescription><gmx:Anchor xlink:href=""></gmx:Anchor></gmd:measureDescription>
+                                    <gmd:result>
+                                        <gmd:DQ_QuantitativeResult>
+                                            <gmd:valueUnit xlink:href=""/>
+                                            <gmd:value>
+                                                <gco:Record></gco:Record>
+                                            </gmd:value>
+                                        </gmd:DQ_QuantitativeResult>
+                                    </gmd:result>
+                                    <gmd:result>
+                                        <gmd:DQ_QuantitativeResult>
+                                            <gmd:valueUnit xlink:href=""/>
+                                            <gmd:value>
+                                                <gco:Record></gco:Record>
+                                            </gmd:value>
+                                        </gmd:DQ_QuantitativeResult>
+                                    </gmd:result>
+                                </gmd:DQ_CompletenessOmission>
+                            </gmd:report>
+                        </xsl:otherwise>
+	  				</xsl:choose>
+                    
 					<!-- IOD-4 Topological consistency -->
 					<xsl:for-each select="topological/item[string-length(normalize-space(name))>0]">
 						<xsl:variable name="topol" select="."/>

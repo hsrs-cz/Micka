@@ -651,10 +651,12 @@
     <value uri="rss" code="WWW:LINK-1.0-http--rss">RSS</value> 
     <value uri="atom" code="WWW:LINK-1.0-http--atom">ATOM</value> 
     <value code="WWW:DOWNLOAD-1.0-ftp--download">FTP</value> 
+    <value code="OGC:WMS">WMS</value> 
     <value code="OGC:WMS-1.0.0-http-get-capabilities">WMS 1.0.0</value> 
     <value code="OGC:WMS-1.1.0-http-get-capabilities">WMS 1.1.0</value> 
     <value code="OGC:WMS-1.1.1-http-get-capabilities">WMS 1.1.1</value> 
     <value code="OGC:WMS-1.3.0-http-get-capabilities">WMS 1.3.0</value> 
+    <value code="OGC:WFS">WFS</value>
     <value code="OGC:WFS-1.0.0-http-get-capabilities">WFS 1.0.0 / Get</value> 
     <value code="OGC:WFS-1.0.0-http-post-capabilities">WFS 1.0.0 / Post</value> 
     <value code="OGC:WFS-1.1.0-http-get-capabilities">WFS 1.1.0 / Get</value> 
@@ -687,37 +689,37 @@
 </protocol>
 
 <extents>
-    <value x1="9.53" y1="46.373" x2="17.16" y2="49.021" uri="https://publications.europa.eu/resource/authority/country/AUT">Rakousko</value>
-    <value x1="2.545" y1="49.498" x2="6.407" y2="51.506" uri="https://publications.europa.eu/resource/authority/country/BEL">Belgie</value>
-    <value x1="22.362" y1="41.236" x2="28.591" y2="44.213" uri="https://publications.europa.eu/resource/authority/country/BGR">Bulharsko</value>
-    <value x1="13.590" y1="42.217" x2="19.677" y2="46.563" uri="https://publications.europa.eu/resource/authority/country/HRV">Chorvatsko</value>
-    <value x1="32.27" y1="34.563" x2="34.587" y2="35.696" uri="https://publications.europa.eu/resource/authority/country/CYP">Kypr</value>
     <value x1="12.09" y1="48.552" x2="18.859" y2="51.056" uri="https://publications.europa.eu/resource/authority/country/CZE" area="78866">Česká republika</value>
-    <value x1="8.074" y1="54.56" x2="15.193" y2="57.752" uri="https://publications.europa.eu/resource/authority/country/DNK">Dánsko</value>
-    <value x1="21.772" y1="57.51" x2="28.209" y2="59.686" uri="https://publications.europa.eu/resource/authority/country/EST">Estonsko</value>
-    <value x1="-9.756" y1="35.789" x2="32.080" y2="71.205" uri="https://publications.europa.eu/resource/authority/country/EUR">Evropská unie</value>
-    <value x1="19.303" y1="59.766" x2="31.586" y2="70.093" uri="https://publications.europa.eu/resource/authority/country/FIN">Finsko</value>
-    <value x1="-61.981" y1="-21.342" x2="55.832" y2="51.09" uri="https://publications.europa.eu/resource/authority/country/FRA">Francie</value>
-    <value x1="5.866" y1="47.271" x2="15.041" y2="55.058" uri="https://publications.europa.eu/resource/authority/country/DEU">Německo</value>
-    <value x1="19.374" y1="34.804" x2="29.642" y2="41.749" uri="https://publications.europa.eu/resource/authority/country/GRC">Řecko</value>
-    <value x1="16.113" y1="45.738" x2="22.897" y2="48.586" uri="https://publications.europa.eu/resource/authority/country/HUN">Maďarsko</value>
-    <value x1="-10.470" y1="51.444" x2="-5.372" y2="55.383" uri="https://publications.europa.eu/resource/authority/country/IRL">Irsko</value>
-    <value x1="6.626" y1="35.493" x2="18.519" y2="47.093" uri="https://publications.europa.eu/resource/authority/country/ITA">Itálie</value>
-    <value x1="20.97" y1="55.675" x2="28.242" y2="58.086" uri="https://publications.europa.eu/resource/authority/country/LVA">Lotyšsko</value>
-    <value x1="20.953" y1="53.899" x2="26.836" y2="56.45" uri="https://publications.europa.eu/resource/authority/country/LTU">Litva</value>
-    <value x1="5.735" y1="49.448" x2="6.53" y2="50.183" uri="https://publications.europa.eu/resource/authority/country/LUX">Lucembursko</value>
-    <value x1="14.19" y1="35.806" x2="14.575" y2="36.08" uri="https://publications.europa.eu/resource/authority/country/MLT">Malta</value>
-    <value x1="3.358" y1="50.751" x2="7.227" y2="53.554" uri="https://publications.europa.eu/resource/authority/country/NLD">Nizozemí</value>
-    <value x1="4.61" y1="57.972" x2="31.167" y2="71.186" uri="https://publications.europa.eu/resource/authority/country/NOR">Norsko</value>
-    <value x1="14.123" y1="49.003" x2="24.145" y2="54.836" uri="https://publications.europa.eu/resource/authority/country/POL">Polsko</value>
-    <value x1="-31.296" y1="32.638" x2="-6.19" y2="42.155" uri="https://publications.europa.eu/resource/authority/country/PRT">Portugalsko</value>
-    <value x1="20.269" y1="43.62" x2="29.678" y2="48.259" uri="https://publications.europa.eu/resource/authority/country/ROU">Rumunsko</value>
-    <value x1="16.832" y1="47.732" x2="22.565" y2="49.614" uri="https://publications.europa.eu/resource/authority/country/SVK">Slovensko</value>
-    <value x1="13.375" y1="45.422" x2="16.61" y2="46.877" uri="https://publications.europa.eu/resource/authority/country/SVN">Slovinsko</value>
-    <value x1="-18.161" y1="27.636" x2="4.327" y2="43.789" uri="https://publications.europa.eu/resource/authority/country/ESP">Španělsko</value>
-    <value x1="10.984" y1="55.336" x2="24.166" y2="69.06" uri="https://publications.europa.eu/resource/authority/country/SWE">Švédsko</value>
-    <value x1="5.956" y1="45.818" x2="10.492" y2="47.809" uri="https://publications.europa.eu/resource/authority/country/CHE">Švýcarsko</value>
-    <value x1="-8.647" y1="49.883" x2="1.762" y2="60.846" uri="https://publications.europa.eu/resource/authority/country/GBR">Spojené kralovství</value>
+    <value x1="9.53" y1="46.373" x2="17.16" y2="49.021" uri="https://publications.europa.eu/resource/authority/country/AUT" area="83879">Rakousko</value>
+    <value x1="2.545" y1="49.498" x2="6.407" y2="51.506" uri="https://publications.europa.eu/resource/authority/country/BEL" area="30528">Belgie</value>
+    <value x1="22.362" y1="41.236" x2="28.591" y2="44.213" uri="https://publications.europa.eu/resource/authority/country/BGR" area="110994">Bulharsko</value>
+    <value x1="13.590" y1="42.217" x2="19.677" y2="46.563" uri="https://publications.europa.eu/resource/authority/country/HRV" area="56594">Chorvatsko</value>
+    <value x1="32.27" y1="34.563" x2="34.587" y2="35.696" uri="https://publications.europa.eu/resource/authority/country/CYP" area="9251">Kypr</value>
+    <value x1="8.074" y1="54.56" x2="15.193" y2="57.752" uri="https://publications.europa.eu/resource/authority/country/DNK" area="42931">Dánsko</value>
+    <value x1="21.772" y1="57.51" x2="28.209" y2="59.686" uri="https://publications.europa.eu/resource/authority/country/EST" area="45336">Estonsko</value>
+    <value x1="-9.756" y1="35.789" x2="32.080" y2="71.205" uri="https://publications.europa.eu/resource/authority/country/EUR" area="4272000">Evropská unie</value>
+    <value x1="19.303" y1="59.766" x2="31.586" y2="70.093" uri="https://publications.europa.eu/resource/authority/country/FIN" area="338424">Finsko</value>
+    <value x1="-61.981" y1="-21.342" x2="55.832" y2="51.09" uri="https://publications.europa.eu/resource/authority/country/FRA" area="643801">Francie</value>
+    <value x1="5.866" y1="47.271" x2="15.041" y2="55.058" uri="https://publications.europa.eu/resource/authority/country/DEU" area="357376">Německo</value>
+    <value x1="19.374" y1="34.804" x2="29.642" y2="41.749" uri="https://publications.europa.eu/resource/authority/country/GRC" area="131957">Řecko</value>
+    <value x1="16.113" y1="45.738" x2="22.897" y2="48.586" uri="https://publications.europa.eu/resource/authority/country/HUN" area="93030">Maďarsko</value>
+    <value x1="-10.470" y1="51.444" x2="-5.372" y2="55.383" uri="https://publications.europa.eu/resource/authority/country/IRL" area="70273">Irsko</value>
+    <value x1="6.626" y1="35.493" x2="18.519" y2="47.093" uri="https://publications.europa.eu/resource/authority/country/ITA" area="301338">Itálie</value>
+    <value x1="20.97" y1="55.675" x2="28.242" y2="58.086" uri="https://publications.europa.eu/resource/authority/country/LVA" area="64589">Lotyšsko</value>
+    <value x1="20.953" y1="53.899" x2="26.836" y2="56.45" uri="https://publications.europa.eu/resource/authority/country/LTU" area="65300">Litva</value>
+    <value x1="5.735" y1="49.448" x2="6.53" y2="50.183" uri="https://publications.europa.eu/resource/authority/country/LUX" area="2586">Lucembursko</value>
+    <value x1="14.19" y1="35.806" x2="14.575" y2="36.08" uri="https://publications.europa.eu/resource/authority/country/MLT" area="316">Malta</value>
+    <value x1="3.358" y1="50.751" x2="7.227" y2="53.554" uri="https://publications.europa.eu/resource/authority/country/NLD" area="41543">Nizozemí</value>
+    <value x1="4.61" y1="57.972" x2="31.167" y2="71.186" uri="https://publications.europa.eu/resource/authority/country/NOR" area="385203">Norsko</value>
+    <value x1="14.123" y1="49.003" x2="24.145" y2="54.836" uri="https://publications.europa.eu/resource/authority/country/POL" area="312679">Polsko</value>
+    <value x1="-31.296" y1="32.638" x2="-6.19" y2="42.155" uri="https://publications.europa.eu/resource/authority/country/PRT" area="92212">Portugalsko</value>
+    <value x1="20.269" y1="43.62" x2="29.678" y2="48.259" uri="https://publications.europa.eu/resource/authority/country/ROU" area="238397">Rumunsko</value>
+    <value x1="16.832" y1="47.732" x2="22.565" y2="49.614" uri="https://publications.europa.eu/resource/authority/country/SVK" area="49035">Slovensko</value>
+    <value x1="13.375" y1="45.422" x2="16.61" y2="46.877" uri="https://publications.europa.eu/resource/authority/country/SVN" area="20273">Slovinsko</value>
+    <value x1="-18.161" y1="27.636" x2="4.327" y2="43.789" uri="https://publications.europa.eu/resource/authority/country/ESP" area="505990">Španělsko</value>
+    <value x1="10.984" y1="55.336" x2="24.166" y2="69.06" uri="https://publications.europa.eu/resource/authority/country/SWE" area="447435">Švédsko</value>
+    <value x1="5.956" y1="45.818" x2="10.492" y2="47.809" uri="https://publications.europa.eu/resource/authority/country/CHE" area="41285">Švýcarsko</value>
+    <value x1="-8.647" y1="49.883" x2="1.762" y2="60.846" uri="https://publications.europa.eu/resource/authority/country/GBR" area="242495">Spojené kralovství</value>
 </extents>
 
 <!-- 8.1 -->

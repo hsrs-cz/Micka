@@ -506,7 +506,7 @@
 		
     <xsl:for-each select="identificationInfo/*/serviceType">
         <srv:serviceType>
-          <gco:LocalName ><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+          <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
         </srv:serviceType>
     </xsl:for-each>
     <xsl:for-each select="identificationInfo/*/serviceTypeVersion">

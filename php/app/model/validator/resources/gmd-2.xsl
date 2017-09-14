@@ -369,17 +369,17 @@ xmlns:php="http://php.net/xsl">
 		<test code="3">
 		 	<description><xsl:value-of select="$labels/test[@code='3']"/></description>
 		 	<xpath>identificationInfo/*/descriptiveKeywords/MD_Keywords[contains(thesaurusName/*/title,'19119')]/keyword</xpath>
-		 	<xsl:if test="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'19119')]/gmd:keyword/gco:CharacterString">
+		 	<xsl:if test="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'19119')]/gmd:keyword/*">
 				<value>
 					<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'19119')]/gmd:keyword">
-						<xsl:value-of select="gco:CharacterString"/>
+						<xsl:value-of select="*"/>
 						<xsl:if test="not(position()=last())">, </xsl:if>
 					</xsl:for-each>
 				</value>	
 				<pass>true</pass>
 			</xsl:if>
 
-            <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title)>0]">
+            <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)>0]">
                 <test code="a">
         		 	<description><xsl:value-of select="$labels/test[@code='3a']"/></description>
         		 	<xpath>identificationInfo/*/descriptiveKeywords/*/keyword</xpath>
@@ -405,10 +405,10 @@ xmlns:php="http://php.net/xsl">
 		<test code="3n">
 		 	<description><xsl:value-of select="$labels/test[@code='3']"/></description>
 		 	<xpath>identificationInfo/*/descriptiveKeywords/MD_Keywords[contains(thesaurusName/*/title,'GEMET - INSPIRE themes')]/keyword</xpath>
-		 	<xsl:if test="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'GEMET - INSPIRE themes')]/gmd:keyword">
-				<value><xsl:value-of select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'GEMET - INSPIRE themes')]/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/></value>
+		 	<xsl:if test="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE themes')]/gmd:keyword">
+				<value><xsl:value-of select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE themes')]/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/></value>
 				<pass>true</pass>
-				<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'GEMET - INSPIRE themes')]/gmd:keyword">
+				<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE themes')]/gmd:keyword">
 					<test code="3.1N">
 						<description><xsl:value-of select="$labels/test[@code='3.2']"/></description>
                         <xsl:variable name="kw" select="."/>
