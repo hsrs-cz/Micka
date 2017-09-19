@@ -464,14 +464,14 @@ class CswClient{
   }
 
   function processTemplate($xmlString, $template, $params=Array()){
-    if($xmlString) $this->xml->loadXML($xmlString);
+    if($xmlString) @$this->xml->loadXML($xmlString);
+    if(!$this->xml) {
+        return "";
+    }
     $this->xsl->load($template);
     $this->xp->importStyleSheet($this->xsl);
     if(count($params) > 0){
-      reset($params);
-      while(list($name, $value) = each($params)){
-        $this->xp->setParameter("", $name, $value);      
-      }
+        $this->xp->setParameter("", $params);
     }   
     return $this->xp->transformToXML($this->xml);
   }

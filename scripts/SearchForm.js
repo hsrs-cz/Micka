@@ -9,7 +9,7 @@ SearchForm = function(){
     var baseURL = (window.location.pathname.replace('/'+HS.getLang(2)+'/',''));
 
 	function processResults(data, opts){
-		var data = $.map(data.suggestions, function(rec) {
+		var data = $.map(data.results, function(rec) {
 			return { text: rec.name, id: rec.id, title: rec.desc, parent: rec.parentId };
 		})
 		return { results: data }
@@ -118,7 +118,7 @@ SearchForm = function(){
 			dataType: 'json',
 			data: function(params){
 				return {
-					query: params.term,
+					q: params.term,
 					type: 'organisation'
 				};
 			},
@@ -199,7 +199,7 @@ SearchForm = function(){
 			processResults: function(data, page){
 				return {
 					results: $.map(data.records, function(rec) {
-						return { text: rec.name, id: rec.id };
+						return { text: rec.title, id: rec.id };
 					})  
 				}    
 			},

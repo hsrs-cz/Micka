@@ -858,11 +858,11 @@
                 			  			<xsl:with-param name="name" select="'protocol'"/>                      
                 			  			<xsl:with-param name="lang" select="$mdLang"/>                     
             			  			</xsl:call-template>
-									<xsl:if test='*/name'>
-										<gmd:name>
-											<gco:CharacterString><xsl:value-of select="*/name"/></gco:CharacterString>
-										</gmd:name>
-									</xsl:if>
+									<xsl:call-template name="txt">
+                			  			<xsl:with-param name="s" select="*"/>                      
+                			  			<xsl:with-param name="name" select="'name'"/>                      
+                			  			<xsl:with-param name="lang" select="$mdLang"/>                     
+            			  			</xsl:call-template>
 									<xsl:call-template name="txt">
                 			  			<xsl:with-param name="s" select="*"/>                      
                 			  			<xsl:with-param name="name" select="'description'"/>                      

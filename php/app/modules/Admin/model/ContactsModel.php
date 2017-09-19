@@ -53,6 +53,21 @@ class ContactsModel extends \BaseModel
         return $contacts;
     }
     
+    public function findMdContactsByName($q='') 
+    {
+        $where = $q ? "WHERE tag ilike '%".$q."%'" : "";
+        if ($this->user->isInRole('admin')) {
+            $contacts = $this->db->query("SELECT *,'w' AS right FROM contacts $where ORDER BY tag")->fetchAll();
+        }
+        $contacts = $this->db->query("SELECT *,'x' AS right FROM contacts $where ORDER BY tag")->fetchAll();
+        $result = array();
+        foreach($contacts as $row){
+            $row->text = $row->person;
+            $result[] = $row;
+        }
+        return array("results" => $result);
+    }
+
     public function findMdContactsById($id,$right) 
     {
         $contact = $this->db->query("SELECT * FROM contacts WHERE id=? 

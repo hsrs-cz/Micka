@@ -26,7 +26,7 @@
 					{* resource type *}
 					<div class="form-group">
 						<label for="res-type" class="control-label">{_messages.frontend.res-type}</label>
-						<select id="res-type" class="form-control"  data-placeholder="type">
+						<select id="res-type" class="form-control" data-placeholder="{_messages.frontend.select}">
                             <option value=""></option>
                             <option value="data">{_messages.frontend.data}</option>
                             <option value="service">{_messages.frontend.service}</option>
@@ -44,13 +44,13 @@
 					{* service type *}
 					<div id="panel-stype" class="form-group">
 						<label for="stype" class="control-label">Typ služby</label>
-						<select id="stype" multiple="multiple" class="form-control" data-placeholder="Service types"></select>
+						<select id="stype" multiple="multiple" class="form-control" data-placeholder="{_messages.frontend.select}"></select>
 					</div>
 
 					{* INSPIRE theme *}
 					<div class="form-group">
 						<label for="inspire" class="control-label">{_messages.frontend.inspire-theme}</label>
-						<select id="inspire" class="form-control" multiple="multiple" data-placeholder="INPSIRE"></select>
+						<select id="inspire" class="form-control" multiple="multiple" data-placeholder="{_messages.frontend.select}"></select>
 					</div>
 					
 					{*  GEMET 
@@ -62,26 +62,26 @@
 					{*  Thesaurus 
 					<div class="form-group">
 						<label for="message-text" class="control-label">témata</label>
-						<select id="kw-2" class="form-control" multiple="multiple" data-placeholder="INPSIRE"></select>
+						<select id="kw-2" class="form-control" multiple="multiple" data-placeholder="{_messages.frontend.select}"></select>
 					</div> *}
 
 					{* Responsible party *}
 					<div class="form-group">
 						<label id="label-contact" for="contact" class="control-label">{_messages.frontend.contact}</label>
-						<select id="contact" class="form-control" multiple="multiple" data-placeholder="resource contact" aria-labelledby="label-contact"></select>
+						<select id="contact" class="form-control" multiple="multiple" data-placeholder="{_messages.frontend.select}" aria-labelledby="label-contact"></select>
 					</div>
 					
 					{* Scale *}
 					<div id="panel-denominator" class="form-group">
 						<label id="label-denominator" for="denominator" class="control-label">{_messages.frontend.scale} 1:</label>
-						<select id="denominator" multiple="multiple" class="form-control" data-placeholder="měřítko" aria-labelledby="label-denominator">{ifset $scales}{$scales}{/ifset}</select>
+						<select id="denominator" multiple="multiple" class="form-control" data-placeholder="{_messages.frontend.select}" aria-labelledby="label-denominator">{ifset $scales}{$scales}{/ifset}</select>
 					</div>
                     
                     {if $user->isLoggedIn()}
                        
                         <div class="form-group">
                             <label id="label-status" for="md-status" class="control-label">{_messages.frontend.status}</label>
-                            <select id="md-status" class="form-control" multiple="multiple" data-placeholder="status" aria-labelledby="label-status"></select>
+                            <select id="md-status" class="form-control" multiple="multiple" data-placeholder="{_messages.frontend.select}" aria-labelledby="label-status"></select>
                         </div>
  
                         <br/>                        

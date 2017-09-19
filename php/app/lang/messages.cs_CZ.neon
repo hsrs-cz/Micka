@@ -152,6 +152,7 @@ frontend:
     for_inspire: "Pro INSPIRE"
     status: "Stav záznamu"
     contact2micka: "do MicKy"
+    select: "vyberte"
 
 management:
     modules: "Administrace"

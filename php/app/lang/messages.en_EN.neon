@@ -114,6 +114,7 @@ frontend:
     cookbook: "Cookbook"
     contact: "Contact"
     copy: "Clone"
+    select: "select"
 
     admin: "Admin"
     application: "Application"

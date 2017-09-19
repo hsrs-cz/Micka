@@ -460,11 +460,11 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							<gmd:MD_TopicCategoryCode><xsl:value-of select="."/></gmd:MD_TopicCategoryCode>
 						</gmd:topicCategory>
 					</xsl:for-each>
-					<xsl:for-each select="serviceType">
+					<xsl:if test="$serv='srv'">
                         <srv:serviceType>
-                            <gco:LocalName><xsl:value-of select="."/></gco:LocalName>
+                            <gco:LocalName><xsl:value-of select="serviceType"/></gco:LocalName>
                         </srv:serviceType>
-					</xsl:for-each>
+					</xsl:if>
 					<xsl:for-each select="serviceTypeVersion">
 						<srv:serviceTypeVersion><xsl:value-of select="."/></srv:serviceTypeVersion>
 					</xsl:for-each>
@@ -478,58 +478,61 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 									</gco:CharacterString>
 								</gmd:description>
 							</xsl:if>
-                            <!-- bbox -->
-                            <xsl:if test="not(extentId/item)">
-                                <gmd:geographicElement>
-                                    <gmd:EX_GeographicBoundingBox>
-                                        <gmd:westBoundLongitude>
-                                            <gco:Decimal><xsl:value-of select="xmin"/></gco:Decimal>
-                                        </gmd:westBoundLongitude>
-                                        <gmd:eastBoundLongitude>
-                                            <gco:Decimal><xsl:value-of select="xmax"/></gco:Decimal>
-                                        </gmd:eastBoundLongitude>
-                                        <gmd:southBoundLatitude>
-                                            <gco:Decimal><xsl:value-of select="ymin"/></gco:Decimal>
-                                        </gmd:southBoundLatitude>
-                                        <gmd:northBoundLatitude>
-                                            <gco:Decimal><xsl:value-of select="ymax"/></gco:Decimal>
-                                        </gmd:northBoundLatitude>
-                                    </gmd:EX_GeographicBoundingBox>
-                                </gmd:geographicElement>
-                            </xsl:if>
+                            <!-- geographic identifier -->
+                            <xsl:choose>
+                                <xsl:when test="extentId">
+                                    <xsl:variable name="code" select="extentId"/>
+                                    <xsl:variable name="row" select="$lcodes/extents/value[@uri=$code]"/>
+                                    <gmd:geographicElement>
+                                        <gmd:EX_GeographicDescription>
+                                            <gmd:geographicIdentifier>
+                                                <gmd:MD_Identifier>
+                                                    <gmd:code>
+                                                        <gmx:Anchor xlink:href="{$code}"><xsl:value-of select="$row"/></gmx:Anchor>
+                                                    </gmd:code>
+                                                </gmd:MD_Identifier>
+                                            </gmd:geographicIdentifier>
+                                        </gmd:EX_GeographicDescription>
+                                    </gmd:geographicElement>
+                                    <gmd:geographicElement>
+                                        <gmd:EX_GeographicBoundingBox>
+                                            <gmd:westBoundLongitude>
+                                                <gco:Decimal><xsl:value-of select="$row/@x1"/></gco:Decimal>
+                                            </gmd:westBoundLongitude>
+                                            <gmd:eastBoundLongitude>
+                                                <gco:Decimal><xsl:value-of select="$row/@x2"/></gco:Decimal>
+                                            </gmd:eastBoundLongitude>
+                                            <gmd:southBoundLatitude>
+                                                <gco:Decimal><xsl:value-of select="$row/@y1"/></gco:Decimal>
+                                            </gmd:southBoundLatitude>
+                                            <gmd:northBoundLatitude>
+                                                <gco:Decimal><xsl:value-of select="$row/@y2"/></gco:Decimal>
+                                            </gmd:northBoundLatitude>
+                                        </gmd:EX_GeographicBoundingBox>
+                                    </gmd:geographicElement>
+                                </xsl:when>
+                                
+                                <!-- BBOX -->
+                                <xsl:otherwise>
+                                    <gmd:geographicElement>
+                                        <gmd:EX_GeographicBoundingBox>
+                                            <gmd:westBoundLongitude>
+                                                <gco:Decimal><xsl:value-of select="xmin"/></gco:Decimal>
+                                            </gmd:westBoundLongitude>
+                                            <gmd:eastBoundLongitude>
+                                                <gco:Decimal><xsl:value-of select="xmax"/></gco:Decimal>
+                                            </gmd:eastBoundLongitude>
+                                            <gmd:southBoundLatitude>
+                                                <gco:Decimal><xsl:value-of select="ymin"/></gco:Decimal>
+                                            </gmd:southBoundLatitude>
+                                            <gmd:northBoundLatitude>
+                                                <gco:Decimal><xsl:value-of select="ymax"/></gco:Decimal>
+                                            </gmd:northBoundLatitude>
+                                        </gmd:EX_GeographicBoundingBox>
+                                    </gmd:geographicElement>
+                                </xsl:otherwise>
+                            </xsl:choose>
                             
-                            <!-- Geographic identifier -->
-                            <xsl:for-each select="extentId/item">
-                                <xsl:variable name="code" select="."/>
-                                <xsl:variable name="row" select="$lcodes/extents/value[@uri=$code]"/>
-                                <gmd:geographicElement>
-                                    <gmd:EX_GeographicDescription>
-                                        <gmd:geographicIdentifier>
-                                            <gmd:MD_Identifier>
-                                                <gmd:code>
-                                                    <gmx:Anchor xlink:href="{$code}"><xsl:value-of select="$row"/></gmx:Anchor>
-                                                </gmd:code>
-                                            </gmd:MD_Identifier>
-                                        </gmd:geographicIdentifier>
-                                    </gmd:EX_GeographicDescription>
-                                </gmd:geographicElement>
-                                <gmd:geographicElement>
-                                    <gmd:EX_GeographicBoundingBox>
-                                        <gmd:westBoundLongitude>
-                                            <gco:Decimal><xsl:value-of select="$row/@x1"/></gco:Decimal>
-                                        </gmd:westBoundLongitude>
-                                        <gmd:eastBoundLongitude>
-                                            <gco:Decimal><xsl:value-of select="$row/@x2"/></gco:Decimal>
-                                        </gmd:eastBoundLongitude>
-                                        <gmd:southBoundLatitude>
-                                            <gco:Decimal><xsl:value-of select="$row/@y1"/></gco:Decimal>
-                                        </gmd:southBoundLatitude>
-                                        <gmd:northBoundLatitude>
-                                            <gco:Decimal><xsl:value-of select="$row/@y2"/></gco:Decimal>
-                                        </gmd:northBoundLatitude>
-                                    </gmd:EX_GeographicBoundingBox>
-                                </gmd:geographicElement>
-                            </xsl:for-each>
 							<xsl:for-each select="tempExt/item">
 								<gmd:temporalElement>
 									<gmd:EX_TemporalExtent>
@@ -817,12 +820,12 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'measureDescription'"/>
                                         <xsl:with-param name="codes" select="$lcodes/extents"/>
-                                        <xsl:with-param name="t" select="coverageDesc"/>
+                                        <xsl:with-param name="t" select="extentId"/>
                                     </xsl:call-template>
                                     <!--  <gmd:dateTime>
                                         <gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
                                     </gmd:dateTime>-->
-                                    <xsl:variable name="c" select="normalize-space(coverageDesc)"/>
+                                    <xsl:variable name="c" select="normalize-space(extentId)"/>
                                     <xsl:variable name="area" select="$lcodes/extents/value[@uri=$c]/@area"/>
                                     <gmd:result>
                                         <gmd:DQ_QuantitativeResult>
@@ -1035,6 +1038,11 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 					<xsl:value-of select="$party/individualName"/>
 				</gco:CharacterString>
 			</gmd:individualName>
+            <!--xsl:call-template name="uriOut">
+                <xsl:with-param name="name" select="'code'"/>
+                <xsl:with-param name="codes" select="$lcodes/coordSys"/>
+                <xsl:with-param name="t" select="."/>
+            </xsl:call-template-->
 			<xsl:call-template name="txtOut">
 				<xsl:with-param name="name" select="'organisationName'"/>
 				<xsl:with-param name="t" select="$party/organisationName"/>

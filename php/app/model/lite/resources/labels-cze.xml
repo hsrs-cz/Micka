@@ -183,10 +183,10 @@ Pokud bude tato položka vyplněna, musí se vyplnit i položka „CZ-10 Plocha 
 			</help>
 	</msg>
 	<msg name="coveragePercent">
-		<label>CZ-10b Plocha [%]</label>
+		<label>CZ-10 Pokrytí území [%]</label>
 		<help>
-			<h3>CZ-10b Pokrytí území - Plocha [%]</h3>
-			<p>Uveďte procento plochy, které datová sada zaujímá z vašeho referenčního území (obvykle plocha působnosti poskytovatele, kraj, celá ČR, chráněné území, ...).
+			<h3></h3>
+			<p>Procento plochy, které datová sada zaujímá z referenčního území označeného geografickým identifikátorem (obvykle plocha působnosti poskytovatele, kraj, celá ČR, chráněné území, ...).
 Pokud bude tato položka vyplněna, musí se vyplnit i položka „CZ-10 Plocha [km2]”.
 </p>
 			<p class="pozn">Položka pro monitoring. Pokud bude položka vyplněna a tato metadata využita pro monitoring (podle vyhlášky 103/2010), je možno z metadata získat automaticky indikátor „Sledování zeměpisného pokrytí prostorovými daty“</p>

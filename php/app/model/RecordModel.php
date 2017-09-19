@@ -857,7 +857,7 @@ class RecordModel extends \BaseModel
         $input = $kote->processForm(beforeSaveRecord($post));
         $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>'cze');
         $xmlstring = $cswClient->processTemplate($input, __DIR__ . '/lite/resources/kote2iso.xsl', $params);
-        //header('Content-Type: application/xml'); echo $xmlstring;  exit;
+        header('Content-Type: application/xml'); echo $xmlstring;  exit;
         $md = [];
         $md['sid'] = session_id();
 		$md['recno'] = $this->getNewRecno('edit_md');

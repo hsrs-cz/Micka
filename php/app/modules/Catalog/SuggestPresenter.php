@@ -102,8 +102,12 @@ class SuggestPresenter extends \BasePresenter
 	{
         $this->template->mds = 'MD';
         $contactsModel = new \App\AdminModel\ContactsModel($this->context->getByType('Nette\Database\Context'), $this->user);
-        var_dump($contactsModel->findMdContacts());
-        $this->template->contacts = $contactsModel->findMdContacts();
+        //var_dump($contactsModel->findMdContacts());
+        $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
+            $contactsModel->findMdContactsByName($this->getParameter('q')), 
+            "application/json;charset=utf-8"
+        ));
+        //$this->template->contacts = $contactsModel->findMdContacts();
     }
     
 }

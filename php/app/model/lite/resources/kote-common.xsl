@@ -100,15 +100,27 @@
 		  <xsl:if test="$publisher=1">getParty(this);</xsl:if>
 		</xsl:variable>
 
-        <xsl:call-template name="drawInput">
+        <!--xsl:call-template name="drawInput">
             <xsl:with-param name="path" select="concat($name,'-individualName[]')"/>
             <xsl:with-param name="name" select="'individualName'"/>
             <xsl:with-param name="value" select="$root/*/gmd:individualName"/>
-            <xsl:with-param name="class" select="'inpS inp2'"/>
+            <xsl:with-param name="class" select="'inp2'"/>
             <xsl:with-param name="valid" select="$valid"/>
-        </xsl:call-template>
-
-		
+        </xsl:call-template-->
+        
+        <div class="row">
+            <xsl:call-template name="drawLabel">
+                <xsl:with-param name="name" select="'individualName'"/>
+                <xsl:with-param name="valid" select="$valid"/>
+                <xsl:with-param name="class" select="'inp2'"/>
+            </xsl:call-template>
+            <div class="col-xs-12 col-md-8">
+                <select class="sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="zodpovědná osoba" data-ajax--url="../../suggest/mdcontacts">
+                    <option value="{$root/*/gmd:individualName}"><xsl:value-of select="$root/*/gmd:individualName"/></option>
+                </select>
+            </div>
+		</div>
+        
 		<xsl:choose>
             <xsl:when test="$publisher=1">
                 <xsl:call-template name="drawInput">
@@ -192,7 +204,8 @@
 		  	<xsl:with-param name="name" select="'www'"/>
 			<xsl:with-param name="value" select="$root/*/gmd:contactInfo/*/gmd:onlineResource/*/gmd:linkage"/>
 			<xsl:with-param name="multi" select="2"/>
-			<xsl:with-param name="class" select="'inpS inp2'"/>
+            <xsl:with-param name="type" select="'plain'"/>
+			<xsl:with-param name="class" select="'inp2'"/>
 		</xsl:call-template>
 		
 		<xsl:call-template name="drawInput">

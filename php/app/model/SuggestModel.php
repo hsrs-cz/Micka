@@ -155,7 +155,7 @@ class SuggestModel
                 ";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
-            case 'topic':
+            case 'topics':
                 $sql = "
                         SELECT codelist_name as recno, label_text as md_value, lang
                         FROM codelist LEFT JOIN label ON codelist.codelist_id = label.label_join
