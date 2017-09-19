@@ -16,6 +16,7 @@ class RouterFactory
 	public static function createRouter()
 	{
         $router = new RouteList;
+        $router[] = new Route('index.php', 'Catalog:Search:default', Route::ONE_WAY);
         $router[] = new Route('[<locale=cs cs|en>/]sign/in', ['module' => 'Catalog', 'presenter' => 'Sign', 'action' => 'in']);
         $router[] = new Route('[<locale=cs cs|en>/]sign/out', ['module' => 'Catalog', 'presenter' => 'Sign', 'action' => 'out']);
         $router[] = new Route('[<locale=cs cs|en>/]record/basic[/<id>]', ['module' => 'Catalog', 'presenter' => 'Record', 'action' => 'basic']);
