@@ -115,9 +115,20 @@
                 <xsl:with-param name="class" select="'inp2'"/>
             </xsl:call-template>
             <div class="col-xs-12 col-md-8">
-                <select class="sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="zodpovědná osoba" data-ajax--url="../../suggest/mdcontacts">
-                    <option value="{$root/*/gmd:individualName}"><xsl:value-of select="$root/*/gmd:individualName"/></option>
+                <xsl:variable name="nc">
+                <xsl:choose>
+                    <xsl:when test="$root/*/gmd:individualName/*/xlink:href">
+                        <xsl:value-of select="$root/*/gmd:individualName/*/xlink:href"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="$root/*/gmd:individualName/*"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+                </xsl:variable>
+                <select class="person sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="zodpovědná osoba" data-ajax--url="../../suggest/mdcontacts">
+                    <option value="{$nc}"><xsl:value-of select="$root/*/gmd:individualName/*"/></option>
                 </select>
+                <input class="hperson" type="hidden" name="{concat($name,'-individualNameTxt[]')}" value="{$root/*/gmd:individualName/*}"/>
             </div>
 		</div>
         

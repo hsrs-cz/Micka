@@ -17,16 +17,18 @@
           <xsl:attribute name="uuid"><xsl:value-of select="id"/></xsl:attribute>
         </xsl:if>
             <xsl:if test="individualName">
-                <gmd:individualName>
-                    <gco:CharacterString><xsl:value-of select="individualName"/></gco:CharacterString>
-                </gmd:individualName>
+                <xsl:call-template name="txt">
+                    <xsl:with-param name="s" select="."/>                      
+                    <xsl:with-param name="name" select="'individualName'"/>                      
+                    <xsl:with-param name="lang" select="$mdLang"/>                      
+                </xsl:call-template>                                                              
             </xsl:if>
             <xsl:if test="organisationName">
-              <xsl:call-template name="txt">
+                <xsl:call-template name="txt">
                     <xsl:with-param name="s" select="."/>                      
                     <xsl:with-param name="name" select="'organisationName'"/>                      
                     <xsl:with-param name="lang" select="$mdLang"/>                      
-                 </xsl:call-template>                                                              
+                </xsl:call-template>                                                              
             </xsl:if>
             <xsl:if test="positionName">
             <gmd:positionName>

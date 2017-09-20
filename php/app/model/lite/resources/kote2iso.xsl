@@ -1033,16 +1033,18 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 		<xsl:param name="party"/>
 
 		<gmd:CI_ResponsibleParty>
-			<gmd:individualName>
-				<gco:CharacterString>
-					<xsl:value-of select="$party/individualName"/>
-				</gco:CharacterString>
-			</gmd:individualName>
-            <!--xsl:call-template name="uriOut">
-                <xsl:with-param name="name" select="'code'"/>
-                <xsl:with-param name="codes" select="$lcodes/coordSys"/>
-                <xsl:with-param name="t" select="."/>
-            </xsl:call-template-->
+            <gmd:individualName>
+                <xsl:choose>
+                    <xsl:when test="$party/individualName=$party/individualNameTxt or $party/individualName=''">
+                        <gco:CharacterString><xsl:value-of select="$party/individualName"/></gco:CharacterString>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <gmx:Anchor xlink:href="{$party/individualName}">
+                            <xsl:value-of select="$party/individualNameTxt"/>
+                        </gmx:Anchor>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </gmd:individualName>
 			<xsl:call-template name="txtOut">
 				<xsl:with-param name="name" select="'organisationName'"/>
 				<xsl:with-param name="t" select="$party/organisationName"/>

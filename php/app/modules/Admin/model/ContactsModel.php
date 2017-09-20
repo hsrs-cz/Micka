@@ -63,6 +63,9 @@ class ContactsModel extends \BaseModel
         $result = array();
         foreach($contacts as $row){
             $row->text = $row->person;
+            // temporary fix
+            $row->organisation = array("cze"=>$row->organisation, "eng"=>$row->organisation_en);
+            $row->org_function = array("cze"=>$row->org_function, "eng"=>$row->org_function_en);
             $result[] = $row;
         }
         return array("results" => $result);

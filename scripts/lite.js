@@ -8,13 +8,13 @@ var lite = {
     init: function(){
         $('[data-tooltip="tooltip"]').tooltip();
         $('.sel2').select2();
+        $('.person').on('select2:select', this.changePerson);
         this.createDuplicate();
         $.fn.datepicker.defaults.language=HS.getLang(2);
         $.fn.datepicker.defaults.todayHighlight = true;
         $.fn.datepicker.defaults.forceParse = false;
         if(lang=='cze') $.fn.datepicker.defaults.format = "dd.mm.yyyy";
         else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
-
         //micka.initMap({});
     },
     
@@ -59,6 +59,30 @@ var lite = {
             $(sel).val('');
             $(sel).select2();
         }	
+    },
+    
+    // fills the contact information
+    changePerson: function(e){
+        var data = e.params.data;
+        var parent = $(e.target).parent().parent().parent();
+        $(e.target).parent().children('.hperson').val(data.text);
+        // if gets data from predefined list
+        var o;
+        if(data.person){
+            for(var l in data.organisation){
+                o = $(parent).find('input[name*="organisationName"]', '.'+l);
+                if(o) $(o).val(data.organisation[l]);
+                o = $(parent).find('input[name*="function"]', '.'+l);
+                if(o) $(o).val(data.org_function[l]);
+            }
+            $(parent).find('input[name*="deliveryPoint"]').val(data.point);
+            $(parent).find('input[name*="city"]').val(data.city);
+            $(parent).find('input[name*="postalCode"]').val(data.postcode);
+            $(parent).find('input[name*="country"]').val(data.country);
+            $(parent).find('input[name*="www"]').val(data.url);
+            $(parent).find('input[name*="email"]').val(data.email);
+            $(parent).find('input[name*="phone"]').val(data.phone);
+        }
     }
 
 }
