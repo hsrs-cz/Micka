@@ -464,6 +464,9 @@ function kontakt1(id, osoba, org, org_en, fce, fce_en, phone, fax, ulice, mesto,
 		else if(v.id=="7001"){
 	        v.value = id;
 	    }
+        else if(v.id=='3750uri'){
+            v.value = id;
+        }
 	    else switch(num){
 			case '3750': v.value = osoba; break;
 			case '3760': v.value = org; break;
@@ -531,7 +534,7 @@ function thes(obj){
 			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json',
 			processResults: function(data, opts){
-                var data = $.map(data.suggestions, function(rec) {
+                var data = $.map(data.results, function(rec) {
                     return { text: rec.name, id: rec.id, title: rec.desc, parent: rec.parentId };
                 })
                 return { results: data }
@@ -559,10 +562,9 @@ function thes(obj){
                 $.ajax({url: url, context: {lang: ll[i]}})
                 .done(function(data){
                     //console.log(data);
-                    if(data.suggestions)  terms[this.lang] = data.suggestions[0].name;
+                    if(data.results)  terms[this.lang] = data.results[0].name;
                     else terms[this.lang] = "";
                     if(ll.length <= Object.keys(terms).length){
-                        //console.log(terms);
                         fromThesaurus({
                             thesName: 'GEMET - INSPIRE themes, version 1.0',
                             thesDate: (ll[0]=='cze') ? '01.06.2008' : '2008-06-01',
@@ -1145,7 +1147,7 @@ function formats(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=formats&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=format&lang='+lang);
 }
 
 function formats1(data){
@@ -1164,19 +1166,21 @@ function formats1(data){
 	}
 	else{
 	  	var inputs = flatNodes(md_elem, "INPUT");
+        var lang;
 	    for(var i=0;i<inputs.length;i++){
+            lang = inputs[i].name.split('|')[1];
 	      	if(inputs[i].type=='text'){
 	        	if(typeof(data)=="object"){
-	      			var lang = inputs[i].id.substr(inputs[i].id.length-3);
                     var f = false;
                     if(data[lang]){
-                        f = data[lang].value;
+                        f = data[lang];
                     }    
 	      			if(!f) continue;
 	      		}
 	      		else f = data;
-	        	if(md_addMode)inputs[i].value += f; 
-	        	else inputs[i].value = f;
+	        	//if(md_addMode)inputs[i].value += f; 
+	        	//else 
+                inputs[i].value = f;
 	      	}   
 	    }   
 	}
@@ -1249,8 +1253,10 @@ function fspec1(f){
 
 function crs(obj){
 	md_elem = obj.parentNode;
+    var mdlang = $('#30').val();
+    console.log(mdlang);
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=crs&handler=crs1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys&handler=crs1&lang='+lang+'&mdlang='+mdlang);
 }
 
 function dName(obj){
@@ -1559,7 +1565,7 @@ var oconstraint = function(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=oconstraint&multi=1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=limitationsAccess&multi=1&lang='+lang);
 }
 
 micka.fillValues = function(listType, code, handler){

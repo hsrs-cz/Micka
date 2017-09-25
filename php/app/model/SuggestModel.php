@@ -157,9 +157,9 @@ class SuggestModel
                 break;
             case 'topics':
                 $sql = "
-                        SELECT codelist_name as recno, label_text as md_value, lang
-                        FROM codelist LEFT JOIN label ON codelist.codelist_id = label.label_join
-                        WHERE el_id=410 AND label_type='CL' AND lang=?
+                    SELECT codelist_name as recno, label_text as md_value, lang
+                    FROM codelist LEFT JOIN label ON codelist.codelist_id = label.label_join
+                    WHERE el_id=410 AND label_type='CL' AND lang=?
                     ";
                 if($query == '') {
                     $result = $this->db->query($sql, $query_lang)->fetchAll();

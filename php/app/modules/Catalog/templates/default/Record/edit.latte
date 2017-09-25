@@ -391,6 +391,12 @@
 <script type="text/javascript" src="{$basePath}/scripts/edit.js"></script>
 
 {if $dataBox == ''}
+<script>
+    baseUrl = {$basePath};
+    $(document).ready(function() {
+        HS.setLang({$appLang});
+    });
+</script>    
 {else}
     <script type="text/javascript" src="{$basePath}/scripts/lite.js"></script>
     <script>

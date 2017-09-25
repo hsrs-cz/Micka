@@ -15,9 +15,8 @@
 <xsl:param name="lang"/>
 
 <!-- GLOBAL VARIABLES -->
-<xsl:variable name="codeLists" select="document(concat('../../xsl/codelists_' ,$lang, '.xml'))/map" />
+<xsl:variable name="codeLists" select="document('../../xsl/codelists.xml')/map" />
 <xsl:variable name="labels" select="document(concat('labels-', $lang, '.xml'))/labels" />
-<!-- <xsl:variable name="validator" select="document('../../include/logs/aaa.xml')/validationResult" /> -->
 
 <!-- vyplni select box(y) -->
 <xsl:template name="sel">
@@ -27,7 +26,6 @@
 	<xsl:param name="title"/>
 	<xsl:param name="multi"/>
 	<xsl:param name="mand"/>
-		
 	
 	<!-- prazdna hodnota -->
 	<xsl:if test="not($value)">
@@ -125,7 +123,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 </xsl:variable>
-                <select class="person sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="zodpovědná osoba" data-ajax--url="../../suggest/mdcontacts">
+                <select class="person sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="zodpovědná osoba" data-ajax--url="../../suggest/mdcontacts?format=json">
                     <option value="{$nc}"><xsl:value-of select="$root/*/gmd:individualName/*"/></option>
                 </select>
                 <input class="hperson" type="hidden" name="{concat($name,'-individualNameTxt[]')}" value="{$root/*/gmd:individualName/*}"/>
@@ -384,10 +382,10 @@
 					<xsl:for-each select="$codelist/*[name()=$codes]/value">
 			  			<xsl:choose>
 			  				<xsl:when test="@code=normalize-space($value)">
-			  					<option value="{@code}" selected="selected"><xsl:value-of select="."/></option>
+			  					<option value="{@code}" title="{*[name()=$lang]/@qtip}" selected="selected"><xsl:value-of select="*[name()=$lang]"/></option>
 			  				</xsl:when>
 			  				<xsl:otherwise>
-			  					<option value="{@code}"><xsl:value-of select="."/></option>
+			  					<option value="{@code}" title="{*[name()=$lang]/@qtip}"><xsl:value-of select="*[name()=$lang]"/></option>
 			  				</xsl:otherwise>
 			  			</xsl:choose>		
 			  		</xsl:for-each>
@@ -431,10 +429,10 @@
                         </xsl:variable>
                          <xsl:choose>
                             <xsl:when test="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]">
-                                <option value="{$c}"  title="{$r/@qtip}" selected="'selected'"><xsl:value-of select="$r"/></option>
+                                <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}" selected="'selected'"><xsl:value-of select="$r/*[name()=$lang]"/></option>
                             </xsl:when>
                             <xsl:otherwise>
-                                <option value="{$c}" title="{$r/@qtip}"><xsl:value-of select="$r"/></option>
+                                <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}"><xsl:value-of select="$r/*[name()=$lang]"/></option>
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:for-each>
@@ -465,7 +463,7 @@
 			<xsl:when test="$langs and $type='textarea'">
 				<xsl:for-each select="$langs">
 					<xsl:variable name="pos" select="position()"/>
-                    <textarea class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]">
+                    <textarea class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}" name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]">
                         <xsl:if test="$value"><xsl:value-of select="$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]"/></xsl:if>
                     </textarea>
 				</xsl:for-each>
@@ -635,7 +633,10 @@
                             <xsl:value-of select="$row/@*[name()=$attrib]"/>
                         </xsl:when>
                         <xsl:otherwise>
-                            <xsl:value-of select="$row"/>
+                            <xsl:choose>
+                                <xsl:when test="$row/*[name()=$lang]"><xsl:value-of select="$row/*[name()=$lang]"/></xsl:when>
+                                <xsl:otherwise><xsl:value-of select="$row/*[name()='eng']"/></xsl:otherwise>
+                            </xsl:choose>
                         </xsl:otherwise>
                     </xsl:choose>
                 </gmx:Anchor>

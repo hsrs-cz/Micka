@@ -40,7 +40,6 @@
         <input type="hidden" name="locale[]" value="{*/gmd:languageCode/*/@codeListValue}"/>
     </xsl:for-each>
 
-
     <!-- 1.1 Title -->
 	<xsl:call-template name="drawInput">
 		<xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
@@ -154,7 +153,6 @@
                         <xsl:with-param name="value" select="$ap"/>
                         <xsl:with-param name="codes" select="'compliant'"/>
                         <xsl:with-param name="class" select="'short inp2'"/>
-                        <xsl:with-param name="valid" select="'7.2'"/>
                         <xsl:with-param name="type" select="'boolean'"/>
                     </xsl:call-template>
                 </fieldset>
@@ -337,7 +335,6 @@
                 <xsl:with-param name="multi" select="2"/>
                 <xsl:with-param name="valid" select="'3.1'"/>
             </xsl:call-template> 
-
                 
        		<!-- ostatni KW s thesaurem-->
             <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[substring(gmd:thesaurusName/*/gmd:title/*,1,15) != 'GEMET - INSPIRE' and string-length(gmd:thesaurusName/*/gmd:title/*)>0]">
@@ -561,7 +558,7 @@
                     <xsl:call-template name="drawInput">
                         <xsl:with-param name="name" select="'compliant'"/>
                         <xsl:with-param name="path" select="'specification-compliant[]'"/>
-                        <xsl:with-param name="value" select="*/gmd:pass/gco:Boolean"/>
+                        <xsl:with-param name="value" select="*/gmd:pass/gco:Boolean|*/gmd:pass/@gco:nilReason"/>
                         <xsl:with-param name="codes" select="'compliant'"/>
                         <xsl:with-param name="req" select="1"/>
                         <xsl:with-param name="class" select="'short inp2'"/>

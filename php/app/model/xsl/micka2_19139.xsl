@@ -859,7 +859,7 @@
                 			  			<xsl:with-param name="lang" select="$mdLang"/>                     
             			  			</xsl:call-template>
 									<xsl:call-template name="txt">
-                			  			<xsl:with-param name="s" select="*"/>                      
+                			  			<xsl:with-param name="s" select="*"/>
                 			  			<xsl:with-param name="name" select="'name'"/>                      
                 			  			<xsl:with-param name="lang" select="$mdLang"/>                     
             			  			</xsl:call-template>

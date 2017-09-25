@@ -149,6 +149,10 @@ label.inp2 {
     padding: 3px 6px 3px 6px;
 }
 
+.select2-container {
+    margin: 2px 0 2px 0;
+}
+
 label.mand {
     color: #A00 !important;
 }

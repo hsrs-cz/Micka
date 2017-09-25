@@ -5,7 +5,7 @@
 
 $title = '';
 
-function getList($type, $lang, $withValues=false){
+function getList($type, $lang, $mdlang, $withValues=false){
     if($type=='fspec'){
         @$xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists_$lang.xml");
         if(!$xml) $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists_eng.xml");
@@ -20,6 +20,27 @@ function getList($type, $lang, $withValues=false){
         echo "</div>";
         return;
     }
+    else if(in_array($type, array('coordSys','format','limitationsAccess'))){
+        $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
+        $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
+        echo '<div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4>'.(string) $title .'</h4>
+        </div><div class="modal-body">';
+        $list = $xml->xpath("//$type/value");
+        foreach ($list as $row){
+            echo "<a href=\"javascript:formats1({uri:'".$row['uri']."', ";
+            foreach($row as $k=>$v){
+                if($k!='uri'){
+                    echo "$k:'".$v."',";
+                }
+            }
+            echo "xxx:'".(string) $row->$mdlang."'});\">".(string) $row->$lang."</a><br>";
+        }
+        echo "</div>";
+        return;
+    }
+
 	@$xml = simplexml_load_file(APP_DIR . "/model/dict/$type.xml");
 	if(!$xml) die("list <b>$type</b> does not exist");
 	// test jazyka
@@ -95,13 +116,15 @@ function kw(f){
 
 <?php
     $lang = htmlspecialchars($_REQUEST['lang']);
+    $mdlang = htmlspecialchars($_REQUEST['mdlang']);
     if(!$lang) $lang='eng';
+    if(!$mdlang) $mdlang='eng';
     if(isset($_REQUEST['multi']) && $_REQUEST['multi']==1) {
         $multi = true;
     } else {
         $multi = false;
     }
-    echo getList(htmlspecialchars($_REQUEST['type']), $lang, $multi);
+    echo getList(htmlspecialchars($_REQUEST['type']), $lang, $mdlang, $multi);
 ?>
 
 
