@@ -115,8 +115,8 @@
             <div class="col-xs-12 col-md-8">
                 <xsl:variable name="nc">
                 <xsl:choose>
-                    <xsl:when test="$root/*/gmd:individualName/*/xlink:href">
-                        <xsl:value-of select="$root/*/gmd:individualName/*/xlink:href"/>
+                    <xsl:when test="$root/*/gmd:individualName/*/@xlink:href">
+                        <xsl:value-of select="$root/*/gmd:individualName/*/@xlink:href"/>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:value-of select="$root/*/gmd:individualName/*"/>
@@ -427,7 +427,8 @@
                                 <xsl:otherwise><xsl:value-of select="$r/@name"/></xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>
-                         <xsl:choose>
+                        <x><xsl:value-of select="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]"/></x>
+                        <xsl:choose>
                             <xsl:when test="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]">
                                 <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}" selected="'selected'"><xsl:value-of select="$r/*[name()=$lang]"/></option>
                             </xsl:when>

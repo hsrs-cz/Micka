@@ -35,7 +35,6 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     </xsl:variable>	
 	
 	<xsl:variable name="mdlang" select="mdlang"/>
-	<xsl:variable name="lcodes" select="document(concat('../../xsl/codelists_' ,mdlang, '.xml'))/map" />
 	<xsl:variable name="codes" select="document('../../xsl/codelists.xml')/map" />
 	
 <gmd:MD_Metadata>
@@ -279,7 +278,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                     <gmd:thesaurusName>
                                         <gmd:CI_Citation>
                                             <gmd:title>
-                                                <gmx:Anchor xlink:href="http://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+                                                <gmx:Anchor xlink:href="https://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
                                             </gmd:title>
                                             <gmd:date><gmd:CI_Date>
                                                 <gmd:date><gco:Date>2008-06-01</gco:Date></gmd:date>

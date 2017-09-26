@@ -360,7 +360,7 @@ class MdXml2Array
  	* 
  	*/
   function readCodelists($lang, $class){
-		$xml = simplexml_load_file( __DIR__ . "/xsl/codelists_$lang.xml");
+		$xml = simplexml_load_file( __DIR__ . "/xsl/codelists.xml");
 		if($xml) {
     		foreach($xml->$class->value as $keyword){
     			$k = (string) $keyword['name']; // misto labelu hodnota
@@ -371,7 +371,7 @@ class MdXml2Array
 		}
 		// snazi se najit v INSPIRE registry 
 		else if($class='inspireKeywords'){
-		    $url = "http://inspire.ec.europa.eu/theme/theme.".$this->langCodes[$lang].".xml";
+		    $url = "https://inspire.ec.europa.eu/theme/theme.".$this->langCodes[$lang].".xml";
 		    if(defined('CONNECTION_PROXY')){
 			    $c = curl_init($url);
 			    curl_setopt($c, CURLOPT_RETURNTRANSFER, TRUE);
