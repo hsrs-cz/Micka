@@ -425,38 +425,38 @@
     	</xsl:call-template>
     </xsl:if>
     
-  <!-- datum --> 
-  <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date|/."> 
-  	<xsl:if test="normalize-space(*/gmd:date)!='' or (normalize-space(*/gmd:date)='' and position()=last())">
+    <!-- datum --> 
+    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date|/."> 
+        <xsl:if test="normalize-space(*/gmd:date)!='' or (normalize-space(*/gmd:date)='' and position()=last())">
 
-		<fieldset>
-            <div class="row">
-                <xsl:call-template name="drawLabel">
+            <fieldset>
+                <div class="row">
+                    <xsl:call-template name="drawLabel">
+                        <xsl:with-param name="name" select="'date'"/>
+                        <xsl:with-param name="class" select="'mand wide'"/>
+                        <xsl:with-param name="dupl" select="1"/>
+                    </xsl:call-template>			
+                </div>
+                <xsl:call-template name="drawInput">
                     <xsl:with-param name="name" select="'date'"/>
-                    <xsl:with-param name="class" select="'mand wide'"/>
-                    <xsl:with-param name="dupl" select="1"/>
-                </xsl:call-template>			
-            </div>
-            <xsl:call-template name="drawInput">
-                <xsl:with-param name="name" select="'date'"/>
-                <xsl:with-param name="path" select="'date-date[]'"/>
-                <xsl:with-param name="value" select="*/gmd:date"/>
-                <xsl:with-param name="type" select="'date'"/>
-                <xsl:with-param name="valid" select="'5a'"/>
-                <xsl:with-param name="class" select="'mandatory inp2'"/>
-                <xsl:with-param name="req" select="'1'"/>
-            </xsl:call-template>
-		 	<xsl:call-template name="drawInput">
-			  	<xsl:with-param name="name" select="'dateType'"/>
-			  	<xsl:with-param name="path" select="'date-type[]'"/>
-			    <xsl:with-param name="value" select="*/gmd:dateType/*/@codeListValue"/>
-			    <xsl:with-param name="codes" select="'dateType'"/>
-			    <xsl:with-param name="class" select="'inp2 short'"/>
-			    <xsl:with-param name="req" select="1"/>
-			</xsl:call-template>
-        </fieldset>
-  	</xsl:if>
-  </xsl:for-each>  
+                    <xsl:with-param name="path" select="'date-date[]'"/>
+                    <xsl:with-param name="value" select="*/gmd:date"/>
+                    <xsl:with-param name="type" select="'date'"/>
+                    <xsl:with-param name="valid" select="'5a'"/>
+                    <xsl:with-param name="class" select="'mandatory inp2'"/>
+                    <xsl:with-param name="req" select="'1'"/>
+                </xsl:call-template>
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="name" select="'dateType'"/>
+                    <xsl:with-param name="path" select="'date-type[]'"/>
+                    <xsl:with-param name="value" select="*/gmd:dateType/*/@codeListValue"/>
+                    <xsl:with-param name="codes" select="'dateType'"/>
+                    <xsl:with-param name="class" select="'inp2 short'"/>
+                    <xsl:with-param name="req" select="1"/>
+                </xsl:call-template>
+            </fieldset>
+        </xsl:if>
+    </xsl:for-each>  
 
 	<div class="row">
  		<xsl:call-template name="drawLabel">

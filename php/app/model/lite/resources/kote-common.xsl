@@ -427,7 +427,6 @@
                                 <xsl:otherwise><xsl:value-of select="$r/@name"/></xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>
-                        <x><xsl:value-of select="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]"/></x>
                         <xsl:choose>
                             <xsl:when test="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]">
                                 <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}" selected="'selected'"><xsl:value-of select="$r/*[name()=$lang]"/></option>

@@ -52,18 +52,12 @@
 	<test code="7.2">Míra souladu (Degree)</test>
 	<test code="8.1">Podmínky pro přístup a užití (Conditions applying to access and use)</test>
 	<test code="8.2">Omezení veřejného přístupu (Limitations on public access)</test>
+	<test code="9.1.d">Role zodpovědné organizace (Responsible party role)</test>
 	<test code="9.1">Odpovědná organizace nebo osoba (Responsible party)</test>
 	<test code="10.1">Kontakt - metadata (Metadata point of contact)</test>
+	<test code="10.1.d">Role kontaktu metadat</test>
 	<test code="10.2">Datum metadat (Metadata date)</test>
 	<test code="10.3">Jazyk metadat (Metadata language)</test>
-	<test code="CZ-1">Identifikátor metadatového záznamu (File Identifier)</test>
-	<test code="CZ-3">Oblast působnosti - jakost</test>
-	<test code="CZ-4">Četnost údržby a aktualizace (Resource Maintenance)</test>
-	<test code="CZ-7">Účel (Purpose)</test>
-	<test code="CZ-9">Typ vazby (CouplingType)</test>
-	<test code="CZ-91">Účel (Purpose)</test>
-	<test code="CZ-10">Pokrytí území</test>
-	<test code="CZ-12">Role zodpovědné organizace (Responsible party role)</test>
 					
 	<test code="IO-1">Souřadnicový rerefenční systém (Reference System Information)</test>
 	<test code="IO-1a">Kód ve tvaru URI</test>
@@ -76,7 +70,16 @@
 	<test code="IO-4a">Výsledek (hodnota/jednotky)</test>
 	<test code="IO-5">Znaková sada (Resource Character set)</test>
 	<test code="IO-6">Typ prostorové reprezentace(Spatial Representation Type)</test>
-	
+	<test code="CZ-1">Identifikátor metadatového záznamu (File Identifier)</test>
+	<test code="CZ-3">Oblast působnosti - jakost</test>
+	<test code="CZ-4">Četnost údržby a aktualizace (Resource Maintenance)</test>
+	<test code="CZ-7">Účel (Purpose)</test>
+	<test code="CZ-9">Typ vazby (CouplingType)</test>
+	<test code="CZ-91">Účel (Purpose)</test>
+	<test code="CZ-10">Pokrytí území</test>
+	<test code="CZ-12">Verze národního profilu</test>
+	<test code="CZ-15">Formát stahovaných dat</test>
+    
 	<test code="Name">Název</test>
 	<test code="Keyword">Klíčové slovo</test>
 	

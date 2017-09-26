@@ -13,7 +13,7 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:template match="//gmd:MD_Metadata[not(contains(gmd:metadataStandardName/*,'ISO 19115/INSPIRE_TG2/CZ4'))]|//gmi:MI_Metadata[not(contains(gmd:metadataStandardName/*,'ISO 19115/INSPIRE_TG2/CZ4'))]">
 
-<xsl:variable name="codelists" select="document(concat('../../xsl/codelists_',$LANG,'.xml'))/map" />
+<xsl:variable name="codelists" select="document('../../xsl/codelists.xml')/map" />
 <xsl:variable name="specifications" select="document('../../dict/specif.xml')/userValues" />
 <xsl:variable name="labels" select="document(concat('labels-',$LANG,'.xml'))/map" />
 <xsl:variable name="srv" select="gmd:identificationInfo/srv:SV_ServiceIdentification != ''"/>
@@ -76,7 +76,7 @@ xmlns:php="http://php.net/xsl">
 	<description><xsl:value-of select="$labels/test[@code='1.3']"/></description>
 	<xpath>hierarchyLevel</xpath>
 	<xsl:if test="$hierarchy='dataset' or $hierarchy='service' or $hierarchy='series' or $hierarchy='application'">
-	    <value><xsl:value-of select="$codelists/updateScope/value[@name=$hierarchy]"/> (<xsl:value-of select="$hierarchy"/>)</value>
+	    <value><xsl:value-of select="$codelists/updateScope/value[@name=$hierarchy]/*[name()=$LANG]"/> (<xsl:value-of select="$hierarchy"/>)</value>
 	    <pass>true</pass>
 	</xsl:if>
 </test>
@@ -231,7 +231,7 @@ xmlns:php="http://php.net/xsl">
 	 	<xpath>identificationInfo[1]/*/language</xpath>
 	 	<xsl:variable name="k" select="gmd:identificationInfo/*/gmd:language/*/@codeListValue"/>
 		<xsl:if test="string-length($k)>0">
-		   	<value><xsl:value-of select="$codelists/language/value[@name=$k]"/> (<xsl:value-of select="$k"/>)</value>
+		   	<value><xsl:value-of select="$codelists/language/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
 		   	<pass>true</pass>
 		</xsl:if>
 	</test>
@@ -244,7 +244,7 @@ xmlns:php="http://php.net/xsl">
 			<value>
 				<xsl:for-each select="gmd:identificationInfo/*/gmd:topicCategory">
 					<xsl:variable name="k" select="normalize-space(.)"/>
-					<xsl:value-of select="$codelists/topicCategory/value[@name=$k]"/> (<xsl:value-of select="."/>)
+					<xsl:value-of select="$codelists/topicCategory/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="."/>)
 					<xsl:if test="not(position()=last())">, </xsl:if>
 				</xsl:for-each>	
 			</value>
@@ -350,7 +350,7 @@ xmlns:php="http://php.net/xsl">
 		 	<description><xsl:value-of select="$labels/test[@code='2.2']"/></description>
 		 	<xpath>identificationInfo[1]/*/srv:serviceType</xpath>
 			<xsl:if test="$k">
-	    		<value><xsl:value-of select="$codelists/applicationType/value[@name=$k]"/> (<xsl:value-of select="$k"/>)</value>
+	    		<value><xsl:value-of select="$codelists/applicationType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
 			    <pass>true</pass>
 			</xsl:if>
 		</test>
@@ -567,12 +567,12 @@ xmlns:php="http://php.net/xsl">
 	 				<xsl:variable name="k" select="*/gmd:dateType/*/@codeListValue"/>
 			 		<xsl:choose>
 				  		<xsl:when test="string-length($k)>0">
-				    		<value><xsl:value-of select="$codelists/dateType/value[@name=$k]"/> (<xsl:value-of select="$k"/>)</value>
+				    		<value><xsl:value-of select="$codelists/dateType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
 				    		<pass>true</pass>
 				  		</xsl:when>
 			    		<xsl:otherwise>
 							<err><xsl:value-of select="$labels/msg/notValid"/>: 
-				    			<xsl:value-of select="$codelists/dateType/value[@name=$k]"/> (<xsl:value-of select="$k"/>)
+				    			<xsl:value-of select="$codelists/dateType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)
 			    			</err>
 			    		</xsl:otherwise>
 					</xsl:choose>
@@ -808,26 +808,12 @@ xmlns:php="http://php.net/xsl">
 						<xpath>role/*/@codeListValue</xpath>
 						<xsl:choose>	  	
 							<xsl:when test="$codelists/role/value[@name=$k]!=''">
-					    		<value><xsl:value-of select="$codelists/role/value[@name=$k]"/> (<xsl:value-of select="$k"/>)</value>
+					    		<value><xsl:value-of select="$codelists/role/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
 					    		<pass>true</pass>
 					    	</xsl:when>
 					    </xsl:choose>
 			    	</test>
 					
-					<xsl:if test="position()=1 and $codelists/role/value[@name=$k]!=''">
-						
-						<test code="CZ-12" level="c">
-						  	<description><xsl:value-of select="$labels/test[@code='CZ-12']"/> = <xsl:value-of select="$codelists/role/value[@name='custodian']"/></description>
-						   	<xpath>identificationInfo[1]/*/pointOfContact/[*/role/*/@codeListValue='custodian']</xpath>
-						   	<xsl:if test="string-length(//gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue='custodian']/*/gmd:organisationName/gco:CharacterString)>0">
-						   	   	<value>
-						           	<xsl:value-of select="//gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue='custodian']/*/gmd:organisationName/gco:CharacterString"/>
-						       	</value>
-						   	   	<pass>true</pass>
-						   	</xsl:if>
-						</test>
-					</xsl:if>
-
 			</test>
 		</xsl:for-each>	
 		
@@ -840,8 +826,20 @@ xmlns:php="http://php.net/xsl">
 	</xsl:otherwise>
 </xsl:choose>
 
+    <!-- 9.1.d -->
+    <test code="9.1 d" level="c">
+        <description><xsl:value-of select="$labels/test[@code='9.1.d']"/> = <xsl:value-of select="$codelists/role/value[@name='custodian']/*[name()=$LANG]"/></description>
+        <xpath>identificationInfo[1]/*/pointOfContact/[*/role/*/@codeListValue='custodian']</xpath>
+        <xsl:if test="string-length(//gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue='custodian']/*/gmd:organisationName/*)>0">
+            <value>
+                <xsl:value-of select="//gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue='custodian']/*/gmd:organisationName/*"/>
+            </value>
+            <pass>true</pass>
+        </xsl:if>
+    </test>
+
+
 <!-- 10.1 -->
-    
 <xsl:choose>
 	<xsl:when test="string-length(normalize-space(gmd:contact))>0">
 		<xsl:for-each select="gmd:contact">
@@ -874,7 +872,7 @@ xmlns:php="http://php.net/xsl">
 					<xpath>role/*/@codeListValue</xpath>
 					<xsl:choose>	  	
 						<xsl:when test="$codelists/role/value[@name=$k1]!=''">
-				    		<value><xsl:value-of select="$codelists/role/value[@name=$k1]"/> (<xsl:value-of select="$k1"/>)</value>
+				    		<value><xsl:value-of select="$codelists/role/value[@name=$k1]/*[name()=$LANG]"/> (<xsl:value-of select="$k1"/>)</value>
 				    		<pass>true</pass>
 				    	</xsl:when>
 				    </xsl:choose>
@@ -882,7 +880,7 @@ xmlns:php="http://php.net/xsl">
 			   	
 			   	<xsl:if test="position()=1 and $codelists/role/value[@name=$k1]!=''">
 		  			<test code="d">
-						<description>Role = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']"/></description>
+						<description>Role = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']/*[name()=$LANG]"/></description>
 						<xpath>role/*/@codeListValue and //contact[*/role/*/@codeListValue='pointOfContact']</xpath>
 						<xsl:choose>			  	
 							<xsl:when test="string-length(//gmd:contact[*/gmd:role/*/@codeListValue='pointOfContact'])>0">
@@ -903,6 +901,18 @@ xmlns:php="http://php.net/xsl">
 		</test>	
 	</xsl:otherwise>
 </xsl:choose>
+
+<!-- 10.1.d -->
+<test code="10.1d" level="c">
+    <description><xsl:value-of select="$labels/test[@code='10.1.d']"/> = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']/*[name()=$LANG]"/></description>
+    <xpath>identificationInfo[1]/*/pointOfContact/[*/role/*/@codeListValue='custodian']</xpath>
+    <xsl:if test="string-length(//gmd:contact[*/gmd:role/*/@codeListValue='pointOfContact']/*/gmd:organisationName/*)>0">
+        <value>
+            <xsl:value-of select="//gmd:contact[*/gmd:role/*/@codeListValue='pointOfContact']/*/gmd:organisationName/*"/>
+        </value>
+        <pass>true</pass>
+    </xsl:if>
+</test>
 	
 <!-- 10.2 -->
 <test code="10.2">
@@ -930,7 +940,7 @@ xmlns:php="http://php.net/xsl">
 
 	<xsl:choose>
 	  <xsl:when test="string-length($mdlang)>0">
-	    <value><xsl:value-of select="$codelists/language/value[@name=$mdlang]"/> (<xsl:value-of select="$mdlang"/>)</value>
+	    <value><xsl:value-of select="$codelists/language/value[@name=$mdlang]/*[name()=$LANG]"/> (<xsl:value-of select="$mdlang"/>)</value>
 	    <pass>true</pass>
 	  </xsl:when>
 	</xsl:choose>
@@ -956,7 +966,7 @@ xmlns:php="http://php.net/xsl">
     	<xsl:choose>
     	  <xsl:when test="string-length(normalize-space(gmd:dataQualityInfo/*/gmd:scope/*/gmd:level/*/@codeListValue))>0">
 	    	<xsl:variable name="k" select="gmd:dataQualityInfo/*/gmd:scope/*/gmd:level/*/@codeListValue"/>
-	    	<value><xsl:value-of select="$codelists/updateScope/value[@name=$k]"/> (<xsl:value-of select="$k"/>)</value>
+	    	<value><xsl:value-of select="$codelists/updateScope/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
     	    <pass>true</pass>
     	  </xsl:when>
     	</xsl:choose>
@@ -973,14 +983,14 @@ xmlns:php="http://php.net/xsl">
     		<xsl:when test="$k='unknown'">
     			<xsl:if test="substring(gmd:identificationInfo/*/gmd:resourceMaintenance/*/gmd:userDefinedMaintenanceFrequency/*,1,1)='P'">
     	    		<value>          
-            			<xsl:value-of select="$codelists/maintenanceAndUpdateFrequency/value[@name=$k]"/> (<xsl:value-of select="$k"/>): <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceMaintenance/*/gmd:userDefinedMaintenanceFrequency"/>
+            			<xsl:value-of select="$codelists/maintenanceAndUpdateFrequency/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>): <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceMaintenance/*/gmd:userDefinedMaintenanceFrequency"/>
             		</value>
     	    		<pass>true</pass>
             	</xsl:if>
     		</xsl:when>
     	  	<xsl:when test="string-length($k)>0">
     	    	<value>          
-            		<xsl:value-of select="$codelists/maintenanceAndUpdateFrequency/value[@name=$k]"/> (<xsl:value-of select="$k"/>)
+            		<xsl:value-of select="$codelists/maintenanceAndUpdateFrequency/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)
             	</value>
     	    	<pass>true</pass>
     	  	</xsl:when>
@@ -1115,7 +1125,7 @@ xmlns:php="http://php.net/xsl">
     	<xsl:variable name="k" select="gmd:identificationInfo[1]/*/gmd:spatialRepresentationType/*/@codeListValue"/>
     	<xsl:choose>
     	  <xsl:when test="$k!=''">
-    	    <value><xsl:value-of select="$codelists/spatialRepresentationType/value[@name=$k]"/> (<xsl:value-of select="$k"/>)</value>
+    	    <value><xsl:value-of select="$codelists/spatialRepresentationType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
     	    <pass>true</pass>
     	  </xsl:when>
     	</xsl:choose>
@@ -1144,7 +1154,7 @@ xmlns:php="http://php.net/xsl">
 		<xsl:variable name="k" select="gmd:identificationInfo/*/srv:couplingType/*/@codeListValue"/>
 		<xsl:choose>
 		  <xsl:when test="string-length($k)>0">
-		    <value><xsl:value-of select="$codelists/couplingType/value[@name=$k]"/> (<xsl:value-of select="$k"/>)</value>
+		    <value><xsl:value-of select="$codelists/couplingType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
 		    <pass>true</pass>
 		  </xsl:when>
 		</xsl:choose>
