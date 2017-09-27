@@ -17,8 +17,9 @@ class RouterFactory
 	{
         $router = new RouteList;
         $router[] = $validatorRouter = new RouteList('Validator');
-        $validatorRouter[] = new Route('validator/valid', 'Default:valid');
-        $validatorRouter[] = new Route('validator/<presenter>/<action>', 'Default:default');
+        $validatorRouter[] = new Route('validator/form', 'Default:form');
+        $validatorRouter[] = new Route('validator/result', 'Default:result');
+        $validatorRouter[] = new Route('validator/<presenter>/<action>', 'Default:form');
         
         $router[] = $adminRouter = new RouteList('Admin');
         $adminRouter[] = new Route('admin/<presenter>/<action>', 'Homepage:default');

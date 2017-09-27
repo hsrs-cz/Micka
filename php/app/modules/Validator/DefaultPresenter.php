@@ -12,12 +12,12 @@ class DefaultPresenter extends \BasePresenter
 	}
     
     /** @resource Catalog:Guest */
-	public function renderDefault()
+	public function renderForm()
 	{
         
     }
     /** @resource Catalog:Guest */
-	public function actionValid()
+	public function actionResult()
 	{
         require_once $this->context->parameters['appDir'] . '/model/validator/resources/Validator.php';
         $data = $this->getHttpRequest()->getPost('xml');
@@ -70,6 +70,8 @@ class DefaultPresenter extends \BasePresenter
 
         if(!$data){
             echo "Data not entered";
+            echo '<br><br>';
+            echo '<a href="'.$this->link(':Validator:Default:form').'">Validator</a>';
             $this->terminate();
         }
         switch ($this->getHttpRequest()->getPost('format')) {
@@ -88,7 +90,7 @@ class DefaultPresenter extends \BasePresenter
                 var_dump($validator->asArray($short)); 
                 echo '</xmp>';
                 echo '<br><br>';
-                echo '<a href="'.$this->link(':Validator:Default:default').'">Validator</a>';
+                echo '<a href="'.$this->link(':Validator:Default:form').'">Validator</a>';
                 $this->terminate();
                 break;
             default:
