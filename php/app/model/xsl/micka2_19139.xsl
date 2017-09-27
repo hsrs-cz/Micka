@@ -506,7 +506,7 @@
 		
     <xsl:for-each select="identificationInfo/*/serviceType">
         <srv:serviceType>
-          <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+          <gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
         </srv:serviceType>
     </xsl:for-each>
     <xsl:for-each select="identificationInfo/*/serviceTypeVersion">
@@ -683,7 +683,7 @@
 	 	<xsl:for-each select="identificationInfo/*/couplingType">
 		      <srv:couplingType>
 		      		<!-- TODO - codelist najit -->
-				    <srv:SV_CouplingType codeList="{$cl}#SV_CouplingType" codeListValue="{.}"/>
+				    <srv:SV_CouplingType codeList="{$cl}#SV_CouplingType" codeListValue="{./*}"/>
 		      </srv:couplingType>
 		</xsl:for-each>
 		        
@@ -706,7 +706,7 @@
           </srv:containsOperations>
         </xsl:for-each>
         <xsl:if test="not(identificationInfo/SV_ServiceIdentification/containsOperations)">
-        	<srv:containsOperations/>
+        	<srv:containsOperations gco:nilReason="unknown"/>
         </xsl:if>  
 
 		<xsl:for-each select="identificationInfo/*/operatesOn[href!='']">
@@ -1021,51 +1021,53 @@
 						</xsl:element>
 					</gmd:report>		
 				</xsl:for-each>
-				<gmd:lineage>
-					<gmd:LI_Lineage>
-  						<xsl:call-template name="txt">
-  						  <xsl:with-param name="s" select="*/lineage/LI_Lineage"/>                      
-  						  <xsl:with-param name="name" select="'statement'"/>                      
-  						  <xsl:with-param name="lang" select="$mdLang"/>                     
-  			      		</xsl:call-template>
-  			      		<!-- 1. processStep -->
-  			      		<xsl:for-each select="*/lineage/LI_Lineage/processStep">
-  			      		  	<gmd:processStep>	
-  			      		  		<gmd:LI_ProcessStep>
-		  						    <xsl:call-template name="txt">
-    		  						  <xsl:with-param name="s" select="LI_ProcessStep"/>                      
-    		  						  <xsl:with-param name="name" select="'description'"/>                      
-    		  						  <xsl:with-param name="lang" select="$mdLang"/>                     
-		  			      			</xsl:call-template> 
-		  						    <xsl:call-template name="txt">
-    		  						  <xsl:with-param name="s" select="LI_ProcessStep"/>                      
-    		  						  <xsl:with-param name="name" select="'rationale'"/>                      
-    		  						  <xsl:with-param name="lang" select="$mdLang"/>                     
-		  			      			</xsl:call-template> 
-			  			      		<gmd:dateTime>
-			  			      		  <gco:DateTime><xsl:value-of select="*/dateTime"/></gco:DateTime>
-			  			      		</gmd:dateTime>  
-			  			      		<xsl:for-each select="*/processor">
-			  			      		  	<xsl:call-template name="contact">
-	     		                 			<xsl:with-param name="org" select="."/>
-	     		                 			<xsl:with-param name="mdLang" select="$mdLang"/>
-	     	                  			</xsl:call-template>
-			  			      		</xsl:for-each>
-		  			      		
-									<xsl:for-each select="*/source">
-										<xsl:apply-templates/>
-				  			      	</xsl:for-each>	<!-- processStep/source -->			      			
-  			      				</gmd:LI_ProcessStep>
-  			      			</gmd:processStep>
-  			      		</xsl:for-each> <!-- processStep -->
-  			      			
-  			      		<!-- 2. source -->
-		  			    <xsl:for-each select="*/lineage/*/source">
-							<xsl:apply-templates select="."/>
-		  			    </xsl:for-each>	<!-- source -->			      			
+                <xsl:if test="*/lineage">
+                    <gmd:lineage>
+                        <gmd:LI_Lineage>
+                            <xsl:call-template name="txt">
+                              <xsl:with-param name="s" select="*/lineage/LI_Lineage"/>                      
+                              <xsl:with-param name="name" select="'statement'"/>                      
+                              <xsl:with-param name="lang" select="$mdLang"/>                     
+                            </xsl:call-template>
+                            <!-- 1. processStep -->
+                            <xsl:for-each select="*/lineage/LI_Lineage/processStep">
+                                <gmd:processStep>	
+                                    <gmd:LI_ProcessStep>
+                                        <xsl:call-template name="txt">
+                                          <xsl:with-param name="s" select="LI_ProcessStep"/>                      
+                                          <xsl:with-param name="name" select="'description'"/>                      
+                                          <xsl:with-param name="lang" select="$mdLang"/>                     
+                                        </xsl:call-template> 
+                                        <xsl:call-template name="txt">
+                                          <xsl:with-param name="s" select="LI_ProcessStep"/>                      
+                                          <xsl:with-param name="name" select="'rationale'"/>                      
+                                          <xsl:with-param name="lang" select="$mdLang"/>                     
+                                        </xsl:call-template> 
+                                        <gmd:dateTime>
+                                          <gco:DateTime><xsl:value-of select="*/dateTime"/></gco:DateTime>
+                                        </gmd:dateTime>  
+                                        <xsl:for-each select="*/processor">
+                                            <xsl:call-template name="contact">
+                                                <xsl:with-param name="org" select="."/>
+                                                <xsl:with-param name="mdLang" select="$mdLang"/>
+                                            </xsl:call-template>
+                                        </xsl:for-each>
+                                    
+                                        <xsl:for-each select="*/source">
+                                            <xsl:apply-templates/>
+                                        </xsl:for-each>	<!-- processStep/source -->			      			
+                                    </gmd:LI_ProcessStep>
+                                </gmd:processStep>
+                            </xsl:for-each> <!-- processStep -->
+                                
+                            <!-- 2. source -->
+                            <xsl:for-each select="*/lineage/*/source">
+                                <xsl:apply-templates select="."/>
+                            </xsl:for-each>	<!-- source -->			      			
 
-						</gmd:LI_Lineage>
-					</gmd:lineage>
+                            </gmd:LI_Lineage>
+                        </gmd:lineage>
+                    </xsl:if>
 				</gmd:DQ_DataQuality>
 			</gmd:dataQualityInfo>
 			</xsl:for-each>

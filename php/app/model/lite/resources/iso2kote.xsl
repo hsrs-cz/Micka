@@ -1061,7 +1061,7 @@
             <xsl:with-param name="name" select="'couplingType'"/>
             <xsl:with-param name="value" select="gmd:identificationInfo/*/srv:couplingType/*/@codeListValue"/>
             <xsl:with-param name="codes" select="'couplingType'"/>
-            <xsl:with-param name="multi" select="2"/> 
+            <xsl:with-param name="class" select="'short'"/>
             <xsl:with-param name="valid" select="'CZ-9'"/>   
         </xsl:call-template>
     </xsl:if>

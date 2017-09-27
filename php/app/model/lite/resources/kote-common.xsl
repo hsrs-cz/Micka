@@ -616,6 +616,7 @@
 	<xsl:param name="codes"/>
 	<xsl:param name="t"/>
     <xsl:param name="attrib" select="''"/>
+    <xsl:param name="lattrib" select="''"/>
 	
     <xsl:variable name="row" select="$codes/value[@uri=normalize-space($t)]"/>
     <xsl:variable name="n">
@@ -631,6 +632,9 @@
                     <xsl:choose>
                         <xsl:when test="$attrib">
                             <xsl:value-of select="$row/@*[name()=$attrib]"/>
+                        </xsl:when>
+                        <xsl:when test="$lattrib">
+                            <xsl:value-of select="$row/*[name()=$lang]/@*[name()=$lattrib]"/>
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:choose>

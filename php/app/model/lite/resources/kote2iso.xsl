@@ -607,7 +607,14 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                         <gco:CharacterString><xsl:value-of select="name"/></gco:CharacterString>
                                     </srv:operationName>
                                     <srv:DCP>
-                                        <srv:DCPList codeList="*/DCPList" codeListValue="WebServices"/>
+                                        <xsl:choose>
+                                            <xsl:when test="name">
+                                                <srv:DCPList codeList="*/DCPList" codeListValue="WebServices"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <srv:DCPList codeList="" codeListValue=""/>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
                                     </srv:DCP>
                                     <srv:connectPoint>
                                         <gmd:CI_OnlineResource>
@@ -656,20 +663,20 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 						</gmd:distributionFormat>
 					</xsl:for-each>
 					<xsl:for-each select="distributor">
-                <gmd:distributor>
-      				<gmd:MD_Distributor>
-      					<gmd:distributorContact>
-      						<gmd:CI_ResponsibleParty>
-      							<gmd:organisationName>
-      								<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-      							</gmd:organisationName>
-      							<gmd:role>
-      								<CI_RoleCode codeListValue="distributor" codeList="{$cl}#CI_RoleCode"/>
-      							</gmd:role>
-      						</gmd:CI_ResponsibleParty>
-      					</gmd:distributorContact>
-      				</gmd:MD_Distributor>
-      			</gmd:distributor>					 
+                        <gmd:distributor>
+                            <gmd:MD_Distributor>
+                                <gmd:distributorContact>
+                                    <gmd:CI_ResponsibleParty>
+                                        <gmd:organisationName>
+                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                        </gmd:organisationName>
+                                        <gmd:role>
+                                            <CI_RoleCode codeListValue="distributor" codeList="{$cl}#CI_RoleCode"/>
+                                        </gmd:role>
+                                    </gmd:CI_ResponsibleParty>
+                                </gmd:distributorContact>
+                            </gmd:MD_Distributor>
+                        </gmd:distributor>					 
 					</xsl:for-each>
 					<gmd:transferOptions>
 						<gmd:MD_DigitalTransferOptions>
@@ -783,7 +790,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                                     <xsl:with-param name="name" select="'title'"/>
                                                     <xsl:with-param name="codes" select="$codes/specifications"/>
                                                     <xsl:with-param name="t" select="uri"/>
-                                                    <xsl:with-param name="attrib" select="'name'"/>
+                                                    <xsl:with-param name="lattrib" select="'name'"/>
                                                 </xsl:call-template>
 	  											<gmd:date>
 	  												<gmd:CI_Date>
@@ -975,10 +982,10 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  				</xsl:if>
                     
 					<!-- IO-2 pro služby -->
-                    <xsl:if test="availability">
-						<xsl:variable name="topol" select="."/>
-	  					<gmd:report>
-	  						<gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                    <xsl:if test="normalize-space(availability)">
+                        <xsl:variable name="topol" select="."/>
+                        <gmd:report>
+                            <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
                                 <gmd:nameOfMeasure>
                                     <gmx:Anchor xlink:href="{$codes/serviceQuality/value[1]/@uri}"><xsl:value-of select="$codes/serviceQuality/value[1]/*[name()=$lang]"/></gmx:Anchor>
                                 </gmd:nameOfMeasure>
@@ -989,18 +996,19 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                     <gmd:DQ_QuantitativeResult>
                                         <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/> 
                                         <gmd:value>
-                                        	<gco:Record xsi:type="xs:double"><xsl:value-of select="availability"/></gco:Record> 
-                                    	</gmd:value>
-                                	</gmd:DQ_QuantitativeResult>
-                            	</gmd:result>
-	  						</gmd:DQ_ConceptualConsistency>
-	  					</gmd:report>
+                                            <gco:Record xsi:type="xs:double"><xsl:value-of select="availability"/></gco:Record> 
+                                        </gmd:value>
+                                    </gmd:DQ_QuantitativeResult>
+                                </gmd:result>
+                            </gmd:DQ_ConceptualConsistency>
+                        </gmd:report>
                     </xsl:if>
+                    
 					<!-- IO-2 pro služby -->
-                    <xsl:if test="performance">
-						<xsl:variable name="topol" select="."/>
-	  					<gmd:report>
-	  						<gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                    <xsl:if test="normalize-space(performance)">
+                        <xsl:variable name="topol" select="."/>
+                        <gmd:report>
+                            <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
                                 <gmd:nameOfMeasure>
                                     <gmx:Anchor xlink:href="{$codes/serviceQuality/value[2]/@uri}"><xsl:value-of select="$codes/serviceQuality/value[2]/*[name()=$lang]"/></gmx:Anchor>
                                 </gmd:nameOfMeasure>
@@ -1011,18 +1019,19 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                     <gmd:DQ_QuantitativeResult>
                                         <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#second"/> 
                                         <gmd:value>
-                                        	<gco:Record xsi:type="xs:double"><xsl:value-of select="performance"/></gco:Record> 
-                                    	</gmd:value>
-                                	</gmd:DQ_QuantitativeResult>
-                            	</gmd:result>
-	  						</gmd:DQ_ConceptualConsistency>
-	  					</gmd:report>
+                                            <gco:Record xsi:type="xs:double"><xsl:value-of select="performance"/></gco:Record> 
+                                        </gmd:value>
+                                    </gmd:DQ_QuantitativeResult>
+                                </gmd:result>
+                            </gmd:DQ_ConceptualConsistency>
+                        </gmd:report>
                     </xsl:if>
+                    
 					<!-- IO-2 pro služby -->
-                    <xsl:if test="capacity">
-						<xsl:variable name="topol" select="."/>
-	  					<gmd:report>
-	  						<gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                    <xsl:if test="normalize-space(capacity)">
+                        <xsl:variable name="topol" select="."/>
+                        <gmd:report>
+                            <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
                                 <gmd:nameOfMeasure>
                                     <gmx:Anchor xlink:href="{$codes/serviceQuality/value[3]/@uri}"><xsl:value-of select="$codes/serviceQuality/value[3]/*[name()=$lang]"/></gmx:Anchor>
                                 </gmd:nameOfMeasure>
@@ -1033,13 +1042,32 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                     <gmd:DQ_QuantitativeResult>
                                         <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#count"/> 
                                         <gmd:value>
-                                        	<gco:Record xsi:type="xs:double"><xsl:value-of select="capacity"/></gco:Record> 
-                                    	</gmd:value>
-                                	</gmd:DQ_QuantitativeResult>
-                            	</gmd:result>
-	  						</gmd:DQ_ConceptualConsistency>
-	  					</gmd:report>
+                                            <gco:Record xsi:type="xs:double"><xsl:value-of select="capacity"/></gco:Record> 
+                                        </gmd:value>
+                                    </gmd:DQ_QuantitativeResult>
+                                </gmd:result>
+                            </gmd:DQ_ConceptualConsistency>
+                        </gmd:report>
                     </xsl:if>
+                    
+                    <gmd:report>
+                        <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                            <gmd:nameOfMeasure>
+                                <gmx:Anchor xlink:href=""></gmx:Anchor>
+                            </gmd:nameOfMeasure>
+                            <gmd:measureDescription>
+                                <gco:CharacterString></gco:CharacterString>
+                            </gmd:measureDescription>
+                            <gmd:result>
+                                <gmd:DQ_QuantitativeResult>
+                                    <gmd:valueUnit xlink:href=""/> 
+                                    <gmd:value>
+                                        <gco:Record></gco:Record> 
+                                    </gmd:value>
+                                </gmd:DQ_QuantitativeResult>
+                            </gmd:result>
+                        </gmd:DQ_ConceptualConsistency>
+                    </gmd:report>
                     
                     <gmd:lineage>
                         <gmd:LI_Lineage>

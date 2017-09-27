@@ -52,7 +52,7 @@ class Kote{
     		    $val = $this->array2xml($name, $val);
 	    	}
             if($val) $xml .= "<$name>$val</$name>";
-            else $xml .= "<$name> </$name>";
+            else $xml .= "<$name></$name>";
 		}
 		return $xml;
 	}
@@ -113,12 +113,12 @@ class Kote{
                         foreach($val[$i] as $k2=>$v2){
                             if($k2 && (($data['locale'] && in_array($k2, $data['locale']))||$k2='TXT')) {
                                 if($k2=='TXT') $j++;
-                                $out[$k[0]][$j][$k[1]][$k2] = htmlspecialchars(str_replace('\\', '\\\\', $v2));
+                                $out[$k[0]][$j][$k[1]][$k2] = trim(htmlspecialchars(str_replace('\\', '\\\\', $v2)));
                             }
-                            else $out[$k[0]][$i][$k[1]][$k2] = htmlspecialchars(str_replace('\\', '\\\\', $v2));
+                            else $out[$k[0]][$i][$k[1]][$k2] = trim(htmlspecialchars(str_replace('\\', '\\\\', $v2)));
                         }
                     }
-                    else $out[$k[0]][$i][$k[1]] = htmlspecialchars(str_replace('\\', '\\\\', $val[$i]));
+                    else $out[$k[0]][$i][$k[1]] = trim(htmlspecialchars(str_replace('\\', '\\\\', $val[$i])));
                 }
             } 
             else $out[$key]=$val;
