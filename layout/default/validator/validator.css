@@ -1,0 +1,99 @@
+#XowsValidator h2 {margin-bottom: 5px; color: #3F76B5; text-align: center}
+
+.hd {
+	float:left;
+	height:20px;
+	margin-right:10px;
+	text-align:right;
+	width:60px
+}
+
+.pass {
+	background:url(pass.png) no-repeat;
+	padding-left:22px
+}
+
+.fail {
+	background:url(fail.png) no-repeat;
+	padding-left:22px
+}
+
+.warning {
+	background:url(warning.png) no-repeat;
+	padding-left:22px
+}
+
+.notice {
+	background:url(info.png) no-repeat;
+	padding-left:22px
+}
+
+.title {
+	color: black;
+}
+
+.row {
+	xclear:both;
+	padding: 2px;
+	font-family: sans-serif;
+	font-size: 13px;
+}
+
+.msgs {
+  margin-left:90px;
+}
+
+.msg-fail {
+	color: #F02020;
+}
+
+.msg-warning{
+  color: #997C0E;
+}
+
+.msg-notice{
+  color: gray;
+}
+
+.msg-ok{
+  color: #008000;
+  padding: 10px;
+  text-align: center;
+}
+
+
+.valid-legend span {
+	height: 20px;
+	margin-right: 10px;
+	display: inline-block;
+}
+
+.value {
+  color: gray;
+  word-wrap: break-word;
+}
+
+.sub {
+	margin-left:25px
+}
+
+#fi-button-msg {
+	background:#eee;
+	border:2px solid #ccc;
+	float:left;
+	margin:5px;
+	padding:5px 10px
+}
+
+#metadataValidator {
+	height:500px;
+	width:700px
+}
+
+.validate-icon {
+	background:url('pass.png') no-repeat 0 0 !important
+}
+
+table {
+	clear:none !important
+}

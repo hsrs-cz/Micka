@@ -16,6 +16,13 @@ class RouterFactory
 	public static function createRouter()
 	{
         $router = new RouteList;
+        $router[] = $validatorRouter = new RouteList('Validator');
+        $validatorRouter[] = new Route('validator/valid', 'Default:valid');
+        $validatorRouter[] = new Route('validator/<presenter>/<action>', 'Default:default');
+        
+        $router[] = $adminRouter = new RouteList('Admin');
+        $adminRouter[] = new Route('admin/<presenter>/<action>', 'Homepage:default');
+
         $router[] = new Route('index.php', 'Catalog:Search:default', Route::ONE_WAY);
         $router[] = new Route('[<locale=cs cs|en>/]sign/in', ['module' => 'Catalog', 'presenter' => 'Sign', 'action' => 'in']);
         $router[] = new Route('[<locale=cs cs|en>/]sign/out', ['module' => 'Catalog', 'presenter' => 'Sign', 'action' => 'out']);
@@ -41,8 +48,6 @@ class RouterFactory
         $router[] = new Route('record[/<id>]', ['module' => 'Catalog', 'presenter' => 'Record', 'action' => 'old']);
         $router[] = new Route('[<locale=cs cs|en>/]<module=Catalog>/<presenter=Search>/<action=default>', 'Catalog:Search:default');
 
-        $router[] = $adminRouter = new RouteList('Admin');
-        $adminRouter[] = new Route('admin/<presenter>/<action>', 'Homepage:default');
 		return $router;
 	}
 
