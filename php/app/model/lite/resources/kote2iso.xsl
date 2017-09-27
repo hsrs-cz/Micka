@@ -500,7 +500,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							</xsl:if>
                             <!-- geographic identifier -->
                             <xsl:choose>
-                                <xsl:when test="extentId">
+                                <xsl:when test="normalize-space(extentId)!=''">
                                     <xsl:variable name="code" select="extentId"/>
                                     <xsl:variable name="row" select="$codes/extents/value[@uri=$code]"/>
                                     <gmd:geographicElement>
