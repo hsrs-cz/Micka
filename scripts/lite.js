@@ -15,7 +15,6 @@ var lite = {
         $.fn.datepicker.defaults.forceParse = false;
         if(lang=='cze') $.fn.datepicker.defaults.format = "dd.mm.yyyy";
         else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
-        //micka.initMap({});
     },
     
     createDuplicate: function(){

@@ -138,11 +138,11 @@
                         <xsl:with-param name="name" select="'mime'"/>
                         <xsl:with-param name="path" select="'linkage-mime[]'"/>
                         <xsl:with-param name="value" select="php:function('getMime',string(*/gmd:description/*))"/>
-                        <xsl:with-param name="class" select="'inp2'"/>
+                        <xsl:with-param name="class" select="'inp2 short'"/>
                         <xsl:with-param name="type" select="'cselect'"/>
                         <xsl:with-param name="multi" select="0"/>
                         <xsl:with-param name="codes" select="'format'"/>
-                        <xsl:with-param name="valid" select="'1.4'"/>
+                        <xsl:with-param name="valid" select="'CZ-15'"/>
                     </xsl:call-template>
                     <xsl:variable name="ap">
                         <xsl:if test="*/gmd:description/*/@xlink:href">1</xsl:if>
@@ -333,7 +333,7 @@
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'GEMET - INSPIRE')]/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="2"/>
-                <xsl:with-param name="valid" select="'3.1'"/>
+                <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template> 
                 
        		<!-- ostatni KW s thesaurem-->
@@ -680,7 +680,6 @@
                                 <xsl:with-param name="class" select="'mand'"/>
                             </xsl:call-template>	
                         </div>
-                            
                         <xsl:call-template name="drawInput">
                             <xsl:with-param name="name" select="'format'"/>
                             <xsl:with-param name="path" select="'format-name[]'"/>
@@ -700,7 +699,7 @@
                         </xsl:call-template>
                         <xsl:call-template name="drawInput">
                             <xsl:with-param name="name" select="'format_specification'"/>
-                            <xsl:with-param name="path" select="concat('format_',(position()-1),'_specification')"/>
+                            <xsl:with-param name="path" select="'format-specification[]'"/>
                             <xsl:with-param name="value" select="*/gmd:specification"/>
                             <xsl:with-param name="class" select="'inp2'"/>
                             <xsl:with-param name="action" select="'fspec(this)'"/>  

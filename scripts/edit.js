@@ -1743,10 +1743,31 @@ micka.initMap=function(config){
 		micka.selFeatures = micka.select.getFeatures();
 		micka.select.on('select', micka.hoverMap);
 	}
-	
+
+
 	
 	//-- pro LITE -- box
-	if(config != undefined && config.edit == true){
+	if(config && config.edit == true){
+        
+        var createControl = function(opts){	
+            var Control = function(options){
+                var button = document.createElement('button');
+                button.innerHTML = options.icon;
+                button.addEventListener('click', options.handler, false);
+                button.addEventListener('touchstart', options.handler, false);
+                var el = document.createElement('div');
+                el.className = 'ol-unselectable ol-control ' + options.className;
+                el.title = opts.title;
+                el.appendChild(button);
+                ol.control.Control.call(this, {
+                  element: el,
+                  target: options.target
+                });
+            }
+            ol.inherits(Control, ol.control.Control);
+            return new Control(opts);
+        }
+        
 		var dragBoxInteraction = new ol.interaction.DragBox({
 	        condition: ol.events.condition.platformModifierKeyOnly,
 	        code: 'AAA',
@@ -1767,7 +1788,7 @@ micka.initMap=function(config){
 	        if(config.handler){
 	        	config.handler(g);
 	        }
-	        else { // TODO dat do samostatne fce - cfg ?
+	        else { 
 		        document.forms[0].xmin.value=g[0].toFixed(3);
 		        document.forms[0].ymin.value=g[1].toFixed(3);
 		        document.forms[0].xmax.value=g[2].toFixed(3);
@@ -1775,6 +1796,7 @@ micka.initMap=function(config){
 	        }
 	    });
 		micka.overmap.addInteraction(dragBoxInteraction);
+        
 	}
 }
 

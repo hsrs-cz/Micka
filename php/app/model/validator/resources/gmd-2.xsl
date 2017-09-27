@@ -41,7 +41,7 @@ xmlns:php="http://php.net/xsl">
 
 <!-- identifikace -->
 <!-- 1.1 -->
-<test code="1.1N" level="m">
+<test code="1.1" level="m">
 	<description><xsl:value-of select="$labels/test[@code='1.1']"/></description>
 	<xpath>identificationInfo[1]/*/citation/*/title <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/*"/>#
 	</xpath>
@@ -54,7 +54,7 @@ xmlns:php="http://php.net/xsl">
 </test>
 
 <!-- 1.2 -->
-<test code="1.2N" level="m">
+<test code="1.2" level="m">
 	<description><xsl:value-of select="$labels/test[@code='1.2']"/></description>
 	<xpath>identificationInfo[1]/*/abstract</xpath>  
     <xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:abstract))>0">
@@ -64,7 +64,7 @@ xmlns:php="http://php.net/xsl">
 </test>
 
 <!-- 1.3 -->
-<test code="1.3N" level="m">
+<test code="1.3" level="m">
 	<description><xsl:value-of select="$labels/test[@code='1.3']"/></description>
 	<xpath>hierarchyLevel</xpath>
 	<xsl:if test="$hierarchy='dataset' or $hierarchy='service' or $hierarchy='series' or $hierarchy='application'">
@@ -218,7 +218,7 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:if test="not($srv)">
 	<!-- 1.7 -->
-	 <test code="1.7n" level="m">
+	 <test code="1.7" level="m">
 	 	<description><xsl:value-of select="$labels/test[@code='1.7']"/></description>
 	 	<xpath>identificationInfo[1]/*/language</xpath>
 	 	<xsl:variable name="k" select="gmd:identificationInfo/*/gmd:language/*/@codeListValue"/>
@@ -229,7 +229,7 @@ xmlns:php="http://php.net/xsl">
 	</test>
 
   	<!-- 2.1 --> 	
-	 <test code="2.1n">
+	 <test code="2.1">
 	 	<description><xsl:value-of select="$labels/test[@code='2.1']"/></description>
 	 	<xpath>identificationInfo[1]/*/topicCategory</xpath>
 			<xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:topicCategory))>0">
@@ -389,14 +389,14 @@ xmlns:php="http://php.net/xsl">
 
 
 	<xsl:otherwise>
-		<test code="3n">
+		<test code="3">
 		 	<description><xsl:value-of select="$labels/test[@code='3']"/></description>
 		 	<xpath>identificationInfo/*/descriptiveKeywords/MD_Keywords[contains(thesaurusName/*/title,'GEMET - INSPIRE themes')]/keyword</xpath>
 		 	<xsl:if test="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE themes')]/gmd:keyword">
 				<value><xsl:value-of select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE themes')]/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/></value>
 				<pass>true</pass>
 				<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE themes')]/gmd:keyword">
-					<test code="3.1N">
+					<test code="3.1">
 						<description><xsl:value-of select="$labels/test[@code='3.2']"/></description>
                         <xsl:variable name="kw" select="."/>
 						<xsl:choose>
@@ -422,7 +422,7 @@ xmlns:php="http://php.net/xsl">
 	<xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox))>0 ">
 	  	<xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 
-			<test code="4.1n">
+			<test code="4.1">
 				<description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
 				<xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
 			  	<xsl:choose>
@@ -465,7 +465,7 @@ xmlns:php="http://php.net/xsl">
 	<xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox))>0 ">
 	  	<xsl:for-each select="gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 
-				<test code="4.1n">
+				<test code="4.1">
 					<description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
 					<xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox"/>]</xpath>
 				  	<xsl:choose>
@@ -503,7 +503,7 @@ xmlns:php="http://php.net/xsl">
 
   
 <!-- 5.2 -->
-<test code="5an">
+<test code="5a">
 	<description><xsl:value-of select="$labels/test[@code='5a']"/></description>
 	<xpath>identificationInfo/*/citation/*/date</xpath>	
 	<xsl:choose>
@@ -556,7 +556,7 @@ xmlns:php="http://php.net/xsl">
 <xsl:if test="not($srv)">
 
 	<!-- 5.1 -->
-	<test code="5bn" level="n">	
+	<test code="5b" level="n">	
 		<description><xsl:value-of select="$labels/test[@code='5b']"/></description>
 		<xpath>identificationInfo/*/extent/*/temporalElement</xpath>	
 		<xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:extent//gmd:temporalElement))>0">
@@ -567,7 +567,7 @@ xmlns:php="http://php.net/xsl">
 
 
 	<!-- 6.1 -->
-	<test code="6.1n">
+	<test code="6.1">
 		<description><xsl:value-of select="$labels/test[@code='6.1']"/></description>
 		<xpath>dataQualityInfo/*/lineage/*/statement</xpath>	
 		<xsl:if test="string-length(normalize-space(gmd:dataQualityInfo//gmd:lineage//gmd:statement))>0">
@@ -577,7 +577,7 @@ xmlns:php="http://php.net/xsl">
 	</test>	
 
 	<!-- 6.2 -->
-	<test code="6.2n" level="c">
+	<test code="6.2" level="c">
 		<description><xsl:value-of select="$labels/test[@code='6.2']"/></description>
 		<xpath>identificationInfo/*/gmd:spatialResolution</xpath>	
 		<xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:spatialResolution))>0">
@@ -613,7 +613,7 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:if test="not($hierarchy) or $hierarchy!='application'">
 	<!-- 7.1 -->
-	<test code="7.1n" level="m">
+	<test code="7.1" level="m">
 		<description><xsl:value-of select="$labels/test[@code='7.1']"/></description>
 		<xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/</xpath>
         <xsl:variable name="specRec" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href=$spec]"/>
@@ -636,7 +636,7 @@ xmlns:php="http://php.net/xsl">
         		<value><xsl:value-of select="$specRec//gmd:title/*/@xlink:href"/></value>
     			<pass>true</pass>
     			<!-- 7.2 -->
-			   	<test code="7.2n">
+			   	<test code="7.2">
 			   		<description><xsl:value-of select="$labels/test[@code='7.2']"/></description>
 			   		<xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/*/pass</xpath>
 			       	<xsl:choose>
@@ -707,7 +707,7 @@ xmlns:php="http://php.net/xsl">
 	</test>	-->
 
 	<!-- 8.1 -->
-	<test code="8.1n">
+	<test code="8.1">
 		<description><xsl:value-of select="$labels/test[@code='8.1']"/></description>
 		<xpath>identificationInfo/*/resourceConstraints/*/accessConstraints</xpath>
 		<xsl:variable name="k" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useConstraints/*/@codeListValue"/>
@@ -721,7 +721,7 @@ xmlns:php="http://php.net/xsl">
 	</test>
 	
 	<!-- 8.2 -->
-	<test code="8.2n">
+	<test code="8.2">
 		<description><xsl:value-of select="$labels/test[@code='8.2']"/></description>
 		<xpath>identificationInfo/*/resourceConstraints/*/accessConstraints</xpath>
 		<xsl:variable name="k" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
@@ -738,7 +738,7 @@ xmlns:php="http://php.net/xsl">
 <xsl:choose>
 	<xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:pointOfContact))>0">
 		<xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact">
-			<test code="9.1n">
+			<test code="9.1">
 				<description><xsl:value-of select="$labels/test[@code='9.1']"/></description>
 				<xpath>identificationInfo/*/pointOfContact</xpath>
 		  		<pass>true</pass>  		
@@ -965,7 +965,7 @@ xmlns:php="http://php.net/xsl">
 	</test>
 
     <!--  xsl:variable name="rep" select="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]"/-->
-    <test code="IO-1n" level="c">
+    <test code="IO-1" level="c">
     	<description><xsl:value-of select="$labels/test[@code='IO-1']"/></description>
     	<xpath>referenceSystemInfo/*/referenceSystemIdentifier/*/code</xpath>
     	<xsl:if test="string-length(normalize-space(gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code))>0">
