@@ -678,11 +678,20 @@
 					</xsl:for-each-->
 					<xsl:for-each select="*/gmd:otherConstraints">
 						<div>
-							<xsl:call-template name="multi">
-								<xsl:with-param name="el" select="."/>
-								<xsl:with-param name="lang" select="$lang"/>
-								<xsl:with-param name="mdlang" select="$mdlang"/>
-							</xsl:call-template>
+                            <xsl:choose>
+                                <xsl:when test="contains(*/@xlink:href,'://opendata.gov.cz')">
+                                    <a href="{*/@xlink:href}" target="_blank">
+                                        <img src="https://opendata.gov.cz/_media/wiki:logo.png" style="height:24px"/>
+                                    </a>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="."/>
+                                    <xsl:with-param name="lang" select="$lang"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                </xsl:call-template>
+                                </xsl:otherwise>
+                            </xsl:choose>
 						</div>
 					</xsl:for-each>
 				</xsl:for-each>
