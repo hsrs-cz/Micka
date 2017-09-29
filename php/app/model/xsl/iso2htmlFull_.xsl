@@ -19,7 +19,7 @@
 	<xsl:variable name="apos">\'</xsl:variable>
 	<xsl:variable name="msg" select="document(concat('client/labels-', $lang, '.xml'))/messages/msg"/>
 	<xsl:variable name="capabilities" select="document(concat('../../config/cswConfig-', $lang, '.xml'))"/>
-	<xsl:variable name="cl" select="document(concat('codelists_', $lang, '.xml'))/map"/>
+	<xsl:variable name="cl" select="document('codelists.xml')/map"/>
 	<xsl:variable name="mdlang" select="*/gmd:language/gmd:LanguageCode/@codeListValue"/>
 	<xsl:include href="client/common_cli.xsl" />
 
@@ -115,7 +115,7 @@
 		</div>			
 	</ol>
 
-	<h1 title="{$cl/updateScope/value[@name=$hlevel]}" property="http://purl.org/dc/terms/title">
+	<h1 title="{$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]}" property="http://purl.org/dc/terms/title">
 		<xsl:call-template name="showres">
 			<xsl:with-param name="r" select="$hlevel"/>
 		</xsl:call-template>
@@ -165,7 +165,7 @@
 					</xsl:choose>
 				</xsl:variable>
 				<div class="c" resource="http://www.w3.org/ns/dcat#{$res}">
-					<xsl:value-of select="$cl/updateScope/value[@name=$hlevel]"/>
+					<xsl:value-of select="$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]"/>
 					<xsl:if test="gmd:hierarchyLevelName != ''">
 					- <xsl:value-of select="gmd:hierarchyLevelName"/>
 					</xsl:if>
@@ -255,6 +255,7 @@
 			<div class="micka-row">
 				<label><xsl:value-of select="$msg[@eng='Identifier']"/></label>
 				<div class="c" property="http://purl.org/dc/terms/identifier">
+                    <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/>
 					<xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
 				</div>
 			</div>
@@ -266,7 +267,7 @@
 				<div class="c">
 					<xsl:for-each select="gmd:identificationInfo/*/gmd:language">
 						<xsl:variable name="kod" select="*/@codeListValue"/>
-						<xsl:value-of select="$cl/language/value[@code=$kod]"/>
+						<xsl:value-of select="$cl/language/value[@code=$kod]/*[name()=$lang]"/>
 						<xsl:if test="position()!=last()">, </xsl:if>
 					</xsl:for-each>
 				</div>
@@ -277,7 +278,7 @@
 				<div class="c">
 					<xsl:for-each select="gmd:identificationInfo/*/gmd:topicCategory">
 						<xsl:variable name="k" select="*"/>
-						<xsl:value-of select="$cl/topicCategory/value[@name=$k]"/>
+						<xsl:value-of select="$cl/topicCategory/value[@name=$k]/*[name()=$lang]"/>
 						<xsl:if test="position()!=last()"><br/></xsl:if>
 					</xsl:for-each>
 				</div>
@@ -313,7 +314,7 @@
 								<xsl:for-each select="*/gmd:keyword">
 							     	<div style="margin-left:20px;">
 							     		<xsl:variable name="k" select="*"/>
-							     		<xsl:value-of select="$cl/cenia/value[@name=$k]"/>
+							     		<xsl:value-of select="$cl/cenia/value[@name=$k]/*[name()=$lang]"/>
 							     	</div>
 						  		</xsl:for-each>
 				  			</xsl:when>
@@ -325,7 +326,7 @@
 							     	<div style="margin-left:20px;">
 							     		<xsl:variable name="k" select="*"/>
 							     		<a property="http://www.w3.org/ns/dcat#theme" resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" target="_blank">
-							     		<xsl:value-of select="$cl/serviceKeyword/value[@name=$k]"/></a>
+							     		<xsl:value-of select="$cl/serviceKeyword/value[@name=$k]/*[name()=$lang]"/></a>
 							     	</div>
 						  		</xsl:for-each>
 				  			</xsl:when>
@@ -464,7 +465,7 @@
 				<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date">
 					<xsl:variable name="k" select="*/gmd:dateType/*/@codeListValue"/>
 					<span property="http://purl.org/dc/terms/{$cl/dateType/value[@name=$k]/@dc}" content="{*/gmd:date}" datatype="http://www.w3.org/2001/XMLSchema#date">
-						<xsl:value-of select="$cl/dateType/value[@name=$k]"/>: <xsl:value-of select="*/gmd:date"/>
+						<xsl:value-of select="$cl/dateType/value[@name=$k]/*[name()=$lang]"/>: <xsl:value-of select="*/gmd:date"/>
 					</span>
 					<xsl:if test="not(position()=last())">, </xsl:if>
 				</xsl:for-each>
@@ -525,7 +526,7 @@
 				<div class="c">
 					<xsl:for-each select="//gmd:spatialRepresentationType">
 						<xsl:variable name="sr" select="gmd:MD_SpatialRepresentationTypeCode"/>
-						<xsl:value-of select="$cl/spatialRepresentationType/value[@name=$sr]"/>
+						<xsl:value-of select="$cl/spatialRepresentationType/value[@name=$sr]/*[name()=$lang]"/>
 						<xsl:if test="not(position()=last())">, </xsl:if>
 					</xsl:for-each>
 				</div>
@@ -637,43 +638,44 @@
 		<div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Use Limitation']"/></label>
 			<div class="c">
-				<xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints">
-					<xsl:for-each select="*/gmd:useLimitation">
-						<xsl:choose>
-							<xsl:when test="contains(gmx:Anchor/@xlink:href,'://creativecommons.org')">
-								<xsl:variable name="licence" select="substring-after(gmx:Anchor/@xlink:href,'creativecommons.org/licenses/')"/>							
-								<a href="{gmx:Anchor/@xlink:href}" target="_blank">
-									<img src="http://licensebuttons.net/l/{$licence}/88x31.png"/><br/>
-									<xsl:call-template name="multi">
-										<xsl:with-param name="el" select="."/>
-										<xsl:with-param name="lang" select="$lang"/>
-										<xsl:with-param name="mdlang" select="$mdlang"/>
-									</xsl:call-template>
-								</a>
-							</xsl:when>
-							<xsl:otherwise>
-							<div>
-								<xsl:call-template name="multi">
-									<xsl:with-param name="el" select="."/>
-									<xsl:with-param name="lang" select="$lang"/>
-									<xsl:with-param name="mdlang" select="$mdlang"/>
-								</xsl:call-template>
-							</div>
-						</xsl:otherwise>
-						</xsl:choose>
-					</xsl:for-each>
-				</xsl:for-each>
+                <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue]">
+                    <xsl:for-each select="*/gmd:otherConstraints">
+                        <xsl:choose>
+                            <xsl:when test="contains(*/@xlink:href,'://creativecommons.org')">
+                                <xsl:variable name="licence" select="substring-after(*/@xlink:href,'creativecommons.org/licenses/')"/>							
+                                <a href="{gmx:Anchor/@xlink:href}" target="_blank">
+                                    <img src="http://licensebuttons.net/l/{$licence}/88x31.png"/><br/>
+                                    <xsl:call-template name="multi">
+                                        <xsl:with-param name="el" select="."/>
+                                        <xsl:with-param name="lang" select="$lang"/>
+                                        <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    </xsl:call-template>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <div>
+                                    <xsl:call-template name="multi">
+                                        <xsl:with-param name="el" select="."/>
+                                        <xsl:with-param name="lang" select="$lang"/>
+                                        <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    </xsl:call-template>
+                                </div>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:for-each>
+
+                </xsl:for-each>
 			</div>
 		</div>
 
 		<div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Access Constraints']"/></label>
 			<div class="c">
-				<xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints">
-					<xsl:for-each select="*/gmd:accessConstraints">
+				<xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue]">
+					<!--xsl:for-each select="*/gmd:accessConstraints">
 						<xsl:variable name="kod" select="*/@codeListValue"/>
-						<div><xsl:value-of select="$cl/accessConstraints/value[@name=$kod]"/></div>
-					</xsl:for-each>
+						<div><xsl:value-of select="$cl/accessConstraints/value[@name=$kod]/*[name()=$lang]"/></div>
+					</xsl:for-each-->
 					<xsl:for-each select="*/gmd:otherConstraints">
 						<div>
 							<xsl:call-template name="multi">
