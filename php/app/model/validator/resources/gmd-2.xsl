@@ -74,121 +74,102 @@ xmlns:php="http://php.net/xsl">
 </test>
 
 <!-- 1.4 -->
-<test code="1.4" level="c">
-	<description><xsl:value-of select="$labels/test[@code='1.4']"/></description>
-	<xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage</xpath>
-    <xsl:if test="string-length(normalize-space(gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage))>0">
-	  <value></value>
-      <pass>true</pass>      
+<xsl:choose>
+    <xsl:when test="string-length(normalize-space(gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage))>0">
+        <!-- projde vsechny linky -->
+        <xsl:variable name="links"> 
+            <xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
+                <link>
+                    <test><xsl:value-of select="php:function('testConnection', string(*/gmd:linkage/gmd:URL))"/></test>
+                    <URL><xsl:value-of select="normalize-space(*/gmd:linkage/gmd:URL)"/></URL>
+                    <protocol><xsl:value-of select="normalize-space(*/gmd:protocol/*/@xlink:href)"/></protocol>
+                </link>
+            </xsl:for-each>
+        </xsl:variable>
 
-      	<!-- projde vsechny linky -->
-      	<xsl:variable name="links"> 
-	      	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
-	      		<link>
-	      			<test><xsl:value-of select="php:function('testConnection', string(*/gmd:linkage/gmd:URL))"/></test>
-	      			<URL><xsl:value-of select="normalize-space(*/gmd:linkage/gmd:URL)"/></URL>
-	      		</link>
-	      	</xsl:for-each>
-      	</xsl:variable>
-      
-
-      <xsl:for-each select="exsl:node-set($links)/link">
-    	  <test code="a" level="m">
-    	 	<description><xsl:value-of select="$labels/test[@code='1.4.a']"/></description>
-    	 	<xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage/URL ON-LINE</xpath>
-            <xsl:choose>
-        		<xsl:when test="string-length(URL)>0">
-        		   <value><xsl:value-of select="URL"/> (<xsl:value-of select="substring-before(test,'|')"/>, <xsl:value-of select="substring-after(test,'|')"/> s)</value>
-        		   <pass>true</pass>
-        		</xsl:when>
-                <xsl:otherwise>
-                    <err><xsl:value-of select="gmd:URL"/> - <xsl:value-of select="$labels/msg/notValid"/></err>
-                </xsl:otherwise>
-            </xsl:choose>
-    	  </test>      
-      </xsl:for-each>
-
-      <xsl:if test="$srv and $hierarchy='service'">
-      	  
-    	  <test code="b" level="m">
-    	 	<description><xsl:value-of select="$labels/test[@code='1.4.b']"/></description>
-    	 	<xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage</xpath>
-    		<xsl:if test="exsl:node-set($links)/link[not(substring-before(test,'|')='?')]">
-    		  <value><xsl:for-each select="exsl:node-set($links)/link[not(substring-before(test,'|')='?')]">
-    		   	&lt;li&gt;<xsl:value-of select="URL"/>&lt;/li&gt;
-    		  </xsl:for-each></value>
-    		  <pass>true</pass>
-    		</xsl:if>
-    	  </test>
-
-      </xsl:if>  
-    </xsl:if>  
-</test>
+        <xsl:for-each select="exsl:node-set($links)/link">
+            <test code="1.4" level="c">
+                <description><xsl:value-of select="$labels/test[@code='1.4']"/></description>
+                <xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage</xpath>
+                <xsl:if test="string-length(URL)>0">
+                    <value><xsl:value-of select="URL"/></value>
+                    <pass>true</pass>
+                    <test code="a" level="m">
+                        <description><xsl:value-of select="$labels/test[@code='1.4.a']"/></description>
+                        <xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage/URL ON-LINE</xpath>
+                        <xsl:choose>
+                            <xsl:when test="substring-after(test,'|')">
+                               <value><xsl:value-of select="substring-before(test,'|')"/>, <xsl:value-of select="substring-after(test,'|')"/> s</value>
+                               <pass>true</pass>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <err><xsl:value-of select="URL"/></err>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </test>
+                    <test code="b" level="m">
+                        <description><xsl:value-of select="$labels/test[@code='1.4.b']"/></description>
+                        <xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage/*/protocol</xpath>
+                        <xsl:choose>
+                            <xsl:when test="contains(protocol, 'http://services.cuzk.cz/codelist/OnlineResourceProtocolValue')">
+                               <value><xsl:value-of select="protocol"/></value>
+                               <pass>true</pass>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <err><xsl:value-of select="protocol"/> - <xsl:value-of select="$labels/msg/notValid"/></err>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </test>      
+                </xsl:if>
+                <!--xsl:if test="$srv and $hierarchy='service'">
+                    <test code="c" level="m">
+                        <description><xsl:value-of select="$labels/test[@code='1.4.c']"/></description>
+                        <xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage</xpath>
+                        <xsl:if test="exsl:node-set($links)/link[not(substring-before(test,'|')='?')]">
+                            <value><xsl:for-each select="exsl:node-set($links)/link[not(substring-before(test,'|')='?')]">
+                            &lt;li&gt;<xsl:value-of select="URL"/>&lt;/li&gt;
+                            </xsl:for-each></value>
+                            <pass>true</pass>
+                        </xsl:if>
+                    </test>
+                </xsl:if-->  
+            </test>
+        </xsl:for-each>
+    </xsl:when>  
+    <xsl:otherwise>
+        <test code="1.4" level="c">
+            <description><xsl:value-of select="$labels/test[@code='1.4']"/></description>
+            <xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage</xpath>
+        </test>
+    </xsl:otherwise>
+</xsl:choose>
 
 <!-- 1.5 -->
-<xsl:if test="not($srv)">	
-	 <test code="1.5">
-	 	<description><xsl:value-of select="$labels/test[@code='1.5']"/></description>
-	 	<xpath>identificationInfo[1]/*/citation/*/identifier</xpath>
-		<xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code))>0">
-		   <value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></value>
-		   <pass>true</pass>
-    	   
-    	   <test code="a" level="c">
-    	 	 <description><xsl:value-of select="$labels/test[@code='1.5.a']"/></description>
-      	 	 <xpath><xsl:value-of select="$labels/test[@code='1.5.a-xpath']"/></xpath>
-             <xsl:choose>
-				<xsl:when test="count(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[substring(*/gmd:code/*,1,3)='CZ-'])>0">
-					<value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[substring(*/gmd:code/*,1,3)='CZ-']/*/gmd:code"/></value>
-					<pass>true</pass>
-				</xsl:when>
-				<xsl:otherwise>
-					<err><xsl:value-of select="$labels/msg/notValid"/></err>
-				</xsl:otherwise>	
-			 </xsl:choose>
-    	  </test>
-    	  
-    	  <!-- test code="b" level="m">
-    	 	 <description><xsl:value-of select="$labels/test[@code='1.5.b']"/></description>
-      	 	 <xpath>identificationInfo[1]/*/citation/*/identifier/*/codeSpace</xpath>
-             <xsl:choose>
-				<xsl:when test="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace/*!=''">
-					<value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace"/></value>
-					<pass>true</pass>
-				</xsl:when>
-				<xsl:otherwise>
-					<err><xsl:value-of select="$labels/msg/notValid"/></err>
-				</xsl:otherwise>	
-			 </xsl:choose>
-    	  </test-->
-    	  
-		</xsl:if>
-	</test>
-</xsl:if>	
-
-<xsl:if test="$srv">
-	 <test code="1.5" level="n">
-	 	<description><xsl:value-of select="$labels/test[@code='1.5']"/></description>
-	 	<xpath>identificationInfo[1]/*/citation/*/identifier</xpath>
-		<xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code))>0">
-		   <value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></value>
-		   <pass>true</pass>
-    	   <test code="a" level="n">
-    	 	 <description><xsl:value-of select="$labels/test[@code='1.5.a']"/></description>
-      	 	 <xpath><xsl:value-of select="$labels/test[@code='1.5.a-xpath']"/></xpath>
-             <xsl:choose>
-				<xsl:when test="count(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[substring(*/gmd:code/*,1,3)='CZ-'])>0">
-					<value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[substring(*/gmd:code/*,1,3)='CZ-']/*/gmd:code"/></value>
-					<pass>true</pass>
-				</xsl:when>
-				<xsl:otherwise>
-					<err><xsl:value-of select="$labels/msg/notValid"/></err>
-				</xsl:otherwise>	
-			 </xsl:choose>
-    	  </test>
-		</xsl:if>
-	</test>
-</xsl:if>	
+<test code="1.5">
+    <xsl:if test="$srv">
+        <xsl:attribute name="level">n</xsl:attribute>
+    </xsl:if>
+    <description><xsl:value-of select="$labels/test[@code='1.5']"/></description>
+    <xpath>identificationInfo[1]/*/citation/*/identifier</xpath>
+    <xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code))>0 or gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[*/gmd:code/*/@xlink:href]/*/gmd:code/*/@xlink:href">
+        <value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[*/gmd:code/*/@xlink:href]/*/gmd:code/*/@xlink:href"/><xsl:text> </xsl:text><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></value>
+        <pass>true</pass>
+       
+        <test code="a" level="c">
+            <description><xsl:value-of select="$labels/test[@code='1.5.a']"/></description>
+            <xpath>identificationInfo/*/citation/*/identifier/*/code/*/@xlink:href</xpath>
+            <xsl:choose>
+                <xsl:when test="substring(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[*/gmd:code/*/@xlink:href]/*/gmd:code/*/@xlink:href, 1,4)='http'">
+                    <value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[*/gmd:code/*/@xlink:href]/*/gmd:code/*/@xlink:href"/></value>
+                    <pass>true</pass>
+                </xsl:when>
+                <xsl:otherwise>
+                    <err><xsl:value-of select="$labels/msg/notValid"/> URI</err>
+                </xsl:otherwise>
+            </xsl:choose>
+        </test>
+    </xsl:if>
+</test>
   
 <!-- 1.6 -->   
  <xsl:if test="$srv and string-length($serviceType)>0">
@@ -633,18 +614,18 @@ xmlns:php="http://php.net/xsl">
        	    </xsl:when>
 			<!-- INSPIRE zaznamy -->
         	<xsl:when test="$specRec//gmd:title/*/@xlink:href">
-        		<value><xsl:value-of select="$specRec//gmd:title/*/@xlink:href"/></value>
+        		<value><xsl:value-of select="$specRec/*/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href"/> (<xsl:value-of select="$specRec//gmd:title/*"/>)</value>
     			<pass>true</pass>
     			<!-- 7.2 -->
 			   	<test code="7.2">
 			   		<description><xsl:value-of select="$labels/test[@code='7.2']"/></description>
 			   		<xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/*/pass</xpath>
 			       	<xsl:choose>
-			          	<xsl:when test="$specRec//gmd:pass">
+			          	<xsl:when test="$specRec//gmd:pass/gco:Boolean">
 			      			<value><xsl:value-of select="$specRec//gmd:pass"/></value>
 			      		  	<pass>true</pass>
 			      	  	</xsl:when>
-			           	<xsl:when test="string-length($specRec//gmd:pass/@gco:nilReason)>0">
+			           	<xsl:when test="$specRec//gmd:pass/@gco:nilReason">
 			      			<value>not evaluated</value>
 			      		  	<pass>true</pass>
 			      	  	</xsl:when>

@@ -1562,14 +1562,29 @@ xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/g
 					</xsl:for-each>
   					<xsl:for-each select="$cit/identifier">
               			<gmd:identifier>
-    						<gmd:RS_Identifier>
-    							<gmd:code>
-    								<gco:CharacterString><xsl:value-of select="*/code"/></gco:CharacterString>
-    							</gmd:code>
-    							<gmd:codeSpace>
-    								<gco:CharacterString><xsl:value-of select="*/codeSpace"/></gco:CharacterString>
-    							</gmd:codeSpace>
-    						</gmd:RS_Identifier>
+                            <xsl:choose>
+                                <xsl:when test="*/codeSpace">
+                                    <gmd:RS_Identifier>
+                                        <xsl:call-template name="txt">
+                                          <xsl:with-param name="s" select="*"/>
+                                          <xsl:with-param name="name" select="'code'"/>
+                                          <xsl:with-param name="lang" select="$mdLang"/>
+                                        </xsl:call-template>
+                                        <gmd:codeSpace>
+                                            <gco:CharacterString><xsl:value-of select="*/codeSpace"/></gco:CharacterString>
+                                        </gmd:codeSpace>
+                                    </gmd:RS_Identifier>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <gmd:MD_Identifier>
+                                        <xsl:call-template name="txt">
+                                          <xsl:with-param name="s" select="*"/>
+                                          <xsl:with-param name="name" select="'code'"/>
+                                          <xsl:with-param name="lang" select="$mdLang"/>
+                                        </xsl:call-template>
+                                    </gmd:MD_Identifier>                                
+                                </xsl:otherwise>
+                            </xsl:choose>
     					</gmd:identifier>
   					</xsl:for-each>
   					<xsl:for-each select="$cit/citedResponsibleParty">

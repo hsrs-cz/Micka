@@ -170,7 +170,7 @@
         
         <div class="col-xs-12 col-md-8">
             <select name="identifier[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
-                <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code">
+                <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
                     <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
                 </xsl:for-each>
             </select>

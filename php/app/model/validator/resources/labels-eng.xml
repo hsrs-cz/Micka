@@ -24,7 +24,8 @@
 	<test code="1.3">Resource type</test>
 	<test code="1.4">Resource locator</test>
 	<test code="1.4.a">ON-LINE</test>
-	<test code="1.4.b">INSPIRE supported web service</test>
+    <test code="1.4.b">Protocol</test>
+	<test code="1.4.c">INSPIRE supported web service</test>
 	<test code="1.5">Unique resource identifier</test>
 	<test code="1.5.a">Identifier form</test>
 	<test code="1.5.a-xpath">CZ-[ID number organisation]-[ID in organisation]</test>
