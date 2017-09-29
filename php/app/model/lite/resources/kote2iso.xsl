@@ -39,7 +39,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	
 <gmd:MD_Metadata>
 	<gmd:fileIdentifier>
-		<gmx:Anchor xlink:href="{fileIdentifier}"/>
+		<gco:CharacterString><xsl:value-of select="fileIdentifier"/></gco:CharacterString>
 	</gmd:fileIdentifier>
 	<gmd:language>
 		<gmd:LanguageCode codeList="{$cl}#CI_LanguageCode" codeListValue="{mdlang}"><xsl:value-of select="mdlang"/></gmd:LanguageCode>
@@ -184,7 +184,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 								<gmd:identifier>
 									<gmd:MD_Identifier>
 										<gmd:code>
-											<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+											<gmx:Anchor xlink:href="{.}"/>
 										</gmd:code>
 									</gmd:MD_Identifier>
 								</gmd:identifier>
