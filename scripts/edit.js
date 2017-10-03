@@ -876,6 +876,9 @@ function cover1(){
 		else if(inputs[i].id=='1020eng') {
 			inputs[i].value=$('#cover-desc-en').val();
 		}	
+		else if(inputs[i].id=='1020uri') {
+			inputs[i].value='https://publications.europa.eu/resource/authority/country/CZE';
+		}	
 		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_0_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#percent';	
 		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_0_2101')>0) inputs[i].value= $('#cover-perc').val();	
 		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_1_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#km2';	
