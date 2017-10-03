@@ -59,11 +59,13 @@
 	<test code="10.3">Metadata language</test>
 	<test code="9.1.d">Responsible party role</test>
 	<test code="10.1.d">Metadata contact role</test>
+	<test code="11">File Identifier</test>
+	<test code="12">Data quality - scope</test>
 			
 	<test code="IO-1">Reference System Information</test>
 	<test code="IO-1a">Code as URI</test>
 	<test code="IO-1b">INSPIRE required codes</test>
-		<test code="IO-3">Encoding (Distribution Format)</test>
+	<test code="IO-3">Encoding (Distribution Format)</test>
 	<test code="IO-3a">Name</test>
 	<test code="IO-3b">Version</test>
 	<test code="IO-3c">Specification</test>
@@ -80,7 +82,24 @@
 	<test code="CZ-91">Purpose</test>
 	<test code="CZ-10">Area coverage</test>
 	<test code="CZ-12">Czech national profile version</test>
+	<test code="CZ-13">Identification of obligatory INSPIRE providers</test>
 	<test code="CZ-15">Downloaded data format</test>
+    
+	<test code="IOD-1">Reference System Information</test>
+	<test code="IOD-1a">Code as URI</test>
+	<test code="IOD-1b">INSPIRE required codes</test>
+	<test code="IOD-3">Encoding (Distribution Format)</test>
+	<test code="IOD-3a">Name</test>
+	<test code="IOD-3b">Version</test>
+	<test code="IOD-3c">Specification</test>
+	<test code="IOD-4">Topological consistency</test>
+	<test code="IOD-4a">Result (value/units)</test>
+	<test code="IOD-5">Resource Character set</test>
+	<test code="IOD-6">Spatial Representation Type</test>
+
+    <test code="IOS-1">Criteria</test>
+    <test code="IOS-2">Quality of service</test>
+    <test code="IOS-3">Invocation metadata</test>
     
 	<test code="Name">Name</test>
 	<test code="Keyword">Keyword</test>

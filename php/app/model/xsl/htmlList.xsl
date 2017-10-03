@@ -21,16 +21,16 @@
 			<!-- ikonky vpravo -->
 			<div class="icons">	  		
 				<xsl:if test="*/gmd:identificationInfo/*/srv:serviceType/*='download'">
-					<a href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={*/gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" title="Atom"><i class="fa fa-feed fa-fw"></i></a>
+					<a href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={*/gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
 				</xsl:if>
 		  		<xsl:variable name="wmsURL" select="*/gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			  	<xsl:if test="string-length($wmsURL)>0">
 			  		<xsl:choose>
 			  			<xsl:when test="contains($wmsURL,'?')">
-			    			<a class='map' href="{$viewerURL}{substring-before($wmsURL,'?')}" target="wmsviewer" title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>		  				
+			    			<a class='map' href="{$viewerURL}{substring-before($wmsURL,'?')}" data-tooltip="tooltip" data-original-target="wmsviewer" title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>		  				
 			  			</xsl:when>
 			  			<xsl:otherwise>
-			  				<a class='map' href="{$viewerURL}{$wmsURL}" target="wmsviewer" title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
+			  				<a class='map' href="{$viewerURL}{$wmsURL}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
 			  			</xsl:otherwise>
 			  		</xsl:choose>
 			  	</xsl:if>
@@ -38,21 +38,21 @@
 				<a href="?ak=detailall&amp;language={$lang}&amp;uuid={@uuid}" class="full" title="{$msg[@eng='fullMetadata']}"></a><xsl:text> </xsl:text> -->
 				<xsl:if test="@edit=1">
 					<xsl:if test="@md_standard=0 or @md_standard=10">
-						<a href="{$thisPath}/{$LANG2}record/valid/{@uuid}" class="valid{@valid}" title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
+						<a href="{$thisPath}/{$LANG2}record/valid/{@uuid}" class="valid{@valid}" data-tooltip="tooltip" data-original-title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
 						<xsl:when test="@valid=2"><i class="fa fa-check-circle fa-fw"></i></xsl:when>
 						<xsl:when test="@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
 						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
 						</xsl:choose></a>
 					</xsl:if>					
-					<a href="{$thisPath}/{$LANG2}record/edit/{@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-					<a href="{$thisPath}/{$LANG2}record/clone/{@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-					<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$thisPath}/record/delete/{@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+					<a href="{$thisPath}/{$LANG2}record/edit/{@uuid}" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+					<a href="{$thisPath}/{$LANG2}record/clone/{@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+					<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$thisPath}/record/delete/{@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 				</xsl:if>
 				<xsl:if test="@md_standard=0 or @md_standard=10">
-					<a href="{$thisPath}/csw/?service=CSW&amp;request=GetRecordById&amp;id={@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$thisPath}/csw/?service=CSW&amp;request=GetRecordById&amp;id={@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
 				
-                <a href="{$thisPath}/record/xml/{@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
+                <a href="{$thisPath}/record/xml/{@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 		
 				<xsl:if test="$CB">
 					<xsl:text> </xsl:text>

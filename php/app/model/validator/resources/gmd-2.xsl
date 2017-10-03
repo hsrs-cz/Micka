@@ -37,7 +37,7 @@ xmlns:php="http://php.net/xsl">
 <xsl:variable name="INSPIRE" select="$codelists/specifications/value[@code='INSPIRE']/@uri"/>	
 <xsl:variable name="neInspire" select="gmd:dataQualityInfo/*/gmd:report[normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString)=normalize-space($INSPIRE)]" />
  
-<validationResult title="{$labels/msg/titleCR}" version="3.0.11, CENIA 2016">
+<validationResult title="{$labels/msg/titleCR}" version="4.0.0 beta, CENIA 2017">
 
 <!-- identifikace -->
 <!-- 1.1 -->
@@ -238,7 +238,7 @@ xmlns:php="http://php.net/xsl">
 				<xsl:when test="$st='view' or $st='discovery' or $st='download' or $st='transformation' or $st='other'">
 				    <value><xsl:value-of select="$st"/></value>
 				    <pass>true</pass>
-				    <xsl:for-each select="gmd:identificationInfo/*/srv:serviceTypeVersion">
+				    <!--xsl:for-each select="gmd:identificationInfo/*/srv:serviceTypeVersion">
 					    <test code="CZ-8" level="c">
 						 	<description><xsl:value-of select="$labels/test[@code='2.2.a']"/></description>
 						 	<xpath>identificationInfo/*/srv:serviceTypeVersion</xpath>
@@ -259,13 +259,13 @@ xmlns:php="http://php.net/xsl">
 					  		
 						 	</xsl:choose>
 						</test>
-					</xsl:for-each> 
+					</xsl:for-each--> 
 				</xsl:when>
 			 	<!-- pro narodni  -->
 				<xsl:when test="not($forInspire) and string-length($st)>0">
 				    <value><xsl:value-of select="$st"/></value>
 				    <pass>true</pass>
-				    <xsl:for-each select="gmd:identificationInfo/*/srv:serviceTypeVersion">
+				    <!--xsl:for-each select="gmd:identificationInfo/*/srv:serviceTypeVersion">
 					    <test code="CZ-8" level="c">
 						 	<description><xsl:value-of select="$labels/test[@code='2.2.a']"/></description>
 						 	<xpath>identificationInfo/*/srv:serviceTypeVersion</xpath>
@@ -306,7 +306,7 @@ xmlns:php="http://php.net/xsl">
 					  		
 						 	</xsl:choose>
 						</test>
-					</xsl:for-each> 
+					</xsl:for-each--> 
 				</xsl:when>
 				<xsl:otherwise>
 				    <err><xsl:value-of select="$st"/> != view | discovery | download | transformation | other</err>
@@ -398,90 +398,86 @@ xmlns:php="http://php.net/xsl">
 
 <!-- 4.1 -->
 <xsl:if test="not($srv)">
+    <xsl:choose>
+        <xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox))>0 ">
+            <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 
-<xsl:choose>
-	<xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox))>0 ">
-	  	<xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+                <test code="4.1">
+                    <description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
+                    <xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
+                    <xsl:choose>
+                        <xsl:when test="gmd:westBoundLongitude &lt; gmd:eastBoundLongitude and gmd:southBoundLatitude &lt; gmd:northBoundLatitude and gmd:westBoundLongitude &gt;= -180 and gmd:eastBoundLongitude &lt;= 180 and gmd:southBoundLatitude &gt;= -90 and gmd:northBoundLatitude &lt;= 90">
+                            <value>
+                                <xsl:value-of select="gmd:westBoundLongitude"/>,
+                                <xsl:value-of select="gmd:southBoundLatitude"/>,
+                                <xsl:value-of select="gmd:eastBoundLongitude"/>, 
+                                <xsl:value-of select="gmd:northBoundLatitude"/>
+                            </value>
+                            <pass>true</pass>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <err>
+                                <xsl:value-of select="gmd:westBoundLongitude"/>,
+                                <xsl:value-of select="gmd:southBoundLatitude"/>,
+                                <xsl:value-of select="gmd:eastBoundLongitude"/>, 
+                                <xsl:value-of select="gmd:northBoundLatitude"/> - 
+                                <xsl:value-of select="$labels/msg/notValid"/>
+                            </err>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </test>
+            </xsl:for-each>
+        </xsl:when>
 
-			<test code="4.1">
-				<description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
-				<xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
-			  	<xsl:choose>
-			  		<xsl:when test="gmd:westBoundLongitude &lt; gmd:eastBoundLongitude and gmd:southBoundLatitude &lt; gmd:northBoundLatitude and gmd:westBoundLongitude &gt;= -180 and gmd:eastBoundLongitude &lt;= 180 and gmd:southBoundLatitude &gt;= -90 and gmd:northBoundLatitude &lt;= 90">
-				    	<value>
-				    		<xsl:value-of select="gmd:westBoundLongitude"/>,
-				    		<xsl:value-of select="gmd:southBoundLatitude"/>,
-				    		<xsl:value-of select="gmd:eastBoundLongitude"/>, 
-				    		<xsl:value-of select="gmd:northBoundLatitude"/>
-				    	</value>
-				    	<pass>true</pass>
-			    	</xsl:when>
-			    	<xsl:otherwise>
-						<err>
-				    		<xsl:value-of select="gmd:westBoundLongitude"/>,
-				    		<xsl:value-of select="gmd:southBoundLatitude"/>,
-				    		<xsl:value-of select="gmd:eastBoundLongitude"/>, 
-				    		<xsl:value-of select="gmd:northBoundLatitude"/> - 
-				    		<xsl:value-of select="$labels/msg/notValid"/>
-			    		</err>
-			    	</xsl:otherwise>
-			    </xsl:choose>
-			</test>
-	    </xsl:for-each>
-	</xsl:when>
-
-	<xsl:otherwise>
-		<test code="4.1">
-			<description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
-			<xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
-		</test>	
-	</xsl:otherwise>
-</xsl:choose>
-
-
+        <xsl:otherwise>
+            <test code="4.1">
+                <description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
+                <xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
+            </test>	
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:if>
 
 <xsl:if test="$srv">
-<xsl:choose>
-	<xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox))>0 ">
-	  	<xsl:for-each select="gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+    <xsl:choose>
+        <xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox))>0 ">
+            <xsl:for-each select="gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 
-				<test code="4.1">
-					<description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
-					<xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox"/>]</xpath>
-				  	<xsl:choose>
-				  		<xsl:when test="gmd:westBoundLongitude &lt; gmd:eastBoundLongitude and gmd:southBoundLatitude &lt; gmd:northBoundLatitude and gmd:westBoundLongitude &gt;= -180 and gmd:eastBoundLongitude &lt;= 180 and gmd:southBoundLatitude &gt;= -90 and gmd:northBoundLatitude &lt;= 90">
-					    	<value>
-					    		<xsl:value-of select="gmd:westBoundLongitude"/>,
-					    		<xsl:value-of select="gmd:southBoundLatitude"/>,
-					    		<xsl:value-of select="gmd:eastBoundLongitude"/>, 
-					    		<xsl:value-of select="gmd:northBoundLatitude"/>
-					    	</value>
-					    	<pass>true</pass>
-				    	</xsl:when>
-				    	<xsl:otherwise>
-							<err>
-					    		<xsl:value-of select="gmd:westBoundLongitude"/>,
-					    		<xsl:value-of select="gmd:southBoundLatitude"/>,
-					    		<xsl:value-of select="gmd:eastBoundLongitude"/>, 
-					    		<xsl:value-of select="gmd:northBoundLatitude"/> - 
-					    		<xsl:value-of select="$labels/msg/notValid"/>
-				    		</err>
-				    	</xsl:otherwise>
-				    </xsl:choose>
-				</test>
-	    </xsl:for-each>
-	</xsl:when>
+                    <test code="4.1">
+                        <description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
+                        <xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox"/>]</xpath>
+                        <xsl:choose>
+                            <xsl:when test="gmd:westBoundLongitude &lt; gmd:eastBoundLongitude and gmd:southBoundLatitude &lt; gmd:northBoundLatitude and gmd:westBoundLongitude &gt;= -180 and gmd:eastBoundLongitude &lt;= 180 and gmd:southBoundLatitude &gt;= -90 and gmd:northBoundLatitude &lt;= 90">
+                                <value>
+                                    <xsl:value-of select="gmd:westBoundLongitude"/>,
+                                    <xsl:value-of select="gmd:southBoundLatitude"/>,
+                                    <xsl:value-of select="gmd:eastBoundLongitude"/>, 
+                                    <xsl:value-of select="gmd:northBoundLatitude"/>
+                                </value>
+                                <pass>true</pass>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <err>
+                                    <xsl:value-of select="gmd:westBoundLongitude"/>,
+                                    <xsl:value-of select="gmd:southBoundLatitude"/>,
+                                    <xsl:value-of select="gmd:eastBoundLongitude"/>, 
+                                    <xsl:value-of select="gmd:northBoundLatitude"/> - 
+                                    <xsl:value-of select="$labels/msg/notValid"/>
+                                </err>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </test>
+            </xsl:for-each>
+        </xsl:when>
 
-	<xsl:otherwise>
-		<test code="4.1">
-			<description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
-			<xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
-		</test>	
-	</xsl:otherwise>
-</xsl:choose>
+        <xsl:otherwise>
+            <test code="4.1">
+                <description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
+                <xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
+            </test>	
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:if>
-
   
 <!-- 5.2 -->
 <test code="5a">
@@ -532,7 +528,6 @@ xmlns:php="http://php.net/xsl">
 	  	</xsl:otherwise>
 	</xsl:choose>
 </test>	
-
 
 <xsl:if test="not($srv)">
 
@@ -639,81 +634,33 @@ xmlns:php="http://php.net/xsl">
 	</test>
 </xsl:if>
 
-<!-- 
-<xsl:if test="not($hierarchy) or $hierarchy!='application'">
+<!-- 8.1 -->
+<test code="8.1">
+    <description><xsl:value-of select="$labels/test[@code='8.1']"/></description>
+    <xpath>identificationInfo/*/resourceConstraints/*/accessConstraints</xpath>
+    <xsl:variable name="k" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useConstraints/*/@codeListValue"/>
+    <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*!=''">
+            <value> 
+                <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*/@xlink:href"/>
+               - <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*"/>
+            </value>
+            <pass>true</pass>
+    </xsl:if>
+</test>
 
-	<test code="7.1" level="m">
-		<xsl:variable name="spec">
-			<xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result">
-				<xsl:variable name="report" select="."/>
-				<xsl:for-each select="$codelists1/serviceSpecifications/value">
-					<xsl:variable name="n" select="./@name"/>
-					<xsl:if test="normalize-space($report/*/gmd:specification/*/gmd:title/gco:CharacterString)=$n"><xsl:copy-of select="$report"/></xsl:if>
-				</xsl:for-each>
-			</xsl:for-each>
-		</xsl:variable>
-
-		
-		<description><xsl:value-of select="$labels/test[@code='7.1']"/></description>
-		<xpath>dataQualityInfo/*/report/*/result/</xpath>
-		
-    	<xsl:choose>
-    		<xsl:when test="string-length(exsl:node-set($spec)/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString)>0">
-	   	 		<value><xsl:value-of select="exsl:node-set($spec)/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString"/></value>
-			 	<pass>true</pass>
-				
-				<xsl:for-each select="exsl:node-set($spec)">
-				     
-			      	<test code="7.2">
-			      		<description><xsl:value-of select="$labels/test[@code='7.2']"/></description>
-			      		<xpath>dataQualityInfo/*/report/*/result/*/pass</xpath>
-			          	<xsl:choose>
-			            	<xsl:when test="string-length(normalize-space(exsl:node-set($spec)/gmd:result/*/gmd:pass))>0">
-			      	   			<value><xsl:value-of select="exsl:node-set($spec)/gmd:result/*/gmd:pass"/></value>
-			      			  	<pass>true</pass>
-			      		  	</xsl:when>
-			            	<xsl:when test="string-length(normalize-space(exsl:node-set($spec)/gmd:result/*/gmd:pass/@gco:nilReason))>0">
-			      	   			<value>not evaluated</value>
-			      			  	<pass>true</pass>
-			      		  	</xsl:when>
-			      		</xsl:choose>
-			      	</test>	
-		      	</xsl:for-each>
-			 	
-		  	</xsl:when>
-		  	 <xsl:otherwise>
-		    	<err><xsl:value-of select="$labels/msg/notEval"/></err>
-		  	</xsl:otherwise>
-		</xsl:choose>  
-	</test>	-->
-
-	<!-- 8.1 -->
-	<test code="8.1">
-		<description><xsl:value-of select="$labels/test[@code='8.1']"/></description>
-		<xpath>identificationInfo/*/resourceConstraints/*/accessConstraints</xpath>
-		<xsl:variable name="k" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useConstraints/*/@codeListValue"/>
-        <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*!=''">
-                <value> 
-                    <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*/@xlink:href"/>
-                   - <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*"/>
-                </value>
-                <pass>true</pass>
-	    </xsl:if>
-	</test>
-	
-	<!-- 8.2 -->
-	<test code="8.2">
-		<description><xsl:value-of select="$labels/test[@code='8.2']"/></description>
-		<xpath>identificationInfo/*/resourceConstraints/*/accessConstraints</xpath>
-		<xsl:variable name="k" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
-        <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*!=''">
-                <value> 
-                    <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*/@xlink:href"/>
-                   - <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*"/>
-                </value>
-                <pass>true</pass>
-	    </xsl:if>
-	</test>
+<!-- 8.2 -->
+<test code="8.2">
+    <description><xsl:value-of select="$labels/test[@code='8.2']"/></description>
+    <xpath>identificationInfo/*/resourceConstraints/*/accessConstraints</xpath>
+    <xsl:variable name="k" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:accessConstraints/*/@codeListValue"/>
+    <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*!=''">
+            <value> 
+                <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*/@xlink:href"/>
+               - <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*"/>
+            </value>
+            <pass>true</pass>
+    </xsl:if>
+</test>
 
 <!-- 9.1 -->
 <xsl:choose>
@@ -884,9 +831,9 @@ xmlns:php="http://php.net/xsl">
 	</xsl:choose>
 </test>
 
-<!-- CZ -->
-<test code="CZ-1" level="m">
-	<description><xsl:value-of select="$labels/test[@code='CZ-1']"/></description>
+<!-- 11 -->
+<test code="11" level="m">
+	<description><xsl:value-of select="$labels/test[@code='11']"/></description>
 	<xpath>fileIdentifier</xpath>
 	<xsl:choose>
 	  <xsl:when test="string-length(normalize-space(gmd:fileIdentifier))>0">
@@ -896,10 +843,9 @@ xmlns:php="http://php.net/xsl">
 	</xsl:choose>
 </test>
 
-
 <xsl:if test="not($srv)">
-    <test code="CZ-3" level="m">
-    	<description><xsl:value-of select="$labels/test[@code='CZ-3']"/></description>
+    <test code="12" level="m">
+    	<description><xsl:value-of select="$labels/test[@code='12']"/></description>
     	<xpath>dataQualityInfo/*/scope/*/level/*/@codeListValue</xpath>
     	<xsl:choose>
     	  <xsl:when test="string-length(normalize-space(gmd:dataQualityInfo/*/gmd:scope/*/gmd:level/*/@codeListValue))>0">
@@ -908,8 +854,222 @@ xmlns:php="http://php.net/xsl">
     	    <pass>true</pass>
     	  </xsl:when>
     	</xsl:choose>
-    </test>  
+    </test>
+</xsl:if>
+ 
+<xsl:if test="$srv">
+    <xsl:if test="$serviceType='other'">
+        <test code="IOS-1" level="m">
+            <xsl:variable name="k" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title/*/@xlink:href"/>
+            <description><xsl:value-of select="$labels/test[@code='IOS-1']"/></description>
+            <xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/DQ_ConformanceResult/specification/*/title = invocable|interoperable|harmonised</xpath>
+            <xsl:choose>
+                <xsl:when test="$k">
+                    <value><xsl:value-of select="$codelists/sds/value[@uri=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
+                    <pass>true</pass>
+                </xsl:when>
+            </xsl:choose>
+        </test>
 
+        <test code="IOS-2" level="m">
+            <description><xsl:value-of select="$labels/test[@code='IOS-2']"/></description>
+            <xpath>dataQualityInfo/*/report/DQ_ConceptualConsistency/result/DQ_QuantitativeResult</xpath>
+            <xsl:if test="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency/gmd:result/gmd:DQ_QuantitativeResult/gmd:value">
+                <value></value>
+                <pass>true</pass>
+
+                <test code="a" level="m">
+                    <xsl:variable name="k" select="$codelists/serviceQuality/value[1]"/>
+                    <description><xsl:value-of select="$k/*[name()=$LANG]"/></description>
+                    <xpath>dataQualityInfo/*/report/DQ_ConceptualConsistency/result/DQ_QuantitativeResult</xpath>
+                    <xsl:choose>
+                        <xsl:when test="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$k/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value">
+                            <value>
+                                <xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$k/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value"/> % 
+                            </value>
+                            <pass>true</pass>
+                        </xsl:when>
+                    </xsl:choose>
+                </test>
+
+               <test code="b" level="m">
+                    <xsl:variable name="k" select="$codelists/serviceQuality/value[2]"/>
+                    <description><xsl:value-of select="$k/*[name()=$LANG]"/></description>
+                    <xpath>dataQualityInfo/*/report/DQ_ConceptualConsistency/result/DQ_QuantitativeResult</xpath>
+                    <xsl:choose>
+                        <xsl:when test="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$k/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value">
+                            <value>
+                                <xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$k/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value"/> s 
+                            </value>
+                            <pass>true</pass>
+                        </xsl:when>
+                    </xsl:choose>
+                </test>
+
+                <test code="c" level="m">
+                    <xsl:variable name="k" select="$codelists/serviceQuality/value[3]"/>
+                    <description><xsl:value-of select="$k/*[name()=$LANG]"/></description>
+                    <xpath>dataQualityInfo/*/report/DQ_ConceptualConsistency/result/DQ_QuantitativeResult</xpath>
+                    <xsl:choose>
+                        <xsl:when test="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$k/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value">
+                            <value>
+                                <xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$k/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value"/>  
+                            </value>
+                            <pass>true</pass>
+                        </xsl:when>
+                    </xsl:choose>
+                </test>
+
+            </xsl:if>
+        </test>
+    </xsl:if>
+
+    <xsl:variable name="k3" select="$codelists/serviceQuality/value[3]"/>
+    <xsl:if test="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$k3/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value">
+        <test code="IOS-3" level="m">
+            <description><xsl:value-of select="$labels/test[@code='IOS-3']"/></description>
+            <xpath>identificationInfo/*/couplingType/*/@codeListValue</xpath>
+            <xsl:if test="gmd:identificationInfo/*/srv:containsOperations/*/srv:operationName/*">
+                <value>
+                    <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations">
+                        <xsl:value-of select="*/srv:operationName/*"/>
+                        <xsl:if test="position() != last()">, </xsl:if>
+                    </xsl:for-each>
+                </value>
+                <pass>true</pass>
+            </xsl:if>
+        </test>
+    </xsl:if>
+</xsl:if>
+
+
+<xsl:if test="not($srv)">
+    <!--  xsl:variable name="rep" select="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]"/-->
+    <test code="IOD-1" level="c">
+    	<description><xsl:value-of select="$labels/test[@code='IOD-1']"/></description>
+    	<xpath>referenceSystemInfo/*/referenceSystemIdentifier/*/code</xpath>
+    	<xsl:if test="string-length(normalize-space(gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code))>0">
+    	    <value></value>
+    	    <pass>true</pass>
+             <xsl:for-each select="gmd:referenceSystemInfo">
+             	<test code="a" level="m">
+             		<description><xsl:value-of select="$labels/test[@code='IOD-1a']"/></description>
+  				<xpath>http://www.opengis.net/def/crs/*</xpath>
+  				<xsl:if test="contains(*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href,'http://www.opengis.net/def/crs/')">
+                    <value>
+                        <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href"/>
+                  		- <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
+                  	</value>
+                  	<pass>true</pass>
+                 	</xsl:if>
+                 </test>
+             </xsl:for-each>    
+    	    <xsl:if test="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]//gmd:pass='true'">
+	    	    <test code="b" level="m">
+	    			<description><xsl:value-of select="$labels/test[@code='IOD-1b']"/></description>
+	    			<xpath>http://www.opengis.net/def/crs/EPSG/x/[4258|3034|3035|3045|3046]</xpath>
+	    			<xsl:if test="gmd:referenceSystemInfo[contains(*//gmd:code,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code, '4258') or contains(*//gmd:code, '3034') or contains(*//gmd:code, '3035') or contains(*//gmd:code, '3045') or contains(*//gmd:code, '3046'))]">
+	    	    		<value>
+	                		<xsl:for-each select="gmd:referenceSystemInfo[contains(*//gmd:code,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code, '4258') or contains(*//gmd:code, '3034') or contains(*//gmd:code, '3035') or contains(*//gmd:code, '3045') or contains(*//gmd:code, '3046'))]">                    
+	                    		<xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
+	                    		<xsl:if test="not(position()=last())">&lt;br/&gt;</xsl:if>
+	                		</xsl:for-each>    
+	            		</value>
+			    	    <pass>true</pass>
+			    	</xsl:if>
+			    </test>    	    
+		    </xsl:if>
+    	</xsl:if>	
+    </test>
+
+    <test code="IOD-3" level="m">
+    	<description><xsl:value-of select="$labels/test[@code='IOD-3']"/></description>
+    	<xpath>distributionInfo/*/distributionFormat/*/name</xpath>
+    	<xsl:choose>
+    	  	<xsl:when test="string-length(normalize-space(gmd:distributionInfo/*/gmd:distributionFormat))>0">
+    	    	<pass>true</pass>
+    	    	<value></value>
+                <xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat">
+                	<test code="a">
+                		<description><xsl:value-of select="$labels/test[@code='IOD-3a']"/></description>
+                		<xsl:if test="string-length(*/gmd:name/*)>0">
+                			<pass>true</pass>
+                    		<value><xsl:value-of select="*/gmd:name/*"/></value>
+                    	</xsl:if>
+                    </test>	
+                	<test code="b">
+                		<description><xsl:value-of select="$labels/test[@code='IOD-3b']"/></description>
+                		<xsl:if test="string-length(*/gmd:version/*)>0">
+                			<pass>true</pass>
+                    		<value><xsl:value-of select="*/gmd:version/*"/></value>
+                    	</xsl:if>
+                    </test>	
+                	<!-- <test code="c" level="c">
+                		<description><xsl:value-of select="$labels/test[@code='IO-3c']"/></description>
+                		<xsl:if test="string-length(*/gmd:specification/*)>0">
+                			<pass>true</pass>
+                    		<value><xsl:value-of select="*/gmd:specification/*"/></value>
+                    	</xsl:if>
+                    </test> -->	
+                </xsl:for-each>    
+            </xsl:when>
+    	</xsl:choose>
+    </test>
+
+    <test code="IOD-4" level="n"> <!-- TODO vylepsit -->
+    	<description><xsl:value-of select="$labels/test[@code='IOD-4']"/></description>
+    	<xpath>dataQualityInfo/*/report/DQ_TopologicalConsistency/result</xpath>
+    	<xsl:choose>
+    	  <xsl:when test="string-length(normalize-space(gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:result))>0">
+    	    <value>
+    			<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"/>
+    			(<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:measureDescription"/>)
+            </value>
+    	    <pass>true</pass>
+    	    <!--  <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:result">
+    	    	<test code="a" level="n">
+    	    		<xsl:if test="*/gmd:value and contains(*/gmd:valueUnit/@xlink:href, 'http://geoportal.gov.cz/res/units.xml#')">
+    	    			<description><xsl:value-of select="$labels/test[@code='IO-4a']"/></description>
+    	    			<value><xsl:value-of select="*/gmd:value"/> / <xsl:value-of select="*/gmd:valueUnit/@xlink:href"/></value>
+    	    			<pass>true</pass>
+    	    		</xsl:if>
+    	    	</test>
+    	    </xsl:for-each>-->
+    	  </xsl:when>
+    	</xsl:choose>
+    </test>
+
+    <test code="IOD-5" level="c">
+    	<description><xsl:value-of select="$labels/test[@code='IOD-5']"/></description>
+    	<xpath>identificationInfo/*/characterSet</xpath>
+    	<xsl:choose>
+    	  <xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:characterSet/*/@codeListValue))>0">
+    	    <value>
+                <xsl:for-each select="gmd:identificationInfo/*/gmd:characterSet">
+                    <xsl:value-of select="*/@codeListValue"/>
+                    <xsl:if test="not(position()=last())">&lt;br/&gt;</xsl:if>
+                </xsl:for-each>    
+            </value>
+    	    <pass>true</pass>
+    	  </xsl:when>
+    	</xsl:choose>
+    </test>
+
+    <test code="IOD-6" level="m">
+    	<description><xsl:value-of select="$labels/test[@code='IOD-6']"/></description>
+    	<xpath>identificationInfo[1]/*/spatialRepresentationType/*/@codeListValue</xpath>
+    	<xsl:variable name="k" select="gmd:identificationInfo[1]/*/gmd:spatialRepresentationType/*/@codeListValue"/>
+    	<xsl:choose>
+    	  <xsl:when test="$k!=''">
+    	    <value><xsl:value-of select="$codelists/spatialRepresentationType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
+    	    <pass>true</pass>
+    	  </xsl:when>
+    	</xsl:choose>
+    </test>
+</xsl:if>
+
+
+<xsl:if test="not($srv)">
     <test code="CZ-4" level="m">
     	<description><xsl:value-of select="$labels/test[@code='CZ-4']"/></description>
     	<xpath>identificationInfo/*/resourceMaintenance/*/maintenanceAndUpdateFrequency/*/@codeListValue</xpath>
@@ -938,165 +1098,26 @@ xmlns:php="http://php.net/xsl">
 		<description><xsl:value-of select="$labels/test[@code='CZ-7']"/></description>
 		<xpath>gmd:identificationInfo/*/gmd:purpose</xpath>
 		<xsl:choose>
-		  <xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:purpose))>0">
-		    <value><xsl:value-of select="gmd:identificationInfo/*/gmd:purpose/gco:CharacterString"/></value>
-		    <pass>true</pass>
-		  </xsl:when>
+            <xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:purpose))>0">
+                <value><xsl:value-of select="gmd:identificationInfo/*/gmd:purpose/gco:CharacterString"/></value>
+                <pass>true</pass>
+            </xsl:when>
 		</xsl:choose>
 	</test>
-
-    <!--  xsl:variable name="rep" select="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]"/-->
-    <test code="IO-1" level="c">
-    	<description><xsl:value-of select="$labels/test[@code='IO-1']"/></description>
-    	<xpath>referenceSystemInfo/*/referenceSystemIdentifier/*/code</xpath>
-    	<xsl:if test="string-length(normalize-space(gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code))>0">
-    	    <value>OK</value>
-    	    <pass>true</pass>
-             <xsl:for-each select="gmd:referenceSystemInfo">
-             	<test code="a" level="m">
-             		<description><xsl:value-of select="$labels/test[@code='IO-1a']"/></description>
-  				<xpath>http://www.opengis.net/def/crs/*</xpath>
-  				<xsl:if test="contains(*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href,'http://www.opengis.net/def/crs/')">
-                    <value>
-                        <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href"/>
-                  		- <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
-                  	</value>
-                  	<pass>true</pass>
-                 	</xsl:if>
-                 </test>
-             </xsl:for-each>    
-    	    <xsl:if test="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]//gmd:pass='true'">
-	    	    <test code="b" level="m">
-	    			<description><xsl:value-of select="$labels/test[@code='IO-1b']"/></description>
-	    			<xpath>http://www.opengis.net/def/crs/EPSG/x/[4258|3034|3035|3045|3046]</xpath>
-	    			<xsl:if test="gmd:referenceSystemInfo[contains(*//gmd:code,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code, '4258') or contains(*//gmd:code, '3034') or contains(*//gmd:code, '3035') or contains(*//gmd:code, '3045') or contains(*//gmd:code, '3046'))]">
-	    	    		<value>
-	                		<xsl:for-each select="gmd:referenceSystemInfo[contains(*//gmd:code,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code, '4258') or contains(*//gmd:code, '3034') or contains(*//gmd:code, '3035') or contains(*//gmd:code, '3045') or contains(*//gmd:code, '3046'))]">                    
-	                    		<xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
-	                    		<xsl:if test="not(position()=last())">&lt;br/&gt;</xsl:if>
-	                		</xsl:for-each>    
-	            		</value>
-			    	    <pass>true</pass>
-			    	</xsl:if>
-			    </test>    	    
-		    </xsl:if>
-    	</xsl:if>	
-    </test>
-
-
-    <test code="IO-3" level="m">
-    	<description><xsl:value-of select="$labels/test[@code='IO-3']"/></description>
-    	<xpath>distributionInfo/*/distributionFormat/*/name</xpath>
-    	<xsl:choose>
-    	  	<xsl:when test="string-length(normalize-space(gmd:distributionInfo/*/gmd:distributionFormat))>0">
-    	    	<pass>true</pass>
-    	    	<value></value>
-                <xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat">
-                	<test code="a">
-                		<description><xsl:value-of select="$labels/test[@code='IO-3a']"/></description>
-                		<xsl:if test="string-length(*/gmd:name/*)>0">
-                			<pass>true</pass>
-                    		<value><xsl:value-of select="*/gmd:name/*"/></value>
-                    	</xsl:if>
-                    </test>	
-                	<test code="b">
-                		<description><xsl:value-of select="$labels/test[@code='IO-3b']"/></description>
-                		<xsl:if test="string-length(*/gmd:version/*)>0">
-                			<pass>true</pass>
-                    		<value><xsl:value-of select="*/gmd:version/*"/></value>
-                    	</xsl:if>
-                    </test>	
-                	<!-- <test code="c" level="c">
-                		<description><xsl:value-of select="$labels/test[@code='IO-3c']"/></description>
-                		<xsl:if test="string-length(*/gmd:specification/*)>0">
-                			<pass>true</pass>
-                    		<value><xsl:value-of select="*/gmd:specification/*"/></value>
-                    	</xsl:if>
-                    </test> -->	
-                </xsl:for-each>    
-    	  </xsl:when>
-    	</xsl:choose>
-    </test>
-
-    <test code="IO-4" level="n"> <!-- TODO vylepsit -->
-    	<description><xsl:value-of select="$labels/test[@code='IO-4']"/></description>
-    	<xpath>dataQualityInfo/*/report/DQ_TopologicalConsistency/result</xpath>
-    	<xsl:choose>
-    	  <xsl:when test="string-length(normalize-space(gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:result))>0">
-    	    <value>
-    			<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:nameOfMeasure"/>
-    			(<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:measureDescription"/>)
-            </value>
-    	    <pass>true</pass>
-    	    <!--  <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency/gmd:result">
-    	    	<test code="a" level="n">
-    	    		<xsl:if test="*/gmd:value and contains(*/gmd:valueUnit/@xlink:href, 'http://geoportal.gov.cz/res/units.xml#')">
-    	    			<description><xsl:value-of select="$labels/test[@code='IO-4a']"/></description>
-    	    			<value><xsl:value-of select="*/gmd:value"/> / <xsl:value-of select="*/gmd:valueUnit/@xlink:href"/></value>
-    	    			<pass>true</pass>
-    	    		</xsl:if>
-    	    	</test>
-    	    </xsl:for-each>-->
-    	  </xsl:when>
-    	</xsl:choose>
-    </test>
-
-    <test code="IO-5" level="c">
-    	<description><xsl:value-of select="$labels/test[@code='IO-5']"/></description>
-    	<xpath>identificationInfo/*/characterSet</xpath>
-    	<xsl:choose>
-    	  <xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/gmd:characterSet/*/@codeListValue))>0">
-    	    <value>
-                <xsl:for-each select="gmd:identificationInfo/*/gmd:characterSet">
-                    <xsl:value-of select="*/@codeListValue"/>
-                    <xsl:if test="not(position()=last())">&lt;br/&gt;</xsl:if>
-                </xsl:for-each>    
-            </value>
-    	    <pass>true</pass>
-    	  </xsl:when>
-    	</xsl:choose>
-    </test>
-
-    <test code="IO-6" level="m">
-    	<description><xsl:value-of select="$labels/test[@code='IO-6']"/></description>
-    	<xpath>identificationInfo[1]/*/spatialRepresentationType/*/@codeListValue</xpath>
-    	<xsl:variable name="k" select="gmd:identificationInfo[1]/*/gmd:spatialRepresentationType/*/@codeListValue"/>
-    	<xsl:choose>
-    	  <xsl:when test="$k!=''">
-    	    <value><xsl:value-of select="$codelists/spatialRepresentationType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
-    	    <pass>true</pass>
-    	  </xsl:when>
-    	</xsl:choose>
-    </test>
-
-
-    <!-- <test code="CZ-9" level="c">
-    	<description><xsl:value-of select="$labels/test[@code='CZ-9']"/></description>
-    	<xpath>identificationInfo[1]/*/purpose</xpath>
-    	<xsl:choose>
-    	  <xsl:when test="string-length(normalize-space(gmd:identificationInfo[1]/*/gmd:purpose))>0">
-    	    <value>
-               <xsl:value-of select="gmd:identificationInfo[1]/*/gmd:purpose"/>
-            </value>
-    	    <pass>true</pass>
-    	  </xsl:when>
-    	</xsl:choose>
-    </test> -->
-
 </xsl:if>
- 
+
 <xsl:if test="$srv">
-	<test code="CZ-9" level="m">
-		<description><xsl:value-of select="$labels/test[@code='CZ-9']"/></description>
-		<xpath>identificationInfo/*/couplingType/*/@codeListValue</xpath>
-		<xsl:variable name="k" select="gmd:identificationInfo/*/srv:couplingType/*/@codeListValue"/>
-		<xsl:choose>
-		  <xsl:when test="string-length($k)>0">
-		    <value><xsl:value-of select="$codelists/couplingType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
-		    <pass>true</pass>
-		  </xsl:when>
-		</xsl:choose>
-	</test>
+    <test code="CZ-9" level="m">
+        <description><xsl:value-of select="$labels/test[@code='CZ-9']"/></description>
+        <xpath>identificationInfo/*/couplingType/*/@codeListValue</xpath>
+        <xsl:variable name="k" select="gmd:identificationInfo/*/srv:couplingType/*/@codeListValue"/>
+        <xsl:choose>
+            <xsl:when test="string-length($k)>0">
+                <value><xsl:value-of select="$codelists/couplingType/value[@name=$k]/*[name()=$LANG]"/> (<xsl:value-of select="$k"/>)</value>
+                <pass>true</pass>
+            </xsl:when>
+        </xsl:choose>
+    </test>
 </xsl:if>
 
 <xsl:if test="not($srv)">
@@ -1106,7 +1127,7 @@ xmlns:php="http://php.net/xsl">
 		<xsl:variable name="k" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[contains(gmd:measureIdentification/*/gmd:code/*,'CZ-COVERAGE')]"/>
    	    <xsl:if test="$k/gmd:result/*/gmd:value!=''">
    	       	<pass>true</pass>
-    	     <test code="a" level="m">
+    	    <test code="a" level="m">
    	    		<description>%</description>
    	    		<xsl:if test="string(number($k/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'percent')]/*/gmd:value)) != 'NaN'">
    	    			<value>
@@ -1116,7 +1137,7 @@ xmlns:php="http://php.net/xsl">
  	    	    	<pass>true</pass>
    	    		</xsl:if>
     	    </test>
-    	     <test code="b" level="m">
+    	    <test code="b" level="m">
    	    		<description>km2</description>
    	    		<xsl:if test="string(number($k/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'km2')]/*/gmd:value)) != 'NaN'">
    	    			<value>
@@ -1128,7 +1149,33 @@ xmlns:php="http://php.net/xsl">
     	    </test>
    	    </xsl:if>
     </test>
- </xsl:if>
+</xsl:if>
+
+<!-- CZ-12 -->
+<test code="CZ-12" level="m">
+    <description><xsl:value-of select="$labels/test[@code='CZ-12']"/></description>
+    <xpath>metadataStandardName</xpath>
+    <xsl:choose>
+        <xsl:when test="gmd:metadataStandardName/*">
+            <value><xsl:value-of select="gmd:metadataStandardName"/></value>
+            <pass>true</pass>
+        </xsl:when>
+    </xsl:choose>
+</test>
+
+<!-- CZ-13 -->
+<xsl:if test="not($srv)">
+    <test code="CZ-13" level="c">
+        <description><xsl:value-of select="$labels/test[@code='CZ-13']"/></description>
+        <xpath>identificationInfo/*/citation/*/otherCitationDetails</xpath>
+        <xsl:choose>
+            <xsl:when test="gmd:identificationInfo/*/gmd:citation/*/gmd:otherCitationDetails/*">
+                <value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:otherCitationDetails/*"/></value>
+                <pass>true</pass>
+            </xsl:when>
+        </xsl:choose>
+    </test>
+</xsl:if>
 
 <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:otherConstraints/*/@xlink:href='http://opendata.gov.cz/definition/opendata']">
 	<test code="CZ-15" level="m">

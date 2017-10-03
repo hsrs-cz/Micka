@@ -72,45 +72,45 @@
 
 	<!--h2 class="noprint"-->
 	<ol class="breadcrumb">
-		<li class="active"><a href="{$MICKA_URL}" tooltip="tooltip" title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
+		<li class="active"><a href="{$MICKA_URL}" tooltip="tooltip" data-tooltip="tooltip" data-original-title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
 		<li><xsl:value-of select="$msg[@eng='basicMetadata']"/></li>
 		<li>		
 			<xsl:if test="../@read=1">
-				<a href="{$MICKA_URL}/{$LANG2}record/full/{../@uuid}" class="icons" title="{$msg[@eng='fullMetadata']}">
+				<a href="{$MICKA_URL}/{$LANG2}record/full/{../@uuid}" class="icons" data-tooltip="tooltip" data-original-title="{$msg[@eng='fullMetadata']}">
 							<xsl:value-of select="$msg[@eng='fullMetadata']"/></a>					
 			</xsl:if>
 		</li>						
 		<div class="icons">
 		  	<xsl:variable name="wmsURL" select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(gmd:protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			<xsl:if test="gmd:identificationInfo/*/srv:serviceType/*='download'">
-				<a href="{$MICKA_URL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={$fid}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" title="Atom"><i class="fa fa-feed fa-fw"></i></a>
+				<a href="{$MICKA_URL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={$fid}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
 			</xsl:if>
 			<xsl:if test="string-length($wmsURL)>0">
 				<xsl:choose>
 					<xsl:when test="contains($wmsURL,'?')">
-			   			<a class='map' href="{$viewerURL}{substring-before($wmsURL,'?')}" target="wmsviewer"><i class="fa fa-map-o fa-fw"></i></a>		  				
+			   			<a class='map' href="{$viewerURL}{substring-before($wmsURL,'?')}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>		  				
 					</xsl:when>
 					<xsl:otherwise>
-						<a class='map' href="{$viewerURL}{$wmsURL}" target="wmsviewer"><i class="fa fa-map-o fa-fw"></i></a>
+						<a class='map' href="{$viewerURL}{$wmsURL}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:text> </xsl:text>
 			</xsl:if>
 			<xsl:if test="../@edit=1">
-				<a href="{$MICKA_URL}/{$LANG2}record/valid/{../@uuid}" class="valid{../@valid}" title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
+				<a href="{$MICKA_URL}/{$LANG2}record/valid/{../@uuid}" class="valid{../@valid}" data-tooltip="tooltip" data-original-title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
 						<xsl:when test="../@valid=2"><i class="fa fa-check-circle fa-fw"></i></xsl:when>
 						<xsl:when test="../@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
 						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
 					</xsl:choose></a>
-				<a href="{$MICKA_URL}/{$LANG2}record/edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-				<a href="{$MICKA_URL}/{$LANG2}record/clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-				<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+				<a href="{$MICKA_URL}/{$LANG2}record/edit/{../@uuid}" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+				<a href="{$MICKA_URL}/{$LANG2}record/clone/{../@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+				<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
-					<a href="{$MICKA_URL}/csw/?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$MICKA_URL}/csw/?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
-				<a href="{$MICKA_URL}/record/xml/{../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
+				<a href="{$MICKA_URL}/record/xml/{../@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
 		</div>			
 	</ol>
@@ -733,15 +733,15 @@
 
 			<div class="micka-row">
 				<label><xsl:value-of select="$msg[@eng='Language']"/></label>
-				<div class="c" rel="http://purl.org/dc/terms/language" resource="http://publications.europa.eu/resource/authority/language/{translate($lang,$lower,$upper)}"><xsl:value-of select="$cl/language/value[@code=$lang]"/></div>
+				<div class="c" rel="http://purl.org/dc/terms/language" resource="http://publications.europa.eu/resource/authority/language/{translate($lang,$lower,$upper)}"><xsl:value-of select="$cl/language/value[@code=$lang]/*[name()=$lang]"/></div>
 			</div>
 		</div>
 	
 		<h3><xsl:value-of select="$msg[@eng='Coupled Resource']"/></h3>
 
-		<!-- ===VAZBY=== -->
+		<!-- ===LINKS=== -->
 		
-		<!-- sluzby -->
+		<!-- services -->
 		<xsl:variable name="vazby" select="php:function('getMetadata', concat('uuidRef=',$fid))"/>
 		<div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Used']"/></label>

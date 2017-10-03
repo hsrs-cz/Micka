@@ -777,7 +777,7 @@ Volný text.</p>
 	</msg>
 	
 	<msg name="serviceQuality">
-		<label>IOS-2.1 Kvalita služby</label>
+		<label>IOS-2 Kvalita služby</label>
 		<help>
 			<h3>Kritéria pro minimální kvalitu interoperabilní služby, kterou odhaduje osoba nebo organizace odpovědná za interoperabilní službu prostorových dat a o které se očekává, že bude platná po určitou dobu</h3> 
 		</help>

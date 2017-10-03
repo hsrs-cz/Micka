@@ -356,7 +356,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 					</descriptiveKeywords>
 					</xsl:if> -->
 					
-					<!-- dalsi kw -->
+					<!-- other kw -->
 					<xsl:for-each select="othes">
 					   <gmd:descriptiveKeywords>
 					     <gmd:MD_Keywords>	
@@ -365,9 +365,6 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     					   			<xsl:with-param name="name" select="'keyword'"/>
     					   			<xsl:with-param name="t" select="."/>
     					   		</xsl:call-template>
-    					     <!-- <gmd:keyword>
-    					     	<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-    					     </gmd:keyword> -->
     					   </xsl:for-each>
   							<gmd:thesaurusName>
   								<gmd:CI_Citation>
@@ -638,7 +635,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 				</xsl:element>
 			</gmd:identificationInfo>
 			
-			<!-- ================================ Distribuce ===============================-->
+			<!-- ================================ Distribution ===============================-->
 			<gmd:distributionInfo>
 				<gmd:MD_Distribution>
 					<xsl:for-each select="format/item">
@@ -751,7 +748,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 				</gmd:MD_Distribution>
 			</gmd:distributionInfo>
 
-			<!-- ================================ Jakost ===============================-->
+			<!-- ================================ Quality ===============================-->
 			<gmd:dataQualityInfo>
 				<gmd:DQ_DataQuality>
 					<gmd:scope>
@@ -761,23 +758,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							</gmd:level>
 						</gmd:DQ_Scope>
 					</gmd:scope>
-                    <!--xsl:if test="string-length(normalize-space(title))=0">
-                        <gmd:report>
-                            <gmd:DQ_DomainConsistency xsi:type="DQ_DomainConsistency_Type">
-                                <gmd:result>
-                                    <gmd:DQ_ConformanceResult>
-                                        <gmd:specification>
-	  										<gmd:CI_Citation>
-	  											<gmd:title>
-  											       <gco:CharacterString></gco:CharacterString>
-	  											</gmd:title>
-                                            </gmd:CI_Citation>
-                                        </gmd:specification>        
-                                    </gmd:DQ_ConformanceResult>
-                                </gmd:result>    
-                            </gmd:DQ_DomainConsistency>
-                        </gmd:report>
-                    </xsl:if-->
+
 					<xsl:for-each select="specification/item">
 						<xsl:variable name="spec" select="."/>
 	  					<gmd:report>
@@ -836,6 +817,74 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  						</gmd:DQ_DomainConsistency>
 	  					</gmd:report>
 	  				</xsl:for-each>
+                    
+                    <xsl:for-each select="sds">
+	  					<gmd:report>
+	  						<gmd:DQ_DomainConsistency xsi:type="DQ_DomainConsistency_Type">
+	  							<gmd:result>
+	  								<gmd:DQ_ConformanceResult xsi:type="DQ_ConformanceResult_Type">
+	  									<gmd:specification>
+	  										<gmd:CI_Citation>
+                                                <xsl:call-template name="uriOut">
+                                                    <xsl:with-param name="name" select="'title'"/>
+                                                    <xsl:with-param name="codes" select="$codes/sds"/>
+                                                    <xsl:with-param name="t" select="."/>
+                                                </xsl:call-template>
+	  											<gmd:date>
+	  												<gmd:CI_Date>
+                       							        <gmd:date>
+                                                            <gco:Date><xsl:value-of select="$codes/sds/value[@uri=.]/@publication"/></gco:Date>
+                                                        </gmd:date>
+                                                        <gmd:dateType>
+	  														<gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+	  													</gmd:dateType>
+	  												</gmd:CI_Date>
+	  											</gmd:date>
+	  										</gmd:CI_Citation>
+	  									</gmd:specification>
+                                        <gmd:explanation>
+ 											<gco:CharacterString>This Spatial Data Service set is conformant with the INSPIRE requirements for Invocable Spatial Data Services</gco:CharacterString>
+	  									</gmd:explanation>
+	  									<gmd:pass>
+											<gco:Boolean>true</gco:Boolean>
+	  									</gmd:pass>
+	  								</gmd:DQ_ConformanceResult>
+	  							</gmd:result>
+	  						</gmd:DQ_DomainConsistency>
+	  					</gmd:report>
+                    </xsl:for-each>
+                    
+                    <gmd:report>
+                        <gmd:DQ_DomainConsistency>
+                            <gmd:result>
+                                <gmd:DQ_ConformanceResult>
+                                    <gmd:specification>
+                                        <gmd:CI_Citation>
+                                            <gmd:title>
+                                                <gco:CharacterString></gco:CharacterString>
+                                            </gmd:title>
+                                            <gmd:date>
+                                                <gmd:CI_Date>
+                                                    <gmd:date>
+                                                        <gco:Date></gco:Date>
+                                                    </gmd:date>
+                                                    <gmd:dateType>
+                                                        <gmd:CI_DateTypeCode codeList="" codeListValue=""/>
+                                                    </gmd:dateType>
+                                                </gmd:CI_Date>
+                                            </gmd:date>
+                                        </gmd:CI_Citation>
+                                    </gmd:specification>
+                                    <gmd:explanation>
+                                        <gco:CharacterString></gco:CharacterString>
+                                    </gmd:explanation>
+                                    <gmd:pass>
+                                        <gco:Boolean></gco:Boolean>
+                                    </gmd:pass>
+                                </gmd:DQ_ConformanceResult>
+                            </gmd:result>
+                        </gmd:DQ_DomainConsistency>
+                    </gmd:report>
 	  					
 
 					<!-- CZ-7 Pokrytí -->
@@ -981,8 +1030,8 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	  					</gmd:report>
 	  				</xsl:if>
                     
-					<!-- IO-2 pro služby -->
-                    <xsl:if test="normalize-space(availability)">
+					<!-- IO-2 - services -->
+                    <xsl:if test="availability">
                         <xsl:variable name="topol" select="."/>
                         <gmd:report>
                             <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
@@ -1050,7 +1099,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                         </gmd:report>
                     </xsl:if>
                     
-                    <gmd:report>
+                    <!--gmd:report>
                         <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
                             <gmd:nameOfMeasure>
                                 <gmx:Anchor xlink:href=""></gmx:Anchor>
@@ -1067,7 +1116,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                 </gmd:DQ_QuantitativeResult>
                             </gmd:result>
                         </gmd:DQ_ConceptualConsistency>
-                    </gmd:report>
+                    </gmd:report-->
                     
                     <gmd:lineage>
                         <gmd:LI_Lineage>

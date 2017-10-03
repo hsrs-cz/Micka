@@ -655,7 +655,7 @@ against which data is being evaluated.</p>
 	</msg>
     
 	<msg name="serviceQuality">
-		<label>IOS-2.1 Quality of service</label>
+		<label>IOS-2 Quality of service</label>
 		<help>
 			<h3>Three criteria for minimum quality of service shall be given to comply with Annex VI of [Regulation 1089/2010]: Availability, Performance and Capacity</h3> 
 		</help>

@@ -463,6 +463,7 @@ class Csw{
     $this->params['thisPath'] = dirname($this->params['thisURL']);
     $this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ?
         $this->appParameters['appLocale'].'/' : '';
+    $this->params['viewerURL'] = $this->appParameters['map']['viewerURL'];
     if(!isset($this->params['CB'])) {
         $this->params['CB'] = "";
         if(isset($_SESSION["micka"]["cb"])) $this->params['CB'] .= $_SESSION["micka"]["cb"]; 
@@ -796,8 +797,6 @@ class Csw{
   $this->params['REWRITE'] = REWRITE_MODE;
   $this->params['CONSTRAINT'] = urlencode($this->params['CONSTRAINT']);
   $this->params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
-  $this->params['viewerURL'] = WMS_CLIENT;
-
 
   $this->setXSLParams($this->params);
   
@@ -1006,7 +1005,6 @@ class Csw{
         $this->params['user'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
         $this->params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
         $this->params['REWRITE'] = REWRITE_MODE;
-        $this->params['viewerURL'] = WMS_CLIENT;
         $this->params['THEME'] = MICKA_THEME;
         if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= MAXRECORDS;
         if(!isset($this->params['SORTORDER'])) $this->params['SORTORDER']= "ASC";

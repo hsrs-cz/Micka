@@ -20,6 +20,7 @@ parameters:
         hs_wms_cze = "http://gis.bnhelp.cz/ows/crtopo?SERVICE=WMS&VERSION=1.1.1&FORMAT=image/gif&layers=demis,sidla,doprava,voda,kraje,orp,hr_cr"
         hs_wms_eng = "http://www2.demis.nl/wms/wms.asp?WMS=WorldMap&SERVICE=WMS&VERSION=1.1.1&FORMAT=image/jpeg&SRS=EPSG:4326&layers=Bathymetry,Topography,Hillshading,Coastlines,Builtup%20areas,Rivers,Streams,Waterbodies,Borders,Railroads,Highways,Roads,Trails,Settlements,Cities"
         hs_initext = 12.0 48.5 18.9 51
+        viewerURL = "https://geoportal.gov.cz/web/guest/map"
     contact:
         title:
             cze = "Katalog prostorových metadat."
