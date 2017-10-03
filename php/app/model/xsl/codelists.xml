@@ -1391,6 +1391,8 @@
   </compliant> 
 
   <inspireKeywords title="Datová témata INSPIRE">
+    <title lang="cze">Témata INSPIRE</title>
+    <title lang="eng">INSPIRE themes</title>
     <!-- ANNEX I -->
     <value uri="https://inspire.ec.europa.eu/theme/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">
         <cze>Souřadnicové referenční systémy</cze>
@@ -1535,6 +1537,8 @@
   </inspireKeywords>
 
   <specifications title="Nařízení komise">
+    <title lang="eng">Specifications</title>
+    <title lang="cze">Specifikace</title>
 	<value code="Metadata"  uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">
         <cze name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat">Metadata</cze>
 		<eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata</eng>
@@ -2359,13 +2363,15 @@
 
 <!-- 8.1 -->
 <accessCond>
+    <title lang="cze">Podmínky pro přístup užití</title>
+    <title lang="eng">Access and use conditions</title>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">
         <cze qtip="No conditions apply to access and use.">žádné podmínky pro přístup a užití</cze>
         <eng qtip="No conditions apply to access and use.">no conditions apply to access and use</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">
         <cze qtip="The conditions applying to access and use are unknown.">podmínky pro přístup a užití nejsou známy</cze>
-       <eng qtip="The conditions applying to access and use are unknown.">the conditions applying to access and use are unknown</eng>
+        <eng qtip="The conditions applying to access and use are unknown.">the conditions applying to access and use are unknown</eng>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by/4.0">
         <cze qtip="">Creative Commons BY 4.0</cze>
@@ -2399,6 +2405,8 @@
 
 <!-- 8.2 -->
 <limitationsAccess>
+    <title lang="cze">Omezení veřejného přístupu</title>
+    <title lang="eng">Limitations on public access</title>
 	<value name="" uri="http://opendata.gov.cz/definition/opendata">
         <cze qtip="Otevřená data ČR.">Otevřená data ČR</cze>
 		<eng>Open Data of the Czech republic</eng>

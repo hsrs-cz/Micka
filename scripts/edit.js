@@ -1201,7 +1201,7 @@ function specif(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=specif&handler=specif1&multi=1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=specifications&handler=specif1&multi=1&lang='+lang);
 }
 
 function specif1(f){
@@ -1245,12 +1245,13 @@ function hlname(obj){
 function fspec(obj){
 	md_elem = obj.parentNode;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=fspec&multi=&lang='+lang);    
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=inspireKeywords&handler=fspec1&multi=&lang='+lang);    
 }
 
 function fspec1(f){
+    console.log(f);
 	var inputs = flatNodes(md_elem, "INPUT");
-	inputs[0].value = f;
+	inputs[0].value = 'INSPIRE Data Specification on ' + f.eng + ' - Guidelines';
     $('#md-dialog').modal('hide');
 }
 
@@ -1540,7 +1541,7 @@ var md_constraint = function(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=uselim&multi=1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=accessCond&multi=1&lang='+lang);
  }
 
 var md_serviceType = function(obj){

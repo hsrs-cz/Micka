@@ -5,22 +5,28 @@
 
 $title = '';
 
-function getList($type, $lang, $mdlang, $withValues=false){
-    if($type=='fspec'){
-        @$xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists_$lang.xml");
-        if(!$xml) $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists_eng.xml");
+function getList($type, $lang, $mdlang, $withValues=false, $handler="formats1"){
+    if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords'))){
+        $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
+        $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
         echo '<div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4>'.(string) $xml->inspireKeywords['title'].'</h4>
+            <h4>'.(string) $title .'</h4>
         </div><div class="modal-body">';
-        $list = $xml->xpath("//inspireKeywords/value");
-        foreach ($list as $entry){
-            echo "<a href=\"javascript:fspec1('D.2.8.".$entry['n']." INSPIRE Data Specification on ".$entry['code']." - Guidelines', '".$entry['publication']."'); window.close();\">".(string) $entry."</a><br>";
+        $list = $xml->xpath("//$type/value");
+        foreach ($list as $row){
+            echo "<a href=\"javascript:$handler({uri:'".$row['uri']."', ";
+            foreach($row as $k=>$v){
+                if($k!='uri'){
+                    echo "$k:'".$v."',";
+                }
+            }
+            echo "xxx:'".(string) $row->$mdlang."'});\">".(string) $row->$lang."</a><br>";
         }
         echo "</div>";
         return;
     }
-    else if(in_array($type, array('coordSys','format','limitationsAccess'))){
+    else if(in_array($type, array('specifications'))){
         $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
         echo '<div class="modal-header">
@@ -32,7 +38,7 @@ function getList($type, $lang, $mdlang, $withValues=false){
             echo "<a href=\"javascript:formats1({uri:'".$row['uri']."', ";
             foreach($row as $k=>$v){
                 if($k!='uri'){
-                    echo "$k:'".$v."',";
+                    echo "$k:'".$v['name']."',";
                 }
             }
             echo "xxx:'".(string) $row->$mdlang."'});\">".(string) $row->$lang."</a><br>";
@@ -117,6 +123,7 @@ function kw(f){
 <?php
     $lang = htmlspecialchars($_REQUEST['lang']);
     $mdlang = htmlspecialchars($_REQUEST['mdlang']);
+    $handler = htmlspecialchars($_REQUEST['handler']) ? htmlspecialchars($_REQUEST['handler']) : false;
     if(!$lang) $lang='eng';
     if(!$mdlang) $mdlang='eng';
     if(isset($_REQUEST['multi']) && $_REQUEST['multi']==1) {
@@ -124,7 +131,7 @@ function kw(f){
     } else {
         $multi = false;
     }
-    echo getList(htmlspecialchars($_REQUEST['type']), $lang, $mdlang, $multi);
-?>
+    echo getList(htmlspecialchars($_REQUEST['type']), $lang, $mdlang, $multi, $handler);
+
 
 
