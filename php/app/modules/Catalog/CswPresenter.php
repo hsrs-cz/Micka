@@ -1,25 +1,25 @@
 <?php
 namespace CatalogModule;
 
-use App\Model;
+use App\Model,
+    App\Security\AuthorizatorFactory;
 
 /** @resource Catalog:Guest */
 class CswPresenter extends \BasePresenter
 {
 	/** @var Model\CswModel */
-	private $md;
+	private $csw;
 
-
-	public function __construct(Model\CswModel $md)
+	public function __construct(Model\CswModel $csw)
 	{
-		$this->md = $md;
+		$this->csw = $csw;
 	}
 
 
 	public function startup()
 	{
 		parent::startup();
-        $this->md->setIdentity($this->user);
+        $this->csw->setIdentity($this->user);
 	}
 
 	/********************* view default *********************/
@@ -41,7 +41,34 @@ class CswPresenter extends \BasePresenter
 
         if (isset($_SERVER['PHP_AUTH_USER'])) {
             $params['user'] = $_SERVER['PHP_AUTH_USER'];
-            $params['pwd']  = $_SERVER['PHP_AUTH_PW']; 
+            $params['pwd']  = $_SERVER['PHP_AUTH_PW'];
+            
+            $usermodel = new Model\UserModel($this->context->getByType('Nette\Database\Context'));
+            $user = $usermodel->getUserByName($_SERVER['PHP_AUTH_USER'], $_SERVER['PHP_AUTH_PW']);
+            if (!$user) {
+                \Tracy\Debugger::log('usr: '.$_SERVER['PHP_AUTH_USER'],'login_err');
+            } else {
+                $role = [];
+                $role[] = AuthorizatorFactory::ROLE_USER;
+                if ($user->role_editor) {
+                    $role[] = AuthorizatorFactory::ROLE_EDITOR;
+                }
+                if ($user->role_publisher) {
+                    $role[] = AuthorizatorFactory::ROLE_PUBLISHER;
+                }
+                if ($user->role_admin) {
+                    $role[] = AuthorizatorFactory::ROLE_ADMIN;
+                }
+                if ($user->role_root) {
+                    $role[] = AuthorizatorFactory::ROLE_ROOT;
+                }
+                $data = ['username' => rtrim($user->username)];
+                $userGroups = $usermodel->getGroupsByUsername($data['username']);
+                $data['groups'] = $userGroups;
+                $identity = new \Nette\Security\Identity($user->id, $role, $data);
+                $this->user->login($identity);
+                $this->csw->setIdentity($this->user);
+            }
         }
 
         if(isset($_REQUEST) && isset($_REQUEST['url']) && $_REQUEST['url']){
@@ -227,12 +254,12 @@ class CswPresenter extends \BasePresenter
                 break;
 
             case 'identify':
-                $this->md->identify();
+                $this->csw->identify();
                 exit;
                 break;
 
             case 'listsets':
-                $this->md->listSets();
+                $this->csw->listSets();
                 exit;
                 break;
 
