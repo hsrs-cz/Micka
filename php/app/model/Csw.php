@@ -14,6 +14,7 @@ namespace Micka;
 class Csw{
     private $user;
     private $appParameters;
+    private $dbContext;
     var $xp  = null;
     var $xml = null;
     var $xsl = null;
@@ -170,9 +171,10 @@ class Csw{
    * @param string $logpath log file name with path (optional)
    */
     function __construct($logpath="", $subset=false){
-        global $tmp_identity, $tmp_appparameters;
+        global $tmp_nbcontext,$tmp_identity, $tmp_appparameters;
             $this->user = $tmp_identity;
             $this->appParameters = $tmp_appparameters;
+            $this->dbContext = $tmp_nbcontext;
         
         $this->xml = new \DomDocument;
         $this->xsl = new \DomDocument;
@@ -503,9 +505,9 @@ class Csw{
       case 'getrecordbyid': $result = $this->getRecordById(); break;
       case 'transaction': $result = $this->transaction(); break;
       case 'harvest': 
-        prihlaseni(null, null); //TODO - change 
-        getProj();
-        if(canAction('w')) $result = $this->harvest(true); break;
+        //prihlaseni(null, null); //TODO - change 
+        //getProj();
+        if($this->user->isInRole('editor')) $result = $this->harvest(true); break;
       case 'getharvest': $result = $this->harvest(false); break;
       default: $this->exception(3, "request", $this->params['REQUEST']." is not supported request value.");  	
     	break;
@@ -1155,7 +1157,7 @@ class Csw{
    *
    */
   function transaction(){
-    if(!canAction('w')) $this->exception(1, "Transaction", "You don't have permission to transaction.");
+    if(!$this->user->isInRole('editor')) $this->exception(1, "Transaction", "You don't have permission to transaction.");
     $this->logText .= $this->params['REQTYPE'];
     switch(strtolower($this->params['REQTYPE'])){
       case "delete": 
@@ -1194,22 +1196,38 @@ class Csw{
    * @param boolean $stopOnError If set true, insert no record if error occurs. Otherwise attempts to insert at least valid elements. 
    * @return array Associative array with update results (both successful and failed records)
    */
-  function update($nodeName='', $editGroup='', $viewGroup='', $public=0, $stopOnError=true, $overwrite='all'){
+  function update($nodeName='', $editGroup='', $viewGroup='', $public=0, $stopOnError=true, $overwrite='all') {
+    $recordModel = new \App\Model\RecordModel($this->dbContext, $this->user);
+    /*
     $importer = new MetadataImport($this->params['DEBUG']);
     $md = $importer->xml2array($this->xml, __DIR__ ."/xsl/update2micka.xsl");
     if($this->params['DEBUG']==2) var_dump($md);
     $c = new MdImport();
-  	$c->setDataType($public); // nastavení veřejného záznamu
-  	if($editGroup){
-		$c->group_e = $editGroup; 
-	}
-  	if($viewGroup){
-		$c->group_v = $viewGroup; 
-	}
-  	$c->stop_error = $stopOnError; // pokud dojde k chybě při importu pokračuje 
-  	$c->server_name = $nodeName; // jméno serveru ze kterého se importuje
-  	$c->setReportValidType('array', true); // formát validace
+    $c->setDataType($public); // nastavení veřejného záznamu
+    if($editGroup){
+        $c->group_e = $editGroup; 
+    }
+    if($viewGroup){
+        $c->group_v = $viewGroup; 
+    }
+    $c->stop_error = $stopOnError; // pokud dojde k chybě při importu pokračuje 
+    $c->server_name = $nodeName; // jméno serveru ze kterého se importuje
+    $c->setReportValidType('array', true); // formát validace
     $result = $c->dataToMd($md, $overwrite); 
+     */
+    $params = array();
+    $params['data_type'] = $public;  // nastavení veřejného záznamu
+    if($editGroup){
+        $params['edit_group'] = $editGroup; 
+    }
+    if($viewGroup){
+        $params['view_group'] = $viewGroup; 
+    }
+    $params['stop_error'] = $stopOnError; // pokud dojde k chybě při importu pokračuje 
+    $params['server_name'] = $nodeName; // jméno serveru ze kterého se importuje
+    $params['valid_type'] = array('type' => 'array', 'short' => TRUE); // formát validace
+    $params['update_type'] = $overwrite; 
+    $result = $recordModel->setXmlFromCsw($this->xml, $params);
     if($this->params['DEBUG']==1) var_dump($result);
     return $result;
   }
