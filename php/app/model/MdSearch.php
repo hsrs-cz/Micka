@@ -93,6 +93,9 @@ class MdSearch
 	}
     
 	private function setFlatParams($params) {
+		if (is_array($params) === FALSE) {
+			$params = array();
+		}
 		$this->sql_mds = '';
 		foreach ($params as $key => $value) {
 			if ($key == 'VALID') {
@@ -120,6 +123,9 @@ class MdSearch
 	}
     
 	private function setQueryIn($query) {
+		if (is_array($query) === FALSE) {
+			$query = array();
+		}
 		$this->query_in = $query;
 		if (count($query) == 1) {
 			if(isset($query[0]) && is_array($query[0]) && count($query[0]) > 0) {
