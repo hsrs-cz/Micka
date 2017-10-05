@@ -9,7 +9,7 @@ class ArrayMdXml2MdValues extends \BaseModel
 	private $md_values = [];
 	private $del_md_id = [];
 	private $md = [];
-    public $lang;
+    public $lang = 'eng';
 	
 	public function startup()
 	{
@@ -441,7 +441,6 @@ class ArrayMdXml2MdValues extends \BaseModel
 	}
     
 	public function getMdFromArrayXml($arrayXml) {
-        //echo '<pre>'; print_r($arrayXml); echo '</pre>'; exit();
         $rs = [];
 		if (is_array($arrayXml) === FALSE) {
 			$rs['report'] = 'input data is not array';
