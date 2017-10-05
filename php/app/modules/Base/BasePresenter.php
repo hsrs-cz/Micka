@@ -34,7 +34,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
                 : substr($this->context->parameters['app']['langs'],0,3);
         $this->mickaSession = $this->getSession('mickaSection');
         
-        define("CSW_LOG", '');
+        define("CSW_LOG", __DIR__ . '/../../../log');
         define("MICKA_ADMIN_IP", '');
         define("MICKA_URL", '');
         define("MICKA_LANG", $this->appLang);
