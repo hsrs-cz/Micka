@@ -5,11 +5,12 @@
 
 $title = '';
 
-function getList($type, $lang, $mdlang, $withValues=false, $handler="formats1"){
-    if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords'))){
+function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
+    if(!$handler) $handler="formats1";
+    if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName'))){
         $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
-        echo '<div class="modal-header">
+        echo '<div class="panel-heading">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4>'.(string) $title .'</h4>
         </div><div class="modal-body">';
@@ -29,7 +30,7 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler="formats1"){
     else if(in_array($type, array('specifications'))){
         $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
-        echo '<div class="modal-header">
+        echo '<div class="modal-headerx panel-heading">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4>'.(string) $title .'</h4>
         </div><div class="modal-body">';

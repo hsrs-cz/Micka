@@ -374,7 +374,7 @@
                         <xsl:when test="$placeholder">
                             <xsl:value-of select="$placeholder"/>
                         </xsl:when>
-                        <xsl:otherwise>Vyberte ...</xsl:otherwise>
+                        <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
                     <xsl:if test="string-length($value)=0"><option></option></xsl:if>
@@ -413,7 +413,7 @@
                         <xsl:when test="$placeholder">
                             <xsl:value-of select="$placeholder"/>
                         </xsl:when>
-                        <xsl:otherwise>Vyberte ...</xsl:otherwise>
+                        <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
                     <!-- blank value -->

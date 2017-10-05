@@ -111,7 +111,7 @@ xmlns:php="http://php.net/xsl">
                         <description><xsl:value-of select="$labels/test[@code='1.4.b']"/></description>
                         <xpath>distributionInfo/*/transferOptions/*/onLine/*/linkage/*/protocol</xpath>
                         <xsl:choose>
-                            <xsl:when test="contains(protocol, 'http://services.cuzk.cz/codelist/OnlineResourceProtocolValue')">
+                            <xsl:when test="contains(protocol, 'http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue')">
                                <value><xsl:value-of select="protocol"/></value>
                                <pass>true</pass>
                             </xsl:when>

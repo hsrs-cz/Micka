@@ -1539,35 +1539,35 @@
   <specifications title="Nařízení komise">
     <title lang="eng">Specifications</title>
     <title lang="cze">Specifikace</title>
-	<value code="Metadata"  uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">
-        <cze name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat">Metadata</cze>
-		<eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata</eng>
-    </value>
 	<!--value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat" 
         code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value-->
 	<value code="Interoperability"  uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">
-        <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">Interoperabilita</cze>
-		<eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability</eng>
+        <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">Interoperabilita 1089/2010</cze>
+		<eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability 1089/2010</eng>
     </value>
+    <value code="Network" uri="https://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">
+        <cze name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby">Síťové služby 976/2009</cze>
+		<eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Network services 976/2009</eng>
+    </value>  
     <value code="Download" uri="https://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">
         <cze name="Nařízení Komise (EU) č. 1088/2010 ze dne 23. listopadu 2010, kterým se mění nařízení (ES) č. 976/2009, pokud jde o služby stahování dat a transformační služby">Stahovací a transformační služby 1088/2010</cze>
-		<eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Download and transformation services</eng>
+		<eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Download and transformation services 1088/2010</eng>
     </value>  
-    <value code="Network" uri="https://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">
-        <cze name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby">Síťové služby</cze>
-		<eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Network services</eng>
-    </value>  
+	<value code="Metadata"  uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">
+        <cze name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat">Metadata 1205/2008</cze>
+		<eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata 1205/2008</eng>
+    </value>
     <value code="Access" uri="https://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">
-        <cze name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" >Přístup k datovým sadám a službám</cze>
-		<eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services</eng>
+        <cze name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" >Přístup k datovým sadám a službám 268/2010</cze>
+		<eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
     </value>
     <value code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">
-        <cze name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" >Monitoring ...</cze>
-		<eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoring and reporting</eng>
+        <cze name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" >Monitoring a reporting 2009/442/ES</cze>
+		<eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoring and reporting 2009/442/ES</eng>
     </value>
     <value code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">
-        <cze name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" >SMĚRNICE INSPIRE</cze>
-		<eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE Directive</eng>
+        <cze name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" >SMĚRNICE INSPIRE 2007/2/ES</cze>
+		<eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
     </value>
   </specifications>
 
@@ -2072,163 +2072,163 @@
 </units>
 
 <protocol>
-    <value code="WWW:LINK-1.0-http--link" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--link">
+    <value code="WWW:LINK-1.0-http--link" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--link">
         <cze>WWW - link</cze>
 		<eng>WWW - link</eng>
     </value> 
-    <value code="WWW:DOWNLOAD-1.0-http--download" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-http--download">
+    <value code="WWW:DOWNLOAD-1.0-http--download" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-http--download">
         <cze>WWW - download</cze>
 		<eng>WWW - download</eng>
     </value> 
-    <value code="WWW:LINK-1.0-http--rss" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--rss">
+    <value code="WWW:LINK-1.0-http--rss" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--rss">
         <cze>RSS</cze>
 		<eng>RSS</eng>
     </value> 
-    <value code="WWW:LINK-1.0-http--atom" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--atom">
+    <value code="WWW:LINK-1.0-http--atom" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--atom">
         <cze>ATOM</cze>
 		<eng>ATOM</eng>
     </value> 
-    <value code="WWW:DOWNLOAD-1.0-ftp--download" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-ftp--download">
+    <value code="WWW:DOWNLOAD-1.0-ftp--download" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-ftp--download">
         <cze>FTP</cze>
 		<eng>FTP</eng>
     </value> 
-    <value code="OGC:WMS" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WMS">
+    <value code="OGC:WMS" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS">
         <cze>WMS</cze>
 		<eng>WMS</eng>
     </value> 
-    <value code="OGC:WMS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WMS-1.0.0-http-get-capabilities">
+    <value code="OGC:WMS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.0.0-http-get-capabilities">
         <cze>WMS 1.0.0</cze>
 		<eng>WMS 1.0.0</eng>
     </value> 
-    <value code="OGC:WMS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.0-http-get-capabilities">
+    <value code="OGC:WMS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.0-http-get-capabilities">
         <cze>WMS 1.1.0</cze>
 		<eng>WMS 1.1.0</eng>
     </value> 
-    <value code="OGC:WMS-1.1.1-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.1-http-get-capabilities">
+    <value code="OGC:WMS-1.1.1-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.1-http-get-capabilities">
         <cze>WMS 1.1.1</cze>
 		<eng>WMS 1.1.1</eng>
     </value> 
-    <value code="OGC:WMS-1.3.0-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WMS-1.3.0-http-get-capabilities">
+    <value code="OGC:WMS-1.3.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.3.0-http-get-capabilities">
         <cze>WMS 1.3.0</cze>
 		<eng>WMS 1.3.0</eng>
     </value> 
-    <value code="OGC:WFS" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WFS">
+    <value code="OGC:WFS" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS">
         <cze>WFS</cze>
 		<eng></eng>
     </value>
-    <value code="OGC:WFS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-get-capabilities">
+    <value code="OGC:WFS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-get-capabilities">
         <cze>WFS 1.0.0 / Get</cze>
 		<eng>WFS 1.0.0 / Get</eng>
     </value> 
-    <value code="OGC:WFS-1.0.0-http-post-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-post-capabilities">
+    <value code="OGC:WFS-1.0.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-post-capabilities">
         <cze>WFS 1.0.0 / Post</cze>
 		<eng>WFS 1.0.0 / Post</eng>
     </value> 
-    <value code="OGC:WFS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-get-capabilities">
+    <value code="OGC:WFS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-get-capabilities">
         <cze>WFS 1.1.0 / Get</cze>
 		<eng>WFS 1.1.0 / Get</eng>
     </value> 
-    <value code="OGC:WFS-1.1.0-http-post-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-post-capabilities">
+    <value code="OGC:WFS-1.1.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-post-capabilities">
         <cze>WFS 1.1.0 / Post</cze>
 		<eng>WFS 1.1.0 / Post</eng>
     </value> 
-    <value code="OGC:WFS-2.0.0-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-get-capabilities">
+    <value code="OGC:WFS-2.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-get-capabilities">
         <cze>WFS 2.0.0 / Get</cze>
 		<eng>WFS 2.0.0 / Get</eng>
     </value> 
-    <value code="OGC:WFS-2.0.0-http-post-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-post-capabilities">
+    <value code="OGC:WFS-2.0.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-post-capabilities">
         <cze>WFS 2.0.0 / Post</cze>
 		<eng>WFS 2.0.0 / Post</eng>
     </value> 
-    <value code="OGC:CSW-2.0.2-http-get-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-get-capabilities">
+    <value code="OGC:CSW-2.0.2-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-get-capabilities">
         <cze>CSW 2.0.2 / Get</cze>
 		<eng>CSW 2.0.2 / Get</eng>
     </value> 
-    <value code="OGC:CSW-2.0.2-http-post-capabilities" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-post-capabilities">
+    <value code="OGC:CSW-2.0.2-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-post-capabilities">
         <cze>CSW 2.0.2 / Post</cze>
 		<eng>CSW 2.0.2 / Post</eng>
     </value> 
-    <value code="ESRI:AIMS--http-get-image" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-image">
+    <value code="ESRI:AIMS--http-get-image" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-image">
         <cze>ESRI ArcIMS image service</cze>
 		<eng>ESRI ArcIMS image service</eng>
     </value> 
-    <value code="ESRI:AIMS--http-get-feature" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-feature">
+    <value code="ESRI:AIMS--http-get-feature" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-feature">
         <cze>ESRI ArcIMS feature service</cze>
 		<eng>ESRI ArcIMS feature service</eng>
     </value> 
-    <value code="ESRI:AIMS--http--configuration" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http--configuration">
+    <value code="ESRI:AIMS--http--configuration" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http--configuration">
         <cze>ArcIMS Map Service (*.AXL)</cze>
 		<eng>ArcIMS Map Service (*.AXL)</eng>
     </value> 
-    <value code="ESRI:MAP-10.2-http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-rest">
+    <value code="ESRI:MAP-10.2-http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-rest">
         <cze>ESRI ArcGIS MAP REST</cze>
 		<eng>ESRI ArcGIS MAP REST</eng>
     </value> 
-    <value code="ESRI:MAP-10.2-http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-soap">
+    <value code="ESRI:MAP-10.2-http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-soap">
         <cze>ESRI ArcGIS MAP SOAP</cze>
 		<eng>ESRI ArcGIS MAP SOAP</eng>
     </value> 
-    <value code="ESRI:FEATURE--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-rest">
+    <value code="ESRI:FEATURE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-rest">
         <cze>ESRI ArcGIS FEATURE REST</cze>
 		<eng>ESRI ArcGIS FEATURE REST</eng>
     </value> 
-    <value code="ESRI:FEATURE--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-soap">
+    <value code="ESRI:FEATURE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-soap">
         <cze>ESRI ArcGIS FEATURE SOAP</cze>
 		<eng>ESRI ArcGIS FEATURE SOAP</eng>
     </value> 
-    <value code="ESRI:GEOCODE--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-rest">
+    <value code="ESRI:GEOCODE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-rest">
         <cze>ESRI ArcGIS GEOCODE REST</cze>
 		<eng>ESRI ArcGIS GEOCODE REST</eng>
     </value> 
-    <value code="ESRI:GEOCODE--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-soap">
+    <value code="ESRI:GEOCODE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-soap">
         <cze>ESRI ArcGIS GEOCODE SOAP</cze>
 		<eng>ESRI ArcGIS GEOCODE SOAP</eng>
     </value> 
-    <value code="ESRI:GEODATA--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-rest">
+    <value code="ESRI:GEODATA--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-rest">
         <cze>ESRI ArcGIS GEODATA REST</cze>
 		<eng>ESRI ArcGIS GEODATA REST</eng>
     </value> 
-    <value code="ESRI:GEODATA--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-soap">
+    <value code="ESRI:GEODATA--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-soap">
         <cze>ESRI ArcGIS GEODATA SOAP</cze>
 		<eng></eng>
     </value> 
-    <value code="ESRI:GEOMETRY--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-rest">
+    <value code="ESRI:GEOMETRY--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-rest">
         <cze>ESRI ArcGIS GEOMETRY REST</cze>
 		<eng>ESRI ArcGIS GEOMETRY REST</eng>
     </value> 
-    <value code="ESRI:GEOMETRY--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-soap">
+    <value code="ESRI:GEOMETRY--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-soap">
         <cze>ESRI ArcGIS GEOMETRY SOAP</cze>
 		<eng>ESRI ArcGIS GEOMETRY SOAP</eng>
     </value> 
-    <value code="ESRI:GP--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GP--http-rest">
+    <value code="ESRI:GP--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GP--http-rest">
         <cze>ESRI ArcGIS Geoprocessing REST</cze>
 		<eng>ESRI ArcGIS Geoprocessing REST</eng>
     </value> 
-    <value code="ESRI:GP--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GP--http-soap">
+    <value code="ESRI:GP--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GP--http-soap">
         <cze>ESRI ArcGIS Geoprocessing SOAP</cze>
 		<eng>ESRI ArcGIS Geoprocessing SOAP</eng>
     </value> 
-    <value code="ESRI:GLOBE--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-rest">
+    <value code="ESRI:GLOBE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-rest">
         <cze>ESRI ArcGIS GLOBE REST</cze>
 		<eng>ESRI ArcGIS GLOBE REST</eng>
     </value> 
-    <value code="ESRI:GLOBE--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-soap">
+    <value code="ESRI:GLOBE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-soap">
         <cze>ESRI ArcGIS GLOBE SOAP</cze>
 		<eng>ESRI ArcGIS GLOBE SOAP</eng>
     </value> 
-    <value code="ESRI:IMAGE--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-rest">
+    <value code="ESRI:IMAGE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-rest">
         <cze>ESRI ArcGIS IMAGE REST</cze>
 		<eng>ESRI ArcGIS IMAGE REST</eng>
     </value> 
-    <value code="ESRI:IMAGE--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-soap">
+    <value code="ESRI:IMAGE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-soap">
         <cze>ESRI ArcGIS IMAGE SOAP</cze>
 		<eng>ESRI ArcGIS IMAGE SOAP</eng>
     </value> 
-    <value code="ESRI:NA--http-rest" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:NA--http-rest">
+    <value code="ESRI:NA--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:NA--http-rest">
         <cze>ESRI ArcGIS Network Analysis REST</cze>
 		<eng>ESRI ArcGIS Network Analysis REST</eng>
     </value> 
-    <value code="ESRI:NA--http-soap" uri="http://services.cuzk.cz/codelist/OnlineResourceProtocolValue/ESRI:NA--http-soap">
+    <value code="ESRI:NA--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:NA--http-soap">
         <cze>ESRI ArcGIS Network Analysis SOAP</cze>
 		<eng>ESRI ArcGIS Network Analysis SOAP</eng>
     </value> 
@@ -2538,5 +2538,103 @@
 		<eng>garant</eng>
     </value>
 </obligatory>
+
+<hlname>
+    <title lang="cze">Úroveň v hierarchii</title>
+    <title lang="eng">Hierarchy level name</title>
+	<value uri="http://geoportal.gov.cz/inspire">
+        <cze>Pro INSPIRE EU</cze>
+		<eng>For INSPIRE EU</eng>
+    </value>    
+</hlname>
+
+<linkageName>
+    <title lang="cze">Předdefinovaná jména zdrojů</title>
+    <title lang="eng">Resource type predefined names</title>
+    <value code="WEB_cze">
+        <eng>Web page (CS)</eng>
+        <cze>Webová stránka (CS)</cze>
+    </value>
+    <value code="ARCH_cze">
+        <eng>Digital archive (CS)</eng>
+        <cze>Digital archive (CS)</cze>
+    </value>
+    <value code="DVD_cze">
+        <eng>DVD/CD (CS)</eng>
+        <cze>DVD/CD (CS)</cze>
+    </value>
+    <value code="WMS_cze">
+        <eng>WMS (CS)</eng>
+        <cze>WMS (CS)</cze>
+    </value> 
+    <value code="PRINT_cze">
+        <eng>Shop - printed (CS)</eng>
+        <cze>Obchod - tisk (CS)</cze>
+    </value> 
+    <value code="ESRI-IMS_cze">
+        <eng>ArcIMS (CS)</eng>
+        <cze>ArcIMS (CS)</cze>
+    </value>
+    <value code="ESRI-SRV_cze">
+        <eng>ArcGIS (CS)</eng>
+        <cze>ArcGIS (CS)</cze>
+    </value>
+    <value code="MAP_cze">
+        <eng>Map application (CS)</eng>
+        <cze>Mapová aplikace (CS)</cze>
+    </value>
+    <value code="DB_cze">
+        <eng>Database application (CS)</eng>
+        <cze>Databázová aplikace (CS)</cze>
+    </value>
+    <value code="GREP_cze">
+        <eng>Georeport (CS)</eng>
+        <cze>Georeport (CS)</cze>
+    </value>
+    <value code="WEB_eng">
+        <eng>Web page (EN)</eng>
+        <cze>Webová stránka (EN)</cze>
+    </value>
+    <value code="ARCH_eng">
+        <eng>Digital archive (EN)</eng>
+        <cze>Digitální archív (EN)</cze>
+    </value>
+    <value code="PRINT_eng">
+        <eng>Shop - printed (EN)</eng>
+        <cze>Obchod - tisk (EN)</cze>
+    </value> 
+    <value code="DVD_eng">
+        <eng>DVD/CD (EN)</eng>
+        <cze>DVD/CD (EN)</cze>
+    </value>
+    <value code="WMS_eng">
+        <eng>WMS (EN)</eng>
+        <cze>WMS (EN)</cze>
+    </value> 
+    <value code="ESRI-IMS_eng">
+        <eng>ArcIMS (EN)</eng>
+        <cze>ArcIMS (EN)</cze>
+    </value>
+    <value code="ESRI-SRV_eng">
+        <eng>ArcGIS (EN)</eng>
+        <cze>ArcGIS (EN)</cze>
+    </value>
+    <value code="MAP_eng">
+        <eng>Map application (EN)</eng>
+        <cze>Mapová aplikace (EN)</cze>
+    </value>
+    <value code="DB_eng">
+        <eng>Database application (EN)</eng>
+        <cze>Databázová aplikace (EN)</cze>
+    </value>
+    <value code="GREP_eng">
+        <eng>Georeport (EN)</eng>
+        <cze>Georeport (EN)</cze>
+    </value>
+    <value code="CSW">
+        <eng>CSW</eng>
+        <cze>CSW</cze>
+    </value>
+</linkageName>
 
 </map>

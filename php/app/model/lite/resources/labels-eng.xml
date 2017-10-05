@@ -679,10 +679,12 @@ against which data is being evaluated.</p>
 		</help>
 	</msg>
 	<msg name="accessPoint">
-		<label>Access point</label>
+		<label>Harmonized</label>
 		<help>
-			<h3>If the address is the access point</h3> 
+			<h3>If the address is the access point of INSPIRE harmonized service.</h3> 
 		</help>
 	</msg>
-    
+    <msg name="sel">
+        <label>Select</label>
+    </msg>
 </labels>

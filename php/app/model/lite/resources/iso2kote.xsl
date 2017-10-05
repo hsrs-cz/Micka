@@ -247,7 +247,6 @@
             <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:language/*/@codeListValue"/>
             <xsl:with-param name="codes" select="'language'"/>
             <xsl:with-param name="multi" select="2"/>
-            <xsl:with-param name="class" select="'short'"/>
             <xsl:with-param name="valid" select="'1.7'"/>
             <xsl:with-param name="req" select="'1'"/>
         </xsl:call-template>
@@ -399,10 +398,10 @@
 	
         <div class="col-xs-12 col-md-8">
             <div id="overmap" style="width:100%; height:400px;"></div>
-            <input type="text" class="inp num mandatory" id="xmin" name="xmin" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:westBoundLongitude/*}" size="5" />
-            <input type="text" class="inp num mandatory" id="ymin" name="ymin" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:southBoundLatitude/*}" size="5" />
-            <input type="text" class="inp num mandatory" id="xmax" name="xmax" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:eastBoundLongitude/*}" size="5" />
-            <input type="text" class="inp num mandatory" id="ymax" name="ymax" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:northBoundLatitude/*}" size="5" />
+            <input type="text" class="form-control tiny " id="xmin" name="xmin" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:westBoundLongitude/*}" size="5" />
+            <input type="text" class="form-control tiny " id="ymin" name="ymin" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:southBoundLatitude/*}" size="5" />
+            <input type="text" class="form-control tiny " id="xmax" name="xmax" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:eastBoundLongitude/*}" size="5" />
+            <input type="text" class="form-control tiny " id="ymax" name="ymax" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:northBoundLatitude/*}" size="5" />
         </div>
     </div>
     <!-- CZ-14 geographic identifier -->
@@ -576,6 +575,7 @@
 	    <xsl:with-param name="multi" select="2"/>
         <xsl:with-param name="req" select="1"/>
 	    <xsl:with-param name="valid" select="'8.1'"/>
+        <xsl:with-param name="tags" select="1"/>
 	    <!-- <xsl:with-param name="class" select="'mandatory'"/>  -->
 	</xsl:call-template>    
     

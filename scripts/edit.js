@@ -742,7 +742,7 @@ function fc(obj){
     md_elem=obj.parentNode;
     md_dexpand1(md_elem);
     $("#md-dialog").modal();
-    var html = '<div class="modal-header">'
+    var html = '<div class="panel-heading">'
     +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
     +'<h4>'+HS.i18n('Select record')+'</h4></div>';
     html += '<div class="modal-body"><select id="parent-select"></select><div id="fc-features"></div></div>';
@@ -838,7 +838,7 @@ function fc1(fcObj, lyrlist){
 function cover(obj){
     md_elem=obj.parentNode;
     $("#md-dialog").modal();
-    var html = '<div class="modal-header">'
+    var html = '<div class="panel-heading">'
     +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
     +'<h4>'+HS.i18n('Area coverage')+'</h4></div>';
     html += '<div class="modal-body">'
@@ -891,7 +891,7 @@ function cover1(){
 function find_parent(obj){
     md_elem = obj.parentNode;
     $("#md-dialog").modal();
-    var html = '<div class="modal-header">'
+    var html = '<div class="panel-heading">'
     +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
     +'<h4>'+HS.i18n('Select record')+'</h4></div>';
     html += '<div class="modal-body"><select id="parent-select"></select></div></div>';       
@@ -1125,8 +1125,9 @@ function mapa(obj){
 }
 
 function uploadFile(obj){
-  md_elem = obj.parentNode.parentNode;
-  openDialog('upload', 'md_img_upload.php', 'width=400,height=200');
+    md_elem = obj.parentNode.parentNode;
+    $("#md-dialog").modal();
+    $("#md-content").html('<div class="modal-body">not implemented yet...</div>');
 }
 
 function uploadFile1(fileURL){
@@ -1238,9 +1239,14 @@ function hlname(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=hlname&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=hlname&handler=hlname1&lang='+lang);
 }
 
+function hlname1(f){
+	var inputs = flatNodes(md_elem, "INPUT");
+	inputs[0].value = f.uri;
+    $('#md-dialog').modal('hide');
+}
 
 function fspec(obj){
 	md_elem = obj.parentNode;
@@ -1249,7 +1255,6 @@ function fspec(obj){
 }
 
 function fspec1(f){
-    console.log(f);
 	var inputs = flatNodes(md_elem, "INPUT");
 	inputs[0].value = 'INSPIRE Data Specification on ' + f.eng + ' - Guidelines';
     $('#md-dialog').modal('hide');
@@ -1267,20 +1272,20 @@ function dName(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=dname&lang='+lang);    
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=linkageName&lang='+lang);
 }
 
 function crs1(f){
-  var pom = f.split(",");
-  var inputs = flatNodes(md_elem, "INPUT");
-  for(var i=0;i<inputs.length;i++){
-    v = inputs[i];
-    switch(v.id){
-      case '2070': v.value = pom[0]; break; 
-      case '2081': v.value = pom[1]; break; 
-    }     
-  }
-  $('#md-dialog').modal('hide');
+    var pom = f.split(",");
+    var inputs = flatNodes(md_elem, "INPUT");
+    for(var i=0;i<inputs.length;i++){
+        v = inputs[i];
+        switch(v.id){
+          case '2070': v.value = pom[0]; break; 
+          case '2081': v.value = pom[1]; break; 
+        }     
+    }
+    $('#md-dialog').modal('hide');
 }
 
 function dc_kontakt(obj, type){
@@ -1661,9 +1666,11 @@ var md_upload_run = function(o){
 }
 
 var md_upload = function(obj, mime){
-	micka.window(obj,{title:'Nahrát soubor', data:'<form name="fileUploadForm" onsubmit="return md_upload_run(this);"><input name="f" type="file"/><br><input type="submit" value="OK"/></form>'
+    $("#md-dialog").modal();
+    $("#md-content").html('<div class="modal-body">not implemented yet...</div>');
+	/*micka.window(obj,{title:'Nahrát soubor', data:'<form name="fileUploadForm" onsubmit="return md_upload_run(this);"><input name="f" type="file"/><br><input type="submit" value="OK"/></form>'
 	+ '<div id="file-progress" style="display:none">Nahrávám...</div>'
-	});
+	});*/
 }
 
 micka.initMap=function(config){

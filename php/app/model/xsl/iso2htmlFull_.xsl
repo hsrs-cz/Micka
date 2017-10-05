@@ -748,7 +748,7 @@
 			<div class="c">
 				<xsl:for-each select="$vazby//gmd:MD_Metadata">
 	                <xsl:variable name="url"><xsl:value-of select="gmd:fileIdentifier"/></xsl:variable>
-					<div><a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$vazby[position()]//gmd:hierarchyLevel/*/@codeListValue]}">
+					<div><a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$vazby[position()]//gmd:hierarchyLevel/*/@codeListValue]/*[name()=$lang]}">
 						<xsl:call-template name="showres">
 							<xsl:with-param name="r" select="gmd:hierarchyLevel/*/@codeListValue"/>
 						</xsl:call-template>
@@ -771,7 +771,7 @@
 					<xsl:variable name="a" select="$pilink//gmd:hierarchyLevel/*/@codeListValue"/>
 	                <xsl:variable name="url"><xsl:value-of select="concat('',$pilink//gmd:fileIdentifier)"/></xsl:variable>
 
-					<a class="t" href="{$url}" title="{$cl/updateScope/value[@name=$a]}">
+					<a class="t" href="{$url}" title="{$cl/updateScope/value[@name=$a]/*[name()=$lang]}">
 						<xsl:call-template name="showres">
 							<xsl:with-param name="r" select="$a"/>
 						</xsl:call-template>
@@ -799,7 +799,7 @@
 						<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
   						<xsl:variable name="url"><xsl:value-of select="concat('',gmd:fileIdentifier)"/></xsl:variable>
 						<div>
-                            <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
+                            <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]/*[name()=$lang]}">
                                 <xsl:call-template name="showres">
                                     <xsl:with-param name="r" select="$a"/>
                                 </xsl:call-template>
@@ -862,7 +862,7 @@
 						<xsl:for-each select="$siblinks//gmd:MD_Metadata">
 							<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
 							<xsl:variable name="url"><xsl:value-of select="concat('',normalize-space(gmd:fileIdentifier))"/></xsl:variable>
-							<div><a href="{$url}" class="t"  title="{$cl/updateScope/value[@name=$a]}">
+							<div><a href="{$url}" class="t"  title="{$cl/updateScope/value[@name=$a]/*[name=$lang]}">
 								<xsl:call-template name="showres">
 									<xsl:with-param name="r" select="$a"/>
 								</xsl:call-template>

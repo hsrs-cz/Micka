@@ -143,6 +143,12 @@ label.inp2 {
     width:180px;
 }
 
+.tiny {
+    width: 90px;
+    display: inline-block !important;
+    margin-right: 3px;
+}
+
 .form-control {
     height: 28px;
     margin: 2px 0 2px 0;

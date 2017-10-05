@@ -91,14 +91,14 @@
 
     <div id="md-dialog" class="modal fade" role="dialog">
         <div class="modal-dialog">
-            <div id="md-content" class="modal-content"></div>
+            <div id="md-content" class="modal-content panel-default"></div>
         </div>
     </div>
     
     <div id="md-keywords" class="modal fade panel-default" role="dialog">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
+            <div class="modal-content panel-default">
+                <div class="panel-heading">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4>{_messages.frontend.keywords}</h4>
                 </div>
@@ -180,7 +180,7 @@
 
         <div id="md-languages-dialog" class="modal fade" role="dialog">
             <div class="modal-dialog">
-                <div id="md-content" class="modal-content">
+                <div id="md-content" class="modal-content panel-default">
                     <div class="modal-body">                
                         {foreach $allLanguages as $key => $value}
                             <div class="checkbox">
