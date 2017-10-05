@@ -1172,7 +1172,7 @@ class Csw{
                   $this->params['GROUP_EDIT'], 
                   $this->params['GROUP_READ'],
                   $this->params['IS_PUBLIC'],
-                  false, 'update'), 
+                  false, 'all'), 
               "Update"); 
           break; 
       case "insert": 
