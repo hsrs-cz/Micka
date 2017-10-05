@@ -826,6 +826,9 @@ class Csw{
   //$export = new MdExport(MICKA_USER, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
   $export = new \App\Model\MdSearch($this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
   $count = $export->fetchXMLOpen($qstr, $flatParams);
+    if ($count == -1) {
+        $this->exception(3, "Filter", "Invalid filter: ".$qstr);
+    }
   $returned = min(array($this->params['MAXRECORDS'], $count - $this->params['STARTPOSITION']+1));
   if($returned < 0) $returned = 0; 
   $next = $this->params['STARTPOSITION'] + $this->params['MAXRECORDS'];
