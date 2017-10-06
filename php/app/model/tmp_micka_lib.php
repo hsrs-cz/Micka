@@ -441,6 +441,7 @@ function getSortBy($in='', $ret='array') {
 			? $sort_by = $_SESSION['micka']['search']['sort_by']
 			: $sort_by = 'title,ASC';
 	}
+    $sort_by = str_replace('|', ',', $sort_by);
 	$pom = explode(',', trim($sort_by));
 	$pom0 = isset($pom[0]) && $pom[0] != '' ? $pom[0] : 'recno';
 	$pom1 = isset($pom[1]) && $pom[1] != '' ? $pom[1] : 'ASC';
