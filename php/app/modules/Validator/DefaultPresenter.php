@@ -74,6 +74,7 @@ class DefaultPresenter extends \BasePresenter
             echo '<a href="'.$this->link(':Validator:Default:form').'">Validator</a>';
             $this->terminate();
         }
+        $validator->run($data);
         switch ($this->getHttpRequest()->getPost('format')) {
             case "application/json":
                 header("Content-type: application/json charset=\"utf-8\"");
