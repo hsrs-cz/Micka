@@ -1,20 +1,6 @@
 {block content}
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>CENIA - INSPIRE validator</title>
-        <meta name="DC.title" lang="en" content="Metadata validator - CS" />
-        <meta name="DC.description" lang="en"  content="Spatial data and services metadata validator according to INSPRE / Czech profile"/>
-        <meta name="DC.Type" content="Service" />  	
-        <meta name="DC.creator" content="Help Service Remote Sensing" />
-        <meta name="DC.date" scheme="W3CDTF" content="2010-12-23"> 
-        <style type="text/css">
-            @import url({$basePath}/layout/default/validator/validator.css);
-        </style>
-    </head>
-    <body>
-        {!$vypis}
-        
-        <br><br><a n:href=":Validator:Default:form">Validator</a>
-    </body>
-</html>
+
+{$vypis|noescape}
+    <br>
+    <br>
+    <a n:href=":Validator:Default:form">Validator</a>
