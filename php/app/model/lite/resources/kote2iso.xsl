@@ -649,12 +649,21 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 								<gmd:version>
 									<gco:CharacterString>
 										<xsl:value-of select="version"/>
-									</gco:CharacterString>
+                                    </gco:CharacterString>
 								</gmd:version>
 								<gmd:specification>
-									<gco:CharacterString>
-										<xsl:value-of select="specification"/>
-									</gco:CharacterString>
+                                    <xsl:variable name="u" select="specification"/>
+                                    <xsl:variable name="sp" select="$codes/inspireKeywords/value[@spec=$u]"/>
+                                    <xsl:choose>
+                                        <xsl:when test="$sp">
+                                            <gmx:Anchor xlink:href="{specification}">INSPIRE Data Specification on <xsl:value-of select="$sp/eng"/> - Guidelines</gmx:Anchor>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <gco:CharacterString>
+                                                <xsl:value-of select="specification"/>
+                                            </gco:CharacterString>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
 								</gmd:specification>
 							</gmd:MD_Format>
 						</gmd:distributionFormat>

@@ -248,6 +248,7 @@
 	<xsl:param name="req" select="''"/>
 	<xsl:param name="tags" select="0"/>
     <xsl:param name="placeholder" select="''"/>
+    <xsl:param name="attr" select="'uri'"/>
 	
 	<!-- class pro label -->
 	<xsl:variable name="lclassI">
@@ -423,7 +424,7 @@
                         <xsl:variable name="r" select="."/>
                         <xsl:variable name="c">            
                             <xsl:choose>
-                                <xsl:when test="$r/@uri"><xsl:value-of select="$r/@uri"/></xsl:when>
+                                <xsl:when test="$r/@*[name()=$attr]"><xsl:value-of select="$r/@*[name()=$attr]"/></xsl:when>
                                 <xsl:otherwise><xsl:value-of select="$r/@name"/></xsl:otherwise>
                             </xsl:choose>
                         </xsl:variable>

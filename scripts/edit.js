@@ -1256,7 +1256,12 @@ function fspec(obj){
 
 function fspec1(f){
 	var inputs = flatNodes(md_elem, "INPUT");
-	inputs[0].value = 'INSPIRE Data Specification on ' + f.eng + ' - Guidelines';
+    for(var i=0;i<inputs.length;i++){
+        if(inputs[i].id.indexOf('uri')>-1){
+            inputs[i].value = 'https://inspire.ec.europa.eu/id/document/tg/' + f.uri.substr(-2);
+        }
+        else inputs[i].value = 'INSPIRE Data Specification on ' + f.eng + ' - Guidelines';
+    }
     $('#md-dialog').modal('hide');
 }
 

@@ -808,11 +808,11 @@
 							<gmd:version>
 								<gco:CharacterString><xsl:value-of select="*/version"/></gco:CharacterString>
 							</gmd:version>
-							<xsl:if test="*/specification">
-				          		<gmd:specification>
-                                	<gco:CharacterString><xsl:value-of select="*/specification"/></gco:CharacterString>
-                            	</gmd:specification>
-                            </xsl:if>							
+                                <xsl:call-template name="txt">
+                                    <xsl:with-param name="s" select="*"/>
+                                    <xsl:with-param name="name" select="'specification'"/>                      
+                                <xsl:with-param name="lang" select="$mdLang"/>                   
+                            </xsl:call-template>
 						</gmd:MD_Format>
 					</gmd:distributionFormat>
 				  </xsl:for-each>

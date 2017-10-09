@@ -1394,143 +1394,143 @@
     <title lang="cze">Témata INSPIRE</title>
     <title lang="eng">INSPIRE themes</title>
     <!-- ANNEX I -->
-    <value uri="https://inspire.ec.europa.eu/theme/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">
+    <value uri="https://inspire.ec.europa.eu/theme/rs" spec="https://inspire.ec.europa.eu/id/document/tg/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">
         <cze>Souřadnicové referenční systémy</cze>
 		<eng>Coordinate reference systems</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/gg" cenia="base" name="Zeměpisné soustavy souřadnicových sítí" code="Geographical grid systems" publication="2010-05-03" n="I.2">
+    <value uri="https://inspire.ec.europa.eu/theme/gg" spec="https://inspire.ec.europa.eu/id/document/tg/gg" cenia="base" name="Zeměpisné soustavy souřadnicových sítí" code="Geographical grid systems" publication="2010-05-03" n="I.2">
         <cze>Zeměpisné soustavy souřadnicových sítí</cze>
 		<eng>Geographical grid systems</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/gn" cenia="base" name="Zeměpisné názvy" code="Geographical names" publication="2010-05-03" n="I.3">
+    <value uri="https://inspire.ec.europa.eu/theme/gn" spec="https://inspire.ec.europa.eu/id/document/tg/gn" cenia="base" name="Zeměpisné názvy" code="Geographical names" publication="2010-05-03" n="I.3">
         <cze>Zeměpisné názvy</cze>
 		<eng>Geographical names</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/au" cenia="division" name="Správní jednotky" code="Administrative units" publication="2010-05-03" n="I.4">
+    <value uri="https://inspire.ec.europa.eu/theme/au" spec="https://inspire.ec.europa.eu/id/document/tg/au" cenia="division" name="Správní jednotky" code="Administrative units" publication="2010-05-03" n="I.4">
         <cze>Správní jednotky</cze>
 		<eng>Administrative units</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/ad" cenia="division" name="Adresy" code="Addresses" publication="2010-05-03" n="I.5">
+    <value uri="https://inspire.ec.europa.eu/theme/ad" spec="https://inspire.ec.europa.eu/id/document/tg/ad" cenia="division" name="Adresy" code="Addresses" publication="2010-05-03" n="I.5">
         <cze>Adresy</cze>
 		<eng>Addresses</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/cp" cenia="division" name="Katastrální parcely" code="Cadastral parcels" publication="2010-05-03" n="I.6">
+    <value uri="https://inspire.ec.europa.eu/theme/cp" spec="https://inspire.ec.europa.eu/id/document/tg/cp" cenia="division" name="Katastrální parcely" code="Cadastral parcels" publication="2010-05-03" n="I.6">
         <cze>Katastrální parcely</cze>
 		<eng>Cadastral parcels</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/tn" cenia="transport" name="Dopravní sítě" code="Transport networks" publication="2010-05-03" n="I.7">
+    <value uri="https://inspire.ec.europa.eu/theme/tn" spec="https://inspire.ec.europa.eu/id/document/tg/tn" cenia="transport" name="Dopravní sítě" code="Transport networks" publication="2010-05-03" n="I.7">
         <cze>Dopravní sítě</cze>
 		<eng>Transport networks</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/hy" cenia="water" name="Vodopis" code="Hydrography" publication="2010-05-03" n="I.8">
+    <value uri="https://inspire.ec.europa.eu/theme/hy" spec="https://inspire.ec.europa.eu/id/document/tg/hy" cenia="water" name="Vodopis" code="Hydrography" publication="2010-05-03" n="I.8">
         <cze>Vodopis</cze>
 		<eng>Hydrography</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/ps" cenia="environment" name="Chráněná území" code="Protected sites" publication="2010-05-03" n="I.9">
+    <value uri="https://inspire.ec.europa.eu/theme/ps" spec="https://inspire.ec.europa.eu/id/document/tg/ps" cenia="environment" name="Chráněná území" code="Protected sites" publication="2010-05-03" n="I.9">
         <cze>Chráněná území</cze>
 		<eng>Protected sites</eng>
     </value>  
 
     <!-- ANNEX II -->
-    <value uri="https://inspire.ec.europa.eu/theme/el" cenia="base" name="Nadmořská výška" code="Elevation" publication="2013-10-12" n="II.1">
+    <value uri="https://inspire.ec.europa.eu/theme/el" spec="https://inspire.ec.europa.eu/id/document/tg/el" cenia="base" name="Nadmořská výška" code="Elevation" publication="2013-10-12" n="II.1">
         <cze>Nadmořská výška</cze>
 		<eng>Elevation</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/lc" cenia="nature" name="Krajinný pokryv" code="Land cover" publication="2013-10-12" n="II.2">
+    <value uri="https://inspire.ec.europa.eu/theme/lc" spec="https://inspire.ec.europa.eu/id/document/tg/lc" cenia="nature" name="Krajinný pokryv" code="Land cover" publication="2013-10-12" n="II.2">
         <cze>Krajinný pokryv</cze>
 		<eng>Land cover</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/oi" cenia="base" name="Ortofotosnímky" code="Orthoimagery" publication="2013-10-12" n="II.3">
+    <value uri="https://inspire.ec.europa.eu/theme/oi" spec="https://inspire.ec.europa.eu/id/document/tg/oi" cenia="base" name="Ortofotosnímky" code="Orthoimagery" publication="2013-10-12" n="II.3">
         <cze>Ortofotosnímky</cze>
 		<eng>Orthoimagery</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/ge" cenia="nature" name="Geologie" code="Geology" publication="2013-10-12" n="II.4">
+    <value uri="https://inspire.ec.europa.eu/theme/ge" spec="https://inspire.ec.europa.eu/id/document/tg/ge" cenia="nature" name="Geologie" code="Geology" publication="2013-10-12" n="II.4">
         <cze>Geologie</cze>
 		<eng>Geology</eng>
     </value>  
 
     <!-- ANNEX III -->
-    <value uri="https://inspire.ec.europa.eu/theme/su" cenia="division" name="Statistické jednotky" code="Statistical units" publication="2013-10-12" n="III.1">
+    <value uri="https://inspire.ec.europa.eu/theme/su" spec="https://inspire.ec.europa.eu/id/document/tg/su" cenia="division" name="Statistické jednotky" code="Statistical units" publication="2013-10-12" n="III.1">
         <cze>Statistické jednotky</cze>
 		<eng>Statistical units</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/bu" cenia="social" name="Budovy" code="Buildings" publication="2013-10-12" n="III.2">
+    <value uri="https://inspire.ec.europa.eu/theme/bu" spec="https://inspire.ec.europa.eu/id/document/tg/bu" cenia="social" name="Budovy" code="Buildings" publication="2013-10-12" n="III.2">
         <cze>Budovy</cze>
 		<eng>Buildings</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/so" cenia="nature" name="Půda" code="Soil" publication="2013-10-12" n="III.3">
+    <value uri="https://inspire.ec.europa.eu/theme/so" spec="https://inspire.ec.europa.eu/id/document/tg/so" cenia="nature" name="Půda" code="Soil" publication="2013-10-12" n="III.3">
         <cze>Půda</cze>
 		<eng>Soil</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/lu" cenia="nature" name="Využití území" code="Land use" publication="2013-10-12" n="III.4">
+    <value uri="https://inspire.ec.europa.eu/theme/lu" spec="https://inspire.ec.europa.eu/id/document/tg/lu" cenia="nature" name="Využití území" code="Land use" publication="2013-10-12" n="III.4">
         <cze>Využití území</cze>
 		<eng>Land use</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/hh" cenia="social" name="Lidské zdraví a bezpečnost" code="Human health and safety" publication="2013-10-12" n="III.5">
+    <value uri="https://inspire.ec.europa.eu/theme/hh" spec="https://inspire.ec.europa.eu/id/document/tg/hh" cenia="social" name="Lidské zdraví a bezpečnost" code="Human health and safety" publication="2013-10-12" n="III.5">
         <cze>Lidské zdraví a bezpečnost</cze>
 		<eng>Human health and safety</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/us" cenia="social" name="Veřejné služby a služby veřejné správy" code="Utility and governmental services" publication="2013-10-12" n="III.6">
+    <value uri="https://inspire.ec.europa.eu/theme/us" spec="https://inspire.ec.europa.eu/id/document/tg/us" cenia="social" name="Veřejné služby a služby veřejné správy" code="Utility and governmental services" publication="2013-10-12" n="III.6">
         <cze>Veřejné služby a služby veřejné správy</cze>
 		<eng>Utility and governmental services</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/ef" cenia="environment" name="Zařízení pro sledování životního prostředí" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">
+    <value uri="https://inspire.ec.europa.eu/theme/ef" spec="https://inspire.ec.europa.eu/id/document/tg/ef" cenia="environment" name="Zařízení pro sledování životního prostředí" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">
         <cze>Zařízení pro sledování životního prostředí</cze>
 		<eng>Environmental monitoring facilities</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/pf" cenia="social" name="Výrobní a průmyslová zařízení" code="Production and industrial facilities" publication="2013-10-12" n="III.8">
+    <value uri="https://inspire.ec.europa.eu/theme/pf" spec="https://inspire.ec.europa.eu/id/document/tg/pf" cenia="social" name="Výrobní a průmyslová zařízení" code="Production and industrial facilities" publication="2013-10-12" n="III.8">
         <cze>Výrobní a průmyslová zařízení</cze>
 		<eng>Production and industrial facilities</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/af" cenia="social" name="Zemědělská a akvakulturní zařízení" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">
+    <value uri="https://inspire.ec.europa.eu/theme/af" spec="https://inspire.ec.europa.eu/id/document/tg/af" cenia="social" name="Zemědělská a akvakulturní zařízení" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">
         <cze>Zemědělská a akvakulturní zařízení</cze>
 		<eng>Agricultural and aquaculture facilities</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/pd" cenia="social" name="Rozložení obyvatelstva – demografie" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">
+    <value uri="https://inspire.ec.europa.eu/theme/pd" spec="https://inspire.ec.europa.eu/id/document/tg/pd" cenia="social" name="Rozložení obyvatelstva – demografie" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">
         <cze>Rozložení obyvatelstva – demografie</cze>
 		<eng>Population distribution &#8212; demography</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/am" cenia="environment" name="Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení" code="Area management/restriction/regulation zones and reporting units" publication="2009-10-20" n="III.11">
+    <value uri="https://inspire.ec.europa.eu/theme/am" spec="https://inspire.ec.europa.eu/id/document/tg/am" cenia="environment" name="Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení" code="Area management/restriction/regulation zones and reporting units" publication="2009-10-20" n="III.11">
         <cze>Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení</cze>
 		<eng>Area management/restriction/regulation zones and reporting units</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/nz" cenia="environment" name="Oblasti ohrožené přírodními riziky" code="Natural risk zones" publication="2013-10-12" n="III.12">
+    <value uri="https://inspire.ec.europa.eu/theme/nz" spec="https://inspire.ec.europa.eu/id/document/tg/nz" cenia="environment" name="Oblasti ohrožené přírodními riziky" code="Natural risk zones" publication="2013-10-12" n="III.12">
         <cze>Oblasti ohrožené přírodními riziky</cze>
 		<eng>Natural risk zones</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/ac" cenia="environment" name="Stav ovzduší" code="Atmospheric conditions" publication="2013-10-12" n="III.13">
+    <value uri="https://inspire.ec.europa.eu/theme/ac" spec="https://inspire.ec.europa.eu/id/document/tg/ac" cenia="environment" name="Stav ovzduší" code="Atmospheric conditions" publication="2013-10-12" n="III.13">
         <cze>Stav ovzduší</cze>
 		<eng>Atmospheric conditions</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/mf" cenia="nature" name="Zeměpisné meteorologické prvky" code="Meteorological geographical features" publication="2013-10-12" n="III.14">
+    <value uri="https://inspire.ec.europa.eu/theme/mf" spec="https://inspire.ec.europa.eu/id/document/tg/mf" cenia="nature" name="Zeměpisné meteorologické prvky" code="Meteorological geographical features" publication="2013-10-12" n="III.14">
         <cze>Zeměpisné meteorologické prvky</cze>
 		<eng>Meteorological geographical features</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/of" cenia="water" name="Zeměpisné oceánografické prvky" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">
+    <value uri="https://inspire.ec.europa.eu/theme/of" spec="https://inspire.ec.europa.eu/id/document/tg/of" cenia="water" name="Zeměpisné oceánografické prvky" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">
         <cze>Zeměpisné oceánografické prvky</cze>
 		<eng>Oceanographic geographical features</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/sr" cenia="water" name="Mořské oblasti" code="Sea regions" publication="2013-10-12" n="III.16">
+    <value uri="https://inspire.ec.europa.eu/theme/sr" spec="https://inspire.ec.europa.eu/id/document/tg/sr" cenia="water" name="Mořské oblasti" code="Sea regions" publication="2013-10-12" n="III.16">
         <cze>Mořské oblasti</cze>
 		<eng>Sea regions</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/br" cenia="nature" name="Bioregiony" code="Bio-geographical regions" publication="2013-10-12" n="III.17">
+    <value uri="https://inspire.ec.europa.eu/theme/br" spec="https://inspire.ec.europa.eu/id/document/tg/br" cenia="nature" name="Bioregiony" code="Bio-geographical regions" publication="2013-10-12" n="III.17">
         <cze>Bioregiony</cze>
 		<eng>Bio-geographical regions</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/hb" cenia="nature" name="Stanoviště a biotopy" code="Habitats and biotopes" publication="2013-10-12" n="III.18">
+    <value uri="https://inspire.ec.europa.eu/theme/hb" spec="https://inspire.ec.europa.eu/id/document/tg/hb" cenia="nature" name="Stanoviště a biotopy" code="Habitats and biotopes" publication="2013-10-12" n="III.18">
         <cze>Stanoviště a biotopy</cze>
 		<eng>Habitats and biotopes</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/sd" cenia="nature" name="Rozložení druhů" code="Species distribution" publication="2013-10-12" n="III.19">
+    <value uri="https://inspire.ec.europa.eu/theme/sd" spec="https://inspire.ec.europa.eu/id/document/tg/sd" cenia="nature" name="Rozložení druhů" code="Species distribution" publication="2013-10-12" n="III.19">
         <cze>Rozložení druhů</cze>
 		<eng>Species distribution</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/er" cenia="social" name="Energetické zdroje" code="Energy resources" publication="2013-10-12" n="III.20">
+    <value uri="https://inspire.ec.europa.eu/theme/er" spec="https://inspire.ec.europa.eu/id/document/tg/er" cenia="social" name="Energetické zdroje" code="Energy resources" publication="2013-10-12" n="III.20">
         <cze>Energetické zdroje</cze>
 		<eng>Energy resources</eng>
     </value>  
-    <value uri="https://inspire.ec.europa.eu/theme/mr" cenia="social" name="Nerostné suroviny" code="Mineral resources" publication="2013-10-12" n="III.21">
+    <value uri="https://inspire.ec.europa.eu/theme/mr" spec="https://inspire.ec.europa.eu/id/document/tg/mr" cenia="social" name="Nerostné suroviny" code="Mineral resources" publication="2013-10-12" n="III.21">
         <cze>Nerostné suroviny</cze>
 		<eng>Mineral resources</eng>
     </value>  

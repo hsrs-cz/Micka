@@ -702,9 +702,11 @@
                             <xsl:with-param name="path" select="'format-specification[]'"/>
                             <xsl:with-param name="value" select="*/gmd:specification"/>
                             <xsl:with-param name="class" select="'inp2'"/>
-                            <xsl:with-param name="action" select="'fspec(this)'"/>  
+                            <xsl:with-param name="codes" select="'inspireKeywords'"/> 
+                            <xsl:with-param name="tags" select="1"/>
+                            <xsl:with-param name="multi" select="0"/>
+                            <xsl:with-param name="attr" select="'spec'"/>
                         </xsl:call-template>
-
                     </fieldset>
                 </xsl:if>
             </xsl:for-each>	    
