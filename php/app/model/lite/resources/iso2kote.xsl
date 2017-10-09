@@ -139,7 +139,7 @@
                         <xsl:with-param name="path" select="'linkage-mime[]'"/>
                         <xsl:with-param name="value" select="php:function('getMime',string(*/gmd:description/*))"/>
                         <xsl:with-param name="class" select="'inp2 short'"/>
-                        <xsl:with-param name="type" select="'cselect'"/>
+                        <xsl:with-param name="attr" select="'code'"/>
                         <xsl:with-param name="multi" select="0"/>
                         <xsl:with-param name="codes" select="'format'"/>
                         <xsl:with-param name="valid" select="'CZ-15'"/>

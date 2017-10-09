@@ -18,62 +18,6 @@
 <xsl:variable name="codeLists" select="document('../../xsl/codelists.xml')/map" />
 <xsl:variable name="labels" select="document(concat('labels-', $lang, '.xml'))/labels" />
 
-<!-- vyplni select box(y) -->
-<xsl:template name="sel">
-	<xsl:param name="name"/>
-	<xsl:param name="value"/>
-	<xsl:param name="codes"/>
-	<xsl:param name="title"/>
-	<xsl:param name="multi"/>
-	<xsl:param name="mand"/>
-	
-	<!-- prazdna hodnota -->
-	<xsl:if test="not($value)">
-		<div id="{$name}_0_">
-			 <xsl:if test="$title">
-				<label for="{$name}" class="{$mand}"><xsl:value-of select="$title"/></label>
-			</xsl:if> 
-			<select name="{$name}_0_">
-				<option value=""> </option>
-				<!-- cyklus pres ciselnik -->
-				<xsl:for-each select="$codes/*">
-					<option value="{@name}"><xsl:value-of select="."/></option>
-		  		</xsl:for-each>
-			</select>	
-			<xsl:if test="$multi">
-				<span class="duplicate"><i class="fa fa-clone fa-lg"></i></span>
-			</xsl:if>
-		</div>
-	</xsl:if>
-	
-	<!-- cyklus pres vsechny hodnoty XML -->
-	<xsl:for-each select="$value">
-		<xsl:variable name="current" select="normalize-space(.)"/>
-		<div id="{concat($name,'_',(position()-1),'_')}">
-			<xsl:if test="$title">          
-				<label for="{$name}" class="{$mand}"><xsl:value-of select="$title"/></label>
-			</xsl:if>
-			<select name="{concat($name,'_',position()-1,'_')}">
-				<option value=""></option>
-				<!-- cyklus pres ciselnik -->
-				<xsl:for-each select="$codes/*">
-		  			<xsl:choose>
-		  				<xsl:when test="@name=$current">
-		  					<option value="{@name}" selected="selected"><xsl:value-of select="."/></option>
-		  				</xsl:when>
-		  				<xsl:otherwise>
-		  					<option value="{@name}"><xsl:value-of select="."/></option>
-		  				</xsl:otherwise>
-		  			</xsl:choose>		
-		  		</xsl:for-each>
-			</select>
-            <xsl:if test="$multi">
-                <span class="duplicate"></span>
-            </xsl:if>
-		</div>		
-	</xsl:for-each>
-</xsl:template>
-
 <!-- ZOBRAZENI ORGANIZACE -->
 <xsl:template name="party">
 	<xsl:param name="root"/>
@@ -355,44 +299,6 @@
 				</input>			
 			</xsl:when>
 
-			<!-- SELECT pres code -->
-			<xsl:when test="$type='cselect'">
-				<select id="{$name}-sel" name="{$pth}" class="sel2 {$class}">
-                   <xsl:if test="$req">
-                        <xsl:attribute name="required">required</xsl:attribute>
-                    </xsl:if>
-                    <xsl:if test="$multi &gt; 1">
-                        <xsl:attribute name="multiple">true</xsl:attribute>
-                    </xsl:if>
-                    <xsl:if test="$multi=0">
-                        <xsl:attribute name="data-allow-clear">true</xsl:attribute>
-                    </xsl:if>
-                    <xsl:if test="$tags=1">
-                        <xsl:attribute name="data-tags">true</xsl:attribute>
-                    </xsl:if>
-                    <xsl:attribute name="data-placeholder">
-                        <xsl:choose>
-                        <xsl:when test="$placeholder">
-                            <xsl:value-of select="$placeholder"/>
-                        </xsl:when>
-                        <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:attribute>
-                    <xsl:if test="string-length($value)=0"><option></option></xsl:if>
-					<!-- cyklus pres ciselnik -->
-					<xsl:for-each select="$codelist/*[name()=$codes]/value">
-			  			<xsl:choose>
-			  				<xsl:when test="@code=normalize-space($value)">
-			  					<option value="{@code}" title="{*[name()=$lang]/@qtip}" selected="selected"><xsl:value-of select="*[name()=$lang]"/></option>
-			  				</xsl:when>
-			  				<xsl:otherwise>
-			  					<option value="{@code}" title="{*[name()=$lang]/@qtip}"><xsl:value-of select="*[name()=$lang]"/></option>
-			  				</xsl:otherwise>
-			  			</xsl:choose>		
-			  		</xsl:for-each>
-				</select>		
-			</xsl:when>
-			
 			<!-- SELECT -->
 			<xsl:when test="$codes!=''">
                 
