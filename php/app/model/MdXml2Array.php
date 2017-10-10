@@ -116,14 +116,8 @@ class MdXml2Array
   	  "#locale-it" => "ita",
   	  "#locale-lv" => "lav",
   	  "#locale-eng" => "eng",
-  	  "#locale-cze" => "cze",
-  	  "locale-eng" => "eng", //chyba v Micce
-  	  "locale_eng" => "eng", //chyba v Micce
-  	  "locale-cze" => "cze", //chyba v Micce
-  	  "locale_cze" => "cze", //chyba v Micce
-  	  "#locale_eng" => "eng", //chyba v Micce
-  	  "#locale_cze" => "cze" //chyba v Micce
-  	  );
+  	  "#locale-cze" => "cze"
+  	);
   	if($this->langCodes) $locales = $this->langCodes;
   	//atributy
     if(($node->nodeType==XML_ELEMENT_NODE)&&($node->hasAttribute('xlink:href'))){
@@ -188,7 +182,7 @@ class MdXml2Array
     } 
     // konec vetve - prazdny element - odmazava z databaze tam kde byly prazdne hodnoty
     else if($node->nodeType!=XML_TEXT_NODE && $node->nodeType!=XML_COMMENT_NODE){
-        $s .= $path."['@']='';\n";
+        $s .= $path."['".$node->nodeName."'][$idx]"."['@']='';\n";
     }
     // konec vetve - text
     else if($node->nodeType==XML_TEXT_NODE && ($node->nodeValue==" " || trim($node->nodeValue))){
@@ -247,7 +241,8 @@ class MdXml2Array
   	    $data = $this->writeNode("", $dom->documentElement, 0);
   	}   
     if(substr($data,0,3)!='$md') return array(); // pokud jsou prazdne
- 
+    // DEBUG
+    //echo "<pre>$data</pre>"; exit;  
     $data = str_replace(
       array("['language'][0]['gco:CharacterString']", "['MD_Identifier']", "ns1:" ) , 
       array("['language'][0]['LanguageCode']", "['RS_Identifier']", "gco:" ), 
