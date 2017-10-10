@@ -144,6 +144,19 @@ class MdXml2Array
     	$s .= $path."['".$node->nodeName."'][$idx]['id'][0]['@']='".trim($node->getAttribute('id'))."';\n";
     }
     
+    if($node->nodeType!=XML_TEXT_NODE && $node->nodeType!=XML_COMMENT_NODE){
+        //atributy TODO - zobecnit
+        if($node->hasAttribute('uom')){
+            $s .= $path."['".$node->nodeName."'][$idx]['uom'][0]['@']='".$node->getAttribute('uom')."';\n";
+        }
+        if($node->hasAttribute('xlink:href')){
+            $s .= $path."['".$node->nodeName."'][$idx]['href'][0]['@']='".$node->getAttribute('xlink:href')."';\n";
+        }
+        if($node->hasAttribute('uuidref')){
+            $s .= $path."['".$node->nodeName."'][$idx]['uuidref'][0]['@']='".$node->getAttribute('uuidref')."';\n";
+        }
+    }
+    
     // existuje-li codeListValue, uz se dal nevyhodnocuje
     if(($node->nodeType==XML_ELEMENT_NODE)&&($node->hasAttribute('codeListValue'))){
     	$s .= $path."['".$node->nodeName."'][0]['@']='".addslashes(trim($node->getAttribute('codeListValue')))."'; \n";
@@ -160,16 +173,6 @@ class MdXml2Array
   		}	
   	}
     else if($node->hasChildNodes()){
-  	  //atributy TODO - zobecnit
-  	  if($node->hasAttribute('uom') && trim($node->getAttribute('uom'))!=""){
-  	  	$s .= $path."['".$node->nodeName."'][$idx]['uom'][0]['@']='".$node->getAttribute('uom')."';\n";
-  	  }
-  	  if($node->hasAttribute('xlink:href')){
-  	  	$s .= $path."['".$node->nodeName."'][$idx]['href'][0]['@']='".$node->getAttribute('xlink:href')."';\n";
-  	  }
-  	  if($node->hasAttribute('uuidref')){
-  	  	$s .= $path."['".$node->nodeName."'][$idx]['uuidref'][0]['@']='".$node->getAttribute('uuidref')."';\n";
-  	  }
   	  $nodes = $node->childNodes;
       $lastNode= "";
       $j = 0;
@@ -184,8 +187,8 @@ class MdXml2Array
       }
     } 
     // konec vetve - prazdny element - odmazava z databaze tam kde byly prazdne hodnoty
-    else if($node->nodeType!=XML_TEXT_NODE){
-        if($node->nodeType!=XML_COMMENT_NODE) $s .= $path."['@']='';\n";
+    else if($node->nodeType!=XML_TEXT_NODE && $node->nodeType!=XML_COMMENT_NODE){
+        $s .= $path."['@']='';\n";
     }
     // konec vetve - text
     else if($node->nodeType==XML_TEXT_NODE && ($node->nodeValue==" " || trim($node->nodeValue))){
@@ -244,7 +247,7 @@ class MdXml2Array
   	    $data = $this->writeNode("", $dom->documentElement, 0);
   	}   
     if(substr($data,0,3)!='$md') return array(); // pokud jsou prazdne
-    
+ 
     $data = str_replace(
       array("['language'][0]['gco:CharacterString']", "['MD_Identifier']", "ns1:" ) , 
       array("['language'][0]['LanguageCode']", "['RS_Identifier']", "gco:" ), 

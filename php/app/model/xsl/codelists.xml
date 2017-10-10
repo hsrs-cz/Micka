@@ -1626,13 +1626,17 @@
   </applicationType>
   
   <inspireType>
-    <value name="dataset" code="5">
+    <value name="dataset">
         <cze>datová sada</cze>
 		<eng>dataset</eng>
     </value>
-    <value name="series" code="6">
+    <value name="series">
         <cze>série</cze>
 		<eng>series</eng>
+    </value>
+    <value name="nonGeographicDataset">
+        <cze>negeografická datová sada</cze>
+		<eng>non geographic dataset</eng>
     </value>
   </inspireType>
   
