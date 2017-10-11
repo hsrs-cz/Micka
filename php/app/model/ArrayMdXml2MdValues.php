@@ -341,8 +341,8 @@ class ArrayMdXml2MdValues extends \BaseModel
                     }
                 }
                 if(substr_count($elements,"']['") > 1) {
+                    \Tracy\Debugger::log('ERROR (path) ' . "$elements = $item", 'IMPORT');
                     $this->setReport($recno_in, 'error', labelTranslation(MICKA_LANG, 'ERROR (path)') . " $elements = $item");
-                    $this->addLogImport('processArrayMd', labelTranslation(MICKA_LANG, 'ERROR (path)') . " $elements = $item");
                 } else { // OK
 					$pom = $this->getElementsData($path_el);
 					if (count($pom) == 0) {
@@ -459,7 +459,7 @@ class ArrayMdXml2MdValues extends \BaseModel
             'md' => $this->md, 
             'md_values' =>  $this->md_values,
             'del_md_id' => $this->del_md_id];
-		return $rs;
+        return $rs;
 	}
 }
 
