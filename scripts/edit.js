@@ -196,7 +196,7 @@ function md_scroll(el){
 		else if(el.getBoundingClientRect().top < h){
 				window.scrollBy(0, -h-10);
 		}  
-	  el.parentNode.style.background="#FFFFA0"; //TODO do stylu
+	  el.parentNode.style.background="#FFBBBB"; //TODO do stylu
 	  setTimeout(function(){
 		  el.parentNode.style.background="";
 		  }, 1000);
@@ -264,9 +264,6 @@ function md_dexpand(obj){
 function clickMenu(afterpost, target){
   var me = window;
   confirmLeave = false;
-  if(parent && parent.frames.main){
-  	var me = parent.frames.main;
-  } 
   md_pageOffset = 0;
   me.confirmLeave = false;
   var form = me.document.forms['md_inpform'];

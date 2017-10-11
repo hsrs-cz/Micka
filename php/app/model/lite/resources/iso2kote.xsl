@@ -165,6 +165,7 @@
         <xsl:call-template name="drawLabel">
             <xsl:with-param name="name" select="'identifier'"/>
             <xsl:with-param name="class" select="$m"/>
+            <xsl:with-param name="valid" select="'1.5'"/>
         </xsl:call-template>			
 
         
@@ -485,6 +486,7 @@
             <xsl:with-param name="langs" select="$langs"/>
 		    <xsl:with-param name="type" select="'textarea'"/> 
             <xsl:with-param name="req" select="1"/>
+            <xsl:with-param name="valid" select="'6.1'"/>
 		</xsl:call-template>
 
         <!-- 12 data quality scope -->
@@ -494,42 +496,42 @@
 		    <xsl:with-param name="class" select="'short'"/>
 		    <xsl:with-param name="codes" select="$typeList"/> 
             <xsl:with-param name="req" select="1"/>
+            <xsl:with-param name="valid" select="'6.1'"/>
 		</xsl:call-template>
-    </xsl:if>
     
-    <!-- 6.2 denominator -->
-    <div class="row">
-        <xsl:call-template name="drawLabel">
-            <xsl:with-param name="name" select="'scale'"/>
-            <xsl:with-param name="class" select="'cond '"/>
-            <xsl:with-param name="valid" select="'6.2'"/>
-        </xsl:call-template>			
-        
-        <div class="col-xs-12 col-md-8">
-            <select name="denominator[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
-                <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator">
-                    <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
-                </xsl:for-each>
-            </select>
+        <!-- 6.2 denominator -->
+        <div class="row">
+            <xsl:call-template name="drawLabel">
+                <xsl:with-param name="name" select="'scale'"/>
+                <xsl:with-param name="class" select="'cond '"/>
+                <xsl:with-param name="valid" select="'6.2'"/>
+            </xsl:call-template>			
+            
+            <div class="col-xs-12 col-md-8">
+                <select name="denominator[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
+                    <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator">
+                        <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
+                    </xsl:for-each>
+                </select>
+            </div>
         </div>
-    </div>
 
-    <!-- 6.2 distance --> 	
-    <div class="row">
-        <xsl:call-template name="drawLabel">
-            <xsl:with-param name="name" select="'distance'"/>
-            <xsl:with-param name="class" select="'cond '"/>
-        </xsl:call-template>			
-        
-        <div class="col-xs-12 col-md-8">
-            <select name="distance[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
-                <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:distance">
-                    <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
-                </xsl:for-each>
-            </select>
+        <!-- 6.2 distance --> 	
+        <div class="row">
+            <xsl:call-template name="drawLabel">
+                <xsl:with-param name="name" select="'distance'"/>
+                <xsl:with-param name="class" select="'cond '"/>
+            </xsl:call-template>			
+            
+            <div class="col-xs-12 col-md-8">
+                <select name="distance[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
+                    <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:distance">
+                        <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
+                    </xsl:for-each>
+                </select>
+            </div>
         </div>
-    </div>
-
+    </xsl:if>
     
     <!-- 7 -->
     <div>
@@ -664,7 +666,7 @@
             <xsl:with-param name="codes" select="'coordSys'"/>
             <xsl:with-param name="class" select="'mandatory'"/>
             <xsl:with-param name="multi" select="2"/> 
-            <xsl:with-param name="valid" select="'IO-1'"/>
+            <xsl:with-param name="valid" select="'IOD-1'"/>
             <xsl:with-param name="req" select="'1'"/>   
         </xsl:call-template>
 
@@ -686,8 +688,7 @@
                             <xsl:with-param name="value" select="*/gmd:name"/>
                             <xsl:with-param name="codes" select="'format'"/>
                             <xsl:with-param name="class" select="'inp2 short'"/>
-                            <xsl:with-param name="action" select="'getFormats(this)'"/> 
-                            <xsl:with-param name="valid" select="'IO-3'"/>
+                            <xsl:with-param name="valid" select="'IOD-3'"/>
                             <xsl:with-param name="tags" select="1"/>                        
                         </xsl:call-template>
                         <xsl:call-template name="drawInput">
@@ -695,7 +696,7 @@
                             <xsl:with-param name="path" select="'format-version[]'"/>
                             <xsl:with-param name="value" select="*/gmd:version"/>
                             <xsl:with-param name="type" select="'real'"/> 
-                            <xsl:with-param name="class" select="'inp2 mandatory short'"/>  
+                            <xsl:with-param name="class" select="'inp2 short'"/>  
                         </xsl:call-template>
                         <xsl:call-template name="drawInput">
                             <xsl:with-param name="name" select="'format_specification'"/>
@@ -722,7 +723,7 @@
                         <xsl:call-template name="drawLabel">
                             <xsl:with-param name="name" select="'Topological'"/>
                             <xsl:with-param name="class" select="'info'"/>
-                            <xsl:with-param name="valid" select="'IO-4'"/>
+                            <xsl:with-param name="valid" select="'IOD-4'"/>
                             <xsl:with-param name="dupl" select="1"/>
                         </xsl:call-template>		
                     </div>
@@ -873,7 +874,7 @@
             <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:characterSet/*/@codeListValue"/>
             <xsl:with-param name="codes" select="'characterSet'"/>
             <xsl:with-param name="multi" select="2"/>
-            <xsl:with-param name="valid" select="'IO-5'"/>
+            <xsl:with-param name="valid" select="'IOD-5'"/>
             <xsl:with-param name="class" select="'cond'"/>
         </xsl:call-template>
 
@@ -884,7 +885,7 @@
             <xsl:with-param name="codes" select="'spatialRepresentationType'"/>
             <xsl:with-param name="multi" select="2"/>
             <xsl:with-param name="req" select="1"/>
-            <xsl:with-param name="valid" select="'IO-6'"/>
+            <xsl:with-param name="valid" select="'IOD-6'"/>
         </xsl:call-template>
 
     </xsl:if> 

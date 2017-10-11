@@ -436,50 +436,52 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                 <xsl:value-of select="spatial"/>
                             </gmd:MD_SpatialRepresentationTypeCode>
                         </gmd:spatialRepresentationType>
-                    </xsl:if>
+                    
 					
-					<xsl:for-each select="denominator">
-						<gmd:spatialResolution>
-							<gmd:MD_Resolution>
-								<gmd:equivalentScale>
-									<gmd:MD_RepresentativeFraction>
-										<gmd:denominator>
-											<gco:Integer>
-												<xsl:value-of select="."/>
-											</gco:Integer>
-										</gmd:denominator>
-									</gmd:MD_RepresentativeFraction>
-								</gmd:equivalentScale>
-							</gmd:MD_Resolution>
-						</gmd:spatialResolution>
-					</xsl:for-each>
+                        <xsl:for-each select="denominator">
+                            <gmd:spatialResolution>
+                                <gmd:MD_Resolution>
+                                    <gmd:equivalentScale>
+                                        <gmd:MD_RepresentativeFraction>
+                                            <gmd:denominator>
+                                                <gco:Integer>
+                                                    <xsl:value-of select="."/>
+                                                </gco:Integer>
+                                            </gmd:denominator>
+                                        </gmd:MD_RepresentativeFraction>
+                                    </gmd:equivalentScale>
+                                </gmd:MD_Resolution>
+                            </gmd:spatialResolution>
+                        </xsl:for-each>
                     
-                    <gmd:spatialResolution>
-                        <gmd:MD_Resolution>
-                            <gmd:equivalentScale>
-                                <gmd:MD_RepresentativeFraction>
-                                    <gmd:denominator><gco:Integer></gco:Integer></gmd:denominator>
-                                </gmd:MD_RepresentativeFraction>
-                            </gmd:equivalentScale>
-                        </gmd:MD_Resolution>
-                    </gmd:spatialResolution>
                     
-					<xsl:for-each select="distance/item">
-						<gmd:spatialResolution>
-							<gmd:MD_Resolution>
-								<gmd:distance>
-									<gco:Distance uom="m"><xsl:value-of select="."/></gco:Distance>
-								</gmd:distance>	
-							</gmd:MD_Resolution>
-						</gmd:spatialResolution>
-					</xsl:for-each>
-                    <gmd:spatialResolution>
-                        <gmd:MD_Resolution>
-                            <gmd:distance>
-                                <gco:Distance uom=""></gco:Distance>
-                            </gmd:distance>	
-                        </gmd:MD_Resolution>
-                    </gmd:spatialResolution>
+                        <gmd:spatialResolution>
+                            <gmd:MD_Resolution>
+                                <gmd:equivalentScale>
+                                    <gmd:MD_RepresentativeFraction>
+                                        <gmd:denominator><gco:Integer></gco:Integer></gmd:denominator>
+                                    </gmd:MD_RepresentativeFraction>
+                                </gmd:equivalentScale>
+                            </gmd:MD_Resolution>
+                        </gmd:spatialResolution>
+                        
+                        <xsl:for-each select="distance/item">
+                            <gmd:spatialResolution>
+                                <gmd:MD_Resolution>
+                                    <gmd:distance>
+                                        <gco:Distance uom="m"><xsl:value-of select="."/></gco:Distance>
+                                    </gmd:distance>	
+                                </gmd:MD_Resolution>
+                            </gmd:spatialResolution>
+                        </xsl:for-each>
+                        <gmd:spatialResolution>
+                            <gmd:MD_Resolution>
+                                <gmd:distance>
+                                    <gco:Distance uom=""></gco:Distance>
+                                </gmd:distance>	
+                            </gmd:MD_Resolution>
+                        </gmd:spatialResolution>
+                    </xsl:if>
 
 					<xsl:for-each select="language/item">
 		  				<gmd:language>

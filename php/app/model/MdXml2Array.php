@@ -338,12 +338,12 @@ class MdXml2Array
                 ? $md['MD_Metadata'][$i]["language"][0]["LanguageCode"][0]['@']
                 : '';
         if(!$lang) $lang='eng';
-        if(isset($md['MD_Metadata'][$i]['identificationInfo'][0]['SV_ServiceIdentification'])){
+        /*if(isset($md['MD_Metadata'][$i]['identificationInfo'][0]['SV_ServiceIdentification'])){
             $this->multiKeywords($md['MD_Metadata'][$i]['identificationInfo'][0]['SV_ServiceIdentification'][0]['descriptiveKeywords'], $lang);
         }
         else {
             $this->multiKeywords($md['MD_Metadata'][$i]['identificationInfo'][0]['MD_DataIdentification'][0]['descriptiveKeywords'], $lang);
-        }
+        }*/
                 
     }
     //var_dump($md); exit;
@@ -393,7 +393,7 @@ class MdXml2Array
 	
 	/* naglicka slova - opacna struktura */
 	function getEngKeywords($class){
-	    $xml = simplexml_load_file( __DIR__ . "/xsl/codelists_eng.xml");
+	    $xml = simplexml_load_file( __DIR__ . "/xsl/codelists.xml");
 	    $this->engKw = array();
         foreach($xml->$class->value as $keyword){
             $this->engKw[(string) $keyword['uri']] = (string) $keyword['name'];

@@ -13,7 +13,7 @@
 	</msg>
 	<msg name="mdlang">
 		<label>10.3 Jazyk metadat</label>
-		<help>Jazyk použitý pro vytvoření metadat. Metadatové záznamy mohou být multilingvální,ale jeden jazyk je hlavní.</help>
+		<help>Jazyk použitý pro vytvoření metadat. Metadatové záznamy mohou být multilingvální, ale jeden jazyk je hlavní.</help>
 	</msg>
 	<msg name="title">
 		<label>1.1 Název</label>
@@ -80,19 +80,19 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 	<msg name="coorSys">
 		<label>IOD-1 Souřadnicový ref. systém</label>
 		<help>
-			Kód souřadnicového referenčního systému používaného (souřadnicových referenčních systémů používaných) v datové sadě.
+			Seznam souřadnicových referenčních systémů, ve kterých je zdroj poskytován.
 		</help>
 	</msg>
 	<msg name="spatialExt">
 		<label>4.1 Geografické ohraničení</label>
 		<help>
-			Prvek určuje prostorový rozsah zdroje a uvádí se jako ohraničení. Ohraničení se vyjadřuje pomocí západní a východní zeměpisné délky a jižní a severní zeměpisné šířky ve stupních desetinné soustavy s přesností nejméně na dvě desetinná místa. Použijte desetinnou tečku. K určení ohraničení můžete použít mapu a její nástroje viz. ikony nad mapou.
+			Pomocí Ctrl-myš zadejte minimální obdélník rozsahu zdroje. Rozsah nemusíte zadávat, pokud zadáte geografický identifikátor.
 		</help>
 	</msg>
 	<msg name="extentId">
 		<label>CZ-14 Geografický identifikátor</label>
 		<help>
-			Identifikátor určující geografický rozsah
+			Identifikátor určující geografický rozsah. Automaticky doplní i geografické ohraničení.
 		</help>
 	</msg>
 	<msg name="timeExtent">
@@ -136,20 +136,19 @@ Tento prvek by měl být vyplněn, pokud zdroj má časový rozsah. Možnost je:
 		<label>CZ-10c Referenční území</label>
 		<help>
 			<p>Název území, pro které je pokrytí udáváno.</p>
-			<p class="pozn">Není-li tato položka vyplněna, je míněno celé území ČR. Volný text.</p>
+			Není-li tato položka vyplněna, je míněno celé území ČR. Volný text.
 		</help>
 	</msg>
 	<msg name="encoding">
 		<label>IOD-3 Kódování (formát)</label>
 		<help>
-			<p>Informace o distribučním formátu (distribučních formátech) datové sady nebo série prostorových dat (v jakém formátu jsou data uložena nebo distribuována).</p>
-			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. </p>		
+			Informace o distribučních formátech dat (v jakém formátu jsou data uložena nebo distribuována).
 		</help>
 	</msg>
 	<msg name="format">
 		<label>Distribuční formát</label>
 		<help>
-			<p>Informace o distribučním formátu (distribučních formátech) datové sady nebo série prostorových dat (v jakém formátu jsou data uložena nebo distribuována).</p>
+			<p>Informace o distribučních formátech dat (v jakém formátu jsou data uložena nebo distribuována).</p>
 			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. </p>		
 		</help>
 	</msg>
@@ -182,7 +181,6 @@ Příklad: D2.8.I.7 Data Specification on Transport Networks – version 3.1)
 		<help>
 			Popis organizace nebo osoby odpovědné za vytvoření a údržbu metadat. Každý, kdo vloží metadata převzatých dat do svého katalogu, se uvede jako Kontaktní místo pro metadata. 
 			Povinně uvádějte název organizace nebo jméno osoby, e-mail a roli.
-		<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod poslední částí této komplexní položky „Zodpovědná organizace“.</p>
 		</help>
 	</msg>
 	<msg name="gemet">
@@ -265,44 +263,14 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 	<msg name="role">
 		<label>Role</label>
 		<help>
-			<p>Organizace nebo osoba, která je primárním poskytovatelem datové sady/série/ služby a je zodpovědná za vytváření, řízení, údržbu a distribuci zdroje, ponese roli „Správce“. Role „Správce“ musí být vždy vyplněna.
-<ul>
-<li>vydavatel – ten, kdo zveřejnil zdroj</li>
-<li>správce – ten, kdo je primárním poskytovatelem datové sady</li>
-<li>vlastník – každý, kdo vlastní zdroj</li>
-<li>uživatel – každý, kdo užívá datovou sadu nebo sérii</li>
-<li>distributor – ten, kdo distribuuje zdroj</li>
-<li>původce – ten, kdo vyrobil/vytvořil datovou sadu nebo metadata, pokud to není správce</li>
-<li>kontaktní bod – ten, s kým je možné se spojit za účelem získání poznatků o datech nebo získání dat
--	nebo  ten, kdo vloží metadata převzatých dat do svého katalogu</li>
-<li>zodp. za sběr dat a výzkum – ten, kdo je zodpovědný za sběr dat a vedení výzkumu</li>
-<li>zpracovatel – ten, kdo zpracoval data tak, že byl zdroj upraven</li>
-<li>poskytovatel zdroje – ten, kdo poskytuje zdroj</li>
-<li>autor – ten, kdo uplatňuje na data autorská práva, pokud to není správce</li>
-</ul>
-			</p>
+			Organizace nebo osoba, která je primárním poskytovatelem zdroje a je zodpovědná za vytváření, řízení, údržbu a distribuci zdroje, ponese roli „Správce“. Role „Správce“ musí být vždy vyplněna.
 		</help>
 	</msg>
     
 	<msg name="mdrole">
 		<label>Role</label>
 		<help>
-			<p>Každý, kdo vloží metadata převzatých dat do svého katalogu, se uvede jako Kontaktní bod pro metadata. Role „Kontaktní bod“ musí být vždy vyplněna!
-<ul>
-<li>vydavatel – ten, kdo zveřejnil zdroj</li>
-<li>správce – ten, kdo je primárním poskytovatelem datové sady</li>
-<li>vlastník – každý, kdo vlastní zdroj</li>
-<li>uživatel – každý, kdo užívá datovou sadu nebo sérii</li>
-<li>distributor – ten, kdo distribuuje zdroj</li>
-<li>původce – ten, kdo vyrobil/vytvořil datovou sadu nebo metadata, pokud to není správce</li>
-<li>kontaktní bod – ten, s kým je možné se spojit za účelem získání poznatků o datech nebo získání dat
--	nebo  ten, kdo vloží metadata převzatých dat do svého katalogu</li>
-<li>zodp. za sběr dat a výzkum – ten, kdo je zodpovědný za sběr dat a vedení výzkumu</li>
-<li>zpracovatel – ten, kdo zpracoval data tak, že byl zdroj upraven</li>
-<li>poskytovatel zdroje – ten, kdo poskytuje zdroj</li>
-<li>autor – ten, kdo uplatňuje na data autorská práva, pokud to není správce</li>
-</ul>
-			</p>
+			Každý, kdo vloží metadata převzatých dat do svého katalogu, se uvede jako Kontaktní bod pro metadata. Role „Kontaktní bod“ musí být vždy vyplněna!
 		</help>
 	</msg>
 	<msg name="Maintenance">
@@ -349,13 +317,13 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 	<msg name="spatial">
 		<label>IOD-6 Typ prostorové reprezentace</label>
 		<help>
-			<p>Metoda použitá k prostorové reprezentaci geografické informace (např. vektor).</p>
+			Metoda použitá k prostorové reprezentaci geografické informace (např. vektor).
 		</help>
 	</msg>
 	<msg name="language">
 		<label>1.7 Jazyk</label>
 		<help>
-			<p>Jazyk datové sady nebo serie. </p> 
+			Jazyk zdroje.
  		</help>
 	</msg>
 	<msg name="characterSet">
@@ -367,10 +335,9 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 	<msg name="operatesOn">
 		<label>1.6 Vázaný zdroj</label>
 		<help>
-			<p>Pokud jde o službu založenou na prostorových datech, uveďte zde URL odkaz na metadata každé datové sady, 
-			která je ve službě použita (pokud existují). Pokud metadate k prostorovým datům použitým ve službě neexistují, musí být vytvořena a doplněna jako vázaný zdroj.</p>
-		<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod komplexní položkou vázaný zdroj.URL odkaz.
-</p>
+			Pokud jde o službu založenou na prostorových datech, uveďte zde URL odkaz na metadata každé datové sady, 
+			která je ve službě použita (pokud existují). Pokud metadate k prostorovým datům použitým ve službě neexistují, musí být vytvořena a doplněna jako vázaný zdroj.
+
 		</help>
 	</msg>
 	<msg name="operatesOn-href">
@@ -408,7 +375,6 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 	<msg name="inspireService">
 		<label>3.1 Klíčové slovo</label>
 		<help>
-			<h3>3.1 Hodnota klíčového slova (Keyword value) </h3>
 			Klasifikace služby podle ISO 19119
 		</help>
 	</msg>
@@ -493,8 +459,8 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 	<msg name="Topological">
 		<label>IOD-4 Topologická správnost</label>
 		<help>
-			<h3>Topologická správnost (Topological consistency)</h3>
-			<p class="pozn">Položka není obecně povinná a bude vyplňována jen pro některá témata</p> 
+            Parametr kvality pro sítě.
+			Položka není obecně povinná a bude vyplňována jen pro některá témata 
 		</help>
 	</msg>
 

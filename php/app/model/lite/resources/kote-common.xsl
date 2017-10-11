@@ -168,6 +168,7 @@
 			<xsl:with-param name="codes" select="'role'"/>
 			<xsl:with-param name="class" select="'short inp2'"/>
 			<xsl:with-param name="req" select="1"/>
+            <xsl:with-param name="valid" select="concat($valid, ' d')"/>
 		</xsl:call-template>		  	
         
 	</fieldset>
