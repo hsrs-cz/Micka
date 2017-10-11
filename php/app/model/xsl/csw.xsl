@@ -7,195 +7,235 @@
 	xmlns:ogc="http://www.opengis.net/ogc" 
     xmlns:ows="http://www.opengis.net/ows"
     xmlns:gco="http://www.opengis.net/gco"
+    xmlns:gmx="http://www.isotc211.org/2005/gmx"
+    xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:srv="http://www.isotc211.org/2005/srv"
+    xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0"
+    xmlns:inspire_ds="http://inspire.ec.europa.eu/schemas/inspire_ds/1.0" 
+    xmlns:inspire_com="http://inspire.ec.europa.eu/schemas/common/1.0"
 	xmlns:csw="http://www.opengis.net/cat/csw/2.0.2">
   <xsl:output method="xml" encoding="utf-8"/>
 
   <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
 
-  <xsl:template match="/">
-  <results>
+<xsl:template match="/">
+<results>
     
-    <MD_Metadata>
-    <identificationInfo>
-    <SV_ServiceIdentification>
-    <serviceType>
-      <gco:LocalName>CSW</gco:LocalName>
-      <!-- <nameNameSpace>OGC</nameNameSpace> -->
-    </serviceType>
-    <serviceTypeVersion><xsl:value-of select="*/@version"/></serviceTypeVersion>
-    <citation>
-    <CI_Citation>
-      <title><xsl:value-of select="*/ows:ServiceIdentification/ows:Title"/></title>
-    </CI_Citation>  
-    </citation>
-    <abstract> <xsl:value-of select="*/ows:ServiceIdentification/ows:Abstract"/> </abstract>
-    <accessProperties>
-    	<MD_StandardOrderProcess>
-    		<fees> 
+    <gmd:MD_Metadata>
+    <gmd:identificationInfo>
+    <srv:SV_ServiceIdentification>
+    <gmd:serviceType>
+        <gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">discovery</gco:LocalName>
+    </gmd:serviceType>
+    <gmd:serviceTypeVersion><xsl:value-of select="*/@version"/></gmd:serviceTypeVersion>
+    <gmd:citation>
+    <gmd:CI_Citation>
+        <gmd:title><xsl:value-of select="*/ows:ServiceIdentification/ows:Title"/></gmd:title>
+        <gmd:date>
+            <gmd:CI_Date>
+                <gmd:date>
+                    <gco:Date><xsl:value-of select="//inspire_com:MetadataDate"/></gco:Date>
+                </gmd:date>
+                <gmd:dateType>
+                    <gmd:CI_DateTypeCode codeListValue="publication" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode">publication</gmd:CI_DateTypeCode>
+                </gmd:dateType>
+            </gmd:CI_Date>
+        </gmd:date>
+    </gmd:CI_Citation>  
+    </gmd:citation>
+    <gmd:abstract><xsl:value-of select="*/ows:ServiceIdentification/ows:Abstract"/></gmd:abstract>
+    <gmd:accessProperties>
+    	<gmd:MD_StandardOrderProcess>
+    		<gmd:fees> 
     			<xsl:value-of select="*/ows:ServiceIdentification/ows:Fees"/>
-    	  </fees>
-    	</MD_StandardOrderProcess> 
-    </accessProperties>
-    <descriptiveKeywords>
-      <MD_Keywords>
+    	  </gmd:fees>
+    	</gmd:MD_StandardOrderProcess> 
+    </gmd:accessProperties>
+    <gmd:descriptiveKeywords>
+      <gmd:MD_Keywords>
       <xsl:for-each select="*/ows:ServiceIdentification/ows:Keywords/ows:Keyword">
-        <keyword> <xsl:value-of select="."/> </keyword>
+        <gmd:keyword><xsl:value-of select="."/></gmd:keyword>
       </xsl:for-each>
-      </MD_Keywords>
-    </descriptiveKeywords>
-    <descriptiveKeywords>
-      <MD_Keywords>
-        <keyword>infoCatalogueService</keyword>
-      	<thesaurusName>
-		  <CI_Citation>
-			<title>ISO 19119 geographic services taxonomy</title>
-			<date>
-			  <CI_Date>
-				<date>2008</date>
-				<dateType>
-  				  <CI_DateTypeCode>publication</CI_DateTypeCode> 
-  				</dateType>
-  			  </CI_Date>
-      		</date>
-      	  </CI_Citation>
-        </thesaurusName>
-      </MD_Keywords>
-    </descriptiveKeywords>
-    <pointOfContact>
-      <CI_ResponsibleParty>
-	    <individualName><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:IndividualName"/></individualName>
-	    <organisationName><xsl:value-of select="*/ows:ServiceProvider/ows:ProviderName"/></organisationName>
-	    <positionName><xsl:value-of select="*/ows:ServiceProvider/ows:PositionName"/></positionName>
-	    <contactInfo>
-	    <CI_Contact>
-	      <phone>
-	      	<CI_Telephone>
-	          <voice><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Phone/ows:Voice"/></voice>
-	        </CI_Telephone>
-	      </phone>
-		    <address>
-		      <CI_Address>
-		        <deliveryPoint><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:DeliveryPoint"/></deliveryPoint>
-		        <city><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:City"/></city>
-		        <postalCode><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:PostalCode"/></postalCode>
-		        <country><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:Country"/></country>
-		        <electronicMailAddress><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"/></electronicMailAddress>
-		      </CI_Address>
-		    </address>
-		    <onlineResource>
-		    	<CI_OnlineResource>
-		    		<linkage>
-		    			<URL><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource/@xlink:href"/></URL>
-		    		</linkage>
-		    	</CI_OnlineResource>
-		    </onlineResource>
-	      </CI_Contact>
-	    </contactInfo>
-	    <role>
-	    	<CI_RoleCode><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:Role"/></CI_RoleCode> 
-	    </role>
-      </CI_ResponsibleParty>
-    </pointOfContact>
+      </gmd:MD_Keywords>
+    </gmd:descriptiveKeywords>
+    <gmd:descriptiveKeywords>
+      <gmd:MD_Keywords>
+        <gmd:keyword>
+            <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoCatalogueService">infoCatalogueService</gmx:Anchor>
+        </gmd:keyword>
+      	<gmd:thesaurusName>
+		  <gmd:CI_Citation>
+			<gmd:title>ISO 19119 geographic services taxonomy</gmd:title>
+			<gmd:date>
+			  <gmd:CI_Date>
+				<gmd:date>2008</gmd:date>
+				<gmd:dateType>
+  				  <gmd:CI_DateTypeCode>publication</gmd:CI_DateTypeCode> 
+  				</gmd:dateType>
+  			  </gmd:CI_Date>
+      		</gmd:date>
+      	  </gmd:CI_Citation>
+        </gmd:thesaurusName>
+      </gmd:MD_Keywords>
+    </gmd:descriptiveKeywords>
+    <gmd:pointOfContact>
+      <gmd:CI_ResponsibleParty>
+	    <gmd:individualName><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:IndividualName"/></gmd:individualName>
+	    <gmd:organisationName><xsl:value-of select="*/ows:ServiceProvider/ows:ProviderName"/></gmd:organisationName>
+	    <gmd:positionName><xsl:value-of select="*/ows:ServiceProvider/ows:PositionName"/></gmd:positionName>
+	    <gmd:contactInfo>
+	    <gmd:CI_Contact>
+	      <gmd:phone>
+	      	<gmd:CI_Telephone>
+	          <gmd:voice><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Phone/ows:Voice"/></gmd:voice>
+	        </gmd:CI_Telephone>
+	      </gmd:phone>
+		    <gmd:address>
+		      <gmd:CI_Address>
+		        <gmd:deliveryPoint><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:DeliveryPoint"/></gmd:deliveryPoint>
+		        <gmd:city><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:City"/></gmd:city>
+		        <gmd:postalCode><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:PostalCode"/></gmd:postalCode>
+		        <gmd:country><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:Country"/></gmd:country>
+		        <gmd:electronicMailAddress><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"/></gmd:electronicMailAddress>
+		      </gmd:CI_Address>
+		    </gmd:address>
+		    <gmd:onlineResource>
+		    	<gmd:CI_OnlineResource>
+		    		<gmd:linkage>
+		    			<gmd:URL><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource/@xlink:href"/></gmd:URL>
+		    		</gmd:linkage>
+		    	</gmd:CI_OnlineResource>
+		    </gmd:onlineResource>
+	      </gmd:CI_Contact>
+	    </gmd:contactInfo>
+	    <gmd:role>
+	    	<gmd:CI_RoleCode><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:Role"/></gmd:CI_RoleCode> 
+	    </gmd:role>
+      </gmd:CI_ResponsibleParty>
+    </gmd:pointOfContact>
 
+        <!-- Omezeni -->       
+        <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+                <gmd:useConstraints>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                </gmd:useConstraints>
+                <gmd:otherConstraints><xsl:value-of select="*/ows:ServiceIdentification/ows:Fees"/></gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+        </gmd:resourceConstraints>
+        
+        <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+                <gmd:accessConstraints>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                </gmd:accessConstraints>
+                <gmd:otherConstraints><xsl:value-of select="*/ows:ServiceIdentification/ows:AccessConstraints"/></gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+        </gmd:resourceConstraints>
 
     <!-- operace -->
     <xsl:for-each select="*/ows:OperationsMetadata/ows:Operation">
-      <containsOperations>
-        <SV_OperationMetadata>
-          <operationName><xsl:value-of select="@name"/></operationName>
+      <srv:containsOperations>
+        <srv:SV_OperationMetadata>
+          <srv:operationName><xsl:value-of select="@name"/></srv:operationName>
           <xsl:for-each select="ows:DCP/ows:HTTP/*">
-            <connectPoint>
-              <CI_OnlineResource>
-              	<linkage> <xsl:value-of select="@xlink:href"/> </linkage>
+            <srv:connectPoint>
+              <gmd:CI_OnlineResource>
+              	<gmd:linkage>
+                    <gmd:URL><xsl:value-of select="@xlink:href"/></gmd:URL>
+                </gmd:linkage>
               	<xsl:choose>
               		<xsl:when test="substring-after(translate(../../../@name,$upper,$lower),'get')!=''">
-              			<protocol>OGC:CSW-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(substring-after(name(),':'),$upper,$lower)" />-<xsl:value-of select="substring(translate(../../../@name,$upper,$lower),4)"/></protocol>
+              			<gmd:protocol>OGC:CSW-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(substring-after(name(),':'),$upper,$lower)" />-<xsl:value-of select="substring(translate(../../../@name,$upper,$lower),4)"/></gmd:protocol>
               		</xsl:when>
               		<xsl:otherwise>
-               			<protocol>OGC:CSW-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(substring-after(name(),':'),$upper,$lower)" />-<xsl:value-of select="translate(../../../@name,$upper,$lower)"/></protocol>             		
+               			<gmd:protocol>OGC:CSW-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(substring-after(name(),':'),$upper,$lower)" />-<xsl:value-of select="translate(../../../@name,$upper,$lower)"/></gmd:protocol>
               		</xsl:otherwise>
               	</xsl:choose>		
-              </CI_OnlineResource>
-            </connectPoint>
+              </gmd:CI_OnlineResource>
+            </srv:connectPoint>
           </xsl:for-each>
-          <DCP>WebServices</DCP>
-        </SV_OperationMetadata>
-      </containsOperations>
+          <srv:DCP><srv:DCPList codeListValue="WebServices"/></srv:DCP>
+        </srv:SV_OperationMetadata>
+      </srv:containsOperations>
     </xsl:for-each>
     
-    <couplingType>
-      <SV_CouplingType>loose</SV_CouplingType>
-    </couplingType>
-    </SV_ServiceIdentification>
-    </identificationInfo>
+    <srv:couplingType>
+        <srv:SV_CouplingType codeListValue="loose">loose</srv:SV_CouplingType>
+    </srv:couplingType>
+    </srv:SV_ServiceIdentification>
+    </gmd:identificationInfo>
 
     <!-- distribuce -->
-    <distributionInfo>
-    <MD_Distribution>
-      <transferOptions>
-      <MD_DigitalTransferOptions>
-        <onLine>
-        <CI_OnlineResource>
-          <linkage><xsl:value-of select="*/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href"/>?SERVICE=CSW&amp;REQUEST=GetCapabilities</linkage>
-          <protocol>OGC:CSW-<xsl:value-of select="*/@version"/>-http-get-capabilities</protocol>
-		  <function><CI_OnLineFunctionCode>download</CI_OnLineFunctionCode></function>
-		</CI_OnlineResource>      
-        </onLine>
-      </MD_DigitalTransferOptions>  
-      </transferOptions>
-    </MD_Distribution>
-    </distributionInfo>
+    <gmd:distributionInfo>
+        <gmd:MD_Distribution>
+            <gmd:transferOptions>
+                <gmd:MD_DigitalTransferOptions>
+                    <gmd:onLine>
+                        <gmd:CI_OnlineResource>
+                            <gmd:linkage>
+                                <gmd:URL><xsl:value-of select="*/ows:OperationsMetadata/ows:Operation[@name='GetCapabilities']/ows:DCP/ows:HTTP/ows:Get/@xlink:href"/>?SERVICE=CSW&amp;REQUEST=GetCapabilities</gmd:URL>
+                            </gmd:linkage>
+                            <gmd:protocol>
+                                <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:CSW-{*/@version}-http-get-capabilities">OGC:CSW-<xsl:value-of select="*/@version"/>-http-get-capabilities</gmx:Anchor>
+                            </gmd:protocol>
+                            <gmd:function>
+                                <gmd:CI_OnLineFunctionCode codeListValue="download">download</gmd:CI_OnLineFunctionCode>
+                            </gmd:function>
+                        </gmd:CI_OnlineResource>      
+                    </gmd:onLine>
+                </gmd:MD_DigitalTransferOptions>  
+            </gmd:transferOptions>
+        </gmd:MD_Distribution>
+    </gmd:distributionInfo>
 
 	
-    <metadataStandardName>ISO 19119</metadataStandardName>
-    <metadataStandardVersion>2005</metadataStandardVersion>
-  	<hierarchyLevel>
-  	  <MD_ScopeCode>service</MD_ScopeCode>
-  	</hierarchyLevel>
-  	<contact>
-      <CI_ResponsibleParty>
-	    <individualName><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:IndividualName"/></individualName>
-	    <organisationName><xsl:value-of select="*/ows:ServiceProvider/ows:ProviderName"/></organisationName>
-	    <positionName><xsl:value-of select="*/ows:ServiceProvider/ows:PositionName"/></positionName>
-	    <contactInfo>
-	    <CI_Contact>
-	      <phone>
-	      	<CI_Telephone>
-	          <voice><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Phone/ows:Voice"/></voice>
-	        </CI_Telephone>
-	      </phone>
-		    <address>
-		      <CI_Address>
-		        <deliveryPoint><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:DeliveryPoint"/></deliveryPoint>
-		        <city><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:City"/></city>
-		        <postalCode><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:PostalCode"/></postalCode>
-		        <country><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:Country"/></country>
-		        <electronicMailAddress><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"/></electronicMailAddress>
-		      </CI_Address>
-		    </address>
-		    <onlineResource>
-		    	<CI_OnlineResource>
-		    		<linkage>
-		    			<URL><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource/@xlink:href"/></URL>
-		    		</linkage>
-		    	</CI_OnlineResource>
-		    </onlineResource>
-	      </CI_Contact>
-	    </contactInfo>
-	    <role>
-	    	<CI_RoleCode>pointOfContact</CI_RoleCode> 
-	    </role>
-      </CI_ResponsibleParty>
-    </contact>
-  	
-  	
-    </MD_Metadata>
- 
-  
-  </results>  
+    <gmd:metadataStandardName>ISO 19115/INSPIRE_TG2/CZ4</gmd:metadataStandardName>
+    <gmd:metadataStandardVersion>2003/cor.1/2006</gmd:metadataStandardVersion>
+  	<gmd:hierarchyLevel>
+  	  <gmd:MD_ScopeCode codeListValue="service">service</gmd:MD_ScopeCode>
+  	</gmd:hierarchyLevel>
+  	<gmd:contact>
+      <gmd:CI_ResponsibleParty>
+	    <gmd:individualName><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:IndividualName"/></gmd:individualName>
+	    <gmd:organisationName><xsl:value-of select="*/ows:ServiceProvider/ows:ProviderName"/></gmd:organisationName>
+	    <gmd:positionName><xsl:value-of select="*/ows:ServiceProvider/ows:PositionName"/></gmd:positionName>
+	    <gmd:contactInfo>
+	    <gmd:CI_Contact>
+	      <gmd:phone>
+	      	<gmd:CI_Telephone>
+	          <gmd:voice><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Phone/ows:Voice"/></gmd:voice>
+	        </gmd:CI_Telephone>
+	      </gmd:phone>
+		    <gmd:address>
+		      <gmd:CI_Address>
+		        <gmd:deliveryPoint><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:DeliveryPoint"/></gmd:deliveryPoint>
+		        <gmd:city><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:City"/></gmd:city>
+		        <gmd:postalCode><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:PostalCode"/></gmd:postalCode>
+		        <gmd:country><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:Country"/></gmd:country>
+		        <gmd:electronicMailAddress><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"/></gmd:electronicMailAddress>
+		      </gmd:CI_Address>
+		    </gmd:address>
+		    <gmd:onlineResource>
+		    	<gmd:CI_OnlineResource>
+		    		<gmd:linkage>
+		    			<gmd:URL><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:OnlineResource/@xlink:href"/></gmd:URL>
+		    		</gmd:linkage>
+		    	</gmd:CI_OnlineResource>
+		    </gmd:onlineResource>
+	      </gmd:CI_Contact>
+	    </gmd:contactInfo>
+	    <gmd:role>
+	    	<gmd:CI_RoleCode codeListValue="pointOfContact">pointOfContact</gmd:CI_RoleCode> 
+	    </gmd:role>
+      </gmd:CI_ResponsibleParty>
+    </gmd:contact>
+    </gmd:MD_Metadata>
+
+</results>  
     
-  </xsl:template>
+</xsl:template>
 
 
 </xsl:stylesheet>

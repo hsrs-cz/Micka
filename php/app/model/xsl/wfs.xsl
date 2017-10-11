@@ -7,6 +7,12 @@
 	xmlns:ogc="http://www.opengis.net/ogc" 
     xmlns:ows="http://www.opengis.net/ows"
     xmlns:gco="http://www.opengis.net/gco"
+    xmlns:gmx="http://www.isotc211.org/2005/gmx"
+    xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:srv="http://www.isotc211.org/2005/srv"
+    xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0" 
+    xmlns:inspire_vs="http://inspire.ec.europa.eu/schemas/inspire_vs/1.0"
+
   >
   <xsl:output method="xml" encoding="utf-8"/>
 
@@ -24,18 +30,21 @@
   	xmlns:ows="http://www.opengis.net/ows/1.1"
     xmlns:wfs="http://www.opengis.net/wfs/2.0"
     xmlns:gml="http://www.opengis.net/gml/3.2"
-    xmlns:fes="http://www.opengis.net/fes/2.0" 
-    xmlns:inspire_common="http://inspire.ec.europa.eu/schemas/common/1.0">
+    xmlns:fes="http://www.opengis.net/fes/2.0" >
+
+    <xsl:variable name="mdlang" select="//inspire_common:ResponseLanguage/*"/>
+    <xsl:variable name="degree" select="//inspire_common:Degree"/>
 
     <MD_Metadata>
+    <language>
+        <gmd:LanguageCode codeListValue="{//inspire_common:ResponseLanguage/*}"><xsl:value-of select="//inspire_common:ResponseLanguage/*"/></gmd:LanguageCode>
+    </language>
     <identificationInfo>
     <SV_ServiceIdentification>
     <serviceType>
-      <gco:LocalName>WFS</gco:LocalName>
-      <!-- <nameNameSpace>OGC</nameNameSpace> -->
+        <gco:LocalName>download</gco:LocalName>
     </serviceType>
-    <language><xsl:value-of select="//inspire_common:ResponseLanguage/*"/></language>
-    <serviceTypeVersion><xsl:value-of select="@version"/></serviceTypeVersion>
+    <!--serviceTypeVersion><xsl:value-of select="@version"/></serviceTypeVersion-->
     <citation>
     <CI_Citation>
       <title><xsl:value-of select="ows:ServiceIdentification/ows:Title"/></title>
@@ -47,7 +56,7 @@
       </identifier>
     </CI_Citation>  
     </citation>
-    <abstract> <xsl:value-of select="ows:ServiceIdentification/ows:Abstract"/> </abstract>
+    <abstract><xsl:value-of select="ows:ServiceIdentification/ows:Abstract"/></abstract>
     <accessProperties>
     	<MD_StandardOrderProcess>
     		<fees> 
@@ -57,14 +66,16 @@
     </accessProperties>
     <descriptiveKeywords>
       <MD_Keywords>
-      <xsl:for-each select="ows:ServiceIdentification/ows:Keywords|//ows:Keyword">
+      <xsl:for-each select="ows:ServiceIdentification/ows:Keywords/ows:Keyword">
         <keyword><xsl:value-of select="."/></keyword>
       </xsl:for-each>
       </MD_Keywords>
     </descriptiveKeywords>
     <descriptiveKeywords>
       <MD_Keywords>
-        <keyword>infoFeatureAccessService</keyword>
+        <keyword>
+            <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService">infoFeatureAccessService</gmx:Anchor>
+        </keyword>
       	<thesaurusName>
 		  <CI_Citation>
 			<title>ISO - 19119 geographic services taxonomy</title>
@@ -80,19 +91,7 @@
         </thesaurusName>
       </MD_Keywords>
     </descriptiveKeywords>
-    <resourceConstraints>
-    	<MD_Constraints>
-    		<useLimitation><xsl:value-of select="ows:ServiceIdentification/ows:Fees"/></useLimitation>
-    	</MD_Constraints>	
-    </resourceConstraints>
-    <xsl:if test="ows:ServiceIdentification/ows:AccessConstraints">
-    	<resourceConstraints>
-    		<MD_LegalConstraints>
-    			<accessConstraints><MD_RestrictionCode>otherRestrictions</MD_RestrictionCode></accessConstraints>
-    			<otherConstraints><xsl:value-of select="ows:ServiceIdentification/ows:AccessConstraints"/></otherConstraints>
-    		</MD_LegalConstraints>
-    	</resourceConstraints>
-    </xsl:if>
+
     <pointOfContact>
       <CI_ResponsibleParty>
 	    <individualName><xsl:value-of select="ows:ServiceProvider/ows:ServiceContact/ows:IndividualName"/></individualName>
@@ -129,6 +128,24 @@
       </CI_ResponsibleParty>
     </pointOfContact>
 
+        <!-- Omezeni -->       
+        <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+                <gmd:useConstraints>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                </gmd:useConstraints>
+                <gmd:otherConstraints><xsl:value-of select="ows:ServiceIdentification/ows:Fees"/></gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+        </gmd:resourceConstraints>
+        
+        <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+                <gmd:accessConstraints>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                </gmd:accessConstraints>
+                <gmd:otherConstraints><xsl:value-of select="ows:ServiceIdentification/ows:AccessConstraints"/></gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+        </gmd:resourceConstraints>
 
     <!-- operace -->
     <xsl:for-each select="ows:OperationsMetadata/ows:Operation">
@@ -202,7 +219,9 @@
         <onLine>
         <CI_OnlineResource>
           <linkage><xsl:value-of select="ows:OperationsMetadata/ows:Operation/ows:DCP/ows:HTTP/ows:Get/@xlink:href"/><xsl:if test="not(contains(ows:OperationsMetadata/ows:Operation/ows:DCP/ows:HTTP/ows:Get/@xlink:href,'?'))">?</xsl:if>SERVICE=WFS&amp;REQUEST=GetCapabilities</linkage>
-          <protocol>OGC:WFS-<xsl:value-of select="@version"/>-http-get-capabilities</protocol>
+          <protocol>
+            <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-{*/@version}-http-get-capabilities">OGC:WFS-<xsl:value-of select="*/@version"/>-http-get-capabilities</gmx:Anchor>
+          </protocol>
 		  <function><CI_OnLineFunctionCode>download</CI_OnLineFunctionCode></function>
 		</CI_OnlineResource>      
         </onLine>
@@ -210,6 +229,7 @@
       </transferOptions>
       <xsl:for-each select="//wfs:OutputFormats/wfs:Format">
 	      <distributionFormat>
+            <MD_Format>
 	      		<xsl:choose>
 	      			<xsl:when test="contains(., 'subType')">
 	      				<name><xsl:value-of select="translate(substring-before(., 'subType'),';',' ')"/></name>
@@ -219,6 +239,7 @@
 	      				<name><xsl:value-of select="."/></name>
 	      			</xsl:otherwise>
 	      		</xsl:choose>
+            </MD_Format>
 	      </distributionFormat>
       </xsl:for-each>
     </MD_Distribution>
@@ -238,7 +259,7 @@
 	  	  	<RS_Identifier>
 	  	  		<xsl:choose>
 	  	  			<xsl:when test="contains(., 'EPSG') or contains(., 'epsg')">
-	  	  	  			<code>http://www.opengis.net/def/crs/EPSG/0/<xsl:value-of select="$code"/></code>
+	  	  	  			<gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/{$code}">EPSG:<xsl:value-of select="$code"/></gmx:Anchor>
 	  		  		</xsl:when>
 	  		  		<xsl:otherwise>
 	  	  	  			<code><xsl:value-of select="$code"/></code>
@@ -251,10 +272,10 @@
 	  	</referenceSystemInfo>	 
   	</xsl:for-each>
 	
-	<metadataStandardName>ISO 19119</metadataStandardName>
-    <metadataStandardVersion>2005</metadataStandardVersion>
+	<metadataStandardName>ISO 19115/INSPIRE_TG2/CZ4</metadataStandardName>
+    <metadataStandardVersion>2003/cor.1/2006</metadataStandardVersion>
   	<hierarchyLevel>
-  	  <MD_ScopeCode>service</MD_ScopeCode>
+  	  <MD_ScopeCode codeListValue="service">service</MD_ScopeCode>
   	</hierarchyLevel>
   	<contact>
       <CI_ResponsibleParty>
@@ -291,6 +312,57 @@
 	    </role>
       </CI_ResponsibleParty>
     </contact>
+    
+	<!-- Specification -->
+	<xsl:if test="$degree='conformant' or $degree='notConformant' or $degree='notEvaluated'">
+		<gmd:dataQualityInfo>
+			<gmd:DQ_DataQuality>
+				<gmd:scope>
+					<gmd:DQ_Scope>
+						<gmd:level>
+							<gmd:MD_ScopeCode codeListValue="service">service</gmd:MD_ScopeCode>
+						</gmd:level>	
+					</gmd:DQ_Scope>
+				</gmd:scope>
+				<gmd:report>
+					<gmd:DQ_DomainConsistency>
+						<gmd:result>
+							<gmd:DQ_ConformanceResult>
+								<gmd:specification>
+									<gmd:CI_Citation>
+					                    <xsl:variable name="t" select="//inspire_common:Conformity/*/inspire_common:Title"/>
+                                        <gmd:title>
+                                            <gmx:Anchor xlink:href="{$codeLists/specifications/value/*[translate(@name,$upper,$lower)=translate($t,$upper,$lower)]/../@uri}"><xsl:value-of select="$t"/></gmx:Anchor>
+                                        </gmd:title>
+										<gmd:date>
+											<gmd:CI_Date>
+												<gmd:date><xsl:value-of select="//inspire_common:Conformity/*/inspire_common:DateOfPublication"/></gmd:date>
+												<gmd:dateType>
+													<gmd:CI_DateTypeCode codeListValue="publication">publication</gmd:CI_DateTypeCode>
+												</gmd:dateType>
+											</gmd:CI_Date>
+										</gmd:date>
+									</gmd:CI_Citation>
+								</gmd:specification>
+								<gmd:explanation>Viz odkazovanou specifikaci</gmd:explanation>
+								<xsl:choose>
+									<xsl:when test="$degree='conformant'">
+										<gmd:pass>true</gmd:pass>
+									</xsl:when>
+                                    <xsl:when test="$degree='notConformant'">
+                                        <gmd:pass>false</gmd:pass>
+                                    </xsl:when>
+									<xsl:otherwise>
+										<gmd:pass></gmd:pass>
+									</xsl:otherwise>
+								</xsl:choose>
+							</gmd:DQ_ConformanceResult>
+						</gmd:result>
+					</gmd:DQ_DomainConsistency>
+				</gmd:report>
+			</gmd:DQ_DataQuality>
+		</gmd:dataQualityInfo>
+	</xsl:if>
   	
   	
     </MD_Metadata>
@@ -347,18 +419,7 @@
         </thesaurusName>
       </MD_Keywords>
     </descriptiveKeywords>
-    <resourceConstraints>
-    	<MD_Constraints>
-    		<useLimitation>XXX <xsl:value-of select="ows:ServiceIdentification/ows:Fees"/></useLimitation>
-    	</MD_Constraints>	
-    </resourceConstraints>
-    <xsl:if test="ows:ServiceIdentification/ows:AccessConstraints">
-    	<resourceConstraints>
-    		<MD_LegalConstraints>
-    			<otherConstraints>YYY <xsl:value-of select="ows:ServiceIdentification/AccessConstraints"/></otherConstraints>
-    		</MD_LegalConstraints>
-    	</resourceConstraints>
-    </xsl:if>
+
     <pointOfContact>
       <CI_ResponsibleParty>
 	    <individualName><xsl:value-of select="ows:ServiceProvider/ows:ServiceContact/ows:IndividualName"/></individualName>
@@ -395,6 +456,24 @@
       </CI_ResponsibleParty>
     </pointOfContact>
 
+        <!-- Omezeni -->       
+        <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+                <gmd:useConstraints>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                </gmd:useConstraints>
+                <gmd:otherConstraints><xsl:value-of select="wms:Service/wms:Fees"/></gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+        </gmd:resourceConstraints>
+        
+        <gmd:resourceConstraints>
+            <gmd:MD_LegalConstraints>
+                <gmd:accessConstraints>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
+                </gmd:accessConstraints>
+                <gmd:otherConstraints><xsl:value-of select="wms:Service/wms:AccessConstraints"/></gmd:otherConstraints>
+            </gmd:MD_LegalConstraints>
+        </gmd:resourceConstraints>
 
     <!-- operace -->
     <xsl:for-each select="ows:OperationsMetadata/ows:Operation">
