@@ -941,12 +941,15 @@ class RecordModel extends \BaseModel
             $md['lang'] = $lang_main;
         }
         $mdXml2Array = new MdXml2Array();
+        /*
         $dataFromXml = $mdXml2Array->getArrayMdFromXml(
             $xmlstring, 
             'ISO19139',
             $md['lang'],
             $lang_main
         );
+        */
+        $dataFromXml = $mdXml2Array->xml2array($xmlstring, __DIR__ ."/xsl/update2micka.xsl");
         $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
         $arrayMdXml2MdValues->lang = $lang_main;
         return $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
