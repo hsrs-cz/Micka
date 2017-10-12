@@ -2494,7 +2494,7 @@
     </value>
 	<value code="xml" uri="https://www.iana.org/assignments/media-types/application/xml">
         <cze qtip="Obecný XML odkument.">XML</cze>
-		<eng qtip="Generic XML document."></eng>
+		<eng qtip="Generic XML document.">XML</eng>
     </value>
 </format>
 

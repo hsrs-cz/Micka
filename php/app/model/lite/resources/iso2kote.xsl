@@ -953,7 +953,8 @@
                         <xsl:call-template name="drawInput">
                             <xsl:with-param name="name" select="'url'"/>
                             <xsl:with-param name="path" select="'operation-url[]'"/>
-                            <xsl:with-param name="value" select="*/srv:connectPoint/*/gmd:linkage"/>
+                            <xsl:with-param name="value" select="*/srv:connectPoint/*/gmd:linkage/gmd:URL"/>
+                            <xsl:with-param name="type" select="'plain'"/>
                             <xsl:with-param name="class" select="'inp2'"/>
                         </xsl:call-template>
                         <xsl:call-template name="drawInput">

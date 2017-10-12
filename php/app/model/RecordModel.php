@@ -433,10 +433,10 @@ class RecordModel extends \BaseModel
         }
         if ($md['md_standard'] == 99) {
             $params = [];
-            $params['file_type'] = (isset($post['fileType']) && $post['fileType'] != '') ? $post['fileType'] : 'ISO19139';
+            $params['type'] = (isset($post['type']) && $post['type'] != '') ? $post['type'] : 'ISO19139';
             $params['md_rec'] = (isset($post['md_rec']) && $post['md_rec'] != '') ? $post['md_rec'] : '';
             $params['fc'] = (isset($post['fc']) && $post['fc'] != '') ? $post['fc'] : '';
-            $params['service_type'] = (isset($post['serviceType']) && $post['serviceType'] != '') ? $post['serviceType'] : 'WMS';
+            //$params['service_type'] = (isset($post['serviceType']) && $post['serviceType'] != '') ? $post['serviceType'] : 'WMS';
             $params['url'] = (isset($post['url']) && $post['url'] != '') ? $post['url'] : '';
             $params['url'] = ($params['url'] != '') ? str_replace('&amp;','&',$params['url']) : '';
             $params['update_type'] = (isset($post['updateType']) && $post['updateType'] != '') ? $post['updateType'] : 'skip';
@@ -449,7 +449,7 @@ class RecordModel extends \BaseModel
                         $mdXml2Array = new MdXml2Array();
                         $dataFromXml = $mdXml2Array->getArrayMdFromXml(
                             file_get_contents($fileName), 
-                            $params['file_type'],
+                            $params['type'],
                             $md['lang'],
                             $lang_main
                         );
@@ -468,7 +468,7 @@ class RecordModel extends \BaseModel
                 $mdXml2Array = new MdXml2Array();
                 $dataFromXml = $mdXml2Array->getArrayMdFromUrl(
                     $params['url'], 
-                    $params['service_type'],
+                    $params['type'],
                     $md['lang'],
                     $lang_main
                 );

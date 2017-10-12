@@ -668,7 +668,7 @@ class MdXml2Array
         }
     }
     else {
-        $xslName = __DIR__."/xsl/".strtolower($service).".xsl"; // vyber sablony
+        $xslName = __DIR__."/xsl/import/".strtolower($service).".xsl"; // vyber sablony
         $md = $this->xml2array($xml, $xslName, array("URL"=>$url));
     }
     if(!isset($md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'])) {

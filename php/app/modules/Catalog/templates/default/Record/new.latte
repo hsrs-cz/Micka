@@ -25,133 +25,128 @@ var chStandard = function(o){
 </script>
 
 <div class="container panel panel-default">
-<h1>{_messages.frontend.new_record}</h1>
+    <h1>{_messages.frontend.new_record}</h1>
 
-<form name="newRecord" action="{link :Catalog:Record:edit 'new'}" METHOD=POST enctype="multipart/form-data">
+    <form name="newRecord" action="{link :Catalog:Record:edit 'new'}" METHOD=POST enctype="multipart/form-data">
 
-<h3>{_messages.frontend.standard}</h3>
-<div>
-	{foreach $mdStandard as $key => $value}
-        <div class="checkbox">
-            <label><input type="radio" name="standard" value="{$key}" {if $key == 0} checked="checked"{/if} onclick="chStandard(this)" /> {$value}</label>
-        </div>    
-	{/foreach}
-</div>
-
-<div id="importArea" style="display:none">
-<h3>Import</h3>
-
-<div class="form-group" style="width:650px;">
-<div class='md_label'>{_messages.frontend.file_from_import}</div>
-<table><tr><td>
-<select name="fileType" onChange="importSelect(this);">
-  <option value="ISO19139">ISO 19139</option>
-  <option value="ESRIdata">ESRI ISO metadata</option>
-  <option value="ISVS">ISVS / MIDAS</option>
-  <option value="FC">FC</option>
-</select>
-<input type="file" name="soubor" size="70">
-</td></tr>
-
-<tr style='display:'>
-<td id="fill-rec">
-  <input value="{_messages.frontend.record_for_update}" onclick="find_record(this,'parent');" class="b" type="button" style="width:180px">
-<input value="X" onclick="document.newRecord.md_rec.value=''; document.getElementById('fill-rec-txt').innerHTML='';" type="button" style="width:15px">
-  <input name="md_rec" value="" type="text" class="inp" style='display:none;'>
-  <span  id="fill-rec-txt"  style='color:red'></span>
-</td></tr>
-
-<tr style='display:none' id='input_hide'>
-<td id="fill-fc">
-<input value="{_messages.frontend.select_fc}" onclick="find_fc(this,'parent');" class="b" type="button" style="width:180px">
-<input value="X" onclick="document.newRecord.fc.value=''; document.getElementById('fill-fc-txt').innerHTML='';" type="button" style="width:15px">
-<input name="fc" value="" type="text" class="inp" style='display:none;'>
-<span id="fill-fc-txt" style='color:red'></span>
-
-</td></tr>
-</table>
-<br>
-<div>
-<div class='md_label'>{_messages.frontend.service_url}</div>
-<select name="serviceType">
-  <option value="XML">XML Metadata</option>
-  <option value="WMS">WMS</option>
-  <option value="WFS">WFS</option>
-  <option value="CSW">CSW</option>
-  <option value="SOS">SOS</option>
-  <option value="KML">KML</option>
-</select>
-<input type="input" name="url" size="105" class="inp">
-</div>
-<br>
-
-<span class='md_label'>{_messages.frontend.existing_record}</span>
-
-<input type="radio" name="updateType" value="all" checked="true"> {_messages.frontend.overwrite}
-<input type="radio" name="updateType" value="skip" checked="true"> {_messages.frontend.leave_existing}
-{* <input type="radio" name="updateType" value="sel"> #Aktualizovat pouze importované položky. *}
-
-</div>
-</div>
-
-
-<h3>{_messages.frontend.edit_group}</h3>
-<div class="form-block" style="width:300px;">
-	<table width="100%">
-
-	<tr><td class='md_label'>{_messages.frontend.edit_group}:</td>
-        <td>
-			<select name="group_e" class="find">
-				{foreach $groups as $key => $value}
-					{if $key == $edit_group}
-					<option label="{$value}" value="{$key}" selected>{$value}</option>
-					{else}
-					<option label="{$value}" value="{$key}">{$value}</option>
-					{/if}
-				{/foreach}
-			</select>
-		</td>
-	</tr>
-
-	<tr><td class='md_label'>{_messages.frontend.view_group}:</td>
-        <td>
-			<select name="group_v" class="find">
-				{foreach $groups as $key => $value}
-					{if $key == $view_group}
-					<option label="{$value}" value="{$key}" selected>{$value}</option>
-					{else}
-					<option label="{$value}" value="{$key}">{$value}</option>
-					{/if}
-				{/foreach}
-			</select>
-        </td>
-	</tr>
-	</table>
-</div>
-
-<div id="lang-choice">
-	<h3>{_messages.frontend.language}</h3>
-	<div class="form-block" style="width:300px;">
-		<table width="100%">
-		<tr><td><h4>{_messages.frontend.primary}</h4></td><td><h4>{_messages.frontend.other}</h4></td></tr>
-		<tr>
-		<td>
-		{foreach $mdLangs as $key => $value}
+    <h3>{_messages.frontend.standard}</h3>
+    <div>
+        {foreach $mdStandard as $key => $value}
             <div class="checkbox">
-                <label><input type="radio" name="lang_main" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> {$value}</label>
-            </div>
+                <label><input type="radio" name="standard" value="{$key}" {if $key == 0} checked="checked"{/if} onclick="chStandard(this)" /> {$value}</label>
+            </div>    
         {/foreach}
-		</td>
-		<td>
-		{foreach $mdLangs as $key => $value}
-            <div class="checkbox">
-                <label><input type="checkbox" name="languages[]" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> {$value}</label>
+    </div>
+
+    <div id="importArea" style="display:none">
+        <h3>Import</h3>
+
+        <div class="form-group">
+            <div class="rowx">
+                <label>{_messages.frontend.res-type}</label>
+                <div style="width:200px; display:inline-block">
+                <select class="form-control" name="type" onChange="importSelect(this);">
+                  <option value="XML">ISO 19139 XML</option>
+                  <option value="ESRIdata">ESRI ISO metadata</option>
+                  <option value="FC">Feature Catalogue</option>
+                  <option value="WMS">WMS</option>
+                  <option value="WFS">WFS</option>
+                  <option value="CSW">CSW</option>
+                  <option value="SOS">SOS</option>
+                  <option value="ATOM">ATOM</option>
+                  <option value="KML">KML</option>
+                </select>
+                </div>
             </div>
-		{/foreach}
-		</td>
-		</tr></table>
-	</div>
-</div>
+            <br/>
+            
+            <div>
+                <label>{_messages.frontend.file_from_import}</label>
+                <input type="file" name="soubor" size="70">
+            </div>
+
+            <div style='display:none' id='input_hide'>
+
+                <input value="{_messages.frontend.select_fc}" onclick="find_fc(this,'parent');" class="b" type="button" style="width:180px">
+                <input value="X" onclick="document.newRecord.fc.value=''; document.getElementById('fill-fc-txt').innerHTML='';" type="button" style="width:15px">
+                <input name="fc" value="" type="text" class="inp" style='display:none;'>
+                <span id="fill-fc-txt" style='color:red'></span>
+
+            </div>
+            <br/>
+            
+            <div>
+                <label>{_messages.frontend.service_url}</label>
+                <input type="input" name="url" class="form-control">
+            </div>
+            
+            <span class='md_label'>{_messages.frontend.existing_record}</span>
+
+            <input type="radio" name="updateType" value="all" checked="true"> {_messages.frontend.overwrite}
+            <input type="radio" name="updateType" value="skip" checked="true"> {_messages.frontend.leave_existing}
+            {* <input type="radio" name="updateType" value="sel"> #Aktualizovat pouze importované položky. *}
+
+        </div>
+    </div>
+
+
+    <h3>{_messages.frontend.edit_group}</h3>
+    <div class="form-block" style="width:300px;">
+        <table width="100%">
+
+        <tr><td class='md_label'>{_messages.frontend.edit_group}:</td>
+            <td>
+                <select name="group_e" class="find">
+                    {foreach $groups as $key => $value}
+                        {if $key == $edit_group}
+                        <option label="{$value}" value="{$key}" selected>{$value}</option>
+                        {else}
+                        <option label="{$value}" value="{$key}">{$value}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+
+        <tr><td class='md_label'>{_messages.frontend.view_group}:</td>
+            <td>
+                <select name="group_v" class="find">
+                    {foreach $groups as $key => $value}
+                        {if $key == $view_group}
+                        <option label="{$value}" value="{$key}" selected>{$value}</option>
+                        {else}
+                        <option label="{$value}" value="{$key}">{$value}</option>
+                        {/if}
+                    {/foreach}
+                </select>
+            </td>
+        </tr>
+        </table>
+    </div>
+
+    <div id="lang-choice">
+        <h3>{_messages.frontend.language}</h3>
+        <div class="form-block" style="width:300px;">
+            <table width="100%">
+            <tr><td><h4>{_messages.frontend.primary}</h4></td><td><h4>{_messages.frontend.other}</h4></td></tr>
+            <tr>
+            <td>
+            {foreach $mdLangs as $key => $value}
+                <div class="checkbox">
+                    <label><input type="radio" name="lang_main" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> {$value}</label>
+                </div>
+            {/foreach}
+            </td>
+            <td>
+            {foreach $mdLangs as $key => $value}
+                <div class="checkbox">
+                    <label><input type="checkbox" name="languages[]" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> {$value}</label>
+                </div>
+            {/foreach}
+            </td>
+            </tr></table>
+        </div>
+    </div>
 	
 <br>
 <p align="center">

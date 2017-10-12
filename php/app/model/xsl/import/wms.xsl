@@ -16,7 +16,7 @@
 
   <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-  <xsl:variable name="codeLists" select="document('codelists.xml')/map" />
+  <xsl:variable name="codeLists" select="document('codelists.xml')/map"/>
   
   <xsl:template match="/">
     <xsl:apply-templates />
@@ -625,7 +625,7 @@
         </gmd:MD_Distribution>
     </gmd:distributionInfo>
 
-  	<!-- referencni system -->
+  	<!-- coordinate reference system -->
   	<xsl:for-each select="wms:Capability/wms:Layer/wms:CRS">
   		<xsl:if test="position() &lt; 201">
 	  		<xsl:variable name="code"><xsl:call-template name="GetLastSegment">

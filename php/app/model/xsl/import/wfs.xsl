@@ -18,7 +18,8 @@
 
   <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-
+  <xsl:variable name="codeLists" select="document('codelists.xml')/map" />
+  
   <xsl:template match="/">
 	  <results>
 	  	<xsl:apply-templates/>
@@ -39,6 +40,38 @@
     <language>
         <gmd:LanguageCode codeListValue="{//inspire_common:ResponseLanguage/*}"><xsl:value-of select="//inspire_common:ResponseLanguage/*"/></gmd:LanguageCode>
     </language>
+    
+  	<!-- coordinate reference system -->
+  	<xsl:for-each select="wfs:FeatureTypeList/wfs:FeatureType/wfs:DefaultCRS|wfs:FeatureTypeList/wfs:FeatureType/wfs:OtherCRS">
+  		<xsl:if test="position() &lt; 201">
+	  		<xsl:variable name="code"><xsl:call-template name="GetLastSegment">
+                <xsl:with-param name="value" select="."/>
+                </xsl:call-template></xsl:variable>
+		  	<xsl:variable name="codeSpace"><xsl:call-template name="GetBeforeLastSegment">
+		  	  	  	<xsl:with-param name="value" select="."/>
+		  	  	  </xsl:call-template></xsl:variable>  	  
+		  	<gmd:referenceSystemInfo>
+		  	  <gmd:MD_ReferenceSystem>
+		  	  <gmd:referenceSystemIdentifier>
+		  	  	<gmd:RS_Identifier>
+		  	  		<xsl:choose>
+		  	  			<xsl:when test="contains(., 'EPSG') or contains(., 'epsg')">
+		  	  	  			<gmd:code>
+                                <gmx:Anchor xlink:href="http://www.opengis.net/def/crs/EPSG/0/{$code}">EPSG:<xsl:value-of select="$code"/></gmx:Anchor>
+                            </gmd:code>
+		  		  		</xsl:when>
+		  		  		<xsl:otherwise>
+		  	  	  			<gmd:code><xsl:value-of select="$code"/></gmd:code>
+		  		  			<gmd:codeSpace><xsl:value-of select="$codeSpace"/></gmd:codeSpace>
+		  		  		</xsl:otherwise>
+		  		  	</xsl:choose>
+		  		</gmd:RS_Identifier>
+		  	  </gmd:referenceSystemIdentifier>
+		  	  </gmd:MD_ReferenceSystem>
+		  	</gmd:referenceSystemInfo>
+		</xsl:if>	 
+	</xsl:for-each>
+
     <identificationInfo>
     <SV_ServiceIdentification>
     <serviceType>
@@ -220,7 +253,7 @@
         <CI_OnlineResource>
           <linkage><xsl:value-of select="ows:OperationsMetadata/ows:Operation/ows:DCP/ows:HTTP/ows:Get/@xlink:href"/><xsl:if test="not(contains(ows:OperationsMetadata/ows:Operation/ows:DCP/ows:HTTP/ows:Get/@xlink:href,'?'))">?</xsl:if>SERVICE=WFS&amp;REQUEST=GetCapabilities</linkage>
           <protocol>
-            <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-{*/@version}-http-get-capabilities">OGC:WFS-<xsl:value-of select="*/@version"/>-http-get-capabilities</gmx:Anchor>
+            <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-{ows:ServiceIdentification/ows:ServiceTypeVersion}-http-get-capabilities">OGC:WFS-<xsl:value-of select="ows:ServiceIdentification/ows:ServiceTypeVersion"/>-http-get-capabilities</gmx:Anchor>
           </protocol>
 		  <function><CI_OnLineFunctionCode>download</CI_OnLineFunctionCode></function>
 		</CI_OnlineResource>      
@@ -231,12 +264,33 @@
 	      <distributionFormat>
             <MD_Format>
 	      		<xsl:choose>
-	      			<xsl:when test="contains(., 'subType')">
-	      				<name><xsl:value-of select="translate(substring-before(., 'subType'),';',' ')"/></name>
-	      				<version><xsl:value-of select="substring-after(., 'subType=')"/></version>
+	      			<xsl:when test="contains(., ';')">
+                        <xsl:variable name="f" select="substring-before(., ';')"/>
+                        <xsl:variable name="cf" select="$codeLists/format/value[contains($f,@code)]"/>
+                        <xsl:choose>
+                            <xsl:when test="$cf">
+                                <name>
+                                    <gmx:Anchor xlink:href="{$cf/@uri}"><xsl:value-of select="$cf/*[name()=$mdlang]"/></gmx:Anchor>
+                                </name>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <name><xsl:value-of select="$f"/></name>
+                            </xsl:otherwise>
+                        </xsl:choose>
+	      				<version><xsl:value-of select="substring-after(., ';')"/></version>
 	      			</xsl:when>
 	      			<xsl:otherwise>
-	      				<name><xsl:value-of select="."/></name>
+                        <xsl:variable name="cf" select="$codeLists/format/value[contains(.,@code)]"/>
+                        <xsl:choose>
+                            <xsl:when test="$cf">
+                                <name>
+                                    <gmx:Anchor xlink:href="{$cf/@uri}"><xsl:value-of select="$cf/*[name()=$mdlang]"/></gmx:Anchor>
+                                </name>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <name><xsl:value-of select="."/></name>
+                            </xsl:otherwise>
+                        </xsl:choose>
 	      			</xsl:otherwise>
 	      		</xsl:choose>
             </MD_Format>
