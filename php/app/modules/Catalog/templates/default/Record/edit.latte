@@ -82,6 +82,7 @@
 	langs = {$record['langs']};
 	md_elem = null;
 	md_partyType = null;
+    baseUrl = "{$baseUrl|noescape}";
 </script>
 
 <div id="main" class="container panel panel-default" style="padding-top: 50px;">
@@ -400,7 +401,6 @@
 
 {if $dataBox == ''}
 <script>
-    baseUrl = {$basePath};
     $(document).ready(function() {
         HS.setLang({$appLang});
     });
@@ -410,14 +410,13 @@
     <script>
 	$(document).ready(function() {
         HS.setLang({$appLang});
-        baseUrl = "{$baseUrl|noescape}";
         lite.init();
 
         var id = $("#parent-identifier").data("val");
         if(id){
             //console.log(id);
             $.ajax({
-                url:  '../../suggest/metadata?lang='+lang+'&id='+id,
+                url: baseUrl+'/suggest/metadata?lang='+lang+'&id='+id,
                 dataType: 'json' 
             })
             .done(function(data){
@@ -428,7 +427,7 @@
                     //data: cswResults(data),
                     data: [{ id:data.records[0].id, text:data.records[0].title }],
                     ajax: {
-                        url:  '../../suggest/metadata?lang='+lang,
+                        url: baseUrl+'/suggest/metadata?lang='+lang,
                         dataType: 'json',
                         processResults: cswResults,
                         cache: false
@@ -445,7 +444,7 @@
             $("#parent-identifier").select2({
                 //data:data.records[0],
                 ajax: {
-                    url:  '../../suggest/metadata?lang='+lang,
+                    url:  baseUrl+'/suggest/metadata?lang='+lang,
                     dataType: 'json',
                     processResults: cswResults,
                     cache: false

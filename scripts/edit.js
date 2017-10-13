@@ -944,8 +944,8 @@ function find_parent1(data){
 		      	else if(inputs[i].id.substr(0,4)=='6001') inputs[i].value=data.uuid;
 		      	else if(inputs[i].id.substr(0,4)=='3002'){
 		      		var cid = (code=='1151') ? '#cit-' : '#_';
-		      		inputs[i].value=location.href.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '')
-		      		+'/csw/index.php?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&ID='+data.uuid+cid+data.uuid;
+		      		inputs[i].value= location.origin + baseUrl
+		      		+'/csw/?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&ID='+data.uuid+cid+data.uuid;
 		      	}	
 		    }
 		    return false;
