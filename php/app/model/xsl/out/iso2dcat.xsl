@@ -29,7 +29,7 @@
 	>
 
     <xsl:variable name="clc" select="document('../codelists4dcat.xml')/codes"/>
-    <xsl:variable name="cl" select="document(concat('../codelists_', $LANGUAGE, '.xml'))/map"/>
+    <xsl:variable name="cl" select="document('../codelists.xml')/map"/>
     <xsl:variable name="mdr" select="document('../inspire-themes-to-mdr-data-themes.rdf.xml')/rdf:RDF"/>
     <xsl:variable name="cURI">http://inspire.ec.europa.eu/metadata-codelist</xsl:variable>
     <xsl:variable name="xsd">http://www.w3.org/2001/XMLSchema#</xsl:variable>
@@ -162,7 +162,7 @@
       				      
 		<!-- ADDED - parent identifier ... -->
 		<xsl:if test="gmd:parentIdentifier/*!=''">
-			<xsl:variable name="md" select="php:function('getData', concat($thisPath,'?service=CSW&amp;request=GetRecordById&amp;id=',gmd:parentIdentifier/*,'&amp;outputSchema=http://www.isotc211.org/2005/gmd'))"/>
+			<xsl:variable name="md" select="php:function('getData', concat($thisPath,'/csw/?service=CSW&amp;request=GetRecordById&amp;id=',gmd:parentIdentifier/*,'&amp;outputSchema=http://www.isotc211.org/2005/gmd'))"/>
 			<dct:isPartOf rdf:parseType="Resource">
 				<dct:identifier rdf:datatype="{$xsd}{php:function('isURI', string($md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code))}"><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*"/></dct:identifier>
 				<foaf:isPrimaryTopicOf>
@@ -276,7 +276,7 @@
         	</dct:provenance>
       	</xsl:if>
 		
-		<!-- Conformity -->
+		<!-- Conformity old? -->
 		<xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title,'INSPIRE') or contains(translate(*/gmd:specification/*/gmd:title,$lower,$upper),'COMMISSION')]">
             <xsl:if test="*/gmd:pass/*='true'">
                 <!-- try to find text and corresponding uri in the codelist -->
@@ -287,7 +287,7 @@
                         <xsl:with-param name="n" select="'dct:title'"/>
                     </xsl:call-template>
                 </xsl:variable>
-                <xsl:variable name="spec1" select="$cl/serviceSpecifications/value[contains(normalize-space($spec),@name)]/@uri"/>
+                <xsl:variable name="spec1" select="$cl/serviceSpecifications/value[contains(normalize-space($spec),*/@name)]/@uri"/>
                 <xsl:choose>
                     <xsl:when test="$spec1">
                         <dct:conformsTo rdf:resource="http://eur-lex.europa.eu/LexUriServ/LexUriServ.do?uri={$spec1}:EN:NOT"/>
@@ -343,7 +343,7 @@
                         <xsl:with-param name="n" select="'dct:title'"/>
                     </xsl:call-template>
                 </xsl:variable>
-                <xsl:variable name="spec1" select="$cl/serviceSpecifications/value[contains(normalize-space($spec),@name)]/@uri"/>
+                <xsl:variable name="spec1" select="$cl/serviceSpecifications/value[contains(normalize-space($spec),*/@name)]/@uri"/>
                 <prov:Activity>
                   <!--xsl:if test="$ResourceUri != ''">
                     <prov:used rdf:resource="{$ResourceUri}"/>
@@ -351,8 +351,8 @@
                   <prov:qualifiedAssociation rdf:parseType="Resource">
                     <prov:hadPlan rdf:parseType="Resource">
                       <xsl:choose>
-                        <xsl:when test="../@xlink:href and ../@xlink:href != ''">
-                          <prov:wasDerivedFrom rdf:resource="{../@xlink:href}"/>
+                        <xsl:when test="*/gmd:specification/*/gmd:title/*/@xlink:href">
+                          <prov:wasDerivedFrom rdf:resource="{*/gmd:specification/*/gmd:title/*/@xlink:href}"/>
         <!--                  
                           <prov:wasDerivedFrom>
                             <rdf:Description rdf:about="{../@xlink:href}">
@@ -625,17 +625,8 @@
       				</xsl:if>
       			</xsl:when>
       			
-      			<!-- URI in MICKA hack -->
-      			<xsl:when test="contains(gmd:PT_FreeText/*/gmd:LocalisedCharacterString[@locale='#locale-uri'],'http')">
-      				<xsl:variable name="theme" select="gmd:PT_FreeText/*/gmd:LocalisedCharacterString[@locale='#locale-uri']"/>
-      				<dcat:theme rdf:resource="{$theme}"/>
-      				<xsl:if test="$mdr/rdf:Description[@rdf:about=$theme]/skos:broadMatch/@rdf:resource">
-      					<dcat:theme rdf:resource="{$mdr/rdf:Description[@rdf:about=$theme]/skos:broadMatch/@rdf:resource}"/>
-      				</xsl:if>
-      			</xsl:when>
-
-                <!-- service keywords mapping -->               
-                <xsl:when test="string-length($cl/serviceKeyword/value[@name=string($k/gco:CharacterString)])>0">
+                <!-- service keywords mapping -->
+                <xsl:when test="string-length($cl/serviceKeyword/value[*/@name=string($k/gco:CharacterString)])>0">
                     <dcat:theme rdf:resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k/gco:CharacterString}"/>
                 </xsl:when>                
                 
