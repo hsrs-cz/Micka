@@ -128,26 +128,30 @@
         		<xsl:when test="lang[@code='uri'] and $count>2">
         			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
         				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="lang[@code=$lang]"/></gmx:Anchor>
-	        			<gmd:PT_FreeText>
-	        			<xsl:for-each select="lang[@code!=$lang and @code!='uri']">
-		        			<gmd:textGroup>
-		        				<gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
-		        			</gmd:textGroup>
-	        			</xsl:for-each>
-	        			</gmd:PT_FreeText>
+                        <xsl:if test="lang[@code!=$lang and @code!='uri']">
+                            <gmd:PT_FreeText>
+                            <xsl:for-each select="lang[@code!=$lang and @code!='uri']">
+                                <gmd:textGroup>
+                                    <gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
+                                </gmd:textGroup>
+                            </xsl:for-each>
+                            </gmd:PT_FreeText>
+                        </xsl:if>
         			</xsl:element>
         		</xsl:when>
                 <!-- multilingual without URI -->
         		<xsl:when test="not(lang[@code='uri']) and $count>1">
         			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
         				<gco:CharacterString><xsl:value-of select="lang[@code=$lang]"/></gco:CharacterString>
-	        			<gmd:PT_FreeText>
-	        			<xsl:for-each select="lang[@code!=$lang]">
-		        			<gmd:textGroup>
-		        				<gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
-		        			</gmd:textGroup>
-	        			</xsl:for-each>
-	        			</gmd:PT_FreeText>
+                        <xsl:if test="lang[@code!=$lang]">
+                            <gmd:PT_FreeText>
+                            <xsl:for-each select="lang[@code!=$lang]">
+                                <gmd:textGroup>
+                                    <gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
+                                </gmd:textGroup>
+                            </xsl:for-each>
+                            </gmd:PT_FreeText>
+                        </xsl:if>
         			</xsl:element>
         		</xsl:when>
                 <!-- monolinugal with URI -->
