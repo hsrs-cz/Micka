@@ -1,4 +1,19 @@
 <?php
+// --- mime type string
+function getMime($s){
+    if(!$s) return '';
+    $p = '/mimeType=(.+?)(\s|$)/';
+    preg_match($p, $s, $m);
+    if(!$m) return '';
+    return str_replace('"','',$m[1]);
+}
+// --- string without mime
+function noMime($s){
+    if(!$s) return '';
+    $p = '/mimeType=(.+?)(\s|$)/';
+    $r = '';
+    return trim(preg_replace($p, $r, $s));
+}
 
 // pro XSLT - dotaz na metadata
 function getMetadata($s, $esn='summary')

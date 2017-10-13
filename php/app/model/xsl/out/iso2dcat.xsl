@@ -437,17 +437,17 @@
 					</xsl:choose>
 					
 					<!-- Conditions for access and use -->
-					<xsl:for-each select="$ii/*/gmd:resourceConstraints/*/gmd:useLimitation">
+					<xsl:for-each select="$ii/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']">
 						<xsl:choose>
-							<xsl:when test="*/@xlink:href">
-								<dct:license rdf:resource="{*/@xlink:href}"/>
+							<xsl:when test="*/gmd:otherConstraints/*/@xlink:href">
+								<dct:license rdf:resource="{*/gmd:otherConstraints/*/@xlink:href}"/>
 							</xsl:when>
 							<xsl:otherwise>
 								<dct:license>
 									<dct:LicenseDocument>
 						     			<xsl:call-template name="rmulti">
 						   					<xsl:with-param name="l" select="$mdlang"/>
-						   					<xsl:with-param name="e" select="*/gmd:useLimitation"/>
+						   					<xsl:with-param name="e" select="*/gmd:otherConstraints"/>
 						   					<xsl:with-param name="n" select="'rdfs:label'"/>
 						   				</xsl:call-template>
 									</dct:LicenseDocument>
@@ -457,42 +457,55 @@
 					</xsl:for-each>
 	
 					<!-- Limitations on public access  -->			
-					<xsl:for-each select="$ii/*/gmd:resourceConstraints[string-length(*/gmd:otherConstraints/*)>0]">
-						<dct:accessRights>
-							<dct:RightsStatement>
-						    	<xsl:call-template name="rmulti">
-						   			<xsl:with-param name="l" select="$mdlang"/>
-						   			<xsl:with-param name="e" select="*/gmd:otherConstraints"/>
-						   			<xsl:with-param name="n" select="'rdfs:label'"/>
-						   		</xsl:call-template>
-							</dct:RightsStatement>
+					<xsl:for-each select="$ii/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue='otherRestrictions']">
+                        <dct:accessRights>
+                            <xsl:choose>
+                                <xsl:when test="*/gmd:otherConstraints/*/@xlink:href">
+                                    <dct:license rdf:resource="{*/gmd:otherConstraints/*/@xlink:href}"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <dct:RightsStatement>
+                                        <xsl:call-template name="rmulti">
+                                            <xsl:with-param name="l" select="$mdlang"/>
+                                            <xsl:with-param name="e" select="*/gmd:otherConstraints"/>
+                                            <xsl:with-param name="n" select="'rdfs:label'"/>
+                                        </xsl:call-template>
+                                    </dct:RightsStatement>
+                                </xsl:otherwise>
+                            </xsl:choose>
 						</dct:accessRights>
 					</xsl:for-each>
 				
 				    <xsl:if test="$ii/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode">
 				    	<adms:representationTechnique rdf:resource="{$cURI}/SpatialRepresentationTypeCode/{gmd:identificationInfo/*/gmd:spatialRepresentationType/gmd:MD_SpatialRepresentationTypeCode/@codeListValue}"/>
 				    </xsl:if>
-					
-		      	<!-- Encoding (format) -->
-		      	<!-- <xsl:for-each select="gmd:distributionInfo/*/gmd:characterSet">
-		      		<dcat:mediaType><xsl:value-of select="*/@codeListValue"/></dcat:mediaType>
-		      	</xsl:for-each> -->
-
-				  <xsl:for-each select="../../../gmd:distributionFormat/*/gmd:name/*">
-				    <xsl:choose>
-				      <xsl:when test="@xlink:href and @xlink:href != ''">
-				        <dct:format rdf:resource="{@xlink:href}"/>
-				      </xsl:when>
-				      <xsl:otherwise>
-				        <dct:format rdf:parseType="Resource">
-				          <rdfs:label><xsl:value-of select="."/></rdfs:label>
-				        </dct:format>
-				      </xsl:otherwise>
-				    </xsl:choose>
-				  </xsl:for-each>
-
-
-				</dcat:Distribution>
+                    
+                    <!-- Encoding (format) -->
+                    <!-- <xsl:for-each select="gmd:distributionInfo/*/gmd:characterSet">
+                        <dcat:mediaType><xsl:value-of select="*/@codeListValue"/></dcat:mediaType>
+                    </xsl:for-each> -->
+                    <xsl:variable name="mime" select="php:function('getMime',string(*/gmd:description/*))"/>
+                    <xsl:variable name="m" select="$cl/format/value[@code=$mime]/@uri"/>
+                    <xsl:choose>
+                        <xsl:when test="$m">
+                            <dct:format rdf:resource="{$m}"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:for-each select="../../../gmd:distributionFormat/*/gmd:name/*">
+                            <xsl:choose>
+                              <xsl:when test="@xlink:href and @xlink:href != ''">
+                                <dct:format rdf:resource="{@xlink:href}"/>
+                              </xsl:when>
+                              <xsl:otherwise>
+                                <dct:format rdf:parseType="Resource">
+                                  <rdfs:label><xsl:value-of select="."/></rdfs:label>
+                                </dct:format>
+                              </xsl:otherwise>
+                            </xsl:choose>
+                          </xsl:for-each>
+                        </xsl:otherwise>
+                    </xsl:choose>
+ 				</dcat:Distribution>
 			</dcat:distribution>
 		</xsl:for-each>
 			
