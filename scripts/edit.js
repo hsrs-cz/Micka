@@ -14,10 +14,8 @@ var messages = {};
 var confirmLeave = false;
 var initialExtent = [12.09, 48.55, 18.86, 51.06]; // TODO - to config
 var thesActivated = false;
-var baseUrl = "";
 
-var micka = {
-};
+var micka = {};
 
 String.prototype.trim = function() { return this.replace(/^\s+|\s+$/, ''); };
 
@@ -1278,13 +1276,12 @@ function dName(obj){
 }
 
 function crs1(f){
-    var pom = f.split(",");
     var inputs = flatNodes(md_elem, "INPUT");
     for(var i=0;i<inputs.length;i++){
         v = inputs[i];
         switch(v.id){
-          case '2070': v.value = pom[0]; break; 
-          case '2081': v.value = pom[1]; break; 
+          case '2070uri': v.value = f.uri; break; 
+          case '2070':    v.value = f.xxx; break; 
         }     
     }
     $('#md-dialog').modal('hide');

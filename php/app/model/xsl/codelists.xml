@@ -2076,6 +2076,8 @@
 </units>
 
 <protocol>
+    <title lang="cze">Protokoly</title>
+    <title lang="eng">Protocols</title>
     <value code="WWW:LINK-1.0-http--link" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--link">
         <cze>WWW - link</cze>
 		<eng>WWW - link</eng>
@@ -2411,13 +2413,13 @@
 <limitationsAccess>
     <title lang="cze">Omezení veřejného přístupu</title>
     <title lang="eng">Limitations on public access</title>
-	<value name="" uri="http://opendata.gov.cz/definition/opendata">
-        <cze qtip="Otevřená data ČR.">Otevřená data ČR</cze>
-		<eng>Open Data of the Czech republic</eng>
-    </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">
         <cze qtip="There are no limitations on public access to spatial data sets and services.">žádné omezení veřejného přístupu</cze>
 		<eng qtip="There are no limitations on public access to spatial data sets and services.">no limitations on public access to spatial data sets and services</eng>
+    </value>
+	<value name="" uri="http://opendata.gov.cz/definition/opendata">
+        <cze qtip="Otevřená data ČR.">Otevřená data ČR</cze>
+		<eng>Open Data of the Czech republic</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">
         <cze qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">veřejný přístup omezen podle Článku 13(1)(a) Směrnice INSPIRE</cze>
