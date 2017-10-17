@@ -451,13 +451,13 @@ class Csw{
 		$this->params['thisURL'] = $scheme.$u['host']. $_SERVER['SCRIPT_NAME'];
 	}
     else {
-		if($_SERVER['SERVER_PORT']!=80){
-			$this->params['MICKA_URL'] = $scheme.$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].dirname($_SERVER['SCRIPT_NAME']);
-			$this->params['thisURL'] = $scheme.$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$_SERVER['SCRIPT_NAME'];
-		}
-		else{
+		if($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443){
 			$this->params['MICKA_URL'] = $scheme.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']);
 			$this->params['thisURL'] = $scheme.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'];
+		}
+		else{
+			$this->params['MICKA_URL'] = $scheme.$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].dirname($_SERVER['SCRIPT_NAME']);
+			$this->params['thisURL'] = $scheme.$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$_SERVER['SCRIPT_NAME'];
 		}
 	}
     $this->params['MICKA_URL'] = rtrim($this->params['MICKA_URL'],'/');
@@ -588,7 +588,7 @@ class Csw{
         //echo ('za-transf ');
         $output = str_replace("&amp;", "&", $output);
         $this->headers[] = HTTP_HTML;
-     	return $output;  	        
+     	return $output;
     }
 
     function setHeader(){
@@ -619,7 +619,7 @@ class Csw{
         $this->xsl->load(__DIR__ ."/xsl/getCapabilities.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $params = array(
-            'thisURL' => $this->params['thisURL'],
+            'thisURL' => dirname($this->params['thisURL'])."/csw/",
             'LANG' => $lang,
             'MICKA_LANG' => MICKA_LANG,
             'LANG_OTHER' => $olang,
