@@ -7,7 +7,7 @@
     <changes>Micka changes</changes>
     <dchanges>OGC Metadata Catalogue: Records changed or updates during last</dchanges>
     <days>days</days>
-    
+
     <identification>Identification</identification>
     <date>Date</date>
     <title>Title</title>
@@ -40,7 +40,7 @@
     <ordering>Ordering instructions</ordering>
     <format>Format</format>
     <graphicOverview>Graphic Overview</graphicOverview>
-    
+
   </messages>
 
   <messages lang='cze'>
@@ -83,6 +83,49 @@
     <ordering>Objednání</ordering>
     <format>Formát</format>
     <graphicOverview>Náhled</graphicOverview>
+
+  </messages>
+
+  <messages lang='spa'>
+    <found>encontrado</found>
+    <notFound>no encontrado</notFound>
+    <map>mapa</map>
+    <changes>Cambios Micka</changes>
+    <dchanges>Catálogo de Metadatos OGC: Registros modificados o actualizaciones durante los últimos</dchanges>
+    <days>días</days>
+
+    <identification>Identificación</identification>
+    <date>Fecha</date>
+    <title>Título</title>
+    <abstract>Resumen</abstract>
+    <category>Categoría</category>
+    <keywords>Palabras clave</keywords>
+    <useLimitation>Limitaciones de uso</useLimitation>
+    <accessConstraints>Restricciones de acceso</accessConstraints>
+    <contact>Contacto</contact>
+    <spatial>Represnetación espacial</spatial>
+    <scale>Escala</scale>
+    <distance>Resolución</distance>
+    <temp>Extensión temporal</temp>
+    <service>Tipo de servicio</service>
+    <operatesOn>En operación</operatesOn>
+    <coorSys>Sistema de coordenadas</coorSys>
+    <extent>Extensión</extent>
+    <west>Oeste</west>
+    <east>Este</east>
+    <south>Sur</south>
+    <north>Norte</north>
+    <lineage>Linaje</lineage>
+    <quality>Calidad</quality>
+    <distrib>Distribución</distrib>
+    <mdcontact>Autor del Metadato</mdcontact>
+    <ident>Identificador</ident>
+    <hierarchy>Tipo de recurso</hierarchy>
+    <dateStamp>Estampilla de tiempo</dateStamp>
+    <fees>Pagos</fees>
+    <ordering>Instrucciones de pedido</ordering>
+    <format>Formato</format>
+    <graphicOverview>Visualización gráfica</graphicOverview>
 
   </messages>
 

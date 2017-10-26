@@ -4,7 +4,7 @@
 		<nadpis>Elements checking</nadpis>
 		<mandatory>mandatory</mandatory>
 		<recommended>recommneded</recommended>
-		
+
 		<title>Identification / Title</title>
 		<abstract>Identification / Abstract</abstract>
 		<date>Identification / Date</date>
@@ -48,7 +48,7 @@
 		<nadpis>Kontrola položek</nadpis>
 		<mandatory>povinné</mandatory>
 		<recommended>doporučené</recommended>
-		
+
 		<title>identifikace / název</title>
 		<abstract>identifikace / abstrakt</abstract>
 		<date>identifikace / kalendářní datum / datum</date>
@@ -86,5 +86,49 @@
 		<md_lang>metadata / jazyk</md_lang>
 		<gemet>identifikace / klíč.slova / GEMET</gemet>
 		<serviceInspire>identifikace / klíč.slova / služby INSPIRE</serviceInspire>
+	</kontrola>
+
+	<kontrola lang='spa'>
+		<nadpis>Control de elementos</nadpis>
+		<mandatory>obligatorio</mandatory>
+		<recommended>recomendado</recommended>
+
+		<title>Identificación / Título</title>
+		<abstract>Identificación / Resumen</abstract>
+		<date>Identificación / Fecha</date>
+		<dateType>Identificación / Tipo de datos</dateType>
+		<temporalElement>Identificación / Extensión temporal</temporalElement>
+		<geographicElement>Identificación / Extensión espacial</geographicElement>
+		<language>Identificación / Idioma del recurso</language>
+		<keyword>Identificación / Palabras clave</keyword>
+		<pointOfContact>Identificación / Punto de contacto</pointOfContact>
+		<organisationName>Identificación / Punto de contacto / Organización y/o Nombre de persona</organisationName>
+		<role>Identificación / Punto de contacto / role </role>
+		<contactInfo>Identification / Contact Point / address or phone </contactInfo>
+		<accessConstraints>Identification / Restricciones de acceso </accessConstraints>
+		<useLimitation>Identification / Limitación de uso </useLimitation>
+		<statement>Calidad / Declaración de Linaje</statement>
+		<conformity_degree>Calidad / reporte/  resultado / Grado de conformidad </conformity_degree>
+		<conformity_spec>Calidad / reporte/ resultado / Especificación </conformity_spec>
+		<distribLinkage>Distribución / Online/ Dirección </distribLinkage>
+		<topicCategory>Distribución / Categoría de tema</topicCategory>
+		<spatialResolution>Identificación / Resolución espacial</spatialResolution>
+		<serviceType>Identificación del servicio / Tipo de servicio</serviceType>
+		<serviceTypeVersion>Identificación / Versión del Tipo de servicio</serviceTypeVersion>
+		<operatesOn>Identificación de servicio / Opera en</operatesOn>
+		<containsOperations>Identificación / Cambio de Operaciones</containsOperations>
+		<operationName>Identificación / Cambio de Operaciones / Punto de contacto / Operación / Nombre de operación </operationName>
+		<operation_linkage>Identificación / Cambio de Operaciones / Punto de contacto / Operación / Dirección </operation_linkage>
+		<DCP>Identificación / Cambio de Operaciones / Punto de contacto / Operación / DCP </DCP>
+		<md_contact>Metadato / Contactos</md_contact>
+		<md_organisationName>Metadato / Contactos / Organización y/o Nombre de persona</md_organisationName>
+		<md_role>Metadato / Contacto / Role</md_role>
+		<md_contactInfo>Metadato / Contact / Address or Phone </md_contactInfo>
+		<hierarchyLevel>Metadato / Nivel jerárquico</hierarchyLevel>
+		<hierarchyLevelService>Metadato / Nivel jerárquico: DEBE ser servicio</hierarchyLevelService>
+		<dateStamp>Metadato / Estampilla de tiempo</dateStamp>
+		<md_lang>Metadato / Idioma</md_lang>
+		<gemet>Identificación / palabras clave / GEMET</gemet>
+		<serviceInspire>Identificación / palabras clave / servicios INSPIRE</serviceInspire>
 	</kontrola>
 </messages>
