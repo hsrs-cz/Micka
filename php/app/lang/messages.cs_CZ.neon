@@ -161,10 +161,11 @@ management:
     harvest: "Harvestování"
     profiles: "Správa profilů"
     summary: "Přehled záznamů"
-    
+
 lang:
     cze: "Česky"
     eng: "Anglicky"
+    spa: "Español"
 
 apperror:
     postIncomplete: "Chyba - data přenesená na server nejsou kompletní!"
@@ -174,7 +175,7 @@ apperror:
     cantSaveNew: "Nepodařilo se vytvořit nový záznam."
 
 import:
-    recordUpdateSkip: "Záznam již existuje. Import zastaven." 
+    recordUpdateSkip: "Záznam již existuje. Import zastaven."
     notRightRecordUpdate: "Nemáte práva aktualizovat záznam."
     incompletInputData: "Vstupní data nejsou kompletní."
     errorFile: "Importovaný soubor je vadný."

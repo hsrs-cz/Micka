@@ -3,105 +3,129 @@
   <status>
     <value name="planned" code="5">
         <cze>plánovaný</cze>
-		<eng>planned</eng>
+		    <eng>planned</eng>
+        <spa>planeado</spa>
     </value>
     <value name="obsolete" code="3">
         <cze>zastaralý</cze>
-		<eng>obsolete</eng>
+		    <eng>obsolete</eng>
+        <spa>obsoleto</spa>
     </value>
     <value name="onGoing" code="4">
         <cze>probíhající</cze>
-		<eng>obsolete</eng>
+		    <eng>onGoing</eng>
+        <spa>enDesarrollo</spa>
     </value>
     <value name="historicalArchive" code="2">
         <cze>historický/archívní</cze>
-		<eng>historical/archive</eng>
+		    <eng>historical/archive</eng>
+        <spa>hostórico/archivo</spa>
     </value>
     <value name="required" code="6">
         <cze>vyžadovaný</cze>
-		<eng>required</eng>
+		    <eng>required</eng>
+        <spa>requerido</spa>
     </value>
     <value name="underDevelopment" code="7">
         <cze>ve vývoji</cze>
-		<eng>under development</eng>
+		    <eng>under development</eng>
+        <spa>bajo desarrollo</spa>
     </value>
     <value name="completed" code="1">
         <cze>kompletní</cze>
-		<eng>completed</eng>
+		    <eng>completed</eng>
+        <spa>completo</spa>
     </value>
   </status>
-  
+
   <spatialRepresentationType>
     <value name="vector" code="1">
         <cze>vektor</cze>
-		<eng>vector</eng>
+		    <eng>vector</eng>
+        <spa>vector</spa>
     </value>
     <value name="video" code="6">
         <cze>video</cze>
-		<eng>video</eng>
+		    <eng>video</eng>
+        <spa>video</spa>
     </value>
     <value name="stereoModel" code="5">
         <cze>stereomodel</cze>
-		<eng>stereomodel</eng>
+		    <eng>stereomodel</eng>
+        <spa>estereomodelo</spa>
     </value>
     <value name="tin" code="4">
         <cze>tin</cze>
-		<eng>tin</eng>
+		    <eng>tin</eng>
+        <spa>tin</spa>
     </value>
     <value name="textTable" code="3">
         <cze>textová tabulka</cze>
-		<eng>text table</eng>
+		    <eng>text table</eng>
+        <spa>tabla de texto</spa>
     </value>
     <value name="grid" code="2">
         <cze>rastr (grid)</cze>
-		<eng>grid</eng>
+		    <eng>grid</eng>
+        <spa>raster (grilla)</spa>
     </value>
   </spatialRepresentationType>
-  
+
   <language>
     <value name="cze" code="cze" code2="cs">
         <cze>čeština</cze>
-		<eng>Czech</eng>
+		    <eng>Czech</eng>
+        <spa>Checo</spa>
     </value>
     <value name="eng" code="eng" code2="en">
         <cze>angličtina</cze>
-		<eng>English</eng>
+		    <eng>English</eng>
+        <spa>Inglés</spa>
     </value>
     <value name="fre" code="fre" code2="fr">
         <cze>francouzština</cze>
-		<eng>French</eng>
+		    <eng>French</eng>
+        <spa>Frencés</spa>
     </value>
     <value name="ger" code="ger" code2="de">
         <cze>němčina</cze>
-		<eng>German</eng>
+		    <eng>German</eng>
+        <spa>Alemán</spa>
     </value>
     <value name="pol" code="pol" code2="pl">
         <cze>polština</cze>
-		<eng>Polish</eng>
+		    <eng>Polish</eng>
+        <spa>Polaco</spa>
     </value>
     <value name="ita" code="ita" code2="it">
         <cze>italština</cze>
-		<eng>Italian</eng>
+		    <eng>Italian</eng>
+        <spa>Italiano</spa>
     </value>
     <value name="slv" code="slv" code2="sl">
         <cze>slovinština</cze>
-		<eng>Slovene</eng>
+		    <eng>Slovene</eng>
+        <spa>Esloveno</spa>
     </value>
     <value name="slo" code="slo" code2="sk">
         <cze>slovenština</cze>
-		<eng>Slovak</eng>
+		    <eng>Slovak</eng>
+        <spa>Eslovaco</spa>
     </value>
     <value name="lav" code="lav" code2="lv">
         <cze>lotyšština</cze>
-		<eng>Latvian</eng>
+		    <eng>Latvian</eng>
+        <spa>Latvian</spa>
     </value>
     <value name="swe" code="swe" code2="sv">
         <cze>švédština</cze>
-		<eng>Swedish</eng>
+		    <eng>Swedish</eng>
+        <spa>Swedish</spa>
     </value>
     <value name="por" code="por" code2="pt">
         <cze>portugalština</cze>
-		<eng>Portuguese</eng>
+		    <eng>Portuguese</eng>
+        <eng>Portugués</eng>
     </value>
     <value name="nor" code="nor" code2="no">
         <cze>norština</cze>
@@ -127,7 +151,7 @@
         <cze>holandština</cze>
 		<eng>Dutch</eng>
     </value>
-    
+
     <value name="alb" code="alb" code2="sq">
         <cze>albánština</cze>
 		<eng>Albanian</eng>
@@ -169,7 +193,7 @@
 		<eng>no language</eng>
     </value>
   </language>
-  
+
   <characterSet>
     <value name="usAscii" code="25">
         <cze>ASCII</cze>
@@ -216,7 +240,7 @@
 		<eng>CP852</eng>
     </value>
   </characterSet>
-  
+
   <topicCategory>
     <value name="farming" code="1">
         <cze>Zemědělství</cze>
@@ -233,7 +257,7 @@
     <value name="climatologyMeteorologyAtmosphere" code="4">
         <cze>Klimatologie/meteorologie/atmosféra</cze>
 		<eng>Climatology/Meteorology/Atmosphere</eng>
-    </value>    
+    </value>
     <value name="economy" code="5">
         <cze>Hospodářství</cze>
 		<eng>Economy</eng>
@@ -295,7 +319,7 @@
 		<eng>Utilities/Communication</eng>
     </value>
   </topicCategory>
-  
+
   <Type>
     <value name="place" code="2">
         <cze>místo</cze>
@@ -318,7 +342,7 @@
 		<eng>discipline</eng>
     </value>
   </Type>
-  
+
   <associationType>
     <value name="largerWorkCitation" code="2">
         <cze>citace větší práce</cze>
@@ -341,7 +365,7 @@
 		<eng>Part of seamless database</eng>
     </value>
   </associationType>
-  
+
   <initiativeType>
     <value name="investigation" code="5">
         <cze>investigation</cze>
@@ -404,7 +428,7 @@
 		<eng>mission</eng>
     </value>
   </initiativeType>
-  
+
   <accessConstraints>
     <value name="trademark" code="4">
         <cze>ochranná známka</cze>
@@ -424,30 +448,36 @@
     </value>
     <value name="restricted" code="7">
         <cze>ne pro veřejné použití</cze>
-		<eng>restricted</eng>
+		    <eng>restricted</eng>
+        <eng>restringido</eng>
     </value>
     <value name="otherRestrictions" code="8">
         <cze>další omezení</cze>
-		<eng>other restrictions</eng>
+		    <eng>other restrictions</eng>
+        <spa>otras restricciones</spa>
     </value>
     <value name="license" code="5">
         <cze>licence</cze>
-		<eng>license</eng>
+		    <eng>license</eng>
+        <spa>license</spa>
     </value>
     <value name="intellectualPropertyRights" code="6">
         <cze>ochrana duševního vlastnictví</cze>
-		<eng>intellectual property rights</eng>
+		    <eng>intellectual property rights</eng>
+        <spa>derechos de propiedad intelectual</spa>
     </value>
   </accessConstraints>
-  
+
   <classification>
     <value name="secret" code="4">
         <cze>tajné</cze>
-		<eng>secret</eng>
+		    <eng>secret</eng>
+        <spa>secreto</spa>
     </value>
     <value name="restricted" code="2">
         <cze>vyhrazené</cze>
-		<eng>restricted</eng>
+		    <eng>restricted</eng>
+        <spa>restringido</spa>
     </value>
     <value name="unclassified" code="1">
         <cze>neklasifikováno</cze>
@@ -462,7 +492,7 @@
 		<eng>top secret</eng>
     </value>
   </classification>
-  
+
   <evaluationMethodType>
     <value name="directExternal" code="2">
         <cze>přímý vnější</cze>
@@ -477,7 +507,7 @@
 		<eng>direct internal</eng>
     </value>
   </evaluationMethodType>
-  
+
   <maintenanceAndUpdateFrequency>
     <value name="unknown" code="12">
         <cze>neznámý</cze>
@@ -528,7 +558,7 @@
 		<eng>not planned</eng>
     </value>
   </maintenanceAndUpdateFrequency>
-  
+
   <updateScope>
     <value name="fieldSession" code="12">
         <cze>mise v terénu</cze>
@@ -599,7 +629,7 @@
 		<eng>application</eng>
     </value>
   </updateScope>
-  
+
   <cellGeometry>
     <value name="area" code="2">
         <cze>plocha</cze>
@@ -610,7 +640,7 @@
 		<eng>point</eng>
     </value>
   </cellGeometry>
-  
+
   <pointInPixel>
     <value name="upperRight" code="4">
         <cze>pravý horní</cze>
@@ -633,7 +663,7 @@
 		<eng>upper left</eng>
     </value>
   </pointInPixel>
-  
+
   <topologyLevel>
     <value name="topology1D" code="2">
         <cze>1D (liniová síť 'snadjezdy')</cze>
@@ -672,7 +702,7 @@
 		<eng>geometryOnly</eng>
     </value>
   </topologyLevel>
-  
+
   <dimensionName>
     <value name="row" code="1">
         <cze>řádek</cze>
@@ -707,7 +737,7 @@
 		<eng>column</eng>
     </value>
   </dimensionName>
-  
+
   <geometricObjectType>
     <value name="composite" code="2">
         <cze>složený</cze>
@@ -734,7 +764,7 @@
 		<eng>curve</eng>
     </value>
   </geometricObjectType>
-  
+
   <contentType>
     <value name="image" code="1">
         <cze>obrázek</cze>
@@ -749,7 +779,7 @@
 		<eng>thematic classification</eng>
     </value>
   </contentType>
-  
+
   <imagingCondition>
     <value name="terrainMasking" code="11">
         <cze>maskováno terénem</cze>
@@ -796,7 +826,7 @@
 		<eng>shadow</eng>
     </value>
   </imagingCondition>
-  
+
   <name>
     <value name="cdRom" code="1">
         <cze>CD</cze>
@@ -871,7 +901,7 @@
 		<eng>telephoneLink</eng>
     </value>
   </name>
-  
+
   <mediumFormat>
     <value name="cpio" code="1">
         <cze>cpio</cze>
@@ -898,7 +928,7 @@
 		<eng>iso9660</eng>
     </value>
   </mediumFormat>
-  
+
   <obligation>
     <value name="conditional" code="3">
         <cze>podmíněný</cze>
@@ -913,7 +943,7 @@
 		<eng>mandatory</eng>
     </value>
   </obligation>
-  
+
   <dataType>
     <value name="unionClass" code="10">
         <cze>unionClass</cze>
@@ -976,7 +1006,7 @@
 		<eng>datatypeClass</eng>
     </value>
   </dataType>
-  
+
   <unitOfMeasure>
     <value name="mikrometer" code="">
         <cze>mikrometr</cze>
@@ -1011,7 +1041,7 @@
 		<eng>nanometer</eng>
     </value>
   </unitOfMeasure>
-  
+
   <presentationForm>
     <value name="mapDigital" code="5">
         <cze>mapa digitální</cze>
@@ -1070,7 +1100,7 @@
 		<eng>imageHardcopy</eng>
     </value>
   </presentationForm>
-  
+
   <role>
     <value name="publisher" code="10">
         <cze>vydavatel</cze>
@@ -1082,7 +1112,8 @@
     </value>
     <value name="owner" code="3">
         <cze>vlastník</cze>
-		<eng>owner</eng>
+		    <eng>owner</eng>
+        <eng>propietario</eng>
     </value>
     <value name="user" code="4">
         <cze>uživatel</cze>
@@ -1090,7 +1121,8 @@
     </value>
     <value name="distributor" code="5">
         <cze>distributor</cze>
-		<eng>distributor</eng>
+		    <eng>distributor</eng>
+        <spa>distribuidor</spa>
     </value>
     <value name="originator" code="6">
         <cze>původce</cze>
@@ -1117,7 +1149,7 @@
 		<eng>author</eng>
     </value>
   </role>
-  
+
   <dateType>
     <value name="publication" code="2" dc="issued">
         <cze>zveřejnění</cze>
@@ -1132,7 +1164,7 @@
 		<eng>creation</eng>
     </value>
   </dateType>
-  
+
   <function>
     <value name="download" code="1">
         <cze>download</cze>
@@ -1155,7 +1187,7 @@
 		<eng>order</eng>
     </value>
   </function>
-  
+
   <uomName>
     <value name="minutes" code="2">
         <cze>minuty</cze>
@@ -1202,7 +1234,7 @@
 		<eng>month</eng>
     </value>
   </uomName>
-  
+
   <type>
     <value name="Image" code="">
         <cze>Obrázek</cze>
@@ -1257,7 +1289,7 @@
 		<eng>Collection</eng>
     </value>
   </type>
-  
+
   <couplingType>
     <value name="tight" code="">
         <cze>těsný</cze>
@@ -1272,109 +1304,120 @@
 		<eng>loose</eng>
     </value>
   </couplingType>
-  
+
   <!-- pridano nad ramec ISO -->
   <coordSys>
     <title lang="cze">Souřadnicový referenční systém</title>
     <title lang="eng">Coordinate reference system</title>
+    <title lang="spa">Sistema de Referencia de Coordenadas</title>
 	<value uri="http://www.opengis.net/def/crs/EPSG/0/2065">
         <cze>S-JTSK (2065)</cze>
-		<eng>Krovak</eng>
+		    <eng>Krovak</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/5514">
         <cze>S-JTSK 3.kvadrant (5514)</cze>
-		<eng>Krovak 3.quadrant</eng>
+		    <eng>Krovak 3.quadrant</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/28403">
         <cze>S-42/3 (28403)</cze>
-		<eng>S-42/3 (28403)</eng>
+		    <eng>S-42/3 (28403)</eng>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/28404">
         <cze>S-42/4 (28404)</cze>
-		<eng>S-42/4 (28404)</eng>
+		    <eng>S-42/4 (28404)</eng>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/4326">
         <cze>WGS84 (4326)</cze>
-		<eng>WGS84 (4326)</eng>
+		    <eng>WGS84 (4326)</eng>
+        <spa>WGS84 (4326)</spa>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/32633">
         <cze>WGS84 UTM3 (32633)</cze>
-		<eng>WGS84 UTM3 (32633)</eng>
+		    <eng>WGS84 UTM3 (32633)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/32634">
         <cze>WGS84 UTM4 (32634)</cze>
-		<eng>WGS84 UTM4 (32634)</eng>
+		    <eng>WGS84 UTM4 (32634)</eng>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/4258">
         <cze>ETRS89 (4258) [INSPIRE]</cze>
-		<eng>ETRS89 (4258) [INSPIRE]</eng>
+		    <eng>ETRS89 (4258) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3034">
         <cze>ETRS-LCC (3034) [INSPIRE]</cze>
-		<eng></eng>
+		    <cze>ETRS-LCC (3034) [INSPIRE]</cze>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3035">
         <cze>ETRS-LAEA (3035) [INSPIRE]</cze>
-		<eng>ETRS-LAEA (3035) [INSPIRE]</eng>
+		    <eng>ETRS-LAEA (3035) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3038">
         <cze>ETRS-TM26 (3038)</cze>
-		<eng>ETRS-TM26 (3038)</eng>
+		    <eng>ETRS-TM26 (3038)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3039">
         <cze>ETRS-TM27 (3039)</cze>
-		<eng>ETRS-TM27 (3039)</eng>
+		    <eng>ETRS-TM27 (3039)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3040">
         <cze>ETRS-TM28 (3040)</cze>
-		<eng>ETRS-TM28 (3040)</eng>
+		    <eng>ETRS-TM28 (3040)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3041">
         <cze>ETRS-TM29 (3041)</cze>
-		<eng>ETRS-TM29 (3041)</eng>
+		    <eng>ETRS-TM29 (3041)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3042">
         <cze>ETRS-TM30 (3042)</cze>
-		<eng>ETRS-TM30 (3042)</eng>
+		    <eng>ETRS-TM30 (3042)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3043">
         <cze>ETRS-TM31 (3043)</cze>
-		<eng>ETRS-TM31 (3043)</eng>
+		    <eng>ETRS-TM31 (3043)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3044">
         <cze>ETRS-TM32 (3044)</cze>
-		<eng>ETRS-TM32 (3044)</eng>
+		    <eng>ETRS-TM32 (3044)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3045">
         <cze>ETRS-TM33 (3045) [INSPIRE]</cze>
-		<eng>ETRS-TM33 (3045) [INSPIRE]</eng>
+		    <eng>ETRS-TM33 (3045) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3046">
         <cze>ETRS-TM34 (3046) [INSPIRE]</cze>
-		<eng>ETRS-TM34 (3046) [INSPIRE]</eng>
+		    <eng>ETRS-TM34 (3046) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3047">
         <cze>ETRS-TM35 (3047)</cze>
-		<eng>ETRS-TM35 (3047)</eng>
+		    <eng>ETRS-TM35 (3047)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3048">
         <cze>ETRS-TM36 (3048)</cze>
-		<eng>ETRS-TM36 (3048)</eng>
+		    <eng>ETRS-TM36 (3048)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3049">
         <cze>ETRS-TM37 (3049)</cze>
-		<eng>ETRS-TM37 (3049)</eng>
+		    <eng>ETRS-TM37 (3049)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3050">
         <cze>ETRS-TM38 (3050)</cze>
-		<eng>ETRS-TM38 (3050)</eng>
+		    <eng>ETRS-TM38 (3050)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3857">
         <cze>Spherical Mercator (3857)</cze>
-		<eng>Spherical Mercator (3857)</eng>
+		    <eng>Spherical Mercator (3857)</eng>
+        <spa>Spherical Mercator (3857)</spa>
+    </value>
+    <value uri="http://www.opengis.net/def/crs/EPSG/0/3116">
+		    <eng>MAGNA-SIRGAS / Colombia Bogota zone (3116)</eng>
+        <spa>MAGNA-SIRGAS / Colombia Bogota Zona (3116)</spa>
+    </value>
+    <value uri="http://www.opengis.net/def/crs/EPSG/0/4326">
+		    <eng>MAGNA-SIRGAS (4686)</eng>
+        <spa>MAGNA-SIRGAS (4686)</spa>
     </value>
   </coordSys>
-  
+
   <compliant>
   	<value name="true" code="">
         <cze>ANO</cze>
@@ -1386,188 +1429,232 @@
     </value>
   	<value name="unknown" code="">
         <cze>NEHODNOCENO</cze>
-		<eng>NOT EVALUATED</eng>
+		    <eng>NOT EVALUATED</eng>
+        <spa>NO EVALUADO</spa>
     </value>
-  </compliant> 
+  </compliant>
 
   <inspireKeywords title="Datová témata INSPIRE">
     <title lang="cze">Témata INSPIRE</title>
     <title lang="eng">INSPIRE themes</title>
+    <title lang="spa">Temas INSPIRE</title>
     <!-- ANNEX I -->
     <value uri="https://inspire.ec.europa.eu/theme/rs" spec="https://inspire.ec.europa.eu/id/document/tg/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">
         <cze>Souřadnicové referenční systémy</cze>
-		<eng>Coordinate reference systems</eng>
-    </value>  
+		    <eng>Coordinate reference systems</eng>
+        <spa>Sistema de Referencia de Coordenadas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/gg" spec="https://inspire.ec.europa.eu/id/document/tg/gg" cenia="base" name="Zeměpisné soustavy souřadnicových sítí" code="Geographical grid systems" publication="2010-05-03" n="I.2">
         <cze>Zeměpisné soustavy souřadnicových sítí</cze>
-		<eng>Geographical grid systems</eng>
-    </value>  
+		    <eng>Geographical grid systems</eng>
+        <spa>Sistemas de Grillas de Coordenadas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/gn" spec="https://inspire.ec.europa.eu/id/document/tg/gn" cenia="base" name="Zeměpisné názvy" code="Geographical names" publication="2010-05-03" n="I.3">
         <cze>Zeměpisné názvy</cze>
-		<eng>Geographical names</eng>
-    </value>  
+		    <eng>Geographical names</eng>
+        <spa>Nombres geográficos</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/au" spec="https://inspire.ec.europa.eu/id/document/tg/au" cenia="division" name="Správní jednotky" code="Administrative units" publication="2010-05-03" n="I.4">
         <cze>Správní jednotky</cze>
-		<eng>Administrative units</eng>
-    </value>  
+		    <eng>Administrative units</eng>
+        <spa>Unidades administrativas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/ad" spec="https://inspire.ec.europa.eu/id/document/tg/ad" cenia="division" name="Adresy" code="Addresses" publication="2010-05-03" n="I.5">
         <cze>Adresy</cze>
-		<eng>Addresses</eng>
-    </value>  
+		    <eng>Addresses</eng>
+        <spa>Direcciones</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/cp" spec="https://inspire.ec.europa.eu/id/document/tg/cp" cenia="division" name="Katastrální parcely" code="Cadastral parcels" publication="2010-05-03" n="I.6">
         <cze>Katastrální parcely</cze>
-		<eng>Cadastral parcels</eng>
-    </value>  
+		    <eng>Cadastral parcels</eng>
+        <spa>Parcelas catastrales</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/tn" spec="https://inspire.ec.europa.eu/id/document/tg/tn" cenia="transport" name="Dopravní sítě" code="Transport networks" publication="2010-05-03" n="I.7">
         <cze>Dopravní sítě</cze>
-		<eng>Transport networks</eng>
-    </value>  
+		    <eng>Transport networks</eng>
+        <spa>Redes de transporte</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/hy" spec="https://inspire.ec.europa.eu/id/document/tg/hy" cenia="water" name="Vodopis" code="Hydrography" publication="2010-05-03" n="I.8">
         <cze>Vodopis</cze>
-		<eng>Hydrography</eng>
-    </value>  
+		    <eng>Hydrography</eng>
+        <spa>Hidrografía</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/ps" spec="https://inspire.ec.europa.eu/id/document/tg/ps" cenia="environment" name="Chráněná území" code="Protected sites" publication="2010-05-03" n="I.9">
         <cze>Chráněná území</cze>
-		<eng>Protected sites</eng>
-    </value>  
+		    <eng>Protected sites</eng>
+        <spa>Sitios protegidos</spa>
+    </value>
 
     <!-- ANNEX II -->
     <value uri="https://inspire.ec.europa.eu/theme/el" spec="https://inspire.ec.europa.eu/id/document/tg/el" cenia="base" name="Nadmořská výška" code="Elevation" publication="2013-10-12" n="II.1">
         <cze>Nadmořská výška</cze>
-		<eng>Elevation</eng>
-    </value>  
+		    <eng>Elevation</eng>
+        <spa>Elevación</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/lc" spec="https://inspire.ec.europa.eu/id/document/tg/lc" cenia="nature" name="Krajinný pokryv" code="Land cover" publication="2013-10-12" n="II.2">
         <cze>Krajinný pokryv</cze>
-		<eng>Land cover</eng>
-    </value>  
+		    <eng>Land cover</eng>
+        <spa>Cobertura del suelo</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/oi" spec="https://inspire.ec.europa.eu/id/document/tg/oi" cenia="base" name="Ortofotosnímky" code="Orthoimagery" publication="2013-10-12" n="II.3">
         <cze>Ortofotosnímky</cze>
-		<eng>Orthoimagery</eng>
-    </value>  
+		    <eng>Orthoimagery</eng>
+        <spa>Ortoimagen</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/ge" spec="https://inspire.ec.europa.eu/id/document/tg/ge" cenia="nature" name="Geologie" code="Geology" publication="2013-10-12" n="II.4">
         <cze>Geologie</cze>
-		<eng>Geology</eng>
-    </value>  
+		    <eng>Geology</eng>
+        <spa>Geología</spa>
+    </value>
 
     <!-- ANNEX III -->
     <value uri="https://inspire.ec.europa.eu/theme/su" spec="https://inspire.ec.europa.eu/id/document/tg/su" cenia="division" name="Statistické jednotky" code="Statistical units" publication="2013-10-12" n="III.1">
         <cze>Statistické jednotky</cze>
-		<eng>Statistical units</eng>
-    </value>  
+		    <eng>Statistical units</eng>
+        <spa>Unidades estadísticas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/bu" spec="https://inspire.ec.europa.eu/id/document/tg/bu" cenia="social" name="Budovy" code="Buildings" publication="2013-10-12" n="III.2">
         <cze>Budovy</cze>
-		<eng>Buildings</eng>
-    </value>  
+		    <eng>Buildings</eng>
+        <spa>Construcciones</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/so" spec="https://inspire.ec.europa.eu/id/document/tg/so" cenia="nature" name="Půda" code="Soil" publication="2013-10-12" n="III.3">
         <cze>Půda</cze>
-		<eng>Soil</eng>
-    </value>  
+		    <eng>Soil</eng>
+        <spa>Suelos</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/lu" spec="https://inspire.ec.europa.eu/id/document/tg/lu" cenia="nature" name="Využití území" code="Land use" publication="2013-10-12" n="III.4">
         <cze>Využití území</cze>
-		<eng>Land use</eng>
-    </value>  
+		    <eng>Land use</eng>
+        <spa>Uso del suelo</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/hh" spec="https://inspire.ec.europa.eu/id/document/tg/hh" cenia="social" name="Lidské zdraví a bezpečnost" code="Human health and safety" publication="2013-10-12" n="III.5">
         <cze>Lidské zdraví a bezpečnost</cze>
-		<eng>Human health and safety</eng>
-    </value>  
+		    <eng>Human health and safety</eng>
+        <spa>Salud y seguridad humana</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/us" spec="https://inspire.ec.europa.eu/id/document/tg/us" cenia="social" name="Veřejné služby a služby veřejné správy" code="Utility and governmental services" publication="2013-10-12" n="III.6">
         <cze>Veřejné služby a služby veřejné správy</cze>
-		<eng>Utility and governmental services</eng>
-    </value>  
+		    <eng>Utility and governmental services</eng>
+        <spa>Servicios públicos y gubernamentales</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/ef" spec="https://inspire.ec.europa.eu/id/document/tg/ef" cenia="environment" name="Zařízení pro sledování životního prostředí" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">
         <cze>Zařízení pro sledování životního prostředí</cze>
-		<eng>Environmental monitoring facilities</eng>
-    </value>  
+		    <eng>Environmental monitoring facilities</eng>
+        <spa>Instalaciones de monitoreo ambiental</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/pf" spec="https://inspire.ec.europa.eu/id/document/tg/pf" cenia="social" name="Výrobní a průmyslová zařízení" code="Production and industrial facilities" publication="2013-10-12" n="III.8">
         <cze>Výrobní a průmyslová zařízení</cze>
-		<eng>Production and industrial facilities</eng>
-    </value>  
+		    <eng>Production and industrial facilities</eng>
+        <spa>Instalaciones productivas e industriales</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/af" spec="https://inspire.ec.europa.eu/id/document/tg/af" cenia="social" name="Zemědělská a akvakulturní zařízení" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">
         <cze>Zemědělská a akvakulturní zařízení</cze>
-		<eng>Agricultural and aquaculture facilities</eng>
-    </value>  
+		    <eng>Agricultural and aquaculture facilities</eng>
+        <spa>Instalaciones agrícolas y acuícolas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/pd" spec="https://inspire.ec.europa.eu/id/document/tg/pd" cenia="social" name="Rozložení obyvatelstva – demografie" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">
         <cze>Rozložení obyvatelstva – demografie</cze>
-		<eng>Population distribution &#8212; demography</eng>
-    </value>  
+		    <eng>Population distribution &#8212; demography</eng>
+        <spa>Distribución de población &#8212; demografía</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/am" spec="https://inspire.ec.europa.eu/id/document/tg/am" cenia="environment" name="Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení" code="Area management/restriction/regulation zones and reporting units" publication="2009-10-20" n="III.11">
         <cze>Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení</cze>
-		<eng>Area management/restriction/regulation zones and reporting units</eng>
-    </value>  
+		    <eng>Area management/restriction/regulation zones and reporting units</eng>
+        <spa>Zonas de ordenación/restricción/regulación y unidades reportadas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/nz" spec="https://inspire.ec.europa.eu/id/document/tg/nz" cenia="environment" name="Oblasti ohrožené přírodními riziky" code="Natural risk zones" publication="2013-10-12" n="III.12">
         <cze>Oblasti ohrožené přírodními riziky</cze>
-		<eng>Natural risk zones</eng>
-    </value>  
+		    <eng>Natural risk zones</eng>
+        <spa>Zonas de riesgos naturales</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/ac" spec="https://inspire.ec.europa.eu/id/document/tg/ac" cenia="environment" name="Stav ovzduší" code="Atmospheric conditions" publication="2013-10-12" n="III.13">
         <cze>Stav ovzduší</cze>
-		<eng>Atmospheric conditions</eng>
-    </value>  
+		    <eng>Atmospheric conditions</eng>
+        <spa>Condiciones atmosféricas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/mf" spec="https://inspire.ec.europa.eu/id/document/tg/mf" cenia="nature" name="Zeměpisné meteorologické prvky" code="Meteorological geographical features" publication="2013-10-12" n="III.14">
         <cze>Zeměpisné meteorologické prvky</cze>
-		<eng>Meteorological geographical features</eng>
-    </value>  
+		    <eng>Meteorological geographical features</eng>
+        <spa>Entidades geográficas metereológicas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/of" spec="https://inspire.ec.europa.eu/id/document/tg/of" cenia="water" name="Zeměpisné oceánografické prvky" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">
         <cze>Zeměpisné oceánografické prvky</cze>
-		<eng>Oceanographic geographical features</eng>
-    </value>  
+		    <eng>Oceanographic geographical features</eng>
+        <spa>Entidades geográficos oceanográficos</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/sr" spec="https://inspire.ec.europa.eu/id/document/tg/sr" cenia="water" name="Mořské oblasti" code="Sea regions" publication="2013-10-12" n="III.16">
         <cze>Mořské oblasti</cze>
-		<eng>Sea regions</eng>
-    </value>  
+		    <eng>Sea regions</eng>
+        <spa>Regiones marítimas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/br" spec="https://inspire.ec.europa.eu/id/document/tg/br" cenia="nature" name="Bioregiony" code="Bio-geographical regions" publication="2013-10-12" n="III.17">
         <cze>Bioregiony</cze>
-		<eng>Bio-geographical regions</eng>
-    </value>  
+		    <eng>Bio-geographical regions</eng>
+        <spa>Regiones biogeográficas</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/hb" spec="https://inspire.ec.europa.eu/id/document/tg/hb" cenia="nature" name="Stanoviště a biotopy" code="Habitats and biotopes" publication="2013-10-12" n="III.18">
         <cze>Stanoviště a biotopy</cze>
-		<eng>Habitats and biotopes</eng>
-    </value>  
+		    <eng>Habitats and biotopes</eng>
+        <spa>Hábitats y biotopos</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/sd" spec="https://inspire.ec.europa.eu/id/document/tg/sd" cenia="nature" name="Rozložení druhů" code="Species distribution" publication="2013-10-12" n="III.19">
         <cze>Rozložení druhů</cze>
-		<eng>Species distribution</eng>
-    </value>  
+		    <eng>Species distribution</eng>
+        <spa>Distribución de especies</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/er" spec="https://inspire.ec.europa.eu/id/document/tg/er" cenia="social" name="Energetické zdroje" code="Energy resources" publication="2013-10-12" n="III.20">
         <cze>Energetické zdroje</cze>
-		<eng>Energy resources</eng>
-    </value>  
+		    <eng>Energy resources</eng>
+        <spa>Recursos energéticos</spa>
+    </value>
     <value uri="https://inspire.ec.europa.eu/theme/mr" spec="https://inspire.ec.europa.eu/id/document/tg/mr" cenia="social" name="Nerostné suroviny" code="Mineral resources" publication="2013-10-12" n="III.21">
         <cze>Nerostné suroviny</cze>
-		<eng>Mineral resources</eng>
-    </value>  
+		    <eng>Mineral resources</eng>
+        <spa>Recursos minerales</spa>
+    </value>
   </inspireKeywords>
 
   <specifications title="Nařízení komise">
     <title lang="eng">Specifications</title>
     <title lang="cze">Specifikace</title>
-	<!--value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat" 
+    <title lang="esp">Especificaciones</title>
+	<!--value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat"
         code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value-->
 	<value code="Interoperability"  uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">
         <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">Interoperabilita 1089/2010</cze>
-		<eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability 1089/2010</eng>
+		    <eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability 1089/2010</eng>
+        <spa name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperabilidad 1089/2010</spa>
     </value>
     <value code="Network" uri="https://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">
         <cze name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby">Síťové služby 976/2009</cze>
-		<eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Network services 976/2009</eng>
-    </value>  
+		    <eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Network services 976/2009</eng>
+        <spa name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Servicios de Red 976/2009</spa>
+    </value>
     <value code="Download" uri="https://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">
         <cze name="Nařízení Komise (EU) č. 1088/2010 ze dne 23. listopadu 2010, kterým se mění nařízení (ES) č. 976/2009, pokud jde o služby stahování dat a transformační služby">Stahovací a transformační služby 1088/2010</cze>
-		<eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Download and transformation services 1088/2010</eng>
-    </value>  
+		    <eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Download and transformation services 1088/2010</eng>
+        <spa name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Servicios de descarga y transformación 1088/2010</spa>
+    </value>
 	<value code="Metadata"  uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">
         <cze name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat">Metadata 1205/2008</cze>
-		<eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata 1205/2008</eng>
+		    <eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata 1205/2008</eng>
+        <spa name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadatos 1205/2008</spa>
     </value>
     <value code="Access" uri="https://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">
         <cze name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" >Přístup k datovým sadám a službám 268/2010</cze>
-		<eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
+		    <eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
+        <spa name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Acceso y acceso a base de datos espaciales 268/2010</spa>
     </value>
     <value code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">
         <cze name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" >Monitoring a reporting 2009/442/ES</cze>
-		<eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoring and reporting 2009/442/ES</eng>
+		    <eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoring and reporting 2009/442/ES</eng>
+        <spa name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoreo y reporte 2009/442/ES</spa>
     </value>
     <value code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">
         <cze name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" >SMĚRNICE INSPIRE 2007/2/ES</cze>
-		<eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
+		    <eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
+        <spa name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">DIRECTIVA INSPIRE 2007/2/ES</spa>
     </value>
   </specifications>
 
@@ -1595,9 +1682,9 @@
   	<value name="other" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other" code="">
         <cze>jiné</cze>
 		<eng>other</eng>
-    </value>   
+    </value>
   </serviceType>
-  
+
   <applicationType>
   	<value name="WMC" code="">
         <cze>Mapový kontext (WMC)</cze>
@@ -1624,7 +1711,7 @@
 		<eng>Other</eng>
     </value>
   </applicationType>
-  
+
   <inspireType>
     <value name="dataset">
         <cze>datová sada</cze>
@@ -1639,7 +1726,7 @@
 		<eng>non geographic dataset</eng>
     </value>
   </inspireType>
-  
+
   <inspireServiceType>
     <value name="service" code="14">
         <cze>služba</cze>
@@ -1673,8 +1760,8 @@
 		<eng>featureCatalogue</eng>
     </value>
    </crType>
-  
-<serviceKeyword>  
+
+<serviceKeyword>
   <value id="100" name="humanInteractionService" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanInteractionService">
         <cze qtip="Aplikace pro koncového uživatele">Geografické služby interakce s člověkem</cze>
 		<eng qtip="This category comprises the following subcategories:">Geographic human interaction services</eng>
@@ -2012,7 +2099,8 @@
     </value>
     <value name="owner" code="3">
         <cze>vlastník</cze>
-		<eng>owner</eng>
+		    <eng>owner</eng>
+        <spa>propietario</spa>
     </value>
     <value name="user" code="4">
         <cze>uživatel</cze>
@@ -2020,15 +2108,18 @@
     </value>
     <value name="distributor" code="5">
         <cze>distributor</cze>
-		<eng>distributor</eng>
+		    <eng>distributor</eng>
+        <spa>distribuidor</spa>
     </value>
     <value name="originator" code="6">
         <cze>původce</cze>
-		<eng>originator</eng>
+		    <eng>originator</eng>
+        <spa>originador</spa>
     </value>
     <value name="pointOfContact" code="7">
         <cze>kontaktní bod</cze>
-		<eng>point Of Contact</eng>
+		    <eng>point Of Contact</eng>
+        <spa>punto de contacto</spa>
     </value>
     <value name="principalInvestigator" code="8">
         <cze>zodp. za sběr dat a výzkum</cze>
@@ -2044,14 +2135,16 @@
     </value>
     <value name="author" code="11">
         <cze>autor</cze>
-		<eng>author</eng>
+		    <eng>author</eng>
+        <spa>autor</spa>
     </value>
 </specRole>
 
 <units>
     <value name="m" code="m">
         <cze>m</cze>
-		<eng>m</eng>
+		    <eng>m</eng>
+        <spa>m</spa>
     </value>
     <value name="m2" code="m2">
         <cze>m2</cze>
@@ -2063,7 +2156,8 @@
     </value>
     <value name="km2" code="km2">
         <cze>km2</cze>
-		<eng>km2</eng>
+		    <eng>km2</eng>
+        <spa>km2</spa>
     </value>
     <value name="percent" code="percent">
         <cze>procenta</cze>
@@ -2080,164 +2174,204 @@
     <title lang="eng">Protocols</title>
     <value code="WWW:LINK-1.0-http--link" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--link">
         <cze>WWW - link</cze>
-		<eng>WWW - link</eng>
-    </value> 
+		    <eng>WWW - link</eng>
+        <spa>WWW - Enlace</spa>
+    </value>
     <value code="WWW:DOWNLOAD-1.0-http--download" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-http--download">
         <cze>WWW - download</cze>
-		<eng>WWW - download</eng>
-    </value> 
+		    <eng>WWW - download</eng>
+        <spa>WWW - descarga</spa>
+    </value>
     <value code="WWW:LINK-1.0-http--rss" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--rss">
         <cze>RSS</cze>
-		<eng>RSS</eng>
-    </value> 
+		    <eng>RSS</eng>
+        <spa>RSS</spa>
+    </value>
     <value code="WWW:LINK-1.0-http--atom" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--atom">
         <cze>ATOM</cze>
-		<eng>ATOM</eng>
-    </value> 
+		    <eng>ATOM</eng>
+        <spa>ATOM</spa>
+    </value>
     <value code="WWW:DOWNLOAD-1.0-ftp--download" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-ftp--download">
         <cze>FTP</cze>
-		<eng>FTP</eng>
-    </value> 
+		    <eng>FTP</eng>
+        <spa>FTP</spa>
+    </value>
     <value code="OGC:WMS" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS">
         <cze>WMS</cze>
-		<eng>WMS</eng>
-    </value> 
+		    <eng>WMS</eng>
+        <spa>WMS</spa>
+    </value>
     <value code="OGC:WMS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.0.0-http-get-capabilities">
         <cze>WMS 1.0.0</cze>
-		<eng>WMS 1.0.0</eng>
-    </value> 
+		    <eng>WMS 1.0.0</eng>
+        <spa>WMS 1.0.0</spa>
+    </value>
     <value code="OGC:WMS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.0-http-get-capabilities">
         <cze>WMS 1.1.0</cze>
-		<eng>WMS 1.1.0</eng>
-    </value> 
+		    <eng>WMS 1.1.0</eng>
+        <spa>WMS 1.1.0</spa>
+    </value>
     <value code="OGC:WMS-1.1.1-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.1-http-get-capabilities">
         <cze>WMS 1.1.1</cze>
-		<eng>WMS 1.1.1</eng>
-    </value> 
+		    <eng>WMS 1.1.1</eng>
+        <spa>WMS 1.1.1</spa>
+    </value>
     <value code="OGC:WMS-1.3.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.3.0-http-get-capabilities">
         <cze>WMS 1.3.0</cze>
-		<eng>WMS 1.3.0</eng>
-    </value> 
+		    <eng>WMS 1.3.0</eng>
+        <spa>WMS 1.3.0</spa>
+    </value>
     <value code="OGC:WFS" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS">
         <cze>WFS</cze>
-		<eng></eng>
+		    <eng>WFS</eng>
+        <spa>WFS</spa>
     </value>
     <value code="OGC:WFS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-get-capabilities">
         <cze>WFS 1.0.0 / Get</cze>
-		<eng>WFS 1.0.0 / Get</eng>
-    </value> 
+		    <eng>WFS 1.0.0 / Get</eng>
+        <spa>WFS 1.0.0 / Get</spa>
+    </value>
     <value code="OGC:WFS-1.0.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-post-capabilities">
         <cze>WFS 1.0.0 / Post</cze>
-		<eng>WFS 1.0.0 / Post</eng>
-    </value> 
+		    <eng>WFS 1.0.0 / Post</eng>
+        <spa>WFS 1.0.0 / Post</spa>
+    </value>
     <value code="OGC:WFS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-get-capabilities">
         <cze>WFS 1.1.0 / Get</cze>
-		<eng>WFS 1.1.0 / Get</eng>
-    </value> 
+		    <eng>WFS 1.1.0 / Get</eng>
+        <spa>WFS 1.1.0 / Get</spa>
+    </value>
     <value code="OGC:WFS-1.1.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-post-capabilities">
         <cze>WFS 1.1.0 / Post</cze>
-		<eng>WFS 1.1.0 / Post</eng>
-    </value> 
+		    <eng>WFS 1.1.0 / Post</eng>
+        <spa>WFS 1.1.0 / Post</spa>
+    </value>
     <value code="OGC:WFS-2.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-get-capabilities">
         <cze>WFS 2.0.0 / Get</cze>
-		<eng>WFS 2.0.0 / Get</eng>
-    </value> 
+		    <eng>WFS 2.0.0 / Get</eng>
+        <spa>WFS 2.0.0 / Get</spa>
+    </value>
     <value code="OGC:WFS-2.0.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-post-capabilities">
         <cze>WFS 2.0.0 / Post</cze>
-		<eng>WFS 2.0.0 / Post</eng>
-    </value> 
+		    <eng>WFS 2.0.0 / Post</eng>
+        <spa>WFS 2.0.0 / Post</spa>
+    </value>
     <value code="OGC:CSW-2.0.2-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-get-capabilities">
         <cze>CSW 2.0.2 / Get</cze>
-		<eng>CSW 2.0.2 / Get</eng>
-    </value> 
+		    <eng>CSW 2.0.2 / Get</eng>
+        <spa>CSW 2.0.2 / Get</spa>
+    </value>
     <value code="OGC:CSW-2.0.2-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-post-capabilities">
         <cze>CSW 2.0.2 / Post</cze>
-		<eng>CSW 2.0.2 / Post</eng>
-    </value> 
+		    <eng>CSW 2.0.2 / Post</eng>
+        <spa>CSW 2.0.2 / Post</spa>
+    </value>
     <value code="ESRI:AIMS--http-get-image" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-image">
         <cze>ESRI ArcIMS image service</cze>
-		<eng>ESRI ArcIMS image service</eng>
-    </value> 
+		    <eng>ESRI ArcIMS image service</eng>
+        <spa>Servicio de Imagen ESRI ArcIMS</spa>
+    </value>
     <value code="ESRI:AIMS--http-get-feature" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-feature">
         <cze>ESRI ArcIMS feature service</cze>
-		<eng>ESRI ArcIMS feature service</eng>
-    </value> 
+		    <eng>ESRI ArcIMS feature service</eng>
+        <spa>Servicio de Entidades de ESRI ArcIMS</spa>
+    </value>
     <value code="ESRI:AIMS--http--configuration" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http--configuration">
         <cze>ArcIMS Map Service (*.AXL)</cze>
-		<eng>ArcIMS Map Service (*.AXL)</eng>
-    </value> 
+		    <eng>ArcIMS Map Service (*.AXL)</eng>
+        <spa>Servicio de Mapas ArcIMS (*.AXL)</spa>
+    </value>
     <value code="ESRI:MAP-10.2-http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-rest">
         <cze>ESRI ArcGIS MAP REST</cze>
-		<eng>ESRI ArcGIS MAP REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS MAP REST</eng>
+        <spa>ESRI ArcGIS MAP REST</spa>
+    </value>
     <value code="ESRI:MAP-10.2-http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-soap">
         <cze>ESRI ArcGIS MAP SOAP</cze>
-		<eng>ESRI ArcGIS MAP SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS MAP SOAP</eng>
+        <spa>ESRI ArcGIS MAP SOAP</spa>
+    </value>
     <value code="ESRI:FEATURE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-rest">
         <cze>ESRI ArcGIS FEATURE REST</cze>
-		<eng>ESRI ArcGIS FEATURE REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS FEATURE REST</eng>
+        <spa>ESRI ArcGIS FEATURE REST</spa>
+    </value>
     <value code="ESRI:FEATURE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-soap">
         <cze>ESRI ArcGIS FEATURE SOAP</cze>
-		<eng>ESRI ArcGIS FEATURE SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS FEATURE SOAP</eng>
+        <spa>ESRI ArcGIS FEATURE SOAP</spa>
+    </value>
     <value code="ESRI:GEOCODE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-rest">
         <cze>ESRI ArcGIS GEOCODE REST</cze>
-		<eng>ESRI ArcGIS GEOCODE REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS GEOCODE REST</eng>
+        <spa>ESRI ArcGIS GEOCODE REST</spa>
+    </value>
     <value code="ESRI:GEOCODE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-soap">
         <cze>ESRI ArcGIS GEOCODE SOAP</cze>
-		<eng>ESRI ArcGIS GEOCODE SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS GEOCODE SOAP</eng>
+        <spa>ESRI ArcGIS GEOCODE SOAP</spa>
+    </value>
     <value code="ESRI:GEODATA--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-rest">
         <cze>ESRI ArcGIS GEODATA REST</cze>
-		<eng>ESRI ArcGIS GEODATA REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS GEODATA REST</eng>
+        <spa>ESRI ArcGIS GEODATA REST</spa>
+    </value>
     <value code="ESRI:GEODATA--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-soap">
         <cze>ESRI ArcGIS GEODATA SOAP</cze>
-		<eng></eng>
-    </value> 
+		    <eng>ESRI ArcGIS GEODATA SOAP</eng>
+        <spa>ESRI ArcGIS GEODATA SOAP</spa>
+    </value>
     <value code="ESRI:GEOMETRY--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-rest">
         <cze>ESRI ArcGIS GEOMETRY REST</cze>
-		<eng>ESRI ArcGIS GEOMETRY REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS GEOMETRY REST</eng>
+        <spa>ESRI ArcGIS GEOMETRY REST</spa>
+    </value>
     <value code="ESRI:GEOMETRY--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-soap">
         <cze>ESRI ArcGIS GEOMETRY SOAP</cze>
-		<eng>ESRI ArcGIS GEOMETRY SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS GEOMETRY SOAP</eng>
+        <spa>ESRI ArcGIS GEOMETRY SOAP</spa>
+    </value>
     <value code="ESRI:GP--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GP--http-rest">
         <cze>ESRI ArcGIS Geoprocessing REST</cze>
-		<eng>ESRI ArcGIS Geoprocessing REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS Geoprocessing REST</eng>
+        <spa>ESRI ArcGIS Geoprocessing REST</spa>
+    </value>
     <value code="ESRI:GP--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GP--http-soap">
         <cze>ESRI ArcGIS Geoprocessing SOAP</cze>
-		<eng>ESRI ArcGIS Geoprocessing SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS Geoprocessing SOAP</eng>
+        <spa>ESRI ArcGIS Geoprocessing SOAP</spa>
+    </value>
     <value code="ESRI:GLOBE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-rest">
         <cze>ESRI ArcGIS GLOBE REST</cze>
-		<eng>ESRI ArcGIS GLOBE REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS GLOBE REST</eng>
+        <spa>ESRI ArcGIS GLOBE REST</spa>
+    </value>
     <value code="ESRI:GLOBE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-soap">
         <cze>ESRI ArcGIS GLOBE SOAP</cze>
-		<eng>ESRI ArcGIS GLOBE SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS GLOBE SOAP</eng>
+        <spa>ESRI ArcGIS GLOBE SOAP</spa>
+    </value>
     <value code="ESRI:IMAGE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-rest">
         <cze>ESRI ArcGIS IMAGE REST</cze>
-		<eng>ESRI ArcGIS IMAGE REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS IMAGE REST</eng>
+        <spa>ESRI ArcGIS IMAGE REST</spa>
+    </value>
     <value code="ESRI:IMAGE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-soap">
         <cze>ESRI ArcGIS IMAGE SOAP</cze>
-		<eng>ESRI ArcGIS IMAGE SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS IMAGE SOAP</eng>
+        <spa>ESRI ArcGIS IMAGE SOAP</spa>
+    </value>
     <value code="ESRI:NA--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:NA--http-rest">
         <cze>ESRI ArcGIS Network Analysis REST</cze>
-		<eng>ESRI ArcGIS Network Analysis REST</eng>
-    </value> 
+		    <eng>ESRI ArcGIS Network Analysis REST</eng>
+        <spa>ESRI ArcGIS Network Analysis REST</spa>
+    </value>
     <value code="ESRI:NA--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:NA--http-soap">
         <cze>ESRI ArcGIS Network Analysis SOAP</cze>
-		<eng>ESRI ArcGIS Network Analysis SOAP</eng>
-    </value> 
+		    <eng>ESRI ArcGIS Network Analysis SOAP</eng>
+        <spa>ESRI ArcGIS Network Analysis SOAP</spa>
+    </value>
 </protocol>
 
 <extents>
@@ -2351,7 +2485,8 @@
     </value>
     <value x1="-18.161" y1="27.636" x2="4.327" y2="43.789" uri="https://publications.europa.eu/resource/authority/country/ESP" area="505990">
         <cze>Španělsko</cze>
-		<eng>Spain</eng>
+		    <eng>Spain</eng>
+        <spa>España</spa>
     </value>
     <value x1="10.984" y1="55.336" x2="24.166" y2="69.06" uri="https://publications.europa.eu/resource/authority/country/SWE" area="447435">
         <cze>Švédsko</cze>
@@ -2371,41 +2506,51 @@
 <accessCond>
     <title lang="cze">Podmínky pro přístup užití</title>
     <title lang="eng">Access and use conditions</title>
+    <title lang="spa">Condiciones de acceso y uso</title>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">
         <cze qtip="No conditions apply to access and use.">žádné podmínky pro přístup a užití</cze>
         <eng qtip="No conditions apply to access and use.">no conditions apply to access and use</eng>
+        <spa qtip="No se aplican condiciones de acceso y uso.">no se aplican condiciones de acceso y utilización</spa>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">
         <cze qtip="The conditions applying to access and use are unknown.">podmínky pro přístup a užití nejsou známy</cze>
         <eng qtip="The conditions applying to access and use are unknown.">the conditions applying to access and use are unknown</eng>
+        <spa qtip="Se desconocen las condiciones de acceso y utilización.">se desconocen las condiciones de acceso y utilización.</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by/4.0">
         <cze qtip="">Creative Commons BY 4.0</cze>
         <eng qtip="">Creative Commons BY 4.0</eng>
+        <spa qtip="">Creative Commons BY 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-sa/4.0">
         <cze qtip="">Creative Commons BY-SA 4.0</cze>
         <eng qtip="">Creative Commons BY-SA 4.0</eng>
+        <spa qtip="">Creative Commons BY-SA 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nd/4.0">
         <cze qtip="">Creative Commons BY-ND 4.0</cze>
         <eng qtip="">Creative Commons BY-ND 4.0</eng>
+        <spa qtip="">Creative Commons BY-ND 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nc/4.0">
         <cze qtip="">Creative Commons BY-NC 4.0</cze>
         <eng qtip="">Creative Commons BY-NC 4.0</eng>
+        <spa qtip="">Creative Commons BY-NC 4.0</spa>
    </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nc-sa/4.0">
         <cze qtip="">Creative Commons BY-NC-SA 4.0</cze>
         <eng qtip="">Creative Commons BY-NC-SA 4.0</eng>
+        <spa qtip="">Creative Commons BY-NC-SA 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nc-nd/4.0">
         <cze qtip="">Creative Commons BY-NC-ND 4.0</cze>
         <eng qtip="">Creative Commons BY-NC-ND 4.0</eng>
+        <spa qtip="">Creative Commons BY-NC-ND 4.0</spa>
    </value>
 	<value name="" uri="http://creativecommons.org/cc0" qtip="">
         <cze qtip="">Creative Commons CC0</cze>
         <eng qtip="">Creative Commons CC0</eng>
+        <spa qtip="">Creative Commons CC0</spa>
     </value>
 </accessCond>
 
@@ -2413,17 +2558,21 @@
 <limitationsAccess>
     <title lang="cze">Omezení veřejného přístupu</title>
     <title lang="eng">Limitations on public access</title>
+    <title lang="spa">Limitaciones al acceso del público</title>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">
         <cze qtip="There are no limitations on public access to spatial data sets and services.">žádné omezení veřejného přístupu</cze>
-		<eng qtip="There are no limitations on public access to spatial data sets and services.">no limitations on public access to spatial data sets and services</eng>
+		    <eng qtip="There are no limitations on public access to spatial data sets and services.">no limitations on public access to spatial data sets and services</eng>
+        <spa qtip="No existen limitaciones al acceso del público a los conjuntos y servicios de datos espaciales.">ninguna limitación del acceso del público a los conjuntos y servicios de datos espaciales</spa>
     </value>
 	<value name="" uri="http://opendata.gov.cz/definition/opendata">
         <cze qtip="Otevřená data ČR.">Otevřená data ČR</cze>
-		<eng>Open Data of the Czech republic</eng>
+		    <eng>Open Data of the Czech republic</eng>
+        <spa>Datos abiertos de la República Checa</spa>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">
         <cze qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">veřejný přístup omezen podle Článku 13(1)(a) Směrnice INSPIRE</cze>
-		<eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">public access limited according to Article 13(1)(a) of the INSPIRE Directive</eng>
+		    <eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">public access limited according to Article 13(1)(a) of the INSPIRE Directive</eng>
+        <spa qtip="El acceso del público a los conjuntos y servicios de datos espaciales afectaría negativamente a la confidencialidad de los procedimientos de las autoridades públicas, cuando dicha confidencialidad esté prevista por ley.">acceso del público limitado de acuerdo al artículo 13, apartado 1, letra a), de la Directiva INSPIRE</spa>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b">
         <cze qtip="Public access to spatial data sets and services would adversely affect international relations, public security or national defence.">veřejný přístup omezen podle Článku 13(1)(b) Směrnice INSPIRE</cze>
@@ -2458,45 +2607,56 @@
 <format>
     <title lang="cze">Formát zdroje</title>
     <title lang="eng">Resource format</title>
+    <title lang="eng">formatos del recurso</title>
 	<value code="x-shapefile" uri="https://inspire.ec.europa.eu/media-types/application/x-shapefile">
         <cze qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</cze>
-		<eng qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</eng>
+		    <eng qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</eng>
+        <spa qtip="El tipo de soporte se utilizará para los archivos de forma Esri. El archivo es un archivo zip que contiene al menos los archivos shp, shx y dbf..">ESRI Shapefile</spa>
     </value>
 	<value code="gml+xml" uri="https://www.iana.org/assignments/media-types/application/gml+xml">
         <cze qtip="GML.">GML</cze>
-		<eng qtip="GML.">GML</eng>
+		    <eng qtip="GML.">GML</eng>
+        <spa qtip="GML.">GML</spa>
     </value>
 	<value code="x-gmz" uri="https://inspire.ec.europa.eu/media-types/application/x-gmz">
         <cze qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</cze>
-		<eng qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</eng>
+		    <eng qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</eng>
+        <spa qtip="El tipo de medio se utilizará para un archivo zip que contenga uno o más documentos GML.">GMZ</spa>
     </value>
 	<value code="vnd.google-earth.kml+xml" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kml+xml">
         <cze qtip="Google Earth KML">KML</cze>
-		<eng qtip="Google Earth KML">KML</eng>
+		    <eng qtip="Google Earth KML">KML</eng>
+        <spa qtip="Google Earth KML">KML</spa>
     </value>
 	<value code="vnd.google-earth.kmz" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kmz">
         <cze qtip="Google Earth KMZ">KMZ</cze>
-		<eng qtip="Google Earth KMZ">KMZ</eng>
+		    <eng qtip="Google Earth KMZ">KMZ</eng>
+        <spa qtip="Google Earth KMZ">KMZ</spa>
     </value>
 	<value code="x-ascii-grid" uri="https://inspire.ec.europa.eu/media-types/application/x-ascii-grid">
         <cze qtip="ASCII GRID">ASCII GRID</cze>
-		<eng qtip="ASCII GRID">ASCII GRID</eng>
+		    <eng qtip="ASCII GRID">ASCII GRID</eng>
+        <spa qtip="ASCII GRID">ASCII GRID</spa>
     </value>
 	<value code="x-ecw" uri="https://inspire.ec.europa.eu/media-types/application/x-ecw">
         <cze qtip="Enhanced Compressed Wavelet (ECW) file">ECW</cze>
-		<eng qtip="Enhanced Compressed Wavelet (ECW) file">ECW</eng>
+		    <eng qtip="Enhanced Compressed Wavelet (ECW) file">ECW</eng>
+        <spa qtip="Archivo mejorado Wavelet Comprimido (ECW)">ECW</spa>
     </value>
 	<value code="x-filegdb" uri="https://inspire.ec.europa.eu/media-types/application/x-filegdb">
         <cze qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</cze>
-		<eng qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</eng>
+		    <eng qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</eng>
+        <spa qtip="El tipo de soporte se utilizará para las geodatabases de archivo ESRI. El archivo es un archivo zip que contiene el directorio gdb.">ESRI Geodatabase</spa>
     </value>
 	<value code="x-las" uri="https://inspire.ec.europa.eu/media-types/application/x-las">
         <cze qtip="The media type shall be used for the LASer file format (LAS).">LAS</cze>
-		<eng qtip="The media type shall be used for the LASer file format (LAS).">LAS</eng>
+		    <eng qtip="The media type shall be used for the LASer file format (LAS).">LAS</eng>
+        <spa qtip="El tipo de medio se utilizará para el formato de archivo LASER (LAS).">LAS</spa>
     </value>
 	<value code="xml" uri="https://www.iana.org/assignments/media-types/application/xml">
         <cze qtip="Obecný XML odkument.">XML</cze>
-		<eng qtip="Generic XML document.">XML</eng>
+        <eng qtip="XML Document Generic.">XML</eng>
+		    <spa qtip="Documento XML genérico.">XML</spa>
     </value>
 </format>
 
@@ -2507,11 +2667,13 @@
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable">
         <cze>interoperabilní</cze>
-		<eng>interoperable</eng>
+		    <eng>interoperable</eng>
+        <spa>interoperable</spa>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised">
         <cze>harmonizované</cze>
-		<eng>harmonised</eng>
+		    <eng>harmonised</eng>
+        <spa>harmonizado</spa>
     </value>
 </sds>
 
@@ -2533,7 +2695,7 @@
 <obligatory>
 	<value name="gestor">
         <cze>gestor</cze>
-		<eng>gestor</eng>
+		    <eng>gestor</eng>
     </value>
     <value name="spolugestor">
         <cze>spolugestor</cze>
@@ -2541,105 +2703,183 @@
     </value>
     <value name="garant">
         <cze>garant</cze>
-		<eng>garant</eng>
+		    <eng>garant</eng>
     </value>
 </obligatory>
 
 <hlname>
     <title lang="cze">Úroveň v hierarchii</title>
     <title lang="eng">Hierarchy level name</title>
-	<value uri="http://geoportal.gov.cz/inspire">
+	  <value uri="http://geoportal.gov.cz/inspire">
         <cze>Pro INSPIRE EU</cze>
-		<eng>For INSPIRE EU</eng>
-    </value>    
+		    <eng>For INSPIRE EU</eng>
+        <spa>Para INSPIRE EU</spa>
+    </value>
 </hlname>
 
 <linkageName>
     <title lang="cze">Předdefinovaná jména zdrojů</title>
     <title lang="eng">Resource type predefined names</title>
+    <title lang="spa">Nombres predefinidos del tipo de recursos</title>
     <value code="WEB_cze">
         <eng>Web page (CS)</eng>
         <cze>Webová stránka (CS)</cze>
+        <spa>Página Web (CS)</spa>
     </value>
     <value code="ARCH_cze">
         <eng>Digital archive (CS)</eng>
         <cze>Digital archive (CS)</cze>
+        <spa>Archivo digital (CS)</spa>
     </value>
     <value code="DVD_cze">
         <eng>DVD/CD (CS)</eng>
         <cze>DVD/CD (CS)</cze>
+        <spa>DVD/CD (CS)</spa>
     </value>
     <value code="WMS_cze">
         <eng>WMS (CS)</eng>
         <cze>WMS (CS)</cze>
-    </value> 
+        <spa>WMS (CS)</spa>
+    </value>
     <value code="PRINT_cze">
         <eng>Shop - printed (CS)</eng>
         <cze>Obchod - tisk (CS)</cze>
-    </value> 
+        <spa>Tienda - impreso (CS)</spa>
+    </value>
     <value code="ESRI-IMS_cze">
         <eng>ArcIMS (CS)</eng>
         <cze>ArcIMS (CS)</cze>
+        <spa>ArcIMS (CS)</spa>
     </value>
     <value code="ESRI-SRV_cze">
         <eng>ArcGIS (CS)</eng>
         <cze>ArcGIS (CS)</cze>
+        <spa>ArcGIS (CS)</spa>
     </value>
     <value code="MAP_cze">
         <eng>Map application (CS)</eng>
         <cze>Mapová aplikace (CS)</cze>
+        <spa>Aplicación de mapa (CS)</spa>
     </value>
     <value code="DB_cze">
         <eng>Database application (CS)</eng>
         <cze>Databázová aplikace (CS)</cze>
+        <spa>Aplicación de base de datos (CS)</spa>
     </value>
     <value code="GREP_cze">
         <eng>Georeport (CS)</eng>
         <cze>Georeport (CS)</cze>
+        <spa>Georeporte (CS)</spa>
     </value>
     <value code="WEB_eng">
         <eng>Web page (EN)</eng>
         <cze>Webová stránka (EN)</cze>
+        <spa>Página Web (EN)</spa>
     </value>
     <value code="ARCH_eng">
         <eng>Digital archive (EN)</eng>
         <cze>Digitální archív (EN)</cze>
+        <spa>Archivo digital (EN)</spa>
     </value>
     <value code="PRINT_eng">
         <eng>Shop - printed (EN)</eng>
         <cze>Obchod - tisk (EN)</cze>
-    </value> 
+        <spa>Tienda - impresa (EN)</spa>
+    </value>
     <value code="DVD_eng">
         <eng>DVD/CD (EN)</eng>
         <cze>DVD/CD (EN)</cze>
+        <spa>DVD/CD (EN)</spa>
     </value>
     <value code="WMS_eng">
         <eng>WMS (EN)</eng>
         <cze>WMS (EN)</cze>
-    </value> 
+        <spa>WMS (EN)</spa>
+    </value>
     <value code="ESRI-IMS_eng">
         <eng>ArcIMS (EN)</eng>
         <cze>ArcIMS (EN)</cze>
+        <spa>ArcIMS (EN)</spa>
     </value>
     <value code="ESRI-SRV_eng">
         <eng>ArcGIS (EN)</eng>
         <cze>ArcGIS (EN)</cze>
+        <spa>ArcGIS (EN)</spa>
     </value>
     <value code="MAP_eng">
         <eng>Map application (EN)</eng>
         <cze>Mapová aplikace (EN)</cze>
+        <spa>Aplicación de mapa (EN)</spa>
     </value>
     <value code="DB_eng">
         <eng>Database application (EN)</eng>
         <cze>Databázová aplikace (EN)</cze>
+        <spa>Aplicación base de datos (EN)</spa>
     </value>
     <value code="GREP_eng">
         <eng>Georeport (EN)</eng>
         <cze>Georeport (EN)</cze>
+        <spa>Georeporte (EN)</spa>
     </value>
     <value code="CSW">
         <eng>CSW</eng>
         <cze>CSW</cze>
+        <spa>CSW</spa>
+    </value>
+    <value code="WEB_spa">
+        <eng>Web page (ESP)</eng>
+        <cze>Webová stránka (ESP)</cze>
+        <spa>Página Web (ESP)</spa>
+    </value>
+    <value code="ARCH_spa">
+        <eng>Digital archive (ESP)</eng>
+        <cze>Digitální archív (ESP)</cze>
+        <spa>Archivo digital (ESP)</spa>
+    </value>
+    <value code="PRINT_spa">
+        <eng>Shop - printed (ESP)</eng>
+        <cze>Obchod - tisk (ESP)</cze>
+        <spa>Tienda - impresa (ESP)</spa>
+    </value>
+    <value code="DVD_spa">
+        <eng>DVD/CD (ESP)</eng>
+        <cze>DVD/CD (ESP)</cze>
+        <spa>DVD/CD (ESP)</spa>
+    </value>
+    <value code="WMS_spa">
+        <eng>WMS (ESP)</eng>
+        <cze>WMS (ESP)</cze>
+        <spa>WMS (ESP)</spa>
+    </value>
+    <value code="ESRI-IMS_spa">
+        <eng>ArcIMS (ESP)</eng>
+        <cze>ArcIMS (ESP)</cze>
+        <spa>ArcIMS (ESP)</spa>
+    </value>
+    <value code="ESRI-SRV_spa">
+        <eng>ArcGIS (ESP)</eng>
+        <cze>ArcGIS (ESP)</cze>
+        <spa>ArcGIS (ESP)</spa>
+    </value>
+    <value code="MAP_spa">
+        <eng>Map application (ESP)</eng>
+        <cze>Mapová aplikace (ESP)</cze>
+        <spa>Aplicación de mapa (ESP)</spa>
+    </value>
+    <value code="DB_spa">
+        <eng>Database application (ESP)</eng>
+        <cze>Databázová aplikace (ESP)</cze>
+        <spa>Aplicación base de datos (ESP)</spa>
+    </value>
+    <value code="GREP_spa">
+        <eng>Georeport (ESP)</eng>
+        <cze>Georeport (ESP)</cze>
+        <spa>Georeporte (ESP)</spa>
+    </value>
+    <value code="CSW">
+        <eng>CSW</eng>
+        <cze>CSW</cze>
+        <spa>CSW</spa>
     </value>
 </linkageName>
 

@@ -161,10 +161,11 @@ management:
     harvest: "Harvesting"
     profiles: "Profiles management"
     summary: "Metadata records overview"
-    
+
 lang:
     cze: "Czech"
     eng: "English"
+    spa: "Español"
 
 apperror:
     postIncomplete: "record POST - incomplete data"
@@ -172,9 +173,9 @@ apperror:
     noRecordFound: "Sorry, no record found."
     noProfileFound: "Sorry, no profile found."
     cantSaveNew: "Sorry, you can't save this new record."
-    
+
 import:
-    recordUpdateSkip: "Record already exists. Import stopped." 
+    recordUpdateSkip: "Record already exists. Import stopped."
     notRightRecordUpdate: "You do not have rights to update the record."
     incompletInputData: "Input data record is not complete."
     errorFile: "Import file is corrupt."

@@ -13,6 +13,9 @@ $labels['cze']['name']='Název';
 $labels['eng']['unit']='Unit';
 $labels['eng']['name']='Name';
 
+$labels['spa']['unit']='Unidad';
+$labels['spa']['name']='Nombre';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -32,7 +35,7 @@ function gazPoly(i){
   for(var j=0;j<(coord[i]).length;j++){
     if(j==0)opener.md_gazet1(coord[i][j], true);
     else opener.md_gazet1(coord[i][j], false);
-  }  
+  }
 }
 
 function gazBbox(bbox){
@@ -74,7 +77,7 @@ function tBbox(s){
 <form>
 	<input type="hidden" name="ak" value="md_gazcli">
 <table>
-<tr><td><?php echo $labels[$lang]['unit']; ?>:</td> 
+<tr><td><?php echo $labels[$lang]['unit']; ?>:</td>
 <td>
 <?php
 class gazClient{
@@ -88,10 +91,10 @@ class gazClient{
       if(substr(PHP_OS,0,3)=="WIN") dl("php_xsl.dll");
       else dl("php_xsl.so");
     }
-    $this->url = $url; 
-    $this->xslName = $xslName;  
-    $this->typename = $typename; 
-    $this->item = $item; 
+    $this->url = $url;
+    $this->xslName = $xslName;
+    $this->typename = $typename;
+    $this->item = $item;
     $this->cp = $cp;
   }
 
@@ -116,13 +119,13 @@ class gazClient{
   	$val = file_get_contents($this->url."?".substr($s,1));
   	return $val;
   }
-  
+
   function getData($qstr){
   	if($this->cp) $qstr = iconv("UTF-8", $this->cp, $qstr);
     $xp = new XsltProcessor();
     $xml = new DomDocument;
     $xsl = new DomDocument;
-    $query["SERVICE"]="WFS";    
+    $query["SERVICE"]="WFS";
     $query["VERSION"]="1.0.0";
     $query["REQUEST"] = "GetFeature";
     $query["TYPENAME"] = $this->typename;
@@ -130,7 +133,7 @@ class gazClient{
     $query["Filter"]=urlencode("<Filter><PropertyIsLike wildCard=\"*\" singleChar=\"@\" escape=\"\\\" matchCase=\"false\"><PropertyName>".$this->item."</PropertyName><Literal>$qstr</Literal></PropertyIsLike></Filter>");
     //highlight_string($query["Filter"]); echo "<hr>";
     $s = $this->getDataByGet($query);
-    //highlight_string($s); 
+    //highlight_string($s);
     // exit;
     $xml->loadXML($s);
     $xsl->load($this->xslName);
@@ -181,7 +184,7 @@ if(isset($query) && $query){
         break;
       }
     }
-  
+
   //zpracovani gazeteeru
     $s = $gazet->getData("*".$query."*");
     $rows = explode ("|", $s);
@@ -199,21 +202,21 @@ if(isset($query) && $query){
       }
       $sour .= "coord[$i][$j]='".$pom[1]."';";
     }
-  
-  
+
+
   echo "<script>
   var coord =new Array();
   $sour
   </script>";
-  } 
+  }
   echo $s;
 
   echo "</table>";
 }
 else {
-?>    
+?>
     <br><table class="odp"><tr><td><a href="javascript:gazBbox('12.09 48.55 18.86 51.06');">Česká republika</a></td></tr></table>
-<?php 
+<?php
 }
 ?>
 
