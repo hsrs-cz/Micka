@@ -1104,49 +1104,58 @@
   <role>
     <value name="publisher" code="10">
         <cze>vydavatel</cze>
-		<eng>publisher</eng>
+        <eng>publisher</eng>
+        <spa>publicador</spa>
     </value>
     <value name="custodian" code="2">
         <cze>správce</cze>
-		<eng>custodian</eng>
+        <eng>custodian</eng>
+        <spa>custodio</spa>
     </value>
     <value name="owner" code="3">
         <cze>vlastník</cze>
-		    <eng>owner</eng>
-        <eng>propietario</eng>
+        <eng>owner</eng>
+        <spa>propietario</spa>
     </value>
     <value name="user" code="4">
         <cze>uživatel</cze>
-		<eng>user</eng>
+        <eng>user</eng>
+        <spa>usuario</spa>
     </value>
     <value name="distributor" code="5">
         <cze>distributor</cze>
-		    <eng>distributor</eng>
+        <eng>distributor</eng>
         <spa>distribuidor</spa>
     </value>
     <value name="originator" code="6">
         <cze>původce</cze>
 		<eng>originator</eng>
+        <spa>creador</spa>
     </value>
     <value name="pointOfContact" code="7">
         <cze>kontaktní bod</cze>
 		<eng>point of contact</eng>
+        <spa>punto de contacto</spa>
     </value>
     <value name="principalInvestigator" code="8">
         <cze>zodp. za sběr dat a výzkum</cze>
 		<eng>principal investigator</eng>
+        <spa>investigador principal</spa>
     </value>
     <value name="processor" code="9">
         <cze>zpracovatel</cze>
 		<eng>processor</eng>
+        <spa>procesador</spa>
     </value>
     <value name="resourceProvider" code="1">
         <cze>poskytovatel zdroje</cze>
 		<eng>resource provider</eng>
+        <spa>proveedor de recursos</spa>
     </value>
     <value name="author" code="11">
         <cze>autor</cze>
 		<eng>author</eng>
+        <spa>autor</spa>
     </value>
   </role>
 

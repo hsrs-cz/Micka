@@ -1080,7 +1080,7 @@
                             <div rel="http://www.w3.org/2006/vcard/ns#hasEmail" resource="mailto:{.}">email: <xsl:value-of select="."/></div>
                         </xsl:for-each>
                         <xsl:variable name="kod" select="*/gmd:role/*/@codeListValue"/>
-                        <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]"/></b> 
+                        <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]/*[$name=$lang]"/></b> 
 
                         <xsl:if test="position()!=last()"><div style="margin-top:8px"></div></xsl:if>
                     </div>
@@ -1239,7 +1239,7 @@
 				<div rel="http://www.w3.org/2006/vcard/ns#hasEmail" resource="mailto:{.}">email: <xsl:value-of select="."/></div>
 				</xsl:for-each>
 			<xsl:variable name="kod" select="gmd:role/*/@codeListValue"/>
-			 <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]"/></b>
+			 <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]/*[name()=$lang]"/></b>
 		 </div> 
 	</xsl:template>
 
