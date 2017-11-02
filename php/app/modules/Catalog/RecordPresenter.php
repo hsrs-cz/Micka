@@ -175,7 +175,7 @@ class RecordPresenter extends \BasePresenter
     public function renderEdit($id) 
     {
         //dump($id);  dump($this->getParameter('recno'));        $this->terminate();
-        $rmd = $this->recordModel->findMdById($id,'edit_md','write');
+        $rmd = $this->recordModel->findMdById($id,'edit_md','edit');
         if ($rmd) {
             $mds = $rmd->md_standard;
             $recno = $rmd->recno;

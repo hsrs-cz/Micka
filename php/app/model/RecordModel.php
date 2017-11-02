@@ -98,7 +98,7 @@ class RecordModel extends \BaseModel
                     }
                 }
                 return FALSE;
-            case 'write':
+            case 'edit':
                 if($this->user->isLoggedIn()) {
                     if($this->recordMd->create_user == $this->user->getIdentity()->username) {
                         return TRUE;
@@ -264,7 +264,7 @@ class RecordModel extends \BaseModel
             // error
         }
         $editRecno = $this->recordMd->recno;
-        $this->setRecordMdById($this->recordMd->uuid, 'md', 'write');
+        $this->setRecordMdById($this->recordMd->uuid, 'md', 'edit');
         if ($this->recordMd) {
             $this->deleteMdValues($this->recordMd->recno);
             $this->setEditMdValues2MdValues($editRecno, $this->recordMd->recno);
@@ -331,7 +331,7 @@ class RecordModel extends \BaseModel
                     if ($this->recordMd) {
                         $report[$key]['title'] = $this->recordMd->title;
                         //update
-                        if ($this->isRight2MdRecord('write') === FALSE) {
+                        if ($this->isRight2MdRecord('edit') === FALSE) {
                             $this->recordMd = NULL;
                             if ($log) {
                                 $report[$key]['report'] = 'No update rights.';
@@ -342,7 +342,7 @@ class RecordModel extends \BaseModel
                             }
                         }
                         if ($data['params']['update_type'] == 'all') {
-                            $this->findMdById($this->copyMd2EditMd(),'edit_md','write');
+                            $this->findMdById($this->copyMd2EditMd(),'edit_md','edit');
                             $md['recno'] = $this->recordMd->recno;
                             $md['uuid'] = rtrim($this->recordMd->uuid);
                             $this->deleteEditMdValuesByLite(
@@ -566,7 +566,7 @@ class RecordModel extends \BaseModel
                         FROM md_values WHERE recno=?"
                         , $editRecno, $this->recordMd->recno);
                 }
-            } elseif ($this->isRight2MdRecord('write')) {
+            } elseif ($this->isRight2MdRecord('edit')) {
                 $id = $this->recordMd->uuid;
                 $editRecno = $this->getNewRecno('edit_md');
                 $this->db->query("
@@ -588,7 +588,7 @@ class RecordModel extends \BaseModel
     
 	public function deleteMdById($id)
 	{
-        $this->setRecordMdById($id, 'md', 'write');
+        $this->setRecordMdById($id, 'md', 'edit');
         if ($this->recordMd) {
             $this->db->query("DELETE FROM md_values WHERE recno =?", $this->recordMd->recno);
             $this->db->query("DELETE FROM md WHERE recno=?", $this->recordMd->recno);
