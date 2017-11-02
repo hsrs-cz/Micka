@@ -88,7 +88,7 @@ class RecordPresenter extends \BasePresenter
         } else {
             $httpResponse = $this->context->getService('httpResponse');
             $httpResponse->setContentType('application/xml');
-            echo $mdr->pxml;
+            echo XML_HEADER.ltrim($mdr->pxml);
             $this->terminate();
         }
         

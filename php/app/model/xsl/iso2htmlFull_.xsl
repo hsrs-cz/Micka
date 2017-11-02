@@ -232,17 +232,17 @@
 									</xsl:variable>
 									<xsl:choose>
 										<xsl:when test="contains(*/gmd:linkage/*,'?')">
-							   				<a class='map' href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="$label1"/></a>		  				
+							   				<a class='map' href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>		  				
 										</xsl:when>
 										<xsl:otherwise>
-											<a class='map' href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="$label1"/></a>
+											<a class='map' href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>
 										</xsl:otherwise>
 									</xsl:choose>
 								</xsl:when>
                                 <xsl:otherwise>
                                 	<a href="{*/gmd:linkage}"  target="_blank">
                                 		<span style="font-size:20px;"><i class="fa fa-external-link-square"></i></span><xsl:text> </xsl:text>
-                                		<xsl:value-of select="$label"/>
+                                		<xsl:value-of select="php:function('noMime',string($label))"/>
                                 	</a>
                                 </xsl:otherwise>
                         	</xsl:choose>   
@@ -325,7 +325,7 @@
 								<xsl:for-each select="*/gmd:keyword">
 							     	<div style="margin-left:20px;">
 							     		<xsl:variable name="k" select="*"/>
-							     		<a property="http://www.w3.org/ns/dcat#theme" resource="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" href="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" target="_blank">
+							     		<a property="http://www.w3.org/ns/dcat#theme" resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" target="_blank">
 							     		<xsl:value-of select="$cl/serviceKeyword/value[@name=$k]/*[name()=$lang]"/></a>
 							     	</div>
 						  		</xsl:for-each>
@@ -350,7 +350,7 @@
 								  			</xsl:call-template>
 								  		</xsl:variable>							     	
 							  			<xsl:choose>
-								     		<xsl:when test="starts-with(*/@xlink:href, 'http://inspire.ec.europa.eu/theme')">
+								     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
 								     			<a property="http://www.w3.org/ns/dcat#theme" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
 								     				<img src="{$MICKA_URL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
 								     			</a>
@@ -399,7 +399,7 @@
 						  			</xsl:call-template>
 						  		</xsl:variable>							     	
 					  			<xsl:choose>
-						     		<xsl:when test="starts-with(*/@xlink:href, 'http://inspire.ec.europa.eu/theme')">
+						     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
 						     			<a href="{./*/@xlink:href}" title="{$theme}" target="_blank">
 						     				<img src="themes/{$THEME}/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
 						     			</a>
@@ -1209,11 +1209,7 @@
 				</div>
 			</xsl:if>
 			<xsl:if test="gmd:individualName">
-				<xsl:call-template name="multi">
-					<xsl:with-param name="el" select="gmd:individualName"/>
-					<xsl:with-param name="lang" select="$lang"/>
-					<xsl:with-param name="mdlang" select="$mdlang"/>
-				</xsl:call-template>
+                <xsl:value-of select="gmd:individualName"/>
 			</xsl:if>
 			<div rel="http://www.w3.org/2006/vcard/ns#hasAddress" vocab="http://www.w3.org/2006/vcard/ns#" typeof="http://www.w3.org/2006/vcard/ns#Address" >
 				<xsl:if test="gmd:contactInfo/*/gmd:address/*/gmd:deliveryPoint">
