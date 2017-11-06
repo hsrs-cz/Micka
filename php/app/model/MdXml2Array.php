@@ -5,19 +5,11 @@ class MdXml2Array
 {
     private $appParameters;
 
-  	var $xsl_files = Array(
-		"esri" => "esri2micka.xsl",
-		"isvs" => "midas2micka.xsl",
-		"native" => "native2micka.xsl",
-		"iso" => "iso2micka.xsl",
-		"wmc" => "wmc.xsl"
-	);
-  	
 	var $xml = null;
 	var $kwList = array();
     var $engKw = array();
 	var $debug = false;
-	private $table_mode = 'md'; // používat tabulku MD nebo TMP
+	private $table_mode = 'md'; // if md or tmp will be used
 	var $langCodes = Array(
 	        "bul" => "bg",
 	        "cze" => "cs",
@@ -222,8 +214,7 @@ class MdXml2Array
         $dom = $xml;
     }
         //--- ladeni ---
-        //header('Content-type: application/xml');
-        //echo $dom->saveXML(); exit;
+        //header('Content-type: application/xml'); echo $dom->saveXML(); exit;
         // ---
   	$this->xml = $xml;
   	//--- vyreseni locales ---
@@ -367,7 +358,7 @@ class MdXml2Array
     			}	
     		}		
 		}
-		// snazi se najit v INSPIRE registry 
+		// attempts to serach in INSPIRE registry 
 		else if($class='inspireKeywords'){
 		    $url = "https://inspire.ec.europa.eu/theme/theme.".$this->langCodes[$lang].".xml";
 		    if(defined('CONNECTION_PROXY')){
@@ -481,76 +472,44 @@ class MdXml2Array
     if(!$OK){
       $root = $xml->getElementsByTagNameNS("http://www.isotc211.org/2005/gmd", "MD_Metadata");
       if($root->item(0)){
-        /*$isValid = $xml->schemaValidate("http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gmd/gmd.xsd");
-        if(!$isValid){
-      		echo "WARNING! Imported XML file is not valid.";
-      		var_dump(libxml_get_errors());
-        }*/
-        $xslName = __DIR__ . "/xsl/". $this->xsl_files["iso"];
+        $xslName = __DIR__ . "/xsl/import/iso.xsl";
         $OK=true;
       }
     }
    
-      //--- import kote etc (19139) - ISO 19115-2
+    //--- import kote etc (19139) - ISO 19115-2
     if(!$OK){
       $root = $xml->getElementsByTagNameNS("http://www.isotc211.org/2005/gmi", "MI_Metadata");
       if($root->item(0)){
-        /*$isValid = $xml->schemaValidate("http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/gmd/gmd.xsd");
-        if(!$isValid){
-      		echo "WARNING! Imported XML file is not valid.";
-      		var_dump(libxml_get_errors());
-        }*/
-        $xslName = PHPINC_DIR ."/xsl/". $this->xsl_files["iso"];
+        $xslName = PHPINC_DIR ."/xsl/import/iso.xsl";
         $OK=true;
       }
     }
     
-    //--- import nativni
-    if(!$OK){
-      $root = $xml->getElementsByTagName("results");
-      if($root->item(0)){
-      	$featureCatalogue = $xml->getElementsByTagName("featureCatalogue");
-        if($featureCatalogue){
-        	$fc = strval($featureCatalogue->item(0)->getAttribute('uuid'));
-        }
-        $xslName = PHPINC_DIR ."/xsl/". $this->xsl_files["native"];
-        $OK=true;
-      }
-    }
-
     //--- kontrola, zda je ESRI
     if(!$OK){
 	    $root = $xml->getElementsByTagName("Esri");
 	    if($root->item(0)){
 	      if($fc != '') {
-		      $xslName = __DIR__ ."/xsl/esri2fc.xsl";
+		      $xslName = __DIR__ ."/xsl/import/esri2fc.xsl";
 		      $lang_fc = $langs;
 	      }
-	      else $xslName = __DIR__ ."/xsl/".$this->xsl_files["esri"];
+	      else $xslName = __DIR__ ."/xsl/import/esri.xsl";
 	      $OK = true;
 	      $esri = true;
 	    }
     }    
     
-    //--- import ISVS/MIDAS
-    if(!$OK){
-      $root = $xml->getElementsByTagName("METAIS");
-      if($root->item(0)){
-        $xslName = __DIR__ ."/xsl/". $this->xsl_files["isvs"];
-        $OK=true;
-      }
-    }
-
     //--- import WMC
     if(!$OK){
       $root = $xml->getElementsByTagNameNS("http://www.opengis.net/context", "ViewContext");
       if($root->item(0)){
-        $xslName = __DIR__ ."/xsl/". $this->xsl_files["wmc"];
+        $xslName = __DIR__ ."/xsl/import/wmc.xsl";
         $OK=true; 
       }
     }
     
-    //--- zde pribudou dalsi typy pro import
+    //--- other import types
     if(!$OK) {
       $rs = array();
       $rs[0]['ok'] = 0;
@@ -659,7 +618,7 @@ class MdXml2Array
     if(strpos($s,'NetworkLink>')) exit("<br><br>Network links in KML are not supported yet.");
     if(!@$xml->loadXML($s)) exit("<br><br>Not valid service!  " . $url);
     if($service == 'XML'){
-        $tmp_md = $this->xml2array($xml, false, array("URL"=>$url));
+        $tmp_md = $this->xml2array($xml, __DIR__."/xsl/import/iso.xsl" , array("URL"=>$url));
         if (array_key_exists('MD_Metadata', $tmp_md)) {
             $md = $tmp_md;
         } else {
@@ -689,7 +648,7 @@ class MdXml2Array
     			
     	));
 		// nalezen záznam
-		if(count($ddata["data"])>0){
+		if(count($ddata["data"]) > 0){
 			if(count($ddata["data"]) > 1){ 
 				echo 'More records found with this URL.';
 				foreach ($ddata["data"] as $row) echo "<br>". $row['uuid'].": ". $row['title'];
