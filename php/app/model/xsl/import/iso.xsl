@@ -9,12 +9,16 @@
   xmlns:gmi="http://www.isotc211.org/2005/gmi" 
   >
 <xsl:output method="xml" encoding="utf-8" />
+
+
 <xsl:template match="/">
-  <results>
-  	<xsl:for-each select="//gmd:MD_Metadata|//gmi:MI_Metadata">
-      <xsl:copy-of select='.'/>
-  	</xsl:for-each>
-  </results>
+    <results>
+        <xsl:for-each select="//gmd:MD_Metadata|//gmi:MI_Metadata">
+            <xsl:apply-templates select="./*"/>
+        </xsl:for-each>
+    </results>
 </xsl:template>
+
+<xsl:include href="update4.xsl" />
 
 </xsl:stylesheet>

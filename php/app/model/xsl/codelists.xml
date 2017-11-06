@@ -1519,112 +1519,112 @@
     <!-- ANNEX III -->
     <value uri="https://inspire.ec.europa.eu/theme/su" spec="https://inspire.ec.europa.eu/id/document/tg/su" cenia="division" name="Statistické jednotky" code="Statistical units" publication="2013-10-12" n="III.1">
         <cze>Statistické jednotky</cze>
-		    <eng>Statistical units</eng>
+		<eng>Statistical units</eng>
         <spa>Unidades estadísticas</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/bu" spec="https://inspire.ec.europa.eu/id/document/tg/bu" cenia="social" name="Budovy" code="Buildings" publication="2013-10-12" n="III.2">
         <cze>Budovy</cze>
-		    <eng>Buildings</eng>
+		<eng>Buildings</eng>
         <spa>Construcciones</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/so" spec="https://inspire.ec.europa.eu/id/document/tg/so" cenia="nature" name="Půda" code="Soil" publication="2013-10-12" n="III.3">
         <cze>Půda</cze>
-		    <eng>Soil</eng>
+		<eng>Soil</eng>
         <spa>Suelos</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/lu" spec="https://inspire.ec.europa.eu/id/document/tg/lu" cenia="nature" name="Využití území" code="Land use" publication="2013-10-12" n="III.4">
         <cze>Využití území</cze>
-		    <eng>Land use</eng>
+		<eng>Land use</eng>
         <spa>Uso del suelo</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/hh" spec="https://inspire.ec.europa.eu/id/document/tg/hh" cenia="social" name="Lidské zdraví a bezpečnost" code="Human health and safety" publication="2013-10-12" n="III.5">
         <cze>Lidské zdraví a bezpečnost</cze>
-		    <eng>Human health and safety</eng>
+		<eng>Human health and safety</eng>
         <spa>Salud y seguridad humana</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/us" spec="https://inspire.ec.europa.eu/id/document/tg/us" cenia="social" name="Veřejné služby a služby veřejné správy" code="Utility and governmental services" publication="2013-10-12" n="III.6">
         <cze>Veřejné služby a služby veřejné správy</cze>
-		    <eng>Utility and governmental services</eng>
+		<eng>Utility and governmental services</eng>
         <spa>Servicios públicos y gubernamentales</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/ef" spec="https://inspire.ec.europa.eu/id/document/tg/ef" cenia="environment" name="Zařízení pro sledování životního prostředí" code="Environmental monitoring facilities" publication="2013-10-12" n="III.7">
         <cze>Zařízení pro sledování životního prostředí</cze>
-		    <eng>Environmental monitoring facilities</eng>
+		<eng>Environmental monitoring facilities</eng>
         <spa>Instalaciones de monitoreo ambiental</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/pf" spec="https://inspire.ec.europa.eu/id/document/tg/pf" cenia="social" name="Výrobní a průmyslová zařízení" code="Production and industrial facilities" publication="2013-10-12" n="III.8">
         <cze>Výrobní a průmyslová zařízení</cze>
-		    <eng>Production and industrial facilities</eng>
+		<eng>Production and industrial facilities</eng>
         <spa>Instalaciones productivas e industriales</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/af" spec="https://inspire.ec.europa.eu/id/document/tg/af" cenia="social" name="Zemědělská a akvakulturní zařízení" code="Agricultural and aquaculture facilities" publication="2013-10-12" n="III.9">
         <cze>Zemědělská a akvakulturní zařízení</cze>
-		    <eng>Agricultural and aquaculture facilities</eng>
+		<eng>Agricultural and aquaculture facilities</eng>
         <spa>Instalaciones agrícolas y acuícolas</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/pd" spec="https://inspire.ec.europa.eu/id/document/tg/pd" cenia="social" name="Rozložení obyvatelstva – demografie" code="Population distribution &#8212; demography" publication="2013-10-12" n="III.10">
         <cze>Rozložení obyvatelstva – demografie</cze>
-		    <eng>Population distribution &#8212; demography</eng>
+		<eng>Population distribution &#8212; demography</eng>
         <spa>Distribución de población &#8212; demografía</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/am" spec="https://inspire.ec.europa.eu/id/document/tg/am" cenia="environment" name="Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení" code="Area management/restriction/regulation zones and reporting units" publication="2009-10-20" n="III.11">
         <cze>Správní oblasti/chráněná pásma/regulovaná území a jednotky podávající hlášení</cze>
-		    <eng>Area management/restriction/regulation zones and reporting units</eng>
+		<eng>Area management/restriction/regulation zones and reporting units</eng>
         <spa>Zonas de ordenación/restricción/regulación y unidades reportadas</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/nz" spec="https://inspire.ec.europa.eu/id/document/tg/nz" cenia="environment" name="Oblasti ohrožené přírodními riziky" code="Natural risk zones" publication="2013-10-12" n="III.12">
         <cze>Oblasti ohrožené přírodními riziky</cze>
-		    <eng>Natural risk zones</eng>
+		<eng>Natural risk zones</eng>
         <spa>Zonas de riesgos naturales</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/ac" spec="https://inspire.ec.europa.eu/id/document/tg/ac" cenia="environment" name="Stav ovzduší" code="Atmospheric conditions" publication="2013-10-12" n="III.13">
         <cze>Stav ovzduší</cze>
-		    <eng>Atmospheric conditions</eng>
+		<eng>Atmospheric conditions</eng>
         <spa>Condiciones atmosféricas</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/mf" spec="https://inspire.ec.europa.eu/id/document/tg/mf" cenia="nature" name="Zeměpisné meteorologické prvky" code="Meteorological geographical features" publication="2013-10-12" n="III.14">
         <cze>Zeměpisné meteorologické prvky</cze>
-		    <eng>Meteorological geographical features</eng>
+		<eng>Meteorological geographical features</eng>
         <spa>Entidades geográficas metereológicas</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/of" spec="https://inspire.ec.europa.eu/id/document/tg/of" cenia="water" name="Zeměpisné oceánografické prvky" code="Oceanographic geographical features" publication="2013-10-12" n="III.15">
         <cze>Zeměpisné oceánografické prvky</cze>
-		    <eng>Oceanographic geographical features</eng>
+		<eng>Oceanographic geographical features</eng>
         <spa>Entidades geográficos oceanográficos</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/sr" spec="https://inspire.ec.europa.eu/id/document/tg/sr" cenia="water" name="Mořské oblasti" code="Sea regions" publication="2013-10-12" n="III.16">
         <cze>Mořské oblasti</cze>
-		    <eng>Sea regions</eng>
+		<eng>Sea regions</eng>
         <spa>Regiones marítimas</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/br" spec="https://inspire.ec.europa.eu/id/document/tg/br" cenia="nature" name="Bioregiony" code="Bio-geographical regions" publication="2013-10-12" n="III.17">
         <cze>Bioregiony</cze>
-		    <eng>Bio-geographical regions</eng>
+		<eng>Bio-geographical regions</eng>
         <spa>Regiones biogeográficas</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/hb" spec="https://inspire.ec.europa.eu/id/document/tg/hb" cenia="nature" name="Stanoviště a biotopy" code="Habitats and biotopes" publication="2013-10-12" n="III.18">
         <cze>Stanoviště a biotopy</cze>
-		    <eng>Habitats and biotopes</eng>
+		<eng>Habitats and biotopes</eng>
         <spa>Hábitats y biotopos</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/sd" spec="https://inspire.ec.europa.eu/id/document/tg/sd" cenia="nature" name="Rozložení druhů" code="Species distribution" publication="2013-10-12" n="III.19">
         <cze>Rozložení druhů</cze>
-		    <eng>Species distribution</eng>
+		<eng>Species distribution</eng>
         <spa>Distribución de especies</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/er" spec="https://inspire.ec.europa.eu/id/document/tg/er" cenia="social" name="Energetické zdroje" code="Energy resources" publication="2013-10-12" n="III.20">
         <cze>Energetické zdroje</cze>
-		    <eng>Energy resources</eng>
+		<eng>Energy resources</eng>
         <spa>Recursos energéticos</spa>
     </value>
     <value uri="https://inspire.ec.europa.eu/theme/mr" spec="https://inspire.ec.europa.eu/id/document/tg/mr" cenia="social" name="Nerostné suroviny" code="Mineral resources" publication="2013-10-12" n="III.21">
         <cze>Nerostné suroviny</cze>
-		    <eng>Mineral resources</eng>
+		<eng>Mineral resources</eng>
         <spa>Recursos minerales</spa>
     </value>
   </inspireKeywords>
 
-  <specifications title="Nařízení komise">
+  <specifications>
     <title lang="eng">Specifications</title>
     <title lang="cze">Specifikace</title>
     <title lang="esp">Especificaciones</title>
@@ -1632,37 +1632,37 @@
         code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value-->
 	<value code="Interoperability"  uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">
         <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">Interoperabilita 1089/2010</cze>
-		    <eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability 1089/2010</eng>
+		<eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability 1089/2010</eng>
         <spa name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperabilidad 1089/2010</spa>
     </value>
     <value code="Network" uri="https://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">
         <cze name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby">Síťové služby 976/2009</cze>
-		    <eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Network services 976/2009</eng>
+		<eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Network services 976/2009</eng>
         <spa name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Servicios de Red 976/2009</spa>
     </value>
     <value code="Download" uri="https://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">
         <cze name="Nařízení Komise (EU) č. 1088/2010 ze dne 23. listopadu 2010, kterým se mění nařízení (ES) č. 976/2009, pokud jde o služby stahování dat a transformační služby">Stahovací a transformační služby 1088/2010</cze>
-		    <eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Download and transformation services 1088/2010</eng>
+		<eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Download and transformation services 1088/2010</eng>
         <spa name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Servicios de descarga y transformación 1088/2010</spa>
     </value>
 	<value code="Metadata"  uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">
         <cze name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat">Metadata 1205/2008</cze>
-		    <eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata 1205/2008</eng>
+		<eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata 1205/2008</eng>
         <spa name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadatos 1205/2008</spa>
     </value>
     <value code="Access" uri="https://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">
         <cze name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" >Přístup k datovým sadám a službám 268/2010</cze>
-		    <eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
+		<eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
         <spa name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Acceso y acceso a base de datos espaciales 268/2010</spa>
     </value>
     <value code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">
         <cze name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" >Monitoring a reporting 2009/442/ES</cze>
-		    <eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoring and reporting 2009/442/ES</eng>
+        <eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoring and reporting 2009/442/ES</eng>
         <spa name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoreo y reporte 2009/442/ES</spa>
     </value>
     <value code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">
         <cze name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" >SMĚRNICE INSPIRE 2007/2/ES</cze>
-		    <eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
+		<eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
         <spa name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">DIRECTIVA INSPIRE 2007/2/ES</spa>
     </value>
   </specifications>
@@ -2619,53 +2619,53 @@
     <title lang="eng">formatos del recurso</title>
 	<value code="x-shapefile" uri="https://inspire.ec.europa.eu/media-types/application/x-shapefile">
         <cze qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</cze>
-		    <eng qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</eng>
+		<eng qtip="The media type shall be used for Esri shapefiles. The file is a zip archive that contains at least the shp, shx and dbf files.">ESRI Shapefile</eng>
         <spa qtip="El tipo de soporte se utilizará para los archivos de forma Esri. El archivo es un archivo zip que contiene al menos los archivos shp, shx y dbf..">ESRI Shapefile</spa>
     </value>
 	<value code="gml+xml" uri="https://www.iana.org/assignments/media-types/application/gml+xml">
         <cze qtip="GML.">GML</cze>
-		    <eng qtip="GML.">GML</eng>
+		<eng qtip="GML.">GML</eng>
         <spa qtip="GML.">GML</spa>
     </value>
 	<value code="x-gmz" uri="https://inspire.ec.europa.eu/media-types/application/x-gmz">
         <cze qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</cze>
-		    <eng qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</eng>
+		<eng qtip="The media type shall be used for a zip archive that contains one or more GML documents.">GMZ</eng>
         <spa qtip="El tipo de medio se utilizará para un archivo zip que contenga uno o más documentos GML.">GMZ</spa>
     </value>
 	<value code="vnd.google-earth.kml+xml" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kml+xml">
         <cze qtip="Google Earth KML">KML</cze>
-		    <eng qtip="Google Earth KML">KML</eng>
+		<eng qtip="Google Earth KML">KML</eng>
         <spa qtip="Google Earth KML">KML</spa>
     </value>
 	<value code="vnd.google-earth.kmz" uri="http://www.iana.org/assignments/media-types/application/vnd.google-earth.kmz">
         <cze qtip="Google Earth KMZ">KMZ</cze>
-		    <eng qtip="Google Earth KMZ">KMZ</eng>
+		<eng qtip="Google Earth KMZ">KMZ</eng>
         <spa qtip="Google Earth KMZ">KMZ</spa>
     </value>
 	<value code="x-ascii-grid" uri="https://inspire.ec.europa.eu/media-types/application/x-ascii-grid">
         <cze qtip="ASCII GRID">ASCII GRID</cze>
-		    <eng qtip="ASCII GRID">ASCII GRID</eng>
+		<eng qtip="ASCII GRID">ASCII GRID</eng>
         <spa qtip="ASCII GRID">ASCII GRID</spa>
     </value>
 	<value code="x-ecw" uri="https://inspire.ec.europa.eu/media-types/application/x-ecw">
         <cze qtip="Enhanced Compressed Wavelet (ECW) file">ECW</cze>
-		    <eng qtip="Enhanced Compressed Wavelet (ECW) file">ECW</eng>
+		<eng qtip="Enhanced Compressed Wavelet (ECW) file">ECW</eng>
         <spa qtip="Archivo mejorado Wavelet Comprimido (ECW)">ECW</spa>
     </value>
 	<value code="x-filegdb" uri="https://inspire.ec.europa.eu/media-types/application/x-filegdb">
         <cze qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</cze>
-		    <eng qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</eng>
+		<eng qtip="The media type shall be used for Esri file geodatabases. The file is a zip archive that contains the gdb directory.">ESRI Geodatabase</eng>
         <spa qtip="El tipo de soporte se utilizará para las geodatabases de archivo ESRI. El archivo es un archivo zip que contiene el directorio gdb.">ESRI Geodatabase</spa>
     </value>
 	<value code="x-las" uri="https://inspire.ec.europa.eu/media-types/application/x-las">
         <cze qtip="The media type shall be used for the LASer file format (LAS).">LAS</cze>
-		    <eng qtip="The media type shall be used for the LASer file format (LAS).">LAS</eng>
+		<eng qtip="The media type shall be used for the LASer file format (LAS).">LAS</eng>
         <spa qtip="El tipo de medio se utilizará para el formato de archivo LASER (LAS).">LAS</spa>
     </value>
 	<value code="xml" uri="https://www.iana.org/assignments/media-types/application/xml">
         <cze qtip="Obecný XML odkument.">XML</cze>
         <eng qtip="XML Document Generic.">XML</eng>
-		    <spa qtip="Documento XML genérico.">XML</spa>
+		<spa qtip="Documento XML genérico.">XML</spa>
     </value>
 </format>
 

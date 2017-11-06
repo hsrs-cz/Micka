@@ -26,14 +26,16 @@
 </xsl:template>
 
 <xsl:template match="gmd:MD_Metadata" xmlns:gmd="http://www.isotc211.org/2005/gmd">
-    <xsl:copy-of select="."/>
+    <xsl:apply-templates select="./*"/>
 </xsl:template>
 
 <xsl:template match="MD_Metadata" xmlns="http://www.isotc211.org/2005/gmd">
-    <xsl:copy-of select="."/>
+    <xsl:apply-templates select="./*"/>
 </xsl:template>
 
 <xsl:template match="featureCatalogue">
 </xsl:template>
+
+<xsl:include href="update4.xsl" />
 
 </xsl:stylesheet>
