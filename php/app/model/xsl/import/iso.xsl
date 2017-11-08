@@ -14,7 +14,9 @@
 <xsl:template match="/">
     <results>
         <xsl:for-each select="//gmd:MD_Metadata|//gmi:MI_Metadata">
-            <xsl:apply-templates select="./*"/>
+            <gmd:MD_Metadata>
+                <xsl:apply-templates select="./*"/>
+            </gmd:MD_Metadata>
         </xsl:for-each>
     </results>
 </xsl:template>

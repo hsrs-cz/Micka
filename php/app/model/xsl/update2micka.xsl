@@ -25,12 +25,16 @@
 	</results>
 </xsl:template>
 
-<xsl:template match="gmd:MD_Metadata" xmlns:gmd="http://www.isotc211.org/2005/gmd">
-    <xsl:apply-templates select="./*"/>
+<xsl:template match="gmd:MD_Metadata">
+    <gmd:MD_Metadata>
+        <xsl:apply-templates select="./*"/>
+    </gmd:MD_Metadata>
 </xsl:template>
 
-<xsl:template match="MD_Metadata" xmlns="http://www.isotc211.org/2005/gmd">
-    <xsl:apply-templates select="./*"/>
+<xsl:template match="MI_Metadata">
+    <gmd:MD_Metadata>
+        <xsl:apply-templates select="./*"/>
+    </gmd:MD_Metadata>
 </xsl:template>
 
 <xsl:template match="featureCatalogue">
