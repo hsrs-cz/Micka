@@ -82,7 +82,9 @@
         <xsl:variable name="k" select="*"/>
         <xsl:choose>
             <xsl:when test="$cl/serviceKeyword/value[@name=$k]">
-                <gmx:Anchor xlink:href="{$cl/serviceKeyword/value[@name=$k]/@uri}"><xsl:value-of select="$k"/></gmx:Anchor>
+                <gmd:keyword>
+                    <gmx:Anchor xlink:href="{$cl/serviceKeyword/value[@name=$k]/@uri}"><xsl:value-of select="$k"/></gmx:Anchor>
+                </gmd:keyword>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:copy-of select="."/>
@@ -186,9 +188,9 @@
         <gmd:CI_Citation>
             <xsl:variable name="s" select="gmd:title/gco:CharacterString"/>
             <xsl:choose>
-                <xsl:when test="$cl/specifications/value[contains(*/@name, $s)]">
+                <xsl:when test="$s!='' and $cl/specifications/value[contains(*/@name, $s)]/@uri">
                     <gmd:title>
-                        <gmx:Anchor xlink:href="{$cl/specifications/value[contains(cze/@name, $s)]/@uri}"><xsl:value-of select="$s"/></gmx:Anchor>
+                        <gmx:Anchor xlink:href="{$cl/specifications/value[contains(*/@name, $s)]/@uri}"><xsl:value-of select="$s"/></gmx:Anchor>
                     </gmd:title>
                 </xsl:when>
                 <xsl:otherwise>
