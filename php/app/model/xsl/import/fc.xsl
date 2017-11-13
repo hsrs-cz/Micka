@@ -6,6 +6,7 @@
   <results>
   	<xsl:for-each select="*">
         <FC_FeatureCatalogue>
+            <id><xsl:value-of select="@uuid"/></id>
             <xsl:copy-of select="*"/>
         </FC_FeatureCatalogue>
     </xsl:for-each>	

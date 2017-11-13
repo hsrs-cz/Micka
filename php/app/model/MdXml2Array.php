@@ -659,6 +659,7 @@ class MdXml2Array
         if(!$xml->loadXML($xmlString)) die('Bad xml format');
         //echo $xslName; die();
         $md = $this->xml2array($xml, $xslName);
+        //echo "<pre>"; print_r($md); die();
         return $md;
     }
     
