@@ -4,12 +4,11 @@
 
 <xsl:template match="/">
   <results>
-  	<xsl:for-each select=".">
-  		<identifier><xsl:value-of select="@uuid"/></identifier>
-  		<xsl:for-each select=".">
-   			<xsl:copy-of select='.'/>
-   		</xsl:for-each>	
-  	</xsl:for-each>
+  	<xsl:for-each select="*">
+        <FC_FeatureCatalogue>
+            <xsl:copy-of select="*"/>
+        </FC_FeatureCatalogue>
+    </xsl:for-each>	
   </results>   
 </xsl:template>
 

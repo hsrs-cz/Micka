@@ -16,7 +16,7 @@
 
   <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-  <xsl:variable name="codeLists" select="document('codelists.xml')/map"/>
+  <xsl:variable name="codeLists" select="document('../codelists.xml')/map"/>
   
   <xsl:template match="/">
     <xsl:apply-templates />
@@ -362,7 +362,7 @@
    			</xsl:when>
    			<xsl:otherwise>	
    				<srv:serviceType>
-	   				<gco:LocalName>view</gco:LocalName>
+	   				<gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType">view</gco:LocalName>
       			</srv:serviceType>
     			<serviceTypeVersion><xsl:value-of select="@version"/> <xsl:value-of select="//inspire_vs:ExtendedCapabilities/inspire_common:Conformity/*"/></serviceTypeVersion>
    			</xsl:otherwise>
@@ -674,7 +674,7 @@
 							<gmd:DQ_ConformanceResult>
 								<gmd:specification>
 									<gmd:CI_Citation>
-					                    <xsl:variable name="t" select="//inspire_common:Conformity/*/inspire_common:Title"/>
+					                    <xsl:variable name="t" select="normalize-space(//inspire_common:Conformity/*/inspire_common:Title)"/>
                                         <gmd:title>
                                             <gmx:Anchor xlink:href="{$codeLists/specifications/value/*[translate(@name,$upper,$lower)=translate($t,$upper,$lower)]/../@uri}"><xsl:value-of select="$t"/></gmx:Anchor>
                                         </gmd:title>

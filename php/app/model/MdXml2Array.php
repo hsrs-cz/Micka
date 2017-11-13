@@ -248,7 +248,7 @@ class MdXml2Array
     // DEBUG
     //echo "<pre>$data</pre>"; exit;  
       
-    $data = str_replace(array("gmd:","gmi:", "gem:"), "", $data); //FIXME udelat pres sablony
+    $data = str_replace(array("gmd:","gmi:", "gem:", "gfc:", "gmx:"), "", $data); //FIXME udelat pres sablony
     //$data = str_replace("csw:", "", $data); //FIXME udelat pres sablony
     $data = str_replace("'false'", "0", $data);
     $data = str_replace("['language'][0]['gco:CharacterString']" , "['language'][0]['LanguageCode']", $data); //kvuli portalu INSPIRE
@@ -266,10 +266,10 @@ class MdXml2Array
       	"['MD_Identifier']",
       	"'false'", "'true'", // predpokladam, ze jde o boolean
       	"MI_Metadata",
-        "['gmx:Anchor'][0]['href'][0]['@']",
-        "['gmx:Anchor'][0]",
-        "[graphicOverview][0][href]", // TODO pro vice
-        "[graphicOverview][0][title]"
+        "['Anchor'][0]['href'][0]['@']",
+        "['Anchor'][0]",
+        "['graphicOverview'][0]['href']", // TODO pro vice
+        "['graphicOverview'][0]['title']"
       ),
       array(
         "['beginPosition'][0]", 
@@ -279,8 +279,8 @@ class MdXml2Array
       	"MD_Metadata",
         "['@uri']",
         "",
-        "[graphicOverview][0][MD_BrowseGraphic][0][fileName]",
-        "[graphicOverview][0][MD_BrowseGraphic][0][fileDescription]"
+        "['graphicOverview'][0]['MD_BrowseGraphic'][0]['fileName']",
+        "['graphicOverview'][0]['MD_BrowseGraphic'][0]['fileDescription']"
       ), 
       $data
     );    
@@ -293,7 +293,7 @@ class MdXml2Array
       	$data
     );
     
-    /*if($this->debug)  echo "<pre>". $data . "</pre>"; */
+    //if($this->debug)  echo "<pre>". $data . "</pre>"; 
     
     //---------------------------------------
   	/*
@@ -465,7 +465,6 @@ class MdXml2Array
     $xsl = new \DomDocument;
     $OK = false;
 	$esri = FALSE;
-
     if(!$xml->loadXML($xmlString)) die('Bad xml format');
     
     //--- import kote etc (19139)
@@ -508,7 +507,7 @@ class MdXml2Array
         $OK=true; 
       }
     }
-    
+
     //--- other import types
     if(!$OK) {
       $rs = array();
@@ -551,7 +550,7 @@ class MdXml2Array
     return $md;
   }
 
-  function getArrayMdFromUrl($url, $service, $langs, $lang='eng', $updateType=''){
+  function getArrayMdFromUrl($url, $type, $service, $langs, $lang='eng', $updateType=''){
     /*---------------------------------------------------------------------
 	Import metadat ze sluzby
 
@@ -574,7 +573,7 @@ class MdXml2Array
   	if (strpos($langs,$lang) === false) $langs = $lang . "|" . $langs; // kontrola, zda je jazyk zaznamu v seznamu pouzitych jazyku
 
     if(!strpos(strtolower(".".$url), "http")) $url = "http://".$url;
-    if($service != 'KML' && $service != 'XML'){
+    if($service != 'kml' && $service != 'iso'){
         if(!strpos(strtolower($url), "service=")){
           if(!strpos($url, "?")) $url .= "?"; else $url .= "&";
           $url .= "SERVICE=".$service;
@@ -616,20 +615,11 @@ class MdXml2Array
     //TODO QUICK HACK - udleat pres sablony nebo DOM 
     if(strpos($s,'exception')) exit("<br><br>Exception: ". $s ." " . $url);
     if(strpos($s,'NetworkLink>')) exit("<br><br>Network links in KML are not supported yet.");
-    if(!@$xml->loadXML($s)) exit("<br><br>Not valid service!  " . $url);
-    if($service == 'XML'){
-        $tmp_md = $this->xml2array($xml, __DIR__."/xsl/import/iso.xsl" , array("URL"=>$url));
-        if (array_key_exists('MD_Metadata', $tmp_md)) {
-            $md = $tmp_md;
-        } else {
-            $md = [];
-            $md["MD_Metadata"][0] = $tmp_md;
-        }
-    }
-    else {
-        $xslName = __DIR__."/xsl/import/".strtolower($service).".xsl"; // vyber sablony
-        $md = $this->xml2array($xml, $xslName, array("URL"=>$url));
-    }
+    return $this->importXML($s, $type, $langs, $lang_main, $params, $updateType);
+    
+    
+
+    /*
     if(!isset($md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'])) {
     	$md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'] = $lang;
     }
@@ -660,7 +650,16 @@ class MdXml2Array
 			}
 		}
     }
-     return $md;
+     return $md;*/
   } // konec funkce importService
 
+    function importXML($xmlString, $type, $langs, $lang_main, $params=false, $updateType="", $md_rec="", $fc=""){
+        $xslName = __DIR__ . "/xsl/import/".strtolower($type).".xsl";
+        $xml = new \DomDocument;
+        if(!$xml->loadXML($xmlString)) die('Bad xml format');
+        //echo $xslName; die();
+        $md = $this->xml2array($xml, $xslName);
+        return $md;
+    }
+    
 } // konec class MetadataImport

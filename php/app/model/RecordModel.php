@@ -447,7 +447,7 @@ class RecordModel extends \BaseModel
                         $fileName = __DIR__ . '/../../temp/upload/' . md5(uniqid(rand(), true)) . '.xml';
                         $file->move($fileName);
                         $mdXml2Array = new MdXml2Array();
-                        $dataFromXml = $mdXml2Array->getArrayMdFromXml(
+                        $dataFromXml = $mdXml2Array->importXml(
                             file_get_contents($fileName), 
                             $params['type'],
                             $md['lang'],

@@ -18,7 +18,7 @@
 
   <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
   <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
-  <xsl:variable name="codeLists" select="document('codelists.xml')/map" />
+  <xsl:variable name="codeLists" select="document('../codelists.xml')/map" />
   
   <xsl:template match="/">
 	  <results>

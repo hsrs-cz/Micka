@@ -24,7 +24,7 @@ class ArrayMdXml2MdValues extends \BaseModel
 		elseif (key($this->arrayXml) == 'metadata') {
             $this->md_standard = 1;
 		}
-		elseif (key($this->arrayXml) == 'featureCatalogue') {
+		elseif (key($this->arrayXml) == 'FC_FeatureCatalogue') {
             $this->md_standard = 2;
 		}
 	}
@@ -318,7 +318,7 @@ class ArrayMdXml2MdValues extends \BaseModel
                         $pom = $this->getElementsData($path_el);
                         if (count($pom) === 0) {
                             \Tracy\Debugger::log('Standard schema - not found: ' . $path_el, 'IMPORT');
-                            throw new \Nette\Application\ApplicationException('messages.import.errorFile');
+                            //throw new \Nette\Application\ApplicationException('messages.import.errorFile');
                         }
                         $path_md .= $pom['md_id'] . "_";
                     }
@@ -419,20 +419,21 @@ class ArrayMdXml2MdValues extends \BaseModel
 				$this->setLangsMd($x, $this->md[$x]['iso']);
 			}
 		}
-		if (array_key_exists('featureCatalogue', $this->arrayXml)) {
-			foreach ($this->arrayXml['featureCatalogue'] as $x=>$md) {
+		if (array_key_exists('FC_FeatureCatalogue', $this->arrayXml)) {
+			foreach ($this->arrayXml['FC_FeatureCatalogue'] as $x=>$md) {
 				$this->md[$x]['iso'] = 'FC';
 				// uuid
 				$this->md[$x]['uuid'] = '';
 				$z = -1;
-				for ($y = 0; $y < count($this->arrayXml['featureCatalogue'][$x]['id']); $y++) {
-					if (isset($this->arrayXml['featureCatalogue'][$x]['id'][$y]['@']) && $this->arrayXml['featureCatalogue'][$x]['id'][$y]['@'] != '') {
-						$this->md[$x]['uuid'] = $this->arrayXml['featureCatalogue'][$x]['id'][$y]['@'];
+				for ($y = 0; $y < count($this->arrayXml['FC_FeatureCatalogue'][$x]['id']); $y++) {
+					if (isset($this->arrayXml['FC_FeatureCatalogue'][$x]['id'][$y]['@']) && $this->arrayXml['FC_FeatureCatalogue'][$x]['id'][$y]['@'] != '') {
+						$this->md[$x]['uuid'] = $this->arrayXml['FC_FeatureCatalogue'][$x]['id'][$y]['@'];
+						$z = $y;
 					}
 				}
 				if ($z > -1) {
 					//odstarnění uuid z pole
-					array_splice($this->arrayXml['featureCatalogue'][$x]['id'],$z,1);
+					unset($this->arrayXml['FC_FeatureCatalogue'][$x]['id']);
 				}
 				$this->setLangMd($x, $this->md[$x]['iso']);
 				$this->setLangsMd($x, $this->md[$x]['iso']);
