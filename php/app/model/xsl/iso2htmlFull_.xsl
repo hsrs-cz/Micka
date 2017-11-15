@@ -173,9 +173,9 @@
 			</div>
 
 	
-			<div class="micka-row">
+			<div class="micka-row" rel="http://www.w3.org/ns/dcat#distribution">
 				<label><xsl:value-of select="$msg[@eng='Resource Locator']"/></label>
-				<div class="c">
+				<div class="c" typeof="http://www.w3.org/ns/dcat#Distribution">
 					<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
 						<xsl:variable name="label">
                                 <xsl:choose>
@@ -196,7 +196,7 @@
                                     <xsl:otherwise><xsl:value-of select="*/gmd:linkage"/></xsl:otherwise>
                                 </xsl:choose>
 						</xsl:variable>
-                        <div>
+                        <div rel="http://www.w3.org/ns/dcat#accessURL">
                           	<xsl:choose>
                            		<xsl:when test="contains(*/gmd:protocol, 'DOWNLOAD')">
                                 	<a href="{*/gmd:linkage}"  target="_blank">
@@ -232,15 +232,15 @@
 									</xsl:variable>
 									<xsl:choose>
 										<xsl:when test="contains(*/gmd:linkage/*,'?')">
-							   				<a class='map' href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>		  				
+							   				<a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>		  				
 										</xsl:when>
 										<xsl:otherwise>
-											<a class='map' href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>
+											<a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>
 										</xsl:otherwise>
 									</xsl:choose>
 								</xsl:when>
                                 <xsl:otherwise>
-                                	<a href="{*/gmd:linkage}"  target="_blank">
+                                	<a resource="{*/gmd:linkage}" href="{*/gmd:linkage}"  target="_blank">
                                 		<span style="font-size:20px;"><i class="fa fa-external-link-square"></i></span><xsl:text> </xsl:text>
                                 		<xsl:value-of select="php:function('noMime',string($label))"/>
                                 	</a>
@@ -325,7 +325,7 @@
 								<xsl:for-each select="*/gmd:keyword">
 							     	<div style="margin-left:20px;">
 							     		<xsl:variable name="k" select="*"/>
-							     		<a property="http://www.w3.org/ns/dcat#theme" resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" target="_blank">
+							     		<a property="http://www.w3.org/ns/dcat#theme" typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" target="_blank">
 							     		<xsl:value-of select="$cl/serviceKeyword/value[@name=$k]/*[name()=$lang]"/></a>
 							     	</div>
 						  		</xsl:for-each>
@@ -351,7 +351,7 @@
 								  		</xsl:variable>							     	
 							  			<xsl:choose>
 								     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
-								     			<a property="http://www.w3.org/ns/dcat#theme" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
+								     			<a property="http://www.w3.org/ns/dcat#theme"  typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
 								     				<img src="{$MICKA_URL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
 								     			</a>
 								     			<xsl:text> </xsl:text>
@@ -436,7 +436,7 @@
 
 		<div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Bounding box']"/></label>
-			<div class="c" rel="http://purl.org/dc/terms/spatial">
+			<div class="c" rel="http://purl.org/dc/terms/spatial" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
 
 				<xsl:for-each select="gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 				    <xsl:variable name="x1" select="gmd:westBoundLongitude/*"/>
@@ -446,7 +446,7 @@
 				
 				
 					<xsl:if test="gmd:westBoundLongitude!=''">
-						<span typeof="http://www.w3.org/2000/01/rdf-schema#Resource" property="http://www.w3.org/ns/locn#geometry" datatype="http://www.opengis.net/ont/geosparql#wktLiteral" content="POLYGON(({$x1} {$y1} {$x1} {$y2} {$x2} {$y2} {$x2} {$y1} {$x1} {$y1}"></span>
+						<span property="http://www.w3.org/ns/locn#geometry" datatype="http://www.opengis.net/ont/geosparql#wktLiteral" content="POLYGON(({$x1} {$y1} {$x1} {$y2} {$x2} {$y2} {$x2} {$y1} {$x1} {$y1}"></span>
 						<div id="r-{position()}" itemscope="itemscope" itemtype="http://schema.org/GeoShape">
 							<meta itemprop="box" id="i-{position()}" content="{gmd:westBoundLongitude} {gmd:southBoundLatitude} {gmd:eastBoundLongitude} {gmd:northBoundLatitude}"/>
 							<xsl:value-of select="gmd:westBoundLongitude/*"/>,
@@ -637,7 +637,7 @@
 
 		<div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Use Limitation']"/></label>
-			<div class="c">
+			<div class="c" rel="http://purl.org/dc/terms/license">
                 <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue]">
                     <xsl:for-each select="*/gmd:otherConstraints">
                         <xsl:choose>
@@ -663,7 +663,6 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:for-each>
-
                 </xsl:for-each>
 			</div>
 		</div>
@@ -728,7 +727,7 @@
 			</div> 
 			<div class="micka-row">
 				<label><xsl:value-of select="$msg[@eng='Date Stamp']"/></label>
-				<div class="c" rel="http://purl.org/dc/terms/modified" resource="{gmd:dateStamp/*}"><xsl:value-of select="php:function('drawDate', string(gmd:dateStamp/*), $lang)"/></div>
+				<div class="c" property="http://purl.org/dc/terms/modified"  datatype="http://www.w3.org/2001/XMLSchema#date" content="{gmd:dateStamp/*}"><xsl:value-of select="php:function('drawDate', string(gmd:dateStamp/*), $lang)"/></div>
 			</div>
 
 			<div class="micka-row">
