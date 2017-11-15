@@ -413,7 +413,8 @@ class MdEditForm  extends \BaseModel
 
             }
             // -path md_id
-            $path = str_replace($key_md_id.'_', '', $path);
+            //$path = str_replace($key_md_id.'_', '', $path);
+            $path = strrev(preg_replace(strrev("/".$key_md_id.'_'."/"),strrev(''),strrev($path),1));
         }
         
         return $end_div_rs;
