@@ -443,7 +443,7 @@ class MdXml2Array
 		}
 	}
   
-  function getArrayMdFromXml($xmlString, $langs, $lang_main, $params=false,$updateType="", $md_rec="", $fc=""){
+    function getArrayMdFromXml($xmlString, $langs, $lang_main, $params=false,$updateType="", $md_rec="", $fc=""){
     /*---------------------------------------------------------------------
       Import jednoho XML dokumentu
 
@@ -657,7 +657,6 @@ class MdXml2Array
         $xslName = __DIR__ . "/xsl/import/".strtolower($type).".xsl";
         $xml = new \DomDocument;
         if(!$xml->loadXML($xmlString)) die('Bad xml format');
-        //echo $xslName; die();
         $md = $this->xml2array($xml, $xslName);
         //echo "<pre>"; print_r($md); die();
         return $md;

@@ -1007,6 +1007,7 @@ class RecordModel extends \BaseModel
         //var_dump($eval_text); exit;
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
+        //header('Content-type: application/xml'); echo $xml->saveXML(); exit;
         return $xml->saveXML();
     }
     
