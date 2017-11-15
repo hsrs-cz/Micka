@@ -162,8 +162,8 @@
     $rec['id'] = '<xsl:value-of select="../@uuid"/>';
     $rec['date'] = '<xsl:value-of select="gmx:versionDate"/>';
     $f = array();
-    <xsl:for-each select="gfc:featureType">    
-        $f[]['name'] = '<xsl:value-of select="*/gfc:typeName/*"/>';
+    <xsl:for-each select="gfc:featureType">
+        $f[]['name'] = '<xsl:value-of select="*/gfc:valueType/gfc:typeName/*"/>';
     </xsl:for-each>
     $rec['features'] = $f;
     $json['records'][] =$rec;

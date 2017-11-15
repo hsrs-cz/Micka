@@ -780,7 +780,8 @@ function fc(obj){
             $('#fc-features input:checked').each(function(i){
                 ff.push(this.name);
             })
-            fc1({uuid: data.id, titles: data.titles, date: data.d, dateType: 'revision'}, ff)
+            fc1({uuid: data.id, titles: data.titles, date: data.d, dateType: 'revision'}, ff);
+            $("#md-dialog").modal('hide');
         });
     });
   
