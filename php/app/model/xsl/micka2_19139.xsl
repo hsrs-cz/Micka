@@ -1421,7 +1421,7 @@
   	xmlns:gml="http://www.opengis.net/gml/3.2"
   	xmlns:gco="http://www.isotc211.org/2005/gco"  	
   	>
-  	<gfc:FC_FeatureCatalogue xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd">
+  	<gfc:FC_FeatureCatalogue xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd" uuid="{@uuid}">
   		<xsl:variable name="mdLang" select="language/*"/>
 		<xsl:call-template name="ftxt">
 			<xsl:with-param name="s" select="name"/>                      
@@ -1436,6 +1436,12 @@
 			<xsl:with-param name="lang" select="$mdLang"/>
 			<xsl:with-param name="ns" select="'gmx'"/>                     
 		</xsl:call-template>
+		<xsl:call-template name="ftxt">
+			<xsl:with-param name="s" select="fieldOfApplication"/>                      
+			<xsl:with-param name="name" select="'fieldOfApplication'"/>                      
+			<xsl:with-param name="lang" select="$mdLang"/>
+			<xsl:with-param name="ns" select="'gmx'"/>                     
+		</xsl:call-template>
   		<gmx:versionNumber><gco:CharacterString><xsl:value-of select="versionNumber"/></gco:CharacterString></gmx:versionNumber>
   		<gmx:versionDate><gco:Date><xsl:value-of select="versionDate"/></gco:Date></gmx:versionDate>
   		<gmx:language>
@@ -1447,6 +1453,11 @@
 				<xsl:with-param name="mdLang" select="$mdLang"/>
 			</xsl:call-template>
   		</gfc:producer>
+        <xsl:if test="functionalLanguage">
+        	<gfc:functionalLanguage>
+                <gco:CharacterString><xsl:value-of select="functionalLanguage"/></gco:CharacterString>
+            </gfc:functionalLanguage>
+        </xsl:if>
 
   		<xsl:for-each select="featureType">
   			<gfc:featureType>

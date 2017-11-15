@@ -1019,7 +1019,7 @@
 	</ol>
 
     <xsl:variable name="mdLang" select="*/gmx:language/*/@codeListValue"/>
-    <h1>		
+    <h1>
         <xsl:call-template name="showres">
             <xsl:with-param name="r" select="'fc'"/>
         </xsl:call-template>
@@ -1079,7 +1079,7 @@
                             <div rel="http://www.w3.org/2006/vcard/ns#hasEmail" resource="mailto:{.}">email: <xsl:value-of select="."/></div>
                         </xsl:for-each>
                         <xsl:variable name="kod" select="*/gmd:role/*/@codeListValue"/>
-                        <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]/*[$name=$lang]"/></b> 
+                        <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]/*[name()=$lang]"/></b> 
 
                         <xsl:if test="position()!=last()"><div style="margin-top:8px"></div></xsl:if>
                     </div>
@@ -1087,7 +1087,7 @@
             </div>
         </div>
     </div>
-    
+
     <xsl:variable name="vazby" select="php:function('getMetadata', concat('FcIdentifier=',$ID))"/>
     <xsl:if test="$vazby//gmd:MD_Metadata">
         <div class="micka-row">
@@ -1095,7 +1095,7 @@
             <div class="c">
                 <xsl:for-each select="$vazby//gmd:MD_Metadata">
                     <div>
-                        <a href="{$MICKA_URL}/record/{gmd:fileIdentifier}?language={$lang}" title="Metadata">
+                        <a href="{$MICKA_URL}/record/basic/{gmd:fileIdentifier}?language={$lang}" title="Metadata">
                             <xsl:call-template name="showres">
                                 <xsl:with-param name="r" select="gmd:hierarchyLevel/*/@codeListValue"/>
                             </xsl:call-template>
@@ -1103,7 +1103,7 @@
                                 <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
                                 <xsl:with-param name="lang" select="$lang"/>
                                 <xsl:with-param name="mdlang" select="$mdLang"/>
-                            </xsl:call-template>							 											
+                            </xsl:call-template>
                         </a>
                      </div>	
                 </xsl:for-each>
@@ -1154,7 +1154,7 @@
                             <th>Kód</th>
                             <th>Hodnoty</th>
                         </tr>
-                         <xsl:for-each select="*/gfc:carrierOfCharacteristics">
+                        <xsl:for-each select="*/gfc:carrierOfCharacteristics">
                             <tr>
                             <th><xsl:value-of select="*/gfc:memberName"/></th>
                                 <td>
@@ -1162,7 +1162,7 @@
                                         <xsl:with-param name="el" select="*/gfc:definition"/>
                                         <xsl:with-param name="lang" select="$lang"/>
                                         <xsl:with-param name="mdlang" select="$mdLang"/>
-                                    </xsl:call-template>							
+                                    </xsl:call-template>
                                 </td> 
                                 <td><xsl:value-of select="*/gfc:valueType"/></td>
                                 <td><xsl:value-of select="*/gfc:valueMeasurementUnit/*/gml32:identifier"/></td>
