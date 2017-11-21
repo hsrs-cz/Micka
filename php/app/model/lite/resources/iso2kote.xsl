@@ -207,7 +207,6 @@
                         <xsl:with-param name="name" select="'operatesOn-href'"/>
                         <xsl:with-param name="value" select="$url"/> 
                         <xsl:with-param name="class" select="'inp2'"/> 
-                        <xsl:with-param name="action" select="'getParent(this)'"/>
                         <xsl:with-param name="type" select="'plain'"/>  
                     </xsl:call-template>
                     
@@ -982,7 +981,7 @@
                     <xsl:with-param name="name" select="'parentIdentifier'"/>
                 </xsl:call-template>			
                 <div class="col-xs-12 col-md-8">
-                    <select name="parentIdentifier" id="parent-identifier" data-val="{gmd:parentIdentifier}"></select>
+                    <select name="parentIdentifier" id="parent-identifier" data-val="{gmd:parentIdentifier}" data-placeholder="..."></select>
                 </div>
             </div>
 	  	</xsl:otherwise>
@@ -1081,9 +1080,6 @@
                 <xsl:with-param name="valid" select="'CZ-10'"/>
             </xsl:call-template>	
     	</div>
-        
-
-    
 
     	<xsl:call-template name="drawInput">
     	  	<xsl:with-param name="name" select="'coverageDesc'"/>
@@ -1137,7 +1133,33 @@
         <xsl:with-param name="valid" select="'CZ-13'"/>
     </xsl:call-template>
 
+    <div class="row">
+        <xsl:call-template name="drawLabel">
+            <xsl:with-param name="name" select="'fc'"/>
+        </xsl:call-template>			
+        <div class="col-xs-12 col-md-8">
+            <select name="fcat" id="fcat" data-val="{gmd:contentInfo/*/gmd:featureCatalogueCitation/*/gmd:identifier/*/gmd:code/*}" data-placeholder="...">
+            </select>
+        </div>
+    </div>
 
+
+    <div class="row">
+        <xsl:call-template name="drawLabel">
+            <xsl:with-param name="name" select="'featureTypes'"/>
+        </xsl:call-template>			
+
+        
+        <div class="col-xs-12 col-md-8">
+            <select id="featureTypes" name="featureTypes[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
+                <xsl:for-each select="gmd:contentInfo/*/gmd:featureTypes">
+                    <option value="{*}" selected="selected"><xsl:value-of select="*"/></option>
+                </xsl:for-each>
+            </select>
+        </div>       
+    </div>
+
+    
 <div style="clear:both; height:20px;"></div>
 <div style="display:none" id="ask-uuid"><xsl:value-of select="$labels/msg[@name='ask-uuid']/label"/></div>
 </xsl:template>

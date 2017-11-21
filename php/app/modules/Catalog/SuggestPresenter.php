@@ -31,6 +31,7 @@ class SuggestPresenter extends \BasePresenter
         $params['query'] = $this->getParameter('q');
         $params['type'] = $this->getParameter('type');
         $params['role'] = $this->getParameter('role');
+        $params['id'] = $this->getParameter('id');
         
         $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
             $this->suggestModel->getAnswer($params), 
@@ -72,6 +73,7 @@ class SuggestPresenter extends \BasePresenter
         $params['lang'] = $this->getParameter('lang');
         $params['query'] = $this->getParameter('q');
         $params['id'] = $this->getParameter('id');
+        $params['res'] = $this->getParameter('res');
         $params['type'] = 'title';
         
         $this->sendResponse( new \Nette\Application\Responses\JsonResponse(

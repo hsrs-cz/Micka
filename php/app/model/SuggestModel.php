@@ -177,19 +177,22 @@ class SuggestModel
                 break;
             case 'title':
                 $l = ''; $l1='';
-                 if($query_lang != ''){
+                if($query_lang != ''){
                     $l = " AND md_values.lang='$query_lang'";
                     $l1 = " AND abstr.lang='$query_lang'";
-                }    
+                }                  
                 $sql = "
                     SELECT trim(uuid) as id, md_values.md_value, abstr.md_value as abstract 
                     FROM md 
-                    JOIN md_values ON (md.recno=md_values.recno  $l) 
-                    JOIN md_values as abstr ON (md.recno=abstr.recno AND abstr.md_id IN (4,5061) $l1)
+                    JOIN md_values ON (md.recno=md_values.recno $l) 
+                    LEFT JOIN md_values as abstr ON (md.recno=abstr.recno AND abstr.md_id IN (4,5061) AND md_standard != 2 $l1)
                     WHERE md_values.md_id IN (11,5063) AND $right                    
                 ";
                 if($creator != '') {
                     $sql .= " AND md.create_user='$creator'";
+                }
+                if($params['res']=='fc'){
+                    $sql .= " AND md_standard=2";
                 }
                 if(isset($params['id'])){
                     $sql .= " AND uuid='".$params['id']."'";
@@ -206,6 +209,15 @@ class SuggestModel
                 $rs = array('numresults'=>count($rs),'records'=>$rs);
                 return $rs;
                  
+                break;
+            case 'featureType':
+                $result = $this->db->query("SELECT md_value FROM md_values LEFT JOIN md USING (recno) 
+                WHERE md_id=13 AND uuid=?", $params['id'])->fetchAll();
+                foreach($result as $row) {
+                    $rs[] = array('id'=>$row->md_value,"title"=>$row->md_value);
+                }
+                $rs = array('numresults'=>count($rs),'records'=>$rs);
+                return $rs;
                 break;
             case 'serviceType':
                 $sql = "SELECT  count(*) as count, md_value

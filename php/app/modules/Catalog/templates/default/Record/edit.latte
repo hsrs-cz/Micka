@@ -411,51 +411,6 @@
 	$(document).ready(function() {
         HS.setLang({$appLang});
         lite.init();
-
-        var id = $("#parent-identifier").data("val");
-        if(id){
-            //console.log(id);
-            $.ajax({
-                url: baseUrl+'/suggest/metadata?lang='+lang+'&id='+id,
-                dataType: 'json' 
-            })
-            .done(function(data){
-                
-                //var data = cswResults(data);
-                //console.log(data.results[0]);
-                $("#parent-identifier").select2({
-                    //data: cswResults(data),
-                    data: [{ id:data.records[0].id, text:data.records[0].title }],
-                    ajax: {
-                        url: baseUrl+'/suggest/metadata?lang='+lang,
-                        dataType: 'json',
-                        processResults: cswResults,
-                        cache: false
-                    },
-                    language: HS.getLang(2),
-                    allowClear: true,
-                    theme: 'bootstrap',
-                    maxSelectionLength: 1           
-                });
-                $("#parent-identifier").trigger('change');
-            });
-        }
-        else {
-            $("#parent-identifier").select2({
-                //data:data.records[0],
-                ajax: {
-                    url:  baseUrl+'/suggest/metadata?lang='+lang,
-                    dataType: 'json',
-                    processResults: cswResults,
-                    cache: false
-                },
-                language: HS.getLang(2),
-                allowClear: true,
-                theme: 'bootstrap',
-                maxSelectionLength: 1           
-            });
-
-        }
         
         var xmin=$('#xmin');
         var ymin=$('#ymin');
@@ -475,14 +430,6 @@
 
         
 	});
-    
-    var cswResults = function(data, page){
-        return {
-            results: $.map(data.records, function(rec) {
-                return { id: rec.id, text: rec.title, title: rec.abstract };
-            })  
-        }    
-    };
     </script>
 {/if} 
 

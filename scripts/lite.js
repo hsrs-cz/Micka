@@ -15,8 +15,91 @@ var lite = {
         $.fn.datepicker.defaults.forceParse = false;
         if(lang=='cze') $.fn.datepicker.defaults.format = "dd.mm.yyyy";
         else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
+        this.processParent();
+        this.processFc();
     },
     
+    cswResults: function(data, page){
+        console.log(data);
+        return {
+            results: $.map(data.records, function(rec) {
+                return {id: rec.id, text: rec.title, title: rec.abstract};
+            })  
+        }    
+    },
+
+    processParent(){
+        var id = $("#parent-identifier").data("val");
+        var me = this;
+        var processResult = function(data){
+            var rec = data ? [{id:data.records[0].id, text:data.records[0].title}] : [];
+            $("#parent-identifier").select2({
+                data: rec,
+                ajax: {
+                    url: baseUrl+'/suggest/metadata?lang='+lang,
+                    dataType: 'json',
+                    processResults: me.cswResults,
+                    cache: false
+                },
+                language: HS.getLang(2),
+                allowClear: true,
+                theme: 'bootstrap',
+                maxSelectionLength: 1           
+            });
+            $("#parent-identifier").trigger('change');
+        };
+        if(id){
+            $.ajax({
+                url: baseUrl+'/suggest/metadata?lang='+lang+'&id='+id,
+                dataType: 'json' 
+            })
+            .done(processResult);
+        }
+        else processResult(false);
+    },
+    
+    processFc(){
+        var id = $("#fcat").data("val");
+        var me = this;
+        var processResult = function(data){
+            var rec = data ? [{id:data.records[0].id, text:data.records[0].title}] : [];
+            $("#fcat").select2({
+                data: rec,
+                ajax: {
+                    url: baseUrl+'/suggest/metadata?lang='+lang+'&res=fc',
+                    dataType: 'json',
+                    processResults: me.cswResults,
+                    cache: false
+                },
+                language: HS.getLang(2),
+                allowClear: true,
+                theme: 'bootstrap',
+                maxSelectionLength: 1           
+            });
+            $("#fcat").trigger('change');
+            $("#fcat").on('change.select2', function (e) {
+                $("#featureTypes").val(null);
+                $("#featureTypes").select2({
+                    ajax: {
+                        url: baseUrl+'/suggest?lang='+lang+'&type=featureType&id='+$("#fcat").val(),
+                        dataType: 'json',
+                        processResults: me.cswResults,
+                        cache: true
+                    }
+                });
+                $("#featureTypes").select2('open');
+            });
+        };
+        if(id){
+            $.ajax({
+                url: baseUrl+'/suggest/metadata?lang='+lang+'&id='+id,
+                dataType: 'json' 
+            })
+            .done(processResult);
+        }
+        else processResult();
+    },
+
     createDuplicate: function(){
         var dupl = $('.duplicate');
         $(dupl).empty(); 
@@ -49,7 +132,7 @@ var lite = {
         if($(cont).children('fieldset').length>1){ 
             cont.removeChild(toDel);
         }
-        // vymazani obsahu pro prvni
+        // erase content for first group
         else {
             $(toDel).find('input').val('');
             var sel  = $(toDel).find('.sel2');

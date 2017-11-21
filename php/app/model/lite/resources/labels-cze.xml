@@ -651,4 +651,17 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
     <msg name="sel">
         <label>Vyberte</label>
     </msg>
+  	<msg name="fc">
+		<label>Katalog geoprvků</label>
+		<help>
+			<h3>Odkaz na Feature katalog</h3> 
+		</help>
+	</msg>
+  	<msg name="featureTypes">
+		<label>Seznam geoprvků</label>
+		<help>
+			<h3>Odkaz na jednotlivé typy geoprvků ve vybraném Feature katalogu</h3> 
+		</help>
+	</msg>
+
 </labels>

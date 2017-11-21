@@ -277,5 +277,15 @@ div.c {
   #results {padding: 5px;}  
 }
  
-  
+a.valid0 {
+    color: red;
+}
+
+a.valid1 {
+    color: orange;
+}
+
+a.valid2 {
+    color: green;
+}
 

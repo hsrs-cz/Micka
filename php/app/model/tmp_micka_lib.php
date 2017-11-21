@@ -16,8 +16,7 @@ function noMime($s){
 }
 
 // pro XSLT - dotaz na metadata
-function getMetadata($s, $esn='summary')
-{
+function getMetadata($s, $esn='summary'){
     $s = stripslashes($s); // FIXME - nevim, co to udela, pokud je apostrof v retezci
 	$csw = new \Micka\Csw();
 	$params["CONSTRAINT"] = $s;
@@ -32,7 +31,27 @@ function getMetadata($s, $esn='summary')
 	$params['ELEMENTSETNAME'] = $esn;
 	$params['buffered'] = true;
 	$result = $csw->run($params);
-	//file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
+	file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
+	$dom = new DOMDocument();
+	$dom->loadXML($result);
+	return $dom;
+}
+
+function getMetadataById($id, $esn='full'){
+    $s = stripslashes($s); // FIXME - nevim, co to udela, pokud je apostrof v retezci
+	$csw = new \Micka\Csw();
+	$params["ID"] = $id;
+	//$params['CONSTRAINT_LANGUAGE'] = 'CQL';
+	//$params['TYPENAMES'] = 'gmd:MD_Metadata';
+	//$params['OUTPUTSCHEMA'] = "http://www.isotc211.org/2005/gmd";
+	$params['SERVICE'] = 'CSW';
+	$params['REQUEST'] = 'GetRecordById';
+	$params['VERSION'] = '2.0.2';
+	$params['ISGET'] = true;
+	$params['ELEMENTSETNAME'] = $esn;
+	$params['buffered'] = true;
+	$result = $csw->run($params);
+	file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
 	$dom = new DOMDocument();
 	$dom->loadXML($result);
 	return $dom;

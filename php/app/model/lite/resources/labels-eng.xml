@@ -687,4 +687,16 @@ against which data is being evaluated.</p>
     <msg name="sel">
         <label>Select</label>
     </msg>
+	<msg name="fc">
+		<label>Feature catalogue</label>
+		<help>
+			<h3>Feature catalogue citation</h3> 
+		</help>
+	</msg>
+  	<msg name="featureTypes">
+		<label>Feature types</label>
+		<help>
+			<h3>Feature types list from corresponding Feature Catalogue</h3> 
+		</help>
+	</msg>
 </labels>

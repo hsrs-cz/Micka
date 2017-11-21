@@ -292,7 +292,6 @@ SearchForm = function(){
 		});
 		data['map'] = _this.overMap.getState();
 		$.cookie('micka', data); 
-		console.log('save cookie', data)
 		return false;				
 	}
 	

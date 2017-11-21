@@ -649,13 +649,76 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
                                 </srv:SV_OperationMetadata>
                             </srv:containsOperations>
                         </xsl:for-each>                        
-						<xsl:for-each select="operatesOn/items">
+						<xsl:for-each select="operatesOn/item">
 							<srv:operatesOn xlink:title="{title}" uuidref="{uuid}" xlink:href="{href}#_{uuid}"/>
 						</xsl:for-each>
 					</xsl:if>
 				</xsl:element>
 			</gmd:identificationInfo>
 			
+            <!-- ================================ Content ====================================-->
+            <xsl:choose>
+                <xsl:when test="fcat">
+                    <gmd:contentInfo>
+                        <gmd:MD_FeatureCatalogueDescription>
+                            <xsl:for-each select="featureTypes/item">
+                                <gmd:featureTypes><gco:LocalName><xsl:value-of select="."/></gco:LocalName></gmd:featureTypes>
+                            </xsl:for-each>
+                            <xsl:variable name="fcRecord" select="php:function('getMetadataById', string(fcat))"/>
+                            <gmd:featureCatalogueCitation>
+                                <gmd:CI_Citation>
+                                    <gmd:title>
+                                        <xsl:copy-of select="$fcRecord//gmx:name/*"/>
+                                    </gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date>
+                                                <gco:Date><xsl:value-of select="$fcRecord//gmx:versionDate/*"/></gco:Date>
+                                            </gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeListValue="revision" codeList="http://standards.iso.org/iso/19139/resources/gmxCodelists.xml#CI_DateTypeCode">revision</gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    <gmd:identifier>
+                                        <gmd:MD_Identifier>
+                                            <gmd:code>
+                                                <gco:CharacterString><xsl:value-of select="fcat"/></gco:CharacterString>
+                                            </gmd:code>
+                                        </gmd:MD_Identifier>
+                                    </gmd:identifier>
+                                </gmd:CI_Citation>
+                            </gmd:featureCatalogueCitation>
+                        </gmd:MD_FeatureCatalogueDescription>
+                    </gmd:contentInfo>
+                </xsl:when>
+                <xsl:otherwise>
+                    <gmd:contentInfo>
+                        <gmd:MD_FeatureCatalogueDescription>
+                            <gmd:featureTypes><gco:LocalName></gco:LocalName></gmd:featureTypes>
+                            <gmd:featureCatalogueCitation>
+                                <gmd:CI_Citation>
+                                    <gmd:title></gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date></gmd:date>
+                                            <gmd:dateType>
+                                                <gmd:CI_DateTypeCode codeListValue=""></gmd:CI_DateTypeCode>
+                                            </gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                    <gmd:identifier>
+                                        <gmd:MD_Identifier>
+                                            <gmd:code></gmd:code>
+                                        </gmd:MD_Identifier>
+                                    </gmd:identifier>
+                                </gmd:CI_Citation>
+                            </gmd:featureCatalogueCitation>
+                        </gmd:MD_FeatureCatalogueDescription>
+                    </gmd:contentInfo>
+                </xsl:otherwise>
+            </xsl:choose>
+            
 			<!-- ================================ Distribution ===============================-->
 			<gmd:distributionInfo>
 				<gmd:MD_Distribution>

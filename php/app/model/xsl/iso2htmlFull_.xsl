@@ -1112,8 +1112,8 @@
     </xsl:if>
     
 	<xsl:for-each select="gfc:featureType">
-		<a name="{*/gfc:typeName}"/>
-			<h2><xsl:value-of select="*/gfc:typeName"/></h2>
+		<a name="{*/gfc:valueType/*}"/>
+			<h2><xsl:value-of select="*/gfc:valueType/*"/></h2>
             <xsl:if test="*/gco:LocalName">
                 <div class="micka-row">
                     <label><xsl:value-of select="$msg[@eng='Name']"/></label>
