@@ -182,11 +182,19 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 							</xsl:for-each>
 							<xsl:for-each select="identifier/item">
 								<gmd:identifier>
-									<gmd:MD_Identifier>
+									<gmd:RS_Identifier>
 										<gmd:code>
-											<gmx:Anchor xlink:href="{.}"/>
+                                            <xsl:choose>
+                                                <xsl:when test="substring(.,1,4)='http'">
+                                                    <gmx:Anchor xlink:href="{.}"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
 										</gmd:code>
-									</gmd:MD_Identifier>
+                                        <gmd:codeSpace></gmd:codeSpace>
+									</gmd:RS_Identifier>
 								</gmd:identifier>
 							</xsl:for-each>
                             <gmd:otherCitationDetails>

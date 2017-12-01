@@ -26,7 +26,9 @@
 	xmlns:owl="http://www.w3.org/2002/07/owl#"
 	xmlns:adms="http://www.w3.org/ns/adms#"
 	xmlns:php="http://php.net/xsl" 
+    exclude-result-prefixes="gco gmd gmx dct php"
 	>
+<xsl:output method="xml" indent="yes" encoding="UTF-8" />
 
     <xsl:variable name="clc" select="document('../codelists4dcat.xml')/codes"/>
     <xsl:variable name="cl" select="document('../codelists.xml')/map"/>
@@ -47,9 +49,7 @@
     </xsl:variable>	
 
 	<rdf:Description>
-    <!-- <xsl:element name="{$ser}">
-    	<xsl:attribute name="rdf:about"><xsl:value-of select="$thisPath"/>/../micka_main.php?ak=detail&amp;uuid=<xsl:value-of select="gmd:fileIdentifier"/></xsl:attribute>
-		 -->
+    	<xsl:attribute name="rdf:about"><xsl:value-of select="$thisPath"/>/csw/?service=CSW&amp;request=GetRecordById&amp;id=<xsl:value-of select="gmd:fileIdentifier"/></xsl:attribute>
 		 
 		 <!-- METADATA on Metadata -->
 		 <foaf:isPrimaryTopicOf>
@@ -103,7 +103,7 @@
 	  	<xsl:choose>
 			<!-- Service Type - not stable -->
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-		  		<rdf:type rdf:resource="http://www.w3.org/ns/dcat#Service"/>
+		  		<rdf:type rdf:resource="http://www.w3.org/ns/dcat#Dataset"/>
 				<dct:type rdf:resource="{$cURI}/ResourceType/service"/>
 				<dct:type rdf:resource="{$cURI}/SpatialDataServiceType/{gmd:identificationInfo/*/srv:serviceType}"/>
 			</xsl:when>
@@ -461,7 +461,7 @@
                         <dct:accessRights>
                             <xsl:choose>
                                 <xsl:when test="*/gmd:otherConstraints/*/@xlink:href">
-                                    <dct:license rdf:resource="{*/gmd:otherConstraints/*/@xlink:href}"/>
+                                    <xsl:attribute name="rdf:resource" select="*/gmd:otherConstraints/*/@xlink:href"/>
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <dct:RightsStatement>
@@ -524,7 +524,7 @@
 	    		</xsl:when>
 	    		<xsl:when test="*/gmd:role/*/@codeListValue='originator'">
 	    			<dct:creator>
-	    				<foaf:Organisation>
+	    				<foaf:Organization>
 	 			     		<xsl:call-template name="rmulti">
 				   				<xsl:with-param name="l" select="$mdlang"/>
 				   				<xsl:with-param name="e" select="*/gmd:organisationName"/>
@@ -545,12 +545,12 @@
                                    <xsl:for-each select="*/gmd:country"><vcard:country-name><xsl:value-of select="*"/></vcard:country-name></xsl:for-each>
                                 </vcard:adr>                                           
                             </xsl:for-each>
-	    				</foaf:Organisation>
+	    				</foaf:Organization>
 	    			</dct:creator>
 	    		</xsl:when>
 	    		<xsl:when test="*/gmd:role/*/@codeListValue='owner'">
 	    			<dct:rightsHolder>
-	    				<foaf:Organisation>
+	    				<foaf:Organization>
 	 			     		<xsl:call-template name="rmulti">
 				   				<xsl:with-param name="l" select="$mdlang"/>
 				   				<xsl:with-param name="e" select="*/gmd:organisationName"/>
@@ -571,12 +571,12 @@
                                    <xsl:for-each select="*/gmd:country"><vcard:country-name><xsl:value-of select="*"/></vcard:country-name></xsl:for-each>
                                </vcard:adr>                                           
                             </xsl:for-each>
-	    				</foaf:Organisation>
+	    				</foaf:Organization>
 	    			</dct:rightsHolder>
 	    		</xsl:when>
 	    		<xsl:when test="*/gmd:role/*/@codeListValue='publisher'">
 	    			<dct:publisher>
-	    				<foaf:Organisation>
+	    				<foaf:Organization>
 	 			     		<xsl:call-template name="rmulti">
 				   				<xsl:with-param name="l" select="$mdlang"/>
 				   				<xsl:with-param name="e" select="*/gmd:organisationName"/>
@@ -597,7 +597,7 @@
                                    <xsl:for-each select="*/gmd:country"><vcard:country-name><xsl:value-of select="*"/></vcard:country-name></xsl:for-each>
                                 </vcard:adr>                                           
                             </xsl:for-each>
-	    				</foaf:Organisation>
+	    				</foaf:Organization>
 	    			</dct:publisher>
 	    		</xsl:when>
 	    		<xsl:otherwise>

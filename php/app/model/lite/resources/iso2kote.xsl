@@ -174,6 +174,9 @@
                 <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
                     <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
                 </xsl:for-each>
+                <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code[not(*/@xlink:href)]">
+                    <option value="{*}" selected="selected"><xsl:value-of select="*"/></option>
+                </xsl:for-each>
             </select>
         </div>       
     </div>
