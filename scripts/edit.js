@@ -1155,7 +1155,7 @@ function formats1(data){
 	if(inputs.length>0){
 	    for(var i in inputs){
 	      	if(typeof(data)=="object"){
-	      		var lang = inputs[i].name.substr(1,3);
+	      		var lang = inputs[i].name.substr(2,3);
 	      		var f = data[lang].value;
 	      		if(!f) continue;
 	      	}

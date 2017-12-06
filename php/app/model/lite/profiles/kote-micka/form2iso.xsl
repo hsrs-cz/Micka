@@ -16,7 +16,7 @@ xmlns:php="http://php.net/xsl"
 xsi:schemaLocation="http://www.isotc211.org/2005/gmd
 http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	<xsl:output method="xml" encoding="UTF-8"/>
-    <xsl:include href="kote-common.xsl" />
+    <xsl:include href="../../resources/lite-common.xsl" />
 
     <xsl:variable name="cl">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml</xsl:variable>
 

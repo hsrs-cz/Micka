@@ -16,7 +16,6 @@
 
 <!-- GLOBAL VARIABLES -->
 <xsl:variable name="codeLists" select="document('../../xsl/codelists.xml')/map" />
-<xsl:variable name="labels" select="document(concat('labels-', $lang, '.xml'))/labels" />
 
 <!-- ZOBRAZENI ORGANIZACE -->
 <xsl:template name="party">

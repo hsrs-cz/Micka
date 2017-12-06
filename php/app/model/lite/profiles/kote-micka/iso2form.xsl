@@ -18,7 +18,8 @@
 
 <xsl:param name="mds" select="0" />
 
-<xsl:include href="kote-common.xsl" />
+<xsl:variable name="labels" select="document(concat('labels-', $lang, '.xml'))/labels" />
+<xsl:include href="../../resources/lite-common.xsl" />
 
 <xsl:variable name="mlang">
 	<xsl:choose>

@@ -254,7 +254,8 @@ class MdEditForm  extends \BaseModel
         if ($editLiteTemplate == '') {
             return '';
         }
-		$template = __DIR__ . '/lite/resources/' . $editLiteTemplate . '.xsl';
+        //TODO here the profile will be selected
+		$template = __DIR__ . '/lite/profiles/' . $editLiteTemplate . '/iso2form.xsl';
 		require_once __DIR__ . '/CswClient.php';
 		require_once __DIR__ . '/lite/resources/Kote.php';
 		$cswClient = new \CSWClient();

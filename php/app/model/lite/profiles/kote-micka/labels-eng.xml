@@ -699,4 +699,10 @@ against which data is being evaluated.</p>
 			<h3>Feature types list from corresponding Feature Catalogue</h3> 
 		</help>
 	</msg>
+	<msg name="obligatory">
+		<label>IO-13 Mandatory subject</label>
+		<help>
+			<h3>Identificaton of mandatory subjesct of INSPIRE</h3> 
+		</help>
+	</msg>    
 </labels>
