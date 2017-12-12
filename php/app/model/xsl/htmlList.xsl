@@ -72,7 +72,7 @@
 		<!-- nadpis -->
 		<div class="title{$public}">
 			<xsl:variable name="detURL"><xsl:value-of select="$LANG2"/>record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>
-				<a href="{$thisPath}/{$detURL}" class="t" title="{$cl/updateScope/value[@name=$hlevel]}">
+				<a href="{$thisPath}/{$detURL}" class="t" title="{$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]}">
 				<xsl:call-template name="showres">
 					<xsl:with-param name="r" select="$hlevel"/>
 					<xsl:with-param name="class" select="'fa-lg'"/>
@@ -161,7 +161,7 @@
 
 	  	<div class="title">
 			<xsl:variable name="detURL">record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>		
-			<a href="{$MICKA_URL}{$detURL}" class="t" title="{$cl/updateScope/value[@name='fc']}">
+			<a href="{$MICKA_URL}{$detURL}" class="t" title="{$cl/updateScope/value[@name='fc']/*[name()=$lang]}">
 				<xsl:call-template name="showres">
 					<xsl:with-param name="r" select="'fc'"/>
 					<xsl:with-param name="class" select="'fa-lg'"/>
