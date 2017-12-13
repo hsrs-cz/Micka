@@ -1260,16 +1260,7 @@
 			<div style="margin-left:20px;">
                 <xsl:for-each select="$subsets//gmd:MD_Metadata">
                     <xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
-                    <xsl:variable name="url">
-                    <xsl:choose>
-                            <xsl:when test="$REWRITE">	
-                                <xsl:value-of select="concat($MICKA_URL,'/records/',gmd:fileIdentifier)"/>
-                            </xsl:when>
-                            <xsl:otherwise>
-                        <xsl:value-of select="concat($MICKA_URL,'?ak=detail&amp;uuid=',gmd:fileIdentifier)"/>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                </xsl:variable>
+                    <xsl:variable name="url" select="concat($MICKA_URL,'/record/basic/',gmd:fileIdentifier)"/>
 
                     <div>
                         <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
@@ -1296,7 +1287,7 @@
                 </xsl:for-each>
                 <xsl:if test="$subsets//csw:SearchResults/@numberOfRecordsMatched &gt; 25">
                     <div>
-                        <a href="{$MICKA_URL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}">See all <xsl:value-of select="$subsets//csw:SearchResults/@numberOfRecordsMatched"/> children ...</a>
+                        <a href="{$MICKA_URL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}"><xsl:value-of select="concat($msg[@eng='ShowAll'], ' (', $subsets//csw:SearchResults/@numberOfRecordsMatched, ') ...')"/> </a>
                     </div>
                 </xsl:if>
             </div>
