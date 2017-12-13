@@ -593,7 +593,7 @@ function thes(obj){
    
     thes['inspire'] = $("#inspire").select2({
 		ajax: {
-			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
+			url: baseUrl + '/registry_client/?uri=https://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json',
 			processResults: function(data, opts){
                 var data = $.map(data.results, function(rec) {

@@ -2,15 +2,15 @@
 // --- bud tam bude include nebo exclude
 $config=array(
     // --- Enduse potential INSPIRE
-    "http://inspire.ec.europa.eu/codelist/EndusePotentialValue"=>array(
+    "https://inspire.ec.europa.eu/codelist/EndusePotentialValue"=>array(
         "adapter"=> "inspireRegistry",
         //"include"=>array()
         "exclude"=>array(
-            "http://inspire.ec.europa.eu/codelist/EndusePotentialValue/abrasiveMinerals"
+            "https://inspire.ec.europa.eu/codelist/EndusePotentialValue/abrasiveMinerals"
         )
     ),
     // --- Enduse potential INSPIRE
-    "http://inspire.ec.europa.eu/theme"=>array(
+    "https://inspire.ec.europa.eu/theme"=>array(
         "adapter"=> "inspireThemes"
     ),
     
@@ -34,7 +34,7 @@ $config=array(
     ),
 
     // --- EU Countries
-    "http://publications.europa.eu/resource/authority/country"=>array(
+    "https://publications.europa.eu/resource/authority/country"=>array(
         "adapter"=> "skos",
         "url" => "http://publications.europa.eu/mdr/resource/authority/country/skos/countries-skos.rdf"
     )
