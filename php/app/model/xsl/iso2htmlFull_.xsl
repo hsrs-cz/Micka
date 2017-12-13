@@ -810,7 +810,7 @@
 				<div class="c">
 					<xsl:for-each select="$subsets//gmd:MD_Metadata">
 						<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
-  						<xsl:variable name="url"><xsl:value-of select="concat('',gmd:fileIdentifier)"/></xsl:variable>
+                        <xsl:variable name="url" select="concat($MICKA_URL,'/record/basic/',gmd:fileIdentifier)"/>
 						<div>
                             <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]/*[name()=$lang]}">
                                 <xsl:call-template name="showres">
@@ -829,9 +829,9 @@
                         </div>
 					</xsl:for-each>
 					<xsl:if test="$subsets//csw:SearchResults/@numberOfRecordsMatched &gt; 25">
-						<div>
-							<a href="?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}">See all <xsl:value-of select="$subsets//csw:SearchResults/@numberOfRecordsMatched"/> children ...</a>
-						</div>
+                        <div>
+                            <a href="{$MICKA_URL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}"><xsl:value-of select="concat($msg[@eng='ShowAll'], ' (', $subsets//csw:SearchResults/@numberOfRecordsMatched, ') ...')"/> </a>
+                        </div>
 					</xsl:if>
 				</div>
 			</div>	
@@ -1261,7 +1261,6 @@
                 <xsl:for-each select="$subsets//gmd:MD_Metadata">
                     <xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
                     <xsl:variable name="url" select="concat($MICKA_URL,'/record/basic/',gmd:fileIdentifier)"/>
-
                     <div>
                         <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
                             <xsl:call-template name="showres">
