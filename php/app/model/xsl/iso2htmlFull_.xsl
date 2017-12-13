@@ -438,7 +438,7 @@
 			<label><xsl:value-of select="$msg[@eng='Bounding box']"/></label>
 			<div class="c" rel="http://purl.org/dc/terms/spatial" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
 
-				<xsl:for-each select="gmd:identificationInfo//gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+				<xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 				    <xsl:variable name="x1" select="gmd:westBoundLongitude/*"/>
 					<xsl:variable name="y1" select="gmd:southBoundLatitude/*"/>
 					<xsl:variable name="x2" select="gmd:eastBoundLongitude/*"/>
@@ -454,12 +454,23 @@
 							<xsl:value-of select="gmd:eastBoundLongitude/*"/>,
 							<xsl:value-of select="gmd:northBoundLatitude/*"/>
 		                </div>
-	                </xsl:if>					
+	                </xsl:if>
 				</xsl:for-each>
        		</div>
-		</div>
+        </div>
 
-		<div class="micka-row">
+        <xsl:if test="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicDescription">
+			<div class="micka-row">
+                <label><xsl:value-of select="$msg[@eng='Region']"/></label>
+                <div class="c" rel="http://purl.org/dc/terms/spatial" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
+                    <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicDescription">
+                        <a href="{gmd:geographicIdentifier/*/gmd:code/*/@xlink:href}" target="_blank"><xsl:value-of select="gmd:geographicIdentifier/*/gmd:code/*"/></a>
+                    </xsl:for-each>
+                </div>
+            </div>
+        </xsl:if>
+		
+        <div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Date']"/></label>
 			<div class="c">
 				<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date">
@@ -593,8 +604,11 @@
 			<div class="c">
 				<xsl:if test="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator!=''">
 					<xsl:value-of select="$msg[@eng='Equivalent Scale']"/> =
-  					<xsl:text> 1:</xsl:text>
-					<xsl:value-of select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator"/>
+                    <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale">
+                        <xsl:text> 1:</xsl:text>
+                        <xsl:value-of select="*/gmd:denominator"/>
+                        <xsl:if test="not(position()=last())">,</xsl:if>
+                    </xsl:for-each>
 				</xsl:if>
 				<xsl:if test="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance">
 					<xsl:value-of select="$msg[@eng='Distance']"/> =

@@ -56,7 +56,7 @@
 			<gmd:MD_Keywords>
 				<xsl:for-each select="*/gmd:keyword">
 					<xsl:choose>
-						<xsl:when test="*/@xlink:href"><copy-of select="."/></xsl:when>
+						<xsl:when test="*/@xlink:href"><xsl:copy-of select="."/></xsl:when>
 						<xsl:otherwise>
 							<xsl:variable name="kw" select="*"/>
 							<gmd:keyword>

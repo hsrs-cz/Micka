@@ -26,6 +26,7 @@
 	<msg eng="Service Type">Typ služby</msg>
 	<msg eng="Coordinate System">Coordinate System</msg>
 	<msg eng="Extent">Rozsah</msg>
+    <msg eng="Region">Území</msg>
 	<!-- <msg eng="West">West</msg>
 	<msg eng="East">East</msg>
 	<msg eng="South">South</msg>

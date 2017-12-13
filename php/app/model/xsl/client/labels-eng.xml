@@ -31,6 +31,7 @@
 	<msg eng="East">East</msg>
 	<msg eng="South">South</msg>
 	<msg eng="North">North</msg>
+    <msg eng="Region">Region</msg>
 	<msg eng="Lineage">Lineage</msg>
 	<msg eng="Data Quality">Data Quality</msg>
 	<msg eng="Distribution">Distribution</msg>
@@ -65,7 +66,6 @@
 	<msg eng="Subsets">Subsets</msg>
 	<msg eng="On-line">On-line</msg>
 	<msg eng="Rationale">Rationale</msg>
-	<msg eng="#rozhranni">#rozhranni</msg>
 	<msg eng="Text">Text</msg>
 	<msg eng="Keywords">Keywords</msg>
 	<msg eng="Fulltext">Fulltext</msg>

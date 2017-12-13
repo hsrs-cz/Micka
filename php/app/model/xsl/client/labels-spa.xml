@@ -27,6 +27,7 @@
 	<msg eng="Service Type">Tipo de servicio</msg>
 	<msg eng="Coordinate System">Sistema de coordenadas</msg>
 	<msg eng="Extent">Extención</msg>
+    <msg eng="Region">Region</msg>
 	<msg eng="West">Oeste</msg>
 	<msg eng="East">Este</msg>
 	<msg eng="South">Sur</msg>

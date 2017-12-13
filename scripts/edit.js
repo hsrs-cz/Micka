@@ -493,12 +493,20 @@ function thes(obj){
     md_dexpand1(md_elem);
     if(thesActivated) return;
     thesActivated = true;
-    
+    var theAjax = null;
     var thes = {};
-    thes['gemet'] = $('#gemet').select2({
-		ajax: {
-			url: baseUrl +'/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConceptsMatchingRegexByThesaurus?',
-			dataType: 'json',
+    /*var template = function(d){
+        var $n = $('<i class=\'narrower\'>&lt;</i>');
+        $n.on('mouseup', d, onGemetClick);
+        var $w = $('<i class=\'broader\'>&gt;</i>');
+        $w.on('mouseup', d, onGemetClick);
+        return $('<span>' + d.text + '</span> ').append($n).append($w);
+    };*/
+
+    var initGemet = function(){
+        theAjax = {
+            url: baseUrl +'/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConceptsMatchingRegexByThesaurus?',
+            dataType: 'json',
             data: function (params) {
                 var query = {
                     thesaurus_uri: 'http://www.eionet.europa.eu/gemet/concept/',
@@ -508,22 +516,81 @@ function thes(obj){
                  }
                 return query;
             },
-           processResults: function(data, page){
+            processResults: function(data, page){
                 return {
                     results: $.map(data, function(rec) {
                         return { text: rec.preferredLabel.string, id: rec.uri };
                     })  
                 }    
             },
-			delay: 200,  
-			cache: false
-	   },
-        minimumInputLength: 3,            
- 		language: HS.getLang(2),
-	    theme: 'bootstrap',
-	    allowClear: true
-	});
+            delay: 200,  
+            cache: false
+        };
+        thes['gemet'] = $('#gemet').select2({
+            ajax: theAjax,
+            //templateResult: template,
+            escapeMarkup: function(m) { return m; },
+            minimumInputLength: 3,
+            language: HS.getLang(2),
+            theme: 'bootstrap',
+            allowClear: true
+        });
+        //$('#gemet').on('change', onGemetClick);
+        /*$('#gemet').on('select2:close', function(e){
+            console.log('close', e);
+            //initGemet();
+        });*/
+   };
+    
+    var onGemetClick = function (e) {
+        e.stopPropagation();
+        //console.log('gemteclick', e);
+        if(!e.target.value) {
+            initGemet();
+            return;
+        }
+        //var data = e.params.data;
+        //var wn = $(this).hasClass('narrower') ? 'narrower' : 'broader';
+        $.ajax({
+            url: baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getRelatedConcepts?',
+            data: {
+                concept_uri: e.target.value,
+                relation_uri: 'http://www.w3.org/2004/02/skos/core%23narrower',
+                language: HS.getLang(2)
+            }
+        })
+        .done(function(data){
+        /*theAjax.url = baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getRelatedConcepts?';
+        theAjax.data = function(params){
+            return {
+                concept_uri: e.target.value,
+                relation_uri: 'http://www.w3.org/2004/02/skos/core%23' + 'narrower',
+                theme: 'bootstrap',
+                allowClear: true,
+                language: HS.getLang(2)
+            }
+        }  */
+            //console.log(data);
+            var d = [{id: e.target.value, text: e.target.innerText}];
+            //$('#gemet').select2().empty();
+            for(var i=0;i<data.length; i++){
+                d.push({id: data[i].uri, text: data[i].preferredLabel.string});
+            }
+            $('#gemet').select2({
+                data: d,
+                //ajax: theAjax,
+                //templateResult: template,
+                allowClear: true,
+                theme: 'bootstrap',
+                minimumResultsForSearch: Infinity
+            });
+            $('#gemet').on('change', onGemetClick);
+            $('#gemet').select2('open');
+        });
+    }
 
+    initGemet();
+   
     thes['inspire'] = $("#inspire").select2({
 		ajax: {
 			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
