@@ -126,6 +126,7 @@
 	<msg eng="Bad">Registro no encontrado</msg>
 	<msg eng="Sources">Fuentes</msg>
 	<msg eng="List">Lista</msg>
+    <msg eng="ShowAll">Mostrar todos los registros</msg>
 
 	<msg eng="edit">Editar</msg>
 	<msg eng="validate">Validar</msg>

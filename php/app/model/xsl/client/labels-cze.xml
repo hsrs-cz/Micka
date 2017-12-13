@@ -125,7 +125,8 @@
 	<msg eng="Bad">Záznam nenalezen</msg>
 	<msg eng="Sources">Zdroje</msg>
 	<msg eng="List">Seznam</msg>
-										
+    <msg eng="ShowAll">Zobrazit všechny záznamy</msg>
+
 	<msg eng="edit">Editovat</msg>
 	<msg eng="validate">Validace</msg>
 	<msg eng="clone">Zkopírovat</msg>

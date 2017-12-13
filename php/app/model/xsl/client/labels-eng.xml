@@ -125,6 +125,7 @@
 	<msg eng="Bad">Record not found</msg>
 	<msg eng="Sources">Sources</msg>
 	<msg eng="List">List</msg>
+    <msg eng="ShowAll">Show all records</msg>
     
 	<msg eng="edit">Edit</msg>
 	<msg eng="validate">Validate</msg>

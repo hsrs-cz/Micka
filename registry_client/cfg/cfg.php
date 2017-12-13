@@ -9,7 +9,7 @@ $config=array(
             "https://inspire.ec.europa.eu/codelist/EndusePotentialValue/abrasiveMinerals"
         )
     ),
-    // --- Enduse potential INSPIRE
+    // --- INSPIRE themes
     "https://inspire.ec.europa.eu/theme"=>array(
         "adapter"=> "inspireThemes"
     ),
