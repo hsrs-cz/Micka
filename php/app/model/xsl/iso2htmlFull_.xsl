@@ -583,8 +583,7 @@
 					<div class="c">
 						<xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:source">
 							<xsl:variable name="md" select="php:function('getData', string(*/gmd:sourceCitation/@xlink:href))"/>
-	  						<xsl:variable name="url"><xsl:value-of select="concat('record/',$md//gmd:fileIdentifier)"/></xsl:variable>
-							
+	  						<xsl:variable name="url"><xsl:value-of select="concat($MICKA_URL,'/record/basic/',$md//gmd:fileIdentifier)"/></xsl:variable>
 							<div>
 								<a href="{$url}">				
 									<xsl:call-template name="multi">
