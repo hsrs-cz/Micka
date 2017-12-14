@@ -25,7 +25,7 @@ class SignPresenter extends \BasePresenter
     public function actionIn()
     {
         if ($this->user->isLoggedIn()) {
-            $this->redirect(':Catalog:Search:default');
+            $this->redirect(':Catalog:Default:default');
         }
     }
 
@@ -34,7 +34,7 @@ class SignPresenter extends \BasePresenter
     {
         $this->user->logout(TRUE);
         $this->flashMessage($this->translator->translate('messages.frontend.logout'));
-        $this->redirect(':Catalog:Search:default');
+        $this->redirect(':Catalog:Default:default');
     }
 
     /** @resource Catalog:Guest */
@@ -66,7 +66,7 @@ class SignPresenter extends \BasePresenter
             $data['groups'] = $userGroups;
             $identity = new Nette\Security\Identity($user->id, $role, $data);
             $this->user->login($identity);
-            $this->redirect(':Catalog:Search:default');
+            $this->redirect(':Catalog:Default:default');
         }
     }
 }

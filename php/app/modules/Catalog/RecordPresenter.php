@@ -109,7 +109,7 @@ class RecordPresenter extends \BasePresenter
     public function actionCancelEdit() 
     {
         $this->recordModel->deleteEditRecords();
-        $this->redirect(':Catalog:Search:default');
+        $this->redirect(':Catalog:Default:default');
     }
     
     /** @resource Catalog:Editor */
@@ -128,7 +128,7 @@ class RecordPresenter extends \BasePresenter
         switch ($post['afterpost']) {
             case 'end':
                 $this->recordModel->setEditRecord2Md();
-                $this->redirect(':Catalog:Search:default');
+                $this->redirect(':Catalog:Default:default');
                 break;
             case 'save':
                 $this->recordModel->setEditRecord2Md();
@@ -266,7 +266,7 @@ class RecordPresenter extends \BasePresenter
     public function renderDelete($id)
     {
         $this->recordModel->deleteMdById($id);
-        $this->redirect(':Catalog:Search:default');
+        $this->redirect(':Catalog:Default:default');
     }
     
 }

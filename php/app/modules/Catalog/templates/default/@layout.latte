@@ -32,7 +32,7 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                    </button>
-                    <a class="navbar-brand" n:href=":Catalog:Search:default" data-tooltip="tooltip" data-container="body" data-placement="bottom" title="Micka">Micka</a>
+                    <a class="navbar-brand" n:href=":Catalog:Default:default" data-tooltip="tooltip" data-container="body" data-placement="bottom" title="Micka">Micka</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="micka-navbar">
@@ -45,7 +45,7 @@
 						{/if}
 						{if $user->isInRole('admin')}
 							<li>
-								<a n:href=":Admin:Homepage:default" data-tooltip="tooltip" title="{_messages.frontend.admin}" data-container="body" data-placement="bottom">
+								<a n:href=":Admin:Default:default" data-tooltip="tooltip" title="{_messages.frontend.admin}" data-container="body" data-placement="bottom">
 									<i class="fa fa-cog fa-lg"></i> {_messages.frontend.admin}</a>
 							</li>
 						{/if}
