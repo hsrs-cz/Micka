@@ -1,0 +1,62 @@
+{block content}
+<style>
+.contacts label { width: 30%; }
+.contacts input { display:inline-block !important; width:70%;}
+.contacts select { display:inline-block !important; width:150px;}
+</style>
+
+<div class="container panel panel-default">
+
+<script src="{$basePath}/scripts/edit.js"></script>
+<script type="text/javascript">
+    function md_delkont(id) {
+        if(confirm({_messages.frontend.delete_record}+'?')) this.location=("{$basePath|noescape}/admin/contacts/delete?id="+id);
+    }
+</script>
+
+<h1>{_messages.frontend.contacts} - {_messages.frontend.new_record2}</h1>
+<br>
+<form action="{link :Admin:Contacts:save $id}" METHOD=POST>
+	<fieldset class="contacts">
+		<div class="form-group"><label><font color="green">{_messages.frontend.person}</font></label><input  class="form-control" type=text name="person" value="{ifset $contact->id}{$contact->person|trim}{/ifset}" size="40" maxlength="60"></div>
+		<div class="form-group"><label><font color="green">{_messages.frontend.organisation}</font></label><input  class="form-control" type=text name="organisation" value="{ifset $contact->id}{$contact->organisation|trim}{/ifset}" size="60" maxlength="120"></div>
+		<div class="form-group"><label><font color="green">{_messages.frontend.organisation} EN</font></label><input  class="form-control" type=text name="organisation_en" value="{ifset $contact->id}{$contact->organisation_en|trim}{/ifset}" size="60" maxlength="120"></div>
+		<div class="form-group"><label><font color="red">{_messages.frontend.label}</font></label><input  class="form-control" type=text name="tag" value="{ifset $contact->id}{$contact->tag|trim}{/ifset}" size="60" maxlength="120" onFocus="fillLabel(this);"></div>
+		<div class="form-group"><label>{_messages.frontend.function}</label><input  class="form-control" type=text name="org_function" value="{ifset $contact->id}{$contact->org_function|trim}{/ifset}" size="40" maxlength="70"></div>
+		<div class="form-group"><label>{_messages.frontend.function} EN</label><input  class="form-control" type=text name="org_function_en" value="{ifset $contact->id}{$contact->org_function_en|trim}{/ifset}" size="40" maxlength="70"></div>
+		<div class="form-group"><label>{_messages.frontend.phone}</label><input  class="form-control" type=text name="phone" value="{ifset $contact->id}{$contact->phone|trim}{/ifset}" size="40" maxlength="20"></div>
+		<div class="form-group"><label>{_messages.frontend.fax}</label><input  class="form-control" type=text name="fax" value="{ifset $contact->id}{$contact->fax|trim}{/ifset}" size="40" maxlength="20"></div>
+		<div class="form-group"><label>{_messages.frontend.point}</label><input  class="form-control" type=text name="point" value="{ifset $contact->id}{$contact->point|trim}{/ifset}" size="40"></div>
+		<div class="form-group"><label>{_messages.frontend.city}</label><input  class="form-control" type=text name="city" value="{ifset $contact->id}{$contact->city|trim}{/ifset}" size="40"></div>
+		<div class="form-group"><label>{_messages.frontend.admin_area}</label><input  class="form-control" type=text name="adminarea" value="{ifset $contact->id}{$contact->adminarea|trim}{/ifset}" size="40"></div>
+		<div class="form-group"><label>{_messages.frontend.postcode}</label><input  class="form-control" type=text name="postcode" value="{ifset $contact->id}{$contact->postcode|trim}{/ifset}" size="40" maxlength="10"></div>
+		<div class="form-group"><label>{_messages.frontend.country}</label><input  class="form-control" type=text name="country" value="{ifset $contact->id}{$contact->country|trim}{/ifset}" size="40" maxlength="25"></div>
+		<div class="form-group"><label>{_messages.frontend.email}</label><input  class="form-control" type=text name="email" value="{ifset $contact->id}{$contact->email|trim}{/ifset}" size="40" maxlength="50"></div>
+		<div class="form-group"><label>{_messages.frontend.url}</label><input  class="form-control" type=text name="url" value="{ifset $contact->id}{$contact->url|trim}{/ifset}" size="40"></div>
+		<div class="form-group"><label>{_messages.frontend.edit_group}</label>
+			<select name="edit_group"  class="form-control" class="find">
+				{foreach $groups as $key => $value}
+                    <option label="{$value}" value="{$key}" {ifset $contact->id}{if $key == $contact->edit_group}selected="selected"{/if}{/ifset}>{$value}</option>
+				{/foreach}
+			</select></div>
+			
+		<div><label>{_messages.frontend.view_group}</label>
+			<select name="view_group" class="form-control" class="find">
+				{foreach $groups as $key => $value}
+					<option label="{$value}" value="{$key}" {ifset $contact->id}{if $key == $contact->view_group}selected="selected"{/if}{/ifset}>{$value}</option>
+				{/foreach}
+			</select></div>
+			
+	</fieldset>
+    <br/><br/>
+	<p align="center">
+		<input type=submit class="btn btn-success" value="{_messages.frontend.save}">
+		<input type=reset class="btn btn-default" value="{_messages.frontend.reset}">
+		<input type=button class="btn btn-default" onClick="window.location.href='{$basePath|noescape}/admin/contacts/default'" value="{_messages.frontend.back}">
+		{if $id > 0}
+			<input type=button class="btn btn-danger" onClick="javascript:md_delkont({$contact->id})" value="{_messages.frontend.delete}">
+		{/if}
+	</p>
+</form>
+
+</div>
