@@ -465,7 +465,9 @@ class Csw{
     $this->params['thisPath'] = dirname($this->params['thisURL']);
     $this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ?
         $this->appParameters['appLocale'].'/' : '';
-    $this->params['viewerURL'] = $this->appParameters['map']['viewerURL'];
+    $this->params['viewerURL'] = isset($this->appParameters['map']['viewerURL'])
+        ? $this->appParameters['map']['viewerURL']
+        : '';
     if(!isset($this->params['CB'])) {
         $this->params['CB'] = "";
         if(isset($_SESSION["micka"]["cb"])) $this->params['CB'] .= $_SESSION["micka"]["cb"];
