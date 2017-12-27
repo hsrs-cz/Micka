@@ -495,101 +495,13 @@ function thes(obj){
     thesActivated = true;
     var theAjax = null;
     var thes = {};
-    /*var template = function(d){
-        var $n = $('<i class=\'narrower\'>&lt;</i>');
-        $n.on('mouseup', d, onGemetClick);
-        var $w = $('<i class=\'broader\'>&gt;</i>');
-        $w.on('mouseup', d, onGemetClick);
-        return $('<span>' + d.text + '</span> ').append($n).append($w);
-    };*/
-
-    var initGemet = function(){
-        theAjax = {
-            url: baseUrl +'/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConceptsMatchingRegexByThesaurus?',
-            dataType: 'json',
-            data: function (params) {
-                var query = {
-                    thesaurus_uri: 'http://www.eionet.europa.eu/gemet/concept/',
-                    regex: encodeURI(params.term),
-                    language: HS.getLang(2),
-                    page: params.page
-                 }
-                return query;
-            },
-            processResults: function(data, page){
-                return {
-                    results: $.map(data, function(rec) {
-                        return { text: rec.preferredLabel.string, id: rec.uri };
-                    })  
-                }    
-            },
-            delay: 200,  
-            cache: false
-        };
-        thes['gemet'] = $('#gemet').select2({
-            ajax: theAjax,
-            //templateResult: template,
-            escapeMarkup: function(m) { return m; },
-            minimumInputLength: 3,
-            language: HS.getLang(2),
-            theme: 'bootstrap',
-            allowClear: true
-        });
-        //$('#gemet').on('change', onGemetClick);
-        /*$('#gemet').on('select2:close', function(e){
-            console.log('close', e);
-            //initGemet();
-        });*/
-   };
     
-    var onGemetClick = function (e) {
-        e.stopPropagation();
-        //console.log('gemteclick', e);
-        if(!e.target.value) {
-            initGemet();
-            return;
-        }
-        //var data = e.params.data;
-        //var wn = $(this).hasClass('narrower') ? 'narrower' : 'broader';
-        $.ajax({
-            url: baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getRelatedConcepts?',
-            data: {
-                concept_uri: e.target.value,
-                relation_uri: 'http://www.w3.org/2004/02/skos/core%23narrower',
-                language: HS.getLang(2)
-            }
-        })
-        .done(function(data){
-        /*theAjax.url = baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getRelatedConcepts?';
-        theAjax.data = function(params){
-            return {
-                concept_uri: e.target.value,
-                relation_uri: 'http://www.w3.org/2004/02/skos/core%23' + 'narrower',
-                theme: 'bootstrap',
-                allowClear: true,
-                language: HS.getLang(2)
-            }
-        }  */
-            //console.log(data);
-            var d = [{id: e.target.value, text: e.target.innerText}];
-            //$('#gemet').select2().empty();
-            for(var i=0;i<data.length; i++){
-                d.push({id: data[i].uri, text: data[i].preferredLabel.string});
-            }
-            $('#gemet').select2({
-                data: d,
-                //ajax: theAjax,
-                //templateResult: template,
-                allowClear: true,
-                theme: 'bootstrap',
-                minimumResultsForSearch: Infinity
-            });
-            $('#gemet').on('change', onGemetClick);
-            $('#gemet').select2('open');
-        });
-    }
-
-    initGemet();
+    var gemet = new GemetClient({
+        url: baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/',
+        lang: HS.getLang(2),
+        el: '#gemet',
+        showTree: true
+    });
    
     thes['inspire'] = $("#inspire").select2({
 		ajax: {
@@ -620,10 +532,8 @@ function thes(obj){
             l2 = HS.getCodeFromLanguage(ll[i],2);
             if(l2.length==2){
                 var url = baseUrl  + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
-                //console.log(url);
                 $.ajax({url: url, context: {lang: ll[i]}})
                 .done(function(data){
-                    //console.log(data);
                     if(data.results)  terms[this.lang] = data.results[0].name;
                     else terms[this.lang] = "";
                     if(ll.length <= Object.keys(terms).length){
@@ -641,38 +551,17 @@ function thes(obj){
         }
     });
     
-   $('#thes-gemet-ok').on('click', function(){
-        var uri = $("#gemet").val();
-        var terms = {};
-        var ll = langs.split('|');
-        var l2 = null;
-        
-        //terms[HS.getLang(3)] = $("#inspire").text();
-        
-        for(i in ll){
-            l2 = HS.getCodeFromLanguage(ll[i],2);
-            if(l2.length==2){
-                var url = baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConcept?concept_uri='+uri+'&language='+l2;
-                $.ajax({
-                    url: url, 
-                    context: {lang: ll[i]}
-                })
-                .done(function(data){
-                    if(data.preferredLabel)  terms[this.lang] = data.preferredLabel.string;
-                    else terms[this.lang] = "";
-                    if(ll.length <= Object.keys(terms).length){
-                        fromThesaurus({ //TODO take from thesaurus
-                            thesName: 'GEMET - Concepts, version 3.1',
-                            thesDate: (ll[0]=='cze') ? '20.07.2012' : '2012-07-20',
-                            uri: uri,
-                            terms: terms
-                        });
-                        $("#md-keywords").modal('hide');
-                        return;
-                    }
-                })
-            }
-        }
+    $('#thes-gemet-ok').on('click', function(){
+        gemet.process(['cze','eng'], function(data){
+            fromThesaurus({ //TODO take from thesaurus client
+                thesName: 'GEMET - Concepts, version 3.1',
+                thesDate: (HS.getLang(3)=='cze') ? '20.07.2012' : '2012-07-20',
+                uri: data.uri,
+                terms: data.labels
+            });
+            $("#md-keywords").modal('hide');
+            return;
+        });
     });
     
 }

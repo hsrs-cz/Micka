@@ -166,3 +166,10 @@ label.mand {
 label.cond {
     color: #060;
 }
+
+.select2-results__group {
+    color: red !important;
+    border: solid #EEE;
+    border-width: 1px 0 1px 0;
+    background: #FFE;
+}
