@@ -552,7 +552,7 @@ function thes(obj){
     });
     
     $('#thes-gemet-ok').on('click', function(){
-        gemet.process(['cze','eng'], function(data){
+        gemet.process(langs.split('|'), function(data){
             fromThesaurus({ //TODO take from thesaurus client
                 thesName: 'GEMET - Concepts, version 3.1',
                 thesDate: (HS.getLang(3)=='cze') ? '20.07.2012' : '2012-07-20',
