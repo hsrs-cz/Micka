@@ -438,7 +438,7 @@
 			<label><xsl:value-of select="$msg[@eng='Bounding box']"/></label>
 			<div class="c" rel="http://purl.org/dc/terms/spatial" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
 
-				<xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+				<xsl:for-each select="gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 				    <xsl:variable name="x1" select="gmd:westBoundLongitude/*"/>
 					<xsl:variable name="y1" select="gmd:southBoundLatitude/*"/>
 					<xsl:variable name="x2" select="gmd:eastBoundLongitude/*"/>
@@ -459,7 +459,7 @@
        		</div>
         </div>
 
-        <xsl:if test="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicDescription">
+        <xsl:if test="gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription">
 			<div class="micka-row">
                 <label><xsl:value-of select="$msg[@eng='Region']"/></label>
                 <div class="c" rel="http://purl.org/dc/terms/spatial" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
