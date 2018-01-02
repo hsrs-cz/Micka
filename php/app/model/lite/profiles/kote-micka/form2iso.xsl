@@ -13,8 +13,7 @@ xmlns:xs="http://www.w3.org/2001/XMLSchema"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:gmx="http://www.isotc211.org/2005/gmx"
 xmlns:php="http://php.net/xsl"
-xsi:schemaLocation="http://www.isotc211.org/2005/gmd
-http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
+xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
 	<xsl:output method="xml" encoding="UTF-8"/>
     <xsl:include href="../../resources/lite-common.xsl" />
 
@@ -35,7 +34,7 @@ http://www.bnhelp.cz/metadata/schemas/gmd/metadataEntity.xsd">
     </xsl:variable>	
 	
 	<xsl:variable name="mdlang" select="mdlang"/>
-	<xsl:variable name="codes" select="document('../../xsl/codelists.xml')/map" />
+	<xsl:variable name="codes" select="document('../../../xsl/codelists.xml')/map" />
 	
 <gmd:MD_Metadata>
 	<gmd:fileIdentifier>
