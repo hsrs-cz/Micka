@@ -193,6 +193,7 @@
 	<xsl:param name="tags" select="0"/>
     <xsl:param name="placeholder" select="''"/>
     <xsl:param name="attr" select="'uri'"/>
+    <xsl:param name="maxlength" select="''"/>
 	
 	<!-- class pro label -->
 	<xsl:variable name="lclassI">
@@ -260,7 +261,10 @@
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
-				</input>			
+					<xsl:if test="$maxlength">
+						<xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
+					</xsl:if>
+				</input>
 			</xsl:when>
 
 			<!-- INPUT - email -->
@@ -352,6 +356,9 @@
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
+					<xsl:if test="$maxlength">
+						<xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
+					</xsl:if>
                 </input>
 			</xsl:otherwise>
 				
@@ -380,10 +387,18 @@
 					<xsl:variable name="pos" select="position()"/>
                     <xsl:choose>
                         <xsl:when test="$value">
-                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}"/>
+                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}">
+                                <xsl:if test="$maxlength">
+                                    <xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
+                                </xsl:if>
+                            </input>
                         </xsl:when>
                         <xsl:otherwise>
-                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value=""/>
+                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="">
+                                <xsl:if test="$maxlength">
+                                    <xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
+                                </xsl:if>
+                            </input>
                         </xsl:otherwise>
                     </xsl:choose>	
 				</xsl:for-each>

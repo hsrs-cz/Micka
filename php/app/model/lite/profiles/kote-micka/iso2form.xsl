@@ -48,6 +48,7 @@
 		<xsl:with-param name="valid" select="'1.1'"/>
 		<xsl:with-param name="langs" select="$langs"/>
 		<xsl:with-param name="req" select="1"/>
+        <xsl:with-param name="maxlength" select="250"/>
 	</xsl:call-template>
 
     <!-- 1.2 Abstract -->
@@ -184,7 +185,33 @@
 
     <!-- 1.6 operatesOn -->
     <xsl:if test="$serv">
-        <xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn|/.">
+        <div class="row">
+            <xsl:call-template name="drawLabel">
+                <xsl:with-param name="name" select="'operatesOn'"/>
+                <xsl:with-param name="class" select="'cond'"/>
+                <xsl:with-param name="valid" select="'1.6'"/>
+                <xsl:with-param name="dupl" select="1"/>
+            </xsl:call-template>
+            <div class="col-xs-12 col-md-8">
+                <select name="operateson[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true" data-ajax--url="../../suggest/metadata?lang={$mlang}&amp;type=query&amp;f=1">
+                    <xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn">
+                        <xsl:variable name="ootitle">
+                            <xsl:choose>
+                                <xsl:when test="@xlink:title!=''">
+                                    <xsl:value-of select="@xlink:title"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="*/gmd:citation/*/gmd:title"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <option value="{@xlink:href}|{$ootitle}" selected="selected"><xsl:value-of select="$ootitle"/></option>
+                    </xsl:for-each>
+                </select>
+            </div>
+        </div>
+
+        <!--xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn|/.">
             <xsl:if test="string-length(@xlink:href)>0 or (string-length(@xlink:href)=0 and position()=last())">
      
                 <xsl:variable name="url">
@@ -208,11 +235,11 @@
                         </xsl:call-template>
                     </div>    
                     <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'operatesOn-href'"/>
+                        <xsl:with-param name="name" select="'operatesOn-href[]'"/>
                         <xsl:with-param name="value" select="$url"/> 
                         <xsl:with-param name="class" select="'inp2'"/> 
                         <xsl:with-param name="type" select="'plain'"/>  
-                    </xsl:call-template>
+                    </xsl:call-template-->
                     
                     <!--xsl:call-template name="drawInput">
                         <xsl:with-param name="name" select="'operatesOn-uuid'"/>
@@ -221,7 +248,7 @@
                         <xsl:with-param name="type" select="'plain'"/>   
                     </xsl:call-template-->
                     
-                    <xsl:variable name="ootitle">
+                    <!--xsl:variable name="ootitle">
                         <xsl:choose>
                             <xsl:when test="@xlink:title!=''">
                                 <xsl:value-of select="@xlink:title"/>
@@ -233,7 +260,7 @@
                     </xsl:variable>
 
                     <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'operatesOn-title'"/>
+                        <xsl:with-param name="name" select="'operatesOn-title[]'"/>
                         <xsl:with-param name="value" select="$ootitle"/>
                         <xsl:with-param name="class" select="'inp2'"/> 
                         <xsl:with-param name="type" select="'plain'"/>   
@@ -241,7 +268,7 @@
                 
                 </fieldset>
             </xsl:if>
-        </xsl:for-each>
+        </xsl:for-each-->
     </xsl:if> 
     
     <xsl:if test="not($serv)">

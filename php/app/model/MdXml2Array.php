@@ -293,7 +293,7 @@ class MdXml2Array
       	$data
     );
     
-    //if($this->debug)  echo "<pre>". $data . "</pre>"; 
+    if($this->debug)  echo "<pre>". $data . "</pre>"; 
     
     //---------------------------------------
   	/*
@@ -301,7 +301,7 @@ class MdXml2Array
   	  $data = iconv('UTF-8', MICKA_CHARSET . '//TRANSLIT', $data);
   	}
     */
-  	//echo "<pre>".$data; exit;
+  	//echo "<pre>".$data; //exit;
     eval($data);
     // odstraneni Locale a dateTime
     for($i=0; $i<count($md['MD_Metadata']); $i++){
@@ -337,7 +337,7 @@ class MdXml2Array
         }*/
                 
     }
-    //var_dump($md); exit;
+    //echo "<pre>"; var_dump($md); exit;
     return $md;
   }
 

@@ -186,7 +186,7 @@ class SuggestModel
                     FROM md 
                     JOIN md_values ON (md.recno=md_values.recno $l) 
                     LEFT JOIN md_values as abstr ON (md.recno=abstr.recno AND abstr.md_id IN (4,5061) AND md_standard != 2 $l1)
-                    WHERE md_values.md_id IN (11,5063) AND $right                    
+                    WHERE md_values.md_id IN (11,5063) AND $right
                 ";
                 if($creator != '') {
                     $sql .= " AND md.create_user='$creator'";
@@ -201,14 +201,23 @@ class SuggestModel
                     $sql .= " AND md_values.md_value ILIKE '". $query . "%'";
                 }
                 $sql .= "
-                ORDER BY md_value";
+                ORDER BY md_value
+                LIMIT 25";
                 $result = $this->db->query($sql)->fetchAll();
-                foreach($result as $row) {
-                    $rs[] = array('id'=>$row->id,"title"=>$row->md_value,"abstract"=>$row->abstract);
+                if($params['f']==1){
+                    foreach($result as $row) {
+                        $rs[] = array('id'=>$row->id,"text"=>$row->md_value,"title"=>$row->abstract);
+                    }
+                    $rs = array('numresults'=>count($rs),'results'=>$rs);
+                    return $rs;
                 }
-                $rs = array('numresults'=>count($rs),'records'=>$rs);
-                return $rs;
-                 
+                else {
+                    foreach($result as $row) {
+                        $rs[] = array('id'=>$row->id,"title"=>$row->md_value,"abstract"=>$row->abstract);
+                    }
+                    $rs = array('numresults'=>count($rs),'records'=>$rs);
+                    return $rs;
+                }
                 break;
             case 'featureType':
                 $result = $this->db->query("SELECT md_value FROM md_values LEFT JOIN md USING (recno) 

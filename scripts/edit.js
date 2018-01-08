@@ -1656,7 +1656,8 @@ micka.initMap=function(config){
         	projection: 'EPSG:3857',
             center: [0,0], 
             zoom: 0
-        })
+        }),
+        interactions: ol.interaction.defaults({mouseWheelZoom:false})
     });
 	
 	// prochazi elementy

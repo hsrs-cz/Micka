@@ -438,7 +438,7 @@
             				<gmd:MD_ClassificationCode codeListValue="{MD_ClassificationCode}" codeList="{$clx}#MD_ClassificationCode"></gmd:MD_ClassificationCode>	
     	      			</gmd:classification>
     	    		</xsl:for-each>
-		  			<xsl:for-each select="*/accessConstraints">	
+		  			<xsl:for-each select="*/accessConstraints">
 		            	<gmd:accessConstraints><gmd:MD_RestrictionCode codeListValue="{MD_RestrictionCode}" codeList="{$clx}#MD_RestrictionCode"><xsl:value-of select="MD_RestrictionCode"/></gmd:MD_RestrictionCode></gmd:accessConstraints>	
 		            </xsl:for-each>
 		            <xsl:for-each select="*/useConstraints">

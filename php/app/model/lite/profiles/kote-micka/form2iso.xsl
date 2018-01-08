@@ -34,7 +34,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
     </xsl:variable>	
 	
 	<xsl:variable name="mdlang" select="mdlang"/>
-	<xsl:variable name="codes" select="document('../../../xsl/codelists.xml')/map" />
+	<!--xsl:variable name="codes" select="document('../../../xsl/codelists.xml')/map" /-->
 	
 <gmd:MD_Metadata>
 	<gmd:fileIdentifier>
@@ -145,7 +145,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 					<gmd:RS_Identifier>
                         <xsl:call-template name="uriOut">
                             <xsl:with-param name="name" select="'code'"/>
-                            <xsl:with-param name="codes" select="$codes/coordSys"/>
+                            <xsl:with-param name="codes" select="$codeLists/coordSys"/>
                             <xsl:with-param name="t" select="."/>
                         </xsl:call-template>
 					</gmd:RS_Identifier>
@@ -277,7 +277,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     <xsl:for-each select="inspireTheme/item">
                                         <xsl:call-template name="uriOut">
                                             <xsl:with-param name="name" select="'keyword'"/>
-                                            <xsl:with-param name="codes" select="$codes/inspireKeywords"/>
+                                            <xsl:with-param name="codes" select="$codeLists/inspireKeywords"/>
                                             <xsl:with-param name="t" select="."/>
                                             <xsl:with-param name="attrib" select="'name'"/>
                                         </xsl:call-template>
@@ -321,7 +321,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	              				<xsl:for-each select="inspireService">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'keyword'"/>
-                                        <xsl:with-param name="codes" select="$codes/serviceKeyword"/>
+                                        <xsl:with-param name="codes" select="$codeLists/serviceKeyword"/>
                                         <xsl:with-param name="t" select="."/>
                                         <xsl:with-param name="attrib" select="'name'"/>
                                     </xsl:call-template>
@@ -407,11 +407,11 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             <gmd:MD_LegalConstraints>
                                 <gmd:useConstraints>
                                     <gmd:MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
-                                </gmd:useConstraints>	
+                                </gmd:useConstraints>
                                 <xsl:for-each select="accessCond/item">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'otherConstraints'"/>
-                                        <xsl:with-param name="codes" select="$codes/accessCond"/>
+                                        <xsl:with-param name="codes" select="$codeLists/accessCond"/>
                                         <xsl:with-param name="t" select="."/>
                                     </xsl:call-template>
                                 </xsl:for-each>
@@ -429,13 +429,22 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                 <xsl:for-each select="limitationsAccess/item">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'otherConstraints'"/>
-                                        <xsl:with-param name="codes" select="$codes/limitationsAccess"/>
+                                        <xsl:with-param name="codes" select="$codeLists/limitationsAccess"/>
                                         <xsl:with-param name="t" select="."/>
                                     </xsl:call-template>
                                 </xsl:for-each>
                             </gmd:MD_LegalConstraints>
                         </gmd:resourceConstraints>
 					</xsl:if>
+                    
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:useConstraints>
+                                <gmd:MD_RestrictionCode codeListValue=""/>
+                            </gmd:useConstraints>
+                            <gmd:otherConstraints></gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
                     
                     <xsl:if test="$serv='gmd'">
                         <gmd:spatialRepresentationType>
@@ -527,7 +536,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             <xsl:choose>
                                 <xsl:when test="normalize-space(extentId)!=''">
                                     <xsl:variable name="code" select="extentId"/>
-                                    <xsl:variable name="row" select="$codes/extents/value[@uri=$code]"/>
+                                    <xsl:variable name="row" select="$codeLists/extents/value[@uri=$code]"/>
                                     <gmd:geographicElement>
                                         <gmd:EX_GeographicDescription>
                                             <gmd:geographicIdentifier>
@@ -648,7 +657,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                             </gmd:linkage>
                                             <xsl:call-template name="uriOut">
                                                 <xsl:with-param name="name" select="'protocol'"/>
-                                                <xsl:with-param name="codes" select="$codes/protocol"/>
+                                                <xsl:with-param name="codes" select="$codeLists/protocol"/>
                                                 <xsl:with-param name="t" select="protocol"/>
                                             </xsl:call-template>
                                         </gmd:CI_OnlineResource>
@@ -656,9 +665,9 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                 </srv:SV_OperationMetadata>
                             </srv:containsOperations>
                         </xsl:for-each>                        
-						<xsl:for-each select="operatesOn/item">
-							<srv:operatesOn xlink:title="{title}" uuidref="{uuid}" xlink:href="{href}#_{uuid}"/>
-						</xsl:for-each>
+						<!--xsl:for-each select="operateson/item">
+							<srv:operatesOn xlink:title="{title}" uuidref="{.}" xlink:href="{href}#_{uuid}"/>
+						</xsl:for-each-->
 					</xsl:if>
 				</xsl:element>
 			</gmd:identificationInfo>
@@ -734,7 +743,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 							<gmd:MD_Format>
                                 <xsl:call-template name="uriOut">
                                     <xsl:with-param name="name" select="'name'"/>
-                                    <xsl:with-param name="codes" select="$codes/format"/>
+                                    <xsl:with-param name="codes" select="$codeLists/format"/>
                                     <xsl:with-param name="t" select="name"/>
                                 </xsl:call-template>
 								<gmd:version>
@@ -744,7 +753,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 								</gmd:version>
 								<gmd:specification>
                                     <xsl:variable name="u" select="specification"/>
-                                    <xsl:variable name="sp" select="$codes/inspireKeywords/value[@spec=$u]"/>
+                                    <xsl:variable name="sp" select="$codeLists/inspireKeywords/value[@spec=$u]"/>
                                     <xsl:choose>
                                         <xsl:when test="$sp">
                                             <gmx:Anchor xlink:href="{specification}">INSPIRE Data Specification on <xsl:value-of select="$sp/eng"/> - Guidelines</gmx:Anchor>
@@ -787,7 +796,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
   									</gmd:linkage>
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'protocol'"/>
-                                        <xsl:with-param name="codes" select="$codes/protocol"/>
+                                        <xsl:with-param name="codes" select="$codeLists/protocol"/>
                                         <xsl:with-param name="t" select="protocol"/>
                                     </xsl:call-template>
                                     <xsl:call-template name="txtOut">
@@ -869,14 +878,14 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	  										<gmd:CI_Citation>
                                                 <xsl:call-template name="uriOut">
                                                     <xsl:with-param name="name" select="'title'"/>
-                                                    <xsl:with-param name="codes" select="$codes/specifications"/>
+                                                    <xsl:with-param name="codes" select="$codeLists/specifications"/>
                                                     <xsl:with-param name="t" select="uri"/>
                                                     <xsl:with-param name="lattrib" select="'name'"/>
                                                 </xsl:call-template>
 	  											<gmd:date>
 	  												<gmd:CI_Date>
                        							        <gmd:date>
-                                                            <gco:Date><xsl:value-of select="$codes/specifications/value[@uri=$spec/uri]/@publication"/></gco:Date>
+                                                            <gco:Date><xsl:value-of select="$codeLists/specifications/value[@uri=$spec/uri]/@publication"/></gco:Date>
                                                         </gmd:date>
                                                         <gmd:dateType>
 	  														<gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
@@ -927,13 +936,13 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	  										<gmd:CI_Citation>
                                                 <xsl:call-template name="uriOut">
                                                     <xsl:with-param name="name" select="'title'"/>
-                                                    <xsl:with-param name="codes" select="$codes/sds"/>
+                                                    <xsl:with-param name="codes" select="$codeLists/sds"/>
                                                     <xsl:with-param name="t" select="."/>
                                                 </xsl:call-template>
 	  											<gmd:date>
 	  												<gmd:CI_Date>
                        							        <gmd:date>
-                                                            <gco:Date><xsl:value-of select="$codes/sds/value[@uri=.]/@publication"/></gco:Date>
+                                                            <gco:Date><xsl:value-of select="$codeLists/sds/value[@uri=.]/@publication"/></gco:Date>
                                                         </gmd:date>
                                                         <gmd:dateType>
 	  														<gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
@@ -1004,14 +1013,14 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     </gmd:measureIdentification>
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'measureDescription'"/>
-                                        <xsl:with-param name="codes" select="$codes/extents"/>
+                                        <xsl:with-param name="codes" select="$codeLists/extents"/>
                                         <xsl:with-param name="t" select="extentId"/>
                                     </xsl:call-template>
                                     <!--  <gmd:dateTime>
                                         <gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
                                     </gmd:dateTime>-->
                                     <xsl:variable name="c" select="normalize-space(extentId)"/>
-                                    <xsl:variable name="area" select="$codes/extents/value[@uri=$c]/@area"/>
+                                    <xsl:variable name="area" select="$codeLists/extents/value[@uri=$c]/@area"/>
                                     <gmd:result>
                                         <gmd:DQ_QuantitativeResult>
                                             <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/>
@@ -1136,10 +1145,10 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                         <gmd:report>
                             <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
                                 <gmd:nameOfMeasure>
-                                    <gmx:Anchor xlink:href="{$codes/serviceQuality/value[1]/@uri}"><xsl:value-of select="$codes/serviceQuality/value[1]/*[name()=$lang]"/></gmx:Anchor>
+                                    <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[1]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[1]/*[name()=$lang]"/></gmx:Anchor>
                                 </gmd:nameOfMeasure>
                                 <gmd:measureDescription>
-                                    <gco:CharacterString><xsl:value-of select="$codes/serviceQuality/value[1]/*[name()=$lang]/@qtip"/></gco:CharacterString>
+                                    <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[1]/*[name()=$lang]/@qtip"/></gco:CharacterString>
                                 </gmd:measureDescription>
                                 <gmd:result>
                                     <gmd:DQ_QuantitativeResult>
@@ -1159,10 +1168,10 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                         <gmd:report>
                             <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
                                 <gmd:nameOfMeasure>
-                                    <gmx:Anchor xlink:href="{$codes/serviceQuality/value[2]/@uri}"><xsl:value-of select="$codes/serviceQuality/value[2]/*[name()=$lang]"/></gmx:Anchor>
+                                    <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[2]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[2]/*[name()=$lang]"/></gmx:Anchor>
                                 </gmd:nameOfMeasure>
                                 <gmd:measureDescription>
-                                    <gco:CharacterString><xsl:value-of select="$codes/serviceQuality/value[2]/*[name()=$lang]/@qtip"/></gco:CharacterString>
+                                    <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[2]/*[name()=$lang]/@qtip"/></gco:CharacterString>
                                 </gmd:measureDescription>
                                 <gmd:result>
                                     <gmd:DQ_QuantitativeResult>
@@ -1182,10 +1191,10 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                         <gmd:report>
                             <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
                                 <gmd:nameOfMeasure>
-                                    <gmx:Anchor xlink:href="{$codes/serviceQuality/value[3]/@uri}"><xsl:value-of select="$codes/serviceQuality/value[3]/*[name()=$lang]"/></gmx:Anchor>
+                                    <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[3]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[3]/*[name()=$lang]"/></gmx:Anchor>
                                 </gmd:nameOfMeasure>
                                 <gmd:measureDescription>
-                                    <gco:CharacterString><xsl:value-of select="$codes/serviceQuality/value[3]/*[name()=$lang]/@qtip"/></gco:CharacterString>
+                                    <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[3]/*[name()=$lang]/@qtip"/></gco:CharacterString>
                                 </gmd:measureDescription>
                                 <gmd:result>
                                     <gmd:DQ_QuantitativeResult>

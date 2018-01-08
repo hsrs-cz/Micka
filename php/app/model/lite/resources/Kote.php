@@ -106,7 +106,10 @@ class Kote{
                     else $out[$k[0]][$i][$k[1]] = trim(htmlspecialchars(str_replace('\\', '\\\\', $val[$i])));
                 }
             } 
-            else $out[$key]=$val;
+            else {
+                if(gettype($val)=='string') $val = trim(htmlspecialchars(str_replace('\\', '\\\\', $val)));
+                $out[$key]=$val;
+            }
 		}
         
         //echo "<pre>"; var_dump($out); die();

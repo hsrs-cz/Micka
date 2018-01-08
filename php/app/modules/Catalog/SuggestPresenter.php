@@ -74,6 +74,7 @@ class SuggestPresenter extends \BasePresenter
         $params['query'] = $this->getParameter('q');
         $params['id'] = $this->getParameter('id');
         $params['res'] = $this->getParameter('res');
+        $params['f'] = $this->getParameter('f');
         $params['type'] = 'title';
         
         $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
