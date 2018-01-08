@@ -524,7 +524,7 @@
 		  	<xsl:with-param name="name" select="'dqScope'"/>
 		    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:scope/*/gmd:level/*/@codeListValue"/>
 		    <xsl:with-param name="class" select="'short'"/>
-		    <xsl:with-param name="codes" select="$typeList"/> 
+		    <xsl:with-param name="codes" select="'updateScope'"/> 
             <xsl:with-param name="req" select="1"/>
             <xsl:with-param name="valid" select="'6.1'"/>
 		</xsl:call-template>

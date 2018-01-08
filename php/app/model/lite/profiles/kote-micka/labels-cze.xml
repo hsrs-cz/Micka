@@ -625,7 +625,7 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		<help>Zda jde o adresu přístupového bodu harmonizované služby podle INSPIRE.</help>
 	</msg>
 	<msg name="obligatory">
-		<label>IO-13 Povinný subjekt</label>
+		<label>CZ-13 Povinný subjekt</label>
 		<help>
 			<h3>Identifikace povinných subjektů INSPIRE</h3> 
 		</help>
@@ -643,7 +643,7 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		</help>
 	</msg>
 	<msg name="mime">
-		<label>Formát</label>
+		<label>CZ-15 Formát</label>
 		<help>
 			<h3>Mime formát zdroje</h3> 
 		</help>

@@ -19,7 +19,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 
     <xsl:variable name="cl">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml</xsl:variable>
 
-	<xsl:template match="/md">
+<xsl:template match="/md">
 
 	<xsl:variable name="serv"><xsl:choose>
         <xsl:when test="iso='19119'">srv</xsl:when>
@@ -35,7 +35,8 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	
 	<xsl:variable name="mdlang" select="mdlang"/>
 	<!--xsl:variable name="codes" select="document('../../../xsl/codelists.xml')/map" /-->
-	
+
+<results>
 <gmd:MD_Metadata>
 	<gmd:fileIdentifier>
 		<gco:CharacterString><xsl:value-of select="fileIdentifier"/></gco:CharacterString>
@@ -1238,10 +1239,9 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 					
 				</gmd:DQ_DataQuality>
 			</gmd:dataQualityInfo>
-
-
 		</gmd:MD_Metadata>
-	</xsl:template>
+    </results>
+</xsl:template>
 
 	<!-- sablona na kontakty -->
 	<xsl:template name="contact">
