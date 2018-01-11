@@ -47,8 +47,11 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         define("MICKA_THEME", 'default');
 
         $url = $this->context->getByType('Nette\Http\Request')->getUrl();
-        define("MICKA_URL", $url->hostUrl . rtrim($url->path,'/'));
-        
+        $locale = $this->translator->getDefaultLocale() == $this->translator->getLocale()
+            ? ''
+            : '/' . $this->translator->getLocale();
+        define("MICKA_URL", $url->hostUrl . rtrim($url->basePath,'/') . $locale);
+
         define("CSW_TIMEOUT", 30);
         define("HTTP_XML", "Content-type: application/xml; charset=utf-8");
         define("HTTP_SOAP", "Content-type: application/soap+xml; charset=utf-8"); //TODO ověřit
