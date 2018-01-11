@@ -36,7 +36,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         
         define("CSW_LOG", __DIR__ . '/../../../log');
         define("MICKA_ADMIN_IP", '');
-        define("MICKA_URL", '');
         define("MICKA_LANG", $this->appLang);
         define("DB_DRIVER", 'postgre');
         define("MAXRECORDS", 10);
@@ -46,7 +45,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         define("REWRITE_MODE", TRUE);
         define("WMS_CLIENT", '');
         define("MICKA_THEME", 'default');
-        
+
+        $url = $this->context->getByType('Nette\Http\Request')->getUrl();
+        define("MICKA_URL", $url->hostUrl . rtrim($url->path,'/'));
         
         define("CSW_TIMEOUT", 30);
         define("HTTP_XML", "Content-type: application/xml; charset=utf-8");
