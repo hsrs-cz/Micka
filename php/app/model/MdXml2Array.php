@@ -202,6 +202,7 @@ class MdXml2Array
   function xml2array($xml, $template, $params=array()){
     if($template){  
         $xp  = new \XsltProcessor();
+        $xp->registerPhpFunctions();
         $xsl = new \DomDocument;
         $xsl->load($template);
         $xp->importStyleSheet($xsl);

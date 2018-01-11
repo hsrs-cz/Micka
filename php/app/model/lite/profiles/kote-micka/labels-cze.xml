@@ -631,7 +631,7 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		</help>
 	</msg>
 	<msg name="operation">
-		<label>IOS-3 Operace</label>
+		<label>IOS-3 Rozhraní</label>
 		<help>
 			<h3>Metadats operací</h3> 
 		</help>

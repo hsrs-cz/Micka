@@ -197,6 +197,12 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 									</gmd:RS_Identifier>
 								</gmd:identifier>
 							</xsl:for-each>
+                            <gmd:identifier>
+                                <gmd:RS_Identifier>
+                                    <gmd:code><gmx:Anchor xlink:href=""/></gmd:code>
+                                    <gmd:codeSpace></gmd:codeSpace>
+                                </gmd:RS_Identifier>
+                            </gmd:identifier>
                             <gmd:otherCitationDetails>
                                 <gco:CharacterString><xsl:value-of select="obligatory"/></gco:CharacterString>
                             </gmd:otherCitationDetails>
@@ -318,7 +324,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                     </xsl:choose>
 					<xsl:if test="inspireService">
 						<gmd:descriptiveKeywords>
-							<gmd:MD_Keywords>						
+							<gmd:MD_Keywords>
 	              				<xsl:for-each select="inspireService">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'keyword'"/>
@@ -338,8 +344,8 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	  									</gmd:CI_Date></gmd:date>
 	  								</gmd:CI_Citation>
 	  							</gmd:thesaurusName>
-							</gmd:MD_Keywords>	
-						</gmd:descriptiveKeywords>						
+							</gmd:MD_Keywords>
+						</gmd:descriptiveKeywords>
 					</xsl:if>
 					<!-- <xsl:if test="gemet">
 					<descriptiveKeywords>
@@ -669,6 +675,18 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 						<!--xsl:for-each select="operateson/item">
 							<srv:operatesOn xlink:title="{title}" uuidref="{.}" xlink:href="{href}#_{uuid}"/>
 						</xsl:for-each-->
+                        <xsl:for-each select="operateson/item">
+                            <xsl:choose>
+                                <xsl:when test="substring(.,1,4)='http'">
+                                    <xsl:variable name="adr" select="substring-before(.,'|')"/>
+                                    <srv:operatesOn xlink:title="{substring-after(.,'|')}" uuidref="{substring-after($adr,'#_')}" xlink:href="{$adr}"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:variable name="r" select="php:function('getMetadataById', string(.))"/>
+                                    <srv:operatesOn xlink:title="{$r//gmd:identificationInfo//gmd:citation/*/gmd:title/gco:CharacterString}" uuidref="{.}" xlink:href="{$MICKA_URL}/csw/?SERVICE=CSW&amp;REQUEST=GetRecordById&amp;ID={.}#_{.}"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:for-each>
 					</xsl:if>
 				</xsl:element>
 			</gmd:identificationInfo>

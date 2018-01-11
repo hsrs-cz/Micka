@@ -1677,17 +1677,17 @@
 		<eng>download</eng>
     </value>
   	<value name="discovery" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/discovery" code="">
-        <cze>vyhledeávací</cze>
+        <cze>vyhledávací</cze>
 		<eng>discovery</eng>
     </value>
   	<value name="transformation" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/transformation" code="">
         <cze>transformační</cze>
 		<eng>transformation</eng>
     </value>
-  	<value name="invoke" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/invoke" code="">
+  	<!--value name="invoke" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/invoke" code="">
         <cze>vyvolání</cze>
 		<eng>invoke</eng>
-    </value>
+    </value-->
   	<value name="other" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/other" code="">
         <cze>jiné</cze>
 		<eng>other</eng>

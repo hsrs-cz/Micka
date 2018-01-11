@@ -918,36 +918,19 @@ class RecordModel extends \BaseModel
     }
     
     private function setFromMickaLite($post) {
-        //echo "<pre>"; var_dump($post); die;
 		$cswClient = new \CswClient();
         $kote = new \Kote();
         $input = $kote->processForm(beforeSaveRecord($post));
-        $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>'cze');
-        // TODO - here the lite profiles should be solved
-        $xmlstring = $cswClient->processTemplate($input, __DIR__ . '/lite/profiles/kote-micka/form2iso.xsl', $params);
-        //header('Content-Type: application/xml'); echo $xmlstring;  exit;
-        $md = [];
-        $md['sid'] = session_id();
-		$md['recno'] = $this->getNewRecno('edit_md');
-        $md['uuid'] = $this->getUuid();
-		$md['md_standard'] = isset($post['standard']) ? $post['standard'] : 0;
-        $md['lang'] = isset($post['standard']) ? $post['standard'] : 0;
-		$md['data_type'] = -1;
-		$md['create_user'] = $this->user->identity->username;
-		$md['create_date'] = Date("Y-m-d");
-        $md['edit_group'] = isset($post['group_e']) ? $post['group_e'] : $this->user->identity->username;
-        $md['view_group'] = isset($post['group_v']) ? $post['group_v'] : $this->user->identity->username;
-        $lang_main = (isset($post['lang_main']) && $post['lang_main'] != '') ? $post['lang_main'] : 'eng';
-        $md['lang'] = isset($post['languages']) ? implode($post['languages'],"|") : '';
-        if ($md['lang'] == '' && $lang_main != '') {
-            $md['lang'] = $lang_main;
-        }
+        $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>$post['mdlang'], 'MICKA_URL'=>MICKA_URL);
         $mdXml2Array = new MdXml2Array();
         $xml = new \DomDocument;
-        if(!$xml->loadXML($xmlstring)) die('Bad xml format');
-        $dataFromXml = $mdXml2Array->xml2array($xml, false, $params);
+        if(!$xml->loadXML($input)) die('Bad xml format');
+        //header('Content-Type: application/xml'); echo $input;  exit;
+        // TODO - here the lite profiles should be solved
+        $dataFromXml = $mdXml2Array->xml2array($xml, __DIR__ . '/lite/profiles/kote-micka/form2iso.xsl', $params);
+        //echo "<pre>"; var_dump($dataFromXml); die;
         $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
-        $arrayMdXml2MdValues->lang = $lang_main;
+        $arrayMdXml2MdValues->lang = $post['mdlang'];
         return $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
     }
     

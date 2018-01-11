@@ -27,6 +27,7 @@ class CswClient{
     $this->xp->registerPhpFunctions();
     $this->xml = new DomDocument;
     $this->xsl = new DomDocument;    
+    //$this->xsl->substituteEntities = true;
   }  
   
   function setParams($params){

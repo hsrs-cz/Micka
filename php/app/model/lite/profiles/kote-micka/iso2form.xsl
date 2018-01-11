@@ -190,7 +190,6 @@
                 <xsl:with-param name="name" select="'operatesOn'"/>
                 <xsl:with-param name="class" select="'cond'"/>
                 <xsl:with-param name="valid" select="'1.6'"/>
-                <xsl:with-param name="dupl" select="1"/>
             </xsl:call-template>
             <div class="col-xs-12 col-md-8">
                 <select name="operateson[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true" data-ajax--url="../../suggest/metadata?lang={$mlang}&amp;type=query&amp;f=1">
@@ -1164,6 +1163,7 @@
         <xsl:with-param name="valid" select="'CZ-13'"/>
     </xsl:call-template>
 
+    <xsl:if test="not($serv)">
     <div class="row">
         <xsl:call-template name="drawLabel">
             <xsl:with-param name="name" select="'fc'"/>
@@ -1173,7 +1173,6 @@
             </select>
         </div>
     </div>
-
 
     <div class="row">
         <xsl:call-template name="drawLabel">
@@ -1189,6 +1188,7 @@
             </select>
         </div>       
     </div>
+    </xsl:if>
 
     
 <div style="clear:both; height:20px;"></div>

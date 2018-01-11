@@ -36,7 +36,7 @@ class Kote{
 	    	if(is_array($val)){
     		    $val = $this->array2xml($name, $val);
 	    	}
-            if($val) $xml .= "<$name>$val</$name>";
+            if($val) $xml .= "<$name>".$val."</$name>";
             else $xml .= "<$name></$name>";
 		}
 		return $xml;
@@ -84,6 +84,10 @@ class Kote{
 	  	}
 	  	return file_get_contents($destination, FILE_TEXT, $ctx);  
 	}
+    
+    function codeRow($s){
+        return htmlspecialchars(str_replace('\\', '\\\\', trim($s)), ENT_COMPAT);
+    }
 	
 	function processForm($data){
 		$out = array();
@@ -96,26 +100,29 @@ class Kote{
                 for($i=0; $i<count($val); $i++){                    
                     if(is_array($val[$i])){
                         foreach($val[$i] as $k2=>$v2){
-                            if($k2 && (($data['locale'] && in_array($k2, $data['locale']))||$k2='TXT')) {
+                            if($k2 && (($data['locale'] && in_array($k2, $data['locale']))||$k2=='TXT')) {
                                 if($k2=='TXT') $j++;
-                                $out[$k[0]][$j][$k[1]][$k2] = trim(htmlspecialchars(str_replace('\\', '\\\\', $v2)));
                             }
-                            else $out[$k[0]][$i][$k[1]][$k2] = trim(htmlspecialchars(str_replace('\\', '\\\\', $v2)));
+                            $out[$k[0]][$i][$k[1]][$k2] = $this->codeRow($v2);
                         }
                     }
-                    else $out[$k[0]][$i][$k[1]] = trim(htmlspecialchars(str_replace('\\', '\\\\', $val[$i])));
+                    else $out[$k[0]][$i][$k[1]] = $this->codeRow($val[$i]);
                 }
             } 
             else {
-                if(gettype($val)=='string') $val = trim(htmlspecialchars(str_replace('\\', '\\\\', $val)));
-                $out[$key]=$val;
+                if(gettype($val)=='string'){
+                    $out[$key] = $this->codeRow($val);
+                }
+                else {
+                    foreach($val as $k2=>$v2){
+                        $out[$key][$k2] = $this->codeRow($v2);
+                    }
+                }
             }
 		}
-        
-        //echo "<pre>"; var_dump($out); die();
-        
+
 		//eval ($out);
-		//var_dump($md);
+		//var_dump($out); die;
 		//$md["keywords"] = isset($data["keywords"]) ? explode("\n",$data["keywords"]) : '';
 		//$md["gemet"] = isset($data["gemet"]) ? explode("\n",$data["gemet"]) : '';
 		//$md["inspire"] = isset($data["inspire"]) ? explode("\n",$data["inspire"]) : '';
