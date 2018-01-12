@@ -441,30 +441,11 @@ class Csw{
     	    //getProj();
         }
     }
-    //define("MICKA_USER", $_SESSION['u']);
     $this->params['timestamp'] = gmdate("Y-m-d\TH:i:s");
-  	$scheme = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
-    if(MICKA_URL){
-        $u = parse_url(MICKA_URL);
-		$scheme = ($u['scheme']) ? $u['scheme'] : $scheme;
-		$this->params['MICKA_URL'] = $scheme . MICKA_URL;
-		$this->params['thisURL'] = $scheme.$u['host']. $_SERVER['SCRIPT_NAME'];
-	}
-    else {
-		if($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443){
-			$this->params['MICKA_URL'] = $scheme.$_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']);
-			$this->params['thisURL'] = $scheme.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'];
-		}
-		else{
-			$this->params['MICKA_URL'] = $scheme.$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].dirname($_SERVER['SCRIPT_NAME']);
-			$this->params['thisURL'] = $scheme.$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT'].$_SERVER['SCRIPT_NAME'];
-		}
-	}
-    $this->params['MICKA_URL'] = rtrim($this->params['MICKA_URL'],'/');
+    $this->params['MICKA_URL'] = MICKA_URL.'/';
+    $this->params['CSW_URL'] = CSW_URL.'/';
     $this->params['buffered'] = isset($params['buffered']) ? $params['buffered'] : '';
-    $this->params['thisPath'] = dirname($this->params['thisURL']);
-    $this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ?
-        $this->appParameters['appLocale'].'/' : '';
+    //$this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ? $this->appParameters['appLocale'].'/' : '';
     $this->params['viewerURL'] = isset($this->appParameters['map']['viewerURL'])
         ? $this->appParameters['map']['viewerURL']
         : '';

@@ -45,11 +45,8 @@
                         <a class="go-back" href="javascript:history.back();" title="{$msg[@eng='Back']}"/>
                     </xsl:if>
                 </div>
-                
-
 			</div>
 		</div>
-		
 	</xsl:template>
 	
 	<xsl:template match="gmd:MD_Metadata|gmi:MI_Metadata"
@@ -76,14 +73,14 @@
 		<li><xsl:value-of select="$msg[@eng='basicMetadata']"/></li>
 		<li>		
 			<xsl:if test="../@read=1">
-				<a href="{$MICKA_URL}/{$LANG2}record/full/{../@uuid}" class="icons" data-tooltip="tooltip" data-original-title="{$msg[@eng='fullMetadata']}">
-							<xsl:value-of select="$msg[@eng='fullMetadata']"/></a>					
+				<a href="../full/{../@uuid}" class="icons" data-tooltip="tooltip" data-original-title="{$msg[@eng='fullMetadata']}">
+					<xsl:value-of select="$msg[@eng='fullMetadata']"/></a>
 			</xsl:if>
 		</li>						
 		<div class="icons">
 		  	<xsl:variable name="wmsURL" select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(gmd:protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			<xsl:if test="gmd:identificationInfo/*/srv:serviceType/*='download'">
-				<a href="{$MICKA_URL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={$fid}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
+				<a href="{$CSW_URL}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={$fid}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
 			</xsl:if>
 			<xsl:if test="string-length($wmsURL)>0">
 				<xsl:choose>
@@ -97,20 +94,20 @@
 				<xsl:text> </xsl:text>
 			</xsl:if>
 			<xsl:if test="../@edit=1">
-				<a href="{$MICKA_URL}/{$LANG2}record/valid/{../@uuid}" class="valid{../@valid}" data-tooltip="tooltip" data-original-title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
+				<a href="../valid/{../@uuid}" class="valid{../@valid}" data-tooltip="tooltip" data-original-title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
 						<xsl:when test="../@valid=2"><i class="fa fa-check-circle fa-fw"></i></xsl:when>
 						<xsl:when test="../@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
 						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
 					</xsl:choose></a>
-				<a href="{$MICKA_URL}/{$LANG2}record/edit/{../@uuid}" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-				<a href="{$MICKA_URL}/{$LANG2}record/clone/{../@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-				<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+				<a href="../edit/{../@uuid}" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+				<a href="../clone/{../@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+				<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '../delete/{../@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
-					<a href="{$MICKA_URL}/csw/?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$CSW_URL}?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
-				<a href="{$MICKA_URL}/record/xml/{../@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
+				<a href="../xml/{../@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
 		</div>			
 	</ol>
@@ -150,7 +147,7 @@
 			    				<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileDescription"/>
 			    				<xsl:with-param name="lang" select="$LANGUAGE"/>
 			    				<xsl:with-param name="mdlang" select="$mdlang"/>
-			  				</xsl:call-template>  					
+			  				</xsl:call-template>
 	  					</div>
 					</div>
 				</div>
@@ -178,23 +175,23 @@
 				<div class="c" typeof="http://www.w3.org/ns/dcat#Distribution">
 					<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
 						<xsl:variable name="label">
-                                <xsl:choose>
-                                	<xsl:when test="*/gmd:description">
-                                		<xsl:call-template name="multi">
-                                            <xsl:with-param name="el" select="*/gmd:description"/>
-                                            <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                            <xsl:with-param name="mdlang" select="$mdlang"/>
-                                        </xsl:call-template>
-                                	</xsl:when>
-                                    <xsl:when test="*/gmd:name">
-                                        <xsl:call-template name="multi">
-                                            <xsl:with-param name="el" select="*/gmd:name"/>
-                                            <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                            <xsl:with-param name="mdlang" select="$mdlang"/>
-                                        </xsl:call-template>
-                                    </xsl:when>
-                                    <xsl:otherwise><xsl:value-of select="*/gmd:linkage"/></xsl:otherwise>
-                                </xsl:choose>
+                            <xsl:choose>
+                                <xsl:when test="*/gmd:description">
+                                    <xsl:call-template name="multi">
+                                        <xsl:with-param name="el" select="*/gmd:description"/>
+                                        <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                        <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:when test="*/gmd:name">
+                                    <xsl:call-template name="multi">
+                                        <xsl:with-param name="el" select="*/gmd:name"/>
+                                        <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                        <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    </xsl:call-template>
+                                </xsl:when>
+                                <xsl:otherwise><xsl:value-of select="*/gmd:linkage"/></xsl:otherwise>
+                            </xsl:choose>
 						</xsl:variable>
                         <div rel="http://www.w3.org/ns/dcat#accessURL">
                           	<xsl:choose>
@@ -213,20 +210,20 @@
 								<xsl:when test="contains(*/gmd:protocol/*,'WMS') or contains(*/gmd:linkage/*,'WMS')">
 									<xsl:variable name="label1">
 		                                <xsl:choose>
-			                                	<xsl:when test="*/gmd:description">
-			                                		<xsl:call-template name="multi">
-			                                            <xsl:with-param name="el" select="*/gmd:description"/>
-			                                            <xsl:with-param name="lang" select="$LANGUAGE"/>
-			                                            <xsl:with-param name="mdlang" select="$mdlang"/>
-			                                        </xsl:call-template>
-			                                	</xsl:when>		                                    
-			                                	<xsl:when test="*/gmd:name">
-		                                        <xsl:call-template name="multi">
-		                                            <xsl:with-param name="el" select="*/gmd:name"/>
-		                                            <xsl:with-param name="lang" select="$LANGUAGE"/>
-		                                            <xsl:with-param name="mdlang" select="$mdlang"/>
-		                                        </xsl:call-template>
-		                                    </xsl:when>
+                                            <xsl:when test="*/gmd:description">
+                                                <xsl:call-template name="multi">
+                                                    <xsl:with-param name="el" select="*/gmd:description"/>
+                                                    <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                                </xsl:call-template>
+                                            </xsl:when>		                                    
+                                            <xsl:when test="*/gmd:name">
+                                                <xsl:call-template name="multi">
+                                                    <xsl:with-param name="el" select="*/gmd:name"/>
+                                                    <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                                </xsl:call-template>
+                                            </xsl:when>
 		                                    <xsl:otherwise><xsl:value-of select="$msg[@eng='showMap']"/></xsl:otherwise>
 		                                </xsl:choose>
 									</xsl:variable>
@@ -352,7 +349,7 @@
 							  			<xsl:choose>
 								     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
 								     			<a property="http://www.w3.org/ns/dcat#theme"  typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
-								     				<img src="{$MICKA_URL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
+								     				<img src="{$CSW_URL}../layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
 								     			</a>
 								     			<xsl:text> </xsl:text>
 								     		</xsl:when>
@@ -401,7 +398,7 @@
 					  			<xsl:choose>
 						     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
 						     			<a href="{./*/@xlink:href}" title="{$theme}" target="_blank">
-						     				<img src="themes/{$THEME}/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
+						     				<img src="{$CSW_URL}../layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
 						     			</a>
 						     			<xsl:text> </xsl:text>
 						     		</xsl:when>
@@ -443,7 +440,6 @@
 					<xsl:variable name="y1" select="gmd:southBoundLatitude/*"/>
 					<xsl:variable name="x2" select="gmd:eastBoundLongitude/*"/>
 					<xsl:variable name="y2" select="gmd:northBoundLatitude/*"/>
-				
 				
 					<xsl:if test="gmd:westBoundLongitude!=''">
 						<span property="http://www.w3.org/ns/locn#geometry" datatype="http://www.opengis.net/ont/geosparql#wktLiteral" content="POLYGON(({$x1} {$y1} {$x1} {$y2} {$x2} {$y2} {$x2} {$y1} {$x1} {$y1}"></span>
@@ -809,7 +805,7 @@
 				<div class="c">
 					<xsl:for-each select="$subsets//gmd:MD_Metadata">
 						<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
-                        <xsl:variable name="url" select="concat($MICKA_URL,'/record/basic/',gmd:fileIdentifier)"/>
+                        <xsl:variable name="url" select="concat($MICKA_URL,'record/basic/',gmd:fileIdentifier)"/>
 						<div>
                             <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]/*[name()=$lang]}">
                                 <xsl:call-template name="showres">
@@ -954,15 +950,15 @@
 				
 		<div class="icons">
 			<xsl:if test="../@edit=1">
-				<a href="{$MICKA_URL}/record/edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-				<a href="{$MICKA_URL}/record/clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-				<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+				<a href="../edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+				<a href="../clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+				<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '../delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
-					<a href="{$MICKA_URL}/csw/?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$CSW_URL}?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
-				<a href="{$MICKA_URL}/record/xml/{../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
+				<a href="../xml/{../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
 		</div>			
 	</ol>
@@ -1018,15 +1014,15 @@
 		<li><xsl:value-of select="$msg[@eng='Feature catalogue']"/></li>
 		<div class="icons">
 			<xsl:if test="../@edit=1">
-				<a href="{$MICKA_URL}/record/edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-				<a href="{$MICKA_URL}/record/clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+				<a href="../edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+				<a href="../clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
 				<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
-					<a href="{$MICKA_URL}/csw/?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$CSW_URL}?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
-				<a href="{$MICKA_URL}/record/xml/{../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
+				<a href="../xml/{../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
 		</div>			
 	</ol>

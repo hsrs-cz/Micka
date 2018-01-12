@@ -21,7 +21,7 @@
 			<!-- ikonky vpravo -->
 			<div class="icons">	  		
 				<xsl:if test="*/gmd:identificationInfo/*/srv:serviceType/*='download'">
-					<a href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={*/gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
+					<a href="{$CSW_URL}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={*/gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
 				</xsl:if>
 		  		<xsl:variable name="wmsURL" select="*/gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			  	<xsl:if test="string-length($wmsURL)>0">
@@ -38,21 +38,21 @@
 				<a href="?ak=detailall&amp;language={$lang}&amp;uuid={@uuid}" class="full" title="{$msg[@eng='fullMetadata']}"></a><xsl:text> </xsl:text> -->
 				<xsl:if test="@edit=1">
 					<xsl:if test="@md_standard=0 or @md_standard=10">
-						<a href="{$thisPath}/{$LANG2}record/valid/{@uuid}" class="valid{@valid}" data-tooltip="tooltip" data-original-title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
+						<a href="record/valid/{@uuid}" class="valid{@valid}" data-tooltip="tooltip" data-original-title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
 						<xsl:when test="@valid=2"><i class="fa fa-check-circle fa-fw"></i></xsl:when>
 						<xsl:when test="@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
 						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
 						</xsl:choose></a>
 					</xsl:if>					
-					<a href="{$thisPath}/{$LANG2}record/edit/{@uuid}" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-					<a href="{$thisPath}/{$LANG2}record/clone/{@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-					<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$thisPath}/record/delete/{@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+					<a href="record/edit/{@uuid}" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
+					<a href="record/clone/{@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
+					<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$MICKA_URL}record/delete/{@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 				</xsl:if>
 				<xsl:if test="@md_standard=0 or @md_standard=10">
-					<a href="{$thisPath}/csw/?service=CSW&amp;request=GetRecordById&amp;id={@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$CSW_URL}?service=CSW&amp;request=GetRecordById&amp;id={@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
 				
-                <a href="{$thisPath}/record/xml/{@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
+                <a href="record/xml/{@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 		
 				<xsl:if test="$CB">
 					<xsl:text> </xsl:text>
@@ -65,14 +65,11 @@
 
 	<xsl:template match="gmd:MD_Metadata|gmi:MI_Metadata">
 	  	<xsl:variable name="mdlang" select="gmd:language/*/@codeListValue"/>
-	
 	    <xsl:variable name="hlevel" select="gmd:hierarchyLevel/gmd:MD_ScopeCode/@codeListValue"/>
-
     	<xsl:variable name="public"><xsl:if test="../@data_type=1"> public</xsl:if></xsl:variable>
 		<!-- nadpis -->
 		<div class="title{$public}">
-			<xsl:variable name="detURL"><xsl:value-of select="$LANG2"/>record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>
-				<a href="{$thisPath}/{$detURL}" class="t" title="{$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]}">
+			<a href="record/basic/{../@uuid}" class="t" title="{$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]}">
 				<xsl:call-template name="showres">
 					<xsl:with-param name="r" select="$hlevel"/>
 					<xsl:with-param name="class" select="'fa-lg'"/>
@@ -138,15 +135,14 @@
 
 	<!-- DC -->
 	<xsl:template match="csw:Record"> 
-		<xsl:variable name="detURL">record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>
 		<meta itemprop="box" id="i-{position()}" content="{ows:BoundingBox/ows:LowerCorner} {ows:BoundingBox/ows:UpperCorner}"/>		
 	  	<div class="title">
             <xsl:call-template name="showres">
                 <xsl:with-param name="r" select="'dc'"/>
                 <xsl:with-param name="class" select="'fa-lg'"/>
             </xsl:call-template>        
-			<a href="{$MICKA_URL}{$detURL}" class="t">	     
-	     		<xsl:value-of select="dc:title" />
+			<a href="record/basic/{../@uuid}" class="t">	     
+	     		<xsl:value-of select="dc:title"/>
 	    	</a> 
 	  	</div>
 	  	<div class="abstract"><xsl:value-of select="dct:abstract" /></div>
@@ -160,8 +156,7 @@
 	 	<xsl:variable name="mdlang" select="../@lang"/>
 
 	  	<div class="title">
-			<xsl:variable name="detURL">record/basic/<xsl:value-of select="../@uuid"/></xsl:variable>		
-			<a href="{$MICKA_URL}{$detURL}" class="t" title="{$cl/updateScope/value[@name='fc']/*[name()=$lang]}">
+			<a href="record/basic/{../@uuid}" class="t" title="{$cl/updateScope/value[@name='fc']/*[name()=$lang]}">
 				<xsl:call-template name="showres">
 					<xsl:with-param name="r" select="'fc'"/>
 					<xsl:with-param name="class" select="'fa-lg'"/>
