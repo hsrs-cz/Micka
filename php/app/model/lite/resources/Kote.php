@@ -102,8 +102,9 @@ class Kote{
                         foreach($val[$i] as $k2=>$v2){
                             if($k2 && (($data['locale'] && in_array($k2, $data['locale']))||$k2=='TXT')) {
                                 if($k2=='TXT') $j++;
+                                $out[$k[0]][$j][$k[1]][$k2] = $this->codeRow($v2);
                             }
-                            $out[$k[0]][$i][$k[1]][$k2] = $this->codeRow($v2);
+                            else $out[$k[0]][$i][$k[1]][$k2] = $this->codeRow($v2);
                         }
                     }
                     else $out[$k[0]][$i][$k[1]] = $this->codeRow($val[$i]);

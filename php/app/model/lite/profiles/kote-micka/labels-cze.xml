@@ -621,8 +621,8 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 	</msg>
 
 	<msg name="accessPoint">
-		<label>Harmonizovaná</label>
-		<help>Zda jde o adresu přístupového bodu harmonizované služby podle INSPIRE.</help>
+		<label>Interoperabilní</label>
+		<help>Zda jde o adresu přístupového bodu služby INSPIRE.</help>
 	</msg>
 	<msg name="obligatory">
 		<label>CZ-13 Povinný subjekt</label>

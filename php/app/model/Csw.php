@@ -134,8 +134,7 @@ class Csw{
             "json" => array(
                 "NS" => 'json',
                 "httpHdr" => array(
-                    "Content-Type: application/json\n",
-                    HTTP_CORS
+                    "Content-Type: application/json\n"
                ),
                     "header" => '{
                     "title":"[title]","subtitle":"[subtitle]",
@@ -530,8 +529,7 @@ class Csw{
             	$json['records'][$i]['inspire']  = $head[$i]['FOR_INSPIRE'];
             }
         }
-		$this->headers[0] = HTTP_CORS;
-		$this->headers[1] = HTTP_JSON;
+		//$this->headers[1] = HTTP_JSON;
 		if($json['next']>0) $json['next']--; // v json je index od 0
     	return json_encode($json);
     }
@@ -570,7 +568,7 @@ class Csw{
         $output = $this->xp->transformToXML($xml);
         //echo ('za-transf ');
         $output = str_replace("&amp;", "&", $output);
-        $this->headers[] = HTTP_HTML;
+        //$this->headers[] = HTTP_HTML;
      	return $output;
     }
 
@@ -582,6 +580,8 @@ class Csw{
 
     function setHeaders($schema){
         if(!$this->params['DEBUG']){
+            //TODO CORS configuration
+            header("Access-Control-Allow-Origin: *");
             foreach($this->schemas[$schema]['httpHdr'] as $header) header($header);
         }
     }
@@ -916,7 +916,6 @@ class Csw{
     }
     // --- XML ---
     else {
-        $this->headers[] = HTTP_CORS;
         $output =$this->xp->transformToXML($this->xml);
     }
 
@@ -1007,7 +1006,6 @@ class Csw{
         }
         // --- XML ---
         else {
-            $this->headers[] = HTTP_CORS;
             $output = $this->xp->transformToXML($this->xml);
         }
         return $output;

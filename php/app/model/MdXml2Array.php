@@ -217,9 +217,9 @@ class MdXml2Array
         //--- ladeni ---
         //header('Content-type: application/xml'); echo $dom->saveXML(); exit;
         // ---
-  	$this->xml = $xml;
+  	//$this->xml = $xml;
   	//--- vyreseni locales ---
-  	$locales = $this->xml->getElementsByTagNameNS("http://www.isotc211.org/2005/gmd", "PT_Locale");
+  	$locales = $dom->getElementsByTagNameNS("http://www.isotc211.org/2005/gmd", "PT_Locale");
 
   	foreach($locales as $locale){
   		if($locale->hasAttributes()){

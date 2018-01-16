@@ -67,6 +67,11 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
         </gmd:hierarchyLevelName>     
     </xsl:for-each>
+    <gmd:hierarchyLevelName>
+        <xsl:if test="hierarchyLevel='service'">
+            <gco:CharacterString><xsl:value-of select="$codeLists/inspireServiceType/value[@name='service']/*[name()=$mdlang]"/></gco:CharacterString>
+        </xsl:if>
+    </gmd:hierarchyLevelName>
     <xsl:choose>
 	    <xsl:when test="inspireEU='on'">
 	        <gmd:hierarchyLevelName>

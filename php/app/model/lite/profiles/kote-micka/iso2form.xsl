@@ -1137,7 +1137,8 @@
             <xsl:with-param name="class" select="'cond wide'"/>
         </xsl:call-template>
         
-        <xsl:for-each select="gmd:hierarchyLevelName[not(*='http://geoportal.gov.cz/inspire')]">
+        <xsl:variable name="s" select="$codeLists/inspireServiceType/value[@name='service']/*[name()=$mlang]"/>
+        <xsl:for-each select="gmd:hierarchyLevelName[not(*='http://geoportal.gov.cz/inspire') and not(*=$s)]">
             <input type="hidden" name="hlName[]" value="{*}"/>
         </xsl:for-each>
 		
