@@ -1,0 +1,34 @@
+{block content}
+<div class="container panel panel-default">
+<h1>
+    <a n:href=":Admin:Default:default"><i class="fa fa-arrow-left"></i></a>
+    /
+    <a n:href=":Admin:Profile:default">{_messages.management.profiles}</a>
+    / {_messages.management.profileAdd}
+</h1>
+<br>
+        
+<form action="{link :Admin:Profile:add}" method="POST">
+    <input type="hidden" name="id" value="{$id}">
+    <table class="table table-hover">
+        <tr class="rowsel">
+            <td style="width:100px">{_messages.frontend.name}</td>
+            <td><input type="text" name="name" value=""></td>
+        </tr>
+        <tr class="rowsel">
+            <td>{_messages.frontend.packages}</td>
+            <td><input type="checkbox" name="packages" value="1"></td>
+        </tr>
+        <tr class="rowsel">
+            <td>{_messages.frontend.for_inspire}</td>
+            <td><input type="checkbox" name="inspire" value="1"></td>
+        </tr>
+            
+        </table>
+    <div>
+        <button type="submit" name="btn" value="save">{_messages.frontend.save}</button>
+        <button type="submit" name="btn" value="cancel">{_messages.frontend.cancel}</button>
+    </div>
+</form>
+<br>
+</div>

@@ -153,13 +153,15 @@ frontend:
     status: "Stav záznamu"
     contact2micka: "do MicKy"
     select: "vyberte"
+    packages: "Balíčky"
 
 management:
     modules: "Administrace"
     contacts: "Správa kontaktů"
     identity: "Práva"
-    harvest: "Harvestování"
     profiles: "Správa profilů"
+    profileSelectMDS: "Výběr metadatového standardu"
+    profileAdd: "Vytvoření nového profilu"
     summary: "Přehled záznamů"
 
 lang:

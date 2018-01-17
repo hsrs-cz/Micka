@@ -1,0 +1,19 @@
+{block content}
+<div class="container panel panel-default">
+    <h1>
+        <a n:href=":Admin:Default:default"><i class="fa fa-arrow-left"></i></a>
+        /
+        {_messages.management.profiles}
+        /
+        {_messages.management.profileSelectMDS}
+    </h1>
+    <ul>
+        {foreach $mdStandard as $row}
+            {if $row->md_standard == 0 || $row->md_standard == 10}
+            <li>
+                <a n:href=":Admin:Profile:default $row->md_standard.',0'">{$row->md_standard_name} ({$row->md_standard_short_name})</a>
+            </li>
+            {/if}
+        {/foreach}
+    </ul>
+</div>

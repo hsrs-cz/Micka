@@ -1,0 +1,86 @@
+{block content}
+<div class="container panel panel-default">
+<style>
+  td a { color: #AAA; }
+  td a:hover { text-decoration: none; color: #059; }
+</style>
+
+
+
+<h1>
+    <a n:href=":Admin:Default:default"><i class="fa fa-arrow-left"></i></a>
+    /
+    <a n:href=":Admin:Profile:default">{_messages.management.profiles}</a>
+    / {$mdStandard->md_standard_name} ({$mdStandard->md_standard_short_name})
+</h1>
+
+<br>
+<a n:href=":Admin:Profile:default">/</a>
+{foreach $pathEl as $row}
+    {if $iterator->isLast()}
+        <b> {$row->el_name}</b>
+    {else}
+        <a n:href=":Admin:Profile:default $mdStandard->md_standard.','.$row->md_id">{$row->el_name}</a>
+    {/if}
+     /
+{/foreach}
+
+
+<table class="table table-hover">
+{foreach $listEl as $row}
+    {first}
+        <tr>
+            <th></th>
+            <th>EL_NAME</th>
+            {foreach $profil as $key=>$profile}
+                <th>
+                    {$profile['name']}
+                    <a n:href=":Admin:Profile:clone $id.','.$key"><i class="fa fa-clone" aria-hidden="true" title="{_messages.frontend.copy}"></i></a>
+                    {if ($mdStandard->md_standard == 0 && $key > 10) || ($mdStandard->md_standard == 10 && $key > 110)}
+                    <a n:href=":Admin:Profile:delete $id.','.$key"><i class="fa fa-trash" aria-hidden="true" title="{_messages.frontend.delete}"></i></a>
+                    {/if}
+                </th>
+            {/foreach}
+            
+        </tr>
+    {/first}
+    {continueIf $id == '0,4751' && $row->md_id == 4752}
+    {continueIf $id == '10,4751' && $row->md_id == 1}
+    <tr class="rowsel">
+        <td style="width:15px" align="right">
+            {if $row->md_left+1 !== $row->md_right}
+                <i class="fa fa-folder" aria-hidden="true"></i>
+            {/if}
+        </td>
+        <td>
+            {if $row->md_left+1 === $row->md_right}
+                <b>{$row->el_name}</b>
+            {else}
+                <a n:href=":Admin:Profile:default $mdStandard->md_standard.','.$row->md_id">
+                    <b>{$row->el_name}</b>
+                </a>
+            {/if}
+        </td>
+        {foreach $profil as $key=>$profile}
+            <td>
+                {ifset $profile['profil'][$row->md_id]}
+                    <a n:href=":Admin:Profile:unset $mdStandard->md_standard.','.$key.','.$row->md_id">
+                        <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                    </a>
+                {else}
+                    {if $row->md_left+1 === $row->md_right}
+                        <a n:href=":Admin:Profile:set $mdStandard->md_standard.','.$key.','.$row->md_id">
+                            <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                        </a>
+                    {else}
+                        <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                    {/if}
+                {/ifset}
+            </td>
+        {/foreach}
+    </tr>
+{/foreach}
+</table>
+<br>
+<br> 
+    

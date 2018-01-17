@@ -153,13 +153,15 @@ frontend:
     for_inspire: "For INSPIRE"
     status: "Record status"
     contact2micka: "Contact to MicKa"
+    packages: "Packages"
 
 management:
     modules: "Administration"
     contacts: "Contacts management"
     identity: "Right management"
-    harvest: "Harvesting"
     profiles: "Profiles management"
+    profileSelectMDS: "Select metadata standard"
+    profileAdd: "Add profile"
     summary: "Metadata records overview"
 
 lang:
