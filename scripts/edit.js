@@ -387,7 +387,7 @@ function start(){
 	var parent = document.getElementById("50");
 	if(parent && parent.value){
 		$("#parent-text").html("...");
-		$.ajax("../../csw/?format=json&query=" + encodeURIComponent("identifier="+parent.value))
+		$.ajax(baseUrl + "/csw/?format=json&query=" + encodeURIComponent("identifier="+parent.value))
         .done(function(data){
             $("#parent-text").html(data.title);
         });
@@ -497,7 +497,7 @@ function thes(obj){
     var thes = {};
     
     var gemet = new GemetClient({
-        url: baseUrl + '/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/',
+        url: baseUrl + '/registry_client/proxy.php?url=http://www.eionet.europa.eu/gemet/',
         lang: HS.getLang(2),
         el: '#gemet',
         showTree: true
@@ -505,7 +505,7 @@ function thes(obj){
    
     thes['inspire'] = $("#inspire").select2({
 		ajax: {
-			url: baseUrl + '/registry_client/?uri=https://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
+			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json',
 			processResults: function(data, opts){
                 var data = $.map(data.results, function(rec) {
@@ -534,7 +534,7 @@ function thes(obj){
                 var url = baseUrl  + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
                 $.ajax({url: url, context: {lang: ll[i]}})
                 .done(function(data){
-                    if(data.results)  terms[this.lang] = data.results[0].name;
+                    if(data.results && data.results[0]) terms[this.lang] = data.results[0].name;
                     else terms[this.lang] = "";
                     if(ll.length <= Object.keys(terms).length){
                         fromThesaurus({
@@ -701,7 +701,7 @@ function fc(obj){
     $("#md-content").html(html);
     $("#parent-select").select2({
         ajax: {
-            url:  '../../csw/?format=application/json&elementsetname=full&lang='+lang,
+            url: baseUrl + '/csw/?format=application/json&elementsetname=full&lang='+lang,
             dataType: 'json',
             data: function(params){
                 q = "type='featureCatalogue'";
@@ -850,7 +850,7 @@ function find_parent(obj){
     $("#md-content").html(html);
     $("#parent-select").select2({
         ajax: {
-            url:  '../../csw/?format=application/json&lang='+lang,
+            url: baseUrl + '/csw/?format=application/json&lang='+lang,
             dataType: 'json',
             data: function(params){
                 return {
@@ -899,8 +899,7 @@ function find_parent1(data){
 		      	else if(inputs[i].id.substr(0,4)=='6001') inputs[i].value=data.uuid;
 		      	else if(inputs[i].id.substr(0,4)=='3002'){
 		      		var cid = (code=='1151') ? '#cit-' : '#_';
-		      		inputs[i].value= location.origin + baseUrl
-		      		+'/csw/?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&ID='+data.uuid+cid+data.uuid;
+		      		inputs[i].value= baseUrl + '/csw/?SERVICE=CSW&VERSION=2.0.2&REQUEST=GetRecordById&OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&ID='+data.uuid+cid+data.uuid;
 		      	}	
 		    }
 		    return false;
@@ -1498,12 +1497,26 @@ function md_datePicker(id){
   }  
 }
 
+// for old INSPIRE standard
 var md_constraint = function(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
     $('#md-content').load(baseUrl+'/suggest/mdlists/?type=accessCond&multi=1&lang='+lang);
  }
+
+var oconstraint = function(obj){
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $("#md-dialog").modal();
+    if($(md_elem.parentNode).find('#700')[0].value=='otherRestrictions'){
+        var type='limitationsAccess';
+    }
+    else {
+        var type='accessCond';
+    }
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type='+type+'&multi=1&lang='+lang);        
+}
 
 var md_serviceType = function(obj){
     md_elem = obj.parentNode;
@@ -1524,13 +1537,6 @@ var md_processStep = function(obj){
     md_addMode = true;
     $("#md-dialog").modal();
     $('#md-content').load(baseUrl+'/suggest/mdlists/?type=steps&multi=1&lang='+lang);
-}
-
-var oconstraint = function(obj){
-    md_elem = obj.parentNode;
-    md_addMode = false;
-    $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=limitationsAccess&multi=1&lang='+lang);
 }
 
 micka.fillValues = function(listType, code, handler){
@@ -1568,7 +1574,7 @@ var checkId = function(o){
 	if(nody[0].value!=''){
 		ajax = new HTTPRequest;
 		ajax.scope = o;		
-		ajax.get("csw/?request=GetRecords&format=text/json&query=ResourceIdentifier%20like%20%27"+nody[0].value+"%27", null, checkIdBack, false);
+		ajax.get(baseUrl + "/csw/?request=GetRecords&format=text/json&query=ResourceIdentifier%20like%20%27"+nody[0].value+"%27", null, checkIdBack, false);
 	}
 }
 

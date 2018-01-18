@@ -6,9 +6,9 @@ HS.Lang.cze['narrower terms'] = 'užší termníny';
 
 var GemetClient = function(params){
     if(!params.url) {console.log('gemetClient params.url not defined.'); return; }
-    url = params.url; 
+    var url = params.url; 
     if(!params.lang) {console.log('gemetClient params.lang not defined.'); return; }
-    lang = params.lang;
+    var lang = params.lang;
     if(!params.el) {console.log('gemetClient params.el not defined.'); return; }
     var $t = $(params.el);
     var showTree = params.showTree;
