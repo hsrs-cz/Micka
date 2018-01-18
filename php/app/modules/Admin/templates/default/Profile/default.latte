@@ -1,8 +1,9 @@
 {block content}
 <div class="container panel panel-default">
 <style>
-  td a { color: #AAA; }
-  td a:hover { text-decoration: none; color: #059; }
+    td { color: #999; }
+    i.fa-check-circle { color: #009800; }
+    td > i.fa-circle-thin { color: #CCC; }
 </style>
 
 
@@ -65,15 +66,15 @@
             <td>
                 {ifset $profile['profil'][$row->md_id]}
                     <a n:href=":Admin:Profile:unset $mdStandard->md_standard.','.$key.','.$row->md_id">
-                        <i class="fa fa-toggle-on" aria-hidden="true"></i>
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
                     </a>
                 {else}
                     {if $row->md_left+1 === $row->md_right}
                         <a n:href=":Admin:Profile:set $mdStandard->md_standard.','.$key.','.$row->md_id">
-                            <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                            <i class="fa fa-circle-thin" aria-hidden="true"></i>
                         </a>
                     {else}
-                        <i class="fa fa-toggle-off" aria-hidden="true"></i>
+                        <i class="fa fa-circle-thin" aria-hidden="true"></i>
                     {/if}
                 {/ifset}
             </td>
