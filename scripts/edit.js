@@ -1719,7 +1719,6 @@ micka.initMap=function(config){
 	}
 
 
-	
 	//-- pro LITE -- box
 	if(config && config.edit == true){
         
@@ -1734,8 +1733,8 @@ micka.initMap=function(config){
                 el.title = opts.title;
                 el.appendChild(button);
                 ol.control.Control.call(this, {
-                  element: el,
-                  target: options.target
+                    element: el,
+                    target: options.target
                 });
             }
             ol.inherits(Control, ol.control.Control);
@@ -1746,10 +1745,10 @@ micka.initMap=function(config){
 	        condition: ol.events.condition.platformModifierKeyOnly,
 	        code: 'AAA',
 	        style: new ol.style.Style({
-	          stroke: new ol.style.Stroke({
-	            color: 'red',
-	            width: 2
-	          })
+                stroke: new ol.style.Stroke({
+                    color: 'red',
+                    width: 2
+                })
 	        })
 	    });
 	
@@ -1770,6 +1769,7 @@ micka.initMap=function(config){
 	        }
 	    });
 		micka.overmap.addInteraction(dragBoxInteraction);
+        
         
 	}
 }

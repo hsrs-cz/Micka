@@ -9,6 +9,8 @@ var lite = {
         $('[data-tooltip="tooltip"]').tooltip();
         $('.sel2').select2();
         $('.person').on('select2:select', this.changePerson);
+        $('#extentId-sel').on('select2:select', this.changeExtent);
+        $('#serviceType-sel').on('select2:select', this.changeServiceType);
         this.createDuplicate();
         $.fn.datepicker.defaults.language=HS.getLang(2);
         $.fn.datepicker.defaults.todayHighlight = true;
@@ -20,7 +22,7 @@ var lite = {
     },
     
     cswResults: function(data, page){
-        console.log(data);
+        //console.log(data);
         return {
             results: $.map(data.records, function(rec) {
                 return {id: rec.id, text: rec.title, title: rec.abstract};
@@ -165,7 +167,23 @@ var lite = {
             $(parent).find('input[name*="email"]').val(data.email);
             $(parent).find('input[name*="phone"]').val(data.phone);
         }
+    },
+    
+    changeExtent: function(e){
+        var bbox = e.params.data.id.split('|')[1].split(" ");
+        micka.mapfeatures.clear();
+        var ext = micka.addBBox(bbox, 'i-1');
+        micka.overmap.getView().fit(ext, micka.overmap.getSize());
+        $('#xmin').val(bbox[0]);
+        $('#ymin').val(bbox[1]);
+        $('#xmax').val(bbox[2]);
+        $('#ymax').val(bbox[3]);
+    },
+    
+    changeServiceType: function(e){
+        if(e.params.data.id=='other') $('#IOS').show();
+        else $('#IOS').hide();
     }
-
+    
 }
 

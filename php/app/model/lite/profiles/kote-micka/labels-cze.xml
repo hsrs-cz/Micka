@@ -54,15 +54,15 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 		<help>Důvod vytvoření DS. Např. citace zákona, vyhlášky apod.</help>
 	</msg>
 	<msg name="keywords">
-		<label>3.1 Další klíč. slova</label>
+		<label>3 Další klíč. slova</label>
 		<help>
 			Seznam dalších klíčových slov.
 		</help>
 	</msg>
 	<msg name="inspireTheme">
-		<label>3 Téma INSPIRE</label>
+		<label>3 Klíč. slovo (INSPIRE)</label>
 		<help>
-			Označení témat INSPIRE.
+			Název tématu INSPIRE.
 		</help>
 	</msg>
 	<msg name="date">
@@ -98,19 +98,17 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 	<msg name="timeExtent">
 		<label>5b Časový rozsah</label>
 		<help>
-			<p>Časový rozsah definuje časové období, které obsah zdroje pokrývá. 
-Tento prvek by měl být vyplněn, pokud zdroj má časový rozsah. Možnost je:
+			<p>Časový rozsah definuje časové období, které obsah zdroje pokrývá. Tento prvek by měl být vyplněn, pokud zdroj má časový rozsah. Možnost je:
 	<ul>
 		<li>jeden časový údaj (např. datum snímkování leteckého snímku) nebo </li>
 		<li>rozsah platnosti např. u správních hranic nebo</li>
 		<li>nekonkrétní časový rozsah, kdy nelze jednu z ohraničujících hodnot intervalu přesně definovat. Tento se bude zapisovat pomocí konkrétního časového intervalu následovně: </li>
 		<ul>
-		<li>pro neukončenou dolní hranici intervalu se bude uvádět hodnota ve tvaru 0001 nebo též 0001-01-01 </li>
-		<li>pro neukončenou horní hranici intervalu se bude uvádět hodnota ve tvaru 9999 nebo též 9999-01-01</li>
+		<li>Pro neukončenou dolní hranici intervalu se bude uvádět "unknown". </li>
+		<li>Pro neukončenou horní hranici intervalu se bude uvádět "unknown". </li>
 		</ul>
 	</ul>
 </p>
-<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. </p>
 		</help>
 	</msg>
 	<msg name="Extent">

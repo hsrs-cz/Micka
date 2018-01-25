@@ -549,7 +549,7 @@
     </xsl:variable>
     <xsl:element name="{$n}">
         <xsl:choose>
-            <xsl:when test="$row">               
+            <xsl:when test="$row">
                 <gmx:Anchor xlink:href="{$t}">
                     <xsl:choose>
                         <xsl:when test="$attrib">

@@ -98,7 +98,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                 <gco:CharacterString><xsl:value-of select="metadataStandardName"/></gco:CharacterString>
             </xsl:when>    
             <xsl:otherwise>    
-		          <gco:CharacterString>ISO 19115/INSPIRE_TG2/CZ4</gco:CharacterString>
+		          <gco:CharacterString>ISO <xsl:value-of select="iso"/>/INSPIRE_TG2/CZ4</gco:CharacterString>
             </xsl:otherwise>
          </xsl:choose>         
 	</gmd:metadataStandardName>
@@ -547,7 +547,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             <!-- geographic identifier -->
                             <xsl:choose>
                                 <xsl:when test="normalize-space(extentId)!=''">
-                                    <xsl:variable name="code" select="extentId"/>
+                                    <xsl:variable name="code" select="substring-before(extentId,'|')"/>
                                     <xsl:variable name="row" select="$codeLists/extents/value[@uri=$code]"/>
                                     <gmd:geographicElement>
                                         <gmd:EX_GeographicDescription>
@@ -560,25 +560,8 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                             </gmd:geographicIdentifier>
                                         </gmd:EX_GeographicDescription>
                                     </gmd:geographicElement>
-                                    <gmd:geographicElement>
-                                        <gmd:EX_GeographicBoundingBox>
-                                            <gmd:westBoundLongitude>
-                                                <gco:Decimal><xsl:value-of select="$row/@x1"/></gco:Decimal>
-                                            </gmd:westBoundLongitude>
-                                            <gmd:eastBoundLongitude>
-                                                <gco:Decimal><xsl:value-of select="$row/@x2"/></gco:Decimal>
-                                            </gmd:eastBoundLongitude>
-                                            <gmd:southBoundLatitude>
-                                                <gco:Decimal><xsl:value-of select="$row/@y1"/></gco:Decimal>
-                                            </gmd:southBoundLatitude>
-                                            <gmd:northBoundLatitude>
-                                                <gco:Decimal><xsl:value-of select="$row/@y2"/></gco:Decimal>
-                                            </gmd:northBoundLatitude>
-                                        </gmd:EX_GeographicBoundingBox>
-                                    </gmd:geographicElement>
                                 </xsl:when>
                                 
-                                <!-- BBOX -->
                                 <xsl:otherwise>
                                     <gmd:geographicElement>
                                         <gmd:EX_GeographicDescription>
@@ -589,24 +572,26 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                             </gmd:geographicIdentifier>
                                         </gmd:EX_GeographicDescription>
                                     </gmd:geographicElement>
-                                    <gmd:geographicElement>
-                                        <gmd:EX_GeographicBoundingBox>
-                                            <gmd:westBoundLongitude>
-                                                <gco:Decimal><xsl:value-of select="xmin"/></gco:Decimal>
-                                            </gmd:westBoundLongitude>
-                                            <gmd:eastBoundLongitude>
-                                                <gco:Decimal><xsl:value-of select="xmax"/></gco:Decimal>
-                                            </gmd:eastBoundLongitude>
-                                            <gmd:southBoundLatitude>
-                                                <gco:Decimal><xsl:value-of select="ymin"/></gco:Decimal>
-                                            </gmd:southBoundLatitude>
-                                            <gmd:northBoundLatitude>
-                                                <gco:Decimal><xsl:value-of select="ymax"/></gco:Decimal>
-                                            </gmd:northBoundLatitude>
-                                        </gmd:EX_GeographicBoundingBox>
-                                    </gmd:geographicElement>
                                 </xsl:otherwise>
                             </xsl:choose>
+                            
+                            <!-- BBOX -->
+                            <gmd:geographicElement>
+                                <gmd:EX_GeographicBoundingBox>
+                                    <gmd:westBoundLongitude>
+                                        <gco:Decimal><xsl:value-of select="xmin"/></gco:Decimal>
+                                    </gmd:westBoundLongitude>
+                                    <gmd:eastBoundLongitude>
+                                        <gco:Decimal><xsl:value-of select="xmax"/></gco:Decimal>
+                                    </gmd:eastBoundLongitude>
+                                    <gmd:southBoundLatitude>
+                                        <gco:Decimal><xsl:value-of select="ymin"/></gco:Decimal>
+                                    </gmd:southBoundLatitude>
+                                    <gmd:northBoundLatitude>
+                                        <gco:Decimal><xsl:value-of select="ymax"/></gco:Decimal>
+                                    </gmd:northBoundLatitude>
+                                </gmd:EX_GeographicBoundingBox>
+                            </gmd:geographicElement>
                             
 							<xsl:for-each select="tempExt/item">
 								<gmd:temporalElement>
@@ -1035,15 +1020,15 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                             </gmd:code>
                                         </gmd:RS_Identifier>
                                     </gmd:measureIdentification>
+                                    <xsl:variable name="c" select="normalize-space(substring-before(extentId,'|'))"/>
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'measureDescription'"/>
                                         <xsl:with-param name="codes" select="$codeLists/extents"/>
-                                        <xsl:with-param name="t" select="extentId"/>
+                                        <xsl:with-param name="t" select="$c"/>
                                     </xsl:call-template>
                                     <!--  <gmd:dateTime>
                                         <gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
                                     </gmd:dateTime>-->
-                                    <xsl:variable name="c" select="normalize-space(extentId)"/>
                                     <xsl:variable name="area" select="$codeLists/extents/value[@uri=$c]/@area"/>
                                     <gmd:result>
                                         <gmd:DQ_QuantitativeResult>

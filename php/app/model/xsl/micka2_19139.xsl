@@ -629,8 +629,28 @@
 			  		<gmd:EX_TemporalExtent>
             			<gmd:extent>
             				<gml:TimePeriod gml:id="TBE{position()}">
-            					<gml:beginPosition><xsl:value-of select="beginPosition" /></gml:beginPosition>
-            					<gml:endPosition><xsl:value-of select="endPosition" /></gml:endPosition>
+                                <xsl:choose>
+                                    <xsl:when test="beginPosition='undefined'">
+                                        <gml:beginPosition indeterminatePosition="undefined"/>
+                                    </xsl:when>
+                                    <xsl:when test="beginPosition='now'">
+                                        <gml:beginPosition indeterminatePosition="now"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <gml:beginPosition><xsl:value-of select="beginPosition"/></gml:beginPosition>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                                <xsl:choose>
+                                    <xsl:when test="endPosition='now'">
+                                        <gml:endPosition indeterminatePosition="now"/>
+                                    </xsl:when>
+                                    <xsl:when test="endPosition='undefined'">
+                                        <gml:endPosition indeterminatePosition="undefined"/>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <gml:endPosition><xsl:value-of select="endPosition"/></gml:endPosition>
+                                    </xsl:otherwise>
+                                </xsl:choose>
             				</gml:TimePeriod>
             			</gmd:extent>
 			  		</gmd:EX_TemporalExtent>

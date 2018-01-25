@@ -11,7 +11,7 @@ extension-element-prefixes="exsl"
 xmlns:php="http://php.net/xsl">
 <xsl:output method="xml"/>
 
-<xsl:template match="//gmd:MD_Metadata[contains(gmd:metadataStandardName/*,'ISO 19115/INSPIRE_TG2/CZ4')]|//gmi:MI_Metadata[contains(gmd:metadataStandardName/*,'ISO 19115/INSPIRE_TG2/CZ4')]">
+<xsl:template match="//gmd:MD_Metadata[contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4')]|//gmi:MI_Metadata[contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4')]">
 
 <xsl:variable name="codelists" select="document('../../xsl/codelists.xml')/map" />
 <xsl:variable name="specifications" select="document('../../dict/specif.xml')/userValues" />
