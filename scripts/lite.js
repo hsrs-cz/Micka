@@ -8,21 +8,29 @@ var lite = {
     init: function(){
         $('[data-tooltip="tooltip"]').tooltip();
         $('.sel2').select2();
+        $('.sel2').on('select2:select', {self: this}, this.onSelect);
+        $('.sel2').on('select2:unselect', {self: this}, this.onSelect);
         $('.person').on('select2:select', this.changePerson);
-        $('#extentId-sel').on('select2:select', this.changeExtent);
-        $('#serviceType-sel').on('select2:select', this.changeServiceType);
         this.createDuplicate();
         $.fn.datepicker.defaults.language=HS.getLang(2);
         $.fn.datepicker.defaults.todayHighlight = true;
         $.fn.datepicker.defaults.forceParse = false;
         if(lang=='cze') $.fn.datepicker.defaults.format = "dd.mm.yyyy";
         else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
+        $('.sel2:required').each(function(e){
+            if($(this).val()){
+                $(this.parentNode).find('.select2-selection').removeClass('micka-req');
+            }
+            else {
+                $(this.parentNode).find('.select2-selection').addClass('micka-req');
+            }
+
+        });
         this.processParent();
         this.processFc();
     },
     
     cswResults: function(data, page){
-        //console.log(data);
         return {
             results: $.map(data.records, function(rec) {
                 return {id: rec.id, text: rec.title, title: rec.abstract};
@@ -183,6 +191,27 @@ var lite = {
     changeServiceType: function(e){
         if(e.params.data.id=='other') $('#IOS').show();
         else $('#IOS').hide();
+    },
+    
+    onSelect: function(e){
+        if($(e.target).prop('required')){
+            if($(e.target).val()){
+                $(e.target.parentNode).find('.select2-selection').removeClass('micka-req');
+            }
+            else {
+                $(e.target.parentNode).find('.select2-selection').addClass('micka-req');
+            }
+        }
+        var self = e.data.self;
+        switch (e.target.id){
+            case 'serviceType-sel':
+                self.changeServiceType(e);
+                break;
+            case 'extentId-sel':
+                self.changeExtent(e);
+                break;
+            default:
+        }
     }
     
 }

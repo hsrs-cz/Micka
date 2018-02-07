@@ -289,3 +289,7 @@ a.valid2 {
     color: green;
 }
 
+.micka-req {
+    background-color: #FBB !important;
+    border-color: #E00 !important; 
+}

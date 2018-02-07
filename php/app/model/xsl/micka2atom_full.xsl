@@ -59,9 +59,9 @@
 	  			</xsl:call-template>
 	  		</xsl:if>	
 	  		<div>Metadata:
-	  			<a href="{$thisPath}/record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-	  			<a href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-	  			<a href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+	  			<a href="../record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+	  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+	  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 	  		</div>
 		  	<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	  	</subtitle>
@@ -69,18 +69,18 @@
 		<!-- link to download service ISO 19139 metadata -->
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-	    		<link href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
+	    		<link href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<link href="{$thisPath}/records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>
+				<link href="../records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	  	
 	  	<!-- Link to Open Search XML description -->
-		<link href="{$thisPath}/opensearch.php" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
+		<link href="../opensearch.php" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
-	    <link href="{$thisPath}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={gmd:fileIdentifier}" rel="self" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
+	    <link href="{$MICKA_URL}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={gmd:fileIdentifier}" rel="self" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
 
 	  	<!-- links to INSPIRE Spatial Object Type definitions for this pre-defined dataset -->
 	  	<!-- TO BE DONE -->
@@ -90,10 +90,10 @@
 	    
 	    <!-- upward link to the corresponding download service feed -->
 		<xsl:variable name="vazby" select="php:function('getMetadata', concat('uuidRef=',gmd:fileIdentifier/*))"/>
-	    <link rel="up" href="{$thisPath}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$vazby//gmd:MD_Metadata/gmd:fileIdentifier/*}" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
+	    <link rel="up" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$vazby//gmd:MD_Metadata/gmd:fileIdentifier/*}" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
 	    
 	    <!-- identifier -->
-      	<id><xsl:value-of select="concat($thisPath,'?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=',gmd:fileIdentifier)"/></id>
+      	<id><xsl:value-of select="concat('?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=',gmd:fileIdentifier)"/></id>
       	
       	<!-- rights, access restrictions -->
       	<rights type="html"><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
@@ -146,10 +146,10 @@
 				</xsl:for-each>
 				
 				<!-- link itself -->
-				<id><xsl:value-of select="concat($thisPath, 'csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
+				<id><xsl:value-of select="concat('?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
 				
 				<!--link to subfeed for the dataset-->
-				<link rel="alternate" href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
+				<link rel="alternate" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
 				
 				<!-- link to dataset metadata record -->
 				<link rel="describedby" href="{@xlink:href}" type="application/xml"/>
@@ -180,9 +180,9 @@
 			  			</xsl:call-template>
 			  		</xsl:if>	
 			  		<div>Metadata:
-			  			<a href="{$thisPath}/record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-			  			<a href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-			  			<a href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+			  			<a href="../record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+			  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+			  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 			  		</div>
 			  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 			  	</summary>

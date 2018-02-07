@@ -334,38 +334,39 @@ xmlns:php="http://php.net/xsl">
 <xsl:choose>
 
 	<xsl:when test="$srv">
-		<test code="3">
-		 	<description><xsl:value-of select="$labels/test[@code='3']"/></description>
-		 	<xpath>identificationInfo/*/descriptiveKeywords/MD_Keywords[contains(thesaurusName/*/title,'19119')]/keyword</xpath>
-		 	<xsl:if test="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'19119')]/gmd:keyword/*">
-				<value>
-					<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'19119')]/gmd:keyword">
-						<xsl:value-of select="*"/>
-						<xsl:if test="not(position()=last())">, </xsl:if>
-					</xsl:for-each>
-				</value>	
-				<pass>true</pass>
-			</xsl:if>
+        <xsl:if test="$hierarchy='service'">
+            <test code="3">
+                <description><xsl:value-of select="$labels/test[@code='3']"/></description>
+                <xpath>identificationInfo/*/descriptiveKeywords/MD_Keywords[contains(thesaurusName/*/title,'19119')]/keyword</xpath>
+                <xsl:if test="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/*,'19119')]/gmd:keyword/*">
+                    <value>
+                        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[contains(gmd:thesaurusName/*/gmd:title/gco:CharacterString,'19119')]/gmd:keyword">
+                            <xsl:value-of select="*"/>
+                            <xsl:if test="not(position()=last())">, </xsl:if>
+                        </xsl:for-each>
+                    </value>	
+                    <pass>true</pass>
+                </xsl:if>
 
-            <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)>0]">
-                <test code="a">
-        		 	<description><xsl:value-of select="$labels/test[@code='3a']"/></description>
-        		 	<xpath>identificationInfo/*/descriptiveKeywords/*/keyword</xpath>
-                    <xsl:choose>
-                        <xsl:when test="string-length(*/gmd:keyword)>0">
-        				    <value><xsl:value-of select="*/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/> = <xsl:value-of select="count(*/gmd:keyword)"/>
-                                (<xsl:for-each select="*/gmd:keyword"><xsl:value-of select="gco:CharacterString"/><xsl:if test="position() != last()">, </xsl:if></xsl:for-each>)
-                            </value>
-        				    <pass>true</pass>                    
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <err><xsl:value-of select="*/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/></err>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </test>
-            </xsl:for-each>
-
-		</test>	
+                <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)>0]">
+                    <test code="a">
+                        <description><xsl:value-of select="$labels/test[@code='3a']"/></description>
+                        <xpath>identificationInfo/*/descriptiveKeywords/*/keyword</xpath>
+                        <xsl:choose>
+                            <xsl:when test="string-length(*/gmd:keyword)>0">
+                                <value><xsl:value-of select="*/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/> = <xsl:value-of select="count(*/gmd:keyword)"/>
+                                    (<xsl:for-each select="*/gmd:keyword"><xsl:value-of select="gco:CharacterString"/><xsl:if test="position() != last()">, </xsl:if></xsl:for-each>)
+                                </value>
+                                <pass>true</pass>                    
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <err><xsl:value-of select="*/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/></err>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </test>
+                </xsl:for-each>
+            </test>	
+        </xsl:if>
 	</xsl:when>
 
 
