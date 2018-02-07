@@ -17,6 +17,8 @@ var lite = {
         $.fn.datepicker.defaults.forceParse = false;
         if(lang=='cze') $.fn.datepicker.defaults.format = "dd.mm.yyyy";
         else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
+        this.processParent();
+        this.processFc();
         $('.sel2:required').each(function(e){
             if($(this).val()){
                 $(this.parentNode).find('.select2-selection').removeClass('micka-req');
@@ -26,8 +28,6 @@ var lite = {
             }
 
         });
-        this.processParent();
-        this.processFc();
     },
     
     cswResults: function(data, page){

@@ -874,6 +874,15 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 							<gmd:level>
 								<gmd:MD_ScopeCode codeListValue="{hierarchyLevel}" codeList="{$cl}#MD_ScopeCode"><xsl:value-of select="hierarchyLevel"/></gmd:MD_ScopeCode>
 							</gmd:level>
+                            <gmd:levelDescription>
+                                <gmd:MD_ScopeDescription>
+                                    <gmd:other>
+                                        <xsl:if test="hierarchyLevel='service'">
+                                            <gco:CharacterString><xsl:value-of select="$codeLists/inspireServiceType/value[@name='service']/*[name()=$mdlang]"/></gco:CharacterString>
+                                        </xsl:if>
+                                    </gmd:other>
+                                </gmd:MD_ScopeDescription>
+                            </gmd:levelDescription>
 						</gmd:DQ_Scope>
 					</gmd:scope>
 

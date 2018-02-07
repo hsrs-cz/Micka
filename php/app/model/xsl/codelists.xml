@@ -2509,6 +2509,50 @@
         <cze>Spojené kralovství</cze>
 		<eng>United Kingdom</eng>
     </value>
+
+	<value x1="14.224" y1="49.942" x2="14.707" y2="50.177" uri="https://linked.cuzk.cz/resource/ruian/kraj/19" area="772.226">
+		<cze>Hlavní město Praha</cze>
+	</value>
+	<value x1="13.396" y1="49.501" x2="15.535" y2="50.619" uri="https://linked.cuzk.cz/resource/ruian/kraj/27" area="16985.048">
+		<cze>Středočeský kraj</cze>
+	</value>
+	<value x1="13.536" y1="48.552" x2="15.604" y2="49.621" uri="https://linked.cuzk.cz/resource/ruian/kraj/35" area="15345.749">
+		<cze>Jihočeský kraj</cze>
+	</value>
+	<value x1="12.401" y1="48.941" x2="13.840" y2="50.104" uri="https://linked.cuzk.cz/resource/ruian/kraj/43" area="11789.002">
+		<cze>Plzeňský kraj</cze>
+	</value>
+	<value x1="12.091" y1="49.890" x2="13.302" y2="50.460" uri="https://linked.cuzk.cz/resource/ruian/kraj/51" area="5163.019">
+		<cze>Karlovarský kraj</cze>
+	</value>
+	<value x1="12.940" y1="50.077" x2="14.653" y2="51.056" uri="https://linked.cuzk.cz/resource/ruian/kraj/60" area="8389.013">
+		<cze>Ústecký kraj</cze>
+	</value>
+	<value x1="14.343" y1="50.472" x2="15.633" y2="51.023" uri="https://linked.cuzk.cz/resource/ruian/kraj/78" area="4988.483">
+		<cze>Liberecký kraj</cze>
+	</value>
+	<value x1="15.104" y1="50.038" x2="16.586" y2="50.780" uri="https://linked.cuzk.cz/resource/ruian/kraj/86" area="7454.065">
+		<cze>Královéhradecký kraj</cze>
+	</value>
+	<value x1="15.363" y1="49.572" x2="16.867" y2="50.208" uri="https://linked.cuzk.cz/resource/ruian/kraj/94" area="7009.652">
+		<cze>Pardubický kraj</cze>
+	</value>
+	<value x1="14.888" y1="48.938" x2="16.418" y2="49.861" uri="https://linked.cuzk.cz/resource/ruian/kraj/108" area="10435.677">
+		<cze>Kraj Vysočina</cze>
+	</value>
+	<value x1="15.542" y1="48.617" x2="17.647" y2="49.633" uri="https://linked.cuzk.cz/resource/ruian/kraj/116" area="10962.372">
+		<cze>Jihomoravský kraj</cze>
+	</value>
+	<value x1="16.712" y1="49.269" x2="17.918" y2="50.449" uri="https://linked.cuzk.cz/resource/ruian/kraj/124" area="8154.790">
+		<cze>Olomoucký kraj</cze>
+	</value>
+	<value x1="17.147" y1="49.393" x2="18.859" y2="50.328" uri="https://linked.cuzk.cz/resource/ruian/kraj/132" area="8407.583">
+		<cze>Moravskoslezský kraj</cze>
+	</value>
+	<value x1="17.110" y1="48.854" x2="18.416" y2="49.540" uri="https://linked.cuzk.cz/resource/ruian/kraj/141" area="6060.384">
+		<cze>Zlínský kraj</cze>
+	</value>
+
 </extents>
 
 <!-- 8.1 -->

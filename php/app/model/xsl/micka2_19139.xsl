@@ -917,14 +917,23 @@
 						<gmd:DQ_Scope>
 							<gmd:level>
 								<xsl:choose>
-									<xsl:when test="*/scope/level/MD_ScopeCode!=''">
-										<gmd:MD_ScopeCode codeListValue="{*/scope/level/MD_ScopeCode}" codeList="{$clx}#MD_ScopeCode"><xsl:value-of select="dataQualityInfo/*/scope/level/MD_ScopeCode"/></gmd:MD_ScopeCode>
+									<xsl:when test="*/scope/*/level/MD_ScopeCode!=''">
+										<gmd:MD_ScopeCode codeListValue="{*/scope/*/level/MD_ScopeCode}" codeList="{$clx}#MD_ScopeCode"><xsl:value-of select="dataQualityInfo/*/scope/level/MD_ScopeCode"/></gmd:MD_ScopeCode>
 									</xsl:when>
 									<xsl:otherwise>
 										<gmd:MD_ScopeCode codeListValue="dataset" codeList="{$clx}#MD_ScopeCode">dataset</gmd:MD_ScopeCode>									
 									</xsl:otherwise>
 								</xsl:choose>
 							</gmd:level>
+                            <xsl:for-each select="*/scope/*/levelDescription">
+                                <gmd:levelDescription>
+                                    <gmd:MD_ScopeDescription>
+                                        <gmd:other>
+                                            <gco:CharacterString><xsl:value-of select="*/other"/></gco:CharacterString>
+                                        </gmd:other>
+                                    </gmd:MD_ScopeDescription>
+                                </gmd:levelDescription>
+                            </xsl:for-each>
 						</gmd:DQ_Scope>
 					</gmd:scope>
 				<xsl:for-each select="*/report">
