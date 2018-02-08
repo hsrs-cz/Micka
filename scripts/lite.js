@@ -19,14 +19,9 @@ var lite = {
         else $.fn.datepicker.defaults.format = "yyyy-mm-dd";
         this.processParent();
         this.processFc();
+        var self = this;
         $('.sel2:required').each(function(e){
-            if($(this).val()){
-                $(this.parentNode).find('.select2-selection').removeClass('micka-req');
-            }
-            else {
-                $(this.parentNode).find('.select2-selection').addClass('micka-req');
-            }
-
+            self.setMandatory(this);
         });
     },
     
@@ -157,7 +152,7 @@ var lite = {
     changePerson: function(e){
         var data = e.params.data;
         var parent = $(e.target).parent().parent().parent();
-        $(e.target).parent().children('.hperson').val(data.text);
+        $(e.target).parent().children('.hperson').val(data.person);
         // if gets data from predefined list
         var o;
         if(data.person){
@@ -194,15 +189,8 @@ var lite = {
     },
     
     onSelect: function(e){
-        if($(e.target).prop('required')){
-            if($(e.target).val()){
-                $(e.target.parentNode).find('.select2-selection').removeClass('micka-req');
-            }
-            else {
-                $(e.target.parentNode).find('.select2-selection').addClass('micka-req');
-            }
-        }
         var self = e.data.self;
+        self.setMandatory(e.target);
         switch (e.target.id){
             case 'serviceType-sel':
                 self.changeServiceType(e);
@@ -211,6 +199,17 @@ var lite = {
                 self.changeExtent(e);
                 break;
             default:
+        }
+    },
+    
+    setMandatory: function(target){
+        if($(target).prop('required')){
+            if($(target).val()){
+                $(target.parentNode).find('.select2-selection').removeClass('micka-req');
+            }
+            else {
+                $(target.parentNode).find('.select2-selection').addClass('micka-req');
+            }
         }
     }
     

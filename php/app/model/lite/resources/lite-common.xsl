@@ -328,7 +328,7 @@
                         </xsl:choose>
                     </xsl:attribute>
                     <!-- blank value -->
-                    <xsl:if test="string-length($value)=0"><option></option></xsl:if>
+                    <xsl:if test="string-length($value)=0 or $codeLists/*[name()=$codes]/value[@uri != exsl:node-set($value)[*/@xlink:href]]"><option></option></xsl:if>
                     <!-- codelist loop -->
                     <xsl:for-each select="$codeLists/*[name()=$codes]/value">
                         <xsl:variable name="r" select="."/>

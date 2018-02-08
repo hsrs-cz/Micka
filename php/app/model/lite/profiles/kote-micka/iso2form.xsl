@@ -324,7 +324,7 @@
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*,'19119')]/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'serviceKeyword'"/>
                 <xsl:with-param name="req" select="1"/>
-                <xsl:with-param name="multi" select="0"/>
+                <xsl:with-param name="multi" select="1"/>
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template>
 
@@ -444,6 +444,9 @@
         <xsl:variable name="value" select="gmd:identificationInfo/*/*/*/gmd:geographicElement/*/gmd:geographicIdentifier/*/gmd:code/*/@xlink:href"/>
         <div class="col-xs-12 col-md-8">
             <select id="extentId-sel" name="extentId" class="sel2" data-allow-clear="true" data-placeholder="{$labels/msg[@name='sel']/*}">
+                <xsl:if test="string-length($value)=0">
+                    <option></option>
+                </xsl:if>
                 <xsl:for-each select="$codeLists/extents/value">
                     <xsl:variable name="r" select="."/>
                     <option value="{@uri}|{@x1} {@y1} {@x2} {@y2}">
@@ -952,7 +955,7 @@
                 <xsl:with-param name="codes" select="'sds'"/>
                 <xsl:with-param name="valid" select="'IOS-1'"/>
                 <xsl:with-param name="multi" select="0"/>
-                <xsl:with-param name="class" select="'short '"/>
+                <xsl:with-param name="class" select="'short'"/>
             </xsl:call-template>
             <!-- IOS-2 - quality  --> 
             <div class="row">

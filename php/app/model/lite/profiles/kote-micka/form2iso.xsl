@@ -1158,7 +1158,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	  				</xsl:if>
                     
 					<!-- IO-2 - services -->
-                    <xsl:if test="availability">
+                    <xsl:if test="normalize-space(availability)">
                         <xsl:variable name="topol" select="."/>
                         <gmd:report>
                             <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
@@ -1226,8 +1226,8 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                         </gmd:report>
                     </xsl:if>
                     
-                    <!--gmd:report>
-                        <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                    <gmd:report>
+                        <gmd:DQ_ConceptualConsistency>
                             <gmd:nameOfMeasure>
                                 <gmx:Anchor xlink:href=""></gmx:Anchor>
                             </gmd:nameOfMeasure>
@@ -1243,7 +1243,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                 </gmd:DQ_QuantitativeResult>
                             </gmd:result>
                         </gmd:DQ_ConceptualConsistency>
-                    </gmd:report-->
+                    </gmd:report>
                     
                     <gmd:lineage>
                         <gmd:LI_Lineage>
