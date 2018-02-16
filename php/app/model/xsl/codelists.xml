@@ -74,57 +74,57 @@
   <language>
     <value name="cze" code="cze" code2="cs">
         <cze>čeština</cze>
-		    <eng>Czech</eng>
+		<eng>Czech</eng>
         <spa>Checo</spa>
     </value>
     <value name="eng" code="eng" code2="en">
         <cze>angličtina</cze>
-		    <eng>English</eng>
+		<eng>English</eng>
         <spa>Inglés</spa>
     </value>
     <value name="fre" code="fre" code2="fr">
         <cze>francouzština</cze>
-		    <eng>French</eng>
+		<eng>French</eng>
         <spa>Frencés</spa>
     </value>
     <value name="ger" code="ger" code2="de">
         <cze>němčina</cze>
-		    <eng>German</eng>
+		<eng>German</eng>
         <spa>Alemán</spa>
     </value>
     <value name="pol" code="pol" code2="pl">
         <cze>polština</cze>
-		    <eng>Polish</eng>
+		<eng>Polish</eng>
         <spa>Polaco</spa>
     </value>
     <value name="ita" code="ita" code2="it">
         <cze>italština</cze>
-		    <eng>Italian</eng>
+		<eng>Italian</eng>
         <spa>Italiano</spa>
     </value>
     <value name="slv" code="slv" code2="sl">
         <cze>slovinština</cze>
-		    <eng>Slovene</eng>
+	    <eng>Slovene</eng>
         <spa>Esloveno</spa>
     </value>
     <value name="slo" code="slo" code2="sk">
         <cze>slovenština</cze>
-		    <eng>Slovak</eng>
+	    <eng>Slovak</eng>
         <spa>Eslovaco</spa>
     </value>
     <value name="lav" code="lav" code2="lv">
         <cze>lotyšština</cze>
-		    <eng>Latvian</eng>
+	    <eng>Latvian</eng>
         <spa>Latvian</spa>
     </value>
     <value name="swe" code="swe" code2="sv">
         <cze>švédština</cze>
-		    <eng>Swedish</eng>
+	    <eng>Swedish</eng>
         <spa>Swedish</spa>
     </value>
     <value name="por" code="por" code2="pt">
         <cze>portugalština</cze>
-		    <eng>Portuguese</eng>
+	    <eng>Portuguese</eng>
         <eng>Portugués</eng>
     </value>
     <value name="nor" code="nor" code2="no">
@@ -142,6 +142,7 @@
     <value name="spa" code="spa" code2="es">
         <cze>španělština</cze>
 		<eng>Spanish</eng>
+        <spa>Español</spa>
     </value>
     <value name="fin" code="fin" code2="fi">
         <cze>finština</cze>
@@ -188,7 +189,7 @@
         <cze>ukrajinština</cze>
 		<eng>Ukrainian</eng>
     </value>
-    <value name="zxx" code="zxx" code2="">
+    <value name="zxx" code="zxx" code2="xx">
         <cze>žádný</cze>
 		<eng>no language</eng>
     </value>
@@ -1668,6 +1669,9 @@
   </specifications>
 
   <serviceType>
+    <title lang="eng">Service type</title>
+    <title lang="cze">Typ služby</title>
+    <title lang="esp">Service type</title>
   	<value name="view" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/view" code="">
         <cze>prohlížecí</cze>
 		<eng>view</eng>
@@ -2183,202 +2187,202 @@
     <title lang="eng">Protocols</title>
     <value code="WWW:LINK-1.0-http--link" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--link">
         <cze>WWW - link</cze>
-		    <eng>WWW - link</eng>
+        <eng>WWW - link</eng>
         <spa>WWW - Enlace</spa>
     </value>
     <value code="WWW:DOWNLOAD-1.0-http--download" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-http--download">
         <cze>WWW - download</cze>
-		    <eng>WWW - download</eng>
+        <eng>WWW - download</eng>
         <spa>WWW - descarga</spa>
     </value>
     <value code="WWW:LINK-1.0-http--rss" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--rss">
         <cze>RSS</cze>
-		    <eng>RSS</eng>
+        <eng>RSS</eng>
         <spa>RSS</spa>
     </value>
     <value code="WWW:LINK-1.0-http--atom" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:LINK-1.0-http--atom">
         <cze>ATOM</cze>
-		    <eng>ATOM</eng>
+        <eng>ATOM</eng>
         <spa>ATOM</spa>
     </value>
     <value code="WWW:DOWNLOAD-1.0-ftp--download" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-ftp--download">
         <cze>FTP</cze>
-		    <eng>FTP</eng>
+        <eng>FTP</eng>
         <spa>FTP</spa>
     </value>
     <value code="OGC:WMS" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS">
         <cze>WMS</cze>
-		    <eng>WMS</eng>
+	    <eng>WMS</eng>
         <spa>WMS</spa>
     </value>
     <value code="OGC:WMS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.0.0-http-get-capabilities">
         <cze>WMS 1.0.0</cze>
-		    <eng>WMS 1.0.0</eng>
+        <eng>WMS 1.0.0</eng>
         <spa>WMS 1.0.0</spa>
     </value>
     <value code="OGC:WMS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.0-http-get-capabilities">
         <cze>WMS 1.1.0</cze>
-		    <eng>WMS 1.1.0</eng>
+        <eng>WMS 1.1.0</eng>
         <spa>WMS 1.1.0</spa>
     </value>
     <value code="OGC:WMS-1.1.1-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.1.1-http-get-capabilities">
         <cze>WMS 1.1.1</cze>
-		    <eng>WMS 1.1.1</eng>
+        <eng>WMS 1.1.1</eng>
         <spa>WMS 1.1.1</spa>
     </value>
     <value code="OGC:WMS-1.3.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-1.3.0-http-get-capabilities">
         <cze>WMS 1.3.0</cze>
-		    <eng>WMS 1.3.0</eng>
+        <eng>WMS 1.3.0</eng>
         <spa>WMS 1.3.0</spa>
     </value>
     <value code="OGC:WFS" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS">
         <cze>WFS</cze>
-		    <eng>WFS</eng>
+        <eng>WFS</eng>
         <spa>WFS</spa>
     </value>
     <value code="OGC:WFS-1.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-get-capabilities">
         <cze>WFS 1.0.0 / Get</cze>
-		    <eng>WFS 1.0.0 / Get</eng>
+        <eng>WFS 1.0.0 / Get</eng>
         <spa>WFS 1.0.0 / Get</spa>
     </value>
     <value code="OGC:WFS-1.0.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.0.0-http-post-capabilities">
         <cze>WFS 1.0.0 / Post</cze>
-		    <eng>WFS 1.0.0 / Post</eng>
+        <eng>WFS 1.0.0 / Post</eng>
         <spa>WFS 1.0.0 / Post</spa>
     </value>
     <value code="OGC:WFS-1.1.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-get-capabilities">
         <cze>WFS 1.1.0 / Get</cze>
-		    <eng>WFS 1.1.0 / Get</eng>
+        <eng>WFS 1.1.0 / Get</eng>
         <spa>WFS 1.1.0 / Get</spa>
     </value>
     <value code="OGC:WFS-1.1.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-1.1.0-http-post-capabilities">
         <cze>WFS 1.1.0 / Post</cze>
-		    <eng>WFS 1.1.0 / Post</eng>
+        <eng>WFS 1.1.0 / Post</eng>
         <spa>WFS 1.1.0 / Post</spa>
     </value>
     <value code="OGC:WFS-2.0.0-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-get-capabilities">
         <cze>WFS 2.0.0 / Get</cze>
-		    <eng>WFS 2.0.0 / Get</eng>
+        <eng>WFS 2.0.0 / Get</eng>
         <spa>WFS 2.0.0 / Get</spa>
     </value>
     <value code="OGC:WFS-2.0.0-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WFS-2.0.0-http-post-capabilities">
         <cze>WFS 2.0.0 / Post</cze>
-		    <eng>WFS 2.0.0 / Post</eng>
+        <eng>WFS 2.0.0 / Post</eng>
         <spa>WFS 2.0.0 / Post</spa>
     </value>
     <value code="OGC:CSW-2.0.2-http-get-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-get-capabilities">
         <cze>CSW 2.0.2 / Get</cze>
-		    <eng>CSW 2.0.2 / Get</eng>
+        <eng>CSW 2.0.2 / Get</eng>
         <spa>CSW 2.0.2 / Get</spa>
     </value>
     <value code="OGC:CSW-2.0.2-http-post-capabilities" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:CSW-2.0.2-http-post-capabilities">
         <cze>CSW 2.0.2 / Post</cze>
-		    <eng>CSW 2.0.2 / Post</eng>
+        <eng>CSW 2.0.2 / Post</eng>
         <spa>CSW 2.0.2 / Post</spa>
     </value>
     <value code="ESRI:AIMS--http-get-image" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-image">
         <cze>ESRI ArcIMS image service</cze>
-		    <eng>ESRI ArcIMS image service</eng>
+        <eng>ESRI ArcIMS image service</eng>
         <spa>Servicio de Imagen ESRI ArcIMS</spa>
     </value>
     <value code="ESRI:AIMS--http-get-feature" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http-get-feature">
         <cze>ESRI ArcIMS feature service</cze>
-		    <eng>ESRI ArcIMS feature service</eng>
+        <eng>ESRI ArcIMS feature service</eng>
         <spa>Servicio de Entidades de ESRI ArcIMS</spa>
     </value>
     <value code="ESRI:AIMS--http--configuration" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:AIMS--http--configuration">
         <cze>ArcIMS Map Service (*.AXL)</cze>
-		    <eng>ArcIMS Map Service (*.AXL)</eng>
+        <eng>ArcIMS Map Service (*.AXL)</eng>
         <spa>Servicio de Mapas ArcIMS (*.AXL)</spa>
     </value>
     <value code="ESRI:MAP-10.2-http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-rest">
         <cze>ESRI ArcGIS MAP REST</cze>
-		    <eng>ESRI ArcGIS MAP REST</eng>
+        <eng>ESRI ArcGIS MAP REST</eng>
         <spa>ESRI ArcGIS MAP REST</spa>
     </value>
     <value code="ESRI:MAP-10.2-http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:MAP-10.2-http-soap">
         <cze>ESRI ArcGIS MAP SOAP</cze>
-		    <eng>ESRI ArcGIS MAP SOAP</eng>
+        <eng>ESRI ArcGIS MAP SOAP</eng>
         <spa>ESRI ArcGIS MAP SOAP</spa>
     </value>
     <value code="ESRI:FEATURE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-rest">
         <cze>ESRI ArcGIS FEATURE REST</cze>
-		    <eng>ESRI ArcGIS FEATURE REST</eng>
+        <eng>ESRI ArcGIS FEATURE REST</eng>
         <spa>ESRI ArcGIS FEATURE REST</spa>
     </value>
     <value code="ESRI:FEATURE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:FEATURE--http-soap">
         <cze>ESRI ArcGIS FEATURE SOAP</cze>
-		    <eng>ESRI ArcGIS FEATURE SOAP</eng>
+        <eng>ESRI ArcGIS FEATURE SOAP</eng>
         <spa>ESRI ArcGIS FEATURE SOAP</spa>
     </value>
     <value code="ESRI:GEOCODE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-rest">
         <cze>ESRI ArcGIS GEOCODE REST</cze>
-		    <eng>ESRI ArcGIS GEOCODE REST</eng>
+        <eng>ESRI ArcGIS GEOCODE REST</eng>
         <spa>ESRI ArcGIS GEOCODE REST</spa>
     </value>
     <value code="ESRI:GEOCODE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOCODE--http-soap">
         <cze>ESRI ArcGIS GEOCODE SOAP</cze>
-		    <eng>ESRI ArcGIS GEOCODE SOAP</eng>
+        <eng>ESRI ArcGIS GEOCODE SOAP</eng>
         <spa>ESRI ArcGIS GEOCODE SOAP</spa>
     </value>
     <value code="ESRI:GEODATA--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-rest">
         <cze>ESRI ArcGIS GEODATA REST</cze>
-		    <eng>ESRI ArcGIS GEODATA REST</eng>
+        <eng>ESRI ArcGIS GEODATA REST</eng>
         <spa>ESRI ArcGIS GEODATA REST</spa>
     </value>
     <value code="ESRI:GEODATA--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEODATA--http-soap">
         <cze>ESRI ArcGIS GEODATA SOAP</cze>
-		    <eng>ESRI ArcGIS GEODATA SOAP</eng>
+        <eng>ESRI ArcGIS GEODATA SOAP</eng>
         <spa>ESRI ArcGIS GEODATA SOAP</spa>
     </value>
     <value code="ESRI:GEOMETRY--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-rest">
         <cze>ESRI ArcGIS GEOMETRY REST</cze>
-		    <eng>ESRI ArcGIS GEOMETRY REST</eng>
+        <eng>ESRI ArcGIS GEOMETRY REST</eng>
         <spa>ESRI ArcGIS GEOMETRY REST</spa>
     </value>
     <value code="ESRI:GEOMETRY--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GEOMETRY--http-soap">
         <cze>ESRI ArcGIS GEOMETRY SOAP</cze>
-		    <eng>ESRI ArcGIS GEOMETRY SOAP</eng>
+        <eng>ESRI ArcGIS GEOMETRY SOAP</eng>
         <spa>ESRI ArcGIS GEOMETRY SOAP</spa>
     </value>
     <value code="ESRI:GP--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GP--http-rest">
         <cze>ESRI ArcGIS Geoprocessing REST</cze>
-		    <eng>ESRI ArcGIS Geoprocessing REST</eng>
+        <eng>ESRI ArcGIS Geoprocessing REST</eng>
         <spa>ESRI ArcGIS Geoprocessing REST</spa>
     </value>
     <value code="ESRI:GP--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GP--http-soap">
         <cze>ESRI ArcGIS Geoprocessing SOAP</cze>
-		    <eng>ESRI ArcGIS Geoprocessing SOAP</eng>
+        <eng>ESRI ArcGIS Geoprocessing SOAP</eng>
         <spa>ESRI ArcGIS Geoprocessing SOAP</spa>
     </value>
     <value code="ESRI:GLOBE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-rest">
         <cze>ESRI ArcGIS GLOBE REST</cze>
-		    <eng>ESRI ArcGIS GLOBE REST</eng>
+        <eng>ESRI ArcGIS GLOBE REST</eng>
         <spa>ESRI ArcGIS GLOBE REST</spa>
     </value>
     <value code="ESRI:GLOBE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:GLOBE--http-soap">
         <cze>ESRI ArcGIS GLOBE SOAP</cze>
-		    <eng>ESRI ArcGIS GLOBE SOAP</eng>
+        <eng>ESRI ArcGIS GLOBE SOAP</eng>
         <spa>ESRI ArcGIS GLOBE SOAP</spa>
     </value>
     <value code="ESRI:IMAGE--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-rest">
         <cze>ESRI ArcGIS IMAGE REST</cze>
-		    <eng>ESRI ArcGIS IMAGE REST</eng>
+        <eng>ESRI ArcGIS IMAGE REST</eng>
         <spa>ESRI ArcGIS IMAGE REST</spa>
     </value>
     <value code="ESRI:IMAGE--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:IMAGE--http-soap">
         <cze>ESRI ArcGIS IMAGE SOAP</cze>
-		    <eng>ESRI ArcGIS IMAGE SOAP</eng>
+        <eng>ESRI ArcGIS IMAGE SOAP</eng>
         <spa>ESRI ArcGIS IMAGE SOAP</spa>
     </value>
     <value code="ESRI:NA--http-rest" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:NA--http-rest">
         <cze>ESRI ArcGIS Network Analysis REST</cze>
-		    <eng>ESRI ArcGIS Network Analysis REST</eng>
+        <eng>ESRI ArcGIS Network Analysis REST</eng>
         <spa>ESRI ArcGIS Network Analysis REST</spa>
     </value>
     <value code="ESRI:NA--http-soap" uri="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/ESRI:NA--http-soap">
         <cze>ESRI ArcGIS Network Analysis SOAP</cze>
-		    <eng>ESRI ArcGIS Network Analysis SOAP</eng>
+        <eng>ESRI ArcGIS Network Analysis SOAP</eng>
         <spa>ESRI ArcGIS Network Analysis SOAP</spa>
     </value>
 </protocol>

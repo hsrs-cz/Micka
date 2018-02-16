@@ -72,7 +72,7 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 		</help>
 	</msg>
 	<msg name="dateType">
-		<label>5a Typ data</label>
+		<label>Typ data</label>
 		<help>Určuje, které události, z předchozí položky „Referenční datum“, se datum týká.
             <p class="pozn">Nemůže existovat více než jedno datum poslední revize. </p>
 		</help>

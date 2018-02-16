@@ -121,15 +121,15 @@
                         </xsl:call-template>
                         <div class="col-xs-12 col-md-8">
                             <xsl:variable name="value" select="*/gmd:description"/>
-                            <input name="linkage-description[][TXT]" class="form-control txt {/*/gmd:language/*/@codeListValue} inp2" value="{php:function('noMime',string(*/gmd:description/*))}"/>
+                            <input name="linkage-description[][TXT]" class="form-control hsf txt {/*/gmd:language/*/@codeListValue} inp2" value="{php:function('noMime',string(*/gmd:description/*))}"/>
                             <xsl:for-each select="$langs">
                                 <xsl:variable name="pos" select="position()"/>
                                 <xsl:choose>
                                     <xsl:when test="$value">
-                                        <input name="linkage-description[][{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue}" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}"/>
+                                        <input name="linkage-description[][{*/gmd:languageCode/*/@codeListValue}]" class="form-control hsf txt {*/gmd:languageCode/*/@codeListValue}" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}"/>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <input name="linkage-description[][{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue}" value=""/>
+                                        <input name="linkage-description[][{*/gmd:languageCode/*/@codeListValue}]" class="form-control hsf txt {*/gmd:languageCode/*/@codeListValue}" value=""/>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             
@@ -173,6 +173,7 @@
         
         <div class="col-xs-12 col-md-8">
             <select name="identifier[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
+                <xsl:if test="not($serv)"><xsl:attribute name="required">required</xsl:attribute></xsl:if>
                 <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
                     <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
                 </xsl:for-each>
@@ -428,10 +429,10 @@
 	
         <div class="col-xs-12 col-md-8">
             <div id="overmap" style="width:100%; height:400px;"></div>
-            <input type="text" class="form-control tiny" id="xmin" name="xmin" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:westBoundLongitude/*}" size="5" />
-            <input type="text" class="form-control tiny" id="ymin" name="ymin" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:southBoundLatitude/*}" size="5" />
-            <input type="text" class="form-control tiny" id="xmax" name="xmax" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:eastBoundLongitude/*}" size="5" />
-            <input type="text" class="form-control tiny" id="ymax" name="ymax" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:northBoundLatitude/*}" size="5" />
+            <input type="text" class="form-control hsf tiny" id="xmin" name="xmin" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:westBoundLongitude/*}" size="5" />
+            <input type="text" class="form-control hsf tiny" id="ymin" name="ymin" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:southBoundLatitude/*}" size="5" />
+            <input type="text" class="form-control hsf tiny" id="xmax" name="xmax" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:eastBoundLongitude/*}" size="5" />
+            <input type="text" class="form-control hsf tiny" id="ymax" name="ymax" pattern="[-+]?[0-9]*\.?[0-9]*" value="{//gmd:identificationInfo//gmd:geographicElement/*/gmd:northBoundLatitude/*}" size="5" />
         </div>
     </div>
     <!-- CZ-14 geographic identifier -->
@@ -522,8 +523,8 @@
             <xsl:for-each select="gmd:identificationInfo/*/*/*/gmd:temporalElement|/.">
                 <xsl:if test="string-length(*/gmd:extent)>0 or(string-length(*/gmd:extent)=0 and position()=last())">
                     <div>
-                       <input class="D form-control" style="display:inline-block" data-provide="datepicker" name="tempExt-from[]" value="{php:function('iso2date', string(*/gmd:extent/*/*[1]),$mlang)}{*/gmd:extent/*/*[1]/@indeterminatePosition}"/> 
-                      - <input class="D form-control" style="display:inline-block" data-provide="datepicker" name="tempExt-to[]"  value="{php:function('iso2date', string(*/gmd:extent/*/*[2]),$mlang)}{*/gmd:extent/*/*[2]/@indeterminatePosition}"/> 
+                       <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-from[]" value="{php:function('iso2date', string(*/gmd:extent/*/*[1]),$mlang)}{*/gmd:extent/*/*[1]/@indeterminatePosition}"/> 
+                      - <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-to[]"  value="{php:function('iso2date', string(*/gmd:extent/*/*[2]),$mlang)}{*/gmd:extent/*/*[2]/@indeterminatePosition}"/> 
                         <xsl:text> </xsl:text><span class="duplicate"></span>
                     </div>
                 </xsl:if>
@@ -587,40 +588,42 @@
     </xsl:if>
     
     <!-- 7 -->
-    <div>
-        <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'https://data.europa.eu/eli/')]|/.">
-            <xsl:if test="string-length(*/gmd:specification)>0 or (string-length(*/gmd:specification)=0 and position()=last())">
-                <fieldset>
-                    <div class="row">
-                        <xsl:call-template name="drawLabel">
-                            <xsl:with-param name="name" select="'Conformity'"/>
-                            <xsl:with-param name="class" select="'mand'"/>
-                            <xsl:with-param name="dupl" select="1"/>
-                            <xsl:with-param name="valid" select="'7.1'"/>
-                        </xsl:call-template>		
-                    </div>
-                    
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'specification'"/>
-                        <xsl:with-param name="path" select="'specification-uri[]'"/>
-                        <xsl:with-param name="value" select="*/gmd:specification/*/gmd:title"/>
-                        <xsl:with-param name="class" select="'inp2'"/>
-                        <xsl:with-param name="req" select="1"/>
-                        <xsl:with-param name="codes" select="'specifications'"/> 
-                    </xsl:call-template>
+    <xsl:if test="gmd:hierarchyLevel/*/@codeListValue!='application'">
+        <div>
+            <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'https://data.europa.eu/eli/')]|/.">
+                <xsl:if test="string-length(*/gmd:specification)>0 or (string-length(*/gmd:specification)=0 and position()=last())">
+                    <fieldset>
+                        <div class="row">
+                            <xsl:call-template name="drawLabel">
+                                <xsl:with-param name="name" select="'Conformity'"/>
+                                <xsl:with-param name="class" select="'mand'"/>
+                                <xsl:with-param name="dupl" select="1"/>
+                                <xsl:with-param name="valid" select="'7.1'"/>
+                            </xsl:call-template>		
+                        </div>
+                        
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'specification'"/>
+                            <xsl:with-param name="path" select="'specification-uri[]'"/>
+                            <xsl:with-param name="value" select="*/gmd:specification/*/gmd:title"/>
+                            <xsl:with-param name="class" select="'inp2'"/>
+                            <xsl:with-param name="req" select="1"/>
+                            <xsl:with-param name="codes" select="'specifications'"/> 
+                        </xsl:call-template>
 
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'compliant'"/>
-                        <xsl:with-param name="path" select="'specification-compliant[]'"/>
-                        <xsl:with-param name="value" select="*/gmd:pass/gco:Boolean|*/gmd:pass/@gco:nilReason"/>
-                        <xsl:with-param name="codes" select="'compliant'"/>
-                        <xsl:with-param name="req" select="1"/>
-                        <xsl:with-param name="class" select="'short inp2'"/>
-                    </xsl:call-template>
-                </fieldset>
-            </xsl:if>
-        </xsl:for-each>
-    </div>
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'compliant'"/>
+                            <xsl:with-param name="path" select="'specification-compliant[]'"/>
+                            <xsl:with-param name="value" select="*/gmd:pass/gco:Boolean|*/gmd:pass/@gco:nilReason"/>
+                            <xsl:with-param name="codes" select="'compliant'"/>
+                            <xsl:with-param name="req" select="1"/>
+                            <xsl:with-param name="class" select="'short inp2'"/>
+                        </xsl:call-template>
+                    </fieldset>
+                </xsl:if>
+            </xsl:for-each>
+        </div>
+    </xsl:if>
     
   	<!-- Conditions applying to access and use --> 
 	<xsl:call-template name="drawInput">
@@ -1158,38 +1161,39 @@
     </fieldset> 
 </xsl:if>-->
 
-	<div class="row">
-        <xsl:call-template name="drawLabel">
-            <xsl:with-param name="name" select="'inspireEU'"/>
-            <xsl:with-param name="class" select="'cond wide'"/>
-        </xsl:call-template>
-        
-        <xsl:variable name="s" select="$codeLists/inspireServiceType/value[@name='service']/*[name()=$mlang]"/>
-        <xsl:for-each select="gmd:hierarchyLevelName[not(*='http://geoportal.gov.cz/inspire') and not(*=$s)]">
-            <input type="hidden" name="hlName[]" value="{*}"/>
-        </xsl:for-each>
-		
-		<div class="col-xs-12 col-md-8">
-            <xsl:choose>
-                <xsl:when test="string-length(gmd:hierarchyLevelName[*='http://geoportal.gov.cz/inspire'])>0">
-			        <input type="checkbox" checked="checked" name="inspireEU"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <input type="checkbox" name="inspireEU"/>
-                </xsl:otherwise>     
-            </xsl:choose>
-		</div>
-	</div>
+    <xsl:if test="gmd:hierarchyLevel/*/@codeListValue!='application'">
+        <div class="row">
+                <xsl:call-template name="drawLabel">
+                    <xsl:with-param name="name" select="'inspireEU'"/>
+                    <xsl:with-param name="class" select="'cond wide'"/>
+                </xsl:call-template>
+            
+            <xsl:variable name="s" select="$codeLists/inspireServiceType/value[@name='service']/*[name()=$mlang]"/>
+            <xsl:for-each select="gmd:hierarchyLevelName[not(*='http://geoportal.gov.cz/inspire') and not(*=$s)]">
+                <input type="hidden" name="hlName[]" value="{*}"/>
+            </xsl:for-each>
+            
+            <div class="col-xs-12 col-md-8">
+                <xsl:choose>
+                    <xsl:when test="string-length(gmd:hierarchyLevelName[*='http://geoportal.gov.cz/inspire'])>0">
+                        <input type="checkbox" checked="checked" name="inspireEU"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <input type="checkbox" name="inspireEU"/>
+                    </xsl:otherwise>     
+                </xsl:choose>
+            </div>
+        </div>
     
-   
-    <xsl:call-template name="drawInput">
-        <xsl:with-param name="name" select="'obligatory'"/>
-        <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:citation/*/gmd:otherCitationDetails"/>
-        <xsl:with-param name="codes" select="'obligatory'"/>
-        <xsl:with-param name="class" select="'short'"/>
-        <xsl:with-param name="multi" select="0"/>
-        <xsl:with-param name="valid" select="'CZ-13'"/>
-    </xsl:call-template>
+        <xsl:call-template name="drawInput">
+            <xsl:with-param name="name" select="'obligatory'"/>
+            <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:citation/*/gmd:otherCitationDetails"/>
+            <xsl:with-param name="codes" select="'obligatory'"/>
+            <xsl:with-param name="class" select="'short'"/>
+            <xsl:with-param name="multi" select="0"/>
+            <xsl:with-param name="valid" select="'CZ-13'"/>
+        </xsl:call-template>
+    </xsl:if>
 
     <xsl:if test="not($serv)">
     <div class="row">

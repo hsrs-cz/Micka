@@ -690,15 +690,9 @@ function thes1(thesaurus, term_id, langs, terms, date, tdate){
 }
 
 function fc(obj){
-    md_elem=obj.parentNode;
-    md_dexpand1(md_elem);
-    $("#md-dialog").modal();
-    var html = '<div class="panel-heading">'
-    +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-    +'<h4>'+HS.i18n('Select record')+'</h4></div>';
-    html += '<div class="modal-body"><select id="parent-select"></select><div id="fc-features"></div></div>';
-    html += '<div  class="modal-footer"><button id="fc-confirm" class="btn btn-primary">OK</button></div></div>';
-    $("#md-content").html(html);
+    var html = '<select id="parent-select"></select><div id="fc-features"></div></div>';
+    micka.window(obj, HS.i18n('Select record'), html, '<button id="fc-confirm" class="btn btn-primary">OK</button>');
+    md_dexpand1(obj.parentNode);
     $("#parent-select").select2({
         ajax: {
             url: baseUrl + '/csw/?format=application/json&elementsetname=full&lang='+lang,
@@ -788,18 +782,12 @@ function fc1(fcObj, lyrlist){
 }*/
 
 function cover(obj){
-    md_elem=obj.parentNode;
-    $("#md-dialog").modal();
-    var html = '<div class="panel-heading">'
-    +'<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
-    +'<h4>'+HS.i18n('Area coverage')+'</h4></div>';
-    html += '<div class="modal-body">'
-			+'<label>'+HS.i18n('Percent')+'</label><input id="cover-perc" class="form-control" type="number" required="required" min="0" max="100" value="100"/>'
+    html = '<label>'+HS.i18n('Percent')+'</label><input id="cover-perc" class="form-control" type="number" required="required" min="0" max="100" value="100"/>'
 			+'<label>km2:</label><input type="number" id="cover-km" class="form-control" required="required" value="78866"/>'
 			+'<label>'+HS.i18n('Description')+'</label><input id="cover-desc" class="form-control" value="Pokrytí území ČR">'
             +'<label>'+HS.i18n('Description')+' - EN</label><input id="cover-desc-en" class="form-control" value="Coverage of CR territory"/>'
 			+'</div><div class="modal-footer"><button type="button" class="btn btn-primary" onClick="cover1();">OK</button></div>';       
-    $("#md-content").html(html);
+    micka.window(obj, HS.i18n('Area coverage'), html);
 }
 
 function cover1(){
@@ -1522,7 +1510,7 @@ var md_serviceType = function(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=service&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=serviceType&lang='+lang);
 }
 
 var md_lineage = function(obj){
@@ -1611,28 +1599,61 @@ var md_callBack = function(cb, uuid){
 	}
 }
 
-var md_upload_run = function(o){
-	var data = new FormData(o);
-	$('#file-progress').css({display:'block'});
-	$.ajax({ url: '?ak=md_upload', data: data, processData: false, contentType: false, type:"POST"})
-	.done(function(result){
-		var inp = flatNodes(md_elem.parentNode, 'INPUT');
-		if(result) {
-			inp[0].value = result;
-			inp[1].value = 'WWW:DOWNLOAD-1.0-http--download';
-			closeDialog();
-		}
-		else alert('Upload error');
-	})
-	return false;
-}
 
 var md_upload = function(obj, mime){
-    $("#md-dialog").modal();
-    $("#md-content").html('<div class="modal-body">not implemented yet...</div>');
-	/*micka.window(obj,{title:'Nahrát soubor', data:'<form name="fileUploadForm" onsubmit="return md_upload_run(this);"><input name="f" type="file"/><br><input type="submit" value="OK"/></form>'
-	+ '<div id="file-progress" style="display:none">Nahrávám...</div>'
-	});*/
+    var f=false;
+	micka.window(obj,'Nahrát soubor', 
+        '<div class="input-group">'
+            +'<input id="file-info" type="text" class="form-control" readonly>'
+            +'<label class="input-group-btn"><span class="btn btn-primary">Vyber<input name="f" type="file" style="display: none;"/></span></label>'
+        +'</div>'
+        +'<label> </label><div id="file-progress" class="progress" style="display:none"><div class="progress-bar bg-success" role="progressbar" style="width: 0%">0%</div></div>',
+        '<button id="upload-confirm" class="btn btn-primary" disabled>OK</button>'
+	);
+    $(':file').on('change', function(e){
+        f = $(this).get(0).files[0];
+        var size = (f.size < 10000000) ? Math.round(f.size/1000) + ' kB' : Math.round(f.size/1000000) + ' MiB';
+        $('#file-info').val(f.name + ' (' + size + ')');
+        $('#upload-confirm').prop('disabled', false);
+    });
+    $('#upload-confirm').on('click', function(e){
+        var form = new FormData();
+        form.append("file", f, f.name);
+        $('#file-progress').css({display:'block'});
+        $.ajax({ 
+            url: '?ak=md_upload', 
+            data: form, 
+            processData: false, 
+            contentType: false, 
+            type:"POST", 
+            xhr: function(){
+                var xhr = new window.XMLHttpRequest();
+                var percent;
+                var $p = $('#file-progress div');
+                xhr.upload.addEventListener('progress', function(e){
+                    if(e.lengthComputable){
+                        percent = Math.round(e.loaded/e.total*100);
+                        if(percent < 100){
+                            $p.css('width', percent+'%').text(percent + '%');
+                        }
+                        else $p.css('width', percent+'%').text(HS.i18n('Processing')+'...');
+                    }
+                });
+                return xhr;
+            }
+        })
+        .done(function(result){
+            var inp = flatNodes(md_elem.parentNode, 'INPUT');
+            if(result) {
+                inp[0].value = result;
+                inp[1].value = 'http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-http--download';
+                inp[2].value = 'WWW:DOWNLOAD-1.0-http--download';
+                $("#md-dialog").modal('hide');
+            }
+            else alert('Upload error');
+        })
+        return false;
+    });
 }
 
 micka.initMap=function(config){
@@ -1850,12 +1871,19 @@ micka.fromGaz = function(b){
     checkBBox();
 }
 
-micka.window = function(obj, par){
+micka.window = function(obj, title, content, footer){
 	md_elem = obj.parentNode;
-	var wname = par.name || 'md_dialog';
-	$("#"+ wname).remove();
-	$("body").append('<div id="'+wname+'" class="md-dialog"><span class="close-dialog" onclick="closeDialog(this)"></span>'
-		+'<h1>'+par.title+'</h1>'+par.data+'</div>');
+    var html = '<div class="panel-heading">'
+    +'<button type="button" class="close" data-dismiss="modal" aria-label="Close">'
+    +'<span aria-hidden="true">&times;</span></button>'
+    +'<h4>'+title+'</h4></div><div class="modal-body">'
+    + content + '</div>';
+    if(footer){
+        html += '<div  class="modal-footer">'+footer+'</div>';
+    }
+    
+    $("#md-dialog").modal();
+    $("#md-content").html(html);
 }
 
 micka.duplicate = function(){

@@ -2,15 +2,15 @@
 // --- bud tam bude include nebo exclude
 $config=array(
     // --- Enduse potential INSPIRE
-    "https://inspire.ec.europa.eu/codelist/EndusePotentialValue"=>array(
+    "http://inspire.ec.europa.eu/codelist/EndusePotentialValue"=>array(
         "adapter"=> "inspireRegistry",
         //"include"=>array()
         "exclude"=>array(
-            "https://inspire.ec.europa.eu/codelist/EndusePotentialValue/abrasiveMinerals"
+            "http://inspire.ec.europa.eu/codelist/EndusePotentialValue/abrasiveMinerals"
         )
     ),
     // --- INSPIRE themes
-    "https://inspire.ec.europa.eu/theme"=>array(
+    "http://inspire.ec.europa.eu/theme"=>array(
         "adapter"=> "inspireThemes"
     ),
     

@@ -1491,12 +1491,23 @@
   		<xsl:for-each select="featureType">
   			<gfc:featureType>
   				<gfc:FC_FeatureType>
-                    <gfc:valueType>
-                        <gfc:typeName>
-                            <gco:LocalName><xsl:value-of select="*/typeName"/></gco:LocalName>
-                        </gfc:typeName>
-                    </gfc:valueType>
-  					<gfc:isAbstract><gco:Boolean>false</gco:Boolean></gfc:isAbstract>
+                    <gfc:typeName>
+                        <gco:LocalName><xsl:value-of select="*/typeName"/></gco:LocalName>
+                    </gfc:typeName>
+                    <xsl:if test="*/definition">
+                        <xsl:call-template name="ftxt">
+                            <xsl:with-param name="s" select="*/definition"/>
+                            <xsl:with-param name="name" select="'definition'"/>
+                            <xsl:with-param name="lang" select="$mdLang"/>
+                            <xsl:with-param name="ns" select="'gfc'"/>
+                        </xsl:call-template>
+                    </xsl:if>
+                    <xsl:if test="*/code">
+                        <gfc:code>
+                            <gco:CharacterString><xsl:value-of select="*/code"/></gco:CharacterString>
+                        </gfc:code>
+                    </xsl:if>
+ 					<gfc:isAbstract><gco:Boolean>false</gco:Boolean></gfc:isAbstract>
   					<gfc:featureCatalogue uuidref="{../@uuid}"/>
   					<xsl:for-each select="*/carrierOfCharacteristics">
 						<gfc:carrierOfCharacteristics>
@@ -1517,15 +1528,20 @@
 									<gfc:code>
 										<gco:CharacterString><xsl:value-of select="*/code"/></gco:CharacterString>
 									</gfc:code>
-								</xsl:if>	
-								<xsl:if test="*/valueMeasureUnit">
-									<gfc:valueMeasurementUnit>
-										<gml:BaseUnit gml:id="{*/valueMeasureUnit}">
-											<gml:identifier codeSpace="http://urn.opengis.net/"><xsl:value-of select="*/valueMeasureUnit"/></gml:identifier>
-										<gml:unitsSystem nilReason="unknown"/>
-										</gml:BaseUnit>
-									</gfc:valueMeasurementUnit>
-								</xsl:if>	
+								</xsl:if>
+                                <xsl:choose>
+                                    <xsl:when test="*/valueMeasurementUnit/href">
+                                        <gfc:valueMeasurementUnit xlink:href="{*/valueMeasurementUnit/href}"/>
+                                    </xsl:when>	
+                                    <xsl:when test="*/valueMeasurementUnit">
+                                        <gfc:valueMeasurementUnit>
+                                            <gml:BaseUnit gml:id="{*/valueMeasurementUnit}">
+                                                <gml:identifier codeSpace="http://urn.opengis.net/"><xsl:value-of select="*/valueMeasurementUnit"/></gml:identifier>
+                                            <gml:unitsSystem nilReason="unknown"/>
+                                            </gml:BaseUnit>
+                                        </gfc:valueMeasurementUnit>
+                                    </xsl:when>
+                                </xsl:choose>
 								<xsl:if test="*/valueType/*/aName">
 									<gfc:valueType>
 										<gco:TypeName>
@@ -1536,27 +1552,29 @@
 									</gfc:valueType>
 								</xsl:if>
 								<xsl:for-each select="*/listedValue">
-									<gfc:FC_ListedValue>
-                                        <xsl:call-template name="ftxt">
-                                            <xsl:with-param name="s" select="*/label"/>
-                                            <xsl:with-param name="name" select="'label'"/>
-                                            <xsl:with-param name="lang" select="$mdLang"/>
-                                            <xsl:with-param name="ns" select="'gfc'"/>
-                                        </xsl:call-template>
-                                        <xsl:if test="*/code">
-                                            <gfc:code>
-                                                <gco:CharacterString><xsl:value-of select="*/code"/></gco:CharacterString>
-                                            </gfc:code>
-                                        </xsl:if>
-                                        <xsl:if test="*/definition">
+                                    <gfc:listedValue>
+                                        <gfc:FC_ListedValue>
                                             <xsl:call-template name="ftxt">
-                                                <xsl:with-param name="s" select="*/definition"/>
-                                                <xsl:with-param name="name" select="'definition'"/>
+                                                <xsl:with-param name="s" select="*/label"/>
+                                                <xsl:with-param name="name" select="'label'"/>
                                                 <xsl:with-param name="lang" select="$mdLang"/>
                                                 <xsl:with-param name="ns" select="'gfc'"/>
                                             </xsl:call-template>
-                                        </xsl:if>
-									</gfc:FC_ListedValue>
+                                            <xsl:if test="*/code">
+                                                <gfc:code>
+                                                    <gco:CharacterString><xsl:value-of select="*/code"/></gco:CharacterString>
+                                                </gfc:code>
+                                            </xsl:if>
+                                            <xsl:if test="*/definition">
+                                                <xsl:call-template name="ftxt">
+                                                    <xsl:with-param name="s" select="*/definition"/>
+                                                    <xsl:with-param name="name" select="'definition'"/>
+                                                    <xsl:with-param name="lang" select="$mdLang"/>
+                                                    <xsl:with-param name="ns" select="'gfc'"/>
+                                                </xsl:call-template>
+                                            </xsl:if>
+                                        </gfc:FC_ListedValue>
+                                    </gfc:listedValue>
 								</xsl:for-each>
 							</gfc:FC_FeatureAttribute>
 						</gfc:carrierOfCharacteristics>
@@ -1568,8 +1586,7 @@
   	</gfc:FC_FeatureCatalogue>
   </xsl:template> 
    
-  <xsl:template name="citation" xmlns:gmd="http://www.isotc211.org/2005/gmd" 
-xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml">
+  <xsl:template name="citation" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml">
    <xsl:param name="cit"/>
    <xsl:param name="cl"/>
    <xsl:param name="mdLang"/>

@@ -231,7 +231,7 @@
 
 			<!-- TEXAREA -->
 			<xsl:when test="$type='textarea'">
-                <textarea name="{$path}{$TXT}" class="form-control {$flag} {$class}">
+                <textarea name="{$path}{$TXT}" class="form-control hsf {$flag} {$class}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
@@ -257,7 +257,7 @@
 			
 			<!-- INPUT - plain -->
 			<xsl:when test="$type='plain'">
-				<input name="{$pth}" class="form-control {$class}" value="{$value}">
+				<input name="{$pth}" class="form-control hsf {$class}" value="{$value}">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -269,7 +269,7 @@
 
 			<!-- INPUT - email -->
 			<xsl:when test="$type='email'">
-				<input name="{$pth}" class="form-control {$class}" value="{$value}" type="email">
+				<input name="{$pth}" class="form-control hsf {$class}" value="{$value}" type="email">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -278,7 +278,7 @@
 
 			<!-- DATE  -->
 			<xsl:when test="$type='date'">
-				<input name="{$pth}" class="form-control D {$class}" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" xpattern="^(19|20)\d\d([-](0[1-9]|1[012]))?([-](0[1-9]|[12][0-9]|3[01]))?$">
+				<input name="{$pth}" class="form-control hsf D {$class}" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" xpattern="^(19|20)\d\d([-](0[1-9]|1[012]))?([-](0[1-9]|[12][0-9]|3[01]))?$">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -287,7 +287,7 @@
 
 			<!-- REAL -->
 			<xsl:when test="$type='real'">
-				<input name="{$pth}" class="form-control num short {$class}" value="{$value}" pattern="[-+]?[0-9]*\.?[0-9]*">
+				<input name="{$pth}" class="form-control hsf num short {$class}" value="{$value}" pattern="[-+]?[0-9]*\.?[0-9]*">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -296,7 +296,7 @@
 
 			<!-- INTEGER -->
 			<xsl:when test="$type='integer'">
-				<input name="{$pth}" class="form-control num short {$class}" value="{$value}" pattern="[-+]?[0-9]*">
+				<input name="{$pth}" class="form-control hsf num short {$class}" value="{$value}" pattern="[-+]?[0-9]*">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -352,7 +352,7 @@
 
 			<!-- INPUT - TEXT -->
 			<xsl:otherwise>
-                <input name="{$pth}{$TXT}" class="form-control {$flag} {$class}" value="{normalize-space($value/gco:CharacterString|$value/gmx:Anchor)}">
+                <input name="{$pth}{$TXT}" class="form-control hsf {$flag} {$class}" value="{normalize-space($value/gco:CharacterString|$value/gmx:Anchor)}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
@@ -377,7 +377,7 @@
 			<xsl:when test="$langs and $type='textarea'">
 				<xsl:for-each select="$langs">
 					<xsl:variable name="pos" select="position()"/>
-                    <textarea class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}" name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]">
+                    <textarea class="form-control hsf txt {*/gmd:languageCode/*/@codeListValue} {$class}" name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]">
                         <xsl:if test="$value"><xsl:value-of select="$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]"/></xsl:if>
                     </textarea>
 				</xsl:for-each>
@@ -387,14 +387,14 @@
 					<xsl:variable name="pos" select="position()"/>
                     <xsl:choose>
                         <xsl:when test="$value">
-                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}">
+                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control hsf txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="{$value/gmd:PT_FreeText/gmd:textGroup/gmd:LocalisedCharacterString[@locale=concat('#',$langs[$pos]/*/@id)]}">
                                 <xsl:if test="$maxlength">
                                     <xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
                                 </xsl:if>
                             </input>
                         </xsl:when>
                         <xsl:otherwise>
-                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="">
+                            <input name="{$pth}[{*/gmd:languageCode/*/@codeListValue}]" class="form-control hsf txt {*/gmd:languageCode/*/@codeListValue} {$class}X" value="">
                                 <xsl:if test="$maxlength">
                                     <xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
                                 </xsl:if>

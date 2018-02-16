@@ -172,7 +172,7 @@ class RecordModel extends \BaseModel
         $y1 = $data['y1'];
         $y2 = $data['y2'];
         if ($this->recordMd->the_geom != '') {
-            $this->db->query("UPDATE edit_md SET the_geom=ST_GeomFromText('?',0)
+            $this->db->query("UPDATE edit_md SET the_geom=ST_GeomFromText(?,0)
                     WHERE sid='".session_id()."' AND recno=?", $this->recordMd->the_geom, $recno);
         } elseif ($x1 != NULL && $x2 != NULL && $y1 != NULL && $y2 != NULL) {
             $this->db->query("UPDATE edit_md SET 

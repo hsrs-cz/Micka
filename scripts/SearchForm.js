@@ -8,6 +8,44 @@ SearchForm = function(){
 	_this = this;
     var baseURL = (window.location.pathname.replace('/'+HS.getLang(2)+'/',''));
 
+	/**
+	* Collect the queryables and fires the search
+	*/
+	this.search = function(){
+        $("#wait").show();
+		result = "";
+		var type = $("#res-type").val();
+		if(type=='data') {
+			result = '(type=dataset OR type=series OR type=noGeographicDataset OR type=tile)';
+		}
+		else addVal('type', "#res-type");
+		addVal('AnyText', "#fulltext", true);
+		addVal('TopicCategory', "#topic");
+		addVal('ServiceType', "#stype");
+		addVal('Subject', "#inspire");
+		addVal('Denominator', "#denominator");
+		addVal('OrganisationName', "#contact");
+        addVal('IsPublic', "#md-status");
+		var bbox = _this.overMap.getBBox();
+		if(bbox) {
+			if(result) result +=" AND ";
+			result += "BBOX='" + bbox.join(' ');
+            if($('#inside').prop( "checked" )) result += ' 1';
+            result += "'";
+		}
+        if($('#md-inspire').prop( "checked" )){
+            if(result) result +=" AND ";
+            result += "HierarchyLevelName='http://geoportal.gov.cz/inspire'";
+        }
+        if($('#md-my').prop( "checked" )){
+            if(result) result +=" AND ";
+            result += "MdCreator='"+user+"'";
+        }
+		var sort = $('#sort').val() + ':' + $('#sortdir').val();
+		//this.saveCookie();
+		window.location = "?query=" + encodeURIComponent(result) + '&sortby='+sort + '&t=' + (Date.now()/1000|0) +'#results';
+	}
+	
 	function processResults(data, opts){
 		var data = $.map(data.results, function(rec) {
 			return { text: rec.name, id: rec.id, title: rec.desc, parent: rec.parentId };
@@ -35,6 +73,9 @@ SearchForm = function(){
 				$("#panel-denominator").show();
 				$("#panel-stype").hide();
 				break;
+            case 'featureCatalogue':
+                $("#panel-inspire").hide();
+                // break is missing on purpose
 			default:
 				$("#panel-topic").hide();
 				$("#panel-denominator").hide();
@@ -54,14 +95,15 @@ SearchForm = function(){
 		allowClear: true,
 		placeholder: 'Typ zdroje',
 		minimumResultsForSearch: Infinity
-	});
+	})
+    .on('select2:select', this.search).on('select2:unselect', this.search);
 	
-	$('#res-type').on('select2:close', function(e){
+	/*$('#res-type').on('select2:close', function(e){
 		changeType(e.target.value);
         _this.search();
-	});
+	});*/
 	
-	$('#kw-2').select2({
+	/*$('#kw-2').select2({
 		ajax: {
 			url: baseURL + '/registry_client/?uri=http://inspire.ec.europa.eu/codelist/EndusePotentialValue&lang=cs',
 			dataType: 'json',
@@ -74,7 +116,7 @@ SearchForm = function(){
 	   allowClear: true
 	});
 
-	/*$('#gemet').select2({
+	$('#gemet').select2({
 		ajax: {
 			url: '/projects/kafka/registry_client/proxy.php?url=http://gemet.bnhelp.cz/thesaurus/getConceptsMatchingRegexByThesaurus?',
 			dataType: 'json',
@@ -134,11 +176,9 @@ SearchForm = function(){
 		language: HS.getLang(2),
 		allowClear: true,
 		theme: 'bootstrap',
-		//tags:true,
 		maxSelectionLength: 1
-	});
-
-	$('#contact').on('select2:close', function(e){ _this.search(); });
+	})
+    .on('select2:select', this.search).on('select2:unselect', this.search);
     
 	$("#denominator").select2({
 		ajax: {
@@ -162,11 +202,9 @@ SearchForm = function(){
 		language: HS.getLang(2),
 		allowClear: true,
 		theme: 'bootstrap',
-		//tags:true,
 		maxSelectionLength: 1
-	});
-
-	$('#denominator').on('select2:close', function(e){ _this.search(); });
+	})
+    .on('select2:select', this.search).on('select2:unselect', this.search);
     
 	$("#inspire").select2({
 		ajax: {
@@ -181,63 +219,48 @@ SearchForm = function(){
 	   language: HS.getLang(2),
 	   allowClear: true
 	   
-	});    
-	
-	$('#inspire').on('select2:close', function(e){ _this.search(); });
-    
+	})
+    .on('select2:select', this.search).on('select2:unselect', this.search);
+        
     $("#topic").select2({
 		ajax: {
-			url: 'suggest',
+			url: 'suggest/mdlists',
 			dataType: 'json',
 			data: function(params){
 				return {
 					query: params.term,
-					type: 'topics',
+					type: 'topicCategory',
+                    request: 'getValues',
 					lang: lang3
 				};
-			},
-			processResults: function(data, page){
-				return {
-					results: $.map(data.records, function(rec) {
-						return { text: rec.title, id: rec.id };
-					})  
-				}    
 			},
 			cache: true
 		}, 
 		language: HS.getLang(2),
 		allowClear: true,
 		theme: 'bootstrap'
-	});
-	
-	$('#topic').on('select2:close', function(e){ _this.search(); });
+	})
+    .on('select2:select', this.search).on('select2:unselect', this.search);
     
     $("#stype").select2({
 		ajax: {
-			url: 'suggest',
+			url: 'suggest/mdlists',
 			dataType: 'json',
 			data: function(params){
 				return {
 					query: params.term,
 					type: 'serviceType',
+                    request: 'getValues',
 					lang: lang3
 				};
-			},
-			processResults: function(data, page){
-				return {
-					results: $.map(data.records, function(rec) {
-						return { text: rec.name, id: rec.name };
-					})  
-				}    
 			},
 			cache: true
 		}, 
 		language: HS.getLang(2),
 		allowClear: true,
 		theme: 'bootstrap'
-	});
-
-	$('#stype').on('select2:close', function(e){ _this.search(); });
+	})    
+    .on('select2:select', this.search).on('select2:unselect', this.search);
 
 	$("#md-status").select2({
 		data: [
@@ -251,8 +274,8 @@ SearchForm = function(){
 	   language: HS.getLang(2),
 	   allowClear: true
 	   
-	});    
-	$("#md-status").on('select2:close', function(e){ _this.search(); });
+	})
+    .on('select2:select', this.search).on('select2:unselect', this.search);
     
     $("#sort").select2({ minimumResultsForSearch: Infinity, allowClear: false});
 	$("#sortdir").select2({ minimumResultsForSearch: Infinity, allowClear: false});
@@ -337,44 +360,6 @@ SearchForm = function(){
 		}
 		if (v.length>1) result += '(' + v.join(' OR ') + ')';
 		else result += v[0];
-	}
-	
-	/**
-	* Collect the queryables and fires the search
-	*/
-	this.search = function(){
-        $("#wait").show();
-		result = "";
-		var type = $("#res-type").val();
-		if(type=='data') {
-			result = '(type=dataset OR type=series OR type=noGeographicDataset OR type=tile)';
-		}
-		else addVal('type', "#res-type");
-		addVal('AnyText', "#fulltext", true);
-		addVal('TopicCategory', "#topic");
-		addVal('ServiceType', "#stype");
-		addVal('Subject', "#inspire");
-		addVal('Denominator', "#denominator");
-		addVal('OrganisationName', "#contact");
-        addVal('IsPublic', "#md-status");
-		var bbox = this.overMap.getBBox();
-		if(bbox) {
-			if(result) result +=" AND ";
-			result += "BBOX='" + bbox.join(' ');
-            if($('#inside').prop( "checked" )) result += ' 1';
-            result += "'";
-		}
-        if($('#md-inspire').prop( "checked" )){
-            if(result) result +=" AND ";
-            result += "HierarchyLevelName='http://geoportal.gov.cz/inspire'";
-        }
-        if($('#md-my').prop( "checked" )){
-            if(result) result +=" AND ";
-            result += "MdCreator='"+user+"'";
-        }
-		var sort = $('#sort').val() + ':' + $('#sortdir').val();
-		//this.saveCookie();
-		window.location = "?query=" + encodeURIComponent(result) + '&sortby='+sort + '&t=' + (Date.now()/1000|0) +'#results';
 	}
 	
 	/**

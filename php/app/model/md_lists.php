@@ -7,7 +7,7 @@ $title = '';
 
 function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
     if(!$handler) $handler="formats1";
-    if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName'))){
+    if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName', 'serviceType'))){
         $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
         echo '<div class="panel-heading">
@@ -72,42 +72,32 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
     echo "</div>";
 }
 
-function getValues($type, $filter){
-	$xml = simplexml_load_file(APP_DIR . "/model/dict/$type.xml");
-	$result = array();
-	foreach ($xml->xpath($filter) as $entry) {
-		$lang = $entry->xpath("../../@lang");
-		$parent =  $entry->xpath("..");
-		$parent = $parent[0];
-		$prefix = (string) $parent->prefix;
-		//var_dump($parent);
-		foreach($parent->attributes() as $k => $v) {
-		    $result[(string) $lang[0]][(string) $k] = (string) $v;
-		}
-		if (isset($prefix)) {
-			$result[(string) $lang[0]]['value'] = (string) $prefix . (string) $entry;
-		} else {
-			$result[(string) $lang[0]]['value'] = (string) $entry;
-		}
-		foreach($entry->attributes() as $k => $v) {
-		    $result[(string) $lang[0]][(string) $k] = (string) $v; 
-		}
-		
-	}
-	return $result;
+function getValues($type, $lang, $filter=''){
+    $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
+    $list = $xml->xpath("//$type/value");
+    $result = array();
+    foreach ($list as $row){
+        $result[] = array(
+            "id"=> (string) $row['name'],
+            "uri"=> (string) $row['uri'],
+            "text"=> (string) $row->$lang
+        );
+    }
+    return array("results"=>$result);
 }
 
 // vraci JSON multilingualni seznam
 if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValues') {
 	$type = htmlspecialchars($_REQUEST['type']);
 	$code = htmlspecialchars($_REQUEST['id']);
+    $lang = htmlspecialchars($_REQUEST['lang']);
 	$filter = "//entry[@id='".$code."']";
 	//$q = htmlspecialchars($_REQUEST['q']);
 	if(isset($_REQUEST['q'])) {
 	    $filter = "//entry[contains(.,'".htmlspecialchars($_REQUEST['q'])."')]";
 	}
     header("Content-type: application/json; charset=utf-8");
-	echo json_encode(getValues($type, $filter));
+	echo json_encode(getValues($type, $lang, $filter));
 	exit;
 }
 ?>
