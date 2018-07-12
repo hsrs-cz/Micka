@@ -69,7 +69,7 @@
 		<!-- link to download service ISO 19139 metadata -->
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-	    		<link href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
+	    		<link href="{$MICKA_URL}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<link href="../records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>

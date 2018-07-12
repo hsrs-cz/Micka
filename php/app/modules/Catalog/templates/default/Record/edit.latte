@@ -236,10 +236,10 @@
                     {/if}
 
                     {if $form['pack'] == 1}
-                        <img class="exp" src='{$basePath}{$themePath}/img/expand.gif' id="PA_{$form['md_path']}"  onClick="md_dexpand(this);">
+                        <i class="exp fa fa-caret-right" id="PA_{$form['md_path']}" onClick="md_dexpand(this);"></i>
                     {/if}
                     {if $form['pack'] == 2}
-                        <img class="exp" src='{$basePath}{$themePath}/img/collapse.gif' id="PA_{$form['md_path']}"  onClick="md_dexpand(this);">
+                        <i class="exp fa fa-caret-down" id="PA_{$form['md_path']}" onClick="md_dexpand(this);"></i>
                     {/if}
 
                     {* ***************************************************************************** *}
@@ -267,7 +267,7 @@
                             <input type=text class="{$form['form_code']}" id="{$form['el_id']}uri" name="{$form['form_code']}|uri|{$form['package_id']}|{$form['md_path']}" value="{ifset $valuesUri[$form['md_path']]}{$valuesUri[$form['md_path']]}{/ifset}">
                             {if $form['el_id'] == 530}
                                 {* keywords hack *}
-                                <a href="#" class="plus" onclick="md_pridej(this); return false;"><i class="fa fa-plus-square-o"></i></a>
+                                <a href="#" class="plus" onclick="md_pridej(this, false); return false;"><i class="fa fa-plus-square-o"></i></a>
                                 <a href="#" class="minus" onclick="md_smaz(this); return false;"><i class="fa fa-minus-square-o"></i></a>
                             {/if}
                             <br>
@@ -309,12 +309,13 @@
                         <a href="#" class="open" onClick="{$form['button_action']|noescape}; return false;" data-tooltip="tooltip" title="{$form['button_text']}"><i class="fa fa-folder-open fa-lg"></i></a>
                     {/if}
 
-                    {* hack kvuli parentIdentifier - kafka *}
+                    {* hack kvuli parentIdentifier *}
                     {if $form['md_id'] == 121}
                         <div style="margin-left:200px;" id="parent-text"></div>
                     {/if}
                     {if $form['max_nb'] != 1 && $form['md_id'] != 88}
                         {* md_id=88: keywords hack*}
+                        <a href="#" class="plus" onclick="md_pridej(this, true); return false;"><i class="fa fa-plus-square"></i></a>
                         <a href="#" class="plus" onclick="md_pridej(this); return false;"><i class="fa fa-plus-square-o"></i></a>
                         <a href="#" class="minus" onclick="md_smaz(this); return false;"><i class="fa fa-minus-square-o"></i></a>
                     {/if}

@@ -5,8 +5,8 @@
  * Help Service Remote Sensing  
 ******************************/
 
-MD_COLLAPSE = "collapse.gif";
-MD_EXPAND   = "expand.gif";
+MD_COLLAPSE = "fa-caret-down";
+MD_EXPAND   = "fa-caret-right";
 MD_EXTENT_PRECISION = 1000;
 var md_mapApp = getBbox;
 var md_pageOffset = 0;
@@ -55,33 +55,35 @@ function md_getSimilar(obj, str){
   return elSim;
 }
 
-function md_pridej(obj){
-  var dold = obj.parentNode;
-  var dnew=dold.cloneNode(true);
-  var dalsi = dold.nextSibling;
-  if(dalsi==null) dold.parentNode.appendChild(dnew); 
-  else dold.parentNode.insertBefore(dnew,dalsi);
-  var pom = dold.id.split("_");
-  var elementy = md_getSimilar(dold.parentNode, pom[0]);
-  md_removeDuplicates(dnew);
-  //for(var i=(parseInt(pom[1])+1);i<elementy.length;i++) md_setName(elementy[i], pom[0]+"_"+i+"_");
-  for(var i=0;i<elementy.length;i++) md_setName(elementy[i], pom[0]+"_"+i+"_");
+function md_pridej(obj, clone){
+    var dold = obj.parentNode;
+    var dnew=dold.cloneNode(true);
+    var dalsi = dold.nextSibling;
+    if(dalsi==null) dold.parentNode.appendChild(dnew); 
+    else dold.parentNode.insertBefore(dnew,dalsi);
+    var pom = dold.id.split("_");
+    var elementy = md_getSimilar(dold.parentNode, pom[0]);
+    if(!clone) md_removeDuplicates(dnew);
+    for(var i=0;i<elementy.length;i++) md_setName(elementy[i], pom[0]+"_"+i+"_");
+    if(!clone){
+        // --- vycisteni ---
+        var nody = flatNodes(dnew, "INPUT");
+        for(var i=0;i<nody.length;i++) if(nody[i].type=="text") nody[i].value = "";
 
-  // --- vycisteni ---
-  var nody = flatNodes(dnew, "INPUT");
-  for(var i=0;i<nody.length;i++) if(nody[i].type=="text") nody[i].value = "";
+        nody = flatNodes(dnew, "SELECT");
+        for(var i=0;i<nody.length;i++) nody[i].selectedIndex=0;
 
-  nody = flatNodes(dnew, "SELECT");
-  for(var i=0;i<nody.length;i++) nody[i].selectedIndex=0;
+        nody = flatNodes(dnew, "TEXTAREA");
+        for(var i=0;i<nody.length;i++) nody[i].value="";
+    }
+    var d = getMyNodes(dnew, "DIV");
+    if(d[0]) d[0].style.display='block';
 
-  nody = flatNodes(dnew, "TEXTAREA");
-  for(var i=0;i<nody.length;i++) nody[i].value="";
+    d = getMyNodes(dnew, "I");
+    if(d[0]) $(d[0]).addClass(MD_COLLAPSE).removeClass(MD_EXPAND);
 
-  var d = getMyNodes(dnew, "DIV");
-  if(d[0]) d[0].style.display='block';
-  
-  window.scrollBy(0,dold.clientHeight);
-  return dnew;
+    window.scrollBy(0,dold.clientHeight);
+    return dnew;
 }
 
 
@@ -245,15 +247,14 @@ function md_dexpand(obj){
   var o = document.getElementById("PB"+id);
   var d = getMyNodes(obj.parentNode, "DIV");
   o = d[0];
-  var src = obj.src.substring(0, obj.src.lastIndexOf("/")+1);
   if(o){
     if(o.style.display=='block'){
       o.style.display='none';
-      obj.src = src+MD_EXPAND;
+      $(obj).removeClass(MD_COLLAPSE).addClass(MD_EXPAND);
     }  
     else {
       o.style.display='block'; 
-      obj.src = src+MD_COLLAPSE;
+      $(obj).removeClass(MD_EXPAND).addClass(MD_COLLAPSE);
     }
   }
 }
@@ -424,9 +425,11 @@ function flatNodes(epom, nodename, theClassName){
 
 function md_dexpand1(obj){
   var divs = flatNodes(obj, "DIV"); 
-  var imgs = getMyNodes(obj, "IMG");
+  var is = getMyNodes(obj, "I");
   if(divs.length>1) divs[1].style.display='block';
-  if(imgs.length>0) imgs[0].src = imgs[0].src.substring(0, imgs[0].src.lastIndexOf("/")+1)+ MD_COLLAPSE; 
+  if(is.length>0) {
+      $(is[0]).addClass(MD_COLLAPSE).removeClass(MD_EXPAND);
+  }
 }
 
 function kontakt(obj,type){
@@ -1379,12 +1382,12 @@ function md_aform(obj,por,asnew){
   var el = document.getElementById('currentFeature');
   if(el){
     if(!window.confirm(messages.leave + ' ?')) return;
-    var obrs = flatNodes(el.parentNode, "IMG");
-    obrs[0].src = obrs[0].src.substring(0, obrs[0].src.lastIndexOf("/")+1) + MD_EXPAND; 
+    var o = flatNodes(el.parentNode, "I");
+    $(obj).addClass(MD_COLLAPSE).removeClass(MD_EXPAND); 
     el.parentNode.removeChild(el);
   } 
-  if(je) return;  
-  obj.src= obj.src.substring(0, obj.src.lastIndexOf("/")+1) + MD_COLLAPSE; 
+  if(je) return; 
+  $(obj).addClass(MD_COLLAPSE).removeClass(MD_EXPAND);  
   var container = document.createElement("div");
   container.id = 'currentFeature';
   obj.parentNode.appendChild(container);

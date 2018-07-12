@@ -28,7 +28,182 @@
     <xsl:apply-templates />
   </xsl:template>
 
+  <!-- Imports Atom feed as Dataset -->
   <xsl:template match="atom:feed">
+  
+  <xsl:variable name="l2" select="@xml:lang"/>
+  <xsl:variable name="mdlang" select="$codeLists/language/value[@code2=$l2]/@name"/>
+  
+  <results>
+    
+    <MD_Metadata>
+    
+    <!--referenceSystemInfo>
+    	<MD_ReferenceSystem>
+    		<referenceSystemIdentifier>
+    			<RS_Identifier>
+    				<code>http://www.opengis.net/def/crs/EPSG/0/4326</code>
+    			</RS_Identifier>
+    		</referenceSystemIdentifier>
+    	</MD_ReferenceSystem>
+    </referenceSystemInfo-->
+  	<hierarchyLevel>
+  	  <MD_ScopeCode>dataset</MD_ScopeCode>
+  	</hierarchyLevel>
+    <language>
+        <LanguageCode codeListValue="{$mdlang}"/>
+    </language>
+
+    
+    <identificationInfo>
+    <MD_DataIdentification>
+    <citation>
+    <CI_Citation>
+      <title><xsl:value-of select="atom:title"/></title>
+      <date>
+      	<CI_Date>
+      		<date><xsl:value-of select="substring-before(atom:updated/@updateSequence,'T')"/></date>
+      		<dateType><CI_DateTypeCode>revision</CI_DateTypeCode></dateType>
+      	</CI_Date>
+      </date>
+    </CI_Citation>  
+    </citation>
+    <abstract><xsl:value-of select="atom:subtitle"/></abstract>
+    <identifier>
+        <code><xsl:value-of select="atom:id"/></code>
+    </identifier>
+    <characterSet>
+    	<MD_CharacterSetCode>UTF-8</MD_CharacterSetCode>
+    </characterSet>
+    <!--descriptiveKeywords>
+      <MD_Keywords>
+        <keyword>
+            <Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/infoFeatureAccessService">infoFeatureAccessService</Anchor>
+        </keyword>
+      <thesaurusName>
+        <CI_Citation>
+            <title>ISO - 19119 geographic services taxonomy</title>
+            <date><CI_Date><date><Date>2010-01-19</Date></date><dateType><CI_DateTypeCode codeListValue="publication">publication</CI_DateTypeCode></dateType></CI_Date></date>
+            </CI_Citation>
+         </thesaurusName>
+       </MD_Keywords>
+   </descriptiveKeywords-->
+    <pointOfContact>
+      <CI_ResponsibleParty>
+	    <!--individualName><xsl:value-of select="atom:author"/></individualName-->
+	    <organisationName><xsl:value-of select="atom:author/atom:name"/></organisationName>
+	    <!--positionName><xsl:value-of select="*/ows:ServiceProvider/ows:PositionName"/></positionName-->
+	    <contactInfo>
+	    <CI_Contact>
+	      <phone>
+	      	<CI_Telephone>
+	          <voice><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Phone/ows:Voice"/></voice>
+	        </CI_Telephone>
+	      </phone>
+		    <address>
+		      <CI_Address>
+		        <deliveryPoint><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:DeliveryPoint"/></deliveryPoint>
+		        <city><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:City"/></city>
+		        <postalCode><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:PostalCode"/></postalCode>
+		        <country><xsl:value-of select="*/ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:Country"/></country>
+		        <electronicMailAddress><xsl:value-of select="atom:author/atom:email"/></electronicMailAddress>
+		      </CI_Address>
+		    </address>
+		    <onlineResource>
+		    	<CI_OnlineResource>
+		    		<linkage>
+		    			<URL><xsl:value-of select="atom:author/atom:uri"/></URL>
+		    		</linkage>
+		    	</CI_OnlineResource>
+		    </onlineResource>
+	      </CI_Contact>
+	    </contactInfo>
+	    <role>
+	    	<CI_RoleCode>custodian</CI_RoleCode> 
+	    </role>
+      </CI_ResponsibleParty>
+    </pointOfContact>
+
+
+    <extent>
+        <!-- prasarna - vezme prvni, kterou najde  
+        <EX_Extent>
+	      <geographicElement>
+	        <EX_BoundingPolygon>
+                <polygon>
+                    <Polygon gml:id="poly1">
+                        <exterior>
+                            <LinearRing>
+                                <posList><xsl:value-of select="atom:entry/georss:polygon"/></posList>
+                            </LinearRing>
+                        </exterior>
+                    </Polygon>
+                </polygon>
+	        </EX_BoundingPolygon>
+	      </geographicElement>
+	
+	      <temporalElement>
+	      	<EX_TemporalExtent>
+	      		<extent>
+	      			<TimePeriod>
+	      				<beginPosition><xsl:value-of select="tmin"/></beginPosition>
+	      				<endPosition><xsl:value-of select="tmax"/></endPosition>
+	      			</TimePeriod>
+	      		</extent>
+	      	</EX_TemporalExtent>
+	      </temporalElement>
+	    </EX_Extent>  -->
+    </extent>
+    <resourceConstraints>
+        <MD_LegalConstraints>
+            <useConstraints>
+                <MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</MD_RestrictionCode>
+            </useConstraints>
+            <otherConstraints><xsl:value-of select="atom:rights"/></otherConstraints>
+        </MD_LegalConstraints>
+    </resourceConstraints>
+    
+	</MD_DataIdentification>
+ 	</identificationInfo>  	
+    
+
+    <!-- distribuce -->
+    <distributionInfo>
+        <MD_Distribution>
+            <transferOptions>
+                <MD_DigitalTransferOptions>
+                    <xsl:for-each select="atom:entry">
+                        <onLine>
+                            <CI_OnlineResource>
+                                <linkage><xsl:value-of select="atom:link[@rel='alternate']/@href"/></linkage>
+                                <protocol>
+                                    <Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-http--download">WWW:DOWNLOAD-1.0-http--download</Anchor>
+                                </protocol>
+                                <name><xsl:value-of select="atom:link[@rel='alternate']/@title"/></name>
+                                <description>mimeType="<xsl:value-of select="substring-after(atom:link[@rel='alternate']/@type,'/')"/>"</description>
+                                <function><CI_OnLineFunctionCode>download</CI_OnLineFunctionCode></function>
+                            </CI_OnlineResource>      
+                        </onLine>
+                    </xsl:for-each>
+                </MD_DigitalTransferOptions>  
+            </transferOptions>
+        </MD_Distribution>
+    </distributionInfo>
+
+	
+    <metadataStandardName>ISO 19115/INSPIRE_TG2/CZ4</metadataStandardName>
+    <metadataStandardVersion>2003/cor.1/2006</metadataStandardVersion>
+
+  	
+    </MD_Metadata>
+ 
+  
+  </results>  
+    
+  </xsl:template>
+
+  <!-- Imports Atom Feed as Atom Service {INSPIRE ?} not used now -->
+  <xsl:template match="atom:feedX">
   
   <xsl:variable name="l2" select="@xml:lang"/>
   <xsl:variable name="mdlang" select="$codeLists/language/value[@code2=$l2]/@name"/>
@@ -186,7 +361,6 @@
     
   </xsl:template>
 
-  
   <!-- rozdeleni retezce podle mezer -->
   <xsl:template match="text()" name="split">
   <xsl:param name="s" select="."/>

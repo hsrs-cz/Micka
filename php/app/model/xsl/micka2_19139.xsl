@@ -88,10 +88,13 @@
 	<gmd:characterSet>
 	  <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8">utf-8</gmd:MD_CharacterSetCode>
 	</gmd:characterSet>
-	<gmd:parentIdentifier>
-		<gco:CharacterString><xsl:value-of select="parentIdentifier"/></gco:CharacterString>
-	</gmd:parentIdentifier>
-	
+
+	<xsl:for-each select="parentIdentifier">
+        <gmd:parentIdentifier>
+            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+        </gmd:parentIdentifier>
+	</xsl:for-each>
+    
 	<gmd:hierarchyLevel>
   		<gmd:MD_ScopeCode codeList="{$clx}#MD_ScopeCode" codeListValue="{hierarchyLevel/MD_ScopeCode}"><xsl:value-of select="hierarchyLevel/MD_ScopeCode"/></gmd:MD_ScopeCode>
 	</gmd:hierarchyLevel>
@@ -100,7 +103,7 @@
 		<gmd:hierarchyLevelName>
 		  <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
 		</gmd:hierarchyLevelName>
-	</xsl:for-each>			
+	</xsl:for-each>
 
 	<xsl:for-each select="contact">
   	<gmd:contact>
@@ -155,8 +158,8 @@
 	
 	<!-- ============================ prostor. reprezentace ========================== -->
       
-  <xsl:for-each select="spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation">
-		<gmd:spatialRepresentationInfo>
+    <xsl:for-each select="spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation">
+        <gmd:spatialRepresentationInfo>
   		<gmd:MD_VectorSpatialRepresentation>
   		<xsl:for-each select="topologyLevel">
   		  <gmd:topologyLevel>
@@ -1586,85 +1589,86 @@
   	</gfc:FC_FeatureCatalogue>
   </xsl:template> 
    
-  <xsl:template name="citation" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml">
-   <xsl:param name="cit"/>
-   <xsl:param name="cl"/>
-   <xsl:param name="mdLang"/>
-   <xsl:param name="id" value=""/>
-  				<gmd:CI_Citation>
-  					<xsl:if test="$id!=''">
-  						<xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
-  					</xsl:if>
-					<xsl:call-template name="txt">
-						<xsl:with-param name="s" select="$cit"/>                      
-					 	<xsl:with-param name="name" select="'title'"/>                      
-						<xsl:with-param name="lang" select="$mdLang"/>                      
-			      	</xsl:call-template>
-					<xsl:call-template name="txt">
-					  <xsl:with-param name="s" select="$cit"/>                      
-					  <xsl:with-param name="name" select="'alternateTitle'"/>                      
-					  <xsl:with-param name="lang" select="$mdLang"/>                      
-			        </xsl:call-template>
-					<xsl:for-each select="$cit/date">
-						<gmd:date>
-							<gmd:CI_Date>
-								<gmd:date>
-									<gco:Date><xsl:value-of select="CI_Date/date"/></gco:Date>
-								</gmd:date>
-								<gmd:dateType>
-									<gmd:CI_DateTypeCode codeListValue="{CI_Date/dateType/CI_DateTypeCode}" codeList="{$clx}#CI_DateTypeCode"><xsl:value-of select="CI_Date/dateType/CI_DateTypeCode"/></gmd:CI_DateTypeCode>
-								</gmd:dateType>
-							</gmd:CI_Date>
-						</gmd:date>
-					</xsl:for-each>
-  					<xsl:for-each select="$cit/identifier">
-              			<gmd:identifier>
-                            <xsl:choose>
-                                <xsl:when test="*/codeSpace">
-                                    <gmd:RS_Identifier>
-                                        <xsl:call-template name="txt">
-                                          <xsl:with-param name="s" select="*"/>
-                                          <xsl:with-param name="name" select="'code'"/>
-                                          <xsl:with-param name="lang" select="$mdLang"/>
-                                        </xsl:call-template>
-                                        <gmd:codeSpace>
-                                            <gco:CharacterString><xsl:value-of select="*/codeSpace"/></gco:CharacterString>
-                                        </gmd:codeSpace>
-                                    </gmd:RS_Identifier>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <gmd:MD_Identifier>
-                                        <xsl:call-template name="txt">
-                                          <xsl:with-param name="s" select="*"/>
-                                          <xsl:with-param name="name" select="'code'"/>
-                                          <xsl:with-param name="lang" select="$mdLang"/>
-                                        </xsl:call-template>
-                                    </gmd:MD_Identifier>                                
-                                </xsl:otherwise>
-                            </xsl:choose>
-    					</gmd:identifier>
-  					</xsl:for-each>
-  					<xsl:for-each select="$cit/citedResponsibleParty">
-				        <gmd:citedResponsibleParty>
-				       	 	<xsl:call-template name="contact">
-				    		 	  <xsl:with-param name="org" select="."/>       
-				    		 	  <xsl:with-param name="mdLang" select="$mdLang"/>       
-				    		 </xsl:call-template>
-				        </gmd:citedResponsibleParty>
-					</xsl:for-each>
-  					
-  					<xsl:for-each select="$cit/presentationForm">
-					  <gmd:presentationForm>
-						<gmd:CI_PresentationFormCode codeListValue="{CI_PresentationFormCode}" codeList="{$clx}#CI_PresentationFormCode"><xsl:value-of select="CI_PresentationFormCode"/></gmd:CI_PresentationFormCode>
-					  </gmd:presentationForm>
-					</xsl:for-each>
-                    <xsl:call-template name="txt">
-                        <xsl:with-param name="s" select="$cit"/>                      
-                        <xsl:with-param name="name" select="'otherCitationDetails'"/>                      
-                        <xsl:with-param name="lang" select="$mdLang"/>                      
-                    </xsl:call-template>
-				</gmd:CI_Citation>
-  </xsl:template> 
+    <xsl:template name="citation" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml">
+        <xsl:param name="cit"/>
+        <xsl:param name="cl"/>
+        <xsl:param name="mdLang"/>
+        <xsl:param name="id" value=""/>
+
+        <gmd:CI_Citation>
+            <xsl:if test="$id!=''">
+                <xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
+            </xsl:if>
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="$cit"/>                      
+                <xsl:with-param name="name" select="'title'"/>                      
+                <xsl:with-param name="lang" select="$mdLang"/>                      
+            </xsl:call-template>
+            <xsl:call-template name="txt">
+              <xsl:with-param name="s" select="$cit"/>                      
+              <xsl:with-param name="name" select="'alternateTitle'"/>                      
+              <xsl:with-param name="lang" select="$mdLang"/>                      
+            </xsl:call-template>
+            <xsl:for-each select="$cit/date">
+                <gmd:date>
+                    <gmd:CI_Date>
+                        <gmd:date>
+                            <gco:Date><xsl:value-of select="CI_Date/date"/></gco:Date>
+                        </gmd:date>
+                        <gmd:dateType>
+                            <gmd:CI_DateTypeCode codeListValue="{CI_Date/dateType/CI_DateTypeCode}" codeList="{$clx}#CI_DateTypeCode"><xsl:value-of select="CI_Date/dateType/CI_DateTypeCode"/></gmd:CI_DateTypeCode>
+                        </gmd:dateType>
+                    </gmd:CI_Date>
+                </gmd:date>
+            </xsl:for-each>
+            <xsl:for-each select="$cit/identifier">
+                <gmd:identifier>
+                    <xsl:choose>
+                        <xsl:when test="*/codeSpace">
+                            <gmd:RS_Identifier>
+                                <xsl:call-template name="txt">
+                                  <xsl:with-param name="s" select="*"/>
+                                  <xsl:with-param name="name" select="'code'"/>
+                                  <xsl:with-param name="lang" select="$mdLang"/>
+                                </xsl:call-template>
+                                <gmd:codeSpace>
+                                    <gco:CharacterString><xsl:value-of select="*/codeSpace"/></gco:CharacterString>
+                                </gmd:codeSpace>
+                            </gmd:RS_Identifier>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <gmd:MD_Identifier>
+                                <xsl:call-template name="txt">
+                                  <xsl:with-param name="s" select="*"/>
+                                  <xsl:with-param name="name" select="'code'"/>
+                                  <xsl:with-param name="lang" select="$mdLang"/>
+                                </xsl:call-template>
+                            </gmd:MD_Identifier>                                
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </gmd:identifier>
+            </xsl:for-each>
+            <xsl:for-each select="$cit/citedResponsibleParty">
+                <gmd:citedResponsibleParty>
+                    <xsl:call-template name="contact">
+                          <xsl:with-param name="org" select="."/>       
+                          <xsl:with-param name="mdLang" select="$mdLang"/>       
+                     </xsl:call-template>
+                </gmd:citedResponsibleParty>
+            </xsl:for-each>
+            
+            <xsl:for-each select="$cit/presentationForm">
+              <gmd:presentationForm>
+                <gmd:CI_PresentationFormCode codeListValue="{CI_PresentationFormCode}" codeList="{$clx}#CI_PresentationFormCode"><xsl:value-of select="CI_PresentationFormCode"/></gmd:CI_PresentationFormCode>
+              </gmd:presentationForm>
+            </xsl:for-each>
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="$cit"/>                      
+                <xsl:with-param name="name" select="'otherCitationDetails'"/>                      
+                <xsl:with-param name="lang" select="$mdLang"/>                      
+            </xsl:call-template>
+        </gmd:CI_Citation>
+    </xsl:template> 
 
    <xsl:include href="common.xsl" />   
 </xsl:stylesheet>

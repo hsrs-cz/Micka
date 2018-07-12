@@ -355,12 +355,8 @@ class Csw{
 
   function processParams($params){
   	if(!isset($params["ISGET"]) || !$params["ISGET"]){
-   		if(isset($GLOBALS["HTTP_RAW_POST_DATA"])) $this->input = $GLOBALS["HTTP_RAW_POST_DATA"];
-   		else $this->input = file_get_contents('php://input', false, null, null, CSW_MAXFILESIZE); //TODO obslouzit chybu
+   		$this->input = file_get_contents('php://input', false, null, null, CSW_MAXFILESIZE); //TODO obslouzit chybu
   	}
-
-  	//$this->logText = $this->getIP()." INPUT=".$this->input;
-  	//$this->saveLog();
 
     // POST
     if($this->input){

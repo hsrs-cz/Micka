@@ -40,6 +40,6 @@
 <xsl:template match="featureCatalogue">
 </xsl:template>
 
-<xsl:include href="update4.xsl" />
+<xsl:include href="import/update4.xsl" />
 
 </xsl:stylesheet>
