@@ -25,12 +25,14 @@ Geospatial metadata catalogue and metadata editing tool.
 4. Rename `app/config/local.neon.dist` to `app/config/local.neon` and edit it for access to your database, your contact information etc.
 5. Make the directories `log` and `temp` writable for the web server
 
+*Note: If updating, please delete all files under php/temp/cache directory.*
+
 ## User access
 During installation these default users are created automatically:
 - admin (password = admin)
 - editor (password = editor)
 - reader (password = reader)
 
-After installation you should login  as admin and change the passwords and/or names on Administration / Rights management page.
+After installation you should login as admin and change the passwords and/or names on Administration / Rights management page.
 
 

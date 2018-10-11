@@ -512,25 +512,25 @@
         </xsl:if>
     </xsl:for-each>  
 
-	<div class="row">
- 		<xsl:call-template name="drawLabel">
-			<xsl:with-param name="name" select="'timeExtent'"/>
-			<xsl:with-param name="class" select="'cond'"/>
-			<xsl:with-param name="valid" select="'5b'"/>
-		</xsl:call-template>	
-	
-        <div class="col-xs-12 col-md-8">
-            <xsl:for-each select="gmd:identificationInfo/*/*/*/gmd:temporalElement|/.">
-                <xsl:if test="string-length(*/gmd:extent)>0 or(string-length(*/gmd:extent)=0 and position()=last())">
+    <xsl:for-each select="gmd:identificationInfo/*/*/*/gmd:temporalElement|/.">
+        <xsl:if test="string-length(*/gmd:extent)>0 or(string-length(*/gmd:extent)=0 and position()=last())">
+            <div class="row">
+                <xsl:call-template name="drawLabel">
+                    <xsl:with-param name="name" select="'timeExtent'"/>
+                    <xsl:with-param name="class" select="'cond'"/>
+                    <xsl:with-param name="valid" select="'5b'"/>
+                </xsl:call-template>	
+            
+                <div class="col-xs-12 col-md-8">
                     <div>
                        <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-from[]" value="{php:function('iso2date', string(*/gmd:extent/*/*[1]),$mlang)}{*/gmd:extent/*/*[1]/@indeterminatePosition}"/> 
                       - <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-to[]"  value="{php:function('iso2date', string(*/gmd:extent/*/*[2]),$mlang)}{*/gmd:extent/*/*[2]/@indeterminatePosition}"/> 
                         <xsl:text> </xsl:text><span class="duplicate"></span>
                     </div>
-                </xsl:if>
-            </xsl:for-each>
-        </div>        
-	</div>
+                </div>        
+            </div>
+        </xsl:if>
+    </xsl:for-each>
  
     <!-- 6.1 lineage -->
 	<xsl:if test="not($serv)">

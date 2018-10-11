@@ -605,6 +605,10 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                                             <xsl:value-of select="php:function('date2iso', string(from))"/>
                                                         </gml:timePosition>
     												</gml:TimeInstant>
+    												<gml:TimePeriod gml:id="TP{position()}">
+    													<gml:beginPosition></gml:beginPosition>
+    													<gml:endPosition></gml:endPosition>
+    												</gml:TimePeriod>                                                        
     											</xsl:when>
                                                 <!-- oba casove udaje -->
     											<xsl:otherwise>
@@ -627,6 +631,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 							</xsl:for-each>
 						</gmd:EX_Extent>
 					</xsl:element>
+                    
 					<xsl:if test="$serv='srv'">
 						<srv:couplingType>
 							<srv:SV_CouplingType codeListValue="{couplingType}" codeList="{$cl}#SV_CouplingType"/>

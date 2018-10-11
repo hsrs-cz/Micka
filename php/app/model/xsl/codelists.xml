@@ -2105,7 +2105,6 @@
         <cze>správce</cze>
 		<eng>custodian</eng>
     </value>
-
     <value name="publisher" code="10">
         <cze>vydavatel</cze>
 		<eng>publisher</eng>
