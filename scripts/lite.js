@@ -1,5 +1,5 @@
 // JavaScript Document
-var mickaURL = '..';
+var mickaURL = '..'; //FIXME - remove?
 var currentObj = null;
 
 if(!String.trim) String.prototype.trim = function() { return this.replace(/^\s+|\s+$/, ''); };
@@ -7,7 +7,13 @@ if(!String.trim) String.prototype.trim = function() { return this.replace(/^\s+|
 var lite = {
     init: function(){
         $('[data-tooltip="tooltip"]').tooltip();
-        $('.sel2').select2();
+        $('.sel2').select2({
+            escapeMarkup: function(markup) { return markup; },
+            templateResult: function (d) {
+                if(d.level && d.level==1) return '<span class="sel2-level1">'+d.text+'</span>';
+                else return d.text; 
+            }
+        });
         $('.sel2').on('select2:select', {self: this}, this.onSelect);
         $('.sel2').on('select2:unselect', {self: this}, this.onSelect);
         $('.person').on('select2:select', this.changePerson);

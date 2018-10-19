@@ -327,6 +327,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             </gmd:descriptiveKeywords>
                         </xsl:otherwise>
                     </xsl:choose>
+
 					<xsl:if test="inspireService">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>
@@ -374,6 +375,33 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 						</MD_Keywords>	
 					</descriptiveKeywords>
 					</xsl:if> -->
+                    
+                    <xsl:if test="normalize-space(enduse)!=''">
+                        <gmd:descriptiveKeywords>
+                            <gmd:MD_Keywords>
+                                <xsl:for-each select="enduse/item">
+                                    <xsl:call-template name="registryOut">
+                                        <xsl:with-param name="name" select="'keyword'"/>
+                                        <xsl:with-param name="uri" select="'http://inspire.ec.europa.eu/codelist/EndusePotentialValue'"/>
+                                        <xsl:with-param name="id" select="."/>
+                                        <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    </xsl:call-template>
+                                </xsl:for-each>
+                                <gmd:thesaurusName>
+                                    <gmd:CI_Citation>
+                                        <gmd:title>
+                                            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/codelist/EndusePotentialValue">Inspire registry - Enduse potential value</gmx:Anchor>
+                                        </gmd:title>
+                                        <gmd:date><gmd:CI_Date>
+                                            <gmd:date><gco:Date>2008-06-01</gco:Date></gmd:date>
+                                            <gmd:dateType><gmd:CI_DateTypeCode codeListValue="publication" codeList="{$cl}#CI_DateTypeCode">publication</gmd:CI_DateTypeCode></gmd:dateType>
+                                        </gmd:CI_Date></gmd:date>
+                                    </gmd:CI_Citation>
+                                </gmd:thesaurusName>
+                            </gmd:MD_Keywords>	
+                        </gmd:descriptiveKeywords>
+                    </xsl:if>
+
 					
 					<!-- other kw -->
 					<xsl:for-each select="othes">

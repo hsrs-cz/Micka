@@ -214,7 +214,7 @@
 		<label>CZ-11 Harvest to EU Geoportal</label>
 		<help>
 			<h3>CZ-11 Harvest to EU Geoportal. Mark the metadata record to be harvested to European INSPIRE portal.</h3>
-			<p>If not marked, it is seen only on Czech nationa geoportal</p> 
+			<p>If not marked, it is available only on Czech national geoportal</p> 
 			<p class="pozn">Internally the http://geoportal.gov.cz/inspire value is set.</p>		
 		</help>
 	</msg>
@@ -704,5 +704,39 @@ against which data is being evaluated.</p>
 		<help>
 			<h3>Identificaton of mandatory subjesct of INSPIRE</h3> 
 		</help>
-	</msg>    
+	</msg>
+	<msg name="operation">
+		<label>IOS-3 Interface</label>
+		<help>
+			<h3>Operation metadata</h3> 
+		</help>
+	</msg>
+	<msg name="operationName">
+		<label>Operation name</label>
+		<help>
+			<h3></h3> 
+		</help>
+	</msg>
+	<msg name="mime">
+		<label>CZ-15 Format</label>
+		<help>
+			<h3>Mime type</h3> 
+		</help>
+	</msg>
+    <msg name="sel">
+        <label>Select</label>
+    </msg>
+  	<msg name="fc">
+		<label>Feature catalogue</label>
+		<help>
+			<h3>Feature catalogue reference</h3> 
+		</help>
+	</msg>
+  	<msg name="featureTypes">
+		<label>Feature types</label>
+		<help>
+			<h3>Feature names into selected Feature catalogue</h3> 
+		</help>
+	</msg>
+    
 </labels>

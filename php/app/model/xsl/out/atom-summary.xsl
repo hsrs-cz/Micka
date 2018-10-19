@@ -52,12 +52,11 @@
 	  	</xsl:call-template></title>
 	  	
 	  	
-	  	
 	  	<!-- links to ISO metadata and alternative representations -->
-      	<link rel="describedby" type="application/xml" href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
+      	<link rel="describedby" type="application/xml" href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
       	
       	<!-- links to detail Atom description -->
-      	<link rel="alternate" type="application/atom+xml" href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
+      	<link rel="alternate" type="application/atom+xml" href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
       	
       	<!-- download link for pre-defined dataset -->
       	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">
@@ -88,45 +87,8 @@
 	    		<xsl:with-param name="lang" select="$LANGUAGE"/>
 	    		<xsl:with-param name="mdlang" select="$mdlang"/>
 	  		</xsl:call-template>
-	  		<div><a href="{$thisPath}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}">Metadata</a> (ISO 19139 XML)</div>
-	  		<!-- div>
-		  		<xsl:choose>
-		  			<xsl:when test="$LANGUAGE='cze'">Data ke stažení: </xsl:when>
-		  			<xsl:otherwise>Download data: </xsl:otherwise>
-		  		</xsl:choose>
-	  		
-			    <xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine[contains(*/gmd:linkage/*,'zip')]">
-			      	
-						<a href="{*/gmd:linkage/*}">
-						<xsl:choose>
-							<xsl:when test="*/gmd:name">
-					    		
-						    	<xsl:call-template name="multi">
-							   		<xsl:with-param name="el" select="*/gmd:name"/>
-							   		<xsl:with-param name="lang" select="$LANGUAGE"/>
-							   		<xsl:with-param name="mdlang" select="$mdlang"/>
-								</xsl:call-template>
-						  	</xsl:when>
-						  	<xsl:otherwise>
-						  		<xsl:value-of select="*/gmd:linkage"/>
-						  	</xsl:otherwise>
-					  	</xsl:choose>
-					  	</a>
-					  	
-					  	<xsl:text> </xsl:text>
+	  		<div><a href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}">Metadata</a> (ISO 19139 XML)</div>
 
-			    </xsl:for-each>
-			    <xsl:variable name="ff" select="gmd:distributionInfo/*/gmd:distributionFormat/*/gmd:name"/>
-	  			(<a href="http://inspire.jrc.ec.europa.eu/media-types/">
-	    		<xsl:choose>
-	    			<xsl:when test="contains($ff,'SHP')">application/x-shapefile</xsl:when>
-	    			<xsl:when test="contains($ff,'TIF')">image/tiff</xsl:when>
-	    			<xsl:when test="contains($ff,'JPG')">image/jpeg</xsl:when>
-	    			<xsl:otherwise><xsl:value-of select="$ff"/></xsl:otherwise>
-	    		</xsl:choose>
-				</a>)
-	  		
-			</div-->
 	  		<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
 	  			<div><img src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>
 	  			<xsl:call-template name="multi">

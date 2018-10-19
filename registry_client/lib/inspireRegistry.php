@@ -2,9 +2,12 @@
 
 function getRemoteData($uri, $config=false, $lang='en'){
     $url = $uri . substr($uri, strrpos($uri, '/')) . '.' . $lang . '.json';
-    $json = file_get_contents($url);
+    $json = @file_get_contents($url);
     if(!$json){
-        die('not found: '. $url);
+        return array(
+            "id" => 'error',
+            "result" => []
+        );
     }
     $data = json_decode($json, 1);
     $result = array();

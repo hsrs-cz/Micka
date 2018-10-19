@@ -662,4 +662,13 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		</help>
 	</msg>
 
+    <!-- user specified -->
+   	<msg name="enduse">
+		<label>3 Potenciál</label>
+		<help>
+			<h3>Potenciál konečného využití</h3> 
+		</help>
+	</msg>
+
+    
 </labels>

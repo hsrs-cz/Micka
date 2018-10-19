@@ -31,7 +31,7 @@ function getMetadata($s, $esn='summary'){
 	$params['ELEMENTSETNAME'] = $esn;
 	$params['buffered'] = true;
 	$result = $csw->run($params);
-	file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
+	//file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
 	$dom = new DOMDocument();
 	$dom->loadXML($result);
 	return $dom;
@@ -51,7 +51,7 @@ function getMetadataById($id, $esn='full'){
 	$params['ELEMENTSETNAME'] = $esn;
 	$params['buffered'] = true;
 	$result = $csw->run($params);
-	file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
+	//file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
 	$dom = new DOMDocument();
 	$dom->loadXML($result);
 	return $dom;
@@ -530,4 +530,12 @@ function dateCz2Iso($datum) {
 		$datum = $pom[2] . '-' . $m . '-' . $d;
 	}
 	return $datum;
+}
+
+function getRegistryText($uri, $id, $lang='en'){
+    require_once(__DIR__ .'/../../../registry_client/lib/RegistryReader.php');
+    $r = new RegistryReader($lang);
+    $r->getData($uri);
+    $data = $r->queryById($id);
+    return $data[0]['text'];
 }

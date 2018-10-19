@@ -3,6 +3,7 @@ require_once('lib/RegistryReader.php');
 
 $uri = htmlspecialchars($_GET['uri']);
 $lang = htmlspecialchars($_GET['lang']);
+if(!$lang) $lang = 'en';
 $r = new RegistryReader($lang);
 $r->getData($uri);
 
@@ -16,7 +17,7 @@ else {
 
 $json = json_encode(array(
     "query"=>$query, 
-    "cached"=>$r->cached ,
+    "cached"=>$r->cached,
     "results"=>$data)
 );
 header('Content-Type: application/json;charset=utf-8');

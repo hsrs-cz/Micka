@@ -194,6 +194,7 @@
     <xsl:param name="placeholder" select="''"/>
     <xsl:param name="attr" select="'uri'"/>
     <xsl:param name="maxlength" select="''"/>
+    <xsl:param name="uri" select="''"/>
 	
 	<!-- class pro label -->
 	<xsl:variable name="lclassI">
@@ -303,6 +304,36 @@
 				</input>			
 			</xsl:when>
 
+			<!-- REGISTRY -->
+            <xsl:when test="$uri!=''">
+                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="../../registry_client?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
+                    <xsl:if test="$req">
+                        <xsl:attribute name="required">required</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$multi &gt; 1">
+                        <xsl:attribute name="multiple">true</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$multi=0">
+                        <xsl:attribute name="data-allow-clear">true</xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="$tags=1">
+                        <xsl:attribute name="data-tags">true</xsl:attribute>
+                    </xsl:if>
+                    <xsl:attribute name="data-placeholder">
+                        <xsl:choose>
+                            <xsl:when test="$placeholder">
+                                <xsl:value-of select="$placeholder"/>
+                            </xsl:when>
+                            <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:attribute>
+                    
+                    <xsl:for-each select="$value">
+                        <option value="{*/@xlink:href}" selected="selected"><xsl:value-of select="*"/></option>
+                    </xsl:for-each>
+                </select>
+			</xsl:when>
+
 			<!-- SELECT -->
 			<xsl:when test="$codes!=''">
                 
@@ -321,10 +352,10 @@
                     </xsl:if>
                     <xsl:attribute name="data-placeholder">
                         <xsl:choose>
-                        <xsl:when test="$placeholder">
-                            <xsl:value-of select="$placeholder"/>
-                        </xsl:when>
-                        <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
+                            <xsl:when test="$placeholder">
+                                <xsl:value-of select="$placeholder"/>
+                            </xsl:when>
+                            <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
                     <!-- blank value -->
@@ -571,6 +602,18 @@
                 <gco:CharacterString><xsl:value-of select="$t"/></gco:CharacterString>
             </xsl:otherwise>
         </xsl:choose>
+    </xsl:element>
+</xsl:template>
+
+<xsl:template name="registryOut">
+	<xsl:param name="name"/>
+	<xsl:param name="uri"/>
+	<xsl:param name="id"/>
+    <xsl:param name="mdlang" select="'eng'"/>
+    <xsl:element name="{$name}">
+        <gmx:Anchor xlink:href="{$id}">
+            <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$mdlang]/@code2))"/>
+        </gmx:Anchor>
     </xsl:element>
 </xsl:template>
 

@@ -37,7 +37,7 @@ class RegistryReader{
      
         // 3. nacte z URL
         if(!$data){
-            require_once("cfg/cfg.php");
+            require_once(__DIR__ ."/../cfg/cfg.php");
             $adapter = $config[$uri]["adapter"] ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
             require_once($this->dir ."/lib/".$adapter);
             $data = getRemoteData($uri, $config[$uri], $this->lang);
@@ -85,12 +85,17 @@ class RegistryReader{
         $this->data = $data;    
     }
 
-    function flatData(){
+    function flatData($data){
         $result = array();
-        foreach($this->data as $key=>$row){
-           $result [] = $row;
-           if(isset($row['children'])){
-               foreach ($row['children'] as $ch){
+        foreach($data as $key=>$row){
+            $children = $row['children'];
+            $row['level'] = 0;
+            unset($row['children']);
+            $result [] = $row;
+            if(isset($children)){
+               foreach ($children as $ch){
+                   $ch['parentName'] = $row['text'];
+                   $ch['level'] = 1;
                    $result [] = $ch;
                }
            }
@@ -105,33 +110,38 @@ class RegistryReader{
                 $q = strtolower($q);
                 $d = array();
                 foreach($data as $key=>$row){
-                    if(strpos(strtolower($row['name']), $q)!==false){
+                    if(strpos(strtolower($row['text']), $q)!==false){
                         $d[] = $row;
-                        // prida vsechny podrizene
-                        if($row['children']) foreach($row['children'] as $ch) $d[] = $ch;
                     }
                     // hleda v podrizenych
                     else {
+                        $pom = false;
                         $first = true;
                         if($row['children']) foreach($row['children'] as $ch){
-                           if(strpos(strtolower($ch['name']), $q)!==false){
-                               if($first) $d[] = $row;
-                               $d[] = $ch;
-                           }    
+                            if(strpos(strtolower($ch['text']), $q)!==false){
+                                if($first){
+                                    $pom = $row;
+                                    unset($pom['children']);
+                                    $first = false;
+                                }
+                                $pom['children'][] = $ch;
+                            }    
                         }
+                        if($pom) $d[] = $pom;
                     }
                 }
-                return $d;
+                //return $d;
+                return $this->flatData($d);
             }
-            return $this->flatData();            
+            return $this->flatData($this->data);
         }
         else {
-            $data = $this->flatData();
+            $data = $this->data;
             if($q){
                 $q = strtolower($q);
                 $d = array();
                 foreach($data as $row){
-                    if(strpos(strtolower($row['name']), $q)!==false){
+                    if(strpos(strtolower($row['text']), $q)!==false){
                         $d[] = $row;
                     }
                 }
@@ -166,10 +176,10 @@ class RegistryReader{
                 }
                 return $d;
             }
-            return $this->flatData();            
+            return $this->flatData($this->data);
         }
         else {
-            $data = $this->flatData();
+            $data = $this->flatData($this->data);
             //var_dump($data);
             if($id){
                 $q = strtolower($q);
