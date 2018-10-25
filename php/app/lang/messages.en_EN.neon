@@ -25,7 +25,7 @@ frontend:
     view_detail: "View detail"
     about: "About"
     version: "Your version"
-    changes: "Changes, news"
+    changes: "Last changes (Atom)"
     bugs: "Known bugs"
     support: "System support"
     edited: "The record is edited by another user."

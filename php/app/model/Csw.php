@@ -3,8 +3,8 @@ namespace Micka;
 /*******************************************************
  * OGC Catalog service server - CS-W 2.0.2
  * Help Service Remote Sensing
- * verze 6.0.0
- * 2017-01-20
+ * verze 6.0.20
+ * 2018-10-25
  *******************************************************/
 
 /**
@@ -437,7 +437,7 @@ class Csw{
         }
     }
     $this->params['timestamp'] = gmdate("Y-m-d\TH:i:s");
-    $this->params['MICKA_URL'] = MICKA_URL.'/';
+    $this->params['MICKA_URL'] = MICKA_URL; //.'/';
     $this->params['CSW_URL'] = CSW_URL.'/';
     $this->params['buffered'] = isset($params['buffered']) ? $params['buffered'] : '';
     //$this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ? $this->appParameters['appLocale'].'/' : '';

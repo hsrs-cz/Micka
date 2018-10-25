@@ -85,7 +85,7 @@
     baseUrl = "{$baseUrl|noescape}";
 </script>
 
-<div id="main" class="container panel panel-default" style="padding-top: 50px;">
+<div id="main" class="container panel panel-default" style="padding: 50px 220px 15px 15px">
     <h3>{_messages.frontend.new_record2}</h3>
 
     <h1>
@@ -326,7 +326,7 @@
                 </div>
             {/foreach}
     {/foreach}
-    </div>
+    </div> {* class t0 *}
 
     {else}
         {* MICKA LITE *}
@@ -338,10 +338,11 @@
     <div class='te'></div>
     </form>
 
+    </div>
     {* VALIDACE *}
     {if $record['mds'] == 0 || $record['mds'] == 10}
         <div id="valid">
-            <img class="exp" onclick="md_dexpand(this);" src="{$basePath}{$themePath}/img/collapse.gif"/>
+            <i id="AAvalid-block" class="exp fa fa-caret-down" onclick="md_dexpand(this);"></i>
             <span id="valid-label">
                 <a  href="#" onclick="clickMenu('valid')"><img src="{$basePath}{$themePath}/img/refresh_small.png"/>
                 <b>{_messages.frontend.validate}</b></a>
@@ -386,7 +387,7 @@
             </div>
         </div>
     {/if}
-</div>
+
 
 <script language="javascript" src="{$basePath}/thesaurus/HS.js"></script>
 <script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>

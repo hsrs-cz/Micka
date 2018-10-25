@@ -27,7 +27,7 @@
 			  	<xsl:if test="string-length($wmsURL)>0">
 			  		<xsl:choose>
 			  			<xsl:when test="contains($wmsURL,'?')">
-			    			<a class='map' href="{$viewerURL}{substring-before($wmsURL,'?')}" data-tooltip="tooltip" data-original-target="wmsviewer" title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>		  				
+			    			<a class='map' href="{$viewerURL}{substring-before($wmsURL,'?')}" data-tooltip="tooltip" target="wmsviewer" title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
 			  			</xsl:when>
 			  			<xsl:otherwise>
 			  				<a class='map' href="{$viewerURL}{$wmsURL}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>

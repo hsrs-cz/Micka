@@ -84,7 +84,7 @@ record creation or record administration. In all cases UTF-8 codepage is used.
 The application enables basic metadata querying. More complex queries are enabled via catalogue service (OGC CSW 2.0.2), which is a part of the application.<br/><br/>
 Pressing <span class="md_menuitem"><a href="" target="main" style="width:100px"><img src="{$basePath}{$themePath}/img/bfind.gif"/> Search</a></span>on left menu this query form is activated.<br />
   <br />
-  <img src="{$basePath}{$themePath}/img/help_input_eng.gif" border="0"/>
+  <img src="{$basePath}{$themePath}/img/help_search_en.png" border="0"/>
   <br />
 </div>
 <div class="odd">Legend: <br />
@@ -171,7 +171,7 @@ Pressing <span class="md_menuitem"><a href="" target="main" style="width:100px">
 <h2><a id="edit"></a>3. Metadata editing </h2>
 <div class="odd">
 Logged users can create, edit, import/export and delete metadata records accordint to their rights.
-{if $user->isInRole('writer')}
+{if $user->isInRole('editor')}
 <h3>New record creation :</h3>
   <br />
   Click: <span class="md_menuitem"><a href="#" style="width:100px"><img src="{$basePath}{$themePath}/img/bblank.gif" width="16" height="16"/> New record </a></span> on the left menu

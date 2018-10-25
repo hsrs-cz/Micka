@@ -215,25 +215,25 @@ function md_expand(obj){
         	 	var toClose = d[j]; 
         	}
         	else if(d[j].style.display!='none') {
-        	  var data = '';
-   	   		  var inputs = flatNodes(d[j],'INPUT');
-   	  	    for(var k=0; k<inputs.length; k++) if(inputs[k].type=='text') data += inputs[k].value;
-   	  	    var selects = flatNodes(d[j],'SELECT');
-   	  	    for(var k=0; k<selects.length; k++) data += selects[k].value;
-   	  	    var texts = flatNodes(d[j],'TEXTAREA');
-   	  	    for(var k=0; k<texts.length; k++) data += texts[k].value;
-   	  	    if(data){
-   	  	    	var c = window.confirm(HS.i18n('Delete') + " ?");
-   	  	    	if(!c){ 
-   	  	    		rf[i].click();
-   	  	    		return false;
-   	  	    	}	
-    				  for(var k=0; k<inputs.length; k++) if(inputs[k].type=="text") inputs[k].value = "";
-    				  for(var k=0; k<texts.length; k++)  texts[k].value = "";
-    				  for(var k=0; k<selects.length; k++) selects[k].selectedIndex=0;  	    	
-   	  	    }  	
-        	  d[j].style.display='none';
-        	}	
+                var data = '';
+                var inputs = flatNodes(d[j],'INPUT');
+                for(var k=0; k<inputs.length; k++) if(inputs[k].type=='text') data += inputs[k].value;
+                var selects = flatNodes(d[j],'SELECT');
+                for(var k=0; k<selects.length; k++) data += selects[k].value;
+                var texts = flatNodes(d[j],'TEXTAREA');
+                for(var k=0; k<texts.length; k++) data += texts[k].value;
+                if(data){
+                    var c = window.confirm(HS.i18n('Delete') + " ?");
+                    if(!c){ 
+                        rf[i].click();
+                        return false;
+                    }	
+                    for(var k=0; k<inputs.length; k++) if(inputs[k].type=="text") inputs[k].value = "";
+                    for(var k=0; k<texts.length; k++)  texts[k].value = "";
+                    for(var k=0; k<selects.length; k++) selects[k].selectedIndex=0;  	    	
+                }  	
+                d[j].style.display='none';
+        	}
         }
       }	  
     }
@@ -243,20 +243,17 @@ function md_expand(obj){
 }
 
 function md_dexpand(obj){
-  var id=obj.id.substr(2);
-  var o = document.getElementById("PB"+id);
-  var d = getMyNodes(obj.parentNode, "DIV");
-  o = d[0];
-  if(o){
-    if(o.style.display=='block'){
-      o.style.display='none';
-      $(obj).removeClass(MD_COLLAPSE).addClass(MD_EXPAND);
-    }  
-    else {
-      o.style.display='block'; 
-      $(obj).removeClass(MD_EXPAND).addClass(MD_COLLAPSE);
+    var o = getMyNodes(obj.parentNode, "DIV")[0];
+    if(o){
+        if(o.style.display!='none'){
+            o.style.display='none';
+            $(obj).removeClass(MD_COLLAPSE).addClass(MD_EXPAND);
+        }  
+        else {
+            o.style.display='block'; 
+            $(obj).removeClass(MD_EXPAND).addClass(MD_COLLAPSE);
+        }
     }
-  }
 }
 
 

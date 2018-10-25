@@ -53,10 +53,10 @@
 	  	
 	  	
 	  	<!-- links to ISO metadata and alternative representations -->
-      	<link rel="describedby" type="application/xml" href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
+      	<link rel="describedby" type="application/xml" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
       	
       	<!-- links to detail Atom description -->
-      	<link rel="alternate" type="application/atom+xml" href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
+      	<link rel="alternate" type="application/atom+xml" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
       	
       	<!-- download link for pre-defined dataset -->
       	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">
@@ -87,7 +87,7 @@
 	    		<xsl:with-param name="lang" select="$LANGUAGE"/>
 	    		<xsl:with-param name="mdlang" select="$mdlang"/>
 	  		</xsl:call-template>
-	  		<div><a href="csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}">Metadata</a> (ISO 19139 XML)</div>
+	  		<div><a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}">Metadata</a> (ISO 19139 XML)</div>
 
 	  		<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
 	  			<div><img src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>
@@ -149,7 +149,7 @@
     <item>
       <title><xsl:value-of select="dc:title"/></title>
       <guid isPermaLink="false">urn:uuid:<xsl:value-of select="dc:identifier[1]"/></guid>
-      <link><xsl:value-of select="$thisPath"/>/../micka_main.php?ak=detail&amp;lang=<xsl:value-of select="$LANGUAGE"/>&amp;uuid=<xsl:value-of select="dc:identifier[1]"/></link>
+      <link>../reords/basic/<xsl:value-of select="dc:identifier[1]"/></link>
       <description><xsl:value-of select="dct:abstract"/></description>
       <pubDate><xsl:call-template name="formatDate">
           <xsl:with-param name="DateTime" select="dc:date"/>

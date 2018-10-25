@@ -26,7 +26,7 @@ frontend:
     record_admin: "Administrace záznamu"
     view_detail: "Zobrazit detail"
     version: "Používáte verzi"
-    changes: "Změny, novinky"
+    changes: "Poslení změny (Atom)"
     bugs: "Zjištěné chyby"
     support: "Systémová podpora"
     edited: "Požadovanou operaci nelze provést, záznam edituje někdo jiný!"

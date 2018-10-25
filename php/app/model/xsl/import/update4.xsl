@@ -28,6 +28,19 @@
 	    </xsl:copy>
 	</xsl:template>
 	
+    <xsl:template match="gmd:individualName">
+        <gmd:individualName>
+            <xsl:choose>
+                <xsl:when test="../@uuid">
+                    <gmx:Anchor xlink:href="{../@uuid}"><xsl:value-of select="."/></gmx:Anchor>
+                </xsl:when>
+                <xsl:otherwise>
+                    <copy-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </gmd:individualName>
+    </xsl:template>
+
 	<!-- CRS -->
 	<xsl:template match="gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier[not(*/gmd:code/*/@xlink:href)]">
 		<gmd:referenceSystemIdentifier>
@@ -96,6 +109,7 @@
 	<xsl:template match="gmd:resourceConstraints[*/gmd:useLimitation/*!='']">
         <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
+                <gmd:useLimitation></gmd:useLimitation>
                 <gmd:useConstraints>
                     <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode">otherRestrictions</gmd:MD_RestrictionCode>
                 </gmd:useConstraints>
@@ -109,7 +123,7 @@
                         </xsl:when>
                         <xsl:otherwise>
                             <xsl:copy-of select="*/gmd:useLimitation/*"/>
-                        </xsl:otherwise>							
+                        </xsl:otherwise>
                     </xsl:choose>
                 </gmd:otherConstraints>
             </gmd:MD_LegalConstraints>
@@ -120,6 +134,7 @@
 	<xsl:template match="gmd:resourceConstraints[*/gmd:otherConstraints/*!='']">
         <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
+                <gmd:useLimitation></gmd:useLimitation>
                 <gmd:accessConstraints>
                     <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode">otherRestrictions</gmd:MD_RestrictionCode>
                 </gmd:accessConstraints>
@@ -173,7 +188,7 @@
                                     </gmd:MD_Identifier>
                                 </gmd:geographicIdentifier>
                             </gmd:EX_GeographicDescription>
-                        </gmd:geographicElement>				
+                        </gmd:geographicElement>
                     </xsl:if>
                 </xsl:for-each>
                 <xsl:for-each select="*/gmd:temporalElement">

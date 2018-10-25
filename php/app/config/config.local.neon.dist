@@ -1,12 +1,19 @@
 parameters:
     app:
+        # UI theme
         layoutTheme = default
+        # UI langauges (must have translation files)
         langs = 'cze,eng'
+        # dafult profile used
         startProfil = 5
+        #records per page
         maxRecords = 10
+        #max number of records per page
         limitMaxRecords = 100
+        #default sort
         sortBy = 'title,ASC'
         importReport = FALSE
+        #switch the validator
         validator = TRUE
         directSummary = TRUE 
         directDetail = TRUE 
@@ -14,14 +21,19 @@ parameters:
         formSign = FALSE
         defaultEditGroup = editor
         defaultViewGroup = reader
+        # record indication for access from csw etc.
         mdDataType = "-1=>'semifinished',0=>'private',1=>'public',2=>'portal'"
+        # admin IP list
         adminIP = '127.0.0.1'
+        # web proxy address
+        proxy =
     map:
-        hs_wms_cze = "http://gis.bnhelp.cz/ows/crtopo?SERVICE=WMS&VERSION=1.1.1&FORMAT=image/gif&layers=demis,sidla,doprava,voda,kraje,orp,hr_cr"
-        hs_wms_eng = "http://www2.demis.nl/wms/wms.asp?WMS=WorldMap&SERVICE=WMS&VERSION=1.1.1&FORMAT=image/jpeg&SRS=EPSG:4326&layers=Bathymetry,Topography,Hillshading,Coastlines,Builtup%20areas,Rivers,Streams,Waterbodies,Borders,Railroads,Highways,Roads,Trails,Settlements,Cities"
+        # initial map extent
         hs_initext = 12.0 48.5 18.9 51
+        # address of the connected WMS viewer web app
         viewerURL = "https://geoportal.gov.cz/web/guest/map"
     contact:
+        #contact info used in Capabilities document etc.
         title:
             cze = "Katalog prostorových metadat."
             eng = "Spatial Metadata Catalogue."

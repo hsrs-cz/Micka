@@ -20,15 +20,38 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+//define('CONNECTION_PROXY', "your-proxy-address"); 
+
+  function getDataByURL($url){
+      $ch = curl_init ($url);
+      curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+      curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // potlačena kontrola certifikátu
+      if(defined('CONNECTION_PROXY')){
+          $proxy = CONNECTION_PROXY;
+          if(defined('CONNECTION_PORT')) $proxy .= ':'. CONNECTION_PORT;
+          curl_setopt($ch, CURLOPT_PROXY, $proxy);
+      }
+      curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+      $data = curl_exec ($ch);
+      //var_dump(curl_getinfo($ch));
+      curl_close ($ch);
+      return $data;
+  }
+
 
 $url = $_REQUEST['url'];
 $purl = parse_url($url);
 if($purl['scheme']=='http' || $purl['scheme']=='https'){
-	$s = @file_get_contents($_REQUEST['url']);
+	$s = getDataByURL($url);
 	if($s){
 	  $s = str_replace(array('\r','\n'), array(' ','<BR>'), $s);
+      $success = "true";
 	}
-	else $s = "[]";  
+	else {
+        $s = "[]";
+        $success = "false";
+    }      
 	header("Content-type: application/json; charset=utf-8");
-	echo '{"success":"true","results":'.$s.'}';
+	echo '{"success":'.$success.',"results":'.$s.'}';
 }

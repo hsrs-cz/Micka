@@ -8,7 +8,6 @@
 <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
 
 <xsl:variable name="msg" select="document('../client/portal.xml')/portal/messages[@lang=$LANGUAGE]"/>
-<xsl:variable name="auth" select="document('../../cfg/cswConfig.xml')"/>
 
 <xsl:template match="gmd:MD_Metadata|gmi:MI_Metadata" 
   xmlns:gmd="http://www.isotc211.org/2005/gmd" 
@@ -26,7 +25,7 @@
 	    	<xsl:with-param name="mdlang" select="$mdlang"/>
 	  	</xsl:call-template></name>
       <guid>urn:uuid:<xsl:value-of select="gmd:fileIdentifier"/></guid>
-      <atom:link><xsl:value-of select="$thisPath"/>/../?service=CSW&amp;request=GetRecordById&amp;language=<xsl:value-of select="$LANGUAGE"/>&amp;id=<xsl:value-of select="gmd:fileIdentifier"/>&amp;format=text/html</atom:link>
+      <atom:link>?service=CSW&amp;request=GetRecordById&amp;language=<xsl:value-of select="$LANGUAGE"/>&amp;id=<xsl:value-of select="gmd:fileIdentifier"/>&amp;format=text/html</atom:link>
       <description><xsl:call-template name="multi">
 	    	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:abstract"/>
 	    	<xsl:with-param name="lang" select="$LANGUAGE"/>

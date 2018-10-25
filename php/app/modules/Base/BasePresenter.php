@@ -52,6 +52,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             : '/' . $this->translator->getLocale();
         define("MICKA_URL", $url->hostUrl . rtrim($url->basePath,'/') . $locale);
         define("CSW_URL", $url->hostUrl . rtrim($url->basePath,'/') . '/csw');
+        if($this->context->parameters['app']['proxy']){
+            define("CONNECTION_PROXY", $this->context->parameters['app']['proxy']);
+        } 
 
         define("CSW_TIMEOUT", 30);
         define("HTTP_XML", "Content-type: application/xml; charset=utf-8");

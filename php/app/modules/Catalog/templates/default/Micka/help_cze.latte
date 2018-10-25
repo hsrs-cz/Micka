@@ -1,5 +1,6 @@
 {block content}
 
+<link rel="stylesheet" href="{$basePath}{$themePath}/edit.css" type="text/css">
 <style type="text/css">
 .odd {
 	text-align: justify;
@@ -66,6 +67,7 @@ a pracovat s uživatelskými profily (podmnožinou položek).
     <li>Jádro (core elements) podle normy ISO</li>
     <li>Plný standard</li>
     <li>Profil INSPIRE</li>
+    <li>Národní metadatový profil ČR</li>
     <li>Uživatelské profily</li>
   </ul>
   Mezi profily je možno přepínat během editování. 
@@ -83,19 +85,21 @@ v postranní liště programu. </p>
 
 <a id="vyhled"></a>
 <h2>2. Vyhledávání záznamů </h2>
-
+<img src="{$basePath}{$themePath}/img/help_search_cs.png" border="0" style="float:left; margin-right:15px"/>
 <p>
-	Aplikace podporuje základní vyhledávání záznamů. 
-	Další možnosti vyhledávání jsou zpřístupněny pomocí katalogové služby OGC, která je součástí instalace (beží na adrese <micka path>/csw/index.php).
-	Na domovské stránce aplikace je tento vyhledávací formulář:  <br /><br />
-  	<img src="{$basePath}{$themePath}/img/help_input.png" border="0" usemap="#Map" />
+	Aplikace podporuje základní vyhledávání záznamů. Po výběru ve vyhledávacím formuláři jsou ihned vybrané záznamy 
+    zobrazeny v prvé části aplikace. Vyhledávací formulář je možno konfigurovat podle potřeby.
+	Další možnosti vyhledávání jsou zpřístupněny pomocí katalogové služby OGC, která je součástí instalace 
+    (beží na adrese <a href="{$basePath}/csw?service=CSW&request=GetCapabilities" target="_blank">{$basePath}/csw</a>).
 </p>
 
 <p>
 	Pro přihlášeného uživatele se zobrazí rozšířený formulář. 
-	Kritéria vyhledávání vycházejí z povinných položek katalogové služby, z INSPIRE a potřeb ČGS.
+	Kritéria vyhledávání vycházejí z povinných položek katalogové služby, z INSPIRE a potřeb správce aplikace.
 
-    <div style="color:red">POZOR! Mezi všemi položkami vyhledávacího formuláře platí průnik (logické AND), pokud nejsou položky vyplněny, nejsou pro výběr uvažovány.</div><br />
+    <div style="color:red">POZOR! Mezi všemi položkami vyhledávacího formuláře platí průnik (logické AND), 
+    pokud nejsou položky vyplněny, nejsou do výběru zahrnuty.</div>
+</p>
 
 <p>
 	Po vyhledání se zobrazí seznam nalezených vět. 
@@ -107,20 +111,21 @@ v postranní liště programu. </p>
 </p>
 
 
+<div  style="clear:both"></div>
 <a id="edit"></a>
 <h2>3. Editování záznamů </h2>
 
 <p>
 	Přihlášení uživatelé mohou v různé míře podle svých práv vytvářet, importovat/exportovat a měnit metadatové záznamy.
 </p>
-{if $user->isInRole('writer')}
+{if $user->isInRole('editor')}
 
 <h3>Vytvoření nového záznamu:</h3>
 <p>  
 	V levém menu zvolte "<b>Nový záznam</b>".  
   Zobrazí se dialog pro vytvoření nového záznamu:
 </p>
-  <img src="{$basePath}{$themePath}/img/help_new.png" xstyle="float:left; margin-right:20px"/><br /><br />
+  <img src="{$basePath}{$themePath}/img/help_new_cs.png" xstyle="float:left; margin-right:20px"/><br /><br />
 
 <p>Zde nastavíte: 
 <ul>
@@ -132,7 +137,7 @@ v postranní liště programu. </p>
 <p>
   Pokud ve výběru stadardu zvolíte Import ze souboru/URL. Poté se na stránce objeví dialog pro import:
 </p>
-  <img src="{$basePath}{$themePath}/img/help_import.gif"/> <br /><br />
+  <img src="{$basePath}{$themePath}/img/help_import_cs.png"/> <br /><br />
 
 <p> Zde zadejte buď 
   <ul>
@@ -143,9 +148,6 @@ v postranní liště programu. </p>
 </p> 
 
 <p> 
- Pokud chcete aktualizovat již existující záznam s jiným identifikátorem, zadejte pomocí tlačítka [ Výběr záznamu pro update ] identifkátor existujícího záznamu.
- Pokud importujete data ze souboru [ ESRI ISO metadata ], Můžete vybrat katalog geoprvků, do kterého naimportujete popis struktury datové sady.<br/> 
- Tlačítkem [ X ] výběry zrušíte. <br /><br /> 
  Přepínačem "Existující záznam přepsat / ponechat" volít, zda se má záznam naimportovat i pokud existuje či ne.
 </p>
 
@@ -155,8 +157,7 @@ v postranní liště programu. </p>
 Význam jednotlivých prvků je popsán pod obrázkem.
 </p>
 
-  <img src="{$basePath}{$themePath}/img/help_edit.png" alt="" />
-  <br/>
+  <img src="{$basePath}{$themePath}/img/help_edit_cs.png" alt="" /><br/>
 
   <h3>Popis jednotlivých prvků formuláře pro editaci dat: </h3>
 
@@ -172,14 +173,13 @@ Význam jednotlivých prvků je popsán pod obrázkem.
 	      Skutečně povinných položek je v normě velice málo a jsou obsaženy v povinném jádře. 
 	      Jejich kontrola probíhá při ukládání v režimu veřejného záznamu. 
 	  </li>
-      <li><span class="c" style="display:inline">Podmíněně povinné elementy</span> 
+      <li><span class="c" style="display:inline">Podmíněně povinné elementy</span>
       	(Tyto elementy jsou povinné za určitých okolností, např. prostorový rozsah musí být vyplněn buď 
       	ohraničujícím obdélníkem, pokud tomu tak není, tak popisem rozsahu) 
       </li>
-      <li class="o">Nepovinné elementy </li>
+      <li><span  class="o">Nepovinné elementy</span></li>
     </ul>
   </div>
-
 </p>
 
 <p> <b>Typy polí ve formuláří</b> - ve formuláři jsou odlišeny datové typy několika barvami:
@@ -203,10 +203,9 @@ Význam jednotlivých prvků je popsán pod obrázkem.
 <p>
 	<b>Výběr ze seznamů</b> -  
    	systém má možnost definovat různé výběry z předdefinovaných hodnot, případně integraci 
-   	s dalšími programy (gazeeteery, thesaury) přes webové služby. Pomocí těchto tlačítek otevřete nové okno 
-   	pro komunikaci s pomocnými programy. 
-	<span class="warning">POZOR! Chcete-li využít tyto funkce, musíte být umožněno ve 
-	otvírání vyskakujících oken pro tuto doménu ve Vašem prohlížeči. </span>
+   	s dalšími programy (gazeeteery, thesaury) přes webové služby. Pomocí těchto tlačítek otevřete dialogové okno 
+   	pro výběr z číselníků. 
+ </span>
 </p>
 
 <p>
@@ -247,7 +246,7 @@ Význam jednotlivých prvků je popsán pod obrázkem.
 <p>
 	Do menu administrace mají přístup pouze osoby s právy administrátora.
 </p>	
-{if $user->isInRole('writer')}
+{if $user->isInRole('editorXXX')}
   Zde jsou tyto funkce:
 
     <h3>Harvestování</h3>
@@ -269,9 +268,9 @@ Význam jednotlivých prvků je popsán pod obrázkem.
 Vyplňování metadat prostorových dat vyžaduje určitou znalost norem, 
 proto doporučujeme školení či osobní konzultace s autory programu před vlastním vyplňováním záznamů.
 
-{if $user->isInRole('writer')}
-	Pro vyplňování doporučujeme použít metadatový profil <b>Micka</b>, který obsahuje základní 
-	potřebnou množinu metadatových pvků.<br />
+{if $user->isInRole('editor')}
+	Pro vyplňování doporučujeme použít metadatový profil <b>Micka</b>, 
+    který je kompatibilní s Národním metadatovým profilem prostorových dat ČR.<br />
 	<br/>
 
 Popis položek profilu MICKA pro metadata prostorových dat:

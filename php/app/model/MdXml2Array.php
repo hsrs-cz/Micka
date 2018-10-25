@@ -228,6 +228,7 @@ class MdXml2Array
   			$this->langCodes[$locale->getAttribute('id')] = $langCode->item(0)->getAttribute('codeListValue'); // DOCASNE kvuli ruznym chybam ve starych XML
   		}	
   	}
+    //var_dump($this->langCodes); die();
   	$this->langCodes['#locale-uri'] = 'uri';
   	if($dom->documentElement){
   	    $data = $this->writeNode("", $dom->documentElement, 0);

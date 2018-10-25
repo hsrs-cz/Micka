@@ -209,8 +209,7 @@ SearchForm = function(){
 	$("#inspire").select2({
 		ajax: {
 			url: baseURL + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
-			dataType: 'json',
-			processResults: processResults, 
+			dataType: 'json', 
 			delay: 200,            
 			cache: true
 	   },
