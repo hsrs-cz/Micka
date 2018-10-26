@@ -260,8 +260,8 @@ class MdEditForm  extends \BaseModel
 		require_once __DIR__ . '/lite/resources/Kote.php';
 		$cswClient = new \CSWClient();
 		$params = array();
-		$params['alabel'] = 'Administrace'; // label Administrace
-		$params['plabel'] = 'Veřejný'; // label Public
+		$params['alabel'] = 'Administrace'; //TODO label Administrace
+		$params['plabel'] = 'Veřejný'; //TODO label Public
 		$params['recno'] = $recordModel->recno;
 		$params['uuid'] = $recordModel->uuid;
 		$params['data_type'] = $recordModel->data_type;
@@ -271,7 +271,7 @@ class MdEditForm  extends \BaseModel
 		$params['mds'] = $recordModel->md_standard;;
 		$params['lang'] = MICKA_LANG;
 		$params['mickaURL'] = dirname($_SERVER['SCRIPT_NAME'])== '\\' ? '' : dirname($_SERVER['SCRIPT_NAME']);
-		return $cswClient->processTemplate($recordModel->pxml, $template, $params);
+        return $cswClient->processTemplate($recordModel->pxml, $template, $params);
     }
 
     public function getEditForm($mds, $recno, $md_langs, $profil, $package, $md_values) {

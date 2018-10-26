@@ -756,7 +756,7 @@
                             <xsl:with-param name="codes" select="'format'"/>
                             <xsl:with-param name="class" select="'inp2 short'"/>
                             <xsl:with-param name="valid" select="'IOD-3'"/>
-                            <xsl:with-param name="tags" select="1"/>                        
+                            <xsl:with-param name="tags" select="1"/>
                         </xsl:call-template>
                         <xsl:call-template name="drawInput">
                             <xsl:with-param name="name" select="'format_version'"/>

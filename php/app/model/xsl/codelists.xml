@@ -1322,108 +1322,108 @@
     <title lang="spa">Sistema de Referencia de Coordenadas</title>
 	<value uri="http://www.opengis.net/def/crs/EPSG/0/2065">
         <cze>S-JTSK (2065)</cze>
-		    <eng>Krovak</eng>
+        <eng>Krovak</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/5514">
         <cze>S-JTSK 3.kvadrant (5514)</cze>
-		    <eng>Krovak 3.quadrant</eng>
+        <eng>Krovak 3.quadrant</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/28403">
         <cze>S-42/3 (28403)</cze>
-		    <eng>S-42/3 (28403)</eng>
+        <eng>S-42/3 (28403)</eng>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/28404">
         <cze>S-42/4 (28404)</cze>
-		    <eng>S-42/4 (28404)</eng>
+        <eng>S-42/4 (28404)</eng>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/4326">
         <cze>WGS84 (4326)</cze>
-		    <eng>WGS84 (4326)</eng>
+        <eng>WGS84 (4326)</eng>
         <spa>WGS84 (4326)</spa>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/32633">
         <cze>WGS84 UTM3 (32633)</cze>
-		    <eng>WGS84 UTM3 (32633)</eng>
+        <eng>WGS84 UTM3 (32633)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/32634">
         <cze>WGS84 UTM4 (32634)</cze>
-		    <eng>WGS84 UTM4 (32634)</eng>
+        <eng>WGS84 UTM4 (32634)</eng>
     </value>
    	<value uri="http://www.opengis.net/def/crs/EPSG/0/4258">
         <cze>ETRS89 (4258) [INSPIRE]</cze>
-		    <eng>ETRS89 (4258) [INSPIRE]</eng>
+        <eng>ETRS89 (4258) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3034">
         <cze>ETRS-LCC (3034) [INSPIRE]</cze>
-		    <cze>ETRS-LCC (3034) [INSPIRE]</cze>
+        <cze>ETRS-LCC (3034) [INSPIRE]</cze>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3035">
         <cze>ETRS-LAEA (3035) [INSPIRE]</cze>
-		    <eng>ETRS-LAEA (3035) [INSPIRE]</eng>
+        <eng>ETRS-LAEA (3035) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3038">
         <cze>ETRS-TM26 (3038)</cze>
-		    <eng>ETRS-TM26 (3038)</eng>
+        <eng>ETRS-TM26 (3038)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3039">
         <cze>ETRS-TM27 (3039)</cze>
-		    <eng>ETRS-TM27 (3039)</eng>
+        <eng>ETRS-TM27 (3039)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3040">
         <cze>ETRS-TM28 (3040)</cze>
-		    <eng>ETRS-TM28 (3040)</eng>
+        <eng>ETRS-TM28 (3040)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3041">
         <cze>ETRS-TM29 (3041)</cze>
-		    <eng>ETRS-TM29 (3041)</eng>
+        <eng>ETRS-TM29 (3041)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3042">
         <cze>ETRS-TM30 (3042)</cze>
-		    <eng>ETRS-TM30 (3042)</eng>
+        <eng>ETRS-TM30 (3042)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3043">
         <cze>ETRS-TM31 (3043)</cze>
-		    <eng>ETRS-TM31 (3043)</eng>
+        <eng>ETRS-TM31 (3043)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3044">
         <cze>ETRS-TM32 (3044)</cze>
-		    <eng>ETRS-TM32 (3044)</eng>
+        <eng>ETRS-TM32 (3044)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3045">
         <cze>ETRS-TM33 (3045) [INSPIRE]</cze>
-		    <eng>ETRS-TM33 (3045) [INSPIRE]</eng>
+        <eng>ETRS-TM33 (3045) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3046">
         <cze>ETRS-TM34 (3046) [INSPIRE]</cze>
-		    <eng>ETRS-TM34 (3046) [INSPIRE]</eng>
+        <eng>ETRS-TM34 (3046) [INSPIRE]</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3047">
         <cze>ETRS-TM35 (3047)</cze>
-		    <eng>ETRS-TM35 (3047)</eng>
+        <eng>ETRS-TM35 (3047)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3048">
         <cze>ETRS-TM36 (3048)</cze>
-		    <eng>ETRS-TM36 (3048)</eng>
+        <eng>ETRS-TM36 (3048)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3049">
         <cze>ETRS-TM37 (3049)</cze>
-		    <eng>ETRS-TM37 (3049)</eng>
+        <eng>ETRS-TM37 (3049)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3050">
         <cze>ETRS-TM38 (3050)</cze>
-		    <eng>ETRS-TM38 (3050)</eng>
+        <eng>ETRS-TM38 (3050)</eng>
     </value>
   	<value uri="http://www.opengis.net/def/crs/EPSG/0/3857">
         <cze>Spherical Mercator (3857)</cze>
-		    <eng>Spherical Mercator (3857)</eng>
+        <eng>Spherical Mercator (3857)</eng>
         <spa>Spherical Mercator (3857)</spa>
     </value>
     <value uri="http://www.opengis.net/def/crs/EPSG/0/3116">
-		    <eng>MAGNA-SIRGAS / Colombia Bogota zone (3116)</eng>
+        <eng>MAGNA-SIRGAS / Colombia Bogota zone (3116)</eng>
         <spa>MAGNA-SIRGAS / Colombia Bogota Zona (3116)</spa>
     </value>
-    <value uri="http://www.opengis.net/def/crs/EPSG/0/4326">
-		    <eng>MAGNA-SIRGAS (4686)</eng>
+    <value uri="http://www.opengis.net/def/crs/EPSG/0/4686">
+        <eng>MAGNA-SIRGAS (4686)</eng>
         <spa>MAGNA-SIRGAS (4686)</spa>
     </value>
   </coordSys>
@@ -1451,69 +1451,69 @@
     <!-- ANNEX I -->
     <value uri="http://inspire.ec.europa.eu/theme/rs" spec="http://inspire.ec.europa.eu/id/document/tg/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">
         <cze>Souřadnicové referenční systémy</cze>
-		    <eng>Coordinate reference systems</eng>
+        <eng>Coordinate reference systems</eng>
         <spa>Sistema de Referencia de Coordenadas</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/gg" spec="http://inspire.ec.europa.eu/id/document/tg/gg" cenia="base" name="Zeměpisné soustavy souřadnicových sítí" code="Geographical grid systems" publication="2010-05-03" n="I.2">
         <cze>Zeměpisné soustavy souřadnicových sítí</cze>
-		    <eng>Geographical grid systems</eng>
+        <eng>Geographical grid systems</eng>
         <spa>Sistemas de Grillas de Coordenadas</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/gn" spec="http://inspire.ec.europa.eu/id/document/tg/gn" cenia="base" name="Zeměpisné názvy" code="Geographical names" publication="2010-05-03" n="I.3">
         <cze>Zeměpisné názvy</cze>
-		    <eng>Geographical names</eng>
+        <eng>Geographical names</eng>
         <spa>Nombres geográficos</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/au" spec="http://inspire.ec.europa.eu/id/document/tg/au" cenia="division" name="Správní jednotky" code="Administrative units" publication="2010-05-03" n="I.4">
         <cze>Správní jednotky</cze>
-		    <eng>Administrative units</eng>
+        <eng>Administrative units</eng>
         <spa>Unidades administrativas</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/ad" spec="http://inspire.ec.europa.eu/id/document/tg/ad" cenia="division" name="Adresy" code="Addresses" publication="2010-05-03" n="I.5">
         <cze>Adresy</cze>
-		    <eng>Addresses</eng>
+        <eng>Addresses</eng>
         <spa>Direcciones</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/cp" spec="http://inspire.ec.europa.eu/id/document/tg/cp" cenia="division" name="Katastrální parcely" code="Cadastral parcels" publication="2010-05-03" n="I.6">
         <cze>Katastrální parcely</cze>
-		    <eng>Cadastral parcels</eng>
+        <eng>Cadastral parcels</eng>
         <spa>Parcelas catastrales</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/tn" spec="http://inspire.ec.europa.eu/id/document/tg/tn" cenia="transport" name="Dopravní sítě" code="Transport networks" publication="2010-05-03" n="I.7">
         <cze>Dopravní sítě</cze>
-		    <eng>Transport networks</eng>
+        <eng>Transport networks</eng>
         <spa>Redes de transporte</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/hy" spec="http://inspire.ec.europa.eu/id/document/tg/hy" cenia="water" name="Vodopis" code="Hydrography" publication="2010-05-03" n="I.8">
         <cze>Vodopis</cze>
-		    <eng>Hydrography</eng>
+        <eng>Hydrography</eng>
         <spa>Hidrografía</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/ps" spec="http://inspire.ec.europa.eu/id/document/tg/ps" cenia="environment" name="Chráněná území" code="Protected sites" publication="2010-05-03" n="I.9">
         <cze>Chráněná území</cze>
-		    <eng>Protected sites</eng>
+        <eng>Protected sites</eng>
         <spa>Sitios protegidos</spa>
     </value>
 
     <!-- ANNEX II -->
     <value uri="http://inspire.ec.europa.eu/theme/el" spec="http://inspire.ec.europa.eu/id/document/tg/el" cenia="base" name="Nadmořská výška" code="Elevation" publication="2013-10-12" n="II.1">
         <cze>Nadmořská výška</cze>
-		    <eng>Elevation</eng>
+        <eng>Elevation</eng>
         <spa>Elevación</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/lc" spec="http://inspire.ec.europa.eu/id/document/tg/lc" cenia="nature" name="Krajinný pokryv" code="Land cover" publication="2013-10-12" n="II.2">
         <cze>Krajinný pokryv</cze>
-		    <eng>Land cover</eng>
+        <eng>Land cover</eng>
         <spa>Cobertura del suelo</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/oi" spec="http://inspire.ec.europa.eu/id/document/tg/oi" cenia="base" name="Ortofotosnímky" code="Orthoimagery" publication="2013-10-12" n="II.3">
         <cze>Ortofotosnímky</cze>
-		    <eng>Orthoimagery</eng>
+        <eng>Orthoimagery</eng>
         <spa>Ortoimagen</spa>
     </value>
     <value uri="http://inspire.ec.europa.eu/theme/ge" spec="http://inspire.ec.europa.eu/id/document/tg/ge" cenia="nature" name="Geologie" code="Geology" publication="2013-10-12" n="II.4">
         <cze>Geologie</cze>
-		    <eng>Geology</eng>
+        <eng>Geology</eng>
         <spa>Geología</spa>
     </value>
 
