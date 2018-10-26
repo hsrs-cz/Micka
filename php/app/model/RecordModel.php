@@ -64,7 +64,7 @@ class RecordModel extends \BaseModel
         if ($this->recordMd && count($this->recordMdValues) == 0) {
             $table = $this->typeTableMd == 'edit_md' ? 'edit_md_values' : 'md_values';
             $this->recordMdValues = $this->db->query(
-                "SELECT * FROM $table WHERE recno=?", $this->recordMd->recno)->fetchAll();
+                "SELECT * FROM $table WHERE recno=? ORDER BY md_path", $this->recordMd->recno)->fetchAll();
         }
         return;
     }
