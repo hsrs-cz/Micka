@@ -104,15 +104,15 @@ class SuggestModel
                 break;
             case 'denom':
                 $creator = '';
-                $query = '';
                 $orderBy = FALSE;
                 $query_lang = '';
                 $mask = ", '999999999'";
                 $sql = "
                     SELECT md_values.md_value 
                     FROM md JOIN md_values ON md.recno=md_values.recno 
-                    WHERE md_values.md_id=99 AND $right
-                    GROUP BY md_values.md_value 
+                    WHERE md_values.md_id=99 AND $right ";
+                    if($query) $sql .= " AND md_values.md_value ILIKE '" . $query . "%' ";
+                    $sql .= "GROUP BY md_values.md_value 
                     ORDER BY TO_NUMBER(md_value $mask)
                 ";
                 $result = $this->db->query($sql)->fetchAll();
@@ -120,17 +120,13 @@ class SuggestModel
             case 'country':
             case 'mdcountry':
                 $creator = '';
-                $query = '';
                 $orderBy = FALSE;
-                $query_lang = '';
                 $md_id = $contact_type == 'country' ? '202,5046' : '168';
-                $sql = "
-                    SELECT md_values.md_value 
+                $sql = "SELECT md_values.md_value 
                     FROM md JOIN md_values ON md.recno=md_values.recno 
-                    WHERE md_values.md_id IN ($md_id) AND $right
-                    GROUP BY md_values.md_value 
-                    ORDER BY md_value
-                ";
+                    WHERE md_values.md_id IN ($md_id) AND $right";
+                if($query) $sql .= " AND md_values.md_value ILIKE '%" . $query . "%' ";
+                $sql .= " GROUP BY md_values.md_value ORDER BY md_value;";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
             case 'keyword':

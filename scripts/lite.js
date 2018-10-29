@@ -43,7 +43,7 @@ var lite = {
         var id = $("#parent-identifier").data("val");
         var me = this;
         var processResult = function(data){
-            var rec = data ? [{id:data.records[0].id, text:data.records[0].title}] : [];
+            var rec = (data && data.records[0]) ? [{id:data.records[0].id, text:data.records[0].title}] : [];
             $("#parent-identifier").select2({
                 data: rec,
                 ajax: {

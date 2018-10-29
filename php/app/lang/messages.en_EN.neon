@@ -113,8 +113,10 @@ frontend:
     home: "Home"
     cookbook: "Cookbook"
     contact: "Contact"
+    mdcontact: "Metadata contact"
     copy: "Clone"
     select: "select"
+    map: "Map"
 
     admin: "Admin"
     application: "Application"

@@ -2391,6 +2391,10 @@
         <cze>Česká republika</cze>
 		<eng>Czech republic</eng>
     </value>
+    <value x1="-180" y1="-90" x2="180" y2="90" uri="WORLD" area="9999999">
+        <cze>Svět</cze>
+		<eng>World</eng>
+    </value>
     <value x1="9.53" y1="46.373" x2="17.16" y2="49.021" uri="https://publications.europa.eu/resource/authority/country/AUT" area="83879">
         <cze>Rakousko</cze>
 		<eng>Austria</eng>

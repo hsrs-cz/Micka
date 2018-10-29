@@ -91,7 +91,13 @@
 
         {* FLASH *}
         {foreach $flashes as $flash}
-            <div class="container alert alert-{$flash->type} alert-dismissible" role="alert">{$flash->message}</div>
+            <div class="container alert alert-{$flash->type} alert-dismissible" role="alert">
+                {$flash->message}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
         {/foreach}
 		
         {include content}

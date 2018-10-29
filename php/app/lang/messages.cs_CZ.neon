@@ -117,7 +117,9 @@ frontend:
     home: "Úvod"
     cookbook: "Kuchařka"
     contact: "Kontakt"
+    mdcontact: "Kontakt - metadata"
     copy: "Zkopírovat"
+    map: "Mapa"
 
     full_metadata: "Detail"
     application: "Aplikace"
