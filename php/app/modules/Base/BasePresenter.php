@@ -100,7 +100,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
         
         $this->template->parameters = $this->context->parameters;
-        $this->template->themePath = '/layout/default';
+        $this->template->themePath = '/layout/' . $this->context->parameters['app']['layoutTheme'];
         $this->template->extjsPath = '/wwwlibs/ext/ext-4.2';
         $this->template->appLang = $this->appLang;
         $this->template->appLang2 = $this->translator->getLocale();
