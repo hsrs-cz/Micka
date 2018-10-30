@@ -26,12 +26,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $tmp_appparameters['appDefaultLocale'] = $this->translator->getDefaultLocale();
         $tmp_appparameters['appLocale'] = $this->translator->getLocale();
         $tmp_appparameters['appUrl'] = $this->link(':Catalog:Default:default');
-        
-        $this->layoutTheme = $this->context->parameters['app']['layoutTheme'];
+        $dir = dirname($this->getReflection()->getFileName());
+        $this->layoutTheme = file_exists("$dir/templates/" . $this->context->parameters['app']['layoutTheme'] . "/Default/default.latte")
+            ? $this->context->parameters['app']['layoutTheme']
+            : 'default';
         $this->langCodes = $this->context->parameters['langCodes'];
         $this->appLang = isset($this->langCodes[$this->translator->getLocale()])
-                ? $this->langCodes[$this->translator->getLocale()]
-                : substr($this->context->parameters['app']['langs'],0,3);
+            ? $this->langCodes[$this->translator->getLocale()]
+            : substr($this->context->parameters['app']['langs'],0,3);
         $this->mickaSession = $this->getSession('mickaSection');
         
         define("CSW_LOG", __DIR__ . '/../../../log');
@@ -100,7 +102,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 	{
         
         $this->template->parameters = $this->context->parameters;
-        $this->template->themePath = '/layout/' . $this->context->parameters['app']['layoutTheme'];
+        $this->template->themePath = '/layout/' . $this->layoutTheme;
         $this->template->extjsPath = '/wwwlibs/ext/ext-4.2';
         $this->template->appLang = $this->appLang;
         $this->template->appLang2 = $this->translator->getLocale();
