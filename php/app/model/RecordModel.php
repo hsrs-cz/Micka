@@ -934,15 +934,19 @@ class RecordModel extends \BaseModel
         return $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
     }
     
-	private function getIdElements() {
+    private function getIdElements()
+    {
         // Move to CodeListModel
-        $data = $this->db->query("SELECT standard_schema.md_id, standard_schema.md_standard, elements.el_name,
+        $data = $this->db->query("SELECT standard_schema.md_id, standard_schema.md_standard,
+            (CASE WHEN standard_schema.md_right-standard_schema.md_left=1 THEN 1 ELSE 0 END) AS is_data,
+            elements.el_name,
             standard_schema.is_uri
             FROM elements JOIN standard_schema ON (elements.el_id = standard_schema.el_id)")->fetchAll();
 		$rs = [];
         foreach ($data as $row) {
 			$rs[$row->md_standard][$row->md_id][0] = $row->el_name;
-			$rs[$row->md_standard][$row->md_id][1] = $row->is_uri;
+            $rs[$row->md_standard][$row->md_id][1] = $row->is_uri;
+            $rs[$row->md_standard][$row->md_id]['is_data'] = $row->is_data;
 		}
 		return $rs;
 	}
@@ -958,6 +962,10 @@ class RecordModel extends \BaseModel
         $i = 0;
         $mds = $this->recordMd->md_standard == 10 ? 0 : $this->recordMd->md_standard;
 		foreach ($this->recordMdValues as $row) {
+            if ($elements_label[$mds][$row->md_id]['is_data'] === 0) {
+                \Tracy\Debugger::log('md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_VALUE');
+                continue;
+            }
             $path_arr = explode('_', substr($row->md_path, 0, strlen($row->md_path) - 1));
             $eval_text_tmp = '$vysl';
             foreach ($path_arr as $key=>$value) {
@@ -986,7 +994,6 @@ class RecordModel extends \BaseModel
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x2']='".$this->recordMd->x2."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y1']='".$this->recordMd->y1."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
-        //var_dump($eval_text); exit;
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
         //header('Content-type: application/xml'); echo $xml->saveXML(); exit;
