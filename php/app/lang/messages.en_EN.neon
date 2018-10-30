@@ -160,7 +160,7 @@ frontend:
 management:
     modules: "Administration"
     contacts: "Contacts management"
-    identity: "Right management"
+    identity: "Rights management"
     profiles: "Profiles management"
     profileSelectMDS: "Select metadata standard"
     profileAdd: "Add profile"
@@ -173,7 +173,7 @@ lang:
 
 apperror:
     postIncomplete: "record POST - incomplete data"
-    postUnknownAc: "rekord POST - unknown action"
+    postUnknownAc: "record POST - unknown action"
     noRecordFound: "Sorry, no record found."
     noProfileFound: "Sorry, no profile found."
     cantSaveNew: "Sorry, you can't save this new record."
