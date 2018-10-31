@@ -16,7 +16,7 @@
 	<feed version="2.0" xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/">
 	    <title><xsl:value-of select="$auth//ows:Title"/></title>
 	    <subtitle><xsl:value-of select="$msg[@eng='AtomSubtitle']"/></subtitle>
-	    <link href="{$thisPath}" rel="via"/>
+	    <link href="" rel="via"/>
     	<openSearch:totalResults><xsl:value-of select="/results/@numberOfRecordsMatched"/></openSearch:totalResults>
     	<openSearch:startIndex><xsl:value-of select="results/@nextRecord - /results/@numberOfRecordsReturned - 1"/></openSearch:startIndex>
     	<openSearch:itemsPerPage><xsl:value-of select="/results/@numberOfRecordsReturned"/></openSearch:itemsPerPage>
@@ -53,10 +53,10 @@
 	  	
 	  	
 	  	<!-- links to ISO metadata and alternative representations -->
-      	<link rel="describedby" type="application/xml" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
+      	<link rel="describedby" type="application/xml" href="{$thisPath}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
       	
       	<!-- links to detail Atom description -->
-      	<link rel="alternate" type="application/atom+xml" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
+      	<link rel="alternate" type="application/atom+xml" href="{$thisPath}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
       	
       	<!-- download link for pre-defined dataset -->
       	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">
@@ -87,7 +87,7 @@
 	    		<xsl:with-param name="lang" select="$LANGUAGE"/>
 	    		<xsl:with-param name="mdlang" select="$mdlang"/>
 	  		</xsl:call-template>
-	  		<div><a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}">Metadata</a> (ISO 19139 XML)</div>
+	  		<div><a href="{$thisPath}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}">Metadata</a> (ISO 19139 XML)</div>
 
 	  		<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
 	  			<div><img src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>

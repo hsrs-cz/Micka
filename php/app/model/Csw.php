@@ -32,7 +32,7 @@ class Csw{
         "csw" => array(
                 "NS" => "http://www.opengis.net/cat/csw/2.0.2",
                 "httpHdr" => array(
-                        "Content-Type: application/xml"
+                    "Content-Type: application/xml"
                 ),
                 "header" => '<csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" version="2.0.2">
                 <csw:RequestId>[id]</csw:RequestId>
@@ -598,7 +598,7 @@ class Csw{
         $this->xsl->load(__DIR__ ."/xsl/getCapabilities.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $params = array(
-            'thisURL' => dirname($this->params['thisURL'])."/csw/",
+            'thisURL' => dirname(MICKA_URL)."/csw/",
             'LANG' => $lang,
             'MICKA_LANG' => MICKA_LANG,
             'LANG_OTHER' => $olang,
@@ -621,7 +621,7 @@ class Csw{
         $this->xml->loadXML("<root/>");
         $this->xsl->load(__DIR__ . "/xsl/describeRecord.xsl");
         $this->xp->importStyleSheet($this->xsl);
-        //$xp->setParameter('', 'thisURL', "http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']);
+        //$xp->setParameter('', 'thisURL', MICKA_URL);
         $processed = $this->xp->transformToXML($this->xml);
         //header("Content-type: application/xml");
         //$processed = file_get_contents(PHPPRG_DIR."/../xsl/describeRecord.xml");
@@ -692,7 +692,7 @@ class Csw{
     if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= MAXRECORDS;
     if($this->params['MAXRECORDS']>LIMITMAXRECORDS) $this->params['MAXRECORDS'] = $this->params['MAXRECORDS']= LIMITMAXRECORDS;
     if(!$this->params['STARTPOSITION'] || $this->params['STARTPOSITION']==0) $this->params['STARTPOSITION'] = 1;
-
+    $this->params['thisPath'] = MICKA_URL;
     $resultType = $this->getParamL('RESULTTYPE');
     if(!$resultType) $resultType = 'results';
     // TODO nějak uspořadat
@@ -982,7 +982,7 @@ class Csw{
         $this->xp->importStyleSheet($this->xsl);
 
         //$this->params['requestId'] = $this->params['REQUESTID'];
-        $this->params['thisPath'] = dirname($this->params['thisURL']);
+        $this->params['thisPath'] = MICKA_URL;
         $this->params['root'] = "csw:GetRecordByIdResponse";
         $this->params['elementSet'] = $this->getParamL('ELEMENTSETNAME');
         $this->params['user'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';

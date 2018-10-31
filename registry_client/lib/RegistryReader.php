@@ -1,6 +1,23 @@
 <?php
 session_start();
 
+function getDataByURL($url){
+  $ch = curl_init ($url);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // potlaèena kontrola certifikátu
+  if(defined('CONNECTION_PROXY')){
+      $proxy = CONNECTION_PROXY;
+      if(defined('CONNECTION_PORT')) $proxy .= ':'. CONNECTION_PORT;
+      curl_setopt($ch, CURLOPT_PROXY, $proxy);
+  }
+  curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
+  $data = curl_exec ($ch);
+  //var_dump(curl_getinfo($ch));
+  curl_close ($ch);
+  return $data;
+}
+
 class RegistryReader{
 
     var $lang = null;

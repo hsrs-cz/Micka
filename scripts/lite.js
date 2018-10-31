@@ -180,13 +180,13 @@ var lite = {
     
     changeExtent: function(e){
         var bbox = e.params.data.id.split('|')[1].split(" ");
-        micka.mapfeatures.clear();
-        var ext = micka.addBBox(bbox, 'i-1');
-        micka.overmap.getView().fit(ext, micka.overmap.getSize());
         $('#xmin').val(bbox[0]);
         $('#ymin').val(bbox[1]);
         $('#xmax').val(bbox[2]);
         $('#ymax').val(bbox[3]);
+        micka.mapfeatures.clear();
+        var ext = micka.addBBox(bbox, 'i-1');
+        micka.overmap.getView().fit(ext, micka.overmap.getSize());
     },
     
     changeServiceType: function(e){

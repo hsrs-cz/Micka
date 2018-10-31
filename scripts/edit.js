@@ -1796,7 +1796,12 @@ micka.initMap=function(config){
 }
 
 micka.addBBox = function(b, id){
-	var g = new ol.geom.Polygon.fromExtent([parseFloat(b[0]), parseFloat(b[1]), parseFloat(b[2]), parseFloat(b[3])]);
+    for(var i=0; i<b.length; i++){
+        b[i] = parseFloat(b[i]);
+    }
+    if(b[1]<-89.6) b[1]=-89.6;
+    if(b[3]> 89.6) b[3]= 89.6;
+	var g = new ol.geom.Polygon.fromExtent(b);
 	g.transform('EPSG:4326', 'EPSG:3857');
 	b = new ol.Feature({geometry: g});
 	b.setId(id);

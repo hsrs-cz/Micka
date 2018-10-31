@@ -26,7 +26,6 @@
 	>
 <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes"/>
 
-  <xsl:variable name="cap" select="document('../../cfg/cswConfig-eng.xml')/*/ows:ServiceProvider"/>
    
   <xsl:include href="iso2dcat.xsl" />
 			

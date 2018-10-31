@@ -12,10 +12,16 @@ var GemetClient = function(params){
     if(!params.el) {console.log('gemetClient params.el not defined.'); return; }
     var $t = $(params.el);
     var showTree = params.showTree;
+    var onClose = params.onClose;
+    var scope = params.scope;
+    
     // GEMET default
-    var thesaurus_uri = params.thesaurusUri ? params.thesaurusUri : 'http://www.eionet.europa.eu/gemet/concept/'
+    var thesaurus_uri = params.thesaurusUri ? params.thesaurusUri : 'http://www.eionet.europa.eu/gemet/concept/';
+    var minChars = (params.minChars != undefined) ? params.minChars : 3;
+    var sel = 0;
     
     this.onThesChange = function (e) {
+        sel = 1;
         e.stopPropagation();
         var d = [
             e.params.data,
@@ -34,7 +40,7 @@ var GemetClient = function(params){
         })
         .done(function(data){
             for(var i=0;i<data.length; i++){
-                d[1].children.push({id: data[i].uri, text: data[i].preferredLabel.string});
+                d[1].children.push({id: data[i].uri, text: data[i].preferredLabel.string, level: 1});
             }
             $.ajax({
                 url: url + 'getRelatedConcepts?',
@@ -47,7 +53,7 @@ var GemetClient = function(params){
             })
             .done(function(data){
                 for(var i=0;i<data.length; i++){
-                    d[2].children.push({id: data[i].uri, text: data[i].preferredLabel.string});
+                    d[2].children.push({id: data[i].uri, text: data[i].preferredLabel.string, level: 1});
                 }
                 $t.select2({
                     data: d,
@@ -60,6 +66,10 @@ var GemetClient = function(params){
         });
     };
     
+    this.onSelect = function(){
+        sel = 0;
+    }
+
     this.process = function(langs, handler){
         var terms = {};
         var l2 = null;
@@ -115,7 +125,7 @@ var GemetClient = function(params){
             delay: 200,  
             cache: false
         },
-        minimumInputLength: 3,
+        minimumInputLength: minChars,
         language: lang,
         theme: 'bootstrap',
         allowClear: true 
@@ -123,14 +133,22 @@ var GemetClient = function(params){
     
     $t.select2(defCfg);
     if(showTree){
+        $t.on('select2:selecting', this.onSelect);
         $t.on('select2:select', this.onThesChange);
     }
     // when clearing the field
-    $t.on('select2:unselecting', function(e){
+    $t.on('select2:unselect', function(e){
         e.stopPropagation();
         $t.select2().empty();
         $t.select2(defCfg);
+        onClose.call(scope);
     });
     
+    $t.on('select2:close', function(d){
+        if(sel==1 && onClose){
+            onClose.call(scope);
+        }
+    });
+
 };
 

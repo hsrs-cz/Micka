@@ -10,7 +10,7 @@ function getRemoteData($uri, $config=false, $lang='en'){
     echo $data; die;
 
 
-    $data = file_get_contents($url);
+    $data = getDataByURL($url);
     var_dump($data);
     if(!$json){
         die('nenalezeno: '. $url);

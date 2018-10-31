@@ -1,4 +1,6 @@
 <?php
+//define('CONNECTION_PROXY', "your-proxy-address"); 
+
 // --- bud tam bude include nebo exclude
 $config=array(
     // --- Enduse potential INSPIRE
