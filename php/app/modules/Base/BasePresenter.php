@@ -25,7 +25,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $tmp_appparameters = $this->context->parameters;
         $tmp_appparameters['appDefaultLocale'] = $this->translator->getDefaultLocale();
         $tmp_appparameters['appLocale'] = $this->translator->getLocale();
-        $tmp_appparameters['appUrl'] = $this->link(':Catalog:Default:default');
+        //$tmp_appparameters['appUrl'] = $this->link(':Catalog:Default:default');
         $dir = dirname($this->getReflection()->getFileName());
         $this->layoutTheme = file_exists("$dir/templates/" . $this->context->parameters['app']['layoutTheme'] . "/Default/default.latte")
             ? $this->context->parameters['app']['layoutTheme']
@@ -57,6 +57,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         if($this->context->parameters['app']['proxy']){
             define("CONNECTION_PROXY", $this->context->parameters['app']['proxy']);
         } 
+
+        $tmp_appparameters['hostUrl'] = $url->hostUrl;
+        $tmp_appparameters['basePath'] = rtrim($url->basePath,'/');
+        $tmp_appparameters['locale'] = $locale;
 
         define("CSW_TIMEOUT", 30);
         define("HTTP_XML", "Content-type: application/xml; charset=utf-8");
