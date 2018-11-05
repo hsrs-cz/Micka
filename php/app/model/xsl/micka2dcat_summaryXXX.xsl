@@ -27,7 +27,6 @@
 
 <xsl:variable name="cap" select="document('../../cfg/cswConfig-eng.xml')/*/ows:ServiceProvider"/>
 
-
 <xsl:template match="/">
 
    <rdf:RDF>

@@ -20,7 +20,7 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-define('CONNECTION_PROXY', "cache.cgu.cz:8080"); 
+//define('CONNECTION_PROXY', "cache.cgu.cz:8080"); 
 
   function getDataByURL($url){
       $ch = curl_init ($url);

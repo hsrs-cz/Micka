@@ -19,6 +19,10 @@ var GemetClient = function(params){
     var thesaurus_uri = params.thesaurusUri ? params.thesaurusUri : 'http://www.eionet.europa.eu/gemet/concept/';
     var minChars = (params.minChars != undefined) ? params.minChars : 3;
     var sel = 0;
+
+	var templateResult = function(data){
+		return $( '<div class="sel2-level'+ data.level +'">' + data.text +'</div>' );
+	}
     
     this.onThesChange = function (e) {
         sel = 1;
@@ -59,7 +63,8 @@ var GemetClient = function(params){
                     data: d,
                     allowClear: true,
                     theme: 'bootstrap',
-                    minimumResultsForSearch: Infinity
+                    minimumResultsForSearch: Infinity,
+                    templateResult: templateResult
                 });
                 $t.select2('open');
             });

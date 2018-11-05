@@ -39,7 +39,7 @@ class SuggestPresenter extends \BasePresenter
         ));
 	}
     
-    /** @resource Catalog:Editor */
+    /** @resource Catalog:Guest */
 	public function renderMdLists()
 	{
         $httpRequest =$this->context->getByType('Nette\Http\Request');

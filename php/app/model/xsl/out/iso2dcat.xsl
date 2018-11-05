@@ -49,7 +49,7 @@
     </xsl:variable>	
 
 	<rdf:Description>
-    	<xsl:attribute name="rdf:about">?service=CSW&amp;request=GetRecordById&amp;id=<xsl:value-of select="gmd:fileIdentifier"/></xsl:attribute>
+    	<xsl:attribute name="rdf:about"><xsl:value-of select="$mickaURL"/>/csw?service=CSW&amp;request=GetRecordById&amp;id=<xsl:value-of select="gmd:fileIdentifier"/></xsl:attribute>
 		 
 		 <!-- METADATA on Metadata -->
 		 <foaf:isPrimaryTopicOf>
@@ -166,7 +166,7 @@
 			<dct:isPartOf rdf:parseType="Resource">
 				<dct:identifier rdf:datatype="{$xsd}{php:function('isURI', string($md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code))}"><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*"/></dct:identifier>
 				<foaf:isPrimaryTopicOf>
-					<dcat:CatalogRecord rdf:about="{$thisPath}/csw?service=CSW&amp;request=GetRecordById&amp;id={gmd:parentIdentifier/*}&amp;outputschema=http://www.w3.org/ns/dcat%23"/>
+					<dcat:CatalogRecord rdf:about="{$mickaURL}/csw?service=CSW&amp;request=GetRecordById&amp;id={gmd:parentIdentifier/*}&amp;outputschema=http://www.w3.org/ns/dcat%23"/>
 				</foaf:isPrimaryTopicOf>			
 			</dct:isPartOf>
 		</xsl:if>
@@ -177,7 +177,7 @@
 			<dct:hasPart rdf:parseType="Resource">
 				<dct:identifier rdf:datatype="{$xsd}{php:function('isURI', string(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code))}"><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*"/></dct:identifier>
 				<foaf:isPrimaryTopicOf>
-					<dcat:CatalogRecord rdf:about="{$thisPath}/csw?service=CSW&amp;request=GetRecordById&amp;id={gmd:fileIdentifier/*}&amp;outputschema=http://www.w3.org/ns/dcat%23"/>
+					<dcat:CatalogRecord rdf:about="{$mickaURL}/csw?service=CSW&amp;request=GetRecordById&amp;id={gmd:fileIdentifier/*}&amp;outputschema=http://www.w3.org/ns/dcat%23"/>
 				</foaf:isPrimaryTopicOf>			
 			</dct:hasPart>
 		</xsl:for-each>

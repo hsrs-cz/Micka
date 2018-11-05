@@ -270,7 +270,7 @@ class MdEditForm  extends \BaseModel
 		$params['select_profil'] = $profil_id;
 		$params['mds'] = $recordModel->md_standard;;
 		$params['lang'] = MICKA_LANG;
-		$params['mickaURL'] = dirname($_SERVER['SCRIPT_NAME'])== '\\' ? '' : dirname($_SERVER['SCRIPT_NAME']);
+		$params['MICKA_URL'] = dirname($_SERVER['SCRIPT_NAME'])== '\\' ? '' : dirname($_SERVER['SCRIPT_NAME']);
         return $cswClient->processTemplate($recordModel->pxml, $template, $params);
     }
 

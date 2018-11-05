@@ -367,14 +367,23 @@
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template> 
     
-            <!-- EU Enduse potential -->
+            <!-- CGS themes -->
+            <xsl:call-template name="drawInput">
+                <xsl:with-param name="name" select="'geology'"/>
+                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'ČGS')]/*/gmd:keyword"/>
+                <xsl:with-param name="codes" select="'geology'"/>
+                <xsl:with-param name="multi" select="2"/>
+                <xsl:with-param name="valid" select="'3'"/>
+            </xsl:call-template> 
+      
+            <!-- EU Enduse potential
             <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'enduse'"/>
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*/@xlink:href,'EndusePotentialValue')]/*/gmd:keyword"/>
                 <xsl:with-param name="uri" select="'http://inspire.ec.europa.eu/codelist/EndusePotentialValue'"/>
                 <xsl:with-param name="multi" select="2"/>
                 <xsl:with-param name="valid" select="'3'"/>
-            </xsl:call-template> 
+            </xsl:call-template>  -->
 
                 
        		<!-- ostatni KW s thesaurem-->
@@ -461,15 +470,20 @@
                 </xsl:if>
                 <xsl:for-each select="$codeLists/extents/value">
                     <xsl:variable name="r" select="."/>
-                    <option value="{@uri}|{@x1} {@y1} {@x2} {@y2}">
-                        <xsl:if test="@uri=$value"><xsl:attribute name="selected">selected</xsl:attribute></xsl:if>
-                        <xsl:value-of select="$r/*[name()=$lang]"/>
-                    </option>
+                    <xsl:choose>
+                        <xsl:when test="@uri=$value">
+                            <option value="{@uri}|{@x1} {@y1} {@x2} {@y2}" selected="selected"><xsl:value-of select="$r/*[name()=$lang]"/><xsl:if test="string($r/*[name()=$lang])=''"><xsl:value-of select="$value"/></xsl:if></option>
+                        </xsl:when>
+                        <xsl:when test="$r/*[name()=$lang]">
+                            <option value="{@uri}|{@x1} {@y1} {@x2} {@y2}">
+                                <xsl:value-of select="$r/*[name()=$lang]"/>
+                            </option>
+                        </xsl:when>
+                    </xsl:choose>
                 </xsl:for-each>
             </select>
         </div>
     </div>
-
 
     <!--xsl:call-template name="drawInput">
         <xsl:with-param name="name" select="'extentId'"/>

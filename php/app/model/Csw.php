@@ -49,9 +49,9 @@ class Csw{
                         "Content-Type: application/xml"
                 ),
                 "header" => '<csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" version="2.0.2">
-	                        <csw:RequestId>[id]</csw:RequestId>
-	                        <csw:SearchStatus timestamp="[timestamp]"/>
-	                        <csw:SearchResults numberOfRecordsMatched="[matched]" numberOfRecordsReturned="[returned]" nextRecord="[next]" elementSet="[elementset]">',
+                    <csw:RequestId>[id]</csw:RequestId>
+                    <csw:SearchStatus timestamp="[timestamp]"/>
+                    <csw:SearchResults numberOfRecordsMatched="[matched]" numberOfRecordsReturned="[returned]" nextRecord="[next]" elementSet="[elementset]">',
                 "footer" => '</csw:SearchResults></csw:GetRecordsResponse>',
                 "template" => "iso-2",
                 "typeNames" => "gmi:md_metadata"
@@ -62,21 +62,33 @@ class Csw{
                         "Content-Type: application/xml"
                 ),
                 "header" => '<csw:GetRecordsResponse xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" version="2.0.2">
-	                        <csw:RequestId>[id]</csw:RequestId>
-	                        <csw:SearchStatus timestamp="[timestamp]"/>
-	                        <csw:SearchResults numberOfRecordsMatched="[matched]" numberOfRecordsReturned="[returned]" nextRecord="[next]" elementSet="[elementset]">',
+                    <csw:RequestId>[id]</csw:RequestId>
+                    <csw:SearchStatus timestamp="[timestamp]"/>
+                    <csw:SearchResults numberOfRecordsMatched="[matched]" numberOfRecordsReturned="[returned]" nextRecord="[next]" elementSet="[elementset]">',
                 "footer" => '</csw:SearchResults></csw:GetRecordsResponse>',
                 "template" => "iso",
                 "typeNames" => "gmd:md_metadata"
             ),
-            "dcat" =>array(
+        "dcat" =>array(
                 "NS" => "http://www.w3.org/ns/dcat#",
                 "httpHdr" => array(
                     "Content-Type: application/rdf+xml\n",
                     "Content-Disposition: attachment; filename=micka.rdf"
                ),
-                "header" => '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">',
-                "footer" => "</rdf:RDF>",
+                "header" => '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <dcat:Catalog xmlns:dcat="http://www.w3.org/ns/dcat#" xmlns:dct="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" rdf:about="[mickaURL]">
+                <dct:title>[title]</dct:title>
+                <dct:description>[subtitle]</dct:description>
+                <dct:language>en</dct:language>
+                <dct:language>cs</dct:language>
+                <foaf:homepage rdf:resource="[mickaURL]"/>
+                <dct:publisher>
+                    <foaf:Organization>
+                        <foaf:name>[authName]</foaf:name>
+                        <foaf:mbox>[authEmail]</foaf:mbox>
+                    </foaf:Organization>
+                </dct:publisher>',
+                "footer" => "</dcat:Catalog></rdf:RDF>",
                 "template" => "dcat"
             ),
         "Atom" => array(
@@ -170,10 +182,12 @@ class Csw{
    * @param string $logpath log file name with path (optional)
    */
     function __construct($logpath="", $subset=false){
+        //FIXME - remove this temporary parameters
         global $tmp_nbcontext,$tmp_identity, $tmp_appparameters;
-            $this->user = $tmp_identity;
-            $this->appParameters = $tmp_appparameters;
-            $this->dbContext = $tmp_nbcontext;
+        $this->user = $tmp_identity;
+        $this->appParameters = $tmp_appparameters;
+        $this->dbContext = $tmp_nbcontext;
+        $this->mickaURL = $this->appParameters['hostUrl'].$this->appParameters['basePath'];
 
         $this->xml = new \DomDocument;
         $this->xsl = new \DomDocument;
@@ -437,8 +451,7 @@ class Csw{
         }
     }
     $this->params['timestamp'] = gmdate("Y-m-d\TH:i:s");
-    $this->params['MICKA_URL'] = MICKA_URL; //.'/';
-    $this->params['CSW_URL'] = CSW_URL.'/';
+    $this->params['mickaURL'] = $this->mickaURL;
     $this->params['buffered'] = isset($params['buffered']) ? $params['buffered'] : '';
     //$this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ? $this->appParameters['appLocale'].'/' : '';
     $this->params['viewerURL'] = isset($this->appParameters['map']['viewerURL'])
@@ -598,7 +611,7 @@ class Csw{
         $this->xsl->load(__DIR__ ."/xsl/getCapabilities.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $params = array(
-            'thisURL' => dirname(MICKA_URL)."/csw/",
+            'mickaURL' => $this->mickaURL,
             'LANG' => $lang,
             'MICKA_LANG' => MICKA_LANG,
             'LANG_OTHER' => $olang,
@@ -621,7 +634,6 @@ class Csw{
         $this->xml->loadXML("<root/>");
         $this->xsl->load(__DIR__ . "/xsl/describeRecord.xsl");
         $this->xp->importStyleSheet($this->xsl);
-        //$xp->setParameter('', 'thisURL', MICKA_URL);
         $processed = $this->xp->transformToXML($this->xml);
         //header("Content-type: application/xml");
         //$processed = file_get_contents(PHPPRG_DIR."/../xsl/describeRecord.xml");
@@ -692,7 +704,6 @@ class Csw{
     if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= MAXRECORDS;
     if($this->params['MAXRECORDS']>LIMITMAXRECORDS) $this->params['MAXRECORDS'] = $this->params['MAXRECORDS']= LIMITMAXRECORDS;
     if(!$this->params['STARTPOSITION'] || $this->params['STARTPOSITION']==0) $this->params['STARTPOSITION'] = 1;
-    $this->params['thisPath'] = MICKA_URL;
     $resultType = $this->getParamL('RESULTTYPE');
     if(!$resultType) $resultType = 'results';
     // TODO nějak uspořadat
@@ -817,11 +828,24 @@ class Csw{
   if($next > $count) $next = 0;
 
   $result = str_replace(
-          array('[id]','[timestamp]','[matched]','[returned]','[next]','[elementset]',
-                '[authName]', '[authEmail]', '[title]', '[subtitle]', '[path]'),
-          array($this->params['REQUESTID'], gmdate("Y-m-d\TH:i:s"), $count, $returned, $next,  $this->getParamL('ELEMENTSETNAME'),
-                  $this->appParameters['contact']['org'][$this->params['LANGUAGE']], $this->appParameters['contact']['email'], $this->appParameters['contact']['title'][$this->params['LANGUAGE']], $this->appParameters['contact']['abstract'][$this->params['LANGUAGE']], $this->appParameters['contact']['www']),
-          $schema['header']);
+    array('[id]', '[timestamp]', '[matched]',
+        '[returned]','[next]','[elementset]',
+        '[authName]', '[authEmail]', '[title]', 
+        '[subtitle]', '[path]', '[mickaURL]'),
+    array($this->params['REQUESTID'], 
+        gmdate("Y-m-d\TH:i:s"), 
+        $count, 
+        $returned, 
+        $next,  
+        $this->getParamL('ELEMENTSETNAME'),
+        $this->appParameters['contact']['org'][$this->params['LANGUAGE']], 
+        $this->appParameters['contact']['email'], 
+        $this->appParameters['contact']['title'][$this->params['LANGUAGE']], 
+        $this->appParameters['contact']['abstract'][$this->params['LANGUAGE']], 
+        $this->appParameters['contact']['www'],
+        $this->mickaURL),
+    $schema['header']
+  );
   if(!$this->params['buffered']) {
       $this->setHeaders($this->params['OUTPUTSCHEMA']);
       if($this->params['OUTPUTSCHEMA']!='json')echo XML_HEADER;
@@ -982,7 +1006,6 @@ class Csw{
         $this->xp->importStyleSheet($this->xsl);
 
         //$this->params['requestId'] = $this->params['REQUESTID'];
-        $this->params['thisPath'] = MICKA_URL;
         $this->params['root'] = "csw:GetRecordByIdResponse";
         $this->params['elementSet'] = $this->getParamL('ELEMENTSETNAME');
         $this->params['user'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';

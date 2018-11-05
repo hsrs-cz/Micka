@@ -16,7 +16,7 @@
 <!-- provides conversion from old ISO 19139 metadata to Anchor-based new INSPIRE profile -->
 
 <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="no"/>
-<xsl:variable name="cl" select="document('../codelists.xml')/map" />   
+<xsl:variable name="cl" select="document('../../../config/codelists.xml')/map" />   
 
 	<!--xsl:template match="/">
 		<xsl:apply-templates select="./*"/>
@@ -90,6 +90,33 @@
 		</gmd:descriptiveKeywords>
 	</xsl:template>
     
+	<!-- CGS temata -->
+	<xsl:template match="gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'Czech Geological')]">
+		<gmd:descriptiveKeywords>
+			<gmd:MD_Keywords>
+				<xsl:for-each select="*/gmd:keyword">
+					<xsl:choose>
+						<xsl:when test="*/@xlink:href"><xsl:copy-of select="."/></xsl:when>
+						<xsl:otherwise>
+							<xsl:variable name="kw" select="normalize-space(*)"/>
+							<gmd:keyword>
+								<gmx:Anchor xlink:href="{$cl/cgsThemes/value[@name=$kw]/@uri}"><xsl:value-of select="$kw"/></gmx:Anchor>
+							</gmd:keyword>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:for-each>
+				<gmd:thesaurusName>
+					<gmd:CI_Citation>
+						<gmd:title>
+							<gmx:Anchor xlink:href="https://registry.geology.cz/CGSGeoscientificTheme">Czech Geological Survey - Concepts, version 1.0</gmx:Anchor>
+						</gmd:title>
+						<xsl:copy-of select="*/gmd:thesaurusName/*/gmd:date"/>
+					</gmd:CI_Citation>
+				</gmd:thesaurusName>
+			</gmd:MD_Keywords>
+		</gmd:descriptiveKeywords>
+	</xsl:template>
+    
     <!-- INSPIRE services klassification-->
     <xsl:template match="gmd:keyword">
         <xsl:variable name="k" select="*"/>
@@ -139,7 +166,7 @@
                     <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode">otherRestrictions</gmd:MD_RestrictionCode>
                 </gmd:accessConstraints>
                 <xsl:choose>
-                    <xsl:when test="contains(*/gmd:otherConstraints/*, 'žádné omezení') or contains(*/gmd:otherConstraints/*, 'no limitations')">
+                    <xsl:when test="contains(*/gmd:otherConstraints/*, 'Bez omezení') or contains(*/gmd:otherConstraints/*, 'no limitations')">
                         <gmd:otherConstraints>
                             <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"><xsl:value-of select="*/gmd:otherConstraints/*"/></gmx:Anchor>
                         </gmd:otherConstraints>

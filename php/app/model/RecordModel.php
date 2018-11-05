@@ -921,7 +921,11 @@ class RecordModel extends \BaseModel
 		$cswClient = new \CswClient();
         $kote = new \Kote();
         $input = $kote->processForm(beforeSaveRecord($post));
-        $params = Array('datestamp'=>date('Y-m-d'), 'lang'=>$post['mdlang'], 'MICKA_URL'=>MICKA_URL);
+        $params = Array(
+                'datestamp'=>date('Y-m-d'), 
+                'lang'=>$post['mdlang'], 
+                'MICKA_URL'=> dirname($_SERVER['SCRIPT_NAME'])== '\\' ? '' : dirname($_SERVER['SCRIPT_NAME'])
+        );
         $mdXml2Array = new MdXml2Array();
         $xml = new \DomDocument;
         if(!$xml->loadXML($input)) die('Bad xml format');

@@ -1,77 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <cswlist>
-  <server name="plan4all" title="Plan4all" link="http://portal.plan4all.eu/metadata/csw/index.php" tab="true"/>
-  <server name="default" title="Help Service local" link="http://localhost/projects/metadata/csw/index.php" />
-  <server name="one" title="One Geology" link="http://one.geology.cz/metadata/csw/" tab="true" permanent="true"/>
-  <server name="hsrs" title="Help Service SVN" link="http://www.bnhelp.cz/projects/metadata/trunk/csw/index.php" />
-  <server name="cenia" title="Cenia" group="mzp" link="http://mis.cenia.cz/portal/csw/index.php" tab="true"/>
-  <server name="cenias" title="Cenia SOAP" group="mzp" link="http://mis.cenia.cz/portal/csw/index.php" method="Soap" tab="true"/>
-  <server name="aopk" title="AOPK" group="mzp" link="http://metadata.nature.cz/csw/index.php" />
-  <server name="cgs" title="Česká geologická služba" link="http://nts5.cgu.cz/website/micka/csw/index.php" />
-  <server name="geofond" title="Geofond" group="mzp" link="http://www.geofond.cz/metadata/csw/index.php" />
-  <server name="krnap" title="KRNAP" group="mzp" link="http://mapy.krnap.cz/metadata/csw/index.php" />
-  <server name="podyji" title="NP Podyjí" group="mzp" link="http://193.165.151.43/metadata/csw/index.php" />
-  <server name="sumava" title="NP Šumava" group="mzp" link="http://map.npsumava.cz/metadata/csw/index.php" />
-  <server name="vuv" title="VÚV TGM" group="mzp" link="http://heis.vuv.cz/xmicka/csw/index.php" />   
-  <server name="uhul" title="ÚHÚL" link="http://geoportal2.uhul.cz/metadata/csw/index.php" />   
   <server name="soap-de" title="terraCatalog 2.2 - GDI-DE Testbed SOAP" link="http://www.portalu.de/csw202" method="Soap"/>
   <server name="conterra" title="Conterra" link="http://gdi-de.sdisuite.de/soapServices/CSWStartup" />
-  <server name="conterras" title="Conterra SOAP" link="http://gdi-de.sdisuite.de/soapServices/services/CSWDiscovery" method="Soap"/>
-  <server name="geonetwork" title="Geonetwork Dutch" link="http://88.198.70.50/geonetwork/srv/en/csw" sw="gn"/>
   <server name="brgm" title="Geonetwork BRGM" link="http://cswservicerec.brgm.fr/geocatws-discovery/services/CSWService.CSWServicePort"  method="Soap"/>
   <server name="fao" title="FAO Geonetwork" link="http://www.fao.org/geonetwork/srv/en/csw"/>
-  <server name="metaschool" title="Metaschool" link="http://www.metaschool.cz/metadata/csw/" />
   <server name="cuzk" title="ČÚZK" link="http://geoportal.cuzk.cz/csw202q/csw.aspx" idmethod="get"/>
-  <server name="latvia" title="Lotyšsko" link="http://giz.zpr.gov.lv/metadata/csw/" />
-  <server name="sazp" title="SAŽP" group="mzp" link="http://globus.sazp.sk:8080/soapservices/services/CSWDiscovery" method="Soap" tab="true"/>
   <server name="esa" title="ESA" group="mzp" link="http://localhost/projects/metadata/csw/openSearch.php" method="OS" tab="false"/>
   <server name="fra" title="FR Geocatalogue" link="http://www.geocatalogue.fr/api-public/services/CSWService.CSWServicePort/" method="Soap" tab="true"/> 
-
-
-<!-- <server name="sazp" title="SAŽP Enviroinfo" group="mzp" link="http://enviroinfo.enviroportal.sk/csw/index.php" /> 
- <server name="sazpeia" title="SAŽP EIA" group="mzp" link="http://enviroinfo.enviroportal.sk/csw/csw_eia.php" /> 
-  <server name="inspire" title="INSPIRE" link="http://www.inspire-geoportal.eu/csw/services/CSW20_Manager_SOAP_Port" version="2.0.0" method="SOAP" />
- <server name="sazp" title="SAŽP" group="mzp" link="http://enviroinfo.enviroportal.sk/csw/index.php" /> 
-  <server name="ddr" title="NDR CSW" link="http://gdi.stadt-chemnitz.de/mdk_csw/mdk_csw" xmethod="SOAP" />
-  <server name="cgs" title="Česká geologická služba" link="http://nts5.cgu.cz/website/micka/csw/index.php" />
-  <server name="hsrs" title="Help Service SVN" link="http://localhost/projects/metadata/csw/index.php" />
-  <server name="cenia" title="Cenia2" group="mzp" link="http://mis.cenia.cz/portal/csw/index.php"/>
-  <server name="npcs" title="NP České Švýcarsko" group="mzp" link="http://www.hsrs.cz/metadata/npcs/csw/index.php" />
-  <server name="local" title="Help Service local" link="http://localhost/projects/metadata/csw/index.php" />
-  <server name="hsrs" title="Help Service SVN" link="http://www.bnhelp.cz/projects/metadata/trunk/csw/index.php" />
-  <server name="vumop" title="VÚMOP" link="http://ms.vumop.cz/metadata2/csw/index.php" />
-  <server name="cenia" title="Cenia2" group="mzp" link="http://mis.cenia.cz/metadata2/csw/index.php"/>
-  <server name="karlovarsky" title="KrÚ - Karlovarský kraj" link="http://gis.kr-karlovarsky.cz/metadata/csw/index.php" />
-  <server name="jrc" title="INSPIRE" link="http://www.inspire-geoportal.eu/csw/CSWStartup" />
-  <server name="hsrs3" title="Micka3" link="http://www.bnhelp.cz/metadata3/csw/index.php" />
-  <server name="cenia" title="Cenia" group="mzp" link="http://mis.cenia.cz/metadata/csw/index.php"/>
-  <server name="sazp" title="SAŽP" group="mzp" link="http://enviroinfo.enviroportal.sk/csw/index.php" />
-  <server name="wireless" title="WirelessInfo" link="http://apps.wirelessinfo.cz/metadata/csw/index.php" />
-
-  <server name="cenia" title="Cenia" group="mzp" link="http://mis.cenia.cz/metadata/csw/index.php"/>
-  <server name="aopk" title="AOPK" group="mzp" link="http://merkur.nature.cz/micka/csw/index.php" />
-  <server name="cgs" title="Česká geologická služba" link="http://nts5.cgu.cz/website/micka/csw/index.php" />
-  <server name="geofond" title="Geofond" group="mzp" link="http://mapmaker.geofond.cz/metadata/csw/index.php" />
-  <server name="vuv" title="VÚV TGM" group="mzp" link="http://heis.vuv.cz/xmicka/csw/index.php" />   
-  <server name="krnap" title="KRNAP" group="mzp" link="http://mapy.krnap.cz/metadata/csw/index.php" />
-  <server name="podyji" title="NP Podyjí" group="mzp" link="http://193.165.151.43/metadata/csw/index.php" />
-  <server name="sumava" title="NP Šumava" group="mzp" link="http://map.npsumava.cz/metadata/csw/index.php" />
-
-  <server name="karlovarsky" title="KrÚ - Karlovarský kraj" link="http://gis.kr-karlovarsky.cz/metadata/csw/index.php" />
-  <server name="vysocina" title="KrÚ - Kraj Vysočina" link="http://mapy.kr-vysocina.cz/metadata/csw/index.php" />
-  <server name="liberec" title="KrÚ - Liberecký kraj" link="http://maps.kraj-lbc.cz/metadata/csw/index.php" /> 
-  <server name="pardubicky" title="KrÚ - Pardubický kraj" link="http://www.hsrs.cz/metadata/pardubickykraj/csw/index.php" /> 
-  <server name="stredocesky" title="KrÚ - Středočeský kraj" link="http://www.hsrs.cz/metadata/kr-stredocesky/csw/index.php" /> 
-
-  <server name="corsica" title="Corsica" link="http://micka.corse.fr/csw/index.php" />
-  <server name="jrc" title="JRC" link="http://geoportal.jrc.it:80/csw/CSWStartup" version="200"/>
-  <server name="fao" title="Geonetwork FAO" link="http://193.43.36.150:8045/geonetwork/srv/en/csw?"/>
-  <server name="ewater" title="e-Water" link="http://193.74.120.24//geonetwork4ewater/srv/en/csw?"/>
-
-  <server name="ger" title="Germany" link="http://www.geocatalog.de/csw/CSWStartup" version="200"/>
-  <server name="fao" title="Geonetwork FAO" link="http://193.43.36.150:8045/geonetwork/srv/en/csw?" />
-  <server name="fao1" title="Geonetwork FAO 1" link="http://dev.sandre.eaufrance.fr/gnthesaurus/srv/en/csw?" />
-  <server name="vsb" title="Geonetwork VSB" link="http://gisak.vsb.cz/geonetwork/srv/en/csw" />
-  <server name="hsrstest" title="HSRS test - cascading 2 servers" link="http://www.bnhelp.cz/metadata2/csw06.php" />
-   <server name="span" title="Španělé" link="http://delta.icc.es/indicio/csw" />-->
 </cswlist>

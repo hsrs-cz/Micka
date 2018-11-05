@@ -14,8 +14,7 @@
 <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
 
 <xsl:variable name="msg" select="document('client/portal.xml')/portal/messages[@lang=$LANGUAGE]"/>
-<xsl:variable name="auth" select="document(concat('../../cfg/cswConfig-',$LANGUAGE,'.xml'))"/>
-<xsl:variable name="cl" select="document(concat('codelists_',$LANGUAGE,'.xml'))/map"/>
+<xsl:variable name="cl" select="document('../../config/codelists.xml')/map"/>
 
 <xsl:template match="//gmd:MD_Metadata|//gmi:MI_Metadata"  
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" 
@@ -59,8 +58,8 @@
 	  			</xsl:call-template>
 	  		</xsl:if>	
 	  		<div>Metadata:
-	  			<a href="../record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-	  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+	  			<a href="record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+	  			<a href="record/xml/{gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
 	  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 	  		</div>
 		  	<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
@@ -69,10 +68,10 @@
 		<!-- link to download service ISO 19139 metadata -->
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-	    		<link href="{$MICKA_URL}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
+	    		<link href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<link href="../records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>
+				<link href="{$mickaURL}/records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	  	
@@ -80,7 +79,7 @@
 		<link href="../opensearch.php" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
-	    <link href="{$MICKA_URL}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={gmd:fileIdentifier}" rel="self" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
+	    <link href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={gmd:fileIdentifier}" rel="self" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
 
 	  	<!-- links to INSPIRE Spatial Object Type definitions for this pre-defined dataset -->
 	  	<!-- TO BE DONE -->
@@ -90,10 +89,10 @@
 	    
 	    <!-- upward link to the corresponding download service feed -->
 		<xsl:variable name="vazby" select="php:function('getMetadata', concat('uuidRef=',gmd:fileIdentifier/*))"/>
-	    <link rel="up" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$vazby//gmd:MD_Metadata/gmd:fileIdentifier/*}" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
+	    <link rel="up" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$vazby//gmd:MD_Metadata/gmd:fileIdentifier/*}" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
 	    
 	    <!-- identifier -->
-      	<id><xsl:value-of select="concat('?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=',gmd:fileIdentifier)"/></id>
+      	<id><xsl:value-of select="concat($mickaURL, '/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=',gmd:fileIdentifier)"/></id>
       	
       	<!-- rights, access restrictions -->
       	<rights type="html"><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
@@ -180,8 +179,8 @@
 			  			</xsl:call-template>
 			  		</xsl:if>	
 			  		<div>Metadata:
-			  			<a href="../record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-			  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+			  			<a href="record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+			  			<a href="record/xml/{$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
 			  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 			  		</div>
 			  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
@@ -319,7 +318,7 @@
     <item>
       <title><xsl:value-of select="dc:title"/></title>
       <guid isPermaLink="false">urn:uuid:<xsl:value-of select="dc:identifier[1]"/></guid>
-      <link><xsl:value-of select="$thisPath"/>/../micka_main.php?ak=detail&amp;lang=<xsl:value-of select="$LANGUAGE"/>&amp;uuid=<xsl:value-of select="dc:identifier[1]"/></link>
+      <link><xsl:value-of select="$mickaURL"/>/../micka_main.php?ak=detail&amp;lang=<xsl:value-of select="$LANGUAGE"/>&amp;uuid=<xsl:value-of select="dc:identifier[1]"/></link>
       <description><xsl:value-of select="dct:abstract"/></description>
       <pubDate><xsl:call-template name="formatDate">
           <xsl:with-param name="DateTime" select="dc:date"/>

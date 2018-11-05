@@ -353,6 +353,33 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if>
+
+					<xsl:if test="geology">
+						<gmd:descriptiveKeywords>
+							<gmd:MD_Keywords>
+	              				<xsl:for-each select="geology/item">
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'keyword'"/>
+                                        <xsl:with-param name="codes" select="$codeLists/geology"/>
+                                        <xsl:with-param name="t" select="."/>
+                                        <xsl:with-param name="attrib" select="'name'"/>
+                                    </xsl:call-template>
+	  							</xsl:for-each>
+	  							<gmd:thesaurusName>
+	  								<gmd:CI_Citation>
+                                            <gmd:title>
+                                                <gmx:Anchor xlink:href="https://registry.geology.cz/CGSGeoscientificTheme">Geovědní témata ČGS</gmx:Anchor>
+                                            </gmd:title>
+	  									<gmd:date><gmd:CI_Date>
+	  										<gmd:date><gco:Date>2018</gco:Date></gmd:date>
+	  										<gmd:dateType><gmd:CI_DateTypeCode codeListValue="publication" codeList="{$cl}#CI_DateTypeCode">publication</gmd:CI_DateTypeCode></gmd:dateType>
+	  									</gmd:CI_Date></gmd:date>
+	  								</gmd:CI_Citation>
+	  							</gmd:thesaurusName>
+							</gmd:MD_Keywords>
+						</gmd:descriptiveKeywords>
+					</xsl:if>
+
 					<!-- <xsl:if test="gemet">
 					<descriptiveKeywords>
 						<MD_Keywords>						

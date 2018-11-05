@@ -76,16 +76,16 @@
 		<ows:Operation name="GetCapabilities">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$thisURL}"/>
-					<ows:Post xlink:href="{$thisURL}"/>
+					<ows:Get xlink:href="{$mickaURL}/csw"/>
+					<ows:Post xlink:href="{$mickaURL}/csw"/>
 				</ows:HTTP>
 			</ows:DCP>
 		</ows:Operation>
 		<ows:Operation name="DescribeRecord">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$thisURL}"/>
-					<ows:Post xlink:href="{$thisURL}"/>
+					<ows:Get xlink:href="{$mickaURL}/csw"/>
+					<ows:Post xlink:href="{$mickaURL}/csw"/>
 				</ows:HTTP>
 			</ows:DCP>
 			<ows:Parameter name="typeName">
@@ -103,13 +103,13 @@
 		<ows:Operation name="GetRecords">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$thisURL}"/>
-					<ows:Post xlink:href="{$thisURL}">
+					<ows:Get xlink:href="{$mickaURL}/csw"/>
+					<ows:Post xlink:href="{$mickaURL}/csw">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>XML</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="{$thisURL}">
+					<ows:Post xlink:href="{$mickaURL}/csw">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
@@ -151,7 +151,9 @@
 		        <ows:Value>DistanceValue</ows:Value>
 		        <ows:Value>Denominator</ows:Value>
 		        <ows:Value>HierarchyLevelName</ows:Value>
+		        <ows:Value>Identifier</ows:Value>
 		        <ows:Value>KeywordType</ows:Value>
+                <ows:Value>Modified</ows:Value>
 		        <ows:Value>Language</ows:Value>
 				<ows:Value>Linkage</ows:Value>
 		        <ows:Value>OperatesOn</ows:Value>
@@ -169,18 +171,30 @@
 		        <ows:Value>Type</ows:Value>
 	      	</ows:Constraint>
 	      	<ows:Constraint name="AdditionalQueryables">
-        		<ows:Value>Degree</ows:Value>
         		<ows:Value>AccessConstraints</ows:Value>
-		        <ows:Value>OtherConstraints</ows:Value>
 		        <ows:Value>Classification</ows:Value>
 		        <ows:Value>ConditionApplyingToAccessAndUse</ows:Value>
+		        <ows:Value>ContactCountry</ows:Value>
+        		<ows:Value>Degree</ows:Value>
+        		<ows:Value>FcIdentifier</ows:Value>
+		        <ows:Value>Fees</ows:Value>
+        		<ows:Value>Format</ows:Value>
+		        <ows:Value>GeographicDescriptionCode</ows:Value>
+        		<ows:Value>IndividualName</ows:Value>
 		        <ows:Value>Lineage</ows:Value>
+		        <ows:Value>LinkName</ows:Value>
+        		<ows:Value>MdIndividualName</ows:Value>
+		        <ows:Value>MetadataContact</ows:Value>
+		        <ows:Value>MetadataCountry</ows:Value>
+		        <ows:Value>MetadataRole</ows:Value>
+		        <ows:Value>OtherConstraints</ows:Value>
+		        <ows:Value>Protocol</ows:Value>
 		        <ows:Value>ResponsiblePartyRole</ows:Value>
+		        <ows:Value>ServiceType</ows:Value>
 		        <ows:Value>SpecificationTitle</ows:Value>
 		        <ows:Value>SpecificationDate</ows:Value>
 		        <ows:Value>SpecificationDateType</ows:Value>
 		        <ows:Value>ThesaurusName</ows:Value>
-		        <ows:Value>Protocol</ows:Value>
 	      </ows:Constraint>
 	      	
 		</ows:Operation>
@@ -188,13 +202,13 @@
 		<ows:Operation name="GetRecordById">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$thisURL}"/>
-					<ows:Post xlink:href="{$thisURL}">
+					<ows:Get xlink:href="{$mickaURL}/csw"/>
+					<ows:Post xlink:href="{$mickaURL}/csw">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>XML</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="{$thisURL}">
+					<ows:Post xlink:href="{$mickaURL}/csw">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
@@ -219,7 +233,7 @@
 		<ows:Operation name="Transaction">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="{$thisURL}"/>
+					<ows:Post xlink:href="{$mickaURL}/csw"/>
 				</ows:HTTP>
 			</ows:DCP>
 		</ows:Operation>
@@ -236,7 +250,7 @@
 	      <ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
 	    </ows:Constraint>
 	    <ows:Constraint name="WSDL">
-		      <ows:Value><xsl:value-of select="$thisURL" />?wsdl</ows:Value>
+		      <ows:Value><xsl:value-of select="$mickaURL"/>/csw?wsdl</ows:Value>
 	    </ows:Constraint>
 	    <ows:Constraint name="FederatedCatalogues">
 	    	<!-- TODO tahat odjinud -->
@@ -247,11 +261,11 @@
 
 		<inspire_ds:ExtendedCapabilities>
 			<inspire_com:ResourceLocator>
-				<inspire_com:URL><xsl:value-of select="$thisURL"/>&amp;SERVICE=CSW&amp;REQUEST=GetCapabilities</inspire_com:URL>
+				<inspire_com:URL><xsl:value-of select="$mickaURL"/>/csw&amp;SERVICE=CSW&amp;REQUEST=GetCapabilities</inspire_com:URL>
 				<inspire_com:MediaType>application/vnd.ogc.wms_xml</inspire_com:MediaType>
 			</inspire_com:ResourceLocator>
 			<inspire_com:ResourceLocator>
-				<inspire_com:URL><xsl:value-of select="substring-before($thisURL,'/csw/')"/></inspire_com:URL>
+				<inspire_com:URL><xsl:value-of select="$mickaURL"/></inspire_com:URL>
 				<inspire_com:MediaType>text/html</inspire_com:MediaType>
 			</inspire_com:ResourceLocator>
 			<inspire_com:ResourceType>service</inspire_com:ResourceType>

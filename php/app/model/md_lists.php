@@ -1,6 +1,7 @@
 <?php
 /**
- * version 20121119
+ * version 2018-11-05
+ * FIXME - add to main app
  */
 
 $title = '';
@@ -8,7 +9,7 @@ $title = '';
 function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
     if(!$handler) $handler="formats1";
     if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName', 'serviceType'))){
-        $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
+        $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
         echo '<div class="panel-heading">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -28,7 +29,7 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
         return;
     }
     else if(in_array($type, array('specifications'))){
-        $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
+        $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
         echo '<div class="modal-headerx panel-heading">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -72,33 +73,29 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
     echo "</div>";
 }
 
-function getValues($type, $lang, $filter=''){
-    $xml = simplexml_load_file(APP_DIR . "/model/xsl/codelists.xml");
+function getCodeListValues($type, $lang, $filter=''){
+    $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
     $list = $xml->xpath("//$type/value");
     $result = array();
     foreach ($list as $row){
-        $result[] = array(
-            "id"=> (string) $row['name'],
-            "uri"=> (string) $row['uri'],
-            "text"=> (string) $row->$lang
-        );
+        if(!$filter || stripos($row->$lang, $filter)!==false){
+            $result[] = array(
+                "id"=> (string) $row['name'],
+                "uri"=> (string) $row['uri'],
+                "text"=> (string) $row->$lang
+            );
+        }
     }
     return array("results"=>$result);
 }
 
-// vraci JSON multilingualni seznam
 if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValues') {
-	$type = htmlspecialchars($_REQUEST['type']);
-	$code = htmlspecialchars($_REQUEST['id']);
+    $type = htmlspecialchars($_REQUEST['type']);
+    $code = htmlspecialchars($_REQUEST['id']);
     $lang = htmlspecialchars($_REQUEST['lang']);
-	$filter = "//entry[@id='".$code."']";
-	//$q = htmlspecialchars($_REQUEST['q']);
-	if(isset($_REQUEST['q'])) {
-	    $filter = "//entry[contains(.,'".htmlspecialchars($_REQUEST['q'])."')]";
-	}
     header("Content-type: application/json; charset=utf-8");
-	echo json_encode(getValues($type, $lang, $filter));
-	exit;
+    echo json_encode(getCodeListValues($type, $lang, $_REQUEST['query']));
+    exit;
 }
 ?>
 <script>
@@ -109,7 +106,6 @@ function kw(f){
 ?>
 }
 </script>
-       
 
 <?php
     $lang = htmlspecialchars($_REQUEST['lang']);
@@ -123,6 +119,4 @@ function kw(f){
         $multi = false;
     }
     echo getList(htmlspecialchars($_REQUEST['type']), $lang, $mdlang, $multi, $handler);
-
-
 

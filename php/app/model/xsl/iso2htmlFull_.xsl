@@ -69,7 +69,7 @@
 
 	<!--h2 class="noprint"-->
 	<ol class="breadcrumb">
-		<li class="active"><a href="{$MICKA_URL}" tooltip="tooltip" data-tooltip="tooltip" data-original-title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
+		<li class="active"><a href="{$mickaURL}" tooltip="tooltip" data-tooltip="tooltip" data-original-title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
 		<li><xsl:value-of select="$msg[@eng='basicMetadata']"/></li>
 		<li>		
 			<xsl:if test="../@read=1">
@@ -80,7 +80,7 @@
 		<div class="icons">
 		  	<xsl:variable name="wmsURL" select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(gmd:protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			<xsl:if test="gmd:identificationInfo/*/srv:serviceType/*='download'">
-				<a href="{$CSW_URL}?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={$fid}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
+				<a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={$fid}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
 			</xsl:if>
 			<xsl:if test="string-length($wmsURL)>0">
 				<xsl:choose>
@@ -105,7 +105,7 @@
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
-					<a href="{$CSW_URL}?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$mickaURL}/csw?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
 				<a href="../xml/{../@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
@@ -349,7 +349,7 @@
 							  			<xsl:choose>
 								     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
 								     			<a property="http://www.w3.org/ns/dcat#theme"  typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
-								     				<img src="{$CSW_URL}../layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
+								     				<img src="{$mickaURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
 								     			</a>
 								     			<xsl:text> </xsl:text>
 								     		</xsl:when>
@@ -398,7 +398,7 @@
 					  			<xsl:choose>
 						     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
 						     			<a href="{./*/@xlink:href}" title="{$theme}" target="_blank">
-						     				<img src="{$CSW_URL}../layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
+						     				<img src="{$mickaURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
 						     			</a>
 						     			<xsl:text> </xsl:text>
 						     		</xsl:when>
@@ -579,7 +579,7 @@
 					<div class="c">
 						<xsl:for-each select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:source">
 							<xsl:variable name="md" select="php:function('getData', string(*/gmd:sourceCitation/@xlink:href))"/>
-	  						<xsl:variable name="url"><xsl:value-of select="concat($MICKA_URL,'/record/basic/',$md//gmd:fileIdentifier)"/></xsl:variable>
+	  						<xsl:variable name="url"><xsl:value-of select="concat($mickaURL,'/record/basic/',$md//gmd:fileIdentifier)"/></xsl:variable>
 							<div>
 								<a href="{$url}">				
 									<xsl:call-template name="multi">
@@ -956,7 +956,7 @@
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
-					<a href="{$CSW_URL}?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$mickaURL}/csw?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
 				<a href="../xml/{../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
@@ -1020,7 +1020,7 @@
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
-					<a href="{$CSW_URL}?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
+					<a href="{$mickaURL}/csw?service=CSW&amp;request=GetRecordById&amp;id={../@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>
 				</xsl:if>
 				<a href="../xml/{../@uuid}" class="xml" target="_blank" title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>

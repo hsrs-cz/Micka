@@ -15,7 +15,7 @@
 <xsl:param name="lang"/>
 
 <!-- GLOBAL VARIABLES -->
-<xsl:variable name="codeLists" select="document('../../xsl/codelists.xml')/map" />
+<xsl:variable name="codeLists" select="document('../../../config/codelists.xml')/map" />
 
 <!-- ZOBRAZENI ORGANIZACE -->
 <xsl:template name="party">
@@ -306,7 +306,7 @@
 
 			<!-- REGISTRY -->
             <xsl:when test="$uri!=''">
-                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="../../registry_client?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
+                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="{$MICKA_URL}/registry_client?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
@@ -379,11 +379,11 @@
                         </xsl:variable>
                         <xsl:choose>
                             <xsl:when test="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]">
-                                <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}" selected="'selected'"><xsl:value-of select="$r/*[name()=$lang]"/></option>
+                                <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}" selected="'selected'"><xsl:value-of select="$r/*[name()=$lang]"/><xsl:if test="string($r/*[name()=$lang])=''"><xsl:value-of select="$c"/></xsl:if></option>
                             </xsl:when>
-                            <xsl:otherwise>
+                            <xsl:when test="$r/*[name()=$lang]">
                                 <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}"><xsl:value-of select="$r/*[name()=$lang]"/></option>
-                            </xsl:otherwise>
+                            </xsl:when>
                         </xsl:choose>
                     </xsl:for-each>
                 </select>		
