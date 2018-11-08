@@ -1,6 +1,6 @@
 /******************************
  * MICKA 6.000
- * 2017-02-20
+ * 2018-11-08
  * javascript
  * Help Service Remote Sensing  
 ******************************/
@@ -507,21 +507,35 @@ function thes(obj){
 		ajax: {
 			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json',
-			processResults: function(data, opts){
-                var data = $.map(data.results, function(rec) {
-                    return { text: rec.name, id: rec.id, title: rec.desc, parent: rec.parentId };
-                })
-                return { results: data }
-            }, 
 			delay: 200,            
 			cache: false
 	   },
 	   theme: 'bootstrap',
 	   language: HS.getLang(2),
 	   allowClear: true
-	   
 	});    
 
+    thes['cgs'] = $("#cgs").select2({
+		ajax: {
+			url: baseUrl + 'suggest/mdlists',
+			dataType: 'json',
+			data: function(params){
+				return {
+					query: params.term,
+					type: 'cgsThemes',
+                    request: 'getValues',
+					lang: lang3
+				};
+			},
+			cache: false
+		}, 
+		language: HS.getLang(2),
+		allowClear: true,
+		theme: 'bootstrap'
+	});
+    //.on('select2:select', this.search).on('select2:unselect', this.search);
+
+    
     $('#thes-inspire-ok').on('click', function(){
         var uri = $("#inspire").val();
         var terms = {};
@@ -534,7 +548,7 @@ function thes(obj){
                 var url = baseUrl  + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
                 $.ajax({url: url, context: {lang: ll[i]}})
                 .done(function(data){
-                    if(data.results && data.results[0]) terms[this.lang] = data.results[0].name;
+                    if(data.results && data.results[0]) terms[this.lang] = data.results[0].text;
                     else terms[this.lang] = "";
                     if(ll.length <= Object.keys(terms).length){
                         fromThesaurus({
@@ -1016,7 +1030,12 @@ function mapa(obj){
     var polygon = null;
     md_elem = obj.parentNode;
     $("#md-dialog").modal();
-    $("#md-content").html('<div class="modal-body"><div id="overmap" style="width:100%; height:300px;"></div>'
+    $("#md-content").html(
+        '<div class="panel-heading">'
+        + '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+        + '<h4>'+ HS.i18n('Set extent') +'</h4>'
+        + '</div>' 
+        + '<div class="modal-body"><div id="overmap" style="width:100%; height:300px;"></div>'
 		+ '<div>' + HS.i18n('Set extent') + ' [Ctrl] + ' + HS.i18n('draw') + '</div></div>');
     $("#md-dialog").on('hide.bs.modal', function (e) {
         $("#md-dialog").off('shown.bs.modal');

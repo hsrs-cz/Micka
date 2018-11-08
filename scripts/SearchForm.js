@@ -360,6 +360,20 @@ SearchForm = function(){
 		if (v.length>1) result += '(' + v.join(' OR ') + ')';
 		else result += v[0];
 	}
+
+    var addLabel = function(key, s, like){
+		if($(s).is(':hidden')) return;
+		var data = $(s).select2('data');
+		if(!data || data.length==0) return;
+		if(result) result += " AND ";
+        var v = new Array();
+		for(i in data){
+			if(like) v.push(key +" like '*"+data[i].text+"*'");
+			else v.push(key +"='"+data[i].text+"'");
+		}
+		if (v.length>1) result += '(' + v.join(' OR ') + ')';
+		else result += v[0];
+	}
 	
 	/**
 	* Empty the search form
@@ -372,7 +386,7 @@ SearchForm = function(){
 			else $(o).val('').trigger('change.select2');
 		});
 		this.overMap.clear();
-        $('#inside').prop( "checked", false );
+        $(':checkbox').prop( "checked", false );
         this.search();
 	}
 

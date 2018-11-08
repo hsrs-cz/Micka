@@ -90,7 +90,7 @@
 		</gmd:descriptiveKeywords>
 	</xsl:template>
     
-	<!-- CGS temata -->
+	<!-- CGS temata - docasne -->
 	<xsl:template match="gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'Czech Geological')]">
 		<gmd:descriptiveKeywords>
 			<gmd:MD_Keywords>
@@ -181,14 +181,21 @@
 	
 	<!-- protocol -->
 	<xsl:template match="gmd:protocol">
-		<gmd:protocol>
-            <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/{*}"><xsl:value-of select="*"/></gmx:Anchor>
-		</gmd:protocol>
+        <xsl:choose>
+            <xsl:when test="*/@xlink:href">
+                <xsl:copy-of select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+                <gmd:protocol>
+                    <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/{*}"><xsl:value-of select="*"/></gmx:Anchor>
+                </gmd:protocol>
+            </xsl:otherwise>
+        </xsl:choose>
 	</xsl:template>
 	
 	<xsl:template match="gmd:metadataStandardName">
         <gmd:metadataStandardName>
-            <gco:CharacterString xmlns:gco="http://www.isotc211.org/2005/gco">ISO 19115/INSPIRE_TG2/CZ4</gco:CharacterString>
+            <gco:CharacterString>ISO 19115/INSPIRE_TG2/CZ4</gco:CharacterString>
         </gmd:metadataStandardName>
 	</xsl:template>	
 	

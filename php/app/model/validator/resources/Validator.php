@@ -45,7 +45,7 @@ function getContents($url){
 		curl_setopt($c, CURLOPT_PROXY, $proxy);	
 	}
     $result = curl_exec($c);    
-    file_put_contents(__DIR__ . "/../../../../log/a.xml", $result);
+    //file_put_contents(__DIR__ . "/../../../../log/a.xml", $result);
     return $result;
 }
 
