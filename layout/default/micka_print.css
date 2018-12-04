@@ -5,3 +5,7 @@
 
 div.print {display: block}
 div.display {display:none}
+
+.breadcrumb {display:none !important}
+
+a[href]:after { content: none }
