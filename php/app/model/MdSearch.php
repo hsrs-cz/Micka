@@ -1132,7 +1132,7 @@ class MdSearch
         $sql_spol['md_from'] = " FROM md WHERE (recno IN (SELECT recno FROM(";
         $sql_spol['md_order'] = "";
         $sql_spol['md_count'] =  "
-            SELECT 	count(DISTINCT recno) AS Celkem
+            SELECT count(DISTINCT recno) AS Celkem
         ";
 		$sql_spol['md_in_end'] =  ")";
 		$sql_spol['md_where_end'] =  ")";

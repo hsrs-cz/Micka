@@ -1377,7 +1377,7 @@ class Csw{
             "mdindividualname"=>"@mdinnaco", "individualname"=>"@innaco",
         	"fcidentifier"=>"@fcid", "otherconstraints"=>"@otherc", "conditionapplyingtoaccessanduse"=>"@ausec",
             "fees"=>"@fees", "protocol"=>"@protocol",
-        	"tempextent_begin"=>"_DATEB_", "tempextent_end"=>"_DATEE_", "bbox"=>"_BBOX_",
+        	"bbox"=>"_BBOX_",
             "thesaurusname"=>"@thesaurus", "bbspan"=>"_BBSPAN_", "linkname"=>"@lname",
             "responsiblepartyrole"=>"@role", "linkage"=>"@linkage", "metadatarole"=>"@mdrole",
             "metadatacontact"=>"@md_contact", "contactcountry"=>"@country",

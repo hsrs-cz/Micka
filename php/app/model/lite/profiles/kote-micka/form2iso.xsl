@@ -360,7 +360,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	              				<xsl:for-each select="geology/item">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'keyword'"/>
-                                        <xsl:with-param name="codes" select="$codeLists/geology"/>
+                                        <xsl:with-param name="codes" select="$codeLists/cgsThemes"/>
                                         <xsl:with-param name="t" select="."/>
                                         <xsl:with-param name="attrib" select="'name'"/>
                                     </xsl:call-template>
@@ -382,7 +382,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 
 					<!-- <xsl:if test="gemet">
 					<descriptiveKeywords>
-						<MD_Keywords>						
+						<MD_Keywords>
               				<xsl:for-each select="gemet">
     							<keyword>
   							  		<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>

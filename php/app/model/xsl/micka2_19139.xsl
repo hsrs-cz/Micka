@@ -527,7 +527,7 @@
     
 		<xsl:element name="{$ext}">
 			<gmd:EX_Extent>
-			  	<xsl:for-each select="identificationInfo//extent/*/description">
+			  	<xsl:for-each select="identificationInfo/*/extent/*/description">
 		    		<gmd:description>
 		    			<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
 		    		</gmd:description>
@@ -555,7 +555,7 @@
 			<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_BoundingPolygon">		
 				<gmd:geographicElement>
 					<gmd:EX_BoundingPolygon>
-						<!-- TODO for multipolygon -->
+						<!-- TODO now only for multipolygon -->
 						<gmd:polygon>
 							<gml:Polygon gml:id="poly{position()}">
 								<xsl:variable name="poly" select="substring(polygon,16)" />
@@ -565,31 +565,31 @@
 										<xsl:variable name="p-int" select="substring-after($poly,'),(')" />
 										<gml:exterior>
 											<gml:LinearRing>
-											<gml:posList><xsl:value-of select="translate($p-ext,',',' ')"/></gml:posList>
+                                                <gml:posList><xsl:value-of select="translate($p-ext,',',' ')"/></gml:posList>
 											</gml:LinearRing>
 										</gml:exterior>
 										<!-- TODO for more interiors -->
 										<gml:interior>
 											<gml:LinearRing>
-											<gml:posList><xsl:value-of select="translate(substring-before($p-int,')))'),',',' ')"/></gml:posList>
+                                                <gml:posList><xsl:value-of select="translate(substring-before($p-int,')))'),',',' ')"/></gml:posList>
 											</gml:LinearRing>
-										</gml:interior>									
+										</gml:interior>
 									</xsl:when>
-								<xsl:otherwise>
-								<gml:exterior>
-									<gml:LinearRing>
-									<gml:posList><xsl:value-of select="translate(substring-before($poly,')))'),',',' ')"/></gml:posList>
-									</gml:LinearRing>
-								</gml:exterior>
-								</xsl:otherwise>
-								</xsl:choose>									
+                                    <xsl:otherwise>
+                                    <gml:exterior>
+                                        <gml:LinearRing>
+                                            <gml:posList><xsl:value-of select="translate(substring-before($poly,')))'),',',' ')"/></gml:posList>
+                                        </gml:LinearRing>
+                                    </gml:exterior>
+                                    </xsl:otherwise>
+                                </xsl:choose>
 							</gml:Polygon>
 						</gmd:polygon>
 					</gmd:EX_BoundingPolygon>
 				</gmd:geographicElement>		
 			</xsl:for-each>
 			
-			<xsl:for-each select="identificationInfo//extent/*/geographicElement/EX_GeographicDescription">
+			<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicDescription">
 				<gmd:geographicElement>
 					<gmd:EX_GeographicDescription>
 						<gmd:geographicIdentifier>

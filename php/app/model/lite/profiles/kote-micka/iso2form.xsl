@@ -371,7 +371,7 @@
             <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'geology'"/>
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'ČGS')]/*/gmd:keyword"/>
-                <xsl:with-param name="codes" select="'geology'"/>
+                <xsl:with-param name="codes" select="'cgsThemes'"/>
                 <xsl:with-param name="multi" select="2"/>
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template> 
