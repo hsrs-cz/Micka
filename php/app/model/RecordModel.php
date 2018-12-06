@@ -17,11 +17,6 @@ class RecordModel extends \BaseModel
     private $profil_id = -1;
     private $package_id = -1;
     
-	public function startup()
-	{
-		parent::startup();
-	}
-    
     public function setAppParameters($appParameters)
     {
         $this->appParameters = $appParameters;
@@ -197,8 +192,8 @@ class RecordModel extends \BaseModel
         if ($recno == 0) {
             $mdRecno = $this->getNewRecno('md');
             $this->db->query("
-                INSERT INTO md (recno,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid,prim)
-                SELECT ?,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid,prim
+                INSERT INTO md (recno,uuid,md_standard,lang,data_type,create_user,create_date,last_update_user,last_update_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid)
+                SELECT ?,uuid,md_standard,lang,data_type,create_user,create_date,last_update_user,last_update_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid
                 FROM edit_md WHERE recno=?"
                 , $mdRecno, $editRecno);
         } else {
