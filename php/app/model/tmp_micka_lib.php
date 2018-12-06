@@ -483,15 +483,20 @@ function getSortBy($in='', $ret='array') {
 	if ($pom0 == 'date') {
 		$pom0 = 'last_update_date';
 	}
+	if ($pom0 == 'modified') {
+		$pom0 = 'md_update';
+	}
 	switch ($pom0) {
 		case 'recno':
 		case 'title':
 		case 'last_update_date':
 		case 'bbox':
+		case 'md_update':
+		//case 'relevance':
 			$rs[0] = $pom0;
 			break;
 		default:
-			$pom0 = 'recno';
+			$rs[0] = 'recno';
 			break;
 	}
 	$rs[1] = $pom1 == 'ASC' || $pom1 == 'DESC' ? $pom1 : 'ASC';
