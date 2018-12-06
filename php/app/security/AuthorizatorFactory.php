@@ -5,9 +5,10 @@ namespace App\Security;
 use Nette,
     Nette\Security\Permission;
 
-class AuthorizatorFactory extends Nette\Object
+class AuthorizatorFactory
 {
-
+    use Nette\SmartObject;
+    
     const ROLE_GUEST = 'guest';
     const ROLE_USER = 'user';
     const ROLE_EDITOR = 'editor';

@@ -186,12 +186,19 @@ class RecordModel extends \BaseModel
     
     private function setEditMd2Md($editRecno, $recno)
     {
+        // validate
+        if ($this->appParameters['app']['validator'] === true) {
+            $this->recordValidate($this->recordMd->pxml);
+            $this->db->query("UPDATE edit_md SET valid=?, prim=? WHERE sid='".session_id()."' AND recno=?",
+                $this->recordMd->valid, $this->recordMd->prim, $editRecno);
+        }
+        
         $mdRecno = NULL;
         if ($recno == 0) {
             $mdRecno = $this->getNewRecno('md');
             $this->db->query("
-                INSERT INTO md (recno,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid)
-                SELECT ?,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid
+                INSERT INTO md (recno,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid,prim)
+                SELECT ?,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid,prim
                 FROM edit_md WHERE recno=?"
                 , $mdRecno, $editRecno);
         } else {
@@ -205,12 +212,30 @@ class RecordModel extends \BaseModel
                         x1=edit.x1, y1=edit.y1, x2=edit.x2, y2=edit.y2, the_geom=edit.the_geom,
                         range_begin=edit.range_begin, range_end=edit.range_end,
                         md_update=edit.md_update,
-                        title=edit.title
+                        title=edit.title,
+                        valid=edit.valid,
+                        prim=edit.prim
                     FROM edit_md edit
                     WHERE edit.recno=? AND md.recno=? AND edit.sid='".session_id()."'";
             $this->db->query($sql,$editRecno,$recno);
         }
         return $mdRecno;
+    }
+
+    private function recordValidate($xml)
+    {
+        $this->recordMd->valid = 0;
+        $this->recordMd->prim = 0;
+        require_once __DIR__ . '/validator/resources/Validator.php';
+        $validator = new \Validator();
+        $validator->run($xml);
+        $vResult = $validator->getPass();
+        if ($vResult) {
+            if ($vResult['fail'] == 0) {
+                $this->recordMd->valid = $vResult['warn'] > 0 ? 1 : 2;
+            }
+            $this->recordMd->prim = $vResult['primary'];
+        }
     }
     
     private function deleteMdValues($recno) {

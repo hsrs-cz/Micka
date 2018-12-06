@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 //require_once dirname(__FILE__).'/../../include/application/micka_config.php';
 
 function isEmail($email){
