@@ -13,7 +13,7 @@
 <xsl:output method="html"/>
 
 <xsl:variable name="msg" select="document(concat('client/labels-',$lang,'.xml'))/messages/msg"/>  
-<xsl:variable name="cl" select="document('codelists.xml')/map"/>
+<xsl:variable name="cl" select="document('../../config/codelists.xml')/map"/>
 <xsl:variable name="MICKA_URL" select="''"/>
 
 <xsl:template match="results">
