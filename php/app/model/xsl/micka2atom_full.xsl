@@ -6,7 +6,7 @@
   xmlns:srv="http://www.isotc211.org/2005/srv"
   xmlns="http://www.w3.org/2005/Atom"
   xmlns:georss="http://www.georss.org/georss" 
-  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:xlink="http://www.w3.org/1999/xlink"  
   xmlns:php="http://php.net/xsl"   
   xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"  
 >
@@ -19,7 +19,8 @@
 <xsl:template match="//gmd:MD_Metadata|//gmi:MI_Metadata"  
 	xmlns:gmd="http://www.isotc211.org/2005/gmd" 
 	xmlns:gco="http://www.isotc211.org/2005/gco"
-	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0" 
+	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0"
+    xmlns:gmx="http://www.isotc211.org/2005/gmx"    
 	>
 	<xsl:variable name="mdlang" select="gmd:language/gmd:LanguageCode/@codeListValue"/>
 	<xsl:variable name="lang2" select="$cl/language/value[$LANGUAGE]/@code2"/>
@@ -58,9 +59,9 @@
 	  			</xsl:call-template>
 	  		</xsl:if>	
 	  		<div>Metadata:
-	  			<a href="record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-	  			<a href="record/xml/{gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-	  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+	  			<a href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+	  			<a href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+	  			<a href="{$mickaURL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 	  		</div>
 		  	<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	  	</subtitle>
@@ -76,7 +77,7 @@
 		</xsl:choose>
 	  	
 	  	<!-- Link to Open Search XML description -->
-		<link href="../opensearch.php" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
+		<link href="{$mickaURL}/opensearch.php" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
 	    <link href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={gmd:fileIdentifier}" rel="self" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
@@ -123,17 +124,25 @@
 			<xsl:variable name="md" select="php:function('getData', string(@xlink:href))"/>
 			<xsl:variable name="mdlang1" select="$md//gmd:language/gmd:LanguageCode/@codeListValue"/>
 			<entry>
+                <xsl:copy-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier"/>
 				<!-- INSPIRE dataset identifier -->
-				<inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></inspire_dls:spatial_dataset_identifier_code>
+                <xsl:choose>
+                    <xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
+                        <inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/></inspire_dls:spatial_dataset_identifier_code>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*"/></inspire_dls:spatial_dataset_identifier_code>
+                    </xsl:otherwise>
+                </xsl:choose>
 				
 				<!-- optional namespace -->
-				<xsl:if test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:namespace">
-					<inspire_dls:spatial_dataset_identifier_namespace><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:namespace"/></inspire_dls:spatial_dataset_identifier_namespace>
+				<xsl:if test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace">
+					<inspire_dls:spatial_dataset_identifier_namespace><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace"/></inspire_dls:spatial_dataset_identifier_namespace>
 				</xsl:if>
 
 				<!-- CRSs in which the pre-defined Dataset is available --> 
 				<xsl:for-each select="$md//gmd:referenceSystemInfo">
-					<category term="{*/gmd:referenceSystemIdentifier/*/gmd:code}" label="{*/gmd:referenceSystemIdentifier/*/gmd:code}"/>
+					<category term="{*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href}" label="{*/gmd:referenceSystemIdentifier/*/gmd:code}"/>
 				</xsl:for-each>
 				
 				<!--  author FIXME jen urcite role? -->
@@ -179,9 +188,9 @@
 			  			</xsl:call-template>
 			  		</xsl:if>	
 			  		<div>Metadata:
-			  			<a href="record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-			  			<a href="record/xml/{$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-			  			<a href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+			  			<a href="{$mickaURL}/record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+			  			<a href="{$mickaURL}/record/xml/{$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+			  			<a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 			  		</div>
 			  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 			  	</summary>

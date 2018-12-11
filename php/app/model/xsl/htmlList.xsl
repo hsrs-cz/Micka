@@ -46,7 +46,7 @@
 					</xsl:if>					
 					<a href="record/edit/{@uuid}" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
 					<a href="record/clone/{@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-					<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$MICKA_URL}record/delete/{@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+					<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '{$mickaURL}record/delete/{@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 				</xsl:if>
 				<xsl:if test="@md_standard=0 or @md_standard=10">
 					<a href="{$mickaURL}/csw?service=CSW&amp;request=GetRecordById&amp;id={@uuid}&amp;outputschema=http://www.w3.org/ns/dcat%23" class="rdf" target="_blank" data-tooltip="tooltip" data-original-title="Geo-DCAT RDF"><i class="fa fa-cube fa-fw"></i></a>

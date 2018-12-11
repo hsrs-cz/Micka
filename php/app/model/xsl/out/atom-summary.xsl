@@ -6,13 +6,13 @@
   xmlns="http://www.w3.org/2005/Atom"
   xmlns:georss="http://www.georss.org/georss" 
   xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
 >
 <xsl:output method="xml" encoding="utf-8" omit-xml-declaration="yes"/>
 
 <xsl:variable name="msg" select="document(concat('../client/labels-',$LANGUAGE,'.xml'))/messages/msg"/>  
-<xsl:variable name="auth" select="document(concat('../../cfg/cswConfig-',$LANGUAGE,'.xml'))"/>
 
-<xsl:template match="/ccc">
+<!--xsl:template match="/ccc">
 	<feed version="2.0" xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/">
 	    <title><xsl:value-of select="$auth//ows:Title"/></title>
 	    <subtitle><xsl:value-of select="$msg[@eng='AtomSubtitle']"/></subtitle>
@@ -29,7 +29,7 @@
 	    	<xsl:apply-templates/>
 	  	</xsl:for-each>
 	</feed>
-</xsl:template>
+</xsl:template-->
 
 <xsl:template match="gmd:MD_Metadata|rec/gmi:MI_Metadata"  
 	xmlns:gmd="http://www.isotc211.org/2005/gmd"   
@@ -39,10 +39,15 @@
 
     <entry>
     	<!--Spatial Data Set Unique Resource Identifier-->
-		<inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></inspire_dls:spatial_dataset_identifier_code>
-    	<xsl:if test="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:namespace">
-    		<inspire_dls:spatial_dataset_identifier_namespace><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:namespace"/></inspire_dls:spatial_dataset_identifier_namespace>
-    	</xsl:if>
+		<inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/></inspire_dls:spatial_dataset_identifier_code>
+    	<xsl:choose>
+            <xsl:when test="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace">
+                <inspire_dls:spatial_dataset_identifier_namespace><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace"/></inspire_dls:spatial_dataset_identifier_namespace>
+            </xsl:when>
+            <xsl:when test="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*">
+                <inspire_dls:spatial_dataset_identifier_namespace><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*"/></inspire_dls:spatial_dataset_identifier_namespace>
+            </xsl:when>
+        </xsl:choose>
 
     	<!-- title for pre-defined dataset -->
       	<title><xsl:call-template name="multi">
@@ -135,9 +140,8 @@
 
 	<!-- SOURADNICOVE SYSTEMY -->
 	  <xsl:for-each select="gmd:referenceSystemInfo[contains(*/gmd:referenceSystemIdentifier/*/gmd:codeSpace/*, 'EPSG')]">
-	    	<category term="http://www.opengis.net/def/crs/EPSG/0/{*/gmd:referenceSystemIdentifier/*/gmd:code}"
-            label="{*/gmd:referenceSystemIdentifier/*/gmd:codeSpace}:{*/gmd:referenceSystemIdentifier/*/gmd:code}"/>
-
+	    	<category term="http://www.opengis.net/def/crs/EPSG/0/{*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href}"
+            label="{*/gmd:referenceSystemIdentifier/*/gmd:codeSpace}:{*/gmd:referenceSystemIdentifier/*/gmd:code/*}"/>
       </xsl:for-each>
 
 

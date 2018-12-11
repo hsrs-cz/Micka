@@ -733,7 +733,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                 </xsl:when>
                                 <xsl:otherwise>
                                     <xsl:variable name="r" select="php:function('getMetadataById', string(.))"/>
-                                    <srv:operatesOn xlink:title="{$r//gmd:identificationInfo//gmd:citation/*/gmd:title/gco:CharacterString}" uuidref="{.}" xlink:href="{$MICKA_URL}/csw/?SERVICE=CSW&amp;REQUEST=GetRecordById&amp;ID={.}#_{.}"/>
+                                    <srv:operatesOn xlink:title="{$r//gmd:identificationInfo//gmd:citation/*/gmd:title/*}" uuidref="{.}" xlink:href="{$mickaURL}/csw/?SERVICE=CSW&amp;REQUEST=GetRecordById&amp;ID={.}#_{.}"/>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:for-each>

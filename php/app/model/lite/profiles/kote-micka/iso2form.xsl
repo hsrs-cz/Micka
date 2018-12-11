@@ -316,6 +316,15 @@
     </xsl:if>
     
     <!-- 3.1 keywords -->
+
+    <!-- CGS themes -->
+    <xsl:call-template name="drawInput">
+        <xsl:with-param name="name" select="'geology'"/>
+        <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'ČGS')]/*/gmd:keyword"/>
+        <xsl:with-param name="codes" select="'cgsThemes'"/>
+        <xsl:with-param name="multi" select="2"/>
+        <xsl:with-param name="valid" select="'3'"/>
+    </xsl:call-template> 
     
     <xsl:choose>
         <xsl:when test="$serv">
@@ -367,14 +376,6 @@
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template> 
     
-            <!-- CGS themes -->
-            <xsl:call-template name="drawInput">
-                <xsl:with-param name="name" select="'geology'"/>
-                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'ČGS')]/*/gmd:keyword"/>
-                <xsl:with-param name="codes" select="'cgsThemes'"/>
-                <xsl:with-param name="multi" select="2"/>
-                <xsl:with-param name="valid" select="'3'"/>
-            </xsl:call-template> 
       
             <!-- EU Enduse potential
             <xsl:call-template name="drawInput">

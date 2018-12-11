@@ -942,9 +942,9 @@ class RecordModel extends \BaseModel
         $kote = new \Kote();
         $input = $kote->processForm(beforeSaveRecord($post));
         $params = Array(
-                'datestamp'=>date('Y-m-d'), 
-                'lang'=>$post['mdlang'], 
-                'MICKA_URL'=> dirname($_SERVER['SCRIPT_NAME'])== '\\' ? '' : dirname($_SERVER['SCRIPT_NAME'])
+            'datestamp'=>date('Y-m-d'), 
+            'lang'=>$post['mdlang'], 
+            'mickaURL'=> MICKA_URL
         );
         $mdXml2Array = new MdXml2Array();
         $xml = new \DomDocument;

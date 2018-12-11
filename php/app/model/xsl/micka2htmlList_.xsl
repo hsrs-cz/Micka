@@ -14,7 +14,6 @@
 
 <xsl:variable name="msg" select="document(concat('client/labels-',$lang,'.xml'))/messages/msg"/>  
 <xsl:variable name="cl" select="document('../../config/codelists.xml')/map"/>
-<xsl:variable name="MICKA_URL" select="''"/>
 
 <xsl:template match="results">
 	<h1>
@@ -32,7 +31,7 @@
 		<xsl:with-param name="matched" select="@numberOfRecordsMatched"/>
 		<xsl:with-param name="returned" select="@numberOfRecordsReturned"/>
 		<xsl:with-param name="next" select="@nextRecord"/>
-		<xsl:with-param name="url" select="concat($MICKA_URL, '?service=CSW&amp;request=GetRecords&amp;query=',$CONSTRAINT,'&amp;format=text/html&amp;language=',$lang,'&amp;maxrecords=',$MAXRECORDS,'&amp;sortby=',$SORTBY,'&amp;startposition')"/>
+		<xsl:with-param name="url" select="concat($mickaURL, '?service=CSW&amp;request=GetRecords&amp;query=',$CONSTRAINT,'&amp;format=text/html&amp;language=',$lang,'&amp;maxrecords=',$MAXRECORDS,'&amp;sortby=',$SORTBY,'&amp;startposition')"/>
 	</xsl:call-template>  	
 	
 </xsl:template>
