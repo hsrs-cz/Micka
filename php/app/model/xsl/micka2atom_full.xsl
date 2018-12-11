@@ -124,7 +124,6 @@
 			<xsl:variable name="md" select="php:function('getData', string(@xlink:href))"/>
 			<xsl:variable name="mdlang1" select="$md//gmd:language/gmd:LanguageCode/@codeListValue"/>
 			<entry>
-                <xsl:copy-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier"/>
 				<!-- INSPIRE dataset identifier -->
                 <xsl:choose>
                     <xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
@@ -154,7 +153,7 @@
 				</xsl:for-each>
 				
 				<!-- link itself -->
-				<id><xsl:value-of select="concat('?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
+				<id><xsl:value-of select="concat($mickaURL, '/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
 				
 				<!--link to subfeed for the dataset-->
 				<link rel="alternate" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
