@@ -13,8 +13,7 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:template match="//gmd:MD_Metadata[contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4')]|//gmi:MI_Metadata[contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4')]">
 
-<xsl:variable name="codelists" select="document('../../xsl/codelists.xml')/map" />
-<xsl:variable name="specifications" select="document('../../dict/specif.xml')/userValues" />
+<xsl:variable name="codelists" select="document('../../../config/codelists.xml')/map" />
 <xsl:variable name="labels" select="document(concat('labels-',$LANG,'.xml'))/map" />
 <xsl:variable name="srv" select="gmd:identificationInfo/srv:SV_ServiceIdentification != ''"/>
 <xsl:variable name="hierarchy" select="gmd:hierarchyLevel/*/@codeListValue"/>
@@ -591,7 +590,7 @@ xmlns:php="http://php.net/xsl">
 <xsl:if test="not($hierarchy) or $hierarchy!='application'">
 	<!-- 7.1 -->
 	<test code="7.1" level="m">
-		<description><xsl:value-of select="$labels/test[@code='7.1']"/></description>
+		<description><xsl:value-of select="$labels/test[@code='7.1']"/>*<xsl:value-of select="$spec"/>*</description>
 		<xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/</xpath>
         <xsl:variable name="specRec" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href=$spec]"/>
         
