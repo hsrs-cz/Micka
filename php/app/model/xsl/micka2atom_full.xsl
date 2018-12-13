@@ -69,10 +69,10 @@
 		<!-- link to download service ISO 19139 metadata -->
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-	    		<link href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}" rel="describedby" type="application/vnd.iso.19139+xml"/>
+	    		<link href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" rel="describedby" type="application/xml"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<link href="{$mickaURL}/records/{gmd:fileIdentifier}" rel="describedby" type="text/html"/>
+				<link href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" rel="describedby" type="application/xml"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	  	
@@ -144,7 +144,7 @@
 					<category term="{*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href}" label="{*/gmd:referenceSystemIdentifier/*/gmd:code}"/>
 				</xsl:for-each>
 				
-				<!--  author FIXME jen urcite role? -->
+				<!--  author FIXME - only certain roles? -->
 				<xsl:for-each select="$md//gmd:identificationInfo/*/gmd:pointOfContact">
 				  	<author>
 			        	<name><xsl:value-of select="*/gmd:organisationName/*"/></name>
@@ -156,10 +156,10 @@
 				<id><xsl:value-of select="concat($mickaURL, '/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
 				
 				<!--link to subfeed for the dataset-->
-				<link rel="alternate" href="?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
+				<link rel="alternate" href="{$mickaURL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
 				
 				<!-- link to dataset metadata record -->
-				<link rel="describedby" href="{@xlink:href}" type="application/xml"/>
+				<link rel="describedby" href="{@xlink:href}" type="application/vnd.iso.19139+xml"/>
 				
 				<xsl:choose>		
 					<xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*">
