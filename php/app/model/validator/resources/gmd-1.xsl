@@ -13,7 +13,7 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:template match="//gmd:MD_Metadata[not(contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4'))]|//gmi:MI_Metadata[not(contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4'))]">
 
-<xsl:variable name="codelists" select="document('../../xsl/codelists.xml')/map" />
+<xsl:variable name="codelists" select="document('../../../config/codelists.xml')/map" />
 <xsl:variable name="specifications" select="document('../../dict/specif.xml')/userValues" />
 <xsl:variable name="labels" select="document(concat('labels-',$LANG,'.xml'))/map" />
 <xsl:variable name="srv" select="gmd:identificationInfo/srv:SV_ServiceIdentification != ''"/>
