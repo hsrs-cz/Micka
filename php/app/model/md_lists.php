@@ -78,7 +78,7 @@ function getCodeListValues($type, $lang, $filter=''){
     $list = $xml->xpath("//$type/value");
     $result = array();
     foreach ($list as $row){
-        if(!$filter || stripos($row->$lang, $filter)!==false){
+        if(!$filter || stripos($row->$lang, $filter)!==false || stripos($row['uri'], $filter)!==false){
             $result[] = array(
                 "id"=> (string) $row['name'],
                 "uri"=> (string) $row['uri'],
@@ -88,6 +88,7 @@ function getCodeListValues($type, $lang, $filter=''){
     }
     return array("results"=>$result);
 }
+
 
 if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValues') {
     $type = htmlspecialchars($_REQUEST['type']);

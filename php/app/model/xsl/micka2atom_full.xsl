@@ -159,7 +159,7 @@
 				<link rel="alternate" href="{$mickaURL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
 				
 				<!-- link to dataset metadata record -->
-				<link rel="describedby" href="{@xlink:href}" type="application/vnd.iso.19139+xml"/>
+				<link rel="describedby" href="{@xlink:href}" type="application/xml"/>
 				
 				<xsl:choose>		
 					<xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*">
@@ -170,7 +170,7 @@
 					</xsl:when>
 				</xsl:choose>
 				
-				<rights><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useLimitation"/></rights>
+				<rights><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints"/></rights>
 				
 				<summary type="html"><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
 		      		<xsl:call-template name="multi">

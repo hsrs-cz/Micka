@@ -590,13 +590,13 @@ xmlns:php="http://php.net/xsl">
 <xsl:if test="not($hierarchy) or $hierarchy!='application'">
 	<!-- 7.1 -->
 	<test code="7.1" level="m">
-		<description><xsl:value-of select="$labels/test[@code='7.1']"/>*<xsl:value-of select="$spec"/>*</description>
-		<xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/</xpath>
+        <description><xsl:value-of select="$labels/test[@code='7.1']"/></description>
+        <xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/</xpath>
         <xsl:variable name="specRec" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href=$spec]"/>
         
         <xsl:choose>
-        	<!-- NE INSPIRE zaznamy -->
-        	<xsl:when test="string-length($neInspire//gmd:title)>0 and $neInspire//gmd:pass/*='false'">
+            <!-- NE INSPIRE zaznamy -->
+            <xsl:when test="string-length($neInspire//gmd:title)>0 and $neInspire//gmd:pass/*='false'">
         		<value><xsl:value-of select="$INSPIRE"/></value>
     			<pass>true</pass>
     			<!-- 7.2 -->

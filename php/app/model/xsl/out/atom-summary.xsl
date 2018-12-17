@@ -49,42 +49,53 @@
             </xsl:when>
         </xsl:choose>
 
-    	<!-- title for pre-defined dataset -->
-      	<title><xsl:call-template name="multi">
-	    	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
-	    	<xsl:with-param name="lang" select="$LANGUAGE"/>
-	    	<xsl:with-param name="mdlang" select="$mdlang"/>
-	  	</xsl:call-template></title>
-	  	
-	  	
-	  	<!-- links to ISO metadata and alternative representations -->
-      	<link rel="describedby" type="application/xml" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}"/>
-      	
+        <!-- SOURADNICOVE SYSTEMY -->
+        <xsl:for-each select="gmd:referenceSystemInfo">
+					<category term="{*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href}" label="{*/gmd:referenceSystemIdentifier/*/gmd:code}"/>
+        </xsl:for-each>
+ 
+        <!-- author info -->
+	  	<xsl:for-each select="gmd:contact">
+		  	<author>
+	        	<name><xsl:value-of select="*/gmd:organisationName/*"/></name>
+	        	<email><xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/></email>
+	    	</author>
+	  	</xsl:for-each>
+
+        <!-- link itself -->
+        <id><xsl:value-of select="concat($mickaURL, '/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
+
       	<!-- links to detail Atom description -->
       	<link rel="alternate" type="application/atom+xml" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
+      	
+	  	<!-- links to ISO metadata and alternative representations -->
+      	<link rel="describedby" type="application/xml" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}"/>
       	
       	<!-- download link for pre-defined dataset -->
       	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">
       		<link rel="alternate" href="{gmd:URL}" type="{../../../../../gmd:distributionFormat/*/gmd:name};{../../../../../gmd:distributionFormat/*/gmd:version}"/>
       	</xsl:for-each>
-		
-		<!-- identifier for pre-defined dataset -->
-      	<id><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></id>
-      	
+
+      	<!-- date/time of last update of feed
+      	<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue!='publication']">
+      		<published><xsl:value-of select="*/gmd:date"/>T00:00:00</published>
+      	</xsl:for-each>-->
+
+        <xsl:choose>
+            <xsl:when test="gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*">
+                <published><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*"/>T00:00:00</published>							
+            </xsl:when>
+            <xsl:when test="gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*">
+                <published><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*"/>T00:00:00</published>							
+            </xsl:when>
+        </xsl:choose>
+
       	<!-- rights, access restrictions -->
-      	<xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints">
+      	<xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/useConstraints/*/@codeListValue='otherRestrictions']">
       		<rights><xsl:value-of select="./*"/></rights>
       	</xsl:for-each>
       	
-      	<!-- date/time of last update of feed-->
-      	<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue!='publication']">
-      		<published><xsl:value-of select="*/gmd:date"/>T00:00:00</published>
-      	</xsl:for-each>
-      	<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='revision']">
-      		<updated><xsl:value-of select="*/gmd:date"/>T00:00:00</updated>
-      	</xsl:for-each>
-      	
-      	<!-- descriptive summary -->
+     	<!-- descriptive summary -->
       	<summary type="html">
       		<xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
       		<xsl:call-template name="multi">
@@ -92,7 +103,6 @@
 	    		<xsl:with-param name="lang" select="$LANGUAGE"/>
 	    		<xsl:with-param name="mdlang" select="$mdlang"/>
 	  		</xsl:call-template>
-	  		<div><a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.isotc211.org/2005/gmd&amp;id={gmd:fileIdentifier}">Metadata</a> (ISO 19139 XML)</div>
 
 	  		<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
 	  			<div><img src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>
@@ -102,21 +112,28 @@
 	    			<xsl:with-param name="mdlang" select="$mdlang"/>
 	  			</xsl:call-template>
 	  		</xsl:if>
+            <div>Metadata:
+                <a href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+                <a href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+                <a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+            </div>
 	  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	  	</summary>
-	  	
-	  	<!-- author info -->
-	  	<xsl:for-each select="gmd:contact">
-		  	<author>
-	        	<name><xsl:value-of select="*/gmd:organisationName/*"/></name>
-	        	<email><xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/></email>
-	    	</author>
-	  	</xsl:for-each>
-	  
+
+    	<!-- title for pre-defined dataset -->
+      	<title><xsl:call-template name="multi">
+	    	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+	    	<xsl:with-param name="lang" select="$LANGUAGE"/>
+	    	<xsl:with-param name="mdlang" select="$mdlang"/>
+	  	</xsl:call-template></title>
+		
+		<!-- identifier for pre-defined dataset 
+      	<id><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></id>-->
+      	
 	  	<!-- aktualizace -->
 	  	<updated><xsl:value-of select="gmd:dateStamp"/>T00:00:00</updated>	
-	  <!-- optional GeoRSS bounding box of the pre-defined dataset. Must be lat lon -->	
-      <xsl:for-each select="gmd:identificationInfo//gmd:EX_GeographicBoundingBox">
+        <!-- optional GeoRSS bounding box of the pre-defined dataset. Must be lat lon -->	
+        <xsl:for-each select="gmd:identificationInfo//gmd:EX_GeographicBoundingBox">
       		<georss:polygon>
 		      	<xsl:value-of select="gmd:southBoundLatitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:westBoundLongitude"/>
 		      	<xsl:text> </xsl:text>
@@ -137,13 +154,6 @@
             label="{gmd:PT_FreeText/*/gmd:LocalisedCharacterString[@locale='#locale-eng']}" xml:lang="en"/>
 
       </xsl:for-each>
-
-	<!-- SOURADNICOVE SYSTEMY -->
-	  <xsl:for-each select="gmd:referenceSystemInfo[contains(*/gmd:referenceSystemIdentifier/*/gmd:codeSpace/*, 'EPSG')]">
-	    	<category term="http://www.opengis.net/def/crs/EPSG/0/{*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href}"
-            label="{*/gmd:referenceSystemIdentifier/*/gmd:codeSpace}:{*/gmd:referenceSystemIdentifier/*/gmd:code/*}"/>
-      </xsl:for-each>
-
 
     </entry>
 </xsl:template>
@@ -172,6 +182,9 @@
         </georss:polygon>
       </xsl:for-each>
     </item>
+</xsl:template>
+
+<xsl:template match="rec/gfc:FC_FeatureCatalogue" xmlns:gfc="http://www.isotc211.org/2005/gfc">
 </xsl:template>
 
 <xsl:template name="formatDate">

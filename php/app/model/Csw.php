@@ -93,10 +93,16 @@ class Csw{
             ),
         "Atom" => array(
                 "NS" => "http://www.w3.org/2005/Atom",
-                "header" => '<feed xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/" xmlns="http://www.w3.org/2005/Atom">
+                "httpHdr" => array(
+                    "Content-Type: application/atom+xml",
+                ),
+                "header" => '<feed xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/" xmlns="http://www.w3.org/2005/Atom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3.org/2005/Atom http://inspire-geoportal.ec.europa.eu/schemas/inspire/atom/1.0/atom.xsd">
                     <title>[title]</title>
-	                <subtitle>[subtitle]</subtitle>
-	                <link href="[path]" rel="via"/>
+                    <subtitle>[subtitle]</subtitle>
+	                <link href="[mickaURL]/csw?SERVICE=CSW&amp;REQUEST=GetCapabilities" rel="describedby" type="application/xml"/>
+                    <link href="[mickaURL]" rel="via"/>
+                    <id>[mickaURL]</id>
+                    <updated>[timestamp]</updated>
             	    <author>
             	    	<name>[authName]</name>
             	    	<email>[authEmail]</email>
@@ -168,7 +174,7 @@ class Csw{
             ),
             "os"	=> array(
                     "NS"=>"http://a9.com/-/spec/opensearch/1.1/"
-                    ),
+                    )
             //"rdf"	=> "http://www.w3.org/1999/02/22-rdf-syntax-ns",
             //"oai_dc" => "http://www.openarchives.org/OAI/2.0/oai_dc/",
             //"oai_marc" => "http://www.openarchives.org/OAI/1.1/oai_marc",

@@ -517,14 +517,14 @@ function thes(obj){
 
     thes['cgs'] = $("#cgs").select2({
 		ajax: {
-			url: baseUrl + 'suggest/mdlists',
+			url: baseUrl + '/suggest/mdlists',
 			dataType: 'json',
 			data: function(params){
 				return {
 					query: params.term,
 					type: 'cgsThemes',
                     request: 'getValues',
-					lang: lang3
+					lang: HS.getLang(3)
 				};
 			},
 			cache: false
@@ -535,7 +535,6 @@ function thes(obj){
 	});
     //.on('select2:select', this.search).on('select2:unselect', this.search);
 
-    
     $('#thes-inspire-ok').on('click', function(){
         var uri = $("#inspire").val();
         var terms = {};
@@ -576,6 +575,35 @@ function thes(obj){
             $("#md-keywords").modal('hide');
             return;
         });
+    });
+
+    $('#thes-geology-ok').on('click', function(){
+        var uri = $("#cgs").select2('data')[0].uri;
+        var terms = {};
+        var ll = langs.split('|');
+        var l2 = null;
+
+        for(i in ll){
+            l2 = HS.getCodeFromLanguage(ll[i],2);
+            if(l2.length==2){
+                var url =baseUrl + '/suggest/mdlists?type=cgsThemes&request=getValues&lang=' + ll[i] +'&query='+uri;
+                $.ajax({url: url, context: {lang: ll[i]}})
+                .done(function(data){
+                    if(data.results && data.results[0]) terms[this.lang] = data.results[0].text;
+                    else terms[this.lang] = "";
+                    if(ll.length <= Object.keys(terms).length){
+                        fromThesaurus({
+                            thesName: 'Geovědní témata ČGS',
+                            thesDate: (ll[0]=='cze') ? '01.01.2018' : '2018-01-01',
+                            uri: uri,
+                            terms: terms
+                        });
+                        $("#md-keywords").modal('hide');
+                        return;
+                    }
+                })
+            }
+        }
     });
     
 }

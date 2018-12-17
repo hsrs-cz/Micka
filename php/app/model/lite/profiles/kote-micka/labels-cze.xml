@@ -663,10 +663,10 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 	</msg>
 
     <!-- user specified -->
-   	<msg name="enduse">
-		<label>3 Potenciál</label>
+   	<msg name="geology">
+		<label>3 Témata ČGS</label>
 		<help>
-			<h3>Potenciál konečného využití</h3> 
+			<h3>Geovědní témata ČGS</h3> 
 		</help>
 	</msg>
 
