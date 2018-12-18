@@ -179,7 +179,7 @@
                 <xsl:with-param name="value" select="*/gmd:code"/>
                 <xsl:with-param name="valid" select="'1.5'"/>
                 <xsl:with-param name="class" select="'inp2'"/>
-                <xsl:with-param name="req" select="1"/>
+                <xsl:with-param name="req" select="not($serv)"/>
             </xsl:call-template>
             
             <xsl:call-template name="drawInput">
