@@ -389,6 +389,18 @@
                 </select>		
             </xsl:when>
 
+            <!-- INPUT - Anchor -->
+			<xsl:when test="$type='anchor'">
+                <input name="{$pth}{$TXT}" class="form-control hsf {$flag} {$class}" value="{normalize-space($value/gmx:Anchor/@xlink:href)}">
+                    <xsl:if test="$req">
+                        <xsl:attribute name="required">required</xsl:attribute>
+                    </xsl:if>
+					<xsl:if test="$maxlength">
+						<xsl:attribute name="maxlength"><xsl:value-of select="$maxlength"/></xsl:attribute>
+					</xsl:if>
+                </input>
+            </xsl:when>
+
 			<!-- INPUT - TEXT -->
 			<xsl:otherwise>
                 <input name="{$pth}{$TXT}" class="form-control hsf {$flag} {$class}" value="{normalize-space($value/gco:CharacterString|$value/gmx:Anchor)}">
@@ -457,6 +469,33 @@
 		</xsl:call-template>	
 	</xsl:if>  -->
 	
+</xsl:template>
+
+<xsl:template name="drawAnchor">
+    <xsl:param name="value"/>
+    <xsl:param name="path"/>
+    <xsl:param name="class" value="''"/>
+	<xsl:param name="valid" select="''"/>
+	<xsl:param name="req" select="''"/>
+    
+    <xsl:call-template name="drawInput">
+        <xsl:with-param name="type" select="'anchor'"/>
+        <xsl:with-param name="name" select="'URI'"/>
+        <xsl:with-param name="path" select="concat($path, '-uri[]')"/>
+        <xsl:with-param name="value" select="$value"/>
+        <xsl:with-param name="valid" select="$valid"/>
+        <xsl:with-param name="class" select="$class"/>
+        <xsl:with-param name="req" select="$req"/>
+    </xsl:call-template>
+    
+    <xsl:call-template name="drawInput">
+        <xsl:with-param name="name" select="'TXT'"/>
+        <xsl:with-param name="path" select="concat($path, '-txt[]')"/>
+        <xsl:with-param name="value" select="$value"/>
+        <xsl:with-param name="valid" select="$valid"/>
+        <xsl:with-param name="class" select="$class"/>
+    </xsl:call-template>
+
 </xsl:template>
 
 <xsl:template name="drawLegend">
@@ -538,9 +577,9 @@
 		</xsl:choose>
 </xsl:template>
 
-	<xsl:attribute-set name="free" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-		<xsl:attribute name="xsi:type">gmd:PT_FreeText_PropertyType</xsl:attribute>
-	</xsl:attribute-set>
+<xsl:attribute-set name="free" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <xsl:attribute name="xsi:type">gmd:PT_FreeText_PropertyType</xsl:attribute>
+</xsl:attribute-set>
 
 <xsl:template name="txtOut">
 	<xsl:param name="name"/>
@@ -578,6 +617,7 @@
 	<xsl:param name="t"/>
     <xsl:param name="attrib" select="''"/>
     <xsl:param name="lattrib" select="''"/>
+    <xsl:param name="locale" select="''"/>
 	
     <xsl:variable name="row" select="$codes/value[@uri=normalize-space($t)]"/>
     <xsl:variable name="n">
@@ -604,6 +644,26 @@
                             </xsl:choose>
                         </xsl:otherwise>
                     </xsl:choose>
+                    <xsl:for-each select="$locale/item">
+                        <xsl:variable name="l" select="."/>
+                        <gmd:PT_FreeText>
+                            <gmd:textGroup>
+                                <gmd:LocalisedCharacterString locale="#locale-{$l}">
+                                    <xsl:choose>
+                                        <xsl:when test="$attrib">
+                                            <xsl:value-of select="$row/@*[name()=$attrib]"/>
+                                        </xsl:when>
+                                        <xsl:when test="$lattrib">
+                                            <xsl:value-of select="$row/*[name()=$l]/@*[name()=$lattrib]"/>
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <xsl:value-of select="$row/*[name()=$l]"/>
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </gmd:LocalisedCharacterString>
+                            </gmd:textGroup>
+                        </gmd:PT_FreeText>
+                    </xsl:for-each>
                 </gmx:Anchor>
             </xsl:when>
             <xsl:otherwise>
@@ -618,8 +678,9 @@
 	<xsl:param name="uri"/>
 	<xsl:param name="id"/>
     <xsl:param name="mdlang" select="'eng'"/>
+    <xsl:param name="locale" select="''"/>
     <xsl:element name="{$name}">
-        <gmx:Anchor xlink:href="{$id}">
+        <gmx:Anchor xlink:href="{$id}"><xsl:value-of select="$locale/item"/>
             <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$mdlang]/@code2))"/>
         </gmx:Anchor>
     </xsl:element>

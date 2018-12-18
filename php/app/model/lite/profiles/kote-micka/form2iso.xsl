@@ -153,6 +153,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             <xsl:with-param name="name" select="'code'"/>
                             <xsl:with-param name="codes" select="$codeLists/coordSys"/>
                             <xsl:with-param name="t" select="."/>
+                            <xsl:with-param name="locale" select="//locale"/>
                         </xsl:call-template>
 					</gmd:RS_Identifier>
 				</gmd:referenceSystemIdentifier>
@@ -190,15 +191,15 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 									<gmd:RS_Identifier>
 										<gmd:code>
                                             <xsl:choose>
-                                                <xsl:when test="substring(.,1,4)='http'">
-                                                    <gmx:Anchor xlink:href="{.}"/>
+                                                <xsl:when test="uri">
+                                                    <gmx:Anchor xlink:href="{uri}"><xsl:value-of select="txt"/></gmx:Anchor>
                                                 </xsl:when>
                                                 <xsl:otherwise>
-                                                    <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                                                    <gco:CharacterString><xsl:value-of select="txt"/></gco:CharacterString>
                                                 </xsl:otherwise>
                                             </xsl:choose>
 										</gmd:code>
-                                        <gmd:codeSpace></gmd:codeSpace>
+                                        <gmd:codeSpace><gco:CharacterString><xsl:value-of select="codeSpace"/></gco:CharacterString></gmd:codeSpace>
 									</gmd:RS_Identifier>
 								</gmd:identifier>
 							</xsl:for-each>
@@ -291,7 +292,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                             <xsl:with-param name="name" select="'keyword'"/>
                                             <xsl:with-param name="codes" select="$codeLists/inspireKeywords"/>
                                             <xsl:with-param name="t" select="."/>
-                                            <xsl:with-param name="attrib" select="'name'"/>
+                                            <xsl:with-param name="locale" select="//locale"/>
                                         </xsl:call-template>
                                     </xsl:for-each>
                                     <gmd:thesaurusName>
@@ -336,7 +337,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'keyword'"/>
                                         <xsl:with-param name="codes" select="$codeLists/serviceKeyword"/>
                                         <xsl:with-param name="t" select="."/>
-                                        <xsl:with-param name="attrib" select="'name'"/>
+                                        <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
 	  							</xsl:for-each>
 	  							<gmd:thesaurusName>
@@ -362,7 +363,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'keyword'"/>
                                         <xsl:with-param name="codes" select="$codeLists/cgsThemes"/>
                                         <xsl:with-param name="t" select="."/>
-                                        <xsl:with-param name="attrib" select="'name'"/>
+                                        <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
 	  							</xsl:for-each>
 	  							<gmd:thesaurusName>
@@ -412,6 +413,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="uri" select="'http://inspire.ec.europa.eu/codelist/EndusePotentialValue'"/>
                                         <xsl:with-param name="id" select="."/>
                                         <xsl:with-param name="mdlang" select="$mdlang"/>
+                                        <xsl:with-param name="locale" select="locale"/>
                                     </xsl:call-template>
                                 </xsl:for-each>
                                 <gmd:thesaurusName>
@@ -480,6 +482,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'otherConstraints'"/>
                                         <xsl:with-param name="codes" select="$codeLists/accessCond"/>
                                         <xsl:with-param name="t" select="."/>
+                                        <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
                                 </xsl:for-each>
                             </gmd:MD_LegalConstraints>
@@ -498,6 +501,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'otherConstraints'"/>
                                         <xsl:with-param name="codes" select="$codeLists/limitationsAccess"/>
                                         <xsl:with-param name="t" select="."/>
+                                        <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
                                 </xsl:for-each>
                             </gmd:MD_LegalConstraints>
@@ -611,6 +615,12 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                                     <gmd:code>
                                                         <gmx:Anchor xlink:href="{$code}"><xsl:value-of select="$row/*[name()=$lang]"/></gmx:Anchor>
                                                     </gmd:code>
+                                                    <!--xsl:call-template name="uriOut">
+                                                        <xsl:with-param name="name" select="'code'"/>
+                                                        <xsl:with-param name="codes" select="$codeLists/extents"/>
+                                                        <xsl:with-param name="t" select="substring-before(extentId,'|')"/>
+                                                        <xsl:with-param name="locale" select="//locale"/>
+                                                    </xsl:call-template-->
                                                 </gmd:MD_Identifier>
                                             </gmd:geographicIdentifier>
                                         </gmd:EX_GeographicDescription>
@@ -716,6 +726,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                                 <xsl:with-param name="name" select="'protocol'"/>
                                                 <xsl:with-param name="codes" select="$codeLists/protocol"/>
                                                 <xsl:with-param name="t" select="protocol"/>
+                                                <xsl:with-param name="locale" select="//locale"/>
                                             </xsl:call-template>
                                         </gmd:CI_OnlineResource>
                                     </srv:connectPoint>
@@ -814,6 +825,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     <xsl:with-param name="name" select="'name'"/>
                                     <xsl:with-param name="codes" select="$codeLists/format"/>
                                     <xsl:with-param name="t" select="name"/>
+                                    <xsl:with-param name="locale" select="//locale"/>
                                 </xsl:call-template>
 								<gmd:version>
 									<gco:CharacterString>
@@ -867,6 +879,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'protocol'"/>
                                         <xsl:with-param name="codes" select="$codeLists/protocol"/>
                                         <xsl:with-param name="t" select="protocol"/>
+                                        <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
                                     <xsl:call-template name="txtOut">
                                         <xsl:with-param name="name" select="'name'"/>
@@ -959,6 +972,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                                     <xsl:with-param name="codes" select="$codeLists/specifications"/>
                                                     <xsl:with-param name="t" select="uri"/>
                                                     <xsl:with-param name="lattrib" select="'name'"/>
+                                                    <xsl:with-param name="locale" select="//locale"/>
                                                 </xsl:call-template>
 	  											<gmd:date>
 	  												<gmd:CI_Date>
@@ -1005,41 +1019,44 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	  					</gmd:report>
 	  				</xsl:for-each>
                     
-                    <xsl:for-each select="sds">
-	  					<gmd:report>
-	  						<gmd:DQ_DomainConsistency xsi:type="DQ_DomainConsistency_Type">
-	  							<gmd:result>
-	  								<gmd:DQ_ConformanceResult xsi:type="DQ_ConformanceResult_Type">
-	  									<gmd:specification>
-	  										<gmd:CI_Citation>
-                                                <xsl:call-template name="uriOut">
-                                                    <xsl:with-param name="name" select="'title'"/>
-                                                    <xsl:with-param name="codes" select="$codeLists/sds"/>
-                                                    <xsl:with-param name="t" select="."/>
-                                                </xsl:call-template>
-	  											<gmd:date>
-	  												<gmd:CI_Date>
-                       							        <gmd:date>
-                                                            <gco:Date><xsl:value-of select="$codeLists/sds/value[@uri=.]/@publication"/></gco:Date>
-                                                        </gmd:date>
-                                                        <gmd:dateType>
-	  														<gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
-	  													</gmd:dateType>
-	  												</gmd:CI_Date>
-	  											</gmd:date>
-	  										</gmd:CI_Citation>
-	  									</gmd:specification>
-                                        <gmd:explanation>
- 											<gco:CharacterString>This Spatial Data Service set is conformant with the INSPIRE requirements for Invocable Spatial Data Services</gco:CharacterString>
-	  									</gmd:explanation>
-	  									<gmd:pass>
-											<gco:Boolean>true</gco:Boolean>
-	  									</gmd:pass>
-	  								</gmd:DQ_ConformanceResult>
-	  							</gmd:result>
-	  						</gmd:DQ_DomainConsistency>
-	  					</gmd:report>
-                    </xsl:for-each>
+                    <xsl:if test="serviceType='other'">
+                        <xsl:for-each select="sds">
+                            <gmd:report>
+                                <gmd:DQ_DomainConsistency xsi:type="DQ_DomainConsistency_Type">
+                                    <gmd:result>
+                                        <gmd:DQ_ConformanceResult xsi:type="DQ_ConformanceResult_Type">
+                                            <gmd:specification>
+                                                <gmd:CI_Citation>
+                                                    <xsl:call-template name="uriOut">
+                                                        <xsl:with-param name="name" select="'title'"/>
+                                                        <xsl:with-param name="codes" select="$codeLists/sds"/>
+                                                        <xsl:with-param name="t" select="."/>
+                                                        <xsl:with-param name="locale" select="//locale"/>
+                                                    </xsl:call-template>
+                                                    <gmd:date>
+                                                        <gmd:CI_Date>
+                                                            <gmd:date>
+                                                                <gco:Date><xsl:value-of select="$codeLists/sds/value[@uri=.]/@publication"/></gco:Date>
+                                                            </gmd:date>
+                                                            <gmd:dateType>
+                                                                <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
+                                                            </gmd:dateType>
+                                                        </gmd:CI_Date>
+                                                    </gmd:date>
+                                                </gmd:CI_Citation>
+                                            </gmd:specification>
+                                            <gmd:explanation>
+                                                <gco:CharacterString>This Spatial Data Service set is conformant with the INSPIRE requirements for Invocable Spatial Data Services</gco:CharacterString>
+                                            </gmd:explanation>
+                                            <gmd:pass>
+                                                <gco:Boolean>true</gco:Boolean>
+                                            </gmd:pass>
+                                        </gmd:DQ_ConformanceResult>
+                                    </gmd:result>
+                                </gmd:DQ_DomainConsistency>
+                            </gmd:report>
+                        </xsl:for-each>
+                    </xsl:if>
                     
                     <gmd:report>
                         <gmd:DQ_DomainConsistency>
@@ -1094,6 +1111,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'measureDescription'"/>
                                         <xsl:with-param name="codes" select="$codeLists/extents"/>
                                         <xsl:with-param name="t" select="$c"/>
+                                        <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
                                     <!--  <gmd:dateTime>
                                         <gco:DateTime>2012-05-03T00:00:00</gco:DateTime>
@@ -1217,73 +1235,75 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	  					</gmd:report>
 	  				</xsl:if>
                     
-					<!-- IO-2 - services -->
-                    <xsl:if test="normalize-space(availability)">
-                        <xsl:variable name="topol" select="."/>
-                        <gmd:report>
-                            <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
-                                <gmd:nameOfMeasure>
-                                    <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[1]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[1]/*[name()=$lang]"/></gmx:Anchor>
-                                </gmd:nameOfMeasure>
-                                <gmd:measureDescription>
-                                    <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[1]/*[name()=$lang]/@qtip"/></gco:CharacterString>
-                                </gmd:measureDescription>
-                                <gmd:result>
-                                    <gmd:DQ_QuantitativeResult>
-                                        <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/> 
-                                        <gmd:value>
-                                            <gco:Record xsi:type="xs:double"><xsl:value-of select="availability"/></gco:Record> 
-                                        </gmd:value>
-                                    </gmd:DQ_QuantitativeResult>
-                                </gmd:result>
-                            </gmd:DQ_ConceptualConsistency>
-                        </gmd:report>
-                    </xsl:if>
-                    
-					<!-- IO-2 pro služby -->
-                    <xsl:if test="normalize-space(performance)">
-                        <xsl:variable name="topol" select="."/>
-                        <gmd:report>
-                            <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
-                                <gmd:nameOfMeasure>
-                                    <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[2]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[2]/*[name()=$lang]"/></gmx:Anchor>
-                                </gmd:nameOfMeasure>
-                                <gmd:measureDescription>
-                                    <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[2]/*[name()=$lang]/@qtip"/></gco:CharacterString>
-                                </gmd:measureDescription>
-                                <gmd:result>
-                                    <gmd:DQ_QuantitativeResult>
-                                        <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#second"/> 
-                                        <gmd:value>
-                                            <gco:Record xsi:type="xs:double"><xsl:value-of select="performance"/></gco:Record> 
-                                        </gmd:value>
-                                    </gmd:DQ_QuantitativeResult>
-                                </gmd:result>
-                            </gmd:DQ_ConceptualConsistency>
-                        </gmd:report>
-                    </xsl:if>
-                    
-					<!-- IO-2 pro služby -->
-                    <xsl:if test="normalize-space(capacity)">
-                        <xsl:variable name="topol" select="."/>
-                        <gmd:report>
-                            <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
-                                <gmd:nameOfMeasure>
-                                    <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[3]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[3]/*[name()=$lang]"/></gmx:Anchor>
-                                </gmd:nameOfMeasure>
-                                <gmd:measureDescription>
-                                    <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[3]/*[name()=$lang]/@qtip"/></gco:CharacterString>
-                                </gmd:measureDescription>
-                                <gmd:result>
-                                    <gmd:DQ_QuantitativeResult>
-                                        <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#count"/> 
-                                        <gmd:value>
-                                            <gco:Record xsi:type="xs:double"><xsl:value-of select="capacity"/></gco:Record> 
-                                        </gmd:value>
-                                    </gmd:DQ_QuantitativeResult>
-                                </gmd:result>
-                            </gmd:DQ_ConceptualConsistency>
-                        </gmd:report>
+					<xsl:if test="serviceType='other'">
+                        <!-- IO-2 - services -->
+                        <xsl:if test="normalize-space(availability)">
+                            <xsl:variable name="topol" select="."/>
+                            <gmd:report>
+                                <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                                    <gmd:nameOfMeasure>
+                                        <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[1]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[1]/*[name()=$lang]"/></gmx:Anchor>
+                                    </gmd:nameOfMeasure>
+                                    <gmd:measureDescription>
+                                        <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[1]/*[name()=$lang]/@qtip"/></gco:CharacterString>
+                                    </gmd:measureDescription>
+                                    <gmd:result>
+                                        <gmd:DQ_QuantitativeResult>
+                                            <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#percent"/> 
+                                            <gmd:value>
+                                                <gco:Record xsi:type="xs:double"><xsl:value-of select="availability"/></gco:Record> 
+                                            </gmd:value>
+                                        </gmd:DQ_QuantitativeResult>
+                                    </gmd:result>
+                                </gmd:DQ_ConceptualConsistency>
+                            </gmd:report>
+                        </xsl:if>
+                        
+                        <!-- IO-2 pro služby -->
+                        <xsl:if test="normalize-space(performance)">
+                            <xsl:variable name="topol" select="."/>
+                            <gmd:report>
+                                <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                                    <gmd:nameOfMeasure>
+                                        <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[2]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[2]/*[name()=$lang]"/></gmx:Anchor>
+                                    </gmd:nameOfMeasure>
+                                    <gmd:measureDescription>
+                                        <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[2]/*[name()=$lang]/@qtip"/></gco:CharacterString>
+                                    </gmd:measureDescription>
+                                    <gmd:result>
+                                        <gmd:DQ_QuantitativeResult>
+                                            <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#second"/> 
+                                            <gmd:value>
+                                                <gco:Record xsi:type="xs:double"><xsl:value-of select="performance"/></gco:Record> 
+                                            </gmd:value>
+                                        </gmd:DQ_QuantitativeResult>
+                                    </gmd:result>
+                                </gmd:DQ_ConceptualConsistency>
+                            </gmd:report>
+                        </xsl:if>
+                        
+                        <!-- IO-2 pro služby -->
+                        <xsl:if test="normalize-space(capacity)">
+                            <xsl:variable name="topol" select="."/>
+                            <gmd:report>
+                                <gmd:DQ_ConceptualConsistency xsi:type="DQ_ConceptualConsistency_Type">
+                                    <gmd:nameOfMeasure>
+                                        <gmx:Anchor xlink:href="{$codeLists/serviceQuality/value[3]/@uri}"><xsl:value-of select="$codeLists/serviceQuality/value[3]/*[name()=$lang]"/></gmx:Anchor>
+                                    </gmd:nameOfMeasure>
+                                    <gmd:measureDescription>
+                                        <gco:CharacterString><xsl:value-of select="$codeLists/serviceQuality/value[3]/*[name()=$lang]/@qtip"/></gco:CharacterString>
+                                    </gmd:measureDescription>
+                                    <gmd:result>
+                                        <gmd:DQ_QuantitativeResult>
+                                            <gmd:valueUnit xlink:href="http://geoportal.gov.cz/res/units.xml#count"/> 
+                                            <gmd:value>
+                                                <gco:Record xsi:type="xs:double"><xsl:value-of select="capacity"/></gco:Record> 
+                                            </gmd:value>
+                                        </gmd:DQ_QuantitativeResult>
+                                    </gmd:result>
+                                </gmd:DQ_ConceptualConsistency>
+                            </gmd:report>
+                        </xsl:if>
                     </xsl:if>
                     
                     <gmd:report>

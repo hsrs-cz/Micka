@@ -122,8 +122,7 @@ class Kote{
             }
 		}
 
-		//eval ($out);
-		//var_dump($out); die;
+		//eval ($out); echo "<pre>"; var_dump($out); die();
 		//$md["keywords"] = isset($data["keywords"]) ? explode("\n",$data["keywords"]) : '';
 		//$md["gemet"] = isset($data["gemet"]) ? explode("\n",$data["gemet"]) : '';
 		//$md["inspire"] = isset($data["inspire"]) ? explode("\n",$data["inspire"]) : '';

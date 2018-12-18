@@ -661,6 +661,18 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 			<h3>Odkaz na jednotlivé typy geoprvků ve vybraném Feature katalogu</h3> 
 		</help>
 	</msg>
+  	<msg name="URI">
+		<label>URI</label>
+		<help>
+			<h3>URI</h3> 
+		</help>
+	</msg>
+  	<msg name="TXT">
+		<label>Text</label>
+		<help>
+			<h3>Řetězec</h3> 
+		</help>
+	</msg>
 
     <!-- user specified -->
    	<msg name="geology">
