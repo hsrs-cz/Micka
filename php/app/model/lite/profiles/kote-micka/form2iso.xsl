@@ -298,11 +298,11 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     <gmd:thesaurusName>
                                         <gmd:CI_Citation>
                                             <gmd:title>
-                                                <gmx:Anchor xlink:href="https://www.eionet.europa.eu/gemet/inspire_themes">GEMET - INSPIRE themes, version 1.0</gmx:Anchor>
+                                                <gmx:Anchor xlink:href="{$codeLists/inspireKeywords/thesaurus/@uri}"><xsl:value-of select="$codeLists/inspireKeywords/thesaurus/*"/></gmx:Anchor>
                                             </gmd:title>
                                             <gmd:date><gmd:CI_Date>
-                                                <gmd:date><gco:Date>2008-06-01</gco:Date></gmd:date>
-                                                <gmd:dateType><gmd:CI_DateTypeCode codeListValue="publication" codeList="{$cl}#CI_DateTypeCode">publication</gmd:CI_DateTypeCode></gmd:dateType>
+                                                <gmd:date><gco:Date><xsl:value-of select="$codeLists/inspireKeywords/thesaurus/@date"/></gco:Date></gmd:date>
+                                                <gmd:dateType><gmd:CI_DateTypeCode codeListValue="{$codeLists/inspireKeywords/thesaurus/@dateType}" codeList="{$cl}#CI_DateTypeCode"><xsl:value-of select="$codeLists/inspireKeywords/thesaurus/@dateType"/></gmd:CI_DateTypeCode></gmd:dateType>
                                             </gmd:CI_Date></gmd:date>
                                         </gmd:CI_Citation>
                                     </gmd:thesaurusName>
@@ -351,6 +351,18 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	  									</gmd:CI_Date></gmd:date>
 	  								</gmd:CI_Citation>
 	  							</gmd:thesaurusName>
+                                    <gmd:thesaurusName>
+                                        <gmd:CI_Citation>
+                                            <gmd:title>
+                                                <gmx:Anchor xlink:href="{$codeLists/serviceKeyword/thesaurus/@uri}"><xsl:value-of select="$codeLists/inspireKeywords/thesaurus/*"/></gmx:Anchor>
+                                            </gmd:title>
+                                            <gmd:date><gmd:CI_Date>
+                                                <gmd:date><gco:Date><xsl:value-of select="$codeLists/serviceKeyword/thesaurus/@date"/></gco:Date></gmd:date>
+                                                <gmd:dateType><gmd:CI_DateTypeCode codeListValue="{$codeLists/serviceKeyword/thesaurus/@dateType}" codeList="{$cl}#CI_DateTypeCode"><xsl:value-of select="$codeLists/inspireKeywords/thesaurus/@dateType"/></gmd:CI_DateTypeCode></gmd:dateType>
+                                            </gmd:CI_Date></gmd:date>
+                                        </gmd:CI_Citation>
+                                    </gmd:thesaurusName>
+
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if>
@@ -615,12 +627,6 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                                     <gmd:code>
                                                         <gmx:Anchor xlink:href="{$code}"><xsl:value-of select="$row/*[name()=$lang]"/></gmx:Anchor>
                                                     </gmd:code>
-                                                    <!--xsl:call-template name="uriOut">
-                                                        <xsl:with-param name="name" select="'code'"/>
-                                                        <xsl:with-param name="codes" select="$codeLists/extents"/>
-                                                        <xsl:with-param name="t" select="substring-before(extentId,'|')"/>
-                                                        <xsl:with-param name="locale" select="//locale"/>
-                                                    </xsl:call-template-->
                                                 </gmd:MD_Identifier>
                                             </gmd:geographicIdentifier>
                                         </gmd:EX_GeographicDescription>
