@@ -91,12 +91,12 @@
 	</xsl:template>
     
 	<!-- CGS temata - docasne -->
-	<xsl:template match="gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'Czech Geological')]">
+	<xsl:template match="gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'Czech Geological Survey')]">
 		<gmd:descriptiveKeywords>
 			<gmd:MD_Keywords>
 				<xsl:for-each select="*/gmd:keyword">
 					<xsl:choose>
-						<xsl:when test="*/@xlink:href"><xsl:copy-of select="."/></xsl:when>
+						<xsl:when test="*/@xlink:href and contains(*/@xlink:href,'https://registry.geology.cz/CGSGeoscientificTheme')"><xsl:copy-of select="."/></xsl:when>
 						<xsl:otherwise>
 							<xsl:variable name="kw" select="normalize-space(*)"/>
 							<gmd:keyword>
