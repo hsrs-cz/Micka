@@ -18,8 +18,7 @@
 	
 	<xsl:variable name="apos">\'</xsl:variable>
 	<xsl:variable name="msg" select="document(concat('client/labels-', $lang, '.xml'))/messages/msg"/>
-	<xsl:variable name="capabilities" select="document(concat('../../config/cswConfig-', $lang, '.xml'))"/>
-	<xsl:variable name="cl" select="document('codelists.xml')/map"/>
+	<xsl:variable name="cl" select="document('../../config/codelists.xml')/map"/>
 	<xsl:variable name="mdlang" select="*/gmd:language/gmd:LanguageCode/@codeListValue"/>
 	<xsl:include href="client/common_cli.xsl" />
 
@@ -76,7 +75,7 @@
 				<a href="../full/{../@uuid}" class="icons" data-tooltip="tooltip" data-original-title="{$msg[@eng='fullMetadata']}">
 					<xsl:value-of select="$msg[@eng='fullMetadata']"/></a>
 			</xsl:if>
-		</li>						
+		</li>
 		<div class="icons">
 		  	<xsl:variable name="wmsURL" select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(gmd:protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			<xsl:if test="gmd:identificationInfo/*/srv:serviceType/*='download'">
@@ -137,126 +136,124 @@
 			</div>
 		</div>
 
-		  	<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
-		  		<div class="micka-row">
-		  			<label><xsl:value-of select="$msg[@eng='Browse Graphic']"/></label>
-					<div class="c">
-	  					<div><img src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>
-	  					<div>
-		  					<xsl:call-template name="multi">
-			    				<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileDescription"/>
-			    				<xsl:with-param name="lang" select="$LANGUAGE"/>
-			    				<xsl:with-param name="mdlang" select="$mdlang"/>
-			  				</xsl:call-template>
-	  					</div>
-					</div>
-				</div>
-	  		</xsl:if>	
-			
-			<div class="micka-row" rel="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">
-				<label><xsl:value-of select="$msg[@eng='Type']"/></label>
-				<xsl:variable name="res">
-					<xsl:choose>
-						<xsl:when test="$hlevel='service'">Catalog</xsl:when>
-						<xsl:otherwise>Dataset</xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable>
-				<div class="c" resource="http://www.w3.org/ns/dcat#{$res}">
-					<xsl:value-of select="$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]"/>
-					<xsl:if test="gmd:hierarchyLevelName != ''">
-					- <xsl:value-of select="gmd:hierarchyLevelName"/>
-					</xsl:if>
-				</div>
-			</div>
-
-	
-			<div class="micka-row" rel="http://www.w3.org/ns/dcat#distribution">
-				<label><xsl:value-of select="$msg[@eng='Resource Locator']"/></label>
-				<div class="c" typeof="http://www.w3.org/ns/dcat#Distribution">
-					<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
-						<xsl:variable name="label">
-                            <xsl:choose>
-                                <xsl:when test="*/gmd:description">
-                                    <xsl:call-template name="multi">
-                                        <xsl:with-param name="el" select="*/gmd:description"/>
-                                        <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                        <xsl:with-param name="mdlang" select="$mdlang"/>
-                                    </xsl:call-template>
-                                </xsl:when>
-                                <xsl:when test="*/gmd:name">
-                                    <xsl:call-template name="multi">
-                                        <xsl:with-param name="el" select="*/gmd:name"/>
-                                        <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                        <xsl:with-param name="mdlang" select="$mdlang"/>
-                                    </xsl:call-template>
-                                </xsl:when>
-                                <xsl:otherwise><xsl:value-of select="*/gmd:linkage"/></xsl:otherwise>
-                            </xsl:choose>
-						</xsl:variable>
-                        <div rel="http://www.w3.org/ns/dcat#accessURL">
-                          	<xsl:choose>
-                           		<xsl:when test="contains(*/gmd:protocol, 'DOWNLOAD')">
-                                	<a href="{*/gmd:linkage}"  target="_blank">
-                                      	<span style="color:#070; font-size:20px;"><i class="fa fa-download"></i></span><xsl:text> </xsl:text>
-                                      	<xsl:value-of select="$label"/>
-                                	</a>	
-                            	</xsl:when>
-                           		<xsl:when test="contains(*/gmd:protocol, 'rss')">
-                                	<a href="{*/gmd:linkage}"  target="_blank">
-                                      	<span style="color:#ff6600; font-size:20px;"><i class="fa fa-feed"></i></span><xsl:text> </xsl:text>
-                                      	<xsl:value-of select="$label"/>
-                                	</a>	
-                            	</xsl:when>
-								<xsl:when test="contains(*/gmd:protocol/*,'WMS') or contains(*/gmd:linkage/*,'WMS')">
-									<xsl:variable name="label1">
-		                                <xsl:choose>
-                                            <xsl:when test="*/gmd:description">
-                                                <xsl:call-template name="multi">
-                                                    <xsl:with-param name="el" select="*/gmd:description"/>
-                                                    <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                                    <xsl:with-param name="mdlang" select="$mdlang"/>
-                                                </xsl:call-template>
-                                            </xsl:when>		                                    
-                                            <xsl:when test="*/gmd:name">
-                                                <xsl:call-template name="multi">
-                                                    <xsl:with-param name="el" select="*/gmd:name"/>
-                                                    <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                                    <xsl:with-param name="mdlang" select="$mdlang"/>
-                                                </xsl:call-template>
-                                            </xsl:when>
-		                                    <xsl:otherwise><xsl:value-of select="$msg[@eng='showMap']"/></xsl:otherwise>
-		                                </xsl:choose>
-									</xsl:variable>
-									<xsl:choose>
-										<xsl:when test="contains(*/gmd:linkage/*,'?')">
-							   				<a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>		  				
-										</xsl:when>
-										<xsl:otherwise>
-											<a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>
-										</xsl:otherwise>
-									</xsl:choose>
-								</xsl:when>
-                                <xsl:otherwise>
-                                	<a resource="{*/gmd:linkage}" href="{*/gmd:linkage}"  target="_blank">
-                                		<span style="font-size:20px;"><i class="fa fa-external-link-square"></i></span><xsl:text> </xsl:text>
-                                		<xsl:value-of select="php:function('noMime',string($label))"/>
-                                	</a>
-                                </xsl:otherwise>
-                        	</xsl:choose>   
-                        </div>
-					</xsl:for-each>
-				</div>
-			</div>
+        <xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
+            <div class="micka-row">
+                <label><xsl:value-of select="$msg[@eng='Browse Graphic']"/></label>
+                <div class="c">
+                    <div><img src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>
+                    <div>
+                        <xsl:call-template name="multi">
+                            <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileDescription"/>
+                            <xsl:with-param name="lang" select="$LANGUAGE"/>
+                            <xsl:with-param name="mdlang" select="$mdlang"/>
+                        </xsl:call-template>
+                    </div>
+                </div>
+            </div>
+        </xsl:if>	
+        
+        <div class="micka-row" rel="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">
+            <label><xsl:value-of select="$msg[@eng='Type']"/></label>
+            <xsl:variable name="res">
+                <xsl:choose>
+                    <xsl:when test="$hlevel='service'">Catalog</xsl:when>
+                    <xsl:otherwise>Dataset</xsl:otherwise>
+                </xsl:choose>
+            </xsl:variable>
+            <div class="c" resource="http://www.w3.org/ns/dcat#{$res}">
+                <xsl:value-of select="$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]"/>
+                <xsl:if test="gmd:hierarchyLevelName != ''">
+                - <xsl:value-of select="gmd:hierarchyLevelName"/>
+                </xsl:if>
+            </div>
+        </div>
 
 
-			<div class="micka-row">
-				<label><xsl:value-of select="$msg[@eng='Identifier']"/></label>
-				<div class="c" property="http://purl.org/dc/terms/identifier">
-                    <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/>
-					<xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
-				</div>
-			</div>
-			
+        <div class="micka-row" rel="http://www.w3.org/ns/dcat#distribution">
+            <label><xsl:value-of select="$msg[@eng='Resource Locator']"/></label>
+            <div class="c" typeof="http://www.w3.org/ns/dcat#Distribution">
+                <xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
+                    <xsl:variable name="label">
+                        <xsl:choose>
+                            <xsl:when test="*/gmd:description">
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="*/gmd:description"/>
+                                    <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:when test="*/gmd:name">
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="*/gmd:name"/>
+                                    <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                </xsl:call-template>
+                            </xsl:when>
+                            <xsl:otherwise><xsl:value-of select="*/gmd:linkage"/></xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <div rel="http://www.w3.org/ns/dcat#accessURL">
+                        <xsl:choose>
+                            <xsl:when test="contains(*/gmd:protocol, 'DOWNLOAD')">
+                                <a href="{*/gmd:linkage}"  target="_blank">
+                                    <span style="color:#070; font-size:20px;"><i class="fa fa-download"></i></span><xsl:text> </xsl:text>
+                                    <xsl:value-of select="$label"/>
+                                </a>	
+                            </xsl:when>
+                            <xsl:when test="contains(*/gmd:protocol, 'rss')">
+                                <a href="{*/gmd:linkage}"  target="_blank">
+                                    <span style="color:#ff6600; font-size:20px;"><i class="fa fa-feed"></i></span><xsl:text> </xsl:text>
+                                    <xsl:value-of select="$label"/>
+                                </a>	
+                            </xsl:when>
+                            <xsl:when test="contains(*/gmd:protocol/*,'WMS') or contains(*/gmd:linkage/*,'WMS')">
+                                <xsl:variable name="label1">
+                                    <xsl:choose>
+                                        <xsl:when test="*/gmd:description">
+                                            <xsl:call-template name="multi">
+                                                <xsl:with-param name="el" select="*/gmd:description"/>
+                                                <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                                <xsl:with-param name="mdlang" select="$mdlang"/>
+                                            </xsl:call-template>
+                                        </xsl:when>		                                    
+                                        <xsl:when test="*/gmd:name">
+                                            <xsl:call-template name="multi">
+                                                <xsl:with-param name="el" select="*/gmd:name"/>
+                                                <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                                <xsl:with-param name="mdlang" select="$mdlang"/>
+                                            </xsl:call-template>
+                                        </xsl:when>
+                                        <xsl:otherwise><xsl:value-of select="$msg[@eng='showMap']"/></xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:variable>
+                                <xsl:choose>
+                                    <xsl:when test="contains(*/gmd:linkage/*,'?')">
+                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>		  				
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <a resource="{*/gmd:linkage}" href="{*/gmd:linkage}"  target="_blank">
+                                    <span style="font-size:20px;"><i class="fa fa-external-link-square"></i></span><xsl:text> </xsl:text>
+                                    <xsl:value-of select="php:function('noMime',string($label))"/>
+                                </a>
+                            </xsl:otherwise>
+                        </xsl:choose>   
+                    </div>
+                </xsl:for-each>
+            </div>
+        </div>
+
+        <div class="micka-row">
+            <label><xsl:value-of select="$msg[@eng='Identifier']"/></label>
+            <div class="c" property="http://purl.org/dc/terms/identifier">
+                <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/>
+                <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
+            </div>
+        </div>
 
 		<xsl:if test="$srv!=1">
 			<div class="micka-row">
@@ -282,7 +279,6 @@
 			</div>
 		</xsl:if>
 
-
 		<xsl:if test="$srv=1">
 			<div class="micka-row">
 				<label>
@@ -299,137 +295,137 @@
 			</div>
 		</xsl:if>
 
-			<div class="micka-row">
-				<label><xsl:value-of select="$msg[@eng='Keywords']"/></label>
-				<div class="c">
-					<xsl:for-each select="//gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)>0]">
+        <div class="micka-row">
+            <label><xsl:value-of select="$msg[@eng='Keywords']"/></label>
+            <div class="c">
+                <xsl:for-each select="//gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)>0]">
 
-						<xsl:choose>
-							<!-- blbost kvuli CENII -->
-							<xsl:when test="contains(*/gmd:thesaurusName/*/gmd:title/*,'CENIA')">
-								<i><b>GEOPORTAL:</b></i>
-								<xsl:for-each select="*/gmd:keyword">
-							     	<div style="margin-left:20px;">
-							     		<xsl:variable name="k" select="*"/>
-							     		<xsl:value-of select="$cl/cenia/value[@name=$k]/*[name()=$lang]"/>
-							     	</div>
-						  		</xsl:for-each>
-				  			</xsl:when>
+                    <xsl:choose>
+                        <!-- blbost kvuli CENII -->
+                        <xsl:when test="contains(*/gmd:thesaurusName/*/gmd:title/*,'CENIA')">
+                            <i><b>GEOPORTAL:</b></i>
+                            <xsl:for-each select="*/gmd:keyword">
+                                <div style="margin-left:20px;">
+                                    <xsl:variable name="k" select="*"/>
+                                    <xsl:value-of select="$cl/cenia/value[@name=$k]/*[name()=$lang]"/>
+                                </div>
+                            </xsl:for-each>
+                        </xsl:when>
 
-				  			<!-- ISO 19119 -->
-							<xsl:when test="contains(*/gmd:thesaurusName/*/gmd:title/*,'ISO - 19119') or contains(*/gmd:thesaurusName/*/gmd:title/*,'INSPIRE Services')">
-								<i><b>ISO 19119:</b></i>
-								<xsl:for-each select="*/gmd:keyword">
-							     	<div style="margin-left:20px;">
-							     		<xsl:variable name="k" select="*"/>
-							     		<a property="http://www.w3.org/ns/dcat#theme" typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" target="_blank">
-							     		<xsl:value-of select="$cl/serviceKeyword/value[@name=$k]/*[name()=$lang]"/></a>
-							     	</div>
-						  		</xsl:for-each>
-				  			</xsl:when>
+                        <!-- ISO 19119 -->
+                        <xsl:when test="contains(*/gmd:thesaurusName/*/gmd:title/*,'ISO - 19119') or contains(*/gmd:thesaurusName/*/gmd:title/*,'INSPIRE Services')">
+                            <i><b>ISO 19119:</b></i>
+                            <xsl:for-each select="*/gmd:keyword">
+                                <div style="margin-left:20px;">
+                                    <xsl:variable name="k" select="*"/>
+                                    <a property="http://www.w3.org/ns/dcat#theme" typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" href="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/{$k}" target="_blank">
+                                    <xsl:value-of select="$cl/serviceKeyword/value[@name=$k]/*[name()=$lang]"/></a>
+                                </div>
+                            </xsl:for-each>
+                        </xsl:when>
 
-				  			<xsl:otherwise>
-								<xsl:variable name="thesaurus">
-									<xsl:call-template name="multi">
-										<xsl:with-param name="el" select="*/gmd:thesaurusName/*/gmd:title"/>
-										<xsl:with-param name="lang" select="$lang"/>
-										<xsl:with-param name="mdlang" select="$mdlang"/>
-									</xsl:call-template>
-								</xsl:variable>
-								<i><b><xsl:value-of select="$thesaurus"/>:</b></i>
-						  		<div style="margin-left:20px;">
-								<xsl:for-each select="*/gmd:keyword">
-							     		<xsl:variable name="theme">
-								     		<xsl:call-template name="multi">
-								    			<xsl:with-param name="el" select="."/>
-								    			<xsl:with-param name="lang" select="$lang"/>
-								    			<xsl:with-param name="mdlang" select="$mdlang"/>
-								  			</xsl:call-template>
-								  		</xsl:variable>							     	
-							  			<xsl:choose>
-								     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
-								     			<a property="http://www.w3.org/ns/dcat#theme"  typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
-								     				<img src="{$mickaURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
-								     			</a>
-								     			<xsl:text> </xsl:text>
-								     		</xsl:when>
-								     		<xsl:when test="./*/@xlink:href">
-								     			<div>
-								     				<a property="http://www.w3.org/ns/dcat#theme" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="registry" target="_blank">
-								     					<xsl:choose>
-								     						<xsl:when test="normalize-space($theme)">
-								     							<xsl:value-of select="$theme"/>
-								     						</xsl:when>
-								     						<xsl:otherwise>
-								     							<xsl:value-of select="./*/@xlink:href"/>
-								     						</xsl:otherwise>
-								     					</xsl:choose>
-								     				</a>
-								     			</div>	
-								     		</xsl:when>
-								     		<xsl:otherwise>
-								     			<div rel="http://www.w3.org/ns/dcat#theme" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
-								     				<span property="http://www.w3.org/2004/02/skos/core#prefLabel"><xsl:value-of select="$theme"/></span>
-													<span rel="http://www.w3.org/2004/02/skos/core#inScheme" typeof="http://www.w3.org/2004/02/skos/core#ConceptScheme">
-														<span content="{$thesaurus}" property="http://purl.org/dc/terms/title"></span>
-														<span content="{../../*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*}" property="http://purl.org/dc/terms/issued"></span>
-													</span>
-								     			</div>	
-								     		</xsl:otherwise>
-							     		</xsl:choose>
-						  			</xsl:for-each>
-						  		</div>
-				  			</xsl:otherwise>
-				  		</xsl:choose>
-					</xsl:for-each>
+                        <xsl:otherwise>
+                            <xsl:variable name="thesaurus">
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="*/gmd:thesaurusName/*/gmd:title"/>
+                                    <xsl:with-param name="lang" select="$lang"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                </xsl:call-template>
+                            </xsl:variable>
+                            <i><b><xsl:value-of select="$thesaurus"/>:</b></i>
+                            <div style="margin-left:20px;">
+                            <xsl:for-each select="*/gmd:keyword">
+                                    <xsl:variable name="theme">
+                                        <xsl:call-template name="multi">
+                                            <xsl:with-param name="el" select="."/>
+                                            <xsl:with-param name="lang" select="$lang"/>
+                                            <xsl:with-param name="mdlang" select="$mdlang"/>
+                                        </xsl:call-template>
+                                    </xsl:variable>
+                                    <xsl:choose>
+                                        <xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
+                                            <a property="http://www.w3.org/ns/dcat#theme"  typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
+                                                <img src="{$mickaURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
+                                            </a>
+                                            <xsl:text> </xsl:text>
+                                        </xsl:when>
+                                        <xsl:when test="./*/@xlink:href">
+                                            <div>
+                                                <a property="http://www.w3.org/ns/dcat#theme" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="registry" target="_blank">
+                                                    <xsl:choose>
+                                                        <xsl:when test="normalize-space($theme)">
+                                                            <xsl:value-of select="$theme"/>
+                                                        </xsl:when>
+                                                        <xsl:otherwise>
+                                                            <xsl:value-of select="./*/@xlink:href"/>
+                                                        </xsl:otherwise>
+                                                    </xsl:choose>
+                                                </a>
+                                            </div>	
+                                        </xsl:when>
+                                        <xsl:otherwise>
+                                            <div rel="http://www.w3.org/ns/dcat#theme" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
+                                                <span property="http://www.w3.org/2004/02/skos/core#prefLabel"><xsl:value-of select="$theme"/></span>
+                                                <span rel="http://www.w3.org/2004/02/skos/core#inScheme" typeof="http://www.w3.org/2004/02/skos/core#ConceptScheme">
+                                                    <span content="{$thesaurus}" property="http://purl.org/dc/terms/title"></span>
+                                                    <span content="{../../*/gmd:thesaurusName/*/gmd:date/*/gmd:date/*}" property="http://purl.org/dc/terms/issued"></span>
+                                                </span>
+                                            </div>	
+                                        </xsl:otherwise>
+                                    </xsl:choose>
+                                </xsl:for-each>
+                            </div>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
 
-					<xsl:for-each select="//gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)=0]">
-						<div>
-							<i><b><xsl:value-of select="$msg[@eng='Free']"/>: </b></i>
-							<div style="margin-left:20px;">
-							<xsl:for-each select="*/gmd:keyword">
-					     		<xsl:variable name="theme">
-						     		<xsl:call-template name="multi">
-						    			<xsl:with-param name="el" select="."/>
-						    			<xsl:with-param name="lang" select="$lang"/>
-						    			<xsl:with-param name="mdlang" select="$mdlang"/>
-						  			</xsl:call-template>
-						  		</xsl:variable>							     	
-					  			<xsl:choose>
-						     		<xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
-						     			<a href="{./*/@xlink:href}" title="{$theme}" target="_blank">
-						     				<img src="{$mickaURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
-						     			</a>
-						     			<xsl:text> </xsl:text>
-						     		</xsl:when>
-						     		<xsl:when test="./*/@xlink:href">
-						     			<div>
-						     				<a href="{./*/@xlink:href}" title="registry" target="_blank">
-						     					<xsl:choose>
-						     						<xsl:when test="normalize-space($theme)">
-						     							<xsl:value-of select="$theme"/>
-						     						</xsl:when>
-						     						<xsl:otherwise>
-						     							<xsl:value-of select="./*/@xlink:href"/>
-						     						</xsl:otherwise>
-						     					</xsl:choose>
-						     				</a>
-						     			</div>	
-						     		</xsl:when>
-						     		<xsl:otherwise>
-						     			<div>
-						     				<xsl:value-of select="$theme"/>
-						     			</div>	
-						     		</xsl:otherwise>
-					     		</xsl:choose>
-					  		</xsl:for-each>
-					  		</div>
-					  	</div>
-					</xsl:for-each>
+                <xsl:for-each select="//gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)=0]">
+                    <div>
+                        <i><b><xsl:value-of select="$msg[@eng='Free']"/>: </b></i>
+                        <div style="margin-left:20px;">
+                        <xsl:for-each select="*/gmd:keyword">
+                            <xsl:variable name="theme">
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="."/>
+                                    <xsl:with-param name="lang" select="$lang"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                </xsl:call-template>
+                            </xsl:variable>							     	
+                            <xsl:choose>
+                                <xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
+                                    <a href="{./*/@xlink:href}" title="{$theme}" target="_blank">
+                                        <img src="{$mickaURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
+                                    </a>
+                                    <xsl:text> </xsl:text>
+                                </xsl:when>
+                                <xsl:when test="./*/@xlink:href">
+                                    <div>
+                                        <a href="{./*/@xlink:href}" title="registry" target="_blank">
+                                            <xsl:choose>
+                                                <xsl:when test="normalize-space($theme)">
+                                                    <xsl:value-of select="$theme"/>
+                                                </xsl:when>
+                                                <xsl:otherwise>
+                                                    <xsl:value-of select="./*/@xlink:href"/>
+                                                </xsl:otherwise>
+                                            </xsl:choose>
+                                        </a>
+                                    </div>	
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <div>
+                                        <xsl:value-of select="$theme"/>
+                                    </div>	
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:for-each>
+                        </div>
+                    </div>
+                </xsl:for-each>
 
 
-				</div>
-			</div>
+            </div>
+        </div>
 
 		<div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Bounding box']"/></label>
@@ -504,7 +500,7 @@
 											<xsl:value-of select="php:function('drawDate', string(*//gml:endPosition|*//gml32:endPosition), $lang)"/>
 										</xsl:otherwise>
 									</xsl:choose>
-									</div>
+								</div>
 							</xsl:when>
 							
 							<!-- rozsah 2 stary -->
@@ -552,8 +548,6 @@
 			</div>
 		</div>
 
-
-	
 		<h3><xsl:value-of select="$msg[@eng='Data Quality']"/></h3>
 
 		<div class="micka-row">
@@ -640,73 +634,70 @@
 		</xsl:for-each>
 	</div>
 
-
-	
 	<h3><xsl:value-of select="$msg[@eng='Constraints']"/></h3>
 
-		<div class="micka-row">
-			<label><xsl:value-of select="$msg[@eng='Use Limitation']"/></label>
-			<div class="c" rel="http://purl.org/dc/terms/license">
-                <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue]">
-                    <xsl:for-each select="*/gmd:otherConstraints">
-                        <xsl:choose>
-                            <xsl:when test="contains(*/@xlink:href,'://creativecommons.org')">
-                                <xsl:variable name="licence" select="substring-after(*/@xlink:href,'creativecommons.org/licenses/')"/>							
-                                <a href="{gmx:Anchor/@xlink:href}" target="_blank">
-                                    <img src="http://licensebuttons.net/l/{$licence}/88x31.png"/><br/>
-                                    <xsl:call-template name="multi">
-                                        <xsl:with-param name="el" select="."/>
-                                        <xsl:with-param name="lang" select="$lang"/>
-                                        <xsl:with-param name="mdlang" select="$mdlang"/>
-                                    </xsl:call-template>
-                                </a>
-                            </xsl:when>
-                            <xsl:otherwise>
-                                <div>
-                                    <xsl:call-template name="multi">
-                                        <xsl:with-param name="el" select="."/>
-                                        <xsl:with-param name="lang" select="$lang"/>
-                                        <xsl:with-param name="mdlang" select="$mdlang"/>
-                                    </xsl:call-template>
-                                </div>
-                            </xsl:otherwise>
-                        </xsl:choose>
-                    </xsl:for-each>
-                </xsl:for-each>
-			</div>
-		</div>
-
-		<div class="micka-row">
-			<label><xsl:value-of select="$msg[@eng='Access Constraints']"/></label>
-			<div class="c">
-				<xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue]">
-					<!--xsl:for-each select="*/gmd:accessConstraints">
-						<xsl:variable name="kod" select="*/@codeListValue"/>
-						<div><xsl:value-of select="$cl/accessConstraints/value[@name=$kod]/*[name()=$lang]"/></div>
-					</xsl:for-each-->
-					<xsl:for-each select="*/gmd:otherConstraints">
-						<div>
-                            <xsl:choose>
-                                <xsl:when test="contains(*/@xlink:href,'://opendata.gov.cz')">
-                                    <a href="{*/@xlink:href}" target="_blank">
-                                        <img src="https://opendata.gov.cz/_media/wiki:logo.png" style="height:24px"/>
-                                    </a>
-                                </xsl:when>
-                                <xsl:otherwise>
+    <div class="micka-row">
+        <label><xsl:value-of select="$msg[@eng='Use Limitation']"/></label>
+        <div class="c" rel="http://purl.org/dc/terms/license">
+            <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue]">
+                <xsl:for-each select="*/gmd:otherConstraints">
+                    <xsl:choose>
+                        <xsl:when test="contains(*/@xlink:href,'://creativecommons.org')">
+                            <xsl:variable name="licence" select="substring-after(*/@xlink:href,'creativecommons.org/licenses/')"/>							
+                            <a href="{gmx:Anchor/@xlink:href}" target="_blank">
+                                <img src="http://licensebuttons.net/l/{$licence}/88x31.png"/><br/>
                                 <xsl:call-template name="multi">
                                     <xsl:with-param name="el" select="."/>
                                     <xsl:with-param name="lang" select="$lang"/>
                                     <xsl:with-param name="mdlang" select="$mdlang"/>
                                 </xsl:call-template>
-                                </xsl:otherwise>
-                            </xsl:choose>
-						</div>
-					</xsl:for-each>
-				</xsl:for-each>
-			</div>
-		</div>	
+                            </a>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <div>
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="."/>
+                                    <xsl:with-param name="lang" select="$lang"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                </xsl:call-template>
+                            </div>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
+            </xsl:for-each>
+        </div>
+    </div>
 
-	
+    <div class="micka-row">
+        <label><xsl:value-of select="$msg[@eng='Access Constraints']"/></label>
+        <div class="c">
+            <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:accessConstraints/*/@codeListValue]">
+                <!--xsl:for-each select="*/gmd:accessConstraints">
+                    <xsl:variable name="kod" select="*/@codeListValue"/>
+                    <div><xsl:value-of select="$cl/accessConstraints/value[@name=$kod]/*[name()=$lang]"/></div>
+                </xsl:for-each-->
+                <xsl:for-each select="*/gmd:otherConstraints">
+                    <div>
+                        <xsl:choose>
+                            <xsl:when test="contains(*/@xlink:href,'://opendata.gov.cz')">
+                                <a href="{*/@xlink:href}" target="_blank">
+                                    <img src="https://opendata.gov.cz/_media/wiki:logo.png" style="height:24px"/>
+                                </a>
+                            </xsl:when>
+                            <xsl:otherwise>
+                            <xsl:call-template name="multi">
+                                <xsl:with-param name="el" select="."/>
+                                <xsl:with-param name="lang" select="$lang"/>
+                                <xsl:with-param name="mdlang" select="$mdlang"/>
+                            </xsl:call-template>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </div>
+                </xsl:for-each>
+            </xsl:for-each>
+        </div>
+    </div>	
+
 	<!-- metadata -->
 	<h3><xsl:value-of name="str" select="$msg[@eng='Metadata Metadata']"/></h3>
 		<div rel="http://xmlns.com/foaf/0.1/isPrimaryTopicOf" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
