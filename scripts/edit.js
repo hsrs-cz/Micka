@@ -1051,6 +1051,7 @@ function XopenDialog(okno, url, win){
   return win;
 }
 
+//traditional interface map
 function mapa(obj){
 	md_elem=obj.parentNode;
     var draw; // global so we can remove it later
@@ -1095,18 +1096,22 @@ function mapa(obj){
             input[1].value = ext[2];
             input[3].value = ext[3];
         }
-        micka.initMap({
+        micka.overMap = new OverMap({
             edit: true,
+            drawBBOX: true, 
             extent: ext,
             polygon: polygon,
-            handler: function(bbox){
-                input[0].value = bbox[0].toFixed(3);
-                input[2].value = bbox[1].toFixed(3);
-                input[1].value = bbox[2].toFixed(3);
-                input[3].value = bbox[3].toFixed(3);
+            handler: function(g){
+                if(!g) return;
+                input[0].value = g[0].toFixed(3);
+                input[2].value = g[1].toFixed(3);
+                input[1].value = g[2].toFixed(3);
+                input[3].value = g[3].toFixed(3);
                 $("#md-dialog").modal('hide');
             }
         });
+        micka.overMap.drawMetadata();
+
     });
 }
 
@@ -1703,160 +1708,31 @@ var md_upload = function(obj, mime){
     });
 }
 
+// pro lite verzi
 micka.initMap=function(config){
-	micka.extents = new Array();
-	micka.mapfeatures = new ol.Collection();
-	micka.flyr = new ol.layer.Vector({
-		source: new ol.source.Vector({features: micka.mapfeatures}),
-		style: new ol.style.Style({
-			fill: new ol.style.Fill({
-			    color: [0,0,0,0]
-			}),
-			stroke: new ol.style.Stroke({
-			    color: '#3182BD',
-			    width: 2
-			}) 
-	    })
-	});
-
-	micka.overmap = new ol.Map({
-        target: "overmap",
-        theme: null,
-        layers: [
- 			new ol.layer.Tile({	source: new ol.source.OSM() }),	                   
-            micka.flyr
-        ],
-        view: new ol.View({
-        	projection: 'EPSG:3857',
-            center: [0,0], 
-            zoom: 0
-        }),
-        interactions: ol.interaction.defaults({mouseWheelZoom:false})
-    });
-	
-	// prochazi elementy
-	var meta = document.getElementsByTagName("META");
-	var ext = new Array();
-	var tr = ol.proj.getTransform('EPSG:4326', 'EPSG:3857');
-	
-	// vezme z konfigu - ma prioritu
-	if(config && config.polygon){
-		ext = config.polygon.getGeometry().getExtent();
-		config.polygon.setId('r-1');
-		micka.flyr.getSource().addFeature(config.polygon);
-	}
-	else if(config && config.extent){
-		ext = micka.addBBox(config.extent, "r-1");
-	}
-	else {
-		for(var i=0; i<meta.length; i++){
-			if(meta[i].getAttribute("itemprop")=="box"){
-				var b = meta[i].getAttribute("content").split(" ");
-				if(b && b.length==4){ 
-					for (var j=0; j<b.length; j++){		
-						b[j] = parseFloat(b[j]);
-					}
-					if(b[0]>=-180 && b[0]<=180){
-						if(b[1]<-85) b[1] = -85;
-						if(b[3]> 85) b[3] = 85;						
-						ext = ol.extent.extend(micka.addBBox(b, "r-"+meta[i].getAttribute("id").split("-")[1]), ext);
-					}
-				}
-			}
-		}
-	}
-
-	// nastaveni rozsahu
-	if(ext[0]){
-		micka.overmap.getView().fit(ext, micka.overmap.getSize());
-		micka.select = new ol.interaction.Select({
-			multi: true,
-			style: new ol.style.Style({
-				fill: new ol.style.Fill({
-				    color: [0,200,250,0.25]
-				}),
-				stroke: new ol.style.Stroke({
-				    color: '#00E8FF',
-				    width: 2
-				}) 
-		    })
-		});
-		micka.overmap.addInteraction(micka.select);
-		micka.selFeatures = micka.select.getFeatures();
-		micka.select.on('select', micka.hoverMap);
-	}
-
-
-	//-- pro LITE -- box
-	if(config && config.edit == true){
-        
-        var createControl = function(opts){	
-            var Control = function(options){
-                var button = document.createElement('button');
-                button.innerHTML = options.icon;
-                button.addEventListener('click', options.handler, false);
-                button.addEventListener('touchstart', options.handler, false);
-                var el = document.createElement('div');
-                el.className = 'ol-unselectable ol-control ' + options.className;
-                el.title = opts.title;
-                el.appendChild(button);
-                ol.control.Control.call(this, {
-                    element: el,
-                    target: options.target
-                });
+    micka.overMap = new OverMap({
+        edit: true,
+        drawBBOX: true, 
+        handler: function(g){
+            if(g){
+                $("#xmin").val(g[0].toFixed(3));
+                $("#ymin").val(g[1].toFixed(3));
+                $("#xmax").val(g[2].toFixed(3));
+                $("#ymax").val(g[3].toFixed(3));
             }
-            ol.inherits(Control, ol.control.Control);
-            return new Control(opts);
+            else {
+                $("#xmin").val('');
+                $("#ymin").val('');
+                $("#xmax").val('');
+                $("#ymax").val('');
+            }
+            return false;
         }
-        
-		var dragBoxInteraction = new ol.interaction.DragBox({
-	        condition: ol.events.condition.platformModifierKeyOnly,
-	        code: 'AAA',
-	        style: new ol.style.Style({
-                stroke: new ol.style.Stroke({
-                    color: 'red',
-                    width: 2
-                })
-	        })
-	    });
-	
-	    dragBoxInteraction.on('boxend', function(e) {
-	        var g = e.target.getGeometry();
-	        g.transform('EPSG:3857', 'EPSG:4326');
-	        g = g.getExtent();
-	        micka.mapfeatures.clear();
-	        micka.addBBox(g, 'i-1');
-	        if(config.handler){
-	        	config.handler(g);
-	        }
-	        else { 
-		        document.forms[0].xmin.value=g[0].toFixed(3);
-		        document.forms[0].ymin.value=g[1].toFixed(3);
-		        document.forms[0].xmax.value=g[2].toFixed(3);
-		        document.forms[0].ymax.value=g[3].toFixed(3);
-	        }
-	    });
-		micka.overmap.addInteraction(dragBoxInteraction);
-        
-        
-	}
+    });
+	micka.overMap.drawMetadata(config.extent);
 }
 
-micka.addBBox = function(b, id){
-    for(var i=0; i<b.length; i++){
-        b[i] = parseFloat(b[i]);
-    }
-    if(b[1]<-89.6) b[1]=-89.6;
-    if(b[3]> 89.6) b[3]= 89.6;
-	var g = new ol.geom.Polygon.fromExtent(b);
-	g.transform('EPSG:4326', 'EPSG:3857');
-	b = new ol.Feature({geometry: g});
-	b.setId(id);
-	micka.flyr.getSource().addFeature(b);
-	return g.getExtent();
-}
-
-micka.hover = function(o){
+/*micka.hover = function(o){
 	if(!micka.flyr) return;
 	var div;
 	micka.selFeatures.forEach(function(e,i,a){
@@ -1912,7 +1788,7 @@ micka.unhoverMap = function(e) {
 	if(div){
 		div.style.background=""; // TODO - nejak jinak
 	}	
-}
+}*/
 
 micka.fromGaz = function(b){
 	var g = b.split(" ");

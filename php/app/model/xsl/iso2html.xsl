@@ -46,8 +46,8 @@
 			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css"/>
 			<link title="MICKA" href="csw/opensearch.php" type="application/opensearchdescription+xml" rel="search"/>
 			<script language="javascript" src="scripts/micka.js"></script>
-			<link rel="stylesheet" href="scripts/ol3/css/ol.css" type="text/css"/>
-			<script src="scripts/ol3/build/ol.js"></script>
+			<link rel="stylesheet" href="scripts/ol5/ol.css" type="text/css"/>
+			<script src="scripts/ol5/ol.js"></script>
 		    <style>
 		    	@import url(themes/<xsl:value-of select="$THEME"/>/single.css);
 		    </style>		

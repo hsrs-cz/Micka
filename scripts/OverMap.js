@@ -5,8 +5,9 @@ function OverMap(config){
 	this.extents = new Array();
 	this.mapfeatures = new ol.Collection();
 	this.searchfeatures = new ol.Collection();
+    var s = new ol.source.Vector({features: this.mapfeatures})
 	this.flyr = new ol.layer.Vector({
-		source: new ol.source.Vector({features: this.mapfeatures}),
+		source: s,
 		style: new ol.style.Style({
 			fill: new ol.style.Fill({
 			    color: [0,0,0,0]
@@ -70,27 +71,28 @@ function OverMap(config){
 	}
 	
 	var drawBoxControl = createControl({
-			icon: '<i class="fa fa-crop"></i>',
-			title: HS.i18n('Draw bounding box'),
-			className: 'bbox-control',
-			handler: function(){
-				_overmap.dragBoxInteraction.setActive(true);
-			}
+        icon: '<i class="fa fa-crop"></i>',
+        title: HS.i18n('Draw bounding box'),
+        className: 'bbox-control',
+        handler: function(){
+            _overmap.dragBoxInteraction.setActive(true);
+            return false;
+        }
 	});
 
 	var eraseGeomControl = createControl({
-			icon: '<i class="fa fa-close"></i>',
-			title: HS.i18n('Clear graphics'),
-			className: 'erase-control',
-			handler: this.clear
+        icon: '<i class="fa fa-close"></i>',
+        title: HS.i18n('Clear graphics'),
+        className: 'erase-control',
+        handler: this.clear
 	});
 
 	var drawPolyControl = createControl({
-			icon: 'P',
-			className: 'poly-control',
-			handler: function(){
-				_overmap.drawPolyInteraction.setActive(true);
-			}
+        icon: 'P',
+        className: 'poly-control',
+        handler: function(){
+            _overmap.drawPolyInteraction.setActive(true);
+        }
 	});
 
 	var controls = [];
@@ -120,6 +122,7 @@ function OverMap(config){
         })
     });
 	
+
 	this.dragBoxInteraction = new ol.interaction.DragBox({
         style: new ol.style.Style({
           stroke: new ol.style.Stroke({
@@ -146,50 +149,78 @@ function OverMap(config){
 	}
 	
     this.dragBoxInteraction.on('boxend', function(e) {
-		this.dragBoxInteraction.setActive(false);
+		_overmap.dragBoxInteraction.setActive(false);
         var g = e.target.getGeometry().clone();
         g.transform('EPSG:3857', 'EPSG:4326');
         g = g.getExtent();
-        this.searchfeatures.clear();
-        this.addBBox(g, 'i-1');
+        _overmap.searchfeatures.clear();
+        _overmap.addBBox(g, 'i-1');
         if(config.handler){
         	config.handler(g);
+            return false;
         }
 	}, this);
 	this.dragBoxInteraction.setActive(false);
 	this.map.addInteraction(this.dragBoxInteraction);
 
 	this.drawPolyInteraction = new ol.interaction.Draw({
-		features: this.searchfeatures,
+		features: _overmap.searchfeatures,
 		type: 'Polygon'
 	});
 
 	
 	this.drawPolyInteraction.on('drawend', function(e) {
-		this.drawPolyInteraction.setActive(false);
+		_overmap.drawPolyInteraction.setActive(false);
 	}, this);
 	
 	this.drawPolyInteraction.setActive(false);
 	this.map.addInteraction(this.drawPolyInteraction);
 	
+    this.drawExtent = function(b){
+        if(!b || !b[0]) b = initialExtent;
+        for(var i=0; i<b.length; i++){
+            b[i] = parseFloat(b[i]);
+        }
+       	var g = new ol.geom.Polygon.fromExtent(b);
+    	g.transform('EPSG:4326', 'EPSG:3857'); //TODO optimize
+        var ext = g.getExtent();
+        var s = _overmap.flyr.getSource();
+        var extInteraction = new ol.interaction.Extent({
+            extent: ext,
+            condition: ol.events.condition.platformModifierKeyOnly,
+            boxStyle: new ol.style.Style({
+              stroke: new ol.style.Stroke({
+                color: '#F00',
+                width: 2
+              })
+            })
+         });
+        this.map.addInteraction(extInteraction);
+        this.map.getView().fit(ext, this.map.getSize());
+    }
+    
 	/* 
 	* Draws metadata records extents to map
 	*/
-	this.drawMetadata = function(){
+	this.drawMetadata = function(extent){
     	var meta = document.getElementsByTagName("META");
     	var ext = new Array();
     	var tr = ol.proj.getTransform('EPSG:4326', 'EPSG:3857');
-    	
+    	//this.clear();
     	// vezme z konfigu - ma prioritu
-    	if(config && config.polygon){
+        if(extent && extent[0]){
+            ext = this.addBBox(extent, "r-1"); //, this.flyr);
+        }
+    	else if(config && config.polygon){
     		ext = config.polygon.getGeometry().getExtent();
     		config.polygon.setId('r-1');
     		this.flyr.getSource().addFeature(config.polygon);
     	}
     	else if(config && config.extent){
-    		ext = this.addBBox(config.extent, "r-1", flyr);
+    		ext = this.addBBox(config.extent, "r-1", this.flyr);
     	}
     	else {
+            
     		for(var i=0; i<meta.length; i++){
     			if(meta[i].getAttribute("itemprop")=="box"){
     				var b = meta[i].getAttribute("content").split(" ");
@@ -198,8 +229,8 @@ function OverMap(config){
     						b[j] = parseFloat(b[j]);
     					}
     					if(b[0]>=-180 && b[0]<=180){
-    						if(b[1]<-85) b[1] = -85;
-    						if(b[3]> 85) b[3] = 85;						
+    						if(b[1]<-89) b[1] = -89;
+    						if(b[3]> 89) b[3] =  89;
     						ext = ol.extent.extend(this.addBBox(b, "r-"+meta[i].getAttribute("id").split("-")[1], this.flyr), ext);
     					}
     				}
@@ -231,6 +262,11 @@ function OverMap(config){
  	}
 	
 	this.addBBox = function(b, id, lyr){
+        for(var i=0; i<b.length; i++){
+            b[i] = parseFloat(b[i]);
+        }
+        if(b[1]<-89.9) b[1] = -89.9;
+        if(b[3]> 89.9) b[3] =  89.9;
     	var g = new ol.geom.Polygon.fromExtent(b);
     	g.transform('EPSG:4326', 'EPSG:3857'); //TODO optimize
     	b = new ol.Feature({geometry: g	});
@@ -240,7 +276,8 @@ function OverMap(config){
     	return g.getExtent();
     }
             
-	this.hover = function(o){
+	//when user put mouse cursor on th erecord
+    this.hover = function(o){
 		if(!_overmap.flyr) return;
 		var div;
 		_overmap.selFeatures.forEach(function(e,i,a){
@@ -258,7 +295,8 @@ function OverMap(config){
    		_overmap.selFeatures.on('add', _overmap.hoverMap);
 	}
 	
-	this.hoverMap = function(e) {
+	// whn user click to map - hover the record list item
+    this.hoverMap = function(e) {
     	var div = document.getElementById(e.element.getId());
     	if(div){
     		//var hdr = $('nav').get(0); //TODO optimize

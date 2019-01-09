@@ -184,9 +184,8 @@ var lite = {
         $('#ymin').val(bbox[1]);
         $('#xmax').val(bbox[2]);
         $('#ymax').val(bbox[3]);
-        micka.mapfeatures.clear();
-        var ext = micka.addBBox(bbox, 'i-1');
-        micka.overmap.getView().fit(ext, micka.overmap.getSize());
+        micka.overMap.searchfeatures.clear();
+        micka.overMap.drawMetadata(bbox);
     },
     
     changeServiceType: function(e){

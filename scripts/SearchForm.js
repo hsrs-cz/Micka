@@ -284,8 +284,10 @@ SearchForm = function(){
     $('#md-inspire').on('change', function(e){ _this.search(); });
     $('#md-my').on('change', function(e){ _this.search(); });
         
-	this.overMap = new OverMap({
-        drawBBOX: true, handler: function(g){
+	// show records extents on the map
+    this.overMap = new OverMap({
+        drawBBOX: true, 
+        handler: function(g){
             _this.search();
         }
     });
