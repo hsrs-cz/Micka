@@ -987,20 +987,35 @@ class RecordModel extends \BaseModel
         $mds = $this->recordMd->md_standard == 10 ? 0 : $this->recordMd->md_standard;
 		foreach ($this->recordMdValues as $row) {
             if ($elements_label[$mds][$row->md_id]['is_data'] === 0) {
-                \Tracy\Debugger::log('md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_VALUE');
+                \Tracy\Debugger::log('md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_MAKE_XML');
                 continue;
             }
-            $path_arr = explode('_', substr($row->md_path, 0, strlen($row->md_path) - 1));
+            $md_path = substr($row->md_path, strlen($row->md_path)-1, 1) != '_'
+                ? substr($row->md_path . '_', 0, strlen($row->md_path . '_')-1)
+                : substr($row->md_path, 0, strlen($row->md_path)-1);
+            $path_arr = explode('_', $md_path);
             $eval_text_tmp = '$vysl';
+            $data_error = 0;
             foreach ($path_arr as $key=>$value) {
                 if ($key%2 == 0) {
-                    $eval_text_tmp .= "['" . $elements_label[$mds][$value][0] . "']";
-                }
-                else {
+                    $element_label = isset($elements_label[$mds][$value][0]) ? $elements_label[$mds][$value][0] : '';
+                    if ($element_label == '') {
+                        $data_error = 1;
+                    }
+                    $eval_text_tmp .= "['" . $element_label . "']";
+                } else {
+                    if ($value == '') {
+                        $data_error = 1;
+                    }
                     $eval_text_tmp .= '[' . $value . ']';
                 }
             }
-            if ($elements_label[$mds][$row->md_id][1] == 1 || $row->lang != 'xxx') {
+            if ($data_error === 1) {
+                \Tracy\Debugger::log('(error md_path) md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_MAKE_XML');
+                continue;
+            }
+            $element_is_data = isset($elements_label[$mds][$row->md_id][1]) ? $elements_label[$mds][$row->md_id][1] : '';
+            if ($element_is_data == 1 || $row->lang != 'xxx') {
                 $eval_text_value = $eval_text_tmp . "['lang'][$i]['@value']=" . '"' . gpc_addslashes($row->md_value) . '";' . "\n";
                 $eval_text_atrrib = $eval_text_tmp . "['lang'][$i]['@attributes']['code']=" . '"' . $row->lang . '";' . "\n";
                 $i++;
@@ -1018,9 +1033,9 @@ class RecordModel extends \BaseModel
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x2']='".$this->recordMd->x2."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y1']='".$this->recordMd->y1."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
+        //\Tracy\Debugger::log($eval_text, 'ERROR_MAKE_XML');
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
-        //header('Content-type: application/xml'); echo $xml->saveXML(); exit;
         return $xml->saveXML();
     }
     
