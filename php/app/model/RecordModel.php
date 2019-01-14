@@ -303,7 +303,7 @@ class RecordModel extends \BaseModel
                     'recno'=>$recno,
                     'md_value'=>$uuid,
                     'md_id'=>38,
-                    'md_path'=>'0_0_38_0',
+                    'md_path'=>'0_0_38_0_',
                     'lang'=>'xxx',
                     'package_id'=>0
                 ];
@@ -313,7 +313,7 @@ class RecordModel extends \BaseModel
                     'recno'=>$recno,
                     'md_value'=>$lang,
                     'md_id'=>5527,
-                    'md_path'=>'0_0_39_0_5527_0',
+                    'md_path'=>'0_0_39_0_5527_0_',
                     'lang'=>'xxx',
                     'package_id'=>0
                 ];
@@ -323,7 +323,7 @@ class RecordModel extends \BaseModel
                     'recno'=>$recno,
                     'md_value'=>Date("Y-m-d"),
                     'md_id'=>44,
-                    'md_path'=>'0_0_44_0',
+                    'md_path'=>'0_0_44_0_',
                     'lang'=>'xxx',
                     'package_id'=>0
                 ];
