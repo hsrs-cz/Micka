@@ -461,7 +461,7 @@ class RecordModel extends \BaseModel
             $params['url'] = ($params['url'] != '') ? str_replace('&amp;','&',$params['url']) : '';
             $params['update_type'] = (isset($post['updateType']) && $post['updateType'] != '') ? $post['updateType'] : 'skip';
             $files = $httpRequest->getFiles();
-            if (isset($files['soubor']) &&  count($files['soubor']) > 0) {
+            if (isset($files['soubor']) &&  isset($files['soubor']->error) && $files['soubor']->error === 0) {
                 foreach ($files as $file) {
                     if ($file->isOk()) {
                         $fileName = __DIR__ . '/../../temp/upload/' . md5(uniqid(rand(), true)) . '.xml';
@@ -1014,8 +1014,8 @@ class RecordModel extends \BaseModel
                 \Tracy\Debugger::log('(error md_path) md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_MAKE_XML');
                 continue;
             }
-            $element_is_data = isset($elements_label[$mds][$row->md_id][1]) ? $elements_label[$mds][$row->md_id][1] : '';
-            if ($element_is_data == 1 || $row->lang != 'xxx') {
+            $element_is_uri = isset($elements_label[$mds][$row->md_id][1]) ? $elements_label[$mds][$row->md_id][1] : 0;
+            if ($element_is_uri == 1 || $row->lang != 'xxx') {
                 $eval_text_value = $eval_text_tmp . "['lang'][$i]['@value']=" . '"' . gpc_addslashes($row->md_value) . '";' . "\n";
                 $eval_text_atrrib = $eval_text_tmp . "['lang'][$i]['@attributes']['code']=" . '"' . $row->lang . '";' . "\n";
                 $i++;
