@@ -13,3 +13,5 @@ HS.Lang.cze['draw'] = 'táhnutí';
 HS.Lang.cze['Description'] = 'Popis';
 HS.Lang.cze['Percent'] = 'Procenta';
 HS.Lang.cze['Area coverage'] = 'Pokrytí území';
+HS.Lang.cze['World'] = 'Svět';
+HS.Lang.cze['Initial'] = 'Výchozí';

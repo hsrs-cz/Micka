@@ -536,23 +536,19 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             </gmd:MD_SpatialRepresentationTypeCode>
                         </gmd:spatialRepresentationType>
                     
-					
-                        <xsl:for-each select="denominator">
+                        <xsl:for-each select="denominator/item">
                             <gmd:spatialResolution>
                                 <gmd:MD_Resolution>
                                     <gmd:equivalentScale>
                                         <gmd:MD_RepresentativeFraction>
                                             <gmd:denominator>
-                                                <gco:Integer>
-                                                    <xsl:value-of select="."/>
-                                                </gco:Integer>
+                                                <gco:Integer><xsl:value-of select="."/></gco:Integer>
                                             </gmd:denominator>
                                         </gmd:MD_RepresentativeFraction>
                                     </gmd:equivalentScale>
                                 </gmd:MD_Resolution>
                             </gmd:spatialResolution>
                         </xsl:for-each>
-                    
                     
                         <gmd:spatialResolution>
                             <gmd:MD_Resolution>

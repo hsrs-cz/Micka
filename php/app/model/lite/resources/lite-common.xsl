@@ -358,11 +358,11 @@
                             <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
-                    <!-- blank value -->
+                    <!-- blank value - temporalily removed
                     <xsl:variable name="v" select="exsl:node-set($value)"/>
                      <xsl:if test="string-length($value)=0 or string-length($codeLists/*[name()=$codes]/value[@uri = $v/*/@xlink:href or @name=$v/*/* or @name=$v]/*)=0">
                         <option value="{exsl:node-set($value)/*}" selected="'selected'"><xsl:value-of select="exsl:node-set($value)/*"/></option>
-                     </xsl:if>
+                     </xsl:if>-->
                     <!-- user defined 
                     <xsl:variable name="v" select="exsl:node-set($value)/*"/>
                     <xsl:if test="string-length($codeLists/*[name()=$codes]/value[*=$v or @name=$v])=0">

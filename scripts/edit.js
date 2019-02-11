@@ -1,6 +1,6 @@
 /******************************
  * MICKA 6.000
- * 2018-11-08
+ * 2019-02-11
  * javascript
  * Help Service Remote Sensing  
 ******************************/
@@ -1044,14 +1044,7 @@ function getBbox(bbox, isPoly){
   }
 }
 
-
-function XopenDialog(okno, url, win){
-  var win = window.open(url, okno, "toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=no,resizable=yes,copyhistory=no,"+win);
-  win.focus();
-  return win;
-}
-
-//traditional interface map
+//traditional map interface
 function mapa(obj){
 	md_elem=obj.parentNode;
     var draw; // global so we can remove it later
@@ -1065,7 +1058,8 @@ function mapa(obj){
         + '<h4>'+ HS.i18n('Set extent') +'</h4>'
         + '</div>' 
         + '<div class="modal-body"><div id="overmap" style="width:100%; height:300px;"></div>'
-		+ '<div>' + HS.i18n('Set extent') + ' [Ctrl] + ' + HS.i18n('draw') + '</div></div>');
+		+ '<div><a onclick="micka.fillExt(-180,-90,180,90)">'  + HS.i18n('World') + '</a> &nbsp;'
+        +'<a onclick="micka.fillExt('+initialExtent+')">'  + HS.i18n('Initial') + '</a></div></div>');
     $("#md-dialog").on('hide.bs.modal', function (e) {
         $("#md-dialog").off('shown.bs.modal');
         $("#md-dialog").off('hide.bs.modal');
@@ -1084,9 +1078,9 @@ function mapa(obj){
             var y1 = parseFloat(input[2].value);
             var y2 = parseFloat(input[3].value);
             ext.push(parseFloat(input[0].value));
-            ext.push(Math.max(-85,y1));
+            ext.push(Math.max(-99,y1));
             ext.push(parseFloat(input[1].value));
-            ext.push(Math.min(85,y2));
+            ext.push(Math.min(99,y2));
         }
         else {
             // asi docasu
@@ -1111,9 +1105,9 @@ function mapa(obj){
             }
         });
         micka.overMap.drawMetadata();
-
     });
 }
+
 
 function uploadFile(obj){
     md_elem = obj.parentNode.parentNode;
@@ -1844,4 +1838,14 @@ micka.duplicate = function(){
 
     window.scrollBy(0,dold.clientHeight);
     return dnew;
+}
+
+micka.fillExt = function(x1,y1,x2,y2){
+    var input = flatNodes(md_elem,'INPUT', 'N');
+    input[0].value = x1.toFixed(3);
+    input[2].value = y1.toFixed(3);
+    input[1].value = x2.toFixed(3);
+    input[3].value = y2.toFixed(3);
+    $("#md-dialog").modal('hide');
+    return false;
 }
