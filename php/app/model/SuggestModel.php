@@ -99,7 +99,7 @@ class SuggestModel
                 if($query != '') {
                     $sql .= " AND md_values.md_value ILIKE'%" . $query . "%'";
                 }
-                $sql .= "ORDER BY md_values.md_value";
+                $sql .= " ORDER BY md_values.md_value";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
             case 'denom':
@@ -241,7 +241,17 @@ class SuggestModel
                 }
                 $rs = array('numresults'=>count($rs),'records'=>$rs);
                 return $rs;
-              
+                break;
+            case 'harvestFrom':
+                if($query != ''){
+                    $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name ILIKE ?", $query.'%')->fetchAll();
+                }
+                else $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name != 'local'")->fetchAll();
+                foreach($result as $row) {
+                    $rs[] = array('id'=>$row->name,"text"=>$row->name);
+                }
+                $rs = array('numresults'=>count($rs),'results'=>$rs);
+                return $rs;
                 break;
             case 'person':
             case 'org':

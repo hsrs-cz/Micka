@@ -1120,8 +1120,9 @@ xmlns:php="http://php.net/xsl">
     </test>
 </xsl:if>
 
+<!-- CZ-10 - vyhozeno z profilu
 <xsl:if test="not($srv)">
-    <test code="CZ-10" level="n"> <!-- TODO - jeste vylepsit -->
+    <test code="CZ-10" level="n"> 
     	<description><xsl:value-of select="$labels/test[@code='CZ-10']"/></description>
     	<xpath>dataQualityInfo/*/report/DQ_CompletenessOmission[contains(measureIdentification/*/code/*,'CZ-COVERAGE')]/result</xpath>
 		<xsl:variable name="k" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[contains(gmd:measureIdentification/*/gmd:code/*,'CZ-COVERAGE')]"/>
@@ -1150,6 +1151,7 @@ xmlns:php="http://php.net/xsl">
    	    </xsl:if>
     </test>
 </xsl:if>
+-->
 
 <!-- CZ-12 -->
 <test code="CZ-12" level="m">

@@ -173,9 +173,11 @@
             <label><xsl:value-of select="$msg[@eng='Resource Locator']"/></label>
             <div class="c" typeof="http://www.w3.org/ns/dcat#Distribution">
                 <xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
+                    <!-- temporal solution -->
+                    <xsl:variable name="d" select="php:function('noMime',string(*/gmd:description))"/>
                     <xsl:variable name="label">
                         <xsl:choose>
-                            <xsl:when test="*/gmd:description">
+                            <xsl:when test="$d">
                                 <xsl:call-template name="multi">
                                     <xsl:with-param name="el" select="*/gmd:description"/>
                                     <xsl:with-param name="lang" select="$LANGUAGE"/>
@@ -237,7 +239,7 @@
                             </xsl:when>
                             <xsl:otherwise>
                                 <a resource="{*/gmd:linkage}" href="{*/gmd:linkage}"  target="_blank">
-                                    <span style="font-size:20px;"><i class="fa fa-external-link-square"></i></span><xsl:text> </xsl:text>
+                                    <span style="font-size:18px;"><i class="fa fa-external-link-square"></i></span><xsl:text> </xsl:text>
                                     <xsl:value-of select="php:function('noMime',string($label))"/>
                                 </a>
                             </xsl:otherwise>

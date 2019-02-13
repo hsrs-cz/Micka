@@ -6,7 +6,7 @@ SearchForm = function(){
 	$.cookie.json = true;
 	var result = "";	
 	_this = this;
-    var baseURL = (window.location.pathname.replace('/'+HS.getLang(2)+'/',''));
+    var baseURL = (window.location.pathname.replace('/'+HS.getLang(2)+'/','/'));
 
 	/**
 	* Collect the queryables and fires the search
@@ -208,7 +208,7 @@ SearchForm = function(){
     
 	$("#inspire").select2({
 		ajax: {
-			url: baseURL + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
+			url: baseURL + 'registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json', 
 			delay: 200,            
 			cache: true
