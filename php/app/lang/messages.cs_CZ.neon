@@ -125,6 +125,7 @@ frontend:
     application: "Aplikace"
     data: "Data"
     service: "Služba"
+    service-type: "Typ služby"
     new: "Nový"
     res-type: "Typ zdroje"
     inspire-theme: "Téma INSPIRE"

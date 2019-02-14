@@ -43,7 +43,7 @@
 
 					{* service type *}
 					<div id="panel-stype" class="form-group">
-						<label for="stype" class="control-label">Typ služby</label>
+						<label for="stype" class="control-label">{_messages.frontend.service-type}</label>
 						<select id="stype" multiple="multiple" class="form-control" data-placeholder="{_messages.frontend.select}"></select>
 					</div>
 
@@ -190,7 +190,7 @@
 		$( window ).unload(searchForm.saveCookie); 
 		searchForm.readCookie();
 		$('[data-tooltip="tooltip"]').tooltip();  
-		//$('div.rec').on('mouseover', searchForm.overMap.hover);
+		$('div.rec').on('click', searchForm.overMap.hover);
         //$('div.rec').on('mouseout', searchForm.unhover);
 	});
 </script>

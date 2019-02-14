@@ -122,7 +122,21 @@ function OverMap(config){
         })
     });
 	
-
+    var getHoverColor = function(){
+        if(hoverColor){
+            return hoverColor;
+        }
+        else {
+            var css = document.styleSheets.item(6).cssRules; // TODO dynamic
+            for(var i in css){
+                if(css.item(i).selectorText=='div.recMap') {
+                    return css.item(i).style.backgroundColor;
+                    break;
+                }
+            }
+    	}
+    };
+    
 	this.dragBoxInteraction = new ol.interaction.DragBox({
         style: new ol.style.Style({
           stroke: new ol.style.Stroke({
@@ -276,7 +290,7 @@ function OverMap(config){
     	return g.getExtent();
     }
             
-	//when user put mouse cursor on th erecord
+	//when user put mouse cursor on the record
     this.hover = function(o){
 		if(!_overmap.flyr) return;
 		var div;
@@ -288,30 +302,20 @@ function OverMap(config){
 		}, _overmap);
 		_overmap.selFeatures.clear();
 		_overmap.selFeatures.un('add', _overmap.hoverMap);
-		var f = _overmap.flyr.getSource().getFeatureById(o.id);
+		var f = _overmap.flyr.getSource().getFeatureById(o.currentTarget.id);
 		if(f){
 			_overmap.selFeatures.push(f);
 		}
    		_overmap.selFeatures.on('add', _overmap.hoverMap);
+        o.currentTarget.style.backgroundColor = getHoverColor();
 	}
 	
 	// whn user click to map - hover the record list item
     this.hoverMap = function(e) {
     	var div = document.getElementById(e.element.getId());
     	if(div){
-    		//var hdr = $('nav').get(0); //TODO optimize
-    		if(!hoverColor){
-    			var css = document.styleSheets.item(7).cssRules; // TODO dynamic
-    			for(var i in css){
-    				if(css.item(i).selectorText=='div.recMap') {
-    					hoverColor = css.item(i).style.backgroundColor;
-    					break;
-    				}
-    			}
-    		}
-    		div.style.backgroundColor = hoverColor;
+    		div.style.backgroundColor = getHoverColor();
     		div.scrollIntoView(true);
-    		//window.scrollBy(0, -hdr.offsetHeight-3); //FIXME - for static nav
             window.scrollBy(0, -3); //FIXME
     	}	
     }

@@ -135,6 +135,7 @@ frontend:
     logout: "Cerrar sesión"
     new: "Nuevo"
     service: "Servicio"
+    service-type: "Tipo de servicio"
     res-type: "Tipo de recurso"
     scale: "Escala"
     sort: "Ordenar por"

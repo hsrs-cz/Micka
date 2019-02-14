@@ -137,6 +137,7 @@ frontend:
     logout: "Logout"
     new: "New"
     service: "Service"
+    service-type: "Service type"
     res-type: "Resource type"
     scale: "Scale"
     sort: "Sort by"
