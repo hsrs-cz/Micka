@@ -738,5 +738,25 @@ against which data is being evaluated.</p>
 			<h3>Feature names into selected Feature catalogue</h3> 
 		</help>
 	</msg>
+  	<msg name="URI">
+		<label>URI</label>
+		<help>
+			<h3>URI</h3> 
+		</help>
+	</msg>
+  	<msg name="TXT">
+		<label>Text</label>
+		<help>
+			<h3>Text</h3> 
+		</help>
+	</msg>
+
+    <!-- user specified -->
+   	<msg name="geology">
+		<label>CGS themes</label>
+		<help>
+			<h3>Geoscientific Czech Geological Survey Themes</h3> 
+		</help>
+	</msg>
     
 </labels>

@@ -512,8 +512,8 @@
         <xsl:with-param name="valid" select="'4.1'"/>
     </xsl:call-template-->
     
-    <xsl:if test="not($serv)">
-    	<!-- CZ-10 % -->
+    <!--<xsl:if test="not($serv)">
+    	 CZ-10 % 
     	<xsl:call-template name="drawInput">
     	  	<xsl:with-param name="name" select="'coveragePercent'"/>
     	    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_CompletenessOmission/gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/*/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'#percent')]/*/gmd:value"/>
@@ -521,7 +521,8 @@
     	    <xsl:with-param name="class" select="'short'"/>
     	    <xsl:with-param name="valid" select="'CZ-10'"/>
     	</xsl:call-template>
-    </xsl:if>
+    </xsl:if>    -->
+
     
     <!-- datum --> 
     <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date|/."> 

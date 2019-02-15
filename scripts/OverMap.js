@@ -1,6 +1,7 @@
 
 function OverMap(config){
 
+	var _overmap = this;
 	var hoverColor = null;
 	this.extents = new Array();
 	this.mapfeatures = new ol.Collection();
@@ -13,7 +14,7 @@ function OverMap(config){
 			    color: [0,0,0,0]
 			}),
 			stroke: new ol.style.Stroke({
-			    color: '#3182BD',
+			    color: '#3182BD', //TODO - configurable
 			    width: 2
 			}) 
 	    })
@@ -23,16 +24,15 @@ function OverMap(config){
 		source: new ol.source.Vector({features: this.searchfeatures}),
 		style: new ol.style.Style({
 			fill: new ol.style.Fill({
-			    color: [255,0,0,0.25]
+			    color: [255,0,0,0.25] //TODO - configurable
 			}),
 			stroke: new ol.style.Stroke({
-			    color: '#F00000',
+			    color: '#F00000', //TODO - configurable
 			    width: 2
 			}) 
 	    })
 	});
 
-	var _overmap = this;
 	
 	this.getBBox = function(){
 		if(_overmap.searchfeatures.getLength()==1){
@@ -155,10 +155,8 @@ function OverMap(config){
 	}
 	
 	this.setState = function(data){
-		
 		//this.map.getView().setCenter(data.center);
 		//this.map.getView().setZoom(data.zoom);
-		
 		if(data.geom) this.addBBox(data.geom, 'box-1');
 	}
 	
@@ -290,16 +288,11 @@ function OverMap(config){
     	return g.getExtent();
     }
             
-	//when user put mouse cursor on the record
+	//when user click at the record list
     this.hover = function(o){
+        $('div.rec').css('background-color', "");
+        o.currentTarget.style.backgroundColor = getHoverColor();
 		if(!_overmap.flyr) return;
-		var div;
-		_overmap.selFeatures.forEach(function(e,i,a){
-			div = document.getElementById(a[i].getId());
-			if(div){
-				div.style.background=""; // TODO - configurable
-			}					
-		}, _overmap);
 		_overmap.selFeatures.clear();
 		_overmap.selFeatures.un('add', _overmap.hoverMap);
 		var f = _overmap.flyr.getSource().getFeatureById(o.currentTarget.id);
@@ -307,7 +300,6 @@ function OverMap(config){
 			_overmap.selFeatures.push(f);
 		}
    		_overmap.selFeatures.on('add', _overmap.hoverMap);
-        o.currentTarget.style.backgroundColor = getHoverColor();
 	}
 	
 	// whn user click to map - hover the record list item

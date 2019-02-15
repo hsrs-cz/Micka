@@ -31,7 +31,7 @@ function getMetadata($s, $esn='summary'){
 	$params['ELEMENTSETNAME'] = $esn;
 	$params['buffered'] = true;
 	$result = $csw->run($params);
-	//file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
+	//file_put_contents(__DIR__ . "/../../log/getMetadata".uniqid().".txt", print_r($params, true).$result);
 	$dom = new DOMDocument();
 	$dom->loadXML($result);
 	return $dom;

@@ -121,7 +121,7 @@
 			<xsl:with-param name="lang" select="$lang"/>
 			<xsl:with-param name="mdlang" select="$mdlang"/>
 		</xsl:call-template>
-		 <xsl:if test="gmd:hierarchyLevelName/*='http://geoportal.gov.cz/inspire'"><span class="for-inspire" title="{$msg[@eng='forInspire']}"></span></xsl:if>
+		<xsl:if test="gmd:hierarchyLevelName/*='http://geoportal.gov.cz/inspire'"><span class="for-inspire" title="{$msg[@eng='forInspire']}"></span></xsl:if>
 	</h1>
 	
 	<div class="report">
@@ -798,7 +798,7 @@
 				<div class="c">
 					<xsl:for-each select="$subsets//gmd:MD_Metadata">
 						<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
-                        <xsl:variable name="url" select="concat($MICKA_URL,'record/basic/',gmd:fileIdentifier)"/>
+                        <xsl:variable name="url" select="concat($mickaURL,'/record/basic/',gmd:fileIdentifier)"/>
 						<div>
                             <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]/*[name()=$lang]}">
                                 <xsl:call-template name="showres">
@@ -812,13 +812,15 @@
                             </a>
 							<xsl:call-template name="subsets">
 								<xsl:with-param name="fid" select="gmd:fileIdentifier"/>
-								<xsl:with-param name="level" select="0"/>
+								<xsl:with-param name="level" select="1"/>
 							</xsl:call-template>
                         </div>
 					</xsl:for-each>
 					<xsl:if test="$subsets//csw:SearchResults/@numberOfRecordsMatched &gt; 25">
                         <div>
-                            <a href="{$MICKA_URL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}"><xsl:value-of select="concat($msg[@eng='ShowAll'], ' (', $subsets//csw:SearchResults/@numberOfRecordsMatched, ') ...')"/> </a>
+                            <a href="{$mickaURL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}">
+                                <xsl:value-of select="concat($msg[@eng='ShowAll'], ' (', $subsets//csw:SearchResults/@numberOfRecordsMatched, ') ...')"/>
+                            </a>
                         </div>
 					</xsl:if>
 				</div>
@@ -938,7 +940,7 @@
 	<xsl:template match="csw:Record" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/">
 
 	<ol class="breadcrumb">
-		<li class="active"><a href="{$MICKA_URL}" tooltip="tooltip" title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
+		<li class="active"><a href="{$mickaURL}" tooltip="tooltip" title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
 		<li><xsl:value-of select="$msg[@eng='fullMetadata']"/></li>
 				
 		<div class="icons">
@@ -1003,13 +1005,13 @@
 	<!-- Feature catalogue -->
 	<xsl:template match="gfc:FC_FeatureCatalogue">
 	<ol class="breadcrumb">
-		<li class="active"><a href="{$MICKA_URL}" tooltip="tooltip" title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
+		<li class="active"><a href="{$mickaURL}" tooltip="tooltip" title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
 		<li><xsl:value-of select="$msg[@eng='Feature catalogue']"/></li>
 		<div class="icons">
 			<xsl:if test="../@edit=1">
 				<a href="../edit/{../@uuid}" class="edit" title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
 				<a href="../clone/{../@uuid}" class="copy" title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-				<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '{$MICKA_URL}/record/delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+				<a href="javascript: omicka.confirm(HS.i18n('Delete record')+'?', '{$mickaURL}/record/delete/{../@uuid}');" class="delete" title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
@@ -1097,7 +1099,7 @@
             <div class="c">
                 <xsl:for-each select="$vazby//gmd:MD_Metadata">
                     <div>
-                        <a href="{$MICKA_URL}/record/basic/{gmd:fileIdentifier}?language={$lang}" title="Metadata">
+                        <a href="{$mickaURL}/record/basic/{gmd:fileIdentifier}?language={$lang}" title="Metadata">
                             <xsl:call-template name="showres">
                                 <xsl:with-param name="r" select="gmd:hierarchyLevel/*/@codeListValue"/>
                             </xsl:call-template>
@@ -1236,7 +1238,7 @@
 				<div rel="http://www.w3.org/2006/vcard/ns#hasEmail" resource="mailto:{.}">email: <xsl:value-of select="."/></div>
 				</xsl:for-each>
 			<xsl:variable name="kod" select="gmd:role/*/@codeListValue"/>
-			 <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]/*[name()=$lang]"/></b>
+            <xsl:value-of select="$msg[@eng='role']"/>: <b><xsl:value-of select="$cl/role/value[@name=$kod]/*[name()=$lang]"/></b>
 		 </div> 
 	</xsl:template>
 
@@ -1248,9 +1250,9 @@
 			<div style="margin-left:20px;">
                 <xsl:for-each select="$subsets//gmd:MD_Metadata">
                     <xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
-                    <xsl:variable name="url" select="concat($MICKA_URL,'/record/basic/',gmd:fileIdentifier)"/>
+                    <xsl:variable name="url" select="concat($mickaURL,'/record/basic/',gmd:fileIdentifier)"/>
                     <div>
-                        <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]}">
+                        <a href="{$url}" class="t" title="{$cl/updateScope/value[@name=$a]/*[name()=$lang]}">
                             <xsl:call-template name="showres">
                                 <xsl:with-param name="r" select="$a"/>
                             </xsl:call-template>
@@ -1274,7 +1276,7 @@
                 </xsl:for-each>
                 <xsl:if test="$subsets//csw:SearchResults/@numberOfRecordsMatched &gt; 25">
                     <div>
-                        <a href="{$MICKA_URL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}"><xsl:value-of select="concat($msg[@eng='ShowAll'], ' (', $subsets//csw:SearchResults/@numberOfRecordsMatched, ') ...')"/> </a>
+                        <a href="{$mickaURL}?request=GetRecords&amp;format=text/html&amp;language={$lang}&amp;query=parentIdentifier={gmd:fileIdentifier/*}"><xsl:value-of select="concat($msg[@eng='ShowAll'], ' (', $subsets//csw:SearchResults/@numberOfRecordsMatched, ') ...')"/> </a>
                     </div>
                 </xsl:if>
             </div>

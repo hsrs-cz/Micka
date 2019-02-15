@@ -495,7 +495,6 @@
         <xsl:with-param name="valid" select="$valid"/>
         <xsl:with-param name="class" select="$class"/>
     </xsl:call-template>
-
 </xsl:template>
 
 <xsl:template name="drawLegend">
@@ -644,26 +643,28 @@
                             </xsl:choose>
                         </xsl:otherwise>
                     </xsl:choose>
-                    <xsl:for-each select="$locale/item">
-                        <xsl:variable name="l" select="."/>
-                        <gmd:PT_FreeText>
-                            <gmd:textGroup>
-                                <gmd:LocalisedCharacterString locale="#locale-{$l}">
-                                    <xsl:choose>
-                                        <xsl:when test="$attrib">
-                                            <xsl:value-of select="$row/@*[name()=$attrib]"/>
-                                        </xsl:when>
-                                        <xsl:when test="$lattrib">
-                                            <xsl:value-of select="$row/*[name()=$l]/@*[name()=$lattrib]"/>
-                                        </xsl:when>
-                                        <xsl:otherwise>
-                                            <xsl:value-of select="$row/*[name()=$l]"/>
-                                        </xsl:otherwise>
-                                    </xsl:choose>
-                                </gmd:LocalisedCharacterString>
-                            </gmd:textGroup>
-                        </gmd:PT_FreeText>
-                    </xsl:for-each>
+                    <xsl:if test="$locale">
+                        <xsl:for-each select="$locale/item">
+                            <xsl:variable name="l" select="."/>
+                            <gmd:PT_FreeText>
+                                <gmd:textGroup>
+                                    <gmd:LocalisedCharacterString locale="#locale-{$l}">
+                                        <xsl:choose>
+                                            <xsl:when test="$attrib">
+                                                <xsl:value-of select="$row/@*[name()=$attrib]"/>
+                                            </xsl:when>
+                                            <xsl:when test="$lattrib">
+                                                <xsl:value-of select="$row/*[name()=$l]/@*[name()=$lattrib]"/>
+                                            </xsl:when>
+                                            <xsl:otherwise>
+                                                <xsl:value-of select="$row/*[name()=$l]"/>
+                                            </xsl:otherwise>
+                                        </xsl:choose>
+                                    </gmd:LocalisedCharacterString>
+                                </gmd:textGroup>
+                            </gmd:PT_FreeText>
+                        </xsl:for-each>
+                    </xsl:if>
                 </gmx:Anchor>
             </xsl:when>
             <xsl:otherwise>

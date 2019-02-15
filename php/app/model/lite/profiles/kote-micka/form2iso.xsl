@@ -153,7 +153,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             <xsl:with-param name="name" select="'code'"/>
                             <xsl:with-param name="codes" select="$codeLists/coordSys"/>
                             <xsl:with-param name="t" select="."/>
-                            <xsl:with-param name="locale" select="//locale"/>
+                            <!--xsl:with-param name="locale" select="//locale"/-->
                         </xsl:call-template>
 					</gmd:RS_Identifier>
 				</gmd:referenceSystemIdentifier>
@@ -827,7 +827,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     <xsl:with-param name="name" select="'name'"/>
                                     <xsl:with-param name="codes" select="$codeLists/format"/>
                                     <xsl:with-param name="t" select="name"/>
-                                    <xsl:with-param name="locale" select="//locale"/>
+                                    <!--xsl:with-param name="locale" select="//locale"/-->
                                 </xsl:call-template>
 								<gmd:version>
 									<gco:CharacterString>
@@ -881,7 +881,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'protocol'"/>
                                         <xsl:with-param name="codes" select="$codeLists/protocol"/>
                                         <xsl:with-param name="t" select="protocol"/>
-                                        <xsl:with-param name="locale" select="//locale"/>
+                                        <!--xsl:with-param name="locale" select="//locale"/-->
                                     </xsl:call-template>
                                     <xsl:call-template name="txtOut">
                                         <xsl:with-param name="name" select="'name'"/>
