@@ -1160,11 +1160,16 @@ function formats1(data){
             lang = inputs[i].name.split('|')[1];
 	      	if(inputs[i].type=='text'){
 	        	if(typeof(data)=="object"){
-                    var f = false;
-                    if(data[lang]){
-                        f = data[lang];
-                    }    
-	      			if(!f) continue;
+                    if(data.value){
+                        f = data.value;
+                    }
+                    else{
+                        var f = false;
+                        if(data[lang]){
+                            f = data[lang];
+                        }    
+                        if(!f) continue;
+                    }
 	      		}
 	      		else f = data;
 	        	//if(md_addMode)inputs[i].value += f; 

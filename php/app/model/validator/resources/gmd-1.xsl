@@ -663,7 +663,7 @@ xmlns:php="http://php.net/xsl">
 			    </test>	
        	    </xsl:when>
 			<!-- INSPIRE zaznamy -->        	
-        	<xsl:when test="string-length(gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]//gmd:title)>0">
+        	<xsl:when test="string-length(gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*))=php:function('mb_strtoupper', $spec)]//gmd:title)>0">
         		<value><xsl:value-of select="$spec"/></value>
     			<pass>true</pass>
     			<!-- 7.2 -->
@@ -671,11 +671,11 @@ xmlns:php="http://php.net/xsl">
 			   		<description><xsl:value-of select="$labels/test[@code='7.2']"/></description>
 			   		<xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/*/pass</xpath>
 			       	<xsl:choose>
-			          	<xsl:when test="string-length(gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]//gmd:pass)>0">
-			      			<value><xsl:value-of select="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]//gmd:pass"/></value>
+			          	<xsl:when test="string-length(gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*))=php:function('mb_strtoupper', $spec)]//gmd:pass)>0">
+			      			<value><xsl:value-of select="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*))=php:function('mb_strtoupper', $spec)]//gmd:pass"/></value>
 			      		  	<pass>true</pass>
 			      	  	</xsl:when>
-			           	<xsl:when test="string-length(gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]//gmd:pass/@gco:nilReason)>0">
+			           	<xsl:when test="string-length(gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*))=php:function('mb_strtoupper', $spec)]//gmd:pass/@gco:nilReason)>0">
 			      			<value>not evaluated</value>
 			      		  	<pass>true</pass>
 			      	  	</xsl:when>
@@ -683,7 +683,7 @@ xmlns:php="http://php.net/xsl">
 			    </test>	
        	    </xsl:when>
             <xsl:otherwise>
-                <err>"<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString"/>" != "<xsl:value-of select="$spec"/>"</err>
+                <err>"<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*"/>" != "<xsl:value-of select="$spec"/>"</err>
             </xsl:otherwise>
         </xsl:choose>
 	</test>

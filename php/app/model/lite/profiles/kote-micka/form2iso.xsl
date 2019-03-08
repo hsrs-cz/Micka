@@ -583,6 +583,11 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	 					  <gmd:LanguageCode codeListValue="{.}" codeList=""><xsl:value-of select="."/></gmd:LanguageCode>
 	          			</gmd:language>
           			</xsl:for-each>
+
+	  				<gmd:characterSet>
+                        <gmd:MD_CharacterSetCode codeListValue="" codeList=""></gmd:MD_CharacterSetCode>
+          			</gmd:characterSet>
+
 					<xsl:for-each select="characterSet">
 		  				<gmd:characterSet>
 	 					  <gmd:MD_CharacterSetCode codeListValue="{.}" codeList=""><xsl:value-of select="."/></gmd:MD_CharacterSetCode>
@@ -865,7 +870,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     </gmd:CI_ResponsibleParty>
                                 </gmd:distributorContact>
                             </gmd:MD_Distributor>
-                        </gmd:distributor>					 
+                        </gmd:distributor>
 					</xsl:for-each>
 					<gmd:transferOptions>
 						<gmd:MD_DigitalTransferOptions>
@@ -881,12 +886,20 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'protocol'"/>
                                         <xsl:with-param name="codes" select="$codeLists/protocol"/>
                                         <xsl:with-param name="t" select="protocol"/>
+                                        <xsl:with-param name="attrib" select="'code'"/>
                                         <!--xsl:with-param name="locale" select="//locale"/-->
                                     </xsl:call-template>
-                                    <xsl:call-template name="txtOut">
+                                    <xsl:call-template name="uriOut">
+                                        <xsl:with-param name="name" select="'name'"/>
+                                        <xsl:with-param name="codes" select="$codeLists/linkageName"/>
+                                        <xsl:with-param name="t" select="name"/>
+                                        <!--xsl:with-param name="attrib" select="'code'"/-->
+                                        <xsl:with-param name="locale" select="//locale"/>
+                                    </xsl:call-template>
+                                    <!--xsl:call-template name="txtOut">
                                         <xsl:with-param name="name" select="'name'"/>
                                         <xsl:with-param name="t" select="name"/>
-                                    </xsl:call-template>
+                                    </xsl:call-template-->
                                     <gmd:description>
                                         <xsl:choose>
                                             <xsl:when test="accessPoint">
@@ -911,15 +924,14 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:if test="description/*[name()!='TXT']">
                                             <gmd:PT_FreeText> 
                                                 <gmd:textGroup>
-                                                    <xsl:for-each select="description/*[name()!='TXT']">		
+                                                    <xsl:for-each select="description/*[name()!='TXT']">
                                                         <gmd:LocalisedCharacterString locale="#locale-{name()}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
                                                     </xsl:for-each>
                                                 </gmd:textGroup>
                                             </gmd:PT_FreeText>
                                         </xsl:if>
                                     </gmd:description>
-                                    
-  									<gmd:function>
+                                    <gmd:function>
   										<gmd:CI_OnLineFunctionCode codeListValue="{function}" codeList="{$cl}#CI_OnLineFunctionCode">
   											<xsl:value-of select="function"/>
   										</gmd:CI_OnLineFunctionCode>

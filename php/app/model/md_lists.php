@@ -17,7 +17,8 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
         </div><div class="modal-body">';
         $list = $xml->xpath("//$type/value");
         foreach ($list as $row){
-            echo "<a href=\"javascript:$handler({uri:'".$row['uri']."', ";
+            if($row['uri']) echo "<a href=\"javascript:$handler({uri:'".$row['uri']."', ";
+            else echo "<a href=\"javascript:$handler({value:'".$row['value']."', ";
             foreach($row as $k=>$v){
                 if($k!='uri'){
                     echo "$k:'".$v."',";
@@ -49,7 +50,7 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
         return;
     }
 
-	@$xml = simplexml_load_file(APP_DIR . "/model/dict/$type.xml");
+	/*@$xml = simplexml_load_file(APP_DIR . "/model/dict/$type.xml");
 	if(!$xml) die("list <b>$type</b> does not exist");
 	// test jazyka
 	$langBranch = $xml->xpath("//translation[@lang='".$lang."']");
@@ -70,7 +71,7 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
     		else echo "<a href=\"javascript:kw('".$entry['code']."');\">".(string) $entry."</a><br>";
     	}
 	}
-    echo "</div>";
+    echo "</div>";*/
 }
 
 function getCodeListValues($type, $lang, $filter=''){

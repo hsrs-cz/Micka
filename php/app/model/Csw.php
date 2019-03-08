@@ -193,7 +193,7 @@ class Csw{
         $this->user = $tmp_identity;
         $this->appParameters = $tmp_appparameters;
         $this->dbContext = $tmp_nbcontext;
-        $this->mickaURL = MICKA_URL;
+        $this->mickaURL = $this->appParameters['hostUrl'] . $this->appParameters['basePath'];
 
         $this->xml = new \DomDocument;
         $this->xsl = new \DomDocument;

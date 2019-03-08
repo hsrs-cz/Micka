@@ -1184,8 +1184,8 @@ xmlns:php="http://php.net/xsl">
 		<description><xsl:value-of select="$labels/test[@code='CZ-15']"/></description>
 		<xpath>distributionInfo/*/transferOptions/*/onLine/*/description contains mimeType</xpath>
 		<xsl:choose>
-            <xsl:when test="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine[contains(*/gmd:description/gco:CharacterString,'mimeType')]/*/gmd:description/gco:CharacterString">
-                <value><xsl:value-of select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine[contains(*/gmd:description/gco:CharacterString,'mimeType')]/*/gmd:description/gco:CharacterString"/></value>
+            <xsl:when test="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine[contains(*/gmd:description/*,'mimeType')]/*/gmd:description/*">
+                <value><xsl:value-of select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine[contains(*/gmd:description/*,'mimeType')]/*/gmd:description/*"/></value>
                 <pass>true</pass>
             </xsl:when>
 		</xsl:choose>
