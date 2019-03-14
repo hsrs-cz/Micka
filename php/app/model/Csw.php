@@ -684,7 +684,7 @@ class Csw{
     $flatParams["hits"] = ($this->getParamL('RESULTTYPE')=='hits');
     $flatParams['extHeader'] = ($this->getParamL('EXTLIST')==1);
 
-    // vyfiltrovat INSPIRE záznamy
+    // filtering for alternative output
     if($this->subset){
     	if($qstr) $qstr[] = "And";
     	$qstr[] = array($this->subset);

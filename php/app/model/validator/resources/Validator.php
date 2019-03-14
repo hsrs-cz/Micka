@@ -9,48 +9,29 @@ function isEmail($email){
 	else {
 		return "";
 	}
-	/*
-	// verze rozšířená o kontrolu existenci domény
-	//
-	// preg pattern for user name
-	// http://tools.ietf.org/html/rfc2822#section-3.2.4
-	$atext = "[a-z0-9\!\#\$\%\&\'\*\+\-\/\=\?\^\_\`\{\|\}\~]";
-	$atom = "$atext+(\.$atext+)*";
-
-	// preg pattern for domain
-	// http://tools.ietf.org/html/rfc1034#section-3.5
-	$dtext = "[a-z0-9]";
-	$dpart = "$dtext+(-$dtext+)*";
-	$domain = "$dpart+(\.$dpart+)+";
-
-	if(preg_match("/^$atom@$domain$/i", $addres)) {
-			list($username, $host)=split('@', $addres);
-			if(checkdnsrr($host,'MX')) {
-				return "1";
-			}
-	}
-	return "";
-	*/
 }
 
-function getContents($url){
-    $c = curl_init($url);
+function getContents($url, $len=1000){
+    $c = curl_init(trim($url));
     curl_setopt($c, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($c, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($c, CURLOPT_MAXREDIRS, 20);
+    curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 2);
+    curl_setopt($c, CURLOPT_TIMEOUT, 3);
+    curl_setopt($c, CURLOPT_RANGE, "0-".$len);
  	if(defined('CONNECTION_PROXY')){
         $proxy = CONNECTION_PROXY;
         if(defined('CONNECTION_PORT')) $proxy .= ':'. CONNECTION_PORT;
 		curl_setopt($c, CURLOPT_PROXY, $proxy);	
 	}
     $result = curl_exec($c);    
-    //file_put_contents(__DIR__ . "/../../../../log/a.xml", $result);
+    //file_put_contents(__DIR__ . "/../../include/logs/".preg_replace(array('/\s/', '/\.[\.]+/', '/[^\w_\.]/'), array('_', '.', '-'), $url).".xml", $result);
     return $result;
 }
 
 function isRunning($url, $type, $d=false){
-	// TODO jednoduche - vylepsit
+                              
 	if(!trim($url)) return false;
 	$type = strtoupper($type);
     $s = trim(getContents($url));
@@ -71,16 +52,10 @@ function isRunning($url, $type, $d=false){
 }
 
 function testConnection($url){
-    // TODO jednoduche - vylepsit
-    //$type = strtoupper($type);
-    $t = microtime(true);
-    $opts = array('timeout' => 3 );
-    if(defined('CONNECTION_PROXY') && CONNECTION_PROXY != ""){
-        $opts['proxy'] = CONNECTION_PROXY;
-        $opts['request_fulluri'] = true;
-    }
-    $context = stream_context_create(array('http' => array($opts) ));
-    @$s = file_get_contents($url, false, $context, 0, 1000);
+    $scheme = parse_url($url, PHP_URL_SCHEME);
+    if($scheme != 'http' &&  $scheme != 'https') return "";
+   $t = microtime(true);
+    $s = trim(getContents($url));
     $t = microtime(true) - $t;
     //file_put_contents('/var/www/projects/tmp/'.time().'.xml',$s);
     if(!$s) return "";
@@ -90,13 +65,14 @@ function testConnection($url){
     else if(strpos($s, 'WMT_MS_Capabilities')!==false) $result = 'WMS-1.1.0';
     else if(strpos($s, 'http://www.opengis.net/wfs/2.0')!==false) $result = 'WFS-2.0.0';
     else if(strpos($s, 'WFS_Capabilities')!==false) $result = 'WFS-1.0.0';
-    else if(strpos($s, "http://inspire.ec.europa.eu/schemas/inspire_dls/1.0")!==false) $result = 'download - ATOM';
+    else if(strpos($s. 'feed')!==false && strpos($s, "http://inspire.ec.europa.eu/schemas/inspire_dls/1.0")!==false) $result = 'download-ATOM';
     else if(strpos($s, "SourceCRS>")!==false) $result = 'transformation - WCTS';
     else if(strpos($s, '"http://www.opengis.net/cat/csw/2.0.2"')!==false) $result = 'CSW-2.0.2';
-    else if( strpos($s, "MD_Metadata>")!==false) $result = 'ISO 19139 metadata';
+    else if(strpos($s, "MD_Metadata>")!==false) $result = 'ISO 19139 metadata';
+    else if(strpos($s, "<html")!==false) $result = 'HTML';
+    //else $result=$s;
     return $result."| ".sprintf("%.3f",$t);
 }
-
 
 function json2array($json) {  
   $json = substr($json, strpos($json,'{')+1, strlen($json)); 

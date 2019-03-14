@@ -1,0 +1,7 @@
+*
+!Admin/*
+!Base/*
+!Catalog/*
+!Error/*
+!Validator/*
+!.gitignore
