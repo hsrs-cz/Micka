@@ -117,7 +117,7 @@
 		</gmd:descriptiveKeywords>
 	</xsl:template>
     
-    <!-- INSPIRE services klassification-->
+    <!-- INSPIRE services classification-->
     <xsl:template match="gmd:keyword">
         <xsl:variable name="k" select="*"/>
         <xsl:choose>
@@ -193,6 +193,24 @@
         </xsl:choose>
 	</xsl:template>
 	
+	<!-- linkage name - CGS only -->
+	<xsl:template match="gmd:name[local-name(..)='CI_OnlineResource']">
+        <xsl:variable name="mdlang" select="//gmd:language/*/@codeListValue"/>
+        <xsl:variable name="k" select="*"/>
+        <xsl:choose>
+            <xsl:when test="$cl/linkageName/value[@uri=$k]">
+                <gmd:name>
+                    <gmx:Anchor xlink:href="{$cl/linkageName/value[@uri=$k]/@uri}">
+                        <xsl:value-of select="$cl/linkageName/value[@uri=$k]/*[local-name()=$mdlang]"/>
+                    </gmx:Anchor>
+                </gmd:name>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
+	</xsl:template>
+
 	<xsl:template match="gmd:metadataStandardName">
         <gmd:metadataStandardName>
             <gco:CharacterString>ISO 19115/INSPIRE_TG2/CZ4</gco:CharacterString>
