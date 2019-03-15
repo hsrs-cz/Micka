@@ -536,7 +536,23 @@ xmlns:php="http://php.net/xsl">
 		<description><xsl:value-of select="$labels/test[@code='5b']"/></description>
 		<xpath>identificationInfo/*/extent/*/temporalElement</xpath>	
 		<xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:extent//gmd:temporalElement))>0">
-	     	<value><xsl:value-of select="gmd:identificationInfo/*/gmd:extent//gmd:temporalElement"/></value>
+	     	<value>
+                <xsl:for-each select="gmd:identificationInfo/*/gmd:extent//gmd:temporalElement">
+                    <xsl:choose>
+                        <xsl:when test="*/gmd:extent/*/gml:timePosition">
+                            <xsl:value-of select="*/gmd:extent/*/gml:timePosition"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="*/gmd:extent/*/gml:beginPosition"/>
+                            <xsl:value-of select="*/gmd:extent/*/gml:beginPosition/@indeterminatePosition"/>
+                            - 
+                            <xsl:value-of select="*/gmd:extent/*/gml:endPosition"/>
+                            <xsl:value-of select="*/gmd:extent/*/gml:endPosition/@indeterminatePosition"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:if test="not(position()=last())">, </xsl:if>
+                </xsl:for-each>
+            </value>
 			<pass>true</pass>
 		</xsl:if>
 	</test>

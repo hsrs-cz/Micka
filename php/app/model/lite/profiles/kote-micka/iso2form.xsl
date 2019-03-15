@@ -681,7 +681,7 @@
   	<!-- Conditions applying to access and use --> 
 	<xsl:call-template name="drawInput">
 	  	<xsl:with-param name="name" select="'accessCond'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints"/>
+	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints]"/>
 	    <xsl:with-param name="codes" select="'accessCond'"/>
 	    <xsl:with-param name="multi" select="'2'"/>
         <xsl:with-param name="req" select="1"/>
@@ -693,7 +693,7 @@
   	<!-- Limitation on public access --> 
 	<xsl:call-template name="drawInput">
 	  	<xsl:with-param name="name" select="'limitationsAccess'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints"/>
+	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints]"/>
 	    <xsl:with-param name="codes" select="'limitationsAccess'"/>
 	    <xsl:with-param name="multi" select="'2'"/>
 	    <xsl:with-param name="valid" select="'8.2'"/>

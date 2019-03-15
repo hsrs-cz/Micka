@@ -17,6 +17,7 @@
 
 <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="no"/>
 <xsl:variable name="cl" select="document('../../../config/codelists.xml')/map" />   
+<xsl:variable name="mdlang" select="//gmd:language/*/@codeListValue"/>
 
 	<!--xsl:template match="/">
 		<xsl:apply-templates select="./*"/>
@@ -195,7 +196,6 @@
 	
 	<!-- linkage name - CGS only -->
 	<xsl:template match="gmd:name[local-name(..)='CI_OnlineResource']">
-        <xsl:variable name="mdlang" select="//gmd:language/*/@codeListValue"/>
         <xsl:variable name="k" select="*"/>
         <xsl:choose>
             <xsl:when test="$cl/linkageName/value[@uri=$k]">
@@ -219,7 +219,6 @@
 	
     <!-- extent ID -->
 	<xsl:template match="gmd:extent|srv:extent">
-        <xsl:variable name="mdlang" select="../../../gmd:language/*/@codeListValue"/>
 		<gmd:extent>
 			<gmd:EX_Extent>
 				<xsl:for-each select="*/gmd:geographicElement">

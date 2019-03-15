@@ -633,7 +633,7 @@
             			<gmd:extent>
             				<gml:TimePeriod gml:id="TBE{position()}">
                                 <xsl:choose>
-                                    <xsl:when test="beginPosition='undefined'">
+                                    <xsl:when test="beginPosition='undefined' or string-length(beginPosition)=0">
                                         <gml:beginPosition indeterminatePosition="undefined"/>
                                     </xsl:when>
                                     <xsl:when test="beginPosition='now'">
@@ -647,7 +647,7 @@
                                     <xsl:when test="endPosition='now'">
                                         <gml:endPosition indeterminatePosition="now"/>
                                     </xsl:when>
-                                    <xsl:when test="endPosition='undefined'">
+                                    <xsl:when test="endPosition='undefined' or string-length(endPosition)=0">
                                         <gml:endPosition indeterminatePosition="undefined"/>
                                     </xsl:when>
                                     <xsl:otherwise>

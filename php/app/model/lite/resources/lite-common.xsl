@@ -358,15 +358,14 @@
                             <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
-                    <!-- blank value -->
                     <xsl:variable name="v" select="exsl:node-set($value)"/>
+                    <!-- blank value -->
                      <xsl:if test="not($multi) and (string-length($value)=0 or string-length($codeLists/*[name()=$codes]/value[@uri = $v/*/@xlink:href or @name=$v/*/* or @name=$v]/*)=0)">
-                        <option value="{exsl:node-set($value)/*}" selected="'selected'"><xsl:value-of select="exsl:node-set($value)/*"/></option>
+                        <option value="{$v/*}" selected="'selected'"><xsl:value-of select="$v/*"/></option>
                      </xsl:if>
                     <!-- user defined 
-                    <xsl:variable name="v" select="exsl:node-set($value)/*"/>
-                    <xsl:if test="string-length($codeLists/*[name()=$codes]/value[*=$v or @name=$v])=0">
-                        <option value="{$v}" selected="'selected'"><xsl:value-of select="$v"/></option>
+                    <xsl:if test="string-length($value) &gt; 0 and string-length($codeLists/*[name()=$codes]/value[*=$v or @name=$v])=0">
+                        <option value="{$v/*}" selected="'selected'"><xsl:value-of select="$v/*"/></option>
                     </xsl:if>-->
                     <!-- codelist loop -->
                     <xsl:for-each select="$codeLists/*[name()=$codes]/value">
@@ -378,13 +377,19 @@
                             </xsl:choose>
                         </xsl:variable>
                         <xsl:choose>
-                            <xsl:when test="exsl:node-set($value)[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]">
+                            <xsl:when test="$v[(*/@xlink:href and */@xlink:href=$c) or normalize-space(.)=$c]">
                                 <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}" selected="'selected'"><xsl:value-of select="$r/*[name()=$lang]"/><xsl:if test="string($r/*[name()=$lang])=''"><xsl:value-of select="$c"/></xsl:if></option>
                             </xsl:when>
                             <xsl:when test="$r/*[name()=$lang]">
                                 <option value="{$c}" title="{$r/*[name()=$lang]/@qtip}"><xsl:value-of select="$r/*[name()=$lang]"/></option>
                             </xsl:when>
                         </xsl:choose>
+                    </xsl:for-each>
+                    <!-- user defined items -->
+                    <xsl:for-each select="$v[string-length(*/@xlink:href)=0]">
+                        <xsl:if test="$codeLists/*[name()=$codes]/value/@*[name()=$attr] != ./* and $codeLists/*[name()=$codes]/value/@name != ./*">
+                            <option value="{.}" selected="selected"><xsl:value-of select="./*"/></option>
+                        </xsl:if>
                     </xsl:for-each>
                 </select>		
             </xsl:when>
