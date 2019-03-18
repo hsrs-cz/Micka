@@ -363,10 +363,7 @@
                      <xsl:if test="not($multi) and (string-length($value)=0 or string-length($codeLists/*[name()=$codes]/value[@uri = $v/*/@xlink:href or @name=$v/*/* or @name=$v]/*)=0)">
                         <option value="{$v/*}" selected="'selected'"><xsl:value-of select="$v/*"/></option>
                      </xsl:if>
-                    <!-- user defined 
-                    <xsl:if test="string-length($value) &gt; 0 and string-length($codeLists/*[name()=$codes]/value[*=$v or @name=$v])=0">
-                        <option value="{$v/*}" selected="'selected'"><xsl:value-of select="$v/*"/></option>
-                    </xsl:if>-->
+
                     <!-- codelist loop -->
                     <xsl:for-each select="$codeLists/*[name()=$codes]/value">
                         <xsl:variable name="r" select="."/>

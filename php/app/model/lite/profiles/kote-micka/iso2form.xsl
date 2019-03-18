@@ -30,7 +30,6 @@
 
 <xsl:template match="*">
 
-
     <xsl:variable name="serv" select="string-length(gmd:identificationInfo/srv:SV_ServiceIdentification)>0 or $mds=10"/>
     <xsl:variable name="langs" select="//gmd:locale" />
     <xsl:variable name="typeList">inspire<xsl:if test="$serv">Service</xsl:if>Type</xsl:variable>
@@ -804,7 +803,6 @@
                             <xsl:with-param name="name" select="'format_version'"/>
                             <xsl:with-param name="path" select="'format-version[]'"/>
                             <xsl:with-param name="value" select="*/gmd:version"/>
-                            <xsl:with-param name="type" select="'real'"/> 
                             <xsl:with-param name="class" select="'inp2 short'"/>  
                         </xsl:call-template>
                         <xsl:call-template name="drawInput">

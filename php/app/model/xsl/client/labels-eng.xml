@@ -54,6 +54,7 @@
 	<msg eng="MaintenanceNote">MaintenanceNote</msg>
 	<msg eng="Protocol">Protocol</msg>
 	<msg eng="Process Step">Process Step</msg>
+	<msg eng="Purpose">Purpose</msg>
 	<msg eng="Source">Source</msg>
 	<msg eng="Source Step">Source Step</msg>
 	<msg eng="Parent">Parent</msg>

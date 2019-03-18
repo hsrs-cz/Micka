@@ -523,13 +523,13 @@
 			</div>
 		</xsl:if>
 		
-		<xsl:if test="//gmd:spatialRepresentationType">
+		<xsl:if test="gmd:identificationInfo/*/gmd:spatialRepresentationType">
 			<div class="micka-row">
 				<label>
 					<xsl:value-of select="$msg[@eng='Spatial Representation']"/>
 				</label>
 				<div class="c">
-					<xsl:for-each select="//gmd:spatialRepresentationType">
+					<xsl:for-each select="gmd:identificationInfo/*/gmd:spatialRepresentationType">
 						<xsl:variable name="sr" select="gmd:MD_SpatialRepresentationTypeCode"/>
 						<xsl:value-of select="$cl/spatialRepresentationType/value[@name=$sr]/*[name()=$lang]"/>
 						<xsl:if test="not(position()=last())">, </xsl:if>
@@ -538,7 +538,22 @@
 			</div>
 		</xsl:if>
 
-		<div class="micka-row">
+        <xsl:if test="gmd:identificationInfo/*/gmd:purpose">
+			<div class="micka-row">
+				<label>
+					<xsl:value-of select="$msg[@eng='Purpose']"/>
+				</label>
+				<div class="c">
+                    <xsl:call-template name="multi">
+                        <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:purpose"/>
+                        <xsl:with-param name="lang" select="$lang"/>
+                        <xsl:with-param name="mdlang" select="$mdlang"/>
+                    </xsl:call-template>
+				</div>
+			</div>
+        </xsl:if>
+        
+        <div class="micka-row">
 			<label><xsl:value-of select="$msg[@eng='Contact Info']"/></label>
 			<div class="c">
 				<xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact">
@@ -594,15 +609,17 @@
 			<label><xsl:value-of select="$msg[@eng='Spatial Resolution']"/></label>
 			<div class="c">
 				<xsl:if test="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator!=''">
-					<xsl:value-of select="$msg[@eng='Equivalent Scale']"/> =
+					<div>
+                    <xsl:value-of select="$msg[@eng='Equivalent Scale']"/>:
                     <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale">
                         <xsl:text> 1:</xsl:text>
                         <xsl:value-of select="*/gmd:denominator"/>
                         <xsl:if test="not(position()=last())">,</xsl:if>
                     </xsl:for-each>
+                    </div>
 				</xsl:if>
 				<xsl:if test="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance">
-					<xsl:value-of select="$msg[@eng='Distance']"/> =
+					<xsl:value-of select="$msg[@eng='Distance']"/>:
  					 <xsl:value-of select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance"/>
 					<xsl:text> </xsl:text>
 					<xsl:value-of select="gmd:identificationInfo/*/gmd:spatialResolution/gmd:MD_Resolution/gmd:distance/gco:Distance/@uom"/>

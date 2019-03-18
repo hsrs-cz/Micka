@@ -54,6 +54,7 @@
 	<msg eng="MaintenanceNote">Poznámka - údržba</msg>
 	<msg eng="Protocol">Protokol</msg>
 	<msg eng="Process Step">Krok zpracování</msg>
+	<msg eng="Purpose">Účel vytvoření</msg>
 	<msg eng="Source">Zdroj</msg>
 	<msg eng="Source Step">Krok zdroje</msg>
 	<msg eng="Parent">Nadřízený</msg>

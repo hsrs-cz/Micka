@@ -54,6 +54,7 @@
 	<msg eng="MaintenanceNote">Nota de mantenimiento</msg>
 	<msg eng="Protocol">Protocolo</msg>
 	<msg eng="Process Step">Pasos del proceso</msg>
+	<msg eng="Purpose">Propósito</msg>
 	<msg eng="Source">Fuente</msg>
 	<msg eng="Source Step">Pasos de la fuente</msg>
 	<msg eng="Parent">Padre</msg>
