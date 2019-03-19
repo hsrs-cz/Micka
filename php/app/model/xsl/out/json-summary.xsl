@@ -22,20 +22,16 @@
   	<xsl:variable name="mdlang" select="gmd:language/*/@codeListValue"/>
 	$rec = array();
     
+    $rec['id'] = '<xsl:value-of select="normalize-space(gmd:fileIdentifier)"/>';	
     <xsl:choose>
-	  	<xsl:when test="(gmd:identificationInfo/srv:SV_ServiceIdentification)!=''">
-            $rec['trida']='service';
-            $rec['serviceType']='<xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/*"/>';
-      	</xsl:when>
-		<xsl:when test="contains(gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage/*,'wmc')">
-	        $rec['trida']='wmc';
-      	</xsl:when>
 		<xsl:when test="gmd:hierarchyLevel/*/@codeListValue!=''">
-           	$rec['trida']='<xsl:value-of select="gmd:hierarchyLevel/*/@codeListValue"/>';
+           	$rec['type']='<xsl:value-of select="gmd:hierarchyLevel/*/@codeListValue"/>';
        	</xsl:when>
-		<xsl:otherwise>$rec['trida']='dataset';</xsl:otherwise>
+		<xsl:otherwise>$rec['type']='dataset';</xsl:otherwise>
+	  	<xsl:when test="(gmd:identificationInfo/srv:SV_ServiceIdentification)!=''">
+           $rec['serviceType']='<xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/*"/>';
+      	</xsl:when>
 	</xsl:choose>
-		$rec['id'] = '<xsl:value-of select="normalize-space(gmd:fileIdentifier)"/>';	
 		$rec['title'] = '<xsl:call-template name="multi">
 		    	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 		    	<xsl:with-param name="lang" select="$lang"/>
@@ -46,7 +42,6 @@
 		      	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
 		  	</xsl:call-template>';
-		$rec['link'] = '<xsl:value-of disable-output-escaping="yes" select="php:function('addslashes', normalize-space(gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage/gmd:URL))"/>';
 		$rec['links'] = array();
 		<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
 			$l['url'] = '<xsl:value-of disable-output-escaping="yes" select="php:function('addslashes', normalize-space(*/gmd:linkage/gmd:URL))"/>';
@@ -75,8 +70,6 @@
 			<xsl:when test="$degree!=''"><xsl:value-of select="$degree"/>;</xsl:when>
 			<xsl:otherwise>null;</xsl:otherwise>
 		</xsl:choose>	
-		$rec['coverageKm'] = '<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'km')]/*/gmd:value/gco:Record"/>';
-		$rec['coveragePercent'] = '<xsl:value-of select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_CompletenessOmission[gmd:measureIdentification/*/gmd:code/*='CZ-COVERAGE']/gmd:result[contains(*/gmd:valueUnit/@xlink:href,'percent')]/*/gmd:value/gco:Record"/>';
 
     $json['records'][] =$rec;
 </xsl:template>	
