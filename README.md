@@ -22,8 +22,12 @@ Geospatial metadata catalogue and metadata editing tool.
 3. Create the database at your PostgreSQL database console or client tool.
 4. Create here the PostGIS extension (e.g. `CREATE EXTENSION postgis;` if not automatically created)
 5. Run SQL scripts located in install directory at PostgreSQL console or admin tool in numerical order (1 - 5).
-4. Rename `app/config/local.neon.dist` to `app/config/local.neon` and edit it for access to your database, your contact information etc.
-5. Make the directories `log` and `temp` writable for the web server
+6. For creating fulltext search indexes in your language edit the install/fulltext.sql script and run it. (English is supported by default)
+7. Rename `app/config/local.neon.dist` to `app/config/local.neon` and edit it for access to your database, your contact information etc.
+8. Make the directories `log` and `temp` writable for the web server
+
+## Updates
+In new versions the database structure may sometimes change. In mostly cases the data remains unchanged but update scripts should be run to change some tables. Update scripts are named **u&lt;update-date&gt;_&lt;table-name&gt;.sql**
 
 *Note: If updating, please delete all files under php/temp/cache directory.*
 

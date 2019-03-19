@@ -19,7 +19,7 @@ SearchForm = function(){
 			result = '(type=dataset OR type=series OR type=noGeographicDataset OR type=tile)';
 		}
 		else addVal('type', "#res-type");
-		addVal('AnyText', "#fulltext", true);
+		addVal('FullText', "#fulltext");
 		addVal('TopicCategory', "#topic");
 		addVal('ServiceType', "#stype");
 		addVal('Subject', "#inspire");

@@ -1368,7 +1368,7 @@ class Csw{
         $cql = str_replace(array('csw:', 'gmd:', '"'), '', $cql);
 
         //mapping to inner queryables
-        $this->map = array('anytext'=>'%',
+        $this->map = array('anytext'=>'%', 'fulltext'=>'_FULL_',
         	'modified'=>'_DATESTAMP_', 'language'=>'_LANGUAGE_', 'tempextent_begin'=>'_DATEB_',
             'tempextent_end'=>'_DATEE_', 'hierarchylevelname'=>'@hlname', "type='featureCatalogue'"=>'_MDS_=2',
           	'type'=>'@type', 'hierarchylevel'=>'@type', 'servicetype'=>'@stype', 'identifier'=>'_UUID_',

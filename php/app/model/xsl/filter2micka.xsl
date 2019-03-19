@@ -201,7 +201,8 @@
     	
 		<xsl:choose>
 		  <!-- 2.0.2 core -->
-			<xsl:when test="contains($n,'any')">"%</xsl:when> <!-- zobecneni anytext -->
+			<xsl:when test="contains($n,'fulltext')">"_FULL_</xsl:when> 
+			<xsl:when test="contains($n,'any')">"%</xsl:when> 
 			<xsl:when test="contains($n,'subject')">"@keyword</xsl:when>
 			<xsl:when test="contains($n,'specificationtitle')">"@sp.title</xsl:when>
 			<xsl:when test="contains($n,'specificationdatetype')">"@sp.dtype</xsl:when>

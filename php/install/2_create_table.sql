@@ -210,6 +210,7 @@ CREATE TABLE md
 CREATE INDEX md_last_update_idx ON md USING btree(last_update_date);
 CREATE INDEX md_title_idx ON md USING btree(title COLLATE pg_catalog."default");
 CREATE UNIQUE INDEX md_uuid_idx ON md USING btree(uuid COLLATE pg_catalog."default");
+CREATE INDEX fxml_en_idx ON md USING GIN (to_tsvector('english', CAST (pxml AS varchar)));
 
 CREATE TABLE md_values
 (
@@ -222,6 +223,7 @@ CREATE TABLE md_values
 );
 CREATE INDEX md_values_mdid_idx ON md_values USING btree(md_id);
 CREATE INDEX md_values_recno_idx ON md_values USING btree(recno);
+
 
 CREATE TABLE edit_md
 (
@@ -270,5 +272,4 @@ CREATE TABLE edit_md_values
 );
 CREATE INDEX edit_md_values_mdid_idx ON edit_md_values USING btree(md_id);
 CREATE INDEX edit_md_values_recno_idx ON edit_md_values USING btree(recno);
-
 

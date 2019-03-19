@@ -465,6 +465,16 @@ class MdSearch
 		}
 		return $data;
 	}
+    
+    private function parserFullText($data){
+        $data = trim(str_replace("'","",explode('=', $data)[1])); //TODO - enhance parsing
+        $data = preg_replace('/[\s]+/mu', ' & ', $data);
+        $pgLangs = ['cs'=>'cs', "en"=>"english", "es"=>"spanish", "fr"=>"french", "ge"=>"german"]; //TODO - to config
+        $lang = $pgLangs[$this->appParameters["appLocale"]] ? $pgLangs[$this->appParameters["appLocale"]] : 'english';
+        // TODO - distiguish configuration of postgress fulltext and ORACLE etc ...
+        $data = "to_tsvector('".$lang."'::regconfig, pxml::character varying::text) @@ to_tsquery('".$lang."','".$data."')";
+        return $data;
+    }
 
 	private function parserMdField($data, $con) {
 		$rs = array();
@@ -477,6 +487,12 @@ class MdSearch
 		$field = ltrim(substr($data, 0, strrpos($dataField, '_') + 1));
 		//echo "FIELD=$field<br>";
 		switch ($field) {
+			case '_FULL_':
+				$rs['sql'] = $this->parserFullText($data);
+				if ($rs['sql'] != '') {
+					$this->query_out_value[] = $rs;
+				}
+				break;
 			case '_LANGUAGE_':
 				$rs['sql'] = $this->parserMdFieldLanguage($data);
 				if ($rs['sql'] != '') {
