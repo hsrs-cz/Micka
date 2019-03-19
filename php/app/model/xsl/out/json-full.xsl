@@ -150,10 +150,6 @@
 			   		<xsl:with-param name="lang" select="$lang"/>
 			   		<xsl:with-param name="mdlang" select="$mdlang"/>
 			  	</xsl:call-template>'; 
-    $rec['titles']['<xsl:value-of select="gmx:language/*/@codeListValue"/>'] = '<xsl:value-of select="gmx:name/gco:CharacterString"/>';
-    <xsl:for-each select="gmx:name/gmd:PT_FreeText">
-        $rec['titles']['<xsl:value-of select="substring-after(gmd:textGroup/*/@locale,'-')"/>'] = '<xsl:value-of select="gmd:textGroup/*"/>';
-    </xsl:for-each>
     $rec['abstract'] = '<xsl:call-template name="multi">
 		   		<xsl:with-param name="el" select="gmx:scope"/>
 		   		<xsl:with-param name="lang" select="$lang"/>
@@ -163,7 +159,13 @@
     $rec['date'] = '<xsl:value-of select="gmx:versionDate"/>';
     $f = array();
     <xsl:for-each select="gfc:featureType">
-        $f[]['name'] = '<xsl:value-of select="*/gfc:valueType/gfc:typeName/*"/>';
+        $f_['name'] = '<xsl:value-of select="*/gfc:typeName/*"/>';
+        $f_['definition'] = '<xsl:call-template name="multi">
+		    	<xsl:with-param name="el" select="*/gfc:definition"/>
+		      	<xsl:with-param name="lang" select="$lang"/>
+		    	<xsl:with-param name="mdlang" select="$mdlang"/>
+		  	</xsl:call-template>';
+        $f[] = $f_;
     </xsl:for-each>
     $rec['features'] = $f;
     $json['records'][] =$rec;
