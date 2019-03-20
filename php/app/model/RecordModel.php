@@ -897,6 +897,21 @@ class RecordModel extends \BaseModel
         $this->deleteEditRecords();
         return $report;
     }
+
+    private function updateDatestamp($recno, $md_standard)
+    {
+        if ($md_standard == 0 || $md_standard == 10) {
+            $this->db->query("DELETE FROM edit_md_values WHERE md_id=44 AND recno=?", $recno);
+            $data = array();
+            $data[0]['recno'] = $recno;
+            $data[0]['md_value'] = Date("Y-m-d");
+            $data[0]['md_id'] = '44';
+            $data[0]['md_path'] = '0_0_44_0';
+            $data[0]['lang'] = 'xxx';
+            $data[0]['package_id'] = '0';
+            $this->seMdValues($data, $recno=0);
+        }
+    }
     
     public function setFormMdValues($id, $post, $appLang)
     {
@@ -929,6 +944,7 @@ class RecordModel extends \BaseModel
                     $this->package_id);
             $this->seMdValues($editMdValues);
         }
+        $this->updateDatestamp($this->recordMd->recno, $this->recordMd->md_standard);
         $report = $this->setLang2RecordMd($select_langs);
         $this->recordMd->pxml = $this->xmlFromRecordMdValues();
         //header('Content-Type: application/xml'); echo $this->recordMd->pxml;  exit;
