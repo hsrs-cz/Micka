@@ -52,35 +52,37 @@
                                 </xsl:for-each>
                             </gmd:CI_Telephone>
                         </gmd:phone>
-                        <xsl:for-each select="contactInfo/*/address">
+                        <xsl:for-each select="contactInfo/*/address/CI_Address">
                             <gmd:address>
                                 <gmd:CI_Address>
-                                    <xsl:for-each select="*/deliveryPoint">
-                                        <gmd:deliveryPoint>
-                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-                                        </gmd:deliveryPoint>
-                                    </xsl:for-each>
-                                    <xsl:for-each select="*/city">
+
+                                        <xsl:call-template name="txt">
+                                            <xsl:with-param name="s" select="."/>
+                                            <xsl:with-param name="name" select="'deliveryPoint'"/>                      
+                                            <xsl:with-param name="lang" select="$mdLang"/>                      
+                                        </xsl:call-template> 
+
+                                    <xsl:for-each select="city">
                                         <gmd:city>
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
                                         </gmd:city>
                                     </xsl:for-each>
-                                    <xsl:for-each select="*/administrativeArea">
+                                    <xsl:for-each select="administrativeArea">
                                         <gmd:administrativeArea>
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
                                         </gmd:administrativeArea>
                                     </xsl:for-each>
-                                    <xsl:for-each select="*/postalCode">
+                                    <xsl:for-each select="postalCode">
                                         <gmd:postalCode>
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
                                         </gmd:postalCode>
                                     </xsl:for-each>
-                                    <xsl:for-each select="*/country">	
+                                    <xsl:for-each select="country">	
                                         <gmd:country>
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
                                         </gmd:country>
                                     </xsl:for-each>
-                                    <xsl:for-each select="*/electronicMailAddress">
+                                    <xsl:for-each select="electronicMailAddress">
                                         <gmd:electronicMailAddress>
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
                                         </gmd:electronicMailAddress>
@@ -120,10 +122,9 @@
 		<xsl:param name="lang"/>
 		<xsl:param name="ns" select="'gmd'"/>
 
-        <xsl:variable name="count" select="count($s/*[name()=$name]/lang)"/>
-        
         <xsl:for-each select="$s/*[name()=$name]">
-        	<xsl:choose>
+            <xsl:variable name="count" select="count(lang)"/>
+            <xsl:choose>
                 <!-- multilingual with URI -->
         		<xsl:when test="lang[@code='uri'] and $count>2">
         			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
