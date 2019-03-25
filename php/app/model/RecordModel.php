@@ -158,7 +158,7 @@ class RecordModel extends \BaseModel
         $data['title'] = $this->recordMd->title != '' ? $this->recordMd->title : NULL;
         //$data['range_begin'] = $this->recordMd->range_begin != '' ? $this->recordMd->range_begin : NULL;
         //$data['range_end'] = $this->recordMd->range_end != '' ? $this->recordMd->range_end : NULL;
-        //$data['md_update'] = $this->recordMd->md_update != '' ? $this->recordMd->md_update : NULL;
+        $data['md_update'] = $this->recordMd->md_update != '' ? $this->recordMd->md_update : NULL;
         //$data['valid'] = $this->recordMd->valid != '' ? $this->recordMd->valid : NULL;
         //$data['prim'] = $this->recordMd->prim != '' ? $this->recordMd->prim : NULL;
         $this->db->query('UPDATE edit_md SET ? WHERE sid=? AND recno=?', $data, session_id(), $recno);
@@ -727,6 +727,10 @@ class RecordModel extends \BaseModel
                 if ($data['md_id'] == 11) {
                     $this->setMdTitle($data);
                 }
+                if ($data['md_id'] == 44) {
+                    //Datestamp;
+                    $this->recordMd->md_update = $data['md_value'];
+                }
                 break;
             case 10:
                 if ($data['md_id'] == 5133) {
@@ -746,6 +750,10 @@ class RecordModel extends \BaseModel
                 }
                 if ($data['md_id'] == 5063) {
                     $this->setMdTitle($data);
+                }
+                if ($data['md_id'] == 44) {
+                    //Datestamp;
+                    $this->recordMd->md_update = $data['md_value'];
                 }
                 break;
             case 1:
@@ -902,14 +910,16 @@ class RecordModel extends \BaseModel
     {
         if ($md_standard == 0 || $md_standard == 10) {
             $this->db->query("DELETE FROM edit_md_values WHERE md_id=44 AND recno=?", $recno);
+            $date = Date("Y-m-d");
             $data = array();
             $data[0]['recno'] = $recno;
-            $data[0]['md_value'] = Date("Y-m-d");
+            $data[0]['md_value'] = $date;
             $data[0]['md_id'] = '44';
             $data[0]['md_path'] = '0_0_44_0';
             $data[0]['lang'] = 'xxx';
             $data[0]['package_id'] = '0';
             $this->seMdValues($data, $recno=0);
+            $this->recordMd->md_update = $date;
         }
     }
     
