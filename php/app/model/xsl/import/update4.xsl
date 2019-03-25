@@ -29,6 +29,7 @@
 	    </xsl:copy>
 	</xsl:template>
 	
+    <!-- Individual name URI -->
     <xsl:template match="gmd:individualName">
         <gmd:individualName>
             <xsl:choose>
@@ -40,6 +41,20 @@
                 </xsl:otherwise>
             </xsl:choose>
         </gmd:individualName>
+    </xsl:template>
+
+    <!-- address URI -->
+    <xsl:template match="gmd:deliveryPoint">
+        <gmd:deliveryPoint>
+            <xsl:choose>
+                <xsl:when test="../@uuid">
+                    <gmx:Anchor xlink:href="{../@uuid}"><xsl:value-of select="."/></gmx:Anchor>
+                </xsl:when>
+                <xsl:otherwise>
+                    <copy-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </gmd:deliveryPoint>
     </xsl:template>
 
 	<!-- CRS -->

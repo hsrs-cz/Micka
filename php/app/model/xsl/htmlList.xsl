@@ -129,7 +129,7 @@
 				</a>
 				<xsl:text>, </xsl:text>							
 			</xsl:if>
-			<xsl:value-of select="$msg[@eng='Date Stamp']"/>: <xsl:value-of select="php:function('drawDate', substring-before(../@last_update_date, ' '), $lang)"/>
+			<xsl:value-of select="$msg[@eng='Date Stamp']"/>: <xsl:value-of select="php:function('drawDate', string(gmd:dateStamp/*), $lang)"/>
 		</div>
 	</xsl:template>
 

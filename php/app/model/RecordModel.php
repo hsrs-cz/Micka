@@ -766,6 +766,7 @@ class RecordModel extends \BaseModel
         }
     }
     
+    // parse post data during editing
     private function getMdValuesFromForm($formData, $appLang)
     {
         $this->initialVariables();
@@ -836,6 +837,7 @@ class RecordModel extends \BaseModel
 		return $editMdValues;
     }
     
+    // processes record language preferences 
     private function setLang2RecordMd($select_langs) {
         $md_langs = explode('|', $this->recordMd->lang);
         $common_langs = array_intersect($md_langs, $select_langs);
@@ -866,6 +868,7 @@ class RecordModel extends \BaseModel
         return $report;
     }
 
+    // transaction support ?
     public function setXmlFromCsw($xml,$params=array()) {
         $mdXml2Array = new MdXml2Array();
         $dataFromXml = $mdXml2Array->xml2array($xml, __DIR__ ."/xsl/update2micka.xsl");
@@ -913,6 +916,7 @@ class RecordModel extends \BaseModel
         }
     }
     
+    // save form values to database when editing
     public function setFormMdValues($id, $post, $appLang)
     {
         $mdr = $this->findMdById($id, 'edit_md', 'edit');
