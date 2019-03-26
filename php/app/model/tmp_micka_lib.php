@@ -481,10 +481,10 @@ function getSortBy($in='', $ret='array') {
 	$pom1 = isset($pom[1]) && $pom[1] != '' ? $pom[1] : 'ASC';
 	$rs = array();
 	if ($pom0 == 'date') {
-		$pom0 = 'last_update_date';
-	}
-	if ($pom0 == 'modified') {
 		$pom0 = 'md_update';
+	}
+	if ($pom0 == 'timestamp') {
+		$pom0 = 'last_update_date';
 	}
 	switch ($pom0) {
 		case 'recno':
