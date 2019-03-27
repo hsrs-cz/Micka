@@ -236,15 +236,15 @@ class MdSearch
 	private function setSqlEmptyIn() {
 		if ($this->sql_or == '') {
 			if ($this->useOrderByXmlPath === TRUE) {
-				$this->sql_final[0] = 'SELECT recno, last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
+				$this->sql_final[0] = 'SELECT recno, last_update_date, md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
 			} else {
-				$this->sql_final[0] = 'SELECT recno, last_update_date, title FROM md';
+				$this->sql_final[0] = 'SELECT recno, last_update_date, md_update, title FROM md';
 			}
 			if ($this->sql_md != '') {
 				$this->sql_final[0] .= ' WHERE ' . substr($this->sql_md, 0, -4);
 			}
 		} else {
-			$this->sql_final[0] = 'SELECT DISTINCT md.recno, md.last_update_date, md.title FROM md JOIN md_values ON md.recno=md_values.recno'; 
+			$this->sql_final[0] = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno'; 
 			if ($this->sql_md == '') {
 				$this->sql_final[0] .= ' WHERE ' . substr($this->sql_or, 0, -4);
 			} else {
@@ -395,7 +395,7 @@ class MdSearch
 		if ($pos0 === FALSE) {
 			$data = str_replace("@$mapping", $type . 'md_values.md_value', $data);
 			if (strpos($data, "= ''") !== FALSE || strpos($data, "=''") !== FALSE) {
-				$data = "SELECT md.recno, md.last_update_date, md.title FROM md LEFT JOIN md_values ON $type md.recno=md_values.recno WHERE md_values.md_value IS NULL";
+				$data = "SELECT md.recno, md.last_update_date, md.md_update, md.title FROM md LEFT JOIN md_values ON $type md.recno=md_values.recno WHERE md_values.md_value IS NULL";
 			}
 		} else {
 			$pos1 = strpos($data, "'", $pos0);
@@ -439,7 +439,7 @@ class MdSearch
                 //$data = $mapping;
             }
             if (stripos($data, '!=') !== FALSE) {
-                $data = "SELECT DISTINCT md.recno, md.last_update_date, md.title FROM md WHERE (SELECT count(*) FROM md_values WHERE md.recno=md_values.recno AND $data)=0";
+                $data = "SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md WHERE (SELECT count(*) FROM md_values WHERE md.recno=md_values.recno AND $data)=0";
     			$data = str_replace("!=", '=', $data);
             }
 			$rs = array();
@@ -744,12 +744,12 @@ class MdSearch
         $md_id_md = $name == 'organisation' ? 187 : 186;
         $md_id_sv = $name == 'organisation' ? 5029 : 5028;
         $rs = "
-            SELECT DISTINCT md.recno, md.last_update_date, md.title
+            SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,27)=substring(m.md_path, 1,27) AND md_values.recno=m.recno)
             WHERE md_values.md_id=$md_id_md AND m.md_id=1047 AND md_values.md_value='$individualName' AND m.md_value='$RoleCode'
             #WHEREMD#
             UNION
-            SELECT DISTINCT md.recno, md.last_update_date, md.title
+            SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,32)=substring(m.md_path, 1,32) AND md_values.recno=m.recno)
             WHERE md_values.md_id=$md_id_sv AND m.md_id=5038 AND md_values.md_value='$individualName' AND m.md_value='$RoleCode'
         ";
@@ -771,7 +771,7 @@ class MdSearch
         }
         $md_id = $name == 'organisation' ? 153: 152;
         $rs = "
-            SELECT DISTINCT md.recno, md.last_update_date, md.title
+            SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,17)=substring(m.md_path, 1,17) AND md_values.recno=m.recno)
             WHERE md_values.md_id=$md_id AND m.md_id=992 AND md_values.md_value='$individualName' AND m.md_value='$RoleCode'
             #WHEREMD#
@@ -804,12 +804,12 @@ class MdSearch
 			} else {
 				$rs = "
 					(
-					SELECT DISTINCT md.recno, md.last_update_date, md.title FROM md JOIN md_values ON md.recno=md_values.recno 
+					SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno 
 					WHERE" . $this->getRight(FALSE) . " 
 					)
 					INTERSECT
 					(
-					SELECT DISTINCT md.recno, md.last_update_date, md.title
+					SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title
 					FROM md JOIN md_values ON md.recno=md_values.recno 
 					WHERE view_group IN($group) OR edit_group IN($group)
 					)
@@ -866,11 +866,11 @@ class MdSearch
 		$sign = $tmp[1];
 		$datum = $tmp[2];
         $rs = "
-            SELECT md.recno, md.last_update_date, md.title
+            SELECT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,34) = substring(m.md_path, 1,34) AND md_values.recno = m.recno)
             WHERE md_values.md_id=5077 AND m.md_id=5090 AND md_values.md_value $sign $datum AND m.md_value = 'revision'
             UNION
-            SELECT md.recno, md.last_update_date, md.title
+            SELECT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,26) = substring(m.md_path, 1,26) AND md_values.recno = m.recno)
             WHERE md_values.md_id=14 AND m.md_id=974 AND md_values.md_value $sign $datum AND m.md_value = 'revision'
         ";
@@ -882,11 +882,11 @@ class MdSearch
 		$sign = $tmp[1];
 		$datum = $tmp[2];
         $rs = "
-            SELECT md.recno, md.last_update_date, md.title
+            SELECT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,34) = substring(m.md_path, 1,34) AND md_values.recno = m.recno)
             WHERE md_values.md_id=5077 AND m.md_id=5090 AND md_values.md_value $sign $datum AND m.md_value = 'creation'
             UNION
-            SELECT md.recno, md.last_update_date, md.title
+            SELECT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,26) = substring(m.md_path, 1,26) AND md_values.recno = m.recno)
             WHERE md_values.md_id=14 AND m.md_id=974 AND md_values.md_value $sign $datum AND m.md_value = 'creation'
         ";
@@ -898,11 +898,11 @@ class MdSearch
 		$sign = $tmp[1];
 		$datum = $tmp[2];
         $rs = "
-            SELECT md.recno, md.last_update_date, md.title
+            SELECT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,34) = substring(m.md_path, 1,34) AND md_values.recno = m.recno)
             WHERE md_values.md_id=5077 AND m.md_id=5090 AND md_values.md_value $sign $datum AND m.md_value = 'publication'
             UNION
-            SELECT md.recno, md.last_update_date, md.title
+            SELECT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,26) = substring(m.md_path, 1,26) AND md_values.recno = m.recno)
             WHERE md_values.md_id=14 AND m.md_id=974 AND md_values.md_value $sign $datum AND m.md_value = 'publication'
         ";
@@ -965,12 +965,12 @@ class MdSearch
             $thesaurus = ' ILIKE ' . $thesaurus;
         }
         $rs = "
-            SELECT DISTINCT md.recno, md.last_update_date, md.title
+            SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,24) = substring(m.md_path, 1,24) AND md_values.recno = m.recno)
             WHERE md_values.md_id=88 AND m.md_id=1755 AND md_values.md_value $keyword AND m.md_value $thesaurus
             #WHEREMD#
             UNION
-            SELECT DISTINCT md.recno, md.last_update_date, md.title
+            SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title
             FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(substring(md_values.md_path, 1,24) = substring(m.md_path, 1,26) AND md_values.recno = m.recno)
             WHERE md_values.md_id=4920 AND m.md_id=4925 AND md_values.md_value $keyword AND m.md_value $thesaurus
         ";
@@ -1037,8 +1037,8 @@ class MdSearch
 			}
 			$this->sql_md .= ' AND ';
 		}
-        $sql_smd = 'SELECT recno, last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
-		$sql_s = 'SELECT DISTINCT md.recno, md.last_update_date, md.title FROM md JOIN md_values ON md.recno=md_values.recno';
+        $sql_smd = 'SELECT recno, last_update_date, md.md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
+		$sql_s = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno';
 		$this->sql_final[0] = '';
 		if (count($this->query_out_value) > 0) {
 			foreach ($this->query_out_value as $key => $value) {
@@ -1092,9 +1092,9 @@ class MdSearch
 					$sql_row = $this->parserData($field, NULL);
                     $sql_row = str_replace('#WHEREMD#', '', $sql_row);
 					$grpBy = '';
-					$sql_s = 'SELECT DISTINCT md.recno, md.last_update_date, md.title FROM md JOIN md_values ON md.recno=md_values.recno';
+					$sql_s = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno';
 					if (strpos($sql_row, 'md_values.') === FALSE) {
-                        $sql_s = 'SELECT recno, last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
+                        $sql_s = 'SELECT recno, last_update_date, md.md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
 					}
 					$sql_row = strpos($sql_row, 'SELECT') === FALSE ? $sql_s . ' WHERE ' . $this->sql_md . $sql_row . $grpBy : $sql_row;
 					if ($sql_row != '') {
@@ -1144,7 +1144,7 @@ class MdSearch
 			$selectBbox = ", " . $selectBbox . " AS bbox";
 		}
 		$sortBy_mdpath = '';
-        $sql_spol['md_select'] =  "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, last_update_date, edit_group, view_group, valid, prim, pxml, server_name".$this->for_inspire;
+        $sql_spol['md_select'] =  "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, md_update, last_update_date, edit_group, view_group, valid, prim, pxml, server_name".$this->for_inspire;
         $sql_spol['md_from'] = " FROM md WHERE (recno IN (SELECT recno FROM(";
         $sql_spol['md_order'] = "";
         $sql_spol['md_count'] =  "
@@ -1173,8 +1173,8 @@ class MdSearch
                 //    'SELECT DISTINCT md.recno, md.last_update_date, md.title',
                 //    'SELECT DISTINCT md.recno, md.last_update_date, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title',
                 //    $sql_final
-                    'SELECT DISTINCT md.recno, md.last_update_date, md.title',
-                    'SELECT DISTINCT md.recno, md.last_update_date, md.title AS title',
+                    'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title',
+                    'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title AS title',
                     $sql_final
                 );
                 $sql_spol['md_select'] .= ', COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title';
@@ -1204,7 +1204,7 @@ class MdSearch
 				$this->setSqlEmptyIn();
 			}
 			elseif (count($in) == 0 && $this->sql_uuid != '') {
-				$this->sql_final[0] = 'SELECT recno, last_update_date, title FROM md WHERE uuid IN ' . $this->sql_uuid;
+				$this->sql_final[0] = 'SELECT recno, last_update_date, md_update, title FROM md WHERE uuid IN ' . $this->sql_uuid;
 			}
 			else {
 				if ($this->isSimpleQuery() === TRUE) {
@@ -1228,7 +1228,7 @@ class MdSearch
 		
 		if ($this->search_uuid === TRUE) {
 			$rs['paginator']['records'] = 1;
-			$rs['sql'] = "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, last_update_date, edit_group, view_group, valid, prim, server_name, pxml".$this->for_inspire." FROM md";
+			$rs['sql'] = "SELECT recno, uuid, md_standard, lang, data_type, create_user, create_date, last_update_user, last_update_date, md_update, edit_group, view_group, valid, prim, server_name, pxml".$this->for_inspire." FROM md";
             $right = $this->appParameters['app']['directSummary'] === TRUE 
                     || $this->appParameters['app']['directDetail'] === TRUE 
                     || $this->appParameters['app']['directXml'] === TRUE
