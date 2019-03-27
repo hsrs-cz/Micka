@@ -35,10 +35,6 @@ class DefaultPresenter extends \BasePresenter
         $params = $csw->dirtyParams($request);
         $this->template->records = $csw->run($params);
         $this->template->urlParams = $this->context->getByType('Nette\Http\Request')->getQuery();
-        
-        // set values for the search form
-        //$this->template->params = $params;
-        
 	}
 
 }

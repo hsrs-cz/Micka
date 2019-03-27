@@ -116,7 +116,7 @@
 				</div> {* panel- body *}
 
                 <div aria-label="..." class="panel-body text-center no-mobile">
-                        <a type="button" target="_blank" href="csw/?request=GetRecords&query={ifset $urlParams['query']}{urlencode($urlParams['query'])}{/ifset}&format=application/xml&MaxRecords=9999&StartPosition={ifset $urlParams['startposition']}{$urlParams['startposition']}{/ifset}&sortby={ifset $urlParams['sortby']}{$urlParams['sortby']}{/ifset}&language={$appLang}&outputSchema=http://www.w3.org/2005/Atom" 
+                        <a type="button" target="_blank" href="csw/?request=GetRecords&query={ifset $urlParams['query']}{urlencode($urlParams['query'])}{/ifset}&format=application/xml&MaxRecords=9999&StartPosition={ifset $urlParams['startposition']}{$urlParams['startposition']}{/ifset}&sortby={ifset $urlParams['sortby']}{urlencode($urlParams['sortby'])}{/ifset}&language={$appLang}&outputSchema=http://www.w3.org/2005/Atom" 
                             class="btn btn-default" data-tooltip="tooltip" title="ATOM feed" data-container="body" data-placement="bottom" style="color:#D60">
                             <i class="fa fa-feed fa-lg"></i> ATOM</a>
                         <a type="button" href="csw/?request=GetRecords&query={ifset $urlParams['query']}{urlencode($urlParams['query'])}{/ifset}&format=application/xml&MaxRecords=9999&StartPosition={ifset $urlParams['startposition']}{$urlParams['startposition']}{/ifset}&language={$appLang}&ElementSetName=brief&outputSchema=http://www.w3.org/ns/dcat%23"  
