@@ -120,11 +120,13 @@ frontend:
 
     admin: "Admin"
     application: "Application"
+    application-type: "Application type"
     ascending: "ascending"
     basic_metadata: "Summary"
     clear: "Clear"
     close: "Close"
     data: "Data"
+    data-type: "Data type"
     descending: "descending"
     extent-similarity: "extent similarity"
     fc: "Feature catalogue"
@@ -157,6 +159,9 @@ frontend:
     status: "Record status"
     contact2micka: "Contact to MicKa"
     packages: "Packages"
+    where-all: "Everywhere"
+    where-title: "Title"
+    where-tabstract: "Title + Abstract"
 
 management:
     modules: "Administration"

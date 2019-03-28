@@ -123,7 +123,9 @@ frontend:
 
     full_metadata: "Detail"
     application: "Aplikace"
+    application-type: "Typ aplikace"
     data: "Data"
+    data-type: "Typ dat"
     service: "Služba"
     service-type: "Typ služby"
     new: "Nový"
@@ -157,6 +159,9 @@ frontend:
     contact2micka: "do MicKy"
     select: "vyberte"
     packages: "Balíčky"
+    where-all: "Všude"
+    where-title: "V názvu"
+    where-tabstract: "V názvu a abstraktu"
 
 management:
     modules: "Administrace"

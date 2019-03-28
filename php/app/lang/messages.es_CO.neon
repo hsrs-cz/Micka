@@ -155,6 +155,9 @@ frontend:
     status: "Estado de registros"
     contact2micka: "Contactar a MicKa"
     packages: "ENG: Packages"
+    where-all: "Everywhere"
+    where-title: "Title"
+    where-tabstract: "Title + Abstract"
 
 management:
     modules: "Administración"

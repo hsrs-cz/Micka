@@ -521,7 +521,6 @@ class Csw{
 
 
     function asJSON($xml, $head, $ext=false){
-    	//echo $xml->saveXML();
         $this->xsl->load(__DIR__ ."/xsl/iso2json.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $this->xp->setParameter('', 'lang', $this->params['LANGUAGE']);
@@ -544,7 +543,6 @@ class Csw{
             	$json['records'][$i]['inspire']  = $head[$i]['FOR_INSPIRE'];
             }
         }
-		//$this->headers[1] = HTTP_JSON;
 		if($json['next']>0) $json['next']--; // v json je index od 0
     	return json_encode($json);
     }
@@ -989,15 +987,17 @@ class Csw{
                     break;
             }
         }
-
+        if(strpos($this->params['FORMAT'],'json')!==false){
+            $sablona = "out/json";
+        }
         switch ($this->getParamL('ELEMENTSETNAME')){ //TODO - nefunguje v sablone
           case 'brief':
-              $sablona .= '_brief'; break;
+              $sablona .= '-brief'; break;
           case 'summary':
-              $sablona .= '_summary'; break;
+              $sablona .= '-summary'; break;
           case 'full':
           default:
-          	$sablona .= '_full'; // podle standardu summary
+          	$sablona .= '-full'; // podle standardu summary
           	$this->params['ELEMENTSETNAME'] = "full";
           	break;
         }
@@ -1007,7 +1007,6 @@ class Csw{
         //TODO - kaskadovani
         //---prevod XML do katalogu
         $this->xml->loadXML($xmlstr);
-
         $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
         $this->xp->importStyleSheet($this->xsl);
 
@@ -1018,6 +1017,7 @@ class Csw{
         $this->params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
         $this->params['REWRITE'] = REWRITE_MODE;
         $this->params['THEME'] = MICKA_THEME;
+        $this->params['lang'] = $this->getParamL('LANGUAGE');
         if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= MAXRECORDS;
         if(!isset($this->params['SORTORDER'])) $this->params['SORTORDER']= "ASC";
         $this->setXSLParams($this->params);
@@ -1027,6 +1027,13 @@ class Csw{
             if($this->params['TEMPLATE']) $sablona = $this->params['TEMPLATE'];
             else $sablona = "iso2htmlFull_";
             $output = $this->asHTML($this->xml, $sablona);
+            $this->isXML = false;
+        }
+        else if(strpos($this->params['FORMAT'],'json')!==false){
+            $output = $this->xp->transformToXML($this->xml);
+            //die($output);
+            eval($output);
+            $output = json_encode($rec);
             $this->isXML = false;
         }
         // --- XML ---
