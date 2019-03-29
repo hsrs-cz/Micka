@@ -36,13 +36,13 @@
 					</div>
 					
 					 {* topic category *}
-					<div id="panel-topic" class="form-group">
+					<div id="panel-topic" class="form-group md-hide">
 						<label for="topic" class="control-label">{_messages.frontend.topic_category}</label>
 						<select id="topic" multiple="multiple" class="form-control" data-placeholder="ISO {_messages.frontend.topic_category}"></select>
 					</div>
 
 					{* service type *}
-					<div id="panel-stype" class="form-group">
+					<div id="panel-stype" class="form-group md-hide">
 						<label for="stype" class="control-label">{_messages.frontend.service-type}</label>
 						<select id="stype" multiple="multiple" class="form-control" data-placeholder="{_messages.frontend.select}"></select>
 					</div>
@@ -72,26 +72,22 @@
 					</div>
 					
 					{* Scale *}
-					<div id="panel-denominator" class="form-group">
+					<div id="panel-denominator" class="form-group md-hide">
 						<label id="label-denominator" for="denominator" class="control-label">{_messages.frontend.scale} 1:</label>
 						<select id="denominator" multiple="multiple" class="form-control" data-placeholder="{_messages.frontend.select}" aria-labelledby="label-denominator">{ifset $scales}{$scales}{/ifset}</select>
 					</div>
                     
                     {if $user->isLoggedIn()}
-                       
                         <div class="form-group">
                             <label id="label-status" for="md-status" class="control-label">{_messages.frontend.status}</label>
                             <select id="md-status" class="form-control" multiple="multiple" data-placeholder="{_messages.frontend.select}" aria-labelledby="label-status"></select>
                         </div>
- 
-                        <br/>                        
-                       <div class="checkbox-inline">
+                        <div class="checkbox-inline">
                             <label for="md-inspire"><input id="md-inspire" type="checkbox" name="md-inspire"/>{_messages.frontend.for_inspire}</label>
                         </div>
-                       <div class="checkbox-inline">
+                        <div class="checkbox-inline">
                             <label for="md-my"><input id="md-my" type="checkbox" name="md-my"/>{_messages.frontend.my_records}</label>
                         </div> 
-
                     {/if}
 
 					{* Sort *}

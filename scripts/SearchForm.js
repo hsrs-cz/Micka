@@ -59,11 +59,10 @@ SearchForm = function(){
 	}
 	
 	function changeType(type){
+        $('.md-hide').hide();
 		switch(type){
 			case 'service':
 			//case 'application':	
-				$("#panel-topic").hide();
-				$("#panel-denominator").hide();
 				$("#panel-stype").show();
 				break;
 			case 'data':
@@ -71,15 +70,12 @@ SearchForm = function(){
 			case 'series':
 				$("#panel-topic").show();
 				$("#panel-denominator").show();
-				$("#panel-stype").hide();
 				break;
             case 'featureCatalogue':
                 $("#panel-inspire").hide();
                 // break is missing on purpose
 			default:
-				$("#panel-topic").hide();
-				$("#panel-denominator").hide();
-				$("#panel-stype").hide();
+                break;
 		}
 	}
 	
@@ -96,7 +92,10 @@ SearchForm = function(){
 		placeholder: 'Typ zdroje',
 		minimumResultsForSearch: Infinity
 	})
-    .on('select2:select', this.search).on('select2:unselect', this.search);
+    .on('select2:select', this.search).on('select2:unselect', function(e){
+        $('#res-type').val(null);
+        _this.search()
+    });
 	
 	/*$('#res-type').on('select2:close', function(e){
 		changeType(e.target.value);
@@ -178,7 +177,7 @@ SearchForm = function(){
 		theme: 'bootstrap',
 		maxSelectionLength: 1
 	})
-    .on('select2:select', this.search).on('select2:unselect', this.search);
+    .on('select2:select select2:unselect', this.search);
     
 	$("#denominator").select2({
 		ajax: {
@@ -204,7 +203,7 @@ SearchForm = function(){
 		theme: 'bootstrap',
 		maxSelectionLength: 1
 	})
-    .on('select2:select', this.search).on('select2:unselect', this.search);
+    .on('select2:select select2:unselect', this.search);
     
 	$("#inspire").select2({
 		ajax: {
@@ -219,7 +218,7 @@ SearchForm = function(){
 	   allowClear: true
 	   
 	})
-    .on('select2:select', this.search).on('select2:unselect', this.search);
+    .on('select2:select select2:unselect', this.search);
         
     $("#topic").select2({
 		ajax: {
@@ -239,7 +238,7 @@ SearchForm = function(){
 		allowClear: true,
 		theme: 'bootstrap'
 	})
-    .on('select2:select', this.search).on('select2:unselect', this.search);
+    .on('select2:select select2:unselect', this.search);
     
     $("#stype").select2({
 		ajax: {
@@ -259,7 +258,7 @@ SearchForm = function(){
 		allowClear: true,
 		theme: 'bootstrap'
 	})    
-    .on('select2:select', this.search).on('select2:unselect', this.search);
+    .on('select2:select select2:unselect', this.search);
 
 	$("#md-status").select2({
 		data: [
@@ -274,7 +273,7 @@ SearchForm = function(){
 	   allowClear: true
 	   
 	})
-    .on('select2:select', this.search).on('select2:unselect', this.search);
+    .on('select2:select select2:unselect', this.search);
     
     $("#sort").select2({ minimumResultsForSearch: Infinity, allowClear: false});
 	$("#sortdir").select2({ minimumResultsForSearch: Infinity, allowClear: false});
