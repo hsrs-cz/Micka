@@ -18,15 +18,14 @@
     		<xsl:when test="string-length(*/identificationInfo/*/citation/*/title/@lang)>0"><xsl:value-of select="identificationInfo/*/citation/*/title/@lang"/></xsl:when>
     	<xsl:otherwise>cze</xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>		
+    </xsl:variable>
 
     <xsl:variable name="cl">http://standards.iso.org/iso/19139/resources/ML_gmxCodelists.xml</xsl:variable>
     <xsl:variable name="clx">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml</xsl:variable>
 
 <xsl:template match="MD_Metadata" 
 	xmlns:gml="http://www.opengis.net/gml"
-	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0"
->
+	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0">
 
     <xsl:variable name="ser">
     	<xsl:choose>
@@ -55,9 +54,7 @@
     		<xsl:when test="string-length(identificationInfo/*/citation/*/title/@lang)>0"><xsl:value-of select="identificationInfo/*/citation/*/title/@lang"/></xsl:when>
     	<xsl:otherwise>cze</xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>		
-
-	<!--xsl:variable name="mdLangs" select="@langs"/-->
+    </xsl:variable>
 
    <xsl:variable name="schLoc">
    	 <xsl:choose>
@@ -66,17 +63,6 @@
    	</xsl:choose>
   </xsl:variable>
    	
-
-	<!--  <gmd:MD_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" 
-  xmlns:gco="http://www.isotc211.org/2005/gco"
-  xmlns:srv="http://www.isotc211.org/2005/srv"
-  xmlns:gml="http://www.opengis.net/gml"  
-  xmlns:ogc="http://www.opengis.net/ogc" 
-  xmlns:ows="http://www.opengis.net/ows" 
-  xmlns:xlink="http://www.w3.org/1999/xlink" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="{$schLoc}"
-  >-->
   	<xsl:element name="{$mdRecord}">
   	<xsl:attribute name="xsi:schemaLocation"><xsl:value-of select="$schLoc"/></xsl:attribute>
 	<gmd:fileIdentifier>
@@ -247,29 +233,29 @@
     	<xsl:attribute name="uuid"><xsl:value-of select="@uuid"/></xsl:attribute>
 			<gmd:citation>
 				<xsl:call-template name="citation">
-					<xsl:with-param name="cit" select="identificationInfo/*/citation/CI_Citation"/>                                          
+					<xsl:with-param name="cit" select="identificationInfo/*/citation/CI_Citation"/>
 					<xsl:with-param name="cl" select="$cl"/>                                          
 					<xsl:with-param name="mdLang" select="$mdLang"/>
-					<xsl:with-param name="id" select="concat('cit-',@uuid)"/>                      
+					<xsl:with-param name="id" select="concat('cit-',@uuid)"/>
 			    </xsl:call-template>
 			</gmd:citation>
 					
 			<xsl:call-template name="txt">
-			  <xsl:with-param name="s" select="identificationInfo/*"/>                      
-			  <xsl:with-param name="name" select="'abstract'"/>                      
-			  <xsl:with-param name="lang" select="$mdLang"/>                    
+			  <xsl:with-param name="s" select="identificationInfo/*"/>
+			  <xsl:with-param name="name" select="'abstract'"/>
+			  <xsl:with-param name="lang" select="$mdLang"/>
 		    </xsl:call-template>
 		      
 			<xsl:call-template name="txt">
-			  <xsl:with-param name="s" select="identificationInfo/*"/>                      
-			  <xsl:with-param name="name" select="'purpose'"/>                      
-			  <xsl:with-param name="lang" select="$mdLang"/>                   
+			  <xsl:with-param name="s" select="identificationInfo/*"/>
+			  <xsl:with-param name="name" select="'purpose'"/>
+			  <xsl:with-param name="lang" select="$mdLang"/>
 		    </xsl:call-template>
 			
 			<xsl:call-template name="txt">
-			  <xsl:with-param name="s" select="identificationInfo/*"/>                      
-			  <xsl:with-param name="name" select="'credit'"/>                      
-			  <xsl:with-param name="lang" select="$mdLang"/>                   
+			  <xsl:with-param name="s" select="identificationInfo/*"/>
+			  <xsl:with-param name="name" select="'credit'"/>
+			  <xsl:with-param name="lang" select="$mdLang"/>
 		    </xsl:call-template>
 
       	  <xsl:for-each select="identificationInfo/*/status">
@@ -281,8 +267,8 @@
 			<xsl:for-each select="identificationInfo/*/pointOfContact">
 		        <gmd:pointOfContact>
 		       	 	<xsl:call-template name="contact">
-		    		 	  <xsl:with-param name="org" select="."/>       
-		    		 	  <xsl:with-param name="mdLang" select="$mdLang"/>       
+		    		 	  <xsl:with-param name="org" select="."/>
+		    		 	  <xsl:with-param name="mdLang" select="$mdLang"/>
 		    		 </xsl:call-template>
 		        </gmd:pointOfContact>
 			</xsl:for-each>
@@ -336,9 +322,9 @@
 				<gmd:resourceFormat>
 					<gmd:MD_Format>
                         <xsl:call-template name="txt">
-                            <xsl:with-param name="s" select="*"/>                      
-                            <xsl:with-param name="name" select="'name'"/>                      
-                            <xsl:with-param name="lang" select="$mdLang"/>                   
+                            <xsl:with-param name="s" select="*"/>
+                            <xsl:with-param name="name" select="'name'"/>
+                            <xsl:with-param name="lang" select="$mdLang"/>
                         </xsl:call-template>
 						<gmd:version>
 							<gco:CharacterString><xsl:value-of select="*/version"/></gco:CharacterString>
@@ -350,48 +336,14 @@
 			
 			<xsl:for-each select="identificationInfo/*/descriptiveKeywords/*">
 				<gmd:descriptiveKeywords>
-				  	<gmd:MD_Keywords>				  		
+				  	<gmd:MD_Keywords>
 
 			 			<xsl:call-template name="txt">
-					  		<xsl:with-param name="s" select="."/>                      
-					  		<xsl:with-param name="name" select="'keyword'"/>                      
-					  		<xsl:with-param name="lang" select="$mdLang"/>                   
+					  		<xsl:with-param name="s" select="."/> 
+					  		<xsl:with-param name="name" select="'keyword'"/>
+					  		<xsl:with-param name="lang" select="$mdLang"/>
 					  	</xsl:call-template>
  
- 
-                        <!-- xsl:for-each select="keyword[not(@i = preceding-sibling::keyword[1]/@i)]">
-                            <xsl:variable name="ii" select="@i" />
-                            <xsl:variable name="cnt" select="count(../keyword[@i = $ii])"/>                            
-                            <xsl:choose>
-   		  						<xsl:when test="$cnt>1">
-  			  					 	<gmd:keyword xsi:type="gmd:PT_FreeText_PropertyType">
-                   						<xsl:choose>
-                     			           	<xsl:when test="../keyword[@i=$ii and @lang='uri']">
-									  			<gmx:Anchor xlink:href="{../keyword[@i=$ii and @lang='uri']}">
-									  				<xsl:value-of select="../keyword[@i=$ii and @lang=$mdLang]"/>
-									  			</gmx:Anchor>
-									  		</xsl:when>	
-                                            <xsl:when test="../keyword[@i=$ii and @lang=$mdLang]">
-                                                <gco:CharacterString><xsl:value-of select="../keyword[@i=$ii and @lang=$mdLang]"/></gco:CharacterString>
-  			  					 		    </xsl:when>
-                                        </xsl:choose>     
-                                        <gmd:PT_FreeText>
-	  				  				  		<xsl:for-each select="../keyword[@i=$ii and @lang!=$mdLang and @lang!='uri']">
-	 				   					  		<gmd:textGroup>
-	  												<gmd:LocalisedCharacterString locale="#locale-{@lang}"><xsl:value-of select="." /></gmd:LocalisedCharacterString>
-	  											</gmd:textGroup>
-	  				  					  	</xsl:for-each>
-  			  					  		</gmd:PT_FreeText>
-  			  						</gmd:keyword>
-  				  				</xsl:when>
-                                <xsl:otherwise>
-  				  				  <gmd:keyword>
-  				  					<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-  				  				  </gmd:keyword>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:for-each-->
-
 		  				<xsl:if test="type">
 		  					<gmd:type>
 								<gmd:MD_KeywordTypeCode codeList="{$clx}#MD_KeywordTypeCode" codeListValue="{type/MD_KeywordTypeCode}"><xsl:value-of select="type/MD_KeywordTypeCode"/></gmd:MD_KeywordTypeCode>
@@ -657,7 +609,7 @@
             				</gml:TimePeriod>
             			</gmd:extent>
 			  		</gmd:EX_TemporalExtent>
-				</gmd:temporalElement>							
+				</gmd:temporalElement>
             </xsl:for-each>  
             <xsl:for-each select="identificationInfo/*/extent/*/temporalElement/*/extent/TimeInstant">
 				<gmd:temporalElement>
@@ -668,7 +620,7 @@
             				</gml:TimeInstant>
             			</gmd:extent>
 			 		</gmd:EX_TemporalExtent>
-				</gmd:temporalElement>							
+				</gmd:temporalElement>
             </xsl:for-each> 
             
             <xsl:for-each select="identificationInfo/*/extent/verticalElement">
@@ -682,7 +634,7 @@
         					</gml:VerticalCRS>
                   		</gmd:verticalCRS>
       				</gmd:EX_VerticalExtent>
-				</gmd:verticalElement>						
+				</gmd:verticalElement>
             </xsl:for-each>  
  
 			</gmd:EX_Extent>
@@ -1095,7 +1047,7 @@
                             <!-- 2. source -->
                             <xsl:for-each select="*/lineage/*/source">
                                 <xsl:apply-templates select="."/>
-                            </xsl:for-each>	<!-- source -->			      			
+                            </xsl:for-each>	<!-- source -->
 
                             </gmd:LI_Lineage>
                         </gmd:lineage>
@@ -1180,9 +1132,9 @@
 	<xsl:template match="source" xmlns:gml="http://www.opengis.net/gml" >
 			<gmd:source><gmd:LI_Source>
 				<xsl:call-template name="txt">
-				  <xsl:with-param name="s" select="LI_Source"/>                      
-				  <xsl:with-param name="name" select="'description'"/>                      
-				  <xsl:with-param name="lang" select="$mdLang"/>                     
+				  <xsl:with-param name="s" select="LI_Source"/>
+				  <xsl:with-param name="name" select="'description'"/>
+				  <xsl:with-param name="lang" select="$mdLang"/>
 				</xsl:call-template>
 				
 				<xsl:for-each select="*/scaleDenominator"> 
@@ -1201,9 +1153,9 @@
 						<gmd:referenceSystemIdentifier>
 							<gmd:RS_Identifier>
                                 <xsl:call-template name="txt">
-									<xsl:with-param name="s" select="*/referenceSystemIdentifier/*"/>                      
-									<xsl:with-param name="name" select="'code'"/>                      
-									<xsl:with-param name="lang" select="$mdLang"/>                     
+									<xsl:with-param name="s" select="*/referenceSystemIdentifier/*"/>
+									<xsl:with-param name="name" select="'code'"/>
+									<xsl:with-param name="lang" select="$mdLang"/>
 								</xsl:call-template>
 								<gmd:code>
 									<gco:CharacterString><xsl:value-of select="*/referenceSystemIdentifier/*/code"/></gco:CharacterString>
@@ -1233,9 +1185,9 @@
 							<xsl:otherwise>
 								<gmd:CI_Citation>
 									<xsl:call-template name="txt">
-									  <xsl:with-param name="s" select="CI_Citation"/>                      
-									  <xsl:with-param name="name" select="'title'"/>                      
-									  <xsl:with-param name="lang" select="$mdLang"/>                     
+									  <xsl:with-param name="s" select="CI_Citation"/>
+									  <xsl:with-param name="name" select="'title'"/>
+									  <xsl:with-param name="lang" select="$mdLang"/>
 									</xsl:call-template>
 									<xsl:for-each select="*/date">
 										<gmd:date>
@@ -1268,7 +1220,7 @@
 									</gml:TimePeriod>
 								</gmd:extent>
 							</gmd:EX_TemporalExtent>
-						</gmd:temporalElement>							
+						</gmd:temporalElement>
 				  </xsl:for-each>
 				    
 				  <xsl:for-each select="*/temporalElement/*/extent/TimeInstant">
@@ -1289,16 +1241,16 @@
 				<xsl:for-each select="*/sourceStep">
 					<gmd:sourceStep><gmd:LI_ProcessStep>
 					<xsl:call-template name="txt">
-						  <xsl:with-param name="s" select="LI_ProcessStep"/>                      
-						  <xsl:with-param name="name" select="'description'"/>                      
-						  <xsl:with-param name="lang" select="$mdLang"/>                     
+						  <xsl:with-param name="s" select="LI_ProcessStep"/>
+						  <xsl:with-param name="name" select="'description'"/>
+						  <xsl:with-param name="lang" select="$mdLang"/>
 					</xsl:call-template> 
 					<xsl:for-each select="*/source">
 					   <gmd:source><gmd:LI_Source>
 							<xsl:call-template name="txt">
-								  <xsl:with-param name="s" select="LI_Source"/>                      
-								  <xsl:with-param name="name" select="'description'"/>                      
-								  <xsl:with-param name="lang" select="$mdLang"/>                     
+								  <xsl:with-param name="s" select="LI_Source"/>
+								  <xsl:with-param name="name" select="'description'"/>
+								  <xsl:with-param name="lang" select="$mdLang"/>
 							</xsl:call-template>
 							<xsl:for-each select="*/scaleDenominator"> 
 							<gmd:scaleDenominator>
@@ -1329,9 +1281,9 @@
 
 							<gmd:sourceCitation><gmd:CI_Citation>
 								<xsl:call-template name="txt">
-								  <xsl:with-param name="s" select="*/sourceCitation/CI_Citation"/>                      
-								  <xsl:with-param name="name" select="'title'"/>                      
-								  <xsl:with-param name="lang" select="$mdLang"/>                     
+								  <xsl:with-param name="s" select="*/sourceCitation/CI_Citation"/>
+								  <xsl:with-param name="name" select="'title'"/>
+								  <xsl:with-param name="lang" select="$mdLang"/>
 							</xsl:call-template>
 							<xsl:for-each select="*/sourceCitation/*/date">
 							<gmd:date>
@@ -1359,7 +1311,7 @@
 												</gml:TimePeriod>
 											</gmd:extent>
 										</gmd:EX_TemporalExtent>
-									</gmd:temporalElement>							
+									</gmd:temporalElement>
 								</xsl:for-each>  
 								<xsl:for-each select="*/temporalElement/*/extent/TimeInstant">
 									<gmd:temporalElement>
@@ -1370,13 +1322,13 @@
 												</gml:TimeInstant>
 											</gmd:extent>
 										</gmd:EX_TemporalExtent>
-									</gmd:temporalElement>							
-								</xsl:for-each> 		
+									</gmd:temporalElement>
+								</xsl:for-each>
 							</gmd:EX_Extent>
 						  </gmd:sourceExtent>
 						</xsl:for-each> 
 						
-					   </gmd:LI_Source></gmd:source>	   
+					   </gmd:LI_Source></gmd:source>
 					   </xsl:for-each>
 						</gmd:LI_ProcessStep>
 					   </gmd:sourceStep>
@@ -1394,7 +1346,7 @@
 		  <dc:identifier><xsl:value-of select="@uuid"/></dc:identifier>
 		  <dc:identifier><xsl:value-of select="identifier"/></dc:identifier>
 			<xsl:for-each select="title">
-				<dc:title lang="{@lang}"><xsl:value-of select="."/></dc:title>	
+				<dc:title lang="{@lang}"><xsl:value-of select="."/></dc:title>
 			</xsl:for-each>
 			<xsl:for-each select="description">
 				<dct:abstract lang="{@lang}"><xsl:value-of select="."/></dct:abstract>
@@ -1456,21 +1408,21 @@
   	<gfc:FC_FeatureCatalogue xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd" uuid="{@uuid}">
   		<xsl:variable name="mdLang" select="language/*"/>
 		<xsl:call-template name="ftxt">
-			<xsl:with-param name="s" select="name"/>                      
-			<xsl:with-param name="name" select="'name'"/>                      
+			<xsl:with-param name="s" select="name"/>
+			<xsl:with-param name="name" select="'name'"/>
 			<xsl:with-param name="lang" select="$mdLang"/>
-			<xsl:with-param name="ns" select="'gmx'"/>                     
+			<xsl:with-param name="ns" select="'gmx'"/>
 		</xsl:call-template>
 
 		<xsl:call-template name="ftxt">
-			<xsl:with-param name="s" select="scope"/>                      
-			<xsl:with-param name="name" select="'scope'"/>                      
+			<xsl:with-param name="s" select="scope"/>
+			<xsl:with-param name="name" select="'scope'"/>
 			<xsl:with-param name="lang" select="$mdLang"/>
-			<xsl:with-param name="ns" select="'gmx'"/>                     
+			<xsl:with-param name="ns" select="'gmx'"/>
 		</xsl:call-template>
 		<xsl:call-template name="ftxt">
-			<xsl:with-param name="s" select="fieldOfApplication"/>                      
-			<xsl:with-param name="name" select="'fieldOfApplication'"/>                      
+			<xsl:with-param name="s" select="fieldOfApplication"/>
+			<xsl:with-param name="name" select="'fieldOfApplication'"/>
 			<xsl:with-param name="lang" select="$mdLang"/>
 			<xsl:with-param name="ns" select="'gmx'"/>                     
 		</xsl:call-template>
@@ -1600,14 +1552,14 @@
                 <xsl:attribute name="id"><xsl:value-of select="$id"/></xsl:attribute>
             </xsl:if>
             <xsl:call-template name="txt">
-                <xsl:with-param name="s" select="$cit"/>                      
-                <xsl:with-param name="name" select="'title'"/>                      
-                <xsl:with-param name="lang" select="$mdLang"/>                      
+                <xsl:with-param name="s" select="$cit"/>
+                <xsl:with-param name="name" select="'title'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
             </xsl:call-template>
             <xsl:call-template name="txt">
-              <xsl:with-param name="s" select="$cit"/>                      
-              <xsl:with-param name="name" select="'alternateTitle'"/>                      
-              <xsl:with-param name="lang" select="$mdLang"/>                      
+              <xsl:with-param name="s" select="$cit"/>
+              <xsl:with-param name="name" select="'alternateTitle'"/>
+              <xsl:with-param name="lang" select="$mdLang"/>
             </xsl:call-template>
             <xsl:for-each select="$cit/date">
                 <gmd:date>
@@ -1643,7 +1595,7 @@
                                   <xsl:with-param name="name" select="'code'"/>
                                   <xsl:with-param name="lang" select="$mdLang"/>
                                 </xsl:call-template>
-                            </gmd:MD_Identifier>                                
+                            </gmd:MD_Identifier>
                         </xsl:otherwise>
                     </xsl:choose>
                 </gmd:identifier>
@@ -1663,9 +1615,9 @@
               </gmd:presentationForm>
             </xsl:for-each>
             <xsl:call-template name="txt">
-                <xsl:with-param name="s" select="$cit"/>                      
-                <xsl:with-param name="name" select="'otherCitationDetails'"/>                      
-                <xsl:with-param name="lang" select="$mdLang"/>                      
+                <xsl:with-param name="s" select="$cit"/>
+                <xsl:with-param name="name" select="'otherCitationDetails'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
             </xsl:call-template>
         </gmd:CI_Citation>
     </xsl:template> 

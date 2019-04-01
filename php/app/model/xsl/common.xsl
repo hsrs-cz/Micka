@@ -18,17 +18,17 @@
         </xsl:if>
             <xsl:if test="individualName">
                 <xsl:call-template name="txt">
-                    <xsl:with-param name="s" select="."/>                      
-                    <xsl:with-param name="name" select="'individualName'"/>                      
-                    <xsl:with-param name="lang" select="$mdLang"/>                      
-                </xsl:call-template>                                                              
+                    <xsl:with-param name="s" select="."/>
+                    <xsl:with-param name="name" select="'individualName'"/>
+                    <xsl:with-param name="lang" select="$mdLang"/>
+                </xsl:call-template>
             </xsl:if>
             <xsl:if test="organisationName">
                 <xsl:call-template name="txt">
-                    <xsl:with-param name="s" select="."/>                      
-                    <xsl:with-param name="name" select="'organisationName'"/>                      
-                    <xsl:with-param name="lang" select="$mdLang"/>                      
-                </xsl:call-template>                                                              
+                    <xsl:with-param name="s" select="."/>
+                    <xsl:with-param name="name" select="'organisationName'"/>
+                    <xsl:with-param name="lang" select="$mdLang"/>
+                </xsl:call-template>
             </xsl:if>
             <xsl:if test="positionName">
             <gmd:positionName>
@@ -163,7 +163,7 @@
         		</xsl:when>
         		<xsl:otherwise>
         			<xsl:element name="{$ns}:{$name}">
-        				<gco:CharacterString><xsl:value-of select="normalize-space(lang[@code=$lang]|.)"/></gco:CharacterString>
+        				<gco:CharacterString><xsl:value-of select="lang[@code=$lang]|."/></gco:CharacterString>
         			</xsl:element>	
         		</xsl:otherwise>
         	</xsl:choose>

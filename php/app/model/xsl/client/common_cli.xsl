@@ -1,4 +1,4 @@
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:php="http://php.net/xsl" >
 
 <xsl:variable name="lower">abcdefghijklmnopqrstuvwxyz</xsl:variable>
 <xsl:variable name="upper">ABCDEFGHIJKLMNOPQRSTUVWXYZ</xsl:variable>
@@ -18,13 +18,13 @@
   				<a href="{$uri}" target="_blank">
   	  			<xsl:call-template name="lf2br">
   	    			<xsl:with-param name="str" select="$txt"/>
-      			</xsl:call-template>   		
+      			</xsl:call-template>                
   				</a>
   			</xsl:when>		
   			<xsl:otherwise>
   	  			<xsl:call-template name="lf2br">
   	    			<xsl:with-param name="str" select="$txt"/>
-      			</xsl:call-template>   		
+      			</xsl:call-template>
       		</xsl:otherwise>	
   		</xsl:choose>
   	</xsl:when>
@@ -34,14 +34,15 @@
   				<a href="{$uri}" target="_blank">
   	  			<xsl:call-template name="lf2br">
   	    			<xsl:with-param name="str" select="$el/*"/>
-      			</xsl:call-template>   		
+      			</xsl:call-template>
+                <!--xsl:value-of select="php:function('hsEntitities',string($el/*))"/--> 
   				</a>
   			</xsl:when>		
   			<xsl:otherwise>
   	  			<xsl:call-template name="lf2br">
   	    			<xsl:with-param name="str" select="$el/*"/>
-      			</xsl:call-template>   		
-      		</xsl:otherwise>	
+      			</xsl:call-template>
+      		</xsl:otherwise>
   		</xsl:choose>		
   	</xsl:otherwise>
   </xsl:choose>
@@ -49,23 +50,47 @@
 
 <!-- conversion of page breaks to br -->
 <xsl:template name="lf2br">
-		<xsl:param name="str"/>
-		<xsl:choose>
-			<xsl:when test="contains($str,'&#xA;')">
-				<xsl:value-of select="substring-before($str,'&#xA;')"/>
-				<br/>
-				<xsl:call-template name="lf2br">
-					<xsl:with-param name="str">
-						<xsl:value-of select="substring-after($str,'&#xA;')"/>
-					</xsl:with-param>
-				</xsl:call-template>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:call-template name="showURL">
-					<xsl:with-param name="val" select="$str"/>
-				</xsl:call-template>
-			</xsl:otherwise>
-		</xsl:choose>
+    <xsl:param name="str"/>
+    <xsl:choose>
+        <!-- if the text is link -->
+    	<xsl:when test="substring($str,1,4)='http'">
+			<a href="{$val}"><xsl:value-of select="$str"/></a>
+        </xsl:when>
+        <!-- line brak to <br> -->
+        <xsl:when test="contains($str,'&#xA;')">
+            <xsl:value-of select="substring-before($str,'&#xA;')"/>
+            <br/>
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str">
+                    <xsl:value-of select="substring-after($str,'&#xA;')"/>
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:when>
+        <!-- <sub> and <sup> processing -->
+        <xsl:when test="contains($str,'&lt;sub')">
+            <xsl:value-of select="substring-before($str,'&lt;sub&gt;')"/>
+            <xsl:variable name="s" select="substring-after($str,'&lt;sub&gt;')"/>
+            <sub>
+                <xsl:value-of select="substring-before($s,'&lt;/sub&gt;')"/>
+            </sub>
+            <xsl:call-template name="ss">
+                <xsl:with-param name="str" select="substring-after($s,'&lt;/sub&gt;')"/>
+            </xsl:call-template>
+        </xsl:when>
+        <xsl:when test="contains($str,'&lt;sup')">
+            <xsl:value-of select="substring-before($str,'&lt;sup&gt;')"/>
+            <xsl:variable name="s" select="substring-after($str,'&lt;sup&gt;')"/>
+            <sup>
+                <xsl:value-of select="substring-before($s,'&lt;/sup&gt;')"/>
+            </sup>
+            <xsl:call-template name="ss">
+                <xsl:with-param name="str" select="substring-after($s,'&lt;/sup&gt;')"/>
+            </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:value-of select="$str"/>
+        </xsl:otherwise>
+    </xsl:choose>
 </xsl:template>
 
 <!-- PAGINATOR -->
@@ -96,17 +121,21 @@
 	</xsl:if> 
 </xsl:template>
 
-	<!-- creation of anchor from url -->
+	<!-- creation of anchor from url 
 	<xsl:template name="showURL">
 		<xsl:param name="val"/>
 		<xsl:choose>
 			<xsl:when test="substring($val,1,4)='http'">
 				<a href="{$val}"><xsl:value-of select="$val"/></a>
 			</xsl:when>
-			<xsl:otherwise><xsl:value-of select="$val"/></xsl:otherwise>  	
+			<xsl:otherwise>
+                <xsl:value-of select="$val"/>
+            </xsl:otherwise>  	
 		</xsl:choose>
-	</xsl:template>
+	</xsl:template>-->
 
+
+    
 	<!-- conversion & to  \&  - not used -->
 	<xsl:template name="amp2amp">
 		<xsl:param name="str"/>
