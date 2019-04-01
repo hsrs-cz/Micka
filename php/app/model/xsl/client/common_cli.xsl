@@ -48,7 +48,7 @@
   </xsl:choose>
 </xsl:template>
 
-<!-- conversion of page breaks to br -->
+<!-- conversion of line breaks to <br> -->
 <xsl:template name="lf2br">
     <xsl:param name="str"/>
     <xsl:choose>
@@ -56,9 +56,13 @@
     	<xsl:when test="substring($str,1,4)='http'">
 			<a href="{$val}"><xsl:value-of select="$str"/></a>
         </xsl:when>
-        <!-- line brak to <br> -->
+        <!-- line breaks to <br> -->
         <xsl:when test="contains($str,'&#xA;')">
-            <xsl:value-of select="substring-before($str,'&#xA;')"/>
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str">
+                    <xsl:value-of select="substring-before($str,'&#xA;')"/>
+                </xsl:with-param>
+            </xsl:call-template>
             <br/>
             <xsl:call-template name="lf2br">
                 <xsl:with-param name="str">
@@ -66,24 +70,29 @@
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:when>
-        <!-- <sub> and <sup> processing -->
+        <!-- <sub> processing -->
         <xsl:when test="contains($str,'&lt;sub')">
-            <xsl:value-of select="substring-before($str,'&lt;sub&gt;')"/>
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str" select="substring-before($str,'&lt;sub&gt;')"/>
+            </xsl:call-template>
             <xsl:variable name="s" select="substring-after($str,'&lt;sub&gt;')"/>
             <sub>
                 <xsl:value-of select="substring-before($s,'&lt;/sub&gt;')"/>
             </sub>
-            <xsl:call-template name="ss">
+            <xsl:call-template name="lf2br">
                 <xsl:with-param name="str" select="substring-after($s,'&lt;/sub&gt;')"/>
             </xsl:call-template>
         </xsl:when>
+        <!-- <sup> processing -->
         <xsl:when test="contains($str,'&lt;sup')">
-            <xsl:value-of select="substring-before($str,'&lt;sup&gt;')"/>
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str" select="substring-before($str,'&lt;sup&gt;')"/>
+            </xsl:call-template>
             <xsl:variable name="s" select="substring-after($str,'&lt;sup&gt;')"/>
             <sup>
                 <xsl:value-of select="substring-before($s,'&lt;/sup&gt;')"/>
             </sup>
-            <xsl:call-template name="ss">
+            <xsl:call-template name="lf2br">
                 <xsl:with-param name="str" select="substring-after($s,'&lt;/sup&gt;')"/>
             </xsl:call-template>
         </xsl:when>
