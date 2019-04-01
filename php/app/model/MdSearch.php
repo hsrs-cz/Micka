@@ -36,13 +36,13 @@ class MdSearch
 	private $ext_header = FALSE;
 	private $hits = FALSE;
 	private $bbox = null;
-	private $useOrderByXmlPath = TRUE;
+	private $useOrderByXmlPath = false;
 	private $sortBy = ['title','ASC'];
     private $for_inspire = '';
     private $paginator = TRUE;
     private $startPosition = 0;
     private $maxRecords = 50;
-    private $appLang = 'eng';
+    private $appLang = 'cze';
     private $type_mapping = array();
 
 
@@ -66,7 +66,8 @@ class MdSearch
 		$this->startPosition = $startPosition;
         $this->setMaxRecords($maxRecords);
         
-		$this->sortBy = getSortBy($sortBy, $ret='array');
+        $this->sortBy = getSortBy($sortBy, $ret='array');
+        $this->appLang = MICKA_LANG;
 	}
 
     public function setAppParameters($parameters)
@@ -143,7 +144,7 @@ class MdSearch
 			$right = '';
 		} elseif ($this->user->isInRole('admin')) {
 			$right = '';
-		} elseif ($this->user == 'guest') {
+		} elseif ($user == 'guest') {
 			$right = '(md.data_type>0)';
 		} else {
 			if ($this->only_public) {
@@ -238,7 +239,12 @@ class MdSearch
 			if ($this->useOrderByXmlPath === TRUE) {
 				$this->sql_final[0] = 'SELECT recno, last_update_date, md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
 			} else {
-				$this->sql_final[0] = 'SELECT recno, last_update_date, md_update, title FROM md';
+                $this->sql_final[0] = "
+                    SELECT md.recno, md.last_update_date, md.md_update, COALESCE(m1.md_value, m2.md_value) AS title 
+                    FROM md left join md_values as m1 on (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang')
+                    left join md_values as m2 on (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))
+
+                ";
 			}
 			if ($this->sql_md != '') {
 				$this->sql_final[0] .= ' WHERE ' . substr($this->sql_md, 0, -4);
@@ -485,7 +491,6 @@ class MdSearch
             $dataField = $dataExplode[0];
         }
 		$field = ltrim(substr($data, 0, strrpos($dataField, '_') + 1));
-		//echo "FIELD=$field<br>";
 		switch ($field) {
 			case '_FULL_':
 				$rs['sql'] = $this->parserFullText($data);
@@ -1151,7 +1156,8 @@ class MdSearch
             SELECT count(DISTINCT recno) AS Celkem
         ";
 		$sql_spol['md_in_end'] =  ")";
-		$sql_spol['md_where_end'] =  ")";
+        $sql_spol['md_where_end'] =  ")";
+        //print_r($this->sql_final);
 		if ($type == 'count') {
 			if ($this->useOrderByXmlPath === TRUE) {
                 //$sql_final = str_replace(
@@ -1178,11 +1184,18 @@ class MdSearch
                     $sql_final
                 );
                 $sql_spol['md_select'] .= ', COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title';
+            } else {
+                $sql_final = str_replace(
+                    "SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md",
+                    "SELECT DISTINCT md.recno, md.last_update_date, md.md_update, COALESCE(m1.md_value, m2.md_value) AS title FROM md LEFT JOIN md_values AS m1 ON (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang') LEFT JOIN md_values AS m2 ON (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))",
+                    $sql_final
+                );
             }
-            $sql_final = str_replace('AS title', 'AS title ' . $selectBbox, $sql_final);
+            //$sql_final = str_replace('AS title', 'AS title ' . $selectBbox, $sql_final);
+            //print_r($sql_final); exit;
             if ($this->paginator === TRUE) {
                 $select_limit = " LIMIT " . $this->maxRecords . " OFFSET $ofs";
-            } else {
+             } else {
                 $select_limit = "";
             }
             $sql =  $sql_spol['md_select'] . $selectBbox
@@ -1197,16 +1210,14 @@ class MdSearch
 		$rs = array();
 		$this->setSqlMd();
 		if (is_array($in)) {
+            $key = key($in);
 			if (count($in) == 0 && $this->sql_uuid == '') {
 				$this->setSqlEmptyIn();
-			}
-			elseif (count($in) == 1 && is_array($in[0]) === TRUE &&  count($in[0]) == 0 && $this->sql_uuid == '') {
+			} elseif (count($in) == 1 && is_array($in[$key]) === TRUE &&  count($in[$key]) == 0 && $this->sql_uuid == '') {
 				$this->setSqlEmptyIn();
-			}
-			elseif (count($in) == 0 && $this->sql_uuid != '') {
+			} elseif (count($in) == 0 && $this->sql_uuid != '') {
 				$this->sql_final[0] = 'SELECT recno, last_update_date, md_update, title FROM md WHERE uuid IN ' . $this->sql_uuid;
-			}
-			else {
+			} else {
 				if ($this->isSimpleQuery() === TRUE) {
 					$this->walkQueryInSimple();
 				} else {
@@ -1217,8 +1228,7 @@ class MdSearch
 			if ($this->query_status === FALSE) {
 				return -1;
 			}
-		}
-		else {
+		} else {
 			return -1;
 		}
 
