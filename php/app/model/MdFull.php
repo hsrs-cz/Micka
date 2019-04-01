@@ -196,7 +196,9 @@ class MdFull  extends \BaseModel
 			$hodnoty = array();
 			$md_id = $row->md_id;
 			if($sanit) {
-				$hle = htmlspecialchars($hle);
+                $hle = htmlspecialchars($hle);
+                $hle = str_replace('&lt;sub&gt;', '<sub>', $hle);
+                $hle = str_replace('&lt;/sub&gt;', '</sub>', $hle);
 			}
 			$hodnoty[$md_id]['value'] = str_replace('\\', '\\\\', $hle);
 			$hodnoty[$md_id]['lang'] = $row->lang;;
@@ -216,7 +218,7 @@ class MdFull  extends \BaseModel
 			$retez2 = str_replace("_","][",$retez2);
 			$hodnoty[$md_id]['path'] = '['.$retez2.']';
 			array_push($rs, $hodnoty);
-		}
+        }
 		return $rs;
 	}
 
