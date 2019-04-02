@@ -54,7 +54,7 @@
     <xsl:choose>
         <!-- if the text is link -->
     	<xsl:when test="substring($str,1,4)='http'">
-			<a href="{$val}"><xsl:value-of select="$str"/></a>
+			<a href="{$str}"><xsl:value-of select="$str"/></a>
         </xsl:when>
         <!-- line breaks to <br> -->
         <xsl:when test="contains($str,'&#xA;')">

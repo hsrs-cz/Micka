@@ -873,7 +873,7 @@ function cover1(){
 }
 
 function formatSel2(data){
-    var m = {dataset: 'map', service: 'gears', fc: 'sitemap', nonGeographicDataset: 'th', series: 'th', application: 'desktop'}
+    var m = {dataset: 'map', service: 'gears', fc: 'sitemap', nonGeographicDataset: 'database', series: 'th', application: 'desktop'}
     return $('<span><span class="res-type "'+data.t+'><i class="fa fa-fw fa-lg fa-'+m[data.t]+'"/></span> '+data.text+'</span>');
 }
 
