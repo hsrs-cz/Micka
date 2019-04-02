@@ -580,7 +580,7 @@
 						<xsl:with-param name="el" select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement"/>
 						<xsl:with-param name="lang" select="$lang"/>
 						<xsl:with-param name="mdlang" select="$mdlang"/>
-					</xsl:call-template>					
+					</xsl:call-template>
 				</div>
 			</div>
 
@@ -592,14 +592,21 @@
 							<xsl:variable name="md" select="php:function('getData', string(*/gmd:sourceCitation/@xlink:href))"/>
 	  						<xsl:variable name="url"><xsl:value-of select="concat($mickaURL,'/record/basic/',$md//gmd:fileIdentifier)"/></xsl:variable>
 							<div>
-								<a href="{$url}">				
+								<a href="{$url}">
 									<xsl:call-template name="multi">
 										<xsl:with-param name="el" select="$md//gmd:title"/>
 										<xsl:with-param name="lang" select="$lang"/>
 										<xsl:with-param name="mdlang" select="$mdlang"/>
 									</xsl:call-template>
 								</a>
-							</div>
+                                <xsl:if test="*/gmd:description">
+                                    (<xsl:call-template name="multi">
+                                        <xsl:with-param name="el" select="*/gmd:description"/>
+                                        <xsl:with-param name="lang" select="$lang"/>
+                                        <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    </xsl:call-template>)
+                                </xsl:if>
+                            </div>
 						</xsl:for-each>
 					</div>
 				</div>	

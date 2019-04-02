@@ -124,6 +124,7 @@ function applyTemplate($xmlSource, $xsltemplate, $user) {
 		$xsl = new DomDocument;
 		$xml->loadXML($xmlSource);
 		$xsl->load(__DIR__ . '/xsl/' . $xsltemplate);
+        $xp->registerPhpFunctions();
 		$xp->importStyleSheet($xsl);
 		//$xp->setParameter("","lang",$lang);
 		$xp->setParameter("","user",$user);

@@ -507,7 +507,7 @@ function thes(obj){
 		ajax: {
 			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
 			dataType: 'json',
-			delay: 200,            
+			delay: 200,
 			cache: false
 	   },
 	   theme: 'bootstrap',
@@ -737,13 +737,14 @@ function fc(obj){
     md_dexpand1(obj.parentNode);
     $("#parent-select").select2({
         ajax: {
-            url: baseUrl + '/csw/?format=application/json&elementsetname=full&lang='+lang,
+            url: baseUrl + '/csw/?format=application/json&elementsetname=brief&lang='+lang,
             dataType: 'json',
+            delay: 300,
             data: function(params){
                 q = "type='featureCatalogue'";
-                if(params.term) q += " and AnyText like '*"+ encodeURIComponent(params.term) + "*'";
+                if(params.term) q += " and Title like '"+ encodeURIComponent(params.term) + "*'";
                 return {
-                    query: q                   
+                    query: q
                 };
             },
             processResults: function(data, page){
@@ -758,7 +759,8 @@ function fc(obj){
         language: HS.getLang(2),
         allowClear: true,
         theme: 'bootstrap',
-        maxSelectionLength: 1           
+        allowHtml: true,
+        maxSelectionLength: 1
     });
     $("#parent-select").on('select2:select',function(e){
         var data = e.params.data
@@ -870,6 +872,11 @@ function cover1(){
 	return false;
 }
 
+function formatSel2(data){
+    var m = {dataset: 'map', service: 'gears', fc: 'sitemap', nonGeographicDataset: 'th', series: 'th', application: 'desktop'}
+    return $('<span><span class="res-type "'+data.t+'><i class="fa fa-fw fa-lg fa-'+m[data.t]+'"/></span> '+data.text+'</span>');
+}
+
 function find_parent(obj){
     md_elem = obj.parentNode;
     $("#md-dialog").modal();
@@ -880,17 +887,18 @@ function find_parent(obj){
     $("#md-content").html(html);
     $("#parent-select").select2({
         ajax: {
-            url: baseUrl + '/csw/?format=application/json&lang='+lang,
+            url: baseUrl + '/csw/?elementsetname=brief&maxrecords=20&sortby=title&format=application/json&&lang='+lang,
             dataType: 'json',
+            delay: 300,
             data: function(params){
                 return {
-                    query: params.term ? "AnyText like '*"+ encodeURIComponent(params.term) + "*'" : ''
+                    query: params.term ? "Title like '"+ encodeURIComponent(params.term) + "*'" : ''
                 };
             },
             processResults: function(data, page){
                 return {
                     results: $.map(data.records, function(rec) {
-                        return { id: rec.id, text: rec.title, title: rec.abstract };
+                        return { id: rec.id, text: rec.title, title: rec.abstract, t: rec.type };
                     })  
                 }    
             },
@@ -899,7 +907,11 @@ function find_parent(obj){
         language: HS.getLang(2),
         allowClear: true,
         theme: 'bootstrap',
-        maxSelectionLength: 1           
+        templateResult: formatSel2,
+        templateSelection: formatSel2,
+        allowHtml: true,
+        minimumInputLength: 1,
+        maxSelectionLength: 1
     });
     $("#parent-select").on('select2:select',function(e){
         find_parent1({
@@ -1610,28 +1622,28 @@ var showLogin = function(){
 
 var checkId = function(o){
 	var nody = flatNodes(o.parentNode.parentNode, "INPUT");
-	if(nody[0].value!=''){
-		ajax = new HTTPRequest;
-		ajax.scope = o;		
-		ajax.get(baseUrl + "/csw/?request=GetRecords&format=text/json&query=ResourceIdentifier%20like%20%27"+nody[0].value+"%27", null, checkIdBack, false);
+	if(nody[0].value || nody[1].value){
+        var q = encodeURIComponent("ResourceIdentifier="+nody[1].value);
+		$.ajax({
+            url: baseUrl + "/csw/?request=GetRecords&format=text/json&query="+q
+        })
+        .done(function(r){
+            var uuid = document.forms[1].uuid.value;
+            eval("var data="+r.responseText);
+            var dup = 0;
+            if(r.matched == 0 || (r.matched == 1 && r.records[0].id == uuid)){
+                //o.className="id-ok";
+                o.style.color = 'green';
+            }
+            else {
+                //o.className="id-fail";
+                o.style.color = 'red';
+                alert("ID již existuje");
+            }
+        });
 	}
 }
 
-var checkIdBack = function(r){
-	if(r.readyState == 4){
-		var uuid = document.forms[0].uuid.value;
-		eval("var data="+r.responseText);
-		var dup = 0;
-		if(data.matched == 0 || (data.matched == 1 && data.records[0].id == uuid)){
-			ajax.scope.className="id-ok";
-		}
-		else {
-			ajax.scope.className="id-fail";
-			alert("ID již existuje");
-		}
-	}		  
-
-}
 
 var md_callBack = function(cb, uuid){
 	if(cb.substring(0,6)=='opener'){

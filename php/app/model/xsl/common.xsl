@@ -1,10 +1,12 @@
 <?xml version='1.0' encoding='utf-8' ?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  		xmlns:gco="http://www.isotc211.org/2005/gco" 
-  		xmlns:gmd="http://www.isotc211.org/2005/gmd"
-  	  	xmlns:gmx="http://www.isotc211.org/2005/gmx"
-  	  	xmlns:xlink="http://www.w3.org/1999/xlink"
-  	  	xmlns:gfc="http://www.isotc211.org/2005/gfc"
+<xsl:stylesheet version="1.0" 
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  	xmlns:gco="http://www.isotc211.org/2005/gco" 
+  	xmlns:gmd="http://www.isotc211.org/2005/gmd"
+  	xmlns:gmx="http://www.isotc211.org/2005/gmx"
+  	xmlns:xlink="http://www.w3.org/1999/xlink"
+  	xmlns:gfc="http://www.isotc211.org/2005/gfc"
+    xmlns:php="http://php.net/xsl" 
 >
 
 
@@ -128,12 +130,12 @@
                 <!-- multilingual with URI -->
         		<xsl:when test="lang[@code='uri'] and $count>2">
         			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
-        				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="lang[@code=$lang]"/></gmx:Anchor>
+        				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="php:function('trim',string(lang[@code=$lang]))"/></gmx:Anchor>
                         <xsl:if test="lang[@code!=$lang and @code!='uri']">
                             <gmd:PT_FreeText>
                             <xsl:for-each select="lang[@code!=$lang and @code!='uri']">
                                 <gmd:textGroup>
-                                    <gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
+                                    <gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="php:function('trim',string(.))"/></gmd:LocalisedCharacterString>
                                 </gmd:textGroup>
                             </xsl:for-each>
                             </gmd:PT_FreeText>
@@ -143,12 +145,12 @@
                 <!-- multilingual without URI -->
         		<xsl:when test="not(lang[@code='uri']) and $count>1">
         			<xsl:element name="{$ns}:{$name}" use-attribute-sets="free">
-        				<gco:CharacterString><xsl:value-of select="lang[@code=$lang]"/></gco:CharacterString>
+        				<gco:CharacterString><xsl:value-of select="php:function('trim',string(lang[@code=$lang]))"/></gco:CharacterString>
                         <xsl:if test="lang[@code!=$lang]">
                             <gmd:PT_FreeText>
                             <xsl:for-each select="lang[@code!=$lang]">
                                 <gmd:textGroup>
-                                    <gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="."/></gmd:LocalisedCharacterString>
+                                    <gmd:LocalisedCharacterString locale="#locale-{@code}"><xsl:value-of select="php:function('trim',string(.))"/></gmd:LocalisedCharacterString>
                                 </gmd:textGroup>
                             </xsl:for-each>
                             </gmd:PT_FreeText>
@@ -158,12 +160,12 @@
                 <!-- monolinugal with URI -->
         		<xsl:when test="lang[@code='uri']">
         			<xsl:element name="{$ns}:{$name}">
-        				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="lang[@code=$lang]|lang[@code='xxx']"/></gmx:Anchor>
+        				<gmx:Anchor xlink:href="{lang[@code='uri']}"><xsl:value-of select="php:function('trim',string(lang[@code=$lang]|lang[@code='xxx']))"/></gmx:Anchor>
         			</xsl:element>	
         		</xsl:when>
         		<xsl:otherwise>
         			<xsl:element name="{$ns}:{$name}">
-        				<gco:CharacterString><xsl:value-of select="lang[@code=$lang]|."/></gco:CharacterString>
+        				<gco:CharacterString><xsl:value-of select="php:function('trim',string(lang[@code=$lang]|.))"/></gco:CharacterString>
         			</xsl:element>	
         		</xsl:otherwise>
         	</xsl:choose>
