@@ -252,8 +252,16 @@
         <div class="micka-row">
             <label><xsl:value-of select="$msg[@eng='Identifier']"/></label>
             <div class="c" property="http://purl.org/dc/terms/identifier">
-                <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/>
-                <xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/>
+                <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier">
+                    <xsl:choose>
+                        <xsl:when test="*/gmd:code/*/@xlink:href">
+                            <xsl:value-of select="*/gmd:code/*/@xlink:href"/>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="*/gmd:codeSpace"/>:<xsl:value-of select="*/gmd:code"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:for-each>
             </div>
         </div>
 

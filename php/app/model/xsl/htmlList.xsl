@@ -12,7 +12,7 @@
   xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" 
   xmlns:gco="http://www.isotc211.org/2005/gco" >
 <xsl:output method="html"/>
-	
+
 	<!-- obalená věta -->
 	<xsl:template match="rec">
 		<div class="rec" id="r-{position()}" itemscope="itemscope" itemtype="http://schema.org/GeoShape">
