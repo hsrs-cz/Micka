@@ -241,17 +241,22 @@ class MdSearch
 			} else {
                 $this->sql_final[0] = "
                     SELECT md.recno, md.last_update_date, md.md_update, COALESCE(m1.md_value, m2.md_value) AS title 
-                    FROM md left join md_values as m1 on (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang')
-                    left join md_values as m2 on (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))
-
+                    FROM md LEFT JOIN md_values AS m1 ON (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang')
+                    LEFT JOIN md_values AS m2 ON (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))
                 ";
 			}
 			if ($this->sql_md != '') {
 				$this->sql_final[0] .= ' WHERE ' . substr($this->sql_md, 0, -4);
 			}
 		} else {
-			$this->sql_final[0] = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno'; 
-			if ($this->sql_md == '') {
+			//$this->sql_final[0] = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno'; 
+            $this->sql_final[0] = "
+                SELECT md.recno, md.last_update_date, md.md_update, COALESCE(m1.md_value, m2.md_value) AS title 
+                FROM md LEFT JOIN md_values AS m1 ON (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang')
+                LEFT JOIN md_values AS m2 ON (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))
+                JOIN md_values ON md.recno=md_values.recno
+            ";
+            if ($this->sql_md == '') {
 				$this->sql_final[0] .= ' WHERE ' . substr($this->sql_or, 0, -4);
 			} else {
 				$this->sql_final[0] .= ' WHERE ' . $this->sql_or;
@@ -1042,8 +1047,13 @@ class MdSearch
 			}
 			$this->sql_md .= ' AND ';
 		}
-        $sql_smd = 'SELECT recno, last_update_date, md.md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
-		$sql_s = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno';
+        //$sql_smd = 'SELECT recno, last_update_date, md.md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
+        $sql_smd = "
+            SELECT md.recno, md.last_update_date, md.md_update, COALESCE(m1.md_value, m2.md_value) AS title 
+            FROM md left join md_values as m1 on (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang')
+            left join md_values as m2 on (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))
+        ";
+        $sql_s = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno';
 		$this->sql_final[0] = '';
 		if (count($this->query_out_value) > 0) {
 			foreach ($this->query_out_value as $key => $value) {
@@ -1099,7 +1109,12 @@ class MdSearch
 					$grpBy = '';
 					$sql_s = 'SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md JOIN md_values ON md.recno=md_values.recno';
 					if (strpos($sql_row, 'md_values.') === FALSE) {
-                        $sql_s = 'SELECT recno, last_update_date, md.md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
+                        //$sql_s = 'SELECT recno, last_update_date, md.md_update, COALESCE((xpath(\'//gmd:identificationInfo/*/gmd:citation/*/gmd:title//gmd:LocalisedCharacterString[contains(@locale, "' . $this->appLang . '")]/text()\', pxml, ARRAY[ARRAY[\'gmd\', \'http://www.isotc211.org/2005/gmd\']]))[1]::text, title) AS title FROM md';
+                        $sql_s = "    
+                            SELECT md.recno, md.last_update_date, md.md_update, COALESCE(m1.md_value, m2.md_value) AS title 
+                            FROM md left join md_values as m1 on (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang')
+                            left join md_values as m2 on (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))
+                        ";
 					}
 					$sql_row = strpos($sql_row, 'SELECT') === FALSE ? $sql_s . ' WHERE ' . $this->sql_md . $sql_row . $grpBy : $sql_row;
 					if ($sql_row != '') {
@@ -1159,6 +1174,7 @@ class MdSearch
         $sql_spol['md_where_end'] =  ")";
         //print_r($this->sql_final);
 		if ($type == 'count') {
+            $sql_final = $this->sql_final[0];
 			if ($this->useOrderByXmlPath === TRUE) {
                 //$sql_final = str_replace(
                 //    'SELECT DISTINCT md.recno, md.last_update_date, md.title',
@@ -1167,8 +1183,13 @@ class MdSearch
                 //);
 			} else {
 				//$sql_final = $this->sql_final[0];
+                $sql_final = str_replace(
+                    "SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md",
+                    "SELECT DISTINCT md.recno, md.last_update_date, md.md_update, COALESCE(m1.md_value, m2.md_value) AS title FROM md LEFT JOIN md_values AS m1 ON (md.recno=m1.recno AND m1.md_id IN (11,5063) AND m1.lang='$this->appLang') LEFT JOIN md_values AS m2 ON (md.recno=m2.recno AND m2.md_id IN (11,5063) AND m2.lang=substring(md.lang,1,3))",
+                    $sql_final
+                );
 			}
-            $sql_final = $this->sql_final[0];
+            //$sql_final = $this->sql_final[0];
 			$sql = "SELECT 	count(DISTINCT recno) AS Celkem FROM md WHERE (recno IN (SELECT recno FROM("
 						. $sql_final
 						. ') jojo))';
