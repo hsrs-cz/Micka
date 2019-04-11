@@ -181,13 +181,6 @@ class RecordModel extends \BaseModel
     
     private function setEditMd2Md($editRecno, $recno)
     {
-        // validate
-        if ($this->appParameters['app']['validator'] === true) {
-            $this->recordValidate($this->recordMd->pxml);
-            $this->db->query("UPDATE edit_md SET valid=?, prim=? WHERE sid='".session_id()."' AND recno=?",
-                $this->recordMd->valid, $this->recordMd->prim, $editRecno);
-        }
-        
         $mdRecno = NULL;
         if ($recno == 0) {
             $mdRecno = $this->getNewRecno('md');
@@ -284,6 +277,12 @@ class RecordModel extends \BaseModel
             // error
         }
         $editRecno = $this->recordMd->recno;
+        // validate
+        if ($this->appParameters['app']['validator'] === true) {
+            $this->recordValidate($this->recordMd->pxml);
+            $this->db->query("UPDATE edit_md SET valid=?, prim=? WHERE sid='".session_id()."' AND recno=?",
+                $this->recordMd->valid, $this->recordMd->prim, $editRecno);
+        }
         $this->setRecordMdById($this->recordMd->uuid, 'md', 'edit');
         if ($this->recordMd) {
             $this->deleteMdValues($this->recordMd->recno);
