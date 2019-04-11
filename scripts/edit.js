@@ -741,7 +741,7 @@ function fc(obj){
             delay: 300,
             data: function(params){
                 q = "type='featureCatalogue'";
-                if(params.term) q += " and Title like '"+ encodeURIComponent(params.term) + "*'";
+                if(params.term) q += " and Title like '"+ params.term + "*'";
                 return {
                     query: q
                 };
@@ -891,7 +891,7 @@ function find_parent(obj){
             delay: 300,
             data: function(params){
                 return {
-                    query: params.term ? "Title like '"+ encodeURIComponent(params.term) + "*'" : ''
+                    query: params.term ? "Title like '"+ params.term + "*'" : ''
                 };
             },
             processResults: function(data, page){
@@ -1707,7 +1707,7 @@ var md_upload = function(obj, mime){
         .done(function(result){
             var inp = flatNodes(md_elem.parentNode, 'INPUT');
             if(result) {
-                inp[0].value = result;
+                inp[0].value = 'to be done...';//result;
                 inp[1].value = 'http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/WWW:DOWNLOAD-1.0-http--download';
                 inp[2].value = 'WWW:DOWNLOAD-1.0-http--download';
                 $("#md-dialog").modal('hide');
