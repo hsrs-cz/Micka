@@ -39,6 +39,9 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
         $list = $xml->xpath("//$type/value");
         foreach ($list as $row){
             echo "<a href=\"javascript:formats1({uri:'".$row['uri']."', ";
+            if($row['publication']){
+                echo "publication:'".$row['publication']."', ";
+            }
             foreach($row as $k=>$v){
                 if($k!='uri'){
                     echo "$k:'".$v['name']."',";

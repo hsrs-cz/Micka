@@ -1169,7 +1169,7 @@ function formats1(data){
         var lang;
 	    for(var i=0;i<inputs.length;i++){
             lang = inputs[i].name.split('|')[1];
-	      	if(inputs[i].type=='text'){
+	      	if(inputs[i].type=='text' && inputs[i].className=='T'){
 	        	if(typeof(data)=="object"){
                     if(data.value){
                         f = data.value;
@@ -1183,11 +1183,19 @@ function formats1(data){
                     }
 	      		}
 	      		else f = data;
-	        	//if(md_addMode)inputs[i].value += f; 
-	        	//else 
                 inputs[i].value = f;
-	      	}   
-	    }   
+	      	}
+	    }
+        // fill the publication date if present
+        if(data.publication){
+            var inputs = flatNodes(md_elem.parentNode, "INPUT");
+            for(var i=0;i<inputs.length;i++){
+                if(inputs[i].className=='D'){
+                    inputs[i].value = data.publication;
+                    break;
+                }
+            }
+        }
 	}
     $('#md-dialog').modal('hide');
 }
