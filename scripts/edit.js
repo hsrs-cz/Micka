@@ -390,7 +390,6 @@ function start(){
             $("#parent-text").html(data.title);
         });
 	}
-    
 }
 
 /* editovani */
@@ -874,7 +873,7 @@ function cover1(){
 
 function formatSel2(data){
     var m = {dataset: 'map', service: 'gears', fc: 'sitemap', nonGeographicDataset: 'database', series: 'th', application: 'desktop'}
-    return $('<span><span class="res-type "'+data.t+'><i class="fa fa-fw fa-lg fa-'+m[data.t]+'"/></span> '+data.text+'</span>');
+    return $('<span><span class="res-type '+data.t+'"><i class="fa fa-fw fa-lg fa-'+m[data.t]+'"/></span> '+data.text+'</span>');
 }
 
 function find_parent(obj){
@@ -1139,9 +1138,9 @@ function uploadFile1(fileURL){
 }
 
 function swapi(o){
-  var pom=o.src.lastIndexOf(".");
-  if(o.src.charAt(pom-1)=="_")o.src=o.src.substr(0,pom-1)+"."+o.src.substr(pom+1,10);
-  else o.src=o.src.substr(0,pom)+"_."+o.src.substr(pom+1,10);
+    var pom=o.src.lastIndexOf(".");
+    if(o.src.charAt(pom-1)=="_")o.src=o.src.substr(0,pom-1)+"."+o.src.substr(pom+1,10);
+    else o.src=o.src.substr(0,pom)+"_."+o.src.substr(pom+1,10);
 }
 
 function formats(obj){
@@ -1638,7 +1637,7 @@ var checkId = function(o){
             else {
                 //o.className="id-fail";
                 o.style.color = 'red';
-                alert("ID již existuje");
+                alert("ID duplicity");
             }
         });
 	}

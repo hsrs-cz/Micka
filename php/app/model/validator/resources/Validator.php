@@ -106,11 +106,6 @@ function isGemet($keyword, $lang){
 	    return $keyword;
 	}
 	return "";
-	/*$s = str_replace(array('\r\n', '"', 'string'), array(' ','\"', 'name'), $s);
-	eval('$s="{results:'.$s.'}";');
-	$s = json2array($s);
-	return $s;
-	return var_export($s,true);*/
 }
 
 class Validator{
@@ -222,7 +217,7 @@ class Validator{
 		    foreach ($xml->error as $err){
     			$tests[] = array(
     				'code' => $err->code,
-    				"value" => $err->line,
+    				"value" => htmlentities($err->line),
     				'err' => (string) $err->message
     			); 
 		    } 
@@ -248,7 +243,7 @@ class Validator{
 			$test['level'] = (string) $t['level'];
 			$test['description'] = (string) $t->description;
 			$test['xpath'] = (string) $t->xpath;
-			$test['value'] = trim((string) $t->value);
+			$test['value'] = htmlentities(trim((string) $t->value));
 			$test['pass'] = (boolean) $t->pass;
 			$test['deepPass'] = $test['pass'];
 			$test['err'] = trim((string) $t->err);
@@ -301,8 +296,9 @@ class Validator{
 				if(!$row['err']) $row['err'] = (string)$this->msg->msg->mv;
 				if($row['xpath']) $row['err'] .= " (" . $row['xpath'] . ")";
 			}
-			$output .= '<div class="row"><div class="hd"><span class="'.$class.'"><i class="fa fa-'.$this->icons[$class].' fa-fw fa-lg"></i></span> (' . $row['code'] . ')</div>';
-			$output .= "<div class='msgs'><div class='title' id='VAL-".$row['code']."'>" . $row['description'] . "</div>";
+			$output .= '<div class="row"><div class="hd"><span class="'.$class.'"><i class="fa fa-'
+                .$this->icons[$class].' fa-fw fa-lg"></i></span> (' . $row['code'] . ')</div>';
+			$output .= "<div class='msgs'><div class='title' id='VAL-".$row['code']."'>".$row['description']."</div>";
 			if($row['value']) $output .= "<div class='value'>" . $row['value'] . "</div>";
 			if($row['err']) $output .= "<div class='msg-".$class."'>" . $row['err'] . "</div>";
 			$output .= "</div></div>";
@@ -318,7 +314,9 @@ class Validator{
   	function asHTML($short=false){
   		$result = $this->asArray($short);
 		$output = '<div id="owsValidator"><h2><a class="go-back" style="float:right;" href="javascript:history.go(-1);" title="'.(string)$this->msg->msg->back.'"></a>'.$this->title.'</h2>';
-  		if($short && $this->fail==0 && $this->warn==0) $output .= '<div class="msg-ok">'.(string) $this->msg->msg->ok.'</div>';
+  		if($short && $this->fail==0 && $this->warn==0){
+            $output .= '<div class="msg-ok">'.(string) $this->msg->msg->ok.'</div>';
+        }
 		$output .= $this->createHTML($result);
 		$output .= "<div style='clear:both; border-bottom:1px solid #909090; margin: 10px 0px 8px 0px;'></div>
 		  <div class='row valid-legend' style='height:16px;'>
