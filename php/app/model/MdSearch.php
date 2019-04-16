@@ -450,9 +450,15 @@ class MdSearch
                 //$data = $mapping;
             }
             if (stripos($data, '!=') !== FALSE) {
-                $data = "SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md WHERE (SELECT count(*) FROM md_values WHERE md.recno=md_values.recno AND $data)=0";
-    			$data = str_replace("!=", '=', $data);
-            }
+                //$data = "SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title FROM md WHERE (SELECT count(*) FROM md_values WHERE md.recno=md_values.recno AND $data)=0";
+    			//$data = str_replace("!=", '=', $data);
+                $data = str_replace("AND md_values.md_value !=", 'AND NOT md_values.md_value =', $data);
+                $data = "
+                    SELECT DISTINCT md.recno, md.last_update_date, md.md_update, md.title 
+                    FROM md INNER JOIN md_values ON md.recno=md_values.recno 
+                    WHERE $data
+                ";
+    }
 			$rs = array();
 			$rs['con'] = $con;
 			$rs['sql'] = $data;
