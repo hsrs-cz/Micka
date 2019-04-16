@@ -439,7 +439,6 @@ class RecordModel extends \BaseModel
 		$md['recno'] = $this->getNewRecno('edit_md');
         $md['uuid'] = $this->getUuid();
 		$md['md_standard'] = isset($post['standard']) ? $post['standard'] : 0;
-        $md['lang'] = isset($post['standard']) ? $post['standard'] : 0;
 		$md['data_type'] = -1;
 		$md['create_user'] = $this->user->identity->username;
 		$md['create_date'] = Date("Y-m-d");
