@@ -196,6 +196,9 @@
                                     <xsl:with-param name="mdlang" select="$mdlang"/>
                                 </xsl:call-template>
                             </xsl:when>
+                            <xsl:when test="$d">
+                                <xsl:value-of select="$d"/>
+                            </xsl:when>
                             <xsl:otherwise><xsl:value-of select="*/gmd:linkage"/></xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
@@ -203,42 +206,48 @@
                         <xsl:choose>
                             <xsl:when test="contains(*/gmd:protocol, 'DOWNLOAD')">
                                 <a href="{*/gmd:linkage}"  target="_blank">
-                                    <span style="color:#070; font-size:20px;"><i class="fa fa-download"></i></span><xsl:text> </xsl:text>
+                                    <span style="color:#070; font-size:18px;"><i class="fa fa-download"></i></span><xsl:text> </xsl:text>
                                     <xsl:value-of select="$label"/>
                                 </a>	
                             </xsl:when>
                             <xsl:when test="contains(*/gmd:protocol, 'rss')">
                                 <a href="{*/gmd:linkage}"  target="_blank">
-                                    <span style="color:#ff6600; font-size:20px;"><i class="fa fa-feed"></i></span><xsl:text> </xsl:text>
+                                    <span style="color:#ff6600; font-size:18px;"><i class="fa fa-feed"></i></span><xsl:text> </xsl:text>
                                     <xsl:value-of select="$label"/>
                                 </a>	
                             </xsl:when>
                             <xsl:when test="contains(*/gmd:protocol/*,'WMS') or contains(*/gmd:linkage/*,'WMS')">
                                 <xsl:variable name="label1">
                                     <xsl:choose>
-                                        <xsl:when test="*/gmd:name"><xsl:value-of select="$d"/></xsl:when>
+                                        <xsl:when test="*/gmd:name"><xsl:value-of select="$label"/></xsl:when>
                                         <xsl:otherwise><xsl:value-of select="$msg[@eng='showMap']"/></xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:variable>
                                 <xsl:choose>
                                     <xsl:when test="contains(*/gmd:linkage/*,'?')">
-                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>		  				
+                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{substring-before(*/gmd:linkage/*,'?')}" target="wmsviewer">
+                                            <span style="color:#ff6600; font-size:18px;"><i class="fa fa-map"></i></span><xsl:text> </xsl:text>
+                                            <xsl:value-of select="$label1"/>
+                                        </a>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer"><span style="color:#ff6600; font-size:20px;"><i class="fa fa-map"></i></span> WMS: <xsl:value-of select="php:function('noMime',string($label1))"/></a>
+                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{*/gmd:linkage/*}" target="wmsviewer">
+                                            <span style="color:#ff6600; font-size:18px;"><i class="fa fa-map"></i></span><xsl:text> </xsl:text>
+                                            <xsl:value-of select="$label1"/>
+                                        </a>
                                     </xsl:otherwise>
                                 </xsl:choose>
                             </xsl:when>
                             <xsl:otherwise>
                                 <a resource="{*/gmd:linkage}" href="{*/gmd:linkage}"  target="_blank">
                                     <span style="font-size:18px;"><i class="fa fa-external-link-square"></i></span><xsl:text> </xsl:text>
-                                    <xsl:value-of select="php:function('noMime',string($label))"/>
+                                    <xsl:value-of select="$label"/>
                                 </a>
                             </xsl:otherwise>
                         </xsl:choose>
-                    </div>
-                    <div>
-                        <xsl:value-of select="$d"/>
+                        <xsl:if test="$d and $label != $d">
+                            - <xsl:value-of select="$d"/>
+                        </xsl:if>
                     </div>
                 </xsl:for-each>
             </div>
