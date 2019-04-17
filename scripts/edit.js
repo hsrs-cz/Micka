@@ -736,7 +736,7 @@ function fc(obj){
     md_dexpand1(obj.parentNode);
     $("#parent-select").select2({
         ajax: {
-            url: baseUrl + '/csw/?format=application/json&elementsetname=brief&lang='+lang,
+            url: baseUrl + '/csw/?format=application/json&elementsetname=full&lang='+lang,
             dataType: 'json',
             delay: 300,
             data: function(params){
@@ -773,7 +773,7 @@ function fc(obj){
             $('#fc-features input:checked').each(function(i){
                 ff.push(this.name);
             })
-            fc1({uuid: data.id, titles: data.titles, date: data.d, dateType: 'revision'}, ff);
+            fc1({uuid: data.id, titles: data.title, date: data.d, dateType: 'revision'}, ff);
             $("#md-dialog").modal('hide');
         });
     });
@@ -797,7 +797,7 @@ function fc1(fcObj, lyrlist){
         else switch(v.id){
           case '2370': fList.push(v); break;
           case '2070': v.value = fcObj.uuid; break;
-          case '3940': if(fcObj.date[0]) v.value = fcObj.date; break;
+          case '3940': if(fcObj.date && fcObj.date[0]) v.value = fcObj.date; break;
         }
     }
     for(var i=0;i<selects.length;i++){

@@ -150,6 +150,10 @@
 			   		<xsl:with-param name="lang" select="$lang"/>
 			   		<xsl:with-param name="mdlang" select="$mdlang"/>
 			  	</xsl:call-template>'; 
+    $rec['titles']['<xsl:value-of select="$mdlang"/>'] = '<xsl:value-of select="gmx:name"/>';
+    <xsl:for-each select="gmx:name/*/gmd:textGroup">
+        $rec['titles']['<xsl:value-of select="substring-after(*/@locale,'-')"/>'] = '<xsl:value-of select="*"/>';
+    </xsl:for-each>
     $rec['abstract'] = '<xsl:call-template name="multi">
 		   		<xsl:with-param name="el" select="gmx:scope"/>
 		   		<xsl:with-param name="lang" select="$lang"/>

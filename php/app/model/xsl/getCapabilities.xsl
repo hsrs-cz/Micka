@@ -123,10 +123,15 @@
 			</ows:Parameter>
 			<ows:Parameter name="outputFormat">
 				<ows:Value>application/xml</ows:Value>
-			</ows:Parameter>
+                <ows:Value>application/json</ows:Value>
+                <ows:Value>text/html</ows:Value>
+            </ows:Parameter>
 			<ows:Parameter name="outputSchema">
 				<ows:Value>http://www.opengis.net/cat/csw/2.0.2</ows:Value>
         		<ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
+        		<ows:Value>http://www.w3.org/2005/Atom</ows:Value>
+        		<ows:Value>http://www.w3.org/ns/dcat</ows:Value>
+        		<ows:Value>http://earth.google.com/kml/2.2</ows:Value>                
 			</ows:Parameter>
 			<ows:Parameter name="resultType">
 				<ows:Value>hits</ows:Value>
@@ -145,6 +150,7 @@
 			<ows:Constraint name="SupportedISOQueryables">
 		        <ows:Value>Abstract</ows:Value>
 		        <ows:Value>AlternateTitle</ows:Value>
+                <ows:Value>BoundingBox</ows:Value>
 		        <ows:Value>CreationDate</ows:Value>
 		        <ows:Value>Distance</ows:Value>
 		        <ows:Value>DistanceUOM</ows:Value>
@@ -164,6 +170,7 @@
 		        <ows:Value>RevisionDate</ows:Value>
 		        <ows:Value>SpatialResolution</ows:Value>
 		        <ows:Value>ServiceType</ows:Value>
+                <ows:Value>Subject</ows:Value>
 		        <ows:Value>TempExtent_begin</ows:Value>
 		        <ows:Value>TempExtent_end</ows:Value>
 		        <ows:Value>TopicCategory</ows:Value>
@@ -172,13 +179,16 @@
 	      	</ows:Constraint>
 	      	<ows:Constraint name="AdditionalQueryables">
         		<ows:Value>AccessConstraints</ows:Value>
+                <ows:Value>AlternateTitle</ows:Value>
 		        <ows:Value>Classification</ows:Value>
 		        <ows:Value>ConditionApplyingToAccessAndUse</ows:Value>
 		        <ows:Value>ContactCountry</ows:Value>
         		<ows:Value>Degree</ows:Value>
+                <ows:Value>Denominator</ows:Value>
         		<ows:Value>FcIdentifier</ows:Value>
 		        <ows:Value>Fees</ows:Value>
         		<ows:Value>Format</ows:Value>
+                <ows:Value>FullText</ows:Value>
 		        <ows:Value>GeographicDescriptionCode</ows:Value>
         		<ows:Value>IndividualName</ows:Value>
 		        <ows:Value>Lineage</ows:Value>
@@ -188,8 +198,11 @@
 		        <ows:Value>MetadataCountry</ows:Value>
 		        <ows:Value>MetadataRole</ows:Value>
 		        <ows:Value>OtherConstraints</ows:Value>
+                <ows:Value>OperatesOn</ows:Value>
+                <ows:Value>OperatesOnName</ows:Value>
 		        <ows:Value>Protocol</ows:Value>
 		        <ows:Value>ResponsiblePartyRole</ows:Value>
+                <ows:Value>ResourceLanguage</ows:Value>
 		        <ows:Value>ServiceType</ows:Value>
 		        <ows:Value>SpecificationTitle</ows:Value>
 		        <ows:Value>SpecificationDate</ows:Value>
@@ -223,10 +236,6 @@
 			<ows:Parameter name="outputSchema">
 				<ows:Value>http://www.opengis.net/cat/csw/2.0.2</ows:Value>
         		<ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
-        		<ows:Value>http://www.georss.org/georss</ows:Value>
-        		<ows:Value>http://www.w3.org/2005/Atom</ows:Value>
-        		<ows:Value>http://www.w3.org/ns/dcat</ows:Value>
-        		<ows:Value>http://earth.google.com/kml/2.2</ows:Value>
 			</ows:Parameter>
 		</ows:Operation>
 		
@@ -322,9 +331,9 @@
 				<ogc:ComparisonOperator>LessThan</ogc:ComparisonOperator>
 				<ogc:ComparisonOperator>LessThanEqualTo</ogc:ComparisonOperator>
 				<ogc:ComparisonOperator>GreaterThanEqualTo</ogc:ComparisonOperator>
-				<!-- to implement -->
+				<!-- to implement 
 				<ogc:ComparisonOperator>Between</ogc:ComparisonOperator>
-				<ogc:ComparisonOperator>NullCheck</ogc:ComparisonOperator>
+				<ogc:ComparisonOperator>NullCheck</ogc:ComparisonOperator>-->
 			</ogc:ComparisonOperators>
 		</ogc:Scalar_Capabilities>
 		<ogc:Id_Capabilities>
