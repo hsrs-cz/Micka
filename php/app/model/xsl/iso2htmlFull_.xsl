@@ -404,7 +404,7 @@
                                     <xsl:with-param name="lang" select="$lang"/>
                                     <xsl:with-param name="mdlang" select="$mdlang"/>
                                 </xsl:call-template>
-                            </xsl:variable>							     	
+                            </xsl:variable>
                             <xsl:choose>
                                 <xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
                                     <a href="{./*/@xlink:href}" title="{$theme}" target="_blank">
@@ -429,7 +429,7 @@
                                 <xsl:otherwise>
                                     <div>
                                         <xsl:value-of select="$theme"/>
-                                    </div>	
+                                    </div>
                                 </xsl:otherwise>
                             </xsl:choose>
                         </xsl:for-each>
@@ -571,7 +571,9 @@
 				<xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact">
 					<div rel="http://www.w3.org/ns/dcat#contactPoint">
 						<xsl:apply-templates select="*"/>
-						<xsl:if test="position()!=last()"><div style="margin-top:8px"></div></xsl:if>
+						<xsl:if test="position()!=last()">
+                            <div style="margin:5px 0 5px 0; border-bottom: 1px solid #EEE;"></div>
+                        </xsl:if>
 					</div>
 				</xsl:for-each>
 			</div>
@@ -758,7 +760,9 @@
 					<xsl:for-each select="gmd:contact">
 						<div  rel="http://www.w3.org/ns/dcat#contactPoint">
 							<xsl:apply-templates select="*"/>
-							<xsl:if test="position()!=last()"><div style="margin-top:8px"></div></xsl:if>
+							<xsl:if test="position()!=last()">
+                                <div style="margin:5px 0 5px 0; border-bottom: 1px solid #EEE;"></div>
+                            </xsl:if>
 						</div>
 					</xsl:for-each>
 				</div>
