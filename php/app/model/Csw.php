@@ -550,7 +550,7 @@ class Csw{
     function asHTML($xml, $template){
     	//die($xml->saveXML());
         $u = parse_url($template);
-        if($u['scheme']=='http' || $u['scheme']=='https'){
+        if(isset($u['scheme']) && ($u['scheme']=='http' || $u['scheme']=='https')){
             $ch = curl_init($template);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_TIMEOUT, 5 );
@@ -691,7 +691,7 @@ class Csw{
     	var_dump($qstr);
     }
 
-    $format = $this->params['FORMAT'];
+    $format = isset($this->params['FORMAT']) ? $this->params['FORMAT'] : '';
     if(!isset($this->params['STARTPOSITION'])) $this->params['STARTPOSITION']=1;
     $this->params['SORTORDER'] = "ASC";
     if(!isset($this->params['SORTBY'])){
@@ -740,7 +740,7 @@ class Csw{
         }*/
           $schema = $this->schemas[$this->params['OUTPUTSCHEMA']];
           $sablona = 'out/' . $schema['template'];
-          $typeNames = $schema['typeNames']; //TODO - jeste udleat, pokud neni outputschema
+          $typeNames = (isset($schema['typeNames'])) ? $schema['typeNames']: ''; //TODO - jeste udleat, pokud neni outputschema
           break;
       default:
           $this->exception(3, "RESULTTYPE", $this->params['RESULTTYPE']); break;
@@ -967,7 +967,7 @@ class Csw{
         if($xmlstr==-1) $this->exception(3, "Filter", "Invalid filter: ".$xmlstr);
         //die($this->params['FORMAT']);
         $sablona = "micka2cat_19139";
-        if($this->params['OUTPUTSCHEMA']){
+        if(isset($this->params['OUTPUTSCHEMA']) && $this->params['OUTPUTSCHEMA']){
             if(!in_array($this->params['OUTPUTSCHEMA'], array_keys($this->schemas))){
                 $this->exception(3, "OUTPUTSCHEMA", $this->params['OUTPUTSCHEMA']." is not valid value.");
             }
@@ -1024,7 +1024,7 @@ class Csw{
 
         // --- HTML ---
         if($this->params['FORMAT']=='text/html'){
-            if($this->params['TEMPLATE']) $sablona = $this->params['TEMPLATE'];
+            if(isset($this->params['TEMPLATE']) && $this->params['TEMPLATE']) $sablona = $this->params['TEMPLATE'];
             else $sablona = "iso2htmlFull_";
             $output = $this->asHTML($this->xml, $sablona);
             $this->isXML = false;

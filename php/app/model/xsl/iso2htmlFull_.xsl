@@ -174,15 +174,20 @@
             <div class="c" typeof="http://www.w3.org/ns/dcat#Distribution">
                 <xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
                     <!-- temporal solution -->
-                    <xsl:variable name="d" select="php:function('noMime',string(*/gmd:description))"/>
+                    <xsl:variable name="d0">
+                        <xsl:call-template name="multi">
+                            <xsl:with-param name="el" select="*/gmd:description"/>
+                            <xsl:with-param name="lang" select="$LANGUAGE"/>
+                            <xsl:with-param name="mdlang" select="$mdlang"/>
+                        </xsl:call-template>
+                    </xsl:variable>
+                    <xsl:variable name="d" select="php:function('noMime',normalize-space($d0))"/>
+                    <xsl:variable name="n" select="*/gmd:name/*/@xlink:href"/>
+                    <xsl:variable name="c" select="$cl/linkageName/value[@uri=$n]/*[name()=$lang]"/>
                     <xsl:variable name="label">
                         <xsl:choose>
-                            <xsl:when test="$d">
-                                <xsl:call-template name="multi">
-                                    <xsl:with-param name="el" select="*/gmd:description"/>
-                                    <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                    <xsl:with-param name="mdlang" select="$mdlang"/>
-                                </xsl:call-template>
+                            <xsl:when test="$c">
+                                <xsl:value-of select="$c"/>
                             </xsl:when>
                             <xsl:when test="*/gmd:name">
                                 <xsl:call-template name="multi">
@@ -211,20 +216,7 @@
                             <xsl:when test="contains(*/gmd:protocol/*,'WMS') or contains(*/gmd:linkage/*,'WMS')">
                                 <xsl:variable name="label1">
                                     <xsl:choose>
-                                        <xsl:when test="*/gmd:description">
-                                            <xsl:call-template name="multi">
-                                                <xsl:with-param name="el" select="*/gmd:description"/>
-                                                <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                                <xsl:with-param name="mdlang" select="$mdlang"/>
-                                            </xsl:call-template>
-                                        </xsl:when>		                                    
-                                        <xsl:when test="*/gmd:name">
-                                            <xsl:call-template name="multi">
-                                                <xsl:with-param name="el" select="*/gmd:name"/>
-                                                <xsl:with-param name="lang" select="$LANGUAGE"/>
-                                                <xsl:with-param name="mdlang" select="$mdlang"/>
-                                            </xsl:call-template>
-                                        </xsl:when>
+                                        <xsl:when test="*/gmd:name"><xsl:value-of select="$d"/></xsl:when>
                                         <xsl:otherwise><xsl:value-of select="$msg[@eng='showMap']"/></xsl:otherwise>
                                     </xsl:choose>
                                 </xsl:variable>
@@ -243,7 +235,10 @@
                                     <xsl:value-of select="php:function('noMime',string($label))"/>
                                 </a>
                             </xsl:otherwise>
-                        </xsl:choose>   
+                        </xsl:choose>
+                    </div>
+                    <div>
+                        <xsl:value-of select="$d"/>
                     </div>
                 </xsl:for-each>
             </div>
