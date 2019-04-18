@@ -80,17 +80,45 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
 function getCodeListValues($type, $lang, $filter=''){
     $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
     $list = $xml->xpath("//$type/value");
-    $result = array();
+    $result = [];
     foreach ($list as $row){
         if(!$filter || stripos($row->$lang, $filter)!==false || stripos($row['uri'], $filter)!==false){
-            $result[] = array(
+            $result[] = [
                 "id"=> (string) $row['name'],
                 "uri"=> (string) $row['uri'],
                 "text"=> (string) $row->$lang
-            );
+            ];
         }
     }
-    return array("results"=>$result);
+    return ["results"=>$result];
+}
+
+function getCodeListValue($type, $filter=''){
+    $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
+    $t = $xml->xpath("//$type/thesaurus");
+    if($t[0]){
+        $thesarus = [
+            "uri" => (string) $t[0]['uri'],
+            "date" => (string) $t[0]['date'],
+            "dateType" => (string) $t[0]['dateType'],
+            "langs"=> $t[0]->children()
+        ];
+    }
+    $list = $xml->xpath("//$type/value");
+    $result = [];
+    foreach ($list as $row){
+        if(!$filter || $row['name'] == $filter || $row['uri'] == $filter){
+            $result[] = [
+                "id"=> (string) $row['name'],
+                "uri"=> (string) $row['uri'],
+                "langs"=> $row->children()
+            ];
+        }
+    }
+    return [
+        "thesaurus"=>$thesarus,
+        "results"=>$result
+    ];
 }
 
 
@@ -98,10 +126,20 @@ if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValues') {
     $type = htmlspecialchars($_REQUEST['type']);
     $code = htmlspecialchars($_REQUEST['id']);
     $lang = htmlspecialchars($_REQUEST['lang']);
+    $query = isset($_REQUEST['query']) ? $_REQUEST['query'] : '';
     header("Content-type: application/json; charset=utf-8");
-    echo json_encode(getCodeListValues($type, $lang, $_REQUEST['query']));
+    echo json_encode(getCodeListValues($type, $lang, $query));
     exit;
 }
+else if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValue') {
+    $type = htmlspecialchars($_REQUEST['type']);
+    $code = htmlspecialchars($_REQUEST['code']);
+    $query = isset($_REQUEST['query']) ? $_REQUEST['query'] : '';
+    header("Content-type: application/json; charset=utf-8");
+    echo json_encode(getCodeListValue($type, $code));
+    exit;
+}
+
 ?>
 <script>
 function kw(f){

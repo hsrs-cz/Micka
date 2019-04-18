@@ -782,7 +782,7 @@ xmlns:php="http://php.net/xsl">
 			   	
 			   	<xsl:if test="position()=1 and $codelists/role/value[@name=$k1]!=''">
 		  			<test code="d">
-						<description>Role = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']"/></description>
+						<description>Role = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']/*[name()=$LANG]"/></description>
 						<xpath>role/*/@codeListValue and //contact[*/role/*/@codeListValue='pointOfContact']</xpath>
 						<xsl:choose>			  	
 							<xsl:when test="string-length(//gmd:contact[*/gmd:role/*/@codeListValue='pointOfContact'])>0">

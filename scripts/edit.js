@@ -1,6 +1,6 @@
 /******************************
- * MICKA 6.000
- * 2019-02-11
+ * MICKA 6.010
+ * 2019-04-18
  * javascript
  * Help Service Remote Sensing  
 ******************************/
@@ -488,6 +488,7 @@ function kontakt1(id, osoba, org, org_en, fce, fce_en, phone, fax, ulice, mesto,
 
 function thes(obj){
     $("#md-keywords").modal(); 
+    if(mds==10) $("#inspire-service-wrap").show();
     md_elem = obj.parentNode;
     md_dexpand1(md_elem);
     if(thesActivated) return;
@@ -504,9 +505,34 @@ function thes(obj){
    
     thes['inspire'] = $("#inspire").select2({
 		ajax: {
-			url: baseUrl + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+HS.getLang(2),
+			url: baseUrl + '/suggest/mdlists',
 			dataType: 'json',
-			delay: 200,
+			data: function(params){
+				return {
+					query: params.term,
+					type: 'inspireKeywords',
+                    request: 'getValues',
+					lang: HS.getLang(3)
+				};
+            }
+	   },
+	   theme: 'bootstrap',
+	   language: HS.getLang(2),
+	   allowClear: true
+	});    
+
+    thes['inspire-service'] = $("#inspire-service").select2({
+		ajax: {
+			url: baseUrl + '/suggest/mdlists',
+			dataType: 'json',
+			data: function(params){
+				return {
+					query: params.term,
+					type: 'serviceKeyword',
+                    request: 'getValues',
+					lang: HS.getLang(3)
+				};
+            },
 			cache: false
 	   },
 	   theme: 'bootstrap',
@@ -532,37 +558,7 @@ function thes(obj){
 		allowClear: true,
 		theme: 'bootstrap'
 	});
-    //.on('select2:select', this.search).on('select2:unselect', this.search);
-
-    $('#thes-inspire-ok').on('click', function(){
-        var uri = $("#inspire").val();
-        var terms = {};
-        var ll = langs.split('|');
-        var l2 = null;
-
-        for(i in ll){
-            l2 = HS.getCodeFromLanguage(ll[i],2);
-            if(l2.length==2){
-                var url = baseUrl  + '/registry_client/?uri=http://inspire.ec.europa.eu/theme&lang='+ l2 +'&id='+uri;
-                $.ajax({url: url, context: {lang: ll[i]}})
-                .done(function(data){
-                    if(data.results && data.results[0]) terms[this.lang] = data.results[0].text;
-                    else terms[this.lang] = "";
-                    if(ll.length <= Object.keys(terms).length){
-                        fromThesaurus({
-                            thesName: 'GEMET - INSPIRE themes, version 1.0',
-                            thesDate: (ll[0]=='cze') ? '01.06.2008' : '2008-06-01',
-                            uri: uri,
-                            terms: terms
-                        });
-                        $("#md-keywords").modal('hide');
-                        return;
-                    }
-                })
-            }
-        }
-    });
-    
+  
     $('#thes-gemet-ok').on('click', function(){
         gemet.process(langs.split('|'), function(data){
             fromThesaurus({ //TODO take from thesaurus client
@@ -576,44 +572,38 @@ function thes(obj){
         });
     });
 
-    $('#thes-geology-ok').on('click', function(){
-        var uri = $("#cgs").select2('data')[0].uri;
-        var terms = {};
-        var ll = langs.split('|');
-        var l2 = null;
-
-        for(i in ll){
-            l2 = HS.getCodeFromLanguage(ll[i],2);
-            if(l2.length==2){
-                var url =baseUrl + '/suggest/mdlists?type=cgsThemes&request=getValues&lang=' + ll[i] +'&query='+uri;
-                $.ajax({url: url, context: {lang: ll[i]}})
-                .done(function(data){
-                    if(data.results && data.results[0]) terms[this.lang] = data.results[0].text;
-                    else terms[this.lang] = "";
-                    if(ll.length <= Object.keys(terms).length){
-                        fromThesaurus({
-                            thesName: 'Geovědní témata ČGS',
-                            thesDate: (ll[0]=='cze') ? '01.01.2018' : '2018-01-01',
-                            uri: uri,
-                            terms: terms
-                        });
-                        $("#md-keywords").modal('hide');
-                        return;
-                    }
-                })
+    $('#thes-inspire-ok').on('click', function(){ localThes("#inspire", "inspireKeywords"); });
+    $('#thes-geology-ok').on('click', function(){ localThes("#cgs", "cgsThemes"); });
+    $('#thes-inspire-service-ok').on('click', function(){ localThes("#inspire-service", "serviceKeyword"); });
+    
+    function localThes(element, type){
+        var uri = $(element).select2('data')[0].uri;
+        var url =baseUrl + '/suggest/mdlists?type='+type+'&request=getValue&code='+uri;
+        $.ajax({url: url})
+        .done(function(data){
+            if(data.results && data.results[0]){ 
+                fromThesaurus({
+                    thesName: data.thesaurus.langs,
+                    thesDate: data.thesaurus.date,
+                    uri: uri,
+                    terms: data.results[0].langs
+                });
+                $("#md-keywords").modal('hide');
+                return;
             }
-        }
-    });
+        })
+    }
     
 }
 
 function fromThesaurus(data){
-  if(!md_elem) return false;
-  var last = -1;
-  var vyplneno=0;
-  var mainLang = langs.substring(0,3);
-  var thesName = data.thesName; 
-
+    if(!md_elem) return false;
+    var last = -1;
+    var vyplneno=0;
+    var mainLang = langs.substring(0,3);
+    var thesName = data.thesName;
+    if(typeof thesName === 'object') thesName = data.thesName[mainLang];
+    
 	var currThesNode = null;
 	var inputs = flatNodes(md_elem, "INPUT"); 
 	var selects = flatNodes(md_elem, "SELECT"); 
@@ -642,11 +632,16 @@ function fromThesaurus(data){
 	var inputs = flatNodes(currThesNode, "INPUT"); 
 	var selects = flatNodes(currThesNode, "SELECT"); 
 	
-  //vyplneni thesauru
+  //fill the thesaurus
   for(i=0;i<inputs.length;i++){
 	  var ll = langs.split("|"); 
 	  for(var j in ll){
-		  if(inputs[i].id=='3600'+ll[j]) inputs[i].value = thesName;
+		  if(inputs[i].id=='3600'+ll[j]) {
+              if((typeof thesName === 'object' && thesName[ll[j]])){
+                  inputs[i].value = thesName[ll[j]];
+              }
+              else inputs[i].value = thesName;
+          }
 		  else if(inputs[i].id=='3940') inputs[i].value = data.thesDate; 
 		  else if(inputs[i].id=='530'+ll[j]){
 			  last = i;
@@ -654,7 +649,7 @@ function fromThesaurus(data){
 		  }
 	  } 
   } 
-  // vyplneni kw
+  // fill the kewords
   if(vyplneno>0){
     var d = md_pridej(inputs[last]);
     inputs = flatNodes(d, "INPUT");
@@ -662,7 +657,7 @@ function fromThesaurus(data){
     	d.scrollIntoView(false);
     }	
   } 
-  // jsou-li termíny
+  // if terms are available
   if(data.terms){
 	  for(i=0;i<inputs.length;i++){
 		  for(var l in data.terms) if(inputs[i].id=='530'+l){
@@ -670,7 +665,7 @@ function fromThesaurus(data){
 		  }
 	  }
   }
-  //je-li uri
+  // if URI is available
   if(data.uri) {
 	  for(i=0;i<inputs.length;i++){
 		  if(inputs[i].id=='530uri'){
@@ -700,14 +695,14 @@ function thes1(thesaurus, term_id, langs, terms, date, tdate){
           inputs[i].value += terms[j]+" ";
           break;
         }
-      } // mozno doplnit na anglictinu implicitne
+      } 
       return;
     }  
     //zadavani
     else if(inputs[i].id=='3600') inputs[i].value=thesaurus; 
     else if(inputs[i].id=='3940') inputs[i].value=date; 
     else {
-      //kontrola na prazdne hodnoty
+      //blank value check
       for(j=0;j<langs.length;j++) if(inputs[i].id=='530'+langs[j]){
         last = i;
         if(inputs[i].value!="") vyplneno++;
@@ -781,7 +776,6 @@ function fc(obj){
 }
 
 function fc1(fcObj, lyrlist){
-    console.log(fcObj);
     var inputs = flatNodes(md_elem, "INPUT"); 
     var selects = flatNodes(md_elem, "SELECT");
     var fList = new Array();
@@ -1046,7 +1040,6 @@ function getBbox(bbox, isPoly){
     y2.value=pom[3];
     var e = getMyNodes(md_elem, "DIV");
     var r = flatNodes(e[0], "INPUT");
-    console.log(e, r);
     r[0].click();
     //vymazani polygonu
     if(poly){
@@ -1277,7 +1270,6 @@ function fspec1(f){
 function crs(obj){
 	md_elem = obj.parentNode;
     var mdlang = $('#30').val();
-    console.log(mdlang);
     $('#md-dialog').modal();
     $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys&handler=crs1&lang='+lang+'&mdlang='+mdlang);
 }

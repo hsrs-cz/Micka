@@ -83,6 +83,7 @@
 	md_elem = null;
 	md_partyType = null;
     baseUrl = "{$baseUrl|noescape}";
+    mds = {$record['mds']};
 </script>
 
 <div id="main" class="container panel panel-default" style="padding: 50px 220px 15px 15px">
@@ -265,11 +266,6 @@
                         {if $form['is_uri'] == 1}
                             <span class="flg"><img src='{$basePath}{$themePath}/img/uri.png' title="URI"></span>
                             <input type=text class="{$form['form_code']}" id="{$form['el_id']}uri" name="{$form['form_code']}|uri|{$form['package_id']}|{$form['md_path']}" value="{ifset $valuesUri[$form['md_path']]}{$valuesUri[$form['md_path']]}{/ifset}">
-                            {if $form['el_id'] == 530}
-                                {* keywords hack *}
-                                <a href="#" class="plus" onclick="md_pridej(this, false); return false;"><i class="fa fa-plus-square-o"></i></a>
-                                <a href="#" class="minus" onclick="md_smaz(this); return false;"><i class="fa fa-minus-square-o"></i></a>
-                            {/if}
                             <br>
                             <span class="c"></span>
                         {/if}
