@@ -199,6 +199,8 @@ class MdFull  extends \BaseModel
                 $hle = htmlspecialchars($hle);
                 $hle = str_replace('&lt;sub&gt;', '<sub>', $hle);
                 $hle = str_replace('&lt;/sub&gt;', '</sub>', $hle);
+                $hle = str_replace('&lt;sup&gt;', '<sup>', $hle);
+                $hle = str_replace('&lt;/sup&gt;', '</sup>', $hle);
 			}
 			$hodnoty[$md_id]['value'] = str_replace('\\', '\\\\', $hle);
 			$hodnoty[$md_id]['lang'] = $row->lang;;
