@@ -482,7 +482,7 @@
 				<xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date">
 					<xsl:variable name="k" select="*/gmd:dateType/*/@codeListValue"/>
 					<span property="http://purl.org/dc/terms/{$cl/dateType/value[@name=$k]/@dc}" content="{*/gmd:date}" datatype="http://www.w3.org/2001/XMLSchema#date">
-						<xsl:value-of select="$cl/dateType/value[@name=$k]/*[name()=$lang]"/>: <xsl:value-of select="*/gmd:date"/>
+						<xsl:value-of select="$cl/dateType/value[@name=$k]/*[name()=$lang]"/>: <xsl:value-of select="php:function('drawDate', string(*/gmd:date), $lang)"/>
 					</span>
 					<xsl:if test="not(position()=last())">, </xsl:if>
 				</xsl:for-each>
