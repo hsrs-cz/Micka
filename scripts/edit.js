@@ -1740,6 +1740,11 @@ micka.initMap=function(config){
         }
     });
 	micka.overMap.drawMetadata(config.extent);
+    // prevet map controls from submit
+    $('.ol-control button').click(function(e){
+        e.preventDefault();
+    });
+
 }
 
 /*micka.hover = function(o){

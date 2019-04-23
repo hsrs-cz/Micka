@@ -20,7 +20,7 @@ function OverMap(config){
 	    })
 	});
 	
-	this.searchLyr = 	new ol.layer.Vector({
+	this.searchLyr = new ol.layer.Vector({
 		source: new ol.source.Vector({features: this.searchfeatures}),
 		style: new ol.style.Style({
 			fill: new ol.style.Fill({
@@ -76,7 +76,6 @@ function OverMap(config){
         className: 'bbox-control',
         handler: function(){
             _overmap.dragBoxInteraction.setActive(true);
-            return false;
         }
 	});
 
