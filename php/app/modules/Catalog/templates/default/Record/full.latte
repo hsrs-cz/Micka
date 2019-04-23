@@ -22,7 +22,7 @@ aaaa { margin-top:10px; margin-bottom:6px; padding-left:8px; border:#A0A0A0 soli
 						<i class="fa fa-ban fa-fw"></i>
 					{/if}	
 				</a>
-				<a n:href=":Catalog:Record:edit rtrim($rec->uuid)" class="edit" title="{_messages.frontend.edit}"><i class="fa fa-pencil fa-fw"></i></a>
+				<a n:href=":Catalog:Record:edit rtrim($rec->uuid), f=>$detail" class="edit" title="{_messages.frontend.edit}"><i class="fa fa-pencil fa-fw"></i></a>
 				<a n:href=":Catalog:Record:clone rtrim($rec->uuid)" class="copy" title="{_messages.frontend.copy}"><i class="fa fa-clone fa-fw"></i></a>
 				<a href="javascript:omicka.confirm(HS.i18n('{_messages.frontend.delete_record}')+'?','{$basePath}/records/delete/{$rec->uuid|trim}');" class="delete" title="{_messages.frontend.delete}"><i class="fa fa-trash fa-fw"></i></a>
 			{/if}	

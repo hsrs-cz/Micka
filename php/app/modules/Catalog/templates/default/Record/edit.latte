@@ -53,7 +53,7 @@
                                 <i class="fa fa-floppy-o fa-lg"></i> {_messages.frontend.save}</a>
                         </li>
                         <li>
-                            <a n:href=":Catalog:Record:cancelEdit" data-tooltip="tooltip" title="{_messages.frontend.cancel_edit}" data-container="body" data-placement="bottom">
+                            <a n:href=":Catalog:Record:cancel $record['uuid'], f=>$detail" data-tooltip="tooltip" title="{_messages.frontend.cancel_edit}" data-container="body" data-placement="bottom">
                                 <i class="fa fa-times fa-lg"></i> {_messages.frontend.cancel}</a>
                         </li>                                
                    </ul>
@@ -140,8 +140,9 @@
            {* <a href="micka" style="background: url('{$basePath}{$themePath}/img/settings.png') no-repeat; padding-left:20px;" onclick="window.open('?ak=rec_admin&recno={$record['recno']|noescape}', '_blank', 'width=400,height=600,resizable=yes'); return false">{_messages.frontend.language}</a> *}
         {/if}
     </div>
+    {dump}
     {if $dataBox == ''}
-        <form id="md_inpform" class="md_inpform" action="{link Record:save $record['uuid']}" method="post">
+        <form id="md_inpform" class="md_inpform" action="{link Record:save $record['uuid'], f=>$detail}" method="post">
     {else}
         <form id="md_inpform" action="{link Record:save $record['uuid']}" method="post" onsubmit="return submitCheck();">
         <input type="hidden" name="mickaLite" value="true">

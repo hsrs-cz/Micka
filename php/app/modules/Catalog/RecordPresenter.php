@@ -20,8 +20,19 @@ class RecordPresenter extends \BasePresenter
 	{
 		parent::startup();
         $this->recordModel->setAppParameters($this->context->parameters);
-	}
+    }
     
+    private function restoreUrl($detailId, $f)
+    {
+        $detail = $f == 'basic' || $f == 'full' ? $f : null;
+        if ($detail === null) {
+            return;
+        }
+        if ($detailId != '') {
+            $this->redirect(":Catalog:Record:$detail", $detailId);
+        }
+    }
+
     /** @resource Catalog:Guest */
 	public function actionDefault($id)
 	{
@@ -77,6 +88,7 @@ class RecordPresenter extends \BasePresenter
         $this->template->values = $mdf->getMdFullView($mdr->recno, $mdr->md_standard, $appLang);
         $this->template->rec = $mdr;
         $this->template->appLang = $appLang;
+        $this->template->detail = 'full';
 	}
     
     /** @resource Catalog:Guest */
@@ -106,9 +118,10 @@ class RecordPresenter extends \BasePresenter
     }
     
     /** @resource Catalog:Editor */
-    public function actionCancelEdit() 
+    public function actionCancel($id) 
     {
         $this->recordModel->deleteEditRecords();
+        $this->restoreUrl($id, $this->getParam('f'));
         $this->redirect(':Catalog:Default:default');
     }
     
@@ -116,8 +129,6 @@ class RecordPresenter extends \BasePresenter
     public function actionSave($id) 
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
-        //var_dump($post);
-        //$this->terminate();
         if (!array_key_exists('ende', $post) || $post['ende'] != 1) {
             throw new \Nette\Application\ApplicationException('messages.apperror.postIncomplete');
         }
@@ -128,6 +139,7 @@ class RecordPresenter extends \BasePresenter
         switch ($post['afterpost']) {
             case 'end':
                 $this->recordModel->setEditRecord2Md();
+                $this->restoreUrl($this->getParam('id'), $this->getParam('f'));
                 $this->redirect(':Catalog:Default:default');
                 break;
             case 'save':
@@ -141,7 +153,7 @@ class RecordPresenter extends \BasePresenter
         $package = $post['package'] != $post['nextpackage']
             ? $post['nextpackage']
             : $post['package'];
-        $this->redirect(':Catalog:Record:edit', [$id, 'profil'=>$profil, 'package'=>$package]);
+        $this->redirect(':Catalog:Record:edit', [$id, 'profil'=>$profil, 'package'=>$package, 'f' => $this->getParam('f')]);
     }
     
     /** @resource Catalog:Editor */
@@ -155,7 +167,7 @@ class RecordPresenter extends \BasePresenter
                 $profil = $mdr->md_standard == 10 
                         ? $this->context->parameters['app']['startProfil']+100 
                         : $this->context->parameters['app']['startProfil'];
-                $this->redirect(':Catalog:Record:edit', [rtrim($mdr->uuid), 'profil'=>$profil, 'package'=>-1]);
+                $this->redirect(':Catalog:Record:edit', [rtrim($mdr->uuid), 'profil'=>$profil, 'package'=>-1, 'f' => $this->getParam('f')]);
             } else {
                 throw new \Nette\Application\ApplicationException('messages.apperror.cantSaveNew');
             }
@@ -174,7 +186,6 @@ class RecordPresenter extends \BasePresenter
     /** @resource Catalog:Editor */
     public function renderEdit($id) 
     {
-        //dump($id);  dump($this->getParameter('recno'));        $this->terminate();
         $rmd = $this->recordModel->findMdById($id,'edit_md','edit');
         if ($rmd) {
             $mds = $rmd->md_standard;
@@ -229,6 +240,7 @@ class RecordPresenter extends \BasePresenter
             $this->template->packages = $mcl->getMdPackages($this->appLang, $mds, $profil);
             $this->template->allLanguages = $mcl->getLangsLabel($this->appLang);
             $this->template->selectLanguages = explode('|',$rmd->lang);
+            $this->template->detail = $this->getParam('f');
         } else {
             throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
