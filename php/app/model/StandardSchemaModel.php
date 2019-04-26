@@ -8,9 +8,9 @@ use Tracy\Debugger;
 
 class StandardSchemaModel
 {
-    private $db;
-    private $md_standard = NULL;
-    private $dataNode = NULL;
+    protected $db;
+    protected $md_standard = NULL;
+    protected $dataNode = NULL;
 
     private $sqlSelectTree = "
         SELECT 
