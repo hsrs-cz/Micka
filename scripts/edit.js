@@ -585,7 +585,7 @@ function thes(obj){
                 fromThesaurus({
                     thesName: data.thesaurus.langs,
                     thesDate: data.thesaurus.date,
-                    uri: uri,
+                    uri: data.thesaurus.uri,
                     terms: data.results[0].langs
                 });
                 $("#md-keywords").modal('hide');
@@ -642,12 +642,15 @@ function fromThesaurus(data){
               }
               else inputs[i].value = thesName;
           }
-		  else if(inputs[i].id=='3940') inputs[i].value = data.thesDate; 
 		  else if(inputs[i].id=='530'+ll[j]){
 			  last = i;
 			  if(inputs[i].value!="") vyplneno++;
 		  }
 	  } 
+      if(inputs[i].id=='3940') inputs[i].value = data.thesDate; 
+      else if(inputs[i].id=='3600uri'){
+          inputs[i].value = data.uri;
+      }
   } 
   // fill the kewords
   if(vyplneno>0){
