@@ -844,7 +844,7 @@ class MdSearch
 		$pom_date = substr($data, $pos1+1, $pos2-($pos1+1));
 		$pom_b = substr($data, 0, $pos1+1);
 		$pom_e = substr($data, $pos2);
-		$date = timeWindow($pom_date,'','');
+		$date = $this->timeWindow($pom_date,'','');
 		$data = $pom_b . $date[0] . $pom_e;
 		$x++;
 		$pos0 = $pos0+7;
@@ -862,7 +862,7 @@ class MdSearch
 			$pom_date = substr($data, $pos1+1, $pos2-($pos1+1));
 			$pom_b = substr($data, 0, $pos1+1);
 			$pom_e = substr($data, $pos2);
-			$date = timeWindow($pom_date,'','');
+			$date = $this->timeWindow($pom_date,'','');
 			$data = $pom_b . $date[1] . $pom_e;
 			$x++;
 			$pos0 = $pos0+7;
@@ -1481,9 +1481,168 @@ class MdSearch
         return $result;
     }
     
-    public function fetchXmlClose() {
+    public function fetchXmlClose()
+    {
         $this->db->query('CLOSE xml_cursor');
         $this->db->commit();
     }
+
+    // date
+    private function isBissextile($year)
+    {
+        if (($year % 4 == 0) && ($year % 100 != 0) && ($year % 1000 != 0)) {
+            return true;
+        } elseif ($year % 400 == 0) {
+            return true;
+        } elseif (( $year % 1000 == 0) && ($year % 4000 != 0)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function extendDate($date, $mode)
+    {
+        $months = array( 1 => 31,
+        2 => 28,
+        3 => 31,
+        4 => 30,
+        5 => 31,
+        6 => 30,
+        7 => 31,
+        8 => 31,
+        9 => 30,
+        10 => 31,
+        11 => 30,
+        12 => 31);
+        //bissextile
+        $monthsBis = array( 1 => 31,
+        2 => 29,
+        3 => 31,
+        4 => 30,
+        5 => 31,
+        6 => 30,
+        7 => 31,
+        8 => 31,
+        9 => 30,
+        10 => 31,
+        11 => 30,
+        12 => 31) ;
+
+        if (strpos($date, ' ')) {
+            $date = substr($date,0,strpos($date, ' '));
+        }
+        $year = '';
+        $month = '';
+        $day = '';
+        if (strpos($date, '-')) {
+            list($year, $month, $day) = explode("-", $date);
+            $day = ($day < 10 && strlen($day) == 1) ? "0$day" : $day ;
+            $month = ($month < 10  && strlen($month) == 1) ? "0$month" : $month ;
+        } else {
+            $dateLen = strlen($date);
+            switch ($dateLen) {
+                case 8: // YYYYMMDD
+                    $month = substr($date,4,2);
+                    $day = substr($date,6,2);
+                case 4: // YYYY
+                    $year = substr($date,0,4);
+                    break;
+                default:
+                    return $date;
+                    break;
+            }
+        }
+        if (!$month) {
+            if ($mode) {
+                $month='12';
+             } else {
+                 $month='01';
+             }
+        }
+        if (!$day) {
+            if($mode) {
+                if ($this->isBissextile($year)) {
+                    $day=$monthsBis[(int)$month];
+                } else {
+                    $day=$months[(int)$month];
+                }
+            } else {
+                $day='01';
+            }
+        }
+        return "$year-$month-$day";
+    }
+
+    private function timeWindow($date, $date1, $date2)
+    {
+        if (!$date && !$date1 && !$date2) {
+            return array('0000-00-00','0000-00-00');
+        }
+        if (($date1)||($date2)) {
+            if($date1) {
+                $date1 = $this->extendDate($date1, false);
+            } else {
+                $date1 = $this->extendDate('0001', false);
+            }
+            if($date2) {
+                $date2 = $this->extendDate($date2, true);
+            } else {
+                $date2 = $this->extendDate('9999', true);
+            }
+        } else {
+            $date1 = $this->extendDate($date, false);
+            $date2 = $this->extendDate($date, true);
+        }
+        if (!$this->isValidDateIso($date1) || !$this->isValidDateIso($date2)) {
+            $date1 = '0000-00-00';
+            $date2 = '0000-00-00';
+        }
+        return Array($date1, $date2);
+
+    }
+
+    /*
+    * http://en.wikipedia.org/wiki/ISO_8601
+    * YYYY
+    * YYYY-MM
+    * YYYY-MM-DD
+    */
+    private function isValidDateIso($date)
+    {
+        $dateLen = strlen($date);
+        switch ($dateLen) {
+            case 4: //YYYY
+                if (preg_match('/[0-9]{4}/', $date)) {
+                    return true;
+                } else {
+                    return false;
+                }
+            case 7: //YYYY-MM
+                if (preg_match('/[0-9]{4}\-[0-9]{2}/', $date)) {
+                    if (substr($date,5,2) < 13) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            case 10: // YYYY-MM-DD
+                if (preg_match('/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/', $date)) {
+                    list($year, $month, $day) = explode("-", $date);
+                    if (checkDate($month, $day, $year)) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            default:
+                return false;
+        }
+    }
+
 }
 
