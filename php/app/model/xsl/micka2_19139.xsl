@@ -958,18 +958,18 @@
 			            								</gmd:dateType>
 			            							</gmd:CI_Date>
 		                       					</gmd:date>
-											 </gmd:CI_Citation>									  
+											 </gmd:CI_Citation>
 										</gmd:specification>
 					      				<xsl:call-template name="txt">
 					      					<xsl:with-param name="s" select="."/>                      
 					      					<xsl:with-param name="name" select="'explanation'"/>                      
-					      					<xsl:with-param name="lang" select="$mdLang"/>                     
+					      					<xsl:with-param name="lang" select="$mdLang"/>
 					      			    </xsl:call-template>
 										<xsl:choose>
-											<xsl:when test=".//pass=1">
+											<xsl:when test=".//pass=1 or .//pass='true'">
 												<gmd:pass><gco:Boolean>true</gco:Boolean></gmd:pass>
 											</xsl:when>
-											<xsl:when test=".//pass='0'">
+											<xsl:when test=".//pass='0' or .//pass='false'">
 												<gmd:pass><gco:Boolean>false</gco:Boolean></gmd:pass>
 											</xsl:when>
 											<xsl:otherwise>	

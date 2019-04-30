@@ -130,6 +130,7 @@ frontend:
     fulltext: "cualquier texto"
     inside: "Dentro del rectángulo"
     inspire-theme: "Tema INSPIRE"
+    inspire-service: "Services classification"
     last_update: "Última actualización"
     login: "Acceder"
     logout: "Cerrar sesión"

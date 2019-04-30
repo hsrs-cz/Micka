@@ -131,6 +131,7 @@ frontend:
     new: "Nový"
     res-type: "Typ zdroje"
     inspire-theme: "Téma INSPIRE"
+    inspire-service: "Klasifikace služeb"
     scale: "Měřítko"
     fulltext: "v textu"
     extent-similarity: "podobnost rozsahu"

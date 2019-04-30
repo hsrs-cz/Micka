@@ -134,6 +134,7 @@ frontend:
     fulltext: "any text"
     inside: "Inside rectangle"
     inspire-theme: "INSPIRE theme"
+    inspire-service: "Services classification"
     last_update: "last update"
     login: "Login"
     logout: "Logout"

@@ -35,6 +35,22 @@ $config=array(
                 }  "
     ),
 
+    // --- nemci
+    "http://resource.geolba.ac.at/lithology"=>array(
+            "adapter" => "skos",
+            "url" => "http://resource.geolba.ac.at/PoolParty/sparql/lithology",
+            "sparql" => "PREFIX dcterms:<http://purl.org/dc/terms/>
+                PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                SELECT ?URI ?prefLabelDE ?date
+            WHERE
+            {
+            ?URI a skos:Concept . ?URI skos:prefLabel ?prefLabelDE . FILTER(lang(?prefLabelDE)='de') .
+            ?URI dcterms:modified ?date
+            }
+            ORDER BY DESC (?date)
+            LIMIT 100"
+    ),
+
     // --- EU Countries
     "https://publications.europa.eu/resource/authority/country"=>array(
         "adapter"=> "skos",
