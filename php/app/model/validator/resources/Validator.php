@@ -54,7 +54,7 @@ function isRunning($url, $type, $d=false){
 function testConnection($url){
     $scheme = parse_url($url, PHP_URL_SCHEME);
     if($scheme != 'http' &&  $scheme != 'https') return "";
-   $t = microtime(true);
+    $t = microtime(true);
     $s = trim(getContents($url));
     $t = microtime(true) - $t;
     //file_put_contents('/var/www/projects/tmp/'.time().'.xml',$s);
@@ -194,7 +194,7 @@ class Validator{
 	    foreach ($errors as $error) {
 	        $err[] = array(
 	            "code" => "XML",
-	            "value" => $error->file . "  line ". $error->line, 
+	            "value" => "line ". $error->line, 
 	            "err" => $error->message,
 	            "pass" => false
 	        );        
