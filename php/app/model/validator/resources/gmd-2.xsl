@@ -35,7 +35,7 @@ xmlns:php="http://php.net/xsl">
 	</xsl:choose>
 </xsl:variable>
 <xsl:variable name="INSPIRE" select="$codelists/specifications/value[@code='INSPIRE']/@uri"/>	
-<xsl:variable name="neInspire" select="gmd:dataQualityInfo/*/gmd:report[normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString)=normalize-space($INSPIRE)]" />
+<xsl:variable name="neInspire" select="gmd:dataQualityInfo/*/gmd:report[normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href)=normalize-space($INSPIRE)]" />
  
 <validationResult title="{$labels/msg/titleCR}" version="4.0.0 beta, CENIA 2017">
 
@@ -209,7 +209,7 @@ xmlns:php="http://php.net/xsl">
 		</xsl:if>
 	</test>
 
-  	<!-- 2.1 --> 	
+  	<!-- 2.1 -->
 	 <test code="2.1">
 	 	<description><xsl:value-of select="$labels/test[@code='2.1']"/></description>
 	 	<xpath>identificationInfo[1]/*/topicCategory</xpath>
@@ -249,12 +249,12 @@ xmlns:php="http://php.net/xsl">
 					 			 		<xsl:when test="contains('2.1,3.0,3.1,3.11',normalize-space(.))">
 						  					<pass>true</pass>
 						  				</xsl:when>	
-						  			</xsl:choose>		
-						  		</xsl:when>						  		
+						  			</xsl:choose>
+						  		</xsl:when>
 		
 								<xsl:otherwise>
 						   			<value><xsl:value-of select="."/></value>
-						  			<pass>true</pass>							
+						  			<pass>true</pass>
 								</xsl:otherwise>
 					  		
 						 	</xsl:choose>
@@ -284,7 +284,7 @@ xmlns:php="http://php.net/xsl">
 					 			 		<xsl:when test="contains('2.1,3.0,3.1,3.11',normalize-space(.))">
 						  					<pass>true</pass>
 						  				</xsl:when>	
-						  			</xsl:choose>		
+						  			</xsl:choose>
 						  		</xsl:when>
 						  		
 					 			<xsl:when test="$st='CSW'">
@@ -344,7 +344,7 @@ xmlns:php="http://php.net/xsl">
                             <xsl:value-of select="*"/>
                             <xsl:if test="not(position()=last())">, </xsl:if>
                         </xsl:for-each>
-                    </value>	
+                    </value>
                     <pass>true</pass>
                 </xsl:if>
 
@@ -357,7 +357,7 @@ xmlns:php="http://php.net/xsl">
                                 <value><xsl:value-of select="*/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/> = <xsl:value-of select="count(*/gmd:keyword)"/>
                                     (<xsl:for-each select="*/gmd:keyword"><xsl:value-of select="gco:CharacterString"/><xsl:if test="position() != last()">, </xsl:if></xsl:for-each>)
                                 </value>
-                                <pass>true</pass>                    
+                                <pass>true</pass>
                             </xsl:when>
                             <xsl:otherwise>
                                 <err><xsl:value-of select="*/gmd:thesaurusName/*/gmd:title/gco:CharacterString"/></err>
@@ -388,7 +388,7 @@ xmlns:php="http://php.net/xsl">
 							</xsl:when>
 							<xsl:otherwise>
 								<err><xsl:value-of select="*"/> - <xsl:value-of select="$labels/msg/notValid"/></err>
-							</xsl:otherwise>	
+							</xsl:otherwise>
 						</xsl:choose>
 					</test>
 				</xsl:for-each>
