@@ -29,6 +29,8 @@ class MickaPresenter extends \BasePresenter
     /** @resource Catalog:Guest */
 	public function renderAbout()
 	{
+        $micka = new \Micka\Micka;
+        $this->template->mickaVersion = $micka->getMickaVersion();
 	}
     
 }
