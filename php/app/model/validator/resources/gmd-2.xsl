@@ -34,7 +34,7 @@ xmlns:php="http://php.net/xsl">
 		</xsl:otherwise>
 	</xsl:choose>
 </xsl:variable>
-<xsl:variable name="INSPIRE" select="$codelists/specifications/value[@code='INSPIRE']/@uri"/>	
+<xsl:variable name="INSPIRE" select="$codelists/specifications/value[@code='INSPIRE']/@uri"/>
 <xsl:variable name="neInspire" select="gmd:dataQualityInfo/*/gmd:report[normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href)=normalize-space($INSPIRE)]" />
  
 <validationResult title="{$labels/msg/titleCR}" version="4.0.0 beta, CENIA 2017">
@@ -603,13 +603,13 @@ xmlns:php="http://php.net/xsl">
 	</test>	
 </xsl:if>
 
+<xsl:variable name="specRec" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href=$spec]"/>
 
 <xsl:if test="not($hierarchy) or $hierarchy!='application'">
 	<!-- 7.1 -->
 	<test code="7.1" level="m">
         <description><xsl:value-of select="$labels/test[@code='7.1']"/></description>
         <xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/</xpath>
-        <xsl:variable name="specRec" select="gmd:dataQualityInfo/*/gmd:report[gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href=$spec]"/>
         
         <xsl:choose>
             <!-- NE INSPIRE zaznamy -->
@@ -1183,7 +1183,7 @@ xmlns:php="http://php.net/xsl">
 </test>
 
 <!-- CZ-13 -->
-<xsl:if test="not($srv)">
+<xsl:if test="not($srv) and $specRec//gmd:title/*/@xlink:href">
     <test code="CZ-13" level="c">
         <description><xsl:value-of select="$labels/test[@code='CZ-13']"/></description>
         <xpath>identificationInfo/*/citation/*/otherCitationDetails</xpath>
