@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8' ?>
 <xsl:stylesheet version="1.0" 
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  	xmlns:gco="http://www.isotc211.org/2005/gco" 
   	xmlns:gmd="http://www.isotc211.org/2005/gmd"
+    xmlns:gco="http://www.isotc211.org/2005/gco"
   	xmlns:gmx="http://www.isotc211.org/2005/gmx"
   	xmlns:xlink="http://www.w3.org/1999/xlink"
   	xmlns:gfc="http://www.isotc211.org/2005/gfc"

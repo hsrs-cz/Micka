@@ -5,7 +5,6 @@
   xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0" 
   xmlns:srv="http://www.isotc211.org/2005/srv" 
   xmlns:ogc="http://www.opengis.net/ogc" 
-  xmlns:gco="http://www.isotc211.org/2005/gco"
   xmlns:ows="http://www.opengis.net/ows" 
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:gmx="http://www.isotc211.org/2005/gmx"  
@@ -26,7 +25,8 @@
 
 <xsl:template match="MD_Metadata" 
 	xmlns:gml="http://www.opengis.net/gml"
-	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0">
+	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0"
+    xmlns:gco="http://www.isotc211.org/2005/gco">
 
     <xsl:variable name="ser">
     	<xsl:choose>

@@ -445,10 +445,11 @@ class RecordModel extends \BaseModel
         $md['edit_group'] = isset($post['group_e']) ? $post['group_e'] : $this->user->identity->username;
         $md['view_group'] = isset($post['group_v']) ? $post['group_v'] : $this->user->identity->username;
         $lang_main = (isset($post['lang_main']) && $post['lang_main'] != '') ? $post['lang_main'] : 'eng';
-        $md['lang'] = isset($post['languages']) ? implode($post['languages'],"|") : '';
-        if ($md['lang'] == '' && $lang_main != '') {
-            $md['lang'] = $lang_main;
+        $langs = isset($post['languages']) ? $post['languages'] : array();
+        if(!in_array($lang_main, $langs)){
+            array_unshift($langs , $lang_main);
         }
+        $md['lang'] = implode($langs,"|");
         if ($md['md_standard'] == 99) {
             $params = [];
             $params['type'] = (isset($post['type']) && $post['type'] != '') ? $post['type'] : 'ISO19139';
