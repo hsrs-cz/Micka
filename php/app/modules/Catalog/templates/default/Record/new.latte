@@ -126,25 +126,17 @@ var chStandard = function(o){
 
     <div id="lang-choice">
         <h3>{_messages.frontend.language}</h3>
-        <div class="form-block" style="width:300px;">
-            <table width="100%">
-            <tr><td><h4>{_messages.frontend.primary}</h4></td><td><h4>{_messages.frontend.other}</h4></td></tr>
-            <tr>
-            <td>
+        <div class="form-block">
+            <h4>{_messages.frontend.language} / {_messages.frontend.primary}</h4>
             {foreach $mdLangs as $key => $value}
                 <div class="checkbox">
-                    <label><input type="radio" name="lang_main" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> {$value}</label>
+                    <label>
+                        <input type="checkbox" name="languages[]" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> 
+                        <input type="radio" name="lang_main" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> 
+                        {$value}
+                    </label>
                 </div>
             {/foreach}
-            </td>
-            <td>
-            {foreach $mdLangs as $key => $value}
-                <div class="checkbox">
-                    <label><input type="checkbox" name="languages[]" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> {$value}</label>
-                </div>
-            {/foreach}
-            </td>
-            </tr></table>
         </div>
     </div>
 	
