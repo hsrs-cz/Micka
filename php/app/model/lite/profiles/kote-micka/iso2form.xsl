@@ -1119,7 +1119,7 @@
                     <xsl:with-param name="name" select="'maintenanceFrequency'"/>
                     <xsl:with-param name="value" select="*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue"/>
                     <xsl:with-param name="codes" select="'maintenanceAndUpdateFrequency'"/>
-                    <xsl:with-param name="path" select="'maintenance-frequency[]'"/>	    
+                    <xsl:with-param name="path" select="'maintenance-frequency[]'"/> 
                     <xsl:with-param name="mand" select="''"/>
                     <xsl:with-param name="class" select="'short inp2'"/>
                     <xsl:with-param name="valid" select="'CZ-4'"/>
@@ -1128,7 +1128,7 @@
                 <xsl:call-template name="drawInput">
                     <xsl:with-param name="name" select="'maintenanceUser'"/>
                     <xsl:with-param name="value" select="*/gmd:userDefinedMaintenanceFrequency/*"/>
-                    <xsl:with-param name="path" select="'maintenance-user[]'"/>	    
+                    <xsl:with-param name="path" select="'maintenance-user[]'"/>	
                     <xsl:with-param name="class" select="'short inp2'"/>
                     <xsl:with-param name="type" select="'plain'"/>
                     <xsl:with-param name="valid" select="'CZ-4'"/>
@@ -1139,7 +1139,7 @@
                     <xsl:with-param name="name" select="'maintenanceScope'"/>
                     <xsl:with-param name="value" select="*/gmd:updateScope/*/@codeListValue"/>
                     <xsl:with-param name="codes" select="'updateScope'"/>
-                    <xsl:with-param name="path" select="'maintenance-scope[]'"/>	    
+                    <xsl:with-param name="path" select="'maintenance-scope[]'"/>
                     <xsl:with-param name="multi" select="1"/>
                     <xsl:with-param name="class" select="'inp2 short'"/>
                     <xsl:with-param name="valid" select="'CZ-4'"/>
@@ -1148,7 +1148,7 @@
                 <xsl:call-template name="drawInput">
                     <xsl:with-param name="name" select="'maintenanceNote'"/>
                     <xsl:with-param name="value" select="*/gmd:maintenanceNote"/>
-                    <xsl:with-param name="path" select="'maintenance-note[]'"/>	    
+                    <xsl:with-param name="path" select="'maintenance-note[]'"/>
                     <xsl:with-param name="multi" select="1"/> <!-- TODO zatim ... -->
                     <xsl:with-param name="class" select="'inp2'"/>
                     <xsl:with-param name="valid" select="'CZ-6'"/>
@@ -1175,7 +1175,7 @@
             <xsl:with-param name="value" select="gmd:identificationInfo/*/srv:couplingType/*/@codeListValue"/>
             <xsl:with-param name="codes" select="'couplingType'"/>
             <xsl:with-param name="class" select="'short'"/>
-            <xsl:with-param name="valid" select="'CZ-9'"/>   
+            <xsl:with-param name="valid" select="'CZ-9'"/>
         </xsl:call-template>
     </xsl:if>
 
@@ -1250,7 +1250,7 @@
     <div class="row">
         <xsl:call-template name="drawLabel">
             <xsl:with-param name="name" select="'fc'"/>
-        </xsl:call-template>			
+        </xsl:call-template>
         <div class="col-xs-12 col-md-8">
             <select name="fcat" id="fcat" data-val="{gmd:contentInfo/*/gmd:featureCatalogueCitation/*/gmd:identifier/*/gmd:code/*}" data-placeholder="...">
             </select>
@@ -1260,7 +1260,7 @@
     <div class="row">
         <xsl:call-template name="drawLabel">
             <xsl:with-param name="name" select="'featureTypes'"/>
-        </xsl:call-template>			
+        </xsl:call-template>
 
         
         <div class="col-xs-12 col-md-8">
@@ -1269,7 +1269,7 @@
                     <option value="{*}" selected="selected"><xsl:value-of select="*"/></option>
                 </xsl:for-each>
             </select>
-        </div>       
+        </div>
     </div>
     </xsl:if>
 

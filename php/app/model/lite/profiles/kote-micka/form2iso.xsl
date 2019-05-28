@@ -209,19 +209,22 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     <gmd:codeSpace></gmd:codeSpace>
                                 </gmd:RS_Identifier>
                             </gmd:identifier>
-                            <gmd:otherCitationDetails>
-                                <gco:CharacterString><xsl:value-of select="obligatory"/></gco:CharacterString>
-                            </gmd:otherCitationDetails>
+                            <xsl:call-template name="uriOut">
+                                <xsl:with-param name="name" select="'otherCitationDetails'"/>
+                                <xsl:with-param name="codes" select="$codeLists/obligatory"/>
+                                <xsl:with-param name="t" select="obligatory"/>
+                                <!--xsl:with-param name="locale" select="//locale"/-->
+                            </xsl:call-template>
 						</gmd:CI_Citation>
 					</gmd:citation>
 					<xsl:call-template name="txtOut">
 						<xsl:with-param name="name" select="'abstract'"/>
 						<xsl:with-param name="t" select="abstract"/>
-					</xsl:call-template>					
+					</xsl:call-template>
 					<xsl:call-template name="txtOut">
 						<xsl:with-param name="name" select="'purpose'"/>
 						<xsl:with-param name="t" select="purpose"/>
-					</xsl:call-template>					
+					</xsl:call-template>
 					<!--<xsl:for-each select="resourceSpecificUsage">
                         <resourceSpecificUsage>
                             <MD_Usage>
