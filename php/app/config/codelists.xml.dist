@@ -2755,17 +2755,20 @@
 </serviceQuality>
 
 <obligatory>
-	<value name="gestor">
+	<value name="gestor" uri="https://services.cuzk.cz/registry/codelist/ObligatoryProviderRoleValue/Gestor">
         <cze>gestor</cze>
-		    <eng>gestor</eng>
+		<eng>gestor</eng>
+        <spa>gestor</spa>
     </value>
-    <value name="spolugestor">
+    <value name="spolugestor" uri="https://services.cuzk.cz/registry/codelist/ObligatoryProviderRoleValue/Cogestor">
         <cze>spolugestor</cze>
 		<eng>co-gestor</eng>
+        <spa>cogestor</spa>
     </value>
-    <value name="garant">
+    <value name="garant" uri="https://services.cuzk.cz/registry/codelist/ObligatoryProviderRoleValue/Guarantee">
         <cze>garant</cze>
-		    <eng>garant</eng>
+		<eng>garant</eng>
+        <spa>garantía</spa>
     </value>
 </obligatory>
 
