@@ -1183,7 +1183,7 @@ xmlns:php="http://php.net/xsl">
 </test>
 
 <!-- CZ-13 -->
-<xsl:if test="not($srv) and $specRec//gmd:title/*/@xlink:href">
+<xsl:if test="not($srv) and $specRec//gmd:pass/*='true'">
     <test code="CZ-13" level="c">
         <description><xsl:value-of select="$labels/test[@code='CZ-13']"/></description>
         <xpath>identificationInfo/*/citation/*/otherCitationDetails</xpath>
