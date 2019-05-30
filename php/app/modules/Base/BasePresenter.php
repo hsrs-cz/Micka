@@ -61,7 +61,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $tmp_appparameters['hostUrl'] = $url->hostUrl;
         $tmp_appparameters['basePath'] = rtrim($url->basePath,'/');
         $tmp_appparameters['locale'] = $locale;
-
+        $tmp_appparameters['cswUrl'] = strpos($url->path, '/filter/') === false
+            ? $tmp_appparameters['hostUrl'] . $tmp_appparameters['basePath'] . '/csw/'
+            : $tmp_appparameters['hostUrl'] . $url->path  . '/';
         define("CSW_TIMEOUT", 30);
         define("HTTP_XML", "Content-type: application/xml; charset=utf-8");
         define("HTTP_SOAP", "Content-type: application/soap+xml; charset=utf-8"); //TODO ověřit
@@ -104,7 +106,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	public function beforeRender()
 	{
-        
         $this->template->parameters = $this->context->parameters;
         $this->template->themePath = '/layout/' . $this->layoutTheme;
         $this->template->extjsPath = '/wwwlibs/ext/ext-4.2';
@@ -114,7 +115,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->template->navigation = [];
         $this->template->hs_initext = '';
         $this->template->langCodes = $this->langCodes;
-
+        $this->template->pageTitle = isset($this->context->parameters['app']['pageTitle'][$this->appLang]) && $this->context->parameters['app']['pageTitle'][$this->appLang] != ''
+            ? $this->context->parameters['app']['pageTitle'][$this->appLang]
+            : 'openMicka';
 	}
 
     /**
