@@ -162,7 +162,9 @@ class CswPresenter extends \BasePresenter
                 $params['buffered'] = array_key_exists('buffered', $params) ? $params['buffered'] : 1;
                 $params['query'] = array_key_exists('query', $params) ? $params['query'] : '';
                 $csw = new \Micka\Csw("", $cswFilters[$id]);
-                echo $csw->run($params);
+                $result = $csw->run($params);
+                $csw->setHeader();
+                echo $result;
                 $this->terminate();
             }
         }
