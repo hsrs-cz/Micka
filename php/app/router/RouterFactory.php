@@ -49,6 +49,7 @@ class RouterFactory
             $router[] = new Route('[<locale=cs cs|en|es>/]suggest/mdgazcli', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'MdGazcli']);
             $router[] = new Route('[<locale=cs cs|en|es>/]suggest', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'default']);
             $router[] = new Route('[<locale=cs cs|en|es>/]csw', ['module' => 'Catalog', 'presenter' => 'Csw', 'action' => 'default']);
+            $router[] = new Route('[<locale=cs cs|en|es>/]csw/filter[/<id>]', ['module' => 'Catalog', 'presenter' => 'Csw', 'action' => 'filter']);
             $router[] = new Route('[<locale=cs cs|en|es>/]about', ['module' => 'Catalog', 'presenter' => 'Micka', 'action' => 'about']);
             $router[] = new Route('[<locale=cs cs|en|es>/]help', ['module' => 'Catalog', 'presenter' => 'Micka', 'action' => 'help']);
             $router[] = new Route('record[/<id>]', ['module' => 'Catalog', 'presenter' => 'Record', 'action' => 'old']);

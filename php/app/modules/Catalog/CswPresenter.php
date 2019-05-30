@@ -149,6 +149,28 @@ class CswPresenter extends \BasePresenter
     }
     
     /** @resource Catalog:Guest */
+	public function renderFilter($id)
+	{
+        $cswFilters = isset($this->context->parameters['csw']) ? $this->context->parameters['csw'] : array();
+        if (count($cswFilters) > 0) {
+            if (array_key_exists($id, $cswFilters)) {
+                $params = $this->getParameters();
+                $params['service'] = array_key_exists('service', $params) ? array_key_exists('service', $params) : 'CSW';
+                $params['version'] = array_key_exists('version', $params) ? array_key_exists('version', $params) : '2.0.2';
+                $params['language'] = array_key_exists('language', $params) ? array_key_exists('language', $params) : $this->appLang;
+                $params['format'] = array_key_exists('format', $params) ? array_key_exists('format', $params) : 'text/html';
+                $params['buffered'] = array_key_exists('buffered', $params) ? array_key_exists('buffered', $params) : 1;
+                $params['query'] = array_key_exists('query', $params) ? array_key_exists('query', $params) : '';
+                $csw = new \Micka\Csw("", $cswFilters[$id]);
+                echo $csw->run($params);
+                $this->terminate();
+            }
+        }
+        throw new \Nette\Application\BadRequestException(404);
+        $this->terminate();
+    }
+    
+    /** @resource Catalog:Guest */
 	public function actionInspire()
 	{
         $csw = new \Micka\Csw("", "_FORINSPIRE_=1"); //TODO do konfigurace
