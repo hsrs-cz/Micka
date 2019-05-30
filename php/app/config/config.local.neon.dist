@@ -70,6 +70,8 @@ parameters:
         sk: slo
         sl: slv
         sv: swe
+    csw:
+        portal = "_DATA_TYPE_ = 2" 
 
 database:
     dsn: 'pgsql:host=your-server-name;dbname=your-database-name;port=5432'
