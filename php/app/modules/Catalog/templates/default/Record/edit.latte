@@ -276,7 +276,7 @@
                     {* ***************************************************************************** *}
                     {if $form['form_code'] == 'T' || $form['form_code'] == 'N'}
                         {if $form['is_uri'] == 1}
-                            <span class="flg"><span class="flg" title="URI"><i class="fa fa-link"></i></span></span>
+                            <span class="flg" title="URI"><i class="fa fa-link"></i></span>
                             <input type=text class="{$form['form_code']}" id="{$form['el_id']}uri" name="{$form['form_code']}|uri|{$form['package_id']}|{$form['md_path']}" value="{ifset $valuesUri[$form['md_path']]}{$valuesUri[$form['md_path']]}{/ifset}">
                             <br>
                             <span class="c"></span>
