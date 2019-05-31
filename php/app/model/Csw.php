@@ -610,12 +610,14 @@ class Csw{
         if(!$lang || !in_array($lang, $langs)){
             $lang='eng';
         }
+        //dump($this->appParameters); exit;
         if(MICKA_LANG == 'cze') $olang = 'eng'; else $olang = 'cze';
         $this->xml->loadXML('<root></root>');
         $this->xsl->load(__DIR__ ."/xsl/getCapabilities.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $params = array(
-            'mickaURL' => $this->mickaURL,
+            'mickaURL' => $this->appParameters['basePath'],
+            'cswURL' => $this->appParameters['cswUrl'],
             'LANG' => $lang,
             'MICKA_LANG' => MICKA_LANG,
             'LANG_OTHER' => $olang,

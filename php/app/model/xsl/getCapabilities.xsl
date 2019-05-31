@@ -16,7 +16,7 @@
       xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd http://inspire.ec.europa.eu/schemas/inspire_ds/1.0 http://inspire.ec.europa.eu/schemas/inspire_ds/1.0/inspire_ds.xsd"
       version="2.0.2">
 
-   	<xsl:variable name="cl" select="document(concat('codelists_', $LANG, '.xml'))/map"/>
+   	<xsl:variable name="cl" select="document('../../config/codelists.xml')/map"/>
 
     <ows:ServiceIdentification>
         <ows:Title><xsl:value-of select="$title"/></ows:Title>
@@ -76,16 +76,16 @@
 		<ows:Operation name="GetCapabilities">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$mickaURL}/csw"/>
-					<ows:Post xlink:href="{$mickaURL}/csw"/>
+					<ows:Get xlink:href="{$cswURL}"/>
+					<ows:Post xlink:href="{$cswURL}"/>
 				</ows:HTTP>
 			</ows:DCP>
 		</ows:Operation>
 		<ows:Operation name="DescribeRecord">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$mickaURL}/csw"/>
-					<ows:Post xlink:href="{$mickaURL}/csw"/>
+					<ows:Get xlink:href="{$cswURL}"/>
+					<ows:Post xlink:href="{$cswURL}"/>
 				</ows:HTTP>
 			</ows:DCP>
 			<ows:Parameter name="typeName">
@@ -103,13 +103,13 @@
 		<ows:Operation name="GetRecords">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$mickaURL}/csw"/>
-					<ows:Post xlink:href="{$mickaURL}/csw">
+					<ows:Get xlink:href="{$cswURL}"/>
+					<ows:Post xlink:href="{$cswURL}">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>XML</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="{$mickaURL}/csw">
+					<ows:Post xlink:href="{$cswURL}">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
@@ -215,13 +215,13 @@
 		<ows:Operation name="GetRecordById">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Get xlink:href="{$mickaURL}/csw"/>
-					<ows:Post xlink:href="{$mickaURL}/csw">
+					<ows:Get xlink:href="{$cswURL}"/>
+					<ows:Post xlink:href="{$cswURL}">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>XML</ows:Value>
 						</ows:Constraint>
 					</ows:Post>
-					<ows:Post xlink:href="{$mickaURL}/csw">
+					<ows:Post xlink:href="{$cswURL}">
 						<ows:Constraint name="PostEncoding">
 						  <ows:Value>SOAP</ows:Value>
 						</ows:Constraint>
@@ -242,7 +242,7 @@
 		<ows:Operation name="Transaction">
 			<ows:DCP>
 				<ows:HTTP>
-					<ows:Post xlink:href="{$mickaURL}/csw"/>
+					<ows:Post xlink:href="{$cswURL}"/>
 				</ows:HTTP>
 			</ows:DCP>
 		</ows:Operation>
@@ -259,7 +259,7 @@
 	      <ows:Value>http://www.isotc211.org/2005/gmd</ows:Value>
 	    </ows:Constraint>
 	    <ows:Constraint name="WSDL">
-		      <ows:Value><xsl:value-of select="$mickaURL"/>/csw?wsdl</ows:Value>
+            <ows:Value><xsl:value-of select="$cswURL"/>?wsdl</ows:Value>
 	    </ows:Constraint>
 	    <ows:Constraint name="FederatedCatalogues">
 	    	<!-- TODO tahat odjinud -->
@@ -270,7 +270,7 @@
 
 		<inspire_ds:ExtendedCapabilities>
 			<inspire_com:ResourceLocator>
-				<inspire_com:URL><xsl:value-of select="$mickaURL"/>/csw&amp;SERVICE=CSW&amp;REQUEST=GetCapabilities</inspire_com:URL>
+				<inspire_com:URL><xsl:value-of select="$cswURL"/>?SERVICE=CSW&amp;REQUEST=GetCapabilities</inspire_com:URL>
 				<inspire_com:MediaType>application/vnd.ogc.wms_xml</inspire_com:MediaType>
 			</inspire_com:ResourceLocator>
 			<inspire_com:ResourceLocator>
