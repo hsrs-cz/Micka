@@ -44,7 +44,7 @@ i.exp {
     display: inline-block;
 }
 
-.flg {position: relative;  display: inline-block; margin-left: -19px; top:0px; xposition:absolute; xleft: 180px;}
+.flg {position: relative; color: #7aa3db; display: inline-block; margin-left: -19px; top:0px; xposition:absolute; xleft: 180px;}
 
 textarea {background: #FFF; font-family: sans-serif; font-size: 11px; width:500px; height:100px; border: solid 1px #DDD; border-radius: 3px; padding: 2px;}
 input {font-size: 11px;}
