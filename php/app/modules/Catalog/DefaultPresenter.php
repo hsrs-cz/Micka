@@ -35,6 +35,8 @@ class DefaultPresenter extends \BasePresenter
         $params = $csw->dirtyParams($request);
         $this->template->records = $csw->run($params);
         $this->template->urlParams = $this->context->getByType('Nette\Http\Request')->getQuery();
+        //$found = $csw->getCountRecords();;
+        //$this->template->pageTitle .= ': ' . $this->translator->translate('messages.frontend.found') . " $found";
 	}
 
 }
