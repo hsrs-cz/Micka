@@ -63,11 +63,17 @@ class RecordPresenter extends \BasePresenter
         $request['version'] = '2.0.2';
         $request['id'] = $id;
         $request['language'] = $appLang;
-        $request['format'] = 'text/html';
+        $request['format'] = 'json';
         $csw = new \Micka\Csw;
+        $mdr = json_decode($csw->run($csw->dirtyParams($request)));
+        $request['format'] = 'text/html';
         $this->template->record = $csw->run($csw->dirtyParams($request));
         $this->template->urlParams = $this->context->getByType('Nette\Http\Request')->getQuery();
         $this->template->appLang = $appLang;
+        $this->template->pageTitle = 
+            $mdr !== null    
+            ? $this->template->pageTitle .= ': ' . $mdr->title
+            : $this->template->pageTitle .= ': ' . $this->translator->translate('messages.apperror.noRecordFound');
 	}
     
     /** @resource Catalog:Guest */
@@ -89,6 +95,7 @@ class RecordPresenter extends \BasePresenter
         $this->template->rec = $mdr;
         $this->template->appLang = $appLang;
         $this->template->detail = 'full';
+        $this->template->pageTitle = $this->template->pageTitle .= ': ' . $mdr->title;
 	}
     
     /** @resource Catalog:Guest */
