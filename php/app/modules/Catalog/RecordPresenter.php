@@ -227,7 +227,8 @@ class RecordPresenter extends \BasePresenter
                 'title'=>$this->recordModel->getMdTitle($md_values,$this->appLang)
                 ];
             $mcl = new \App\Model\CodeListModel($this->context->getByType('Nette\Database\Context'), $this->user);
-            $this->template->dataBox = $data->getEditLiteForm($rmd, $profil, $mcl->getEditLiteTemplate($mds, $profil));
+            $mcl->setLiteProfiles($this->appLang, $mds);
+            $this->template->dataBox = $data->getEditLiteForm($rmd, $profil, $mcl->getEditLiteProfile($profil));
             $this->template->formData =
                     $this->template->dataBox == ''
                     ? $data->getEditForm($mds, $recno, $md_langs, $profil, $package, $md_values)

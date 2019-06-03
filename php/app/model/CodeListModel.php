@@ -7,10 +7,7 @@ use Nette;
 
 class CodeListModel extends \BaseModel
 {
-	public function startup()
-	{
-		parent::startup();
-	}
+    private $liteProfiles = array();
 
     public function getStandardsLabel($appLang, $all=FALSE) 
     {
@@ -40,15 +37,38 @@ class CodeListModel extends \BaseModel
     
     public function getMdProfils($appLang, $mds=0) 
     {
-        return $this->db->query("
+        $rs = array();
+        $rs = $this->db->query("
                 SELECT profil_id, CASE WHEN label_text IS NULL THEN profil_name ELSE label_text END AS label_text
                 FROM profil_names z LEFT JOIN (SELECT label_join,label_text FROM label WHERE lang=? AND label_type='PN') s
                 ON z.profil_id=s.label_join
                 WHERE md_standard=? AND is_vis=1
             ", $appLang, $mds)->fetchPairs('profil_id', 'label_text');
+        return $rs + $this->liteProfiles['titles'];
     }
     
-    public function isPackageProfil($mds, $profil_id) {
+    public function setLiteProfiles($appLang, $mds)
+    {
+        $dir = __DIR__ . '/lite/profiles/';
+        $files = scandir($dir, 0);
+        $i = $mds == 10 ? 150 : 50;
+        $tmpConfig = new Nette\DI\Config\Loader();
+        foreach ($files as $file) {
+            if ($file == '.' || $file == '..') {
+                continue;
+            }
+            if (file_exists($dir . $file . '/config.liteprofile.neon')) {
+                $config = $tmpConfig->load($dir . $file . '/config.liteprofile.neon');
+                $title = isset($config['title'][$appLang]) ? $config['title'][$appLang] : $file;
+            }
+            $this->liteProfiles['profiles'][$i] =  $file;
+            $this->liteProfiles['titles'][$i] =  $title;
+            $i++;
+        }
+    }
+
+    public function isPackageProfil($mds, $profil_id)
+    {
         $is_packages = 0;
         if ($mds == 0 || $mds == 10) {
             $is_packages = $this->db->query("SELECT is_packages FROM profil_names
@@ -61,7 +81,8 @@ class CodeListModel extends \BaseModel
         }
     }
     
-    public function getEditLiteTemplate($mds, $profil_id) {
+    public function getEditLiteTemplate($mds, $profil_id)
+    {
         $template = '';
         if ($mds == 0 || $mds == 10) {
             $template = $this->db->query("SELECT edit_lite_template FROM profil_names
@@ -70,6 +91,11 @@ class CodeListModel extends \BaseModel
         return $template;
     }
     
+    public function getEditLiteProfile($profil_id)
+    {
+        return isset($this->liteProfiles['profiles'][$profil_id]) ? $this->liteProfiles['profiles'][$profil_id] : '';
+    }
+
     public function getMdPackages($appLang, $mds, $profil_id, $pairs=FALSE) 
     {
         if (!$this->isPackageProfil($mds, $profil_id)) {
