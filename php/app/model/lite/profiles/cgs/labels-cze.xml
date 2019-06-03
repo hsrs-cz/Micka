@@ -1,0 +1,686 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<labels>
+	<msg name="fileIdentifier">
+		<label>11. Identifikátor metadatového záznamu</label>
+		<help>Automaticky generovaný identifikátor. Typicky UUID. Jde o unikátní klíč v katalogu. Je možno jej přepsat.</help>
+	</msg>
+	<msg name="inspireEU">
+		<label>CZ-11 Harvestovat na geoportál EU</label>
+		<help>Označuje, zda bude záznam harvestován na evropský INSPIRE geoportál (Podléhá dalšímu schválení správcem národního geoportálu). 
+			    Pokud není označen, bude prezentován pouze na národním geoportálu.
+			<p class="pozn">Hodnota je podle národního profilu http://geoportal.gov.cz/inspire</p>
+		</help>
+	</msg>
+	<msg name="mdlang">
+		<label>10.3 Jazyk metadat</label>
+		<help>Jazyk použitý pro vytvoření metadat. Metadatové záznamy mohou být multilingvální, ale jeden jazyk je hlavní.</help>
+	</msg>
+	<msg name="title">
+		<label>1.1 Název</label>
+		<help>Charakteristický, často jedinečný název, pod kterým je zdroj znám. Měl by být unikátní v rámci organizace.</help>
+	</msg>
+	<msg name="abstract">
+		<label>1.2 Abstrakt</label>
+		<help>Stručné popisné shrnutí obsahu zdroje.</help>
+	</msg>
+	<msg name="hierarchyLevel">
+		<label>1.3 Typ</label>
+		<help>Typ zdroje, který je popisován metadaty.</help>
+	</msg>
+	<msg name="scale">
+		<label>6.2a Prostor. rozlišení - měřítko</label>
+		<help>
+			Měřítko mapy, ze které byla vektorová datová sada odvozena.
+Hodnota se vyjádří jako celé číslo vyjadřující jmenovatele měřítkového čísla. Snažte se tuto hodnotu uvádět vždy, pokud je to možné, kvůli následnému vyhledávání. Alternativně lze uvést rozlišení-vzdálenost.
+Povinné u datových souborů a sérií datových souborů, jestliže lze stanovit odpovídající měřítko.
+		</help>
+	</msg>
+	<msg name="distance">
+		<label>6.2b Prostor. rozlišení - vzdál.</label>
+		<help>Přesnost/rozlišení rastrové datové sady v metrech.
+Hodnota rozlišení se vyjádří jako celočíselná hodnota od nuly do nekonečna.
+Povinné u datových souborů a sérií datových souborů, jestliže lze stanovit odpovídající hodnotu rozlišení
+		</help>
+	</msg>
+	<msg name="lineage">
+		<label>6.1 Původ</label>
+		<help>
+			Vyjádření historie zpracování a/nebo celkové kvality datové sady nebo série. 
+Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen a jeho kvalita zajištěna, zda se jedná o oficiální verzi (pokud existuje více verzí) a zda má právní platnost.
+			</help>
+	</msg>
+	<msg name="purpose">
+		<label>CZ-7 Účel</label>
+		<help>Důvod vytvoření DS. Např. citace zákona, vyhlášky apod.</help>
+	</msg>
+	<msg name="keywords">
+		<label>3 Další klíč. slova</label>
+		<help>
+			Seznam dalších klíčových slov.
+		</help>
+	</msg>
+	<msg name="inspireTheme">
+		<label>3 Klíč. slovo (INSPIRE)</label>
+		<help>
+			Název tématu INSPIRE.
+		</help>
+	</msg>
+	<msg name="date">
+		<label>5a Referenční datum</label>
+		<help>
+			Jedná se buď o datum zveřejnění, poslední revize nebo vytvoření. Tato událost, které se datum týká, se volí v následující položce.
+		</help>
+	</msg>
+	<msg name="dateType">
+		<label>Typ data</label>
+		<help>Určuje, které události, z předchozí položky „Referenční datum“, se datum týká.
+            <p class="pozn">Nemůže existovat více než jedno datum poslední revize. </p>
+		</help>
+	</msg>
+	<msg name="coorSys">
+		<label>IOD-1 Souřadnicový ref. systém</label>
+		<help>
+			Seznam souřadnicových referenčních systémů, ve kterých je zdroj poskytován.
+		</help>
+	</msg>
+	<msg name="spatialExt">
+		<label>4.1 Geografické ohraničení</label>
+		<help>
+			Pomocí Ctrl-myš zadejte minimální obdélník rozsahu zdroje. Rozsah nemusíte zadávat, pokud zadáte geografický identifikátor.
+		</help>
+	</msg>
+	<msg name="extentId">
+		<label>CZ-14 Geografický identifikátor</label>
+		<help>
+			Identifikátor určující geografický rozsah. Automaticky doplní i geografické ohraničení.
+		</help>
+	</msg>
+	<msg name="timeExtent">
+		<label>5b Časový rozsah</label>
+		<help>
+			<p>Časový rozsah definuje časové období, které obsah zdroje pokrývá. Tento prvek by měl být vyplněn, pokud zdroj má časový rozsah. Možnost je:
+	<ul>
+		<li>jeden časový údaj (např. datum snímkování leteckého snímku) nebo </li>
+		<li>rozsah platnosti např. u správních hranic nebo</li>
+		<li>nekonkrétní časový rozsah, kdy nelze jednu z ohraničujících hodnot intervalu přesně definovat. Tento se bude zapisovat pomocí konkrétního časového intervalu následovně: </li>
+		<ul>
+		<li>Pro neukončenou dolní hranici intervalu se bude uvádět "unknown". </li>
+		<li>Pro neukončenou horní hranici intervalu se bude uvádět "unknown". </li>
+		</ul>
+	</ul>
+</p>
+		</help>
+	</msg>
+	<msg name="Extent">
+		<label>Rozsah</label>
+	</msg>
+	<!--msg name="Coverage">
+		<label>CZ-10 Pokrytí území</label>
+	</msg>
+	<msg name="coverageArea">
+		<label>CZ-10a Plocha [km2]</label>
+		<help>
+			Uveďte plochu pokrytí referenčního území daty v procentech.”.
+			<p class="pozn">Položka pro monitoring. Pokud bude položka vyplněna a tato metadata využita pro monitoring (podle vyhlášky 103/2010), je možno z metadata získat automaticky indikátor „Sledování zeměpisného pokrytí prostorovými daty“</p>
+			</help>
+	</msg-->
+	<msg name="coveragePercent">
+		<label>CZ-10 Pokrytí území [%]</label>
+		<help>Procento plochy, které datová sada zaujímá z referenčního území označeného geografickým identifikátorem (obvykle plocha působnosti poskytovatele, kraj, celá ČR, chráněné území, ...).
+			<p class="pozn">Položka pro monitoring. Pokud bude položka vyplněna a tato metadata využita pro monitoring (podle vyhlášky 103/2010), je možno z metadata získat automaticky indikátor „Sledování zeměpisného pokrytí prostorovými daty“</p>
+			</help>
+	</msg>
+	<msg name="coverageDesc">
+		<label>CZ-10c Referenční území</label>
+		<help>
+			<p>Název území, pro které je pokrytí udáváno.</p>
+			Není-li tato položka vyplněna, je míněno celé území ČR. Volný text.
+		</help>
+	</msg>
+	<msg name="encoding">
+		<label>IOD-3 Kódování (formát)</label>
+		<help>
+			Informace o distribučních formátech dat (v jakém formátu jsou data uložena nebo distribuována).
+		</help>
+	</msg>
+	<msg name="format">
+		<label>Distribuční formát</label>
+		<help>
+			<p>Informace o distribučních formátech dat (v jakém formátu jsou data uložena nebo distribuována).</p>
+			<p class="pozn">Položka může být násobná. Násobí se znaménkem + a odebírá znaménkem - pod položkou. </p>		
+		</help>
+	</msg>
+	<msg name="format_version">
+		<label>Verze</label>
+		<help>
+			<p>Verzi formátu dat je nutno uvést, pokud uvádíte distribuční formát dat!
+Např. pokud uvedete distribuční formát „Shapefile“, pak jeho verze bude vždy 1.0, protože tento formát nemá verze.
+</p>
+		</help>
+	</msg>
+	<msg name="format_specification">
+		<label>Specifikace formátu</label>
+		<help>Podle INSPIRE specifikací dat se doporučuje uvádět i citaci specifikace, kde je kódování popsáno. 
+Příklad: D2.8.I.7 Data Specification on Transport Networks – version 3.1)
+		</help>
+	</msg>
+	<msg name="topicCategory">
+		<label>2.1 Tematická kategorie</label>
+		<help>Základní tematické členění podle ISO 19115.</help>
+	</msg>
+	<msg name="dataContact">
+		<label>9.1 Odpovědná organizace</label>
+		<help>
+			Organizace odpovídající za vytvoření, řízení, údržbu a distribuci zdroje. 
+		</help>
+	</msg>
+	<msg name="contact">
+		<label>10.1 Kontakt - metadata</label>
+		<help>
+			Popis organizace nebo osoby odpovědné za vytvoření a údržbu metadat. Každý, kdo vloží metadata převzatých dat do svého katalogu, se uvede jako Kontaktní místo pro metadata. 
+			Povinně uvádějte název organizace nebo jméno osoby, e-mail a roli.
+		</help>
+	</msg>
+	<msg name="gemet">
+		<label>3.1 GEMET</label>		
+		<help>Další Klíčová slova z thesauru GEMET. Zadejte alespoň jedno klíčové slovo. Výběr z číselníku. 
+		</help>
+	</msg>
+	<msg name="parentIdentifier">
+		<label>CZ-2 Identifikátor nadřazeného záznamu </label>
+		<help>Unikátní identifikátor nadřazeného metadatového záznamu</help>
+	</msg>
+	<msg name="identifier">
+		<label>1.5 Jedinečný identifikátor</label>
+		<help>Hodnota, která zdroj jednoznačně identifikuje v rámci světa. Měl by být ve tvaru URI.</help>
+	</msg>
+	<msg name="codeSpace">
+		<label>Prostor kódů</label>
+		<help>
+			Řetězec označující autoritu, která kódy přiděluje
+		</help>
+	</msg>
+	<msg name="accessCond">
+		<label>8.1. Podmínky pro přístup a užití</label>
+		<help>Podmínky vztahující se k přístupu a užití datové sady. Vyberte z číselníku nebo zadejte text a potvrďte ENTER.</help>
+	</msg>
+	<msg name="limitationsAccess">
+		<label>8.2. Omezení věřejného přístupu</label>
+		<help>Omezení veřejného přístupu k datové sadě. Vyberte z číselníku nebo zadejte text a potvrďte ENTER.</help>
+	</msg>
+	<msg name="linkage">
+		<label>1.4 Odkaz</label>
+		<help>
+			<p>Tato položka definuje odkaz(y) na zdroj a/nebo odkaz na další informace o zdroji. Povinný, pokud je k dispozici adresa URL pro získání dalších informací o zdroji a/nebo pro přístup k souvisejícím službám. 
+V případě, že data jsou dostupná formou služby OGC, půjde o odkaz na GetCapabilities. Jako součást URL je třeba uvádět tyto parametry:
+SERVICE=&lt;kód služby&gt; a REQUEST=GetCapabilities, kde kód služby je WMS/WFS/WCS/CSW apod. 
+Příklad:
+http://portal.mysite.cz/services/wms?SERVICE=WMS&amp;REQUEST=GetCapabilities 
+U nestandardních služeb – mimo rámec INSPIRE - bude poskytován odkaz na tradiční přípojný bod služby.
+</p>
+		</help>
+	</msg>
+    <msg name="url">
+        <label>URL</label>
+        <help>Adresa</help>
+    </msg>
+    <msg name="function">
+        <label>Funkce</label>
+        <help>Podle ISO 19115. Pro webové služby OGC zadejte "download".</help>
+    </msg>
+	<msg name="protocol">
+		<label>Protokol</label>
+        <help>Rozlišení typu odkazu. Důležité pro identifikaci OGC služeb (WMS) apod.</help>
+	</msg>
+	<msg name="name">
+		<label>Název</label>
+        <help></help>
+	</msg>
+	<msg name="description">
+		<label>Popis</label>
+        <help></help>
+	</msg>
+	<msg name="distributor">
+		<label>Distributor</label>
+		<help>Název organizace, která je zodpovědná za distribuci dat.</help>
+	</msg>
+	<msg name="compliant">
+		<label>7.2 Míra souladu se specifikací</label>
+		<help>
+			Míra souladu datové sady s prováděcími pravidly přijatými podle čl. 7 odst. 1 směrnice 2007/2/ES či s jinou specifikací. Souvisí s položkou 7.1 Specifikace.
+		</help>
+	</msg>
+	<msg name="specification">
+		<label>7.1 Specifikace</label>
+		<help>
+			<p>Nařízení INSPIRE, vůči kterému je soulad zdroje hodnocen. Z číselníku vyberte nařízení.
+Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud zdroje nejsou INSPIRE, vyberte z číselníku „Směrnice 2007/2 INSPIRE“ a do položky 7.2 Míra souladu vyberte z číselníku hodnotu „NE“ a tím se označí, že zdroj není INSPIRE.
+</p>
+		</help>
+	</msg>
+	<msg name="role">
+		<label>Role</label>
+		<help>
+			Organizace nebo osoba, která je primárním poskytovatelem zdroje a je zodpovědná za vytváření, řízení, údržbu a distribuci zdroje, ponese roli „Správce“. Role „Správce“ musí být vždy vyplněna.
+		</help>
+	</msg>
+    
+	<msg name="mdrole">
+		<label>Role</label>
+		<help>
+			Každý, kdo vloží metadata převzatých dat do svého katalogu, se uvede jako Kontaktní bod pro metadata. Role „Kontaktní bod“ musí být vždy vyplněna!
+		</help>
+	</msg>
+	<msg name="Maintenance">
+		<label>CZ-4 Údržba</label>
+		<help>
+			<p>Informace o četnosti aktualizací. Pokud v číselníku není vhodný interval, zvolte „neznámý“ a vyplňte následující položku Úroveň údržby a aktualizace (uživ.).</p>
+		</help>
+	</msg>
+		
+	<msg name="maintenanceFrequency">
+		<label>CZ-4a četnost</label>
+		<help>
+			<p>Informace o četnosti aktualizací. Pokud v číselníku není vhodný interval, zvolte „neznámý“ a vyplňte následující položku Úroveň údržby a aktualizace (uživ.).</p>
+		</help>
+	</msg>
+	<msg name="maintenanceUser">
+		<label>CZ-4b četnost (uživ.)</label>
+		<help>
+			<p>Uživatelem definovaná četnost údržby (User defined Resource Maintenance) podle ISO 8601</p>
+			<p class="pozn">Tvar je  např. P10D = 10 dní, P5H = 5 hodin, P3W = 3 týdny apod.</p>
+		</help>
+	</msg>
+	<msg name="maintenanceScope">
+		<label>CZ-5 úroveň</label>
+		<help>
+			<p>Oblast dat, jichž se údržba týká, např. dlaždice. Není-li uvedeno, je míněná celá datová sada.</p>
+		</help>
+	</msg>
+	<msg name="dqScope">
+		<label>12 Úroveň popisu kvality</label>
+		<help>
+			<p>Oblast dat, jichž se údržba týká, např. dlaždice. Není-li uvedeno, je míněná celá datová sada.</p>
+		</help>
+	</msg>
+	<msg name="maintenanceNote">
+		<label>CZ-6 poznámka</label>
+		<help>
+			<p>Informace ohledně zvláštních požadavků na údržbu zdroje.</p>
+		</help>
+	</msg>
+	<coorSys>
+		Souřadnicový systém, ve kterém jsou data k dispozici
+	</coorSys>
+	<msg name="spatial">
+		<label>IOD-6 Typ prostorové reprezentace</label>
+		<help>
+			Metoda použitá k prostorové reprezentaci geografické informace (např. vektor).
+		</help>
+	</msg>
+	<msg name="language">
+		<label>1.7 Jazyk</label>
+		<help>
+			Jazyk zdroje.
+ 		</help>
+	</msg>
+	<msg name="characterSet">
+		<label>IOD-5 Kódování znaků</label>
+		<help>
+			<p>Kódování znaků používané v datové sadě.</p>
+		</help>
+	</msg>
+	<msg name="operatesOn">
+		<label>1.6 Vázaný zdroj</label>
+		<help>
+			Pokud jde o službu založenou na prostorových datech, uveďte zde URL odkaz na metadata každé datové sady, 
+			která je ve službě použita (pokud existují). Pokud metadate k prostorovým datům použitým ve službě neexistují, musí být vytvořena a doplněna jako vázaný zdroj.
+
+		</help>
+	</msg>
+	<msg name="operatesOn-href">
+		<label>URL</label>
+		<help>
+			<p>Adresa odkazující na metadata zdroje (XML)</p>
+		</help>
+	</msg>			
+	<msg name="operatesOn-uuid">
+		<label>ID</label>
+		<help>Identifikátor MD_DataIdentification v XML s metadaty #
+		<p class="pozn">Zopakovaný z URL</p>		
+		</help>
+	</msg>			
+	<msg name="operatesOn-title">
+		<label>Název</label>
+		<help>Název zdrojové datové sady (v metadatech dat je to 1.1 Název (Resource title))</help>
+	</msg>			
+	<msg name="serviceType">
+		<label>2.2 Typ služby</label>
+		<help>
+			<p>Typ služby založené na prostorových datech podle definice INSPIRE typů služeb nebo označení podle OGC. </p>
+		</help>
+	</msg>
+	<msg name="serviceTypeVersion">
+		<label>CZ-8 Verze služby</label>
+		<help>Verze služby založené na prostorových datech.</help>
+	</msg>
+	<msg name="couplingType">
+		<label>CZ-9 Typ vazby</label>
+		<help>
+			<p>Těsnost propojení služby s vázánými zdroji (následující položka).</p>
+		</help>
+	</msg>
+	<msg name="inspireService">
+		<label>3.1 Klíčové slovo</label>
+		<help>
+			Klasifikace služby podle ISO 19119
+		</help>
+	</msg>
+	<msg name="www">
+		<label>www</label>
+		<help>Webové stránky organizace</help>
+	</msg>
+	<msg name="email">
+		<label>email</label>
+		<help>E-mailová adresa</help>
+	</msg>
+	<msg name="phone">
+		<label>telefon</label>
+		<help>Telefonní číslo</help>
+	</msg>
+	<msg name="postalCode">
+		<label>PSČ</label>
+		<help>Poštovní směrovací číslo (nebo jiný kód v případě ciziny)</help>
+	</msg>
+	<msg name="country">
+		<label>Země</label>
+		<help>Země. </help>
+	</msg>
+	<msg name="city">
+		<label>Město</label>
+		<help>Město nebo sídlo</help>
+	</msg>
+	<msg name="deliveryPoint">
+		<label>Dodací bod</label>
+		<help>Ulice a číslo nebo poštovní schránka apod.</help>
+	</msg>
+	<msg name="organisationName">
+		<label>Organizace</label>
+		<help>Název organizace</help>
+	</msg>
+	<msg name="individualName">
+		<label>Osoba</label>
+		<help>Jméno a příjmení. Výběr z číselníku nebo zadejte libovolný text a potvrďte ENTER.</help>
+	</msg>
+	<msg name="Metadata">
+		<label>Metadata metadat</label>
+		<help></help>
+	</msg>
+	<msg name="Identification">
+		<label>Identifikace</label>
+		<help></help>
+	</msg>
+	<msg name="Distribution">
+		<label>Distribuce</label>
+		<help></help>
+	</msg>
+	<msg name="Quality">
+		<label>Kvalita</label>
+		<help></help>
+	</msg>
+	<msg name="Conformity">
+		<label>7. Soulad</label>
+		<help></help>
+	</msg>
+	<msg name="metadataStandardName">
+		<label>Název standardu</label>
+		<help></help>
+	</msg>
+	<msg name="metadataStandardVersion">
+		<label>Verze standardu</label>
+		<help></help>
+	</msg>    
+	<msg name="resourceSpecificUsage">
+		<label>Specifické užití</label>
+		<help></help>
+	</msg> 
+	<msg name="fromList">
+		<label>Ze seznamu</label>
+	</msg> 
+	<msg name="fromMap">
+		<label>Z mapy</label>
+	</msg> 
+	<msg name="ask-uuid">
+		<label>Opravdu chcete změnit identifikátor? Obsah formuláře se pak uloží jako nový záznam!</label>
+	</msg> 
+
+	<msg name="Topological">
+		<label>IOD-4 Topologická správnost</label>
+		<help>
+            Parametr kvality pro sítě.
+			Položka není obecně povinná a bude vyplňována jen pro některá témata 
+		</help>
+	</msg>
+
+	<msg name="topologicalName">
+		<label>Název</label>
+		<help>
+			<h3>IO-4a Název měření</h3>
+			<p></p> 
+		</help>
+	</msg>
+	   
+	<msg name="topologicalCode">
+		<label>Identifikátor</label>
+		<help>
+			<h3>IO-4b Identifikátor měření</h3>
+			<p></p> 
+		</help>
+	</msg>
+
+	<msg name="topologicalMethodType">
+		<label>Typ měření</label>
+		<help>
+			<h3>IO-4b Typ metody měření</h3>
+			<p></p> 
+		</help>
+	</msg>
+
+	<msg name="topologicalDesr">
+		<label>Metoda měření</label>
+		<help>
+			<h3>IO-4c Popis metody měření</h3>
+			<p></p> 
+		</help>
+	</msg>
+    
+	<msg name="topologicalDate">
+		<label>Datum</label>
+		<help>
+			<h3>IO-4d Datum měření</h3>
+			<p></p> 
+		</help>
+	</msg>
+
+	<msg name="topologicalResult">
+		<label>Kvantitativní výsledek</label>
+		<help>
+			<h3>IO-4e Kvantitaivní výsledek měření</h3>
+			<p></p> 
+		</help>
+	</msg>
+    
+	<msg name="topologicalValue">
+		<label>Hodnota</label>
+		<help>
+			<h3>Číselná hodnota měření</h3>
+			<p>Výsledek kvantitativního měření</p> 
+		</help>
+	</msg>
+    
+	<msg name="topologicalUnit">
+		<label>Jednotky</label>
+		<help>
+			<h3>Jednotky měření</h3>
+			<p>Znaková sada, ve které jsou data kódována.</p> 
+		</help>
+	</msg>
+    
+	<msg name="topologicalKResult">
+		<label>Kvalitativní výsledek</label>
+		<help>
+			<h3>IO-4f Kvalitativní výsledek</h3>
+			<p></p> 
+		</help>
+	</msg>
+	
+	<msg name="topologicalKTitle">
+		<label>Specifikace</label>
+		<help>
+			<h3>IO-4f Kvalitativní výsledek - citace testu</h3>
+			<p></p> 
+		</help>
+	</msg>
+	
+	<msg name="topologicalSpecDate">
+		<label>Datum</label>
+		<help>
+			<h3>IO-4f Kvalitativní výsledek - datum specifikace</h3>
+			<p>vytvoření/zveřejnění/revize specifikace</p> 
+		</help>
+	</msg>
+	
+	<msg name="topologicalSpecDateType">
+		<label>Typ</label>
+		<help>
+			<h3>IO-4f Kvalitativní výsledek - typ datum specifikace</h3>
+			<p></p> 
+		</help>
+	</msg>
+	
+	<msg name="topologicalExpl">
+		<label>Vysvětlení</label>
+		<help>
+			<h3>IO-4i Kvalitativní výsledek - vysvětlení</h3>
+			<p></p> 
+		</help>
+	</msg>
+
+	<msg name="topologicalPass">
+		<label>Prošlo</label>
+		<help>
+			<h3>IO-4i Kvalitativní výsledek - test splněn</h3>
+			<p></p> 
+		</help>
+	</msg>
+		
+	<msg name="fkw">
+		<label>Volné klíčové slovo</label>
+		<help>
+			<h3>Volné klíčové slovo</h3>
+			<p>Další klíč. slova zadaná uživatelem</p> 
+		</help>
+	</msg>
+
+	<msg name="bbox-help">
+		<label>Zadejte výřez v mapě pomocí Ctrl + tažením myši</label>
+	</msg>
+
+	<msg name="sds">
+		<label>IOS-1 Kategorie</label>
+		<help>
+			<h3>Kategorie interoperabilních služeb prostorových dat</h3> 
+		</help>
+	</msg>
+	
+	<msg name="serviceQuality">
+		<label>IOS-2 Kvalita služby</label>
+		<help>
+			<h3>Kritéria pro minimální kvalitu interoperabilní služby, kterou odhaduje osoba nebo organizace odpovědná za interoperabilní službu prostorových dat a o které se očekává, že bude platná po určitou dobu</h3> 
+		</help>
+	</msg>
+	<msg name="availability">
+		<label>Dostupnost [%]</label>
+		<help>
+			<h3>Procento času, kdy je služba k dispozici</h3> 
+		</help>
+	</msg>
+	<msg name="performance">
+		<label>Výkonnost [s]</label>
+		<help>
+			<h3>Jak rychle může být dokončen požadavek na službu prostorových dat</h3> 
+		</help>
+	</msg>
+	<msg name="capacity">
+		<label>Kapacita</label>
+		<help>
+			<h3>Maximální počet současných požadavků, které lze provést s deklarovaným výkonem</h3> 
+		</help>
+	</msg>
+
+	<msg name="accessPoint">
+		<label>Interoperabilní</label>
+		<help>Zda jde o adresu přístupového bodu služby INSPIRE.</help>
+	</msg>
+	<msg name="obligatory">
+		<label>CZ-13 Povinný subjekt</label>
+		<help>
+			<h3>Identifikace povinných subjektů INSPIRE</h3> 
+		</help>
+	</msg>
+	<msg name="operation">
+		<label>IOS-3 Rozhraní</label>
+		<help>
+			<h3>Metadats operací</h3> 
+		</help>
+	</msg>
+	<msg name="operationName">
+		<label>Název operace</label>
+		<help>
+			<h3></h3> 
+		</help>
+	</msg>
+	<msg name="mime">
+		<label>CZ-15 Formát</label>
+		<help>
+			<h3>Mime formát zdroje</h3> 
+		</help>
+	</msg>
+    <msg name="sel">
+        <label>Vyberte</label>
+    </msg>
+  	<msg name="fc">
+		<label>Katalog geoprvků</label>
+		<help>
+			<h3>Odkaz na Feature katalog</h3> 
+		</help>
+	</msg>
+  	<msg name="featureTypes">
+		<label>Seznam geoprvků</label>
+		<help>
+			<h3>Odkaz na jednotlivé typy geoprvků ve vybraném Feature katalogu</h3> 
+		</help>
+	</msg>
+  	<msg name="URI">
+		<label>URI</label>
+		<help>
+			<h3>URI</h3> 
+		</help>
+	</msg>
+  	<msg name="TXT">
+		<label>Text</label>
+		<help>
+			<h3>Řetězec</h3> 
+		</help>
+	</msg>
+
+    <!-- user specified -->
+   	<msg name="geology">
+		<label>3 Témata ČGS</label>
+		<help>
+			<h3>Geovědní témata ČGS</h3> 
+		</help>
+	</msg>
+
+    
+</labels>
