@@ -69,7 +69,7 @@ class CodeListModel extends \BaseModel
             $i++;
         }
         */
-        $file = $layoutTheme;
+        $file = 'default';
         if (file_exists($dir . $layoutTheme)) {
             $file = $layoutTheme;
         }
