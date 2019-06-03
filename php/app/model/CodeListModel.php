@@ -47,12 +47,13 @@ class CodeListModel extends \BaseModel
         return $rs + $this->liteProfiles['titles'];
     }
     
-    public function setLiteProfiles($appLang, $mds)
+    public function setLiteProfiles($appLang, $mds, $layoutTheme)
     {
         $dir = __DIR__ . '/lite/profiles/';
-        $files = scandir($dir, 0);
         $i = $mds == 10 ? 150 : 50;
         $tmpConfig = new Nette\DI\Config\Loader();
+        /*
+        $files = scandir($dir, 0);
         foreach ($files as $file) {
             if ($file == '.' || $file == '..') {
                 continue;
@@ -60,11 +61,26 @@ class CodeListModel extends \BaseModel
             if (file_exists($dir . $file . '/config.liteprofile.neon')) {
                 $config = $tmpConfig->load($dir . $file . '/config.liteprofile.neon');
                 $title = isset($config['title'][$appLang]) ? $config['title'][$appLang] : $file;
+            } else {
+                $title = $file;
             }
             $this->liteProfiles['profiles'][$i] =  $file;
             $this->liteProfiles['titles'][$i] =  $title;
             $i++;
         }
+        */
+        $file = $layoutTheme;
+        if (file_exists($dir . $layoutTheme)) {
+            $file = $layoutTheme;
+        }
+        if (file_exists($dir . $file . '/config.liteprofile.neon')) {
+            $config = $tmpConfig->load($dir . $file . '/config.liteprofile.neon');
+            $title = isset($config['title'][$appLang]) ? $config['title'][$appLang] : $file;
+        } else {
+            $title = $file;
+        }
+        $this->liteProfiles['profiles'][$i] =  $file;
+        $this->liteProfiles['titles'][$i] =  $title;
     }
 
     public function isPackageProfil($mds, $profil_id)
