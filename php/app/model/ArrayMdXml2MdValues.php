@@ -81,7 +81,7 @@ class ArrayMdXml2MdValues extends \BaseModel
                 standard_schema.md_right, elements.multi_lang, elements.form_code
             FROM standard_schema INNER JOIN elements ON standard_schema.el_id = elements.el_id
             WHERE standard_schema.md_standard=?
-		", $this->md_standard);
+        ", $this->md_standard)->fetchAll();
 		if (count($result) < 1) {
 			$this->standard_schema = false;
 		}
