@@ -139,7 +139,7 @@ class RecordPresenter extends \BasePresenter
         if (!array_key_exists('ende', $post) || $post['ende'] != 1) {
             throw new \Nette\Application\ApplicationException('messages.apperror.postIncomplete');
         }
-        $report = $this->recordModel->setFormMdValues($id, $post, $this->appLang);
+        $report = $this->recordModel->setFormMdValues($id, $post, $this->appLang, $this->layoutTheme);
         if (count($report) > 0) {
             $this->flashMessage($report['message'], $report['type']);
         }

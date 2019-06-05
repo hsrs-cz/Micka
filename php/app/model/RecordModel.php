@@ -926,7 +926,7 @@ class RecordModel extends \BaseModel
     }
     
     // save form values to database when editing
-    public function setFormMdValues($id, $post, $appLang)
+    public function setFormMdValues($id, $post, $appLang, $layoutTheme)
     {
         $mdr = $this->findMdById($id, 'edit_md', 'edit');
         if (!$mdr) {
@@ -941,7 +941,9 @@ class RecordModel extends \BaseModel
         if (array_key_exists('mickaLite', $post)) {
             //Micka Lite
             $this->initialVariables();
-            $editMdValues = $this->setFromMickaLite($post);
+            $mcl = new \App\Model\CodeListModel($this->db, $this->user);
+            $liteProfile = $mcl->getLiteProfileById($post['profil'], $appLang, $layoutTheme);
+            $editMdValues = $this->setFromMickaLite($post, $liteProfile);
             $this->deleteEditMdValuesByLite(
                     $this->recordMd->recno, 
                     $this->recordMd->md_standard, 
@@ -960,13 +962,12 @@ class RecordModel extends \BaseModel
         $this->updateDatestamp($this->recordMd->recno, $this->recordMd->md_standard);
         $report = $this->setLang2RecordMd($select_langs);
         $this->recordMd->pxml = $this->xmlFromRecordMdValues();
-        //header('Content-Type: application/xml'); echo $this->recordMd->pxml;  exit;
         $this->applyXslTemplate2Xml('micka2one19139.xsl');
         $this->updateEditMD($this->recordMd->recno);
         return $report;
     }
     
-    private function setFromMickaLite($post) {
+    private function setFromMickaLite($post, $liteProfile) {
 		$cswClient = new \CswClient();
         $kote = new \Kote();
         $input = $kote->processForm(beforeSaveRecord($post));
@@ -978,13 +979,14 @@ class RecordModel extends \BaseModel
         $mdXml2Array = new MdXml2Array();
         $xml = new \DomDocument;
         if(!$xml->loadXML($input)) die('Bad xml format');
-        //header('Content-Type: application/xml'); echo $input;  exit;
-        // TODO - here the lite profiles should be solved
-        $dataFromXml = $mdXml2Array->xml2array($xml, __DIR__ . '/lite/profiles/kote-micka/form2iso.xsl', $params);
-        //echo "<pre>"; var_dump($dataFromXml); die;
-        $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
-        $arrayMdXml2MdValues->lang = $post['mdlang'];
-        return $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
+        if (file_exists(__DIR__ . '/lite/profiles/' . $liteProfile . '/form2iso.xsl')) {
+            $dataFromXml = $mdXml2Array->xml2array($xml, __DIR__ . '/lite/profiles/' . $liteProfile . '/form2iso.xsl', $params);
+            $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+            $arrayMdXml2MdValues->lang = $post['mdlang'];
+            return $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
+        } else {
+            throw new \Nette\Application\ApplicationException('messages.apperror.noProfileFound');
+        }
     }
     
     private function getIdElements()

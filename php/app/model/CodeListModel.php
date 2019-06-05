@@ -112,6 +112,13 @@ class CodeListModel extends \BaseModel
         return isset($this->liteProfiles['profiles'][$profil_id]) ? $this->liteProfiles['profiles'][$profil_id] : '';
     }
 
+    public function getLiteProfileById($profil_id, $appLang, $layoutTheme)
+    {
+        $mds = $profil_id < 100 ? 0 : 10;
+        $this->setLiteProfiles($appLang, $mds, $layoutTheme);
+        return isset($this->liteProfiles['profiles'][$profil_id]) ? $this->liteProfiles['profiles'][$profil_id] : '';
+    }
+
     public function getMdPackages($appLang, $mds, $profil_id, $pairs=FALSE) 
     {
         if (!$this->isPackageProfil($mds, $profil_id)) {
