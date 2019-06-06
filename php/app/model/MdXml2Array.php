@@ -617,7 +617,9 @@ class MdXml2Array
     //TODO QUICK HACK - udleat pres sablony nebo DOM 
     if(strpos($s,'exception')) exit("<br><br>Exception: ". $s ." " . $url);
     if(strpos($s,'NetworkLink>')) exit("<br><br>Network links in KML are not supported yet.");
-    return $this->importXML($s, $type, $langs, $lang_main, $params, $updateType);
+    $params = [];
+    $params['url'] = $url;
+    return $this->importXML($s, $type, $langs, $lang, $params, $updateType);
     
     
 
@@ -659,7 +661,7 @@ class MdXml2Array
         $xslName = __DIR__ . "/xsl/import/".strtolower($type).".xsl";
         $xml = new \DomDocument;
         if(!$xml->loadXML($xmlString)) die('Bad xml format');
-        $md = $this->xml2array($xml, $xslName);
+        $md = $this->xml2array($xml, $xslName, $params);
         //echo "<pre>"; print_r($md); die();
         return $md;
     }

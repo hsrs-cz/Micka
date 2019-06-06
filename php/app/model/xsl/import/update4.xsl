@@ -29,32 +29,60 @@
 	    </xsl:copy>
 	</xsl:template>
 	
+    <!-- hierarchyLevelName -->
+    <xsl:template match="gmd:hierarchyLevelName">
+        <xsl:choose>
+            <xsl:when test="starts-with(*,'http')">
+                <gmd:hierarchyLevelName>
+                    <gmx:Anchor xlink:href="{*}"><xsl:value-of select="*"/></gmx:Anchor>
+                </gmd:hierarchyLevelName>
+            </xsl:when>
+            <xsl:otherwise>
+                <copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!-- parentIdentifier -->
+    <xsl:template match="gmd:parentIdentifier">
+        <xsl:choose>
+            <xsl:when test="*/@xlink:href">
+                <copy-of select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+                <gmd:parentIdentifier>
+                    <gmx:Anchor xlink:href="{*}"><xsl:value-of select="*"/></gmx:Anchor>
+                </gmd:parentIdentifier>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
     <!-- Individual name URI -->
     <xsl:template match="gmd:individualName">
-        <gmd:individualName>
-            <xsl:choose>
-                <xsl:when test="../@uuid">
+        <xsl:choose>
+            <xsl:when test="../@uuid">
+                <gmd:individualName>
                     <gmx:Anchor xlink:href="{../@uuid}"><xsl:value-of select="."/></gmx:Anchor>
-                </xsl:when>
-                <xsl:otherwise>
-                    <copy-of select="."/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </gmd:individualName>
+                </gmd:individualName>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
     <!-- address URI -->
     <xsl:template match="gmd:deliveryPoint">
-        <gmd:deliveryPoint>
-            <xsl:choose>
-                <xsl:when test="../@uuid">
+        <xsl:choose>
+            <xsl:when test="../@uuid">
+                <gmd:deliveryPoint>
                     <gmx:Anchor xlink:href="{../@uuid}"><xsl:value-of select="."/></gmx:Anchor>
-                </xsl:when>
-                <xsl:otherwise>
-                    <copy-of select="."/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </gmd:deliveryPoint>
+                </gmd:deliveryPoint>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:copy-of select="."/>
+            </xsl:otherwise>
+        </xsl:choose>
     </xsl:template>
 
 	<!-- CRS -->

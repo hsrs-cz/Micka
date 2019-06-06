@@ -387,7 +387,7 @@ function start(){
 		ta[i].onkeyup=chTextArea;
 		ta[i].change=chTextArea;
 	}
-	// rodicovsky element
+	// parent metadata name 
 	var parent = document.getElementById("50");
 	if(parent && parent.value){
 		$("#parent-text").html("...");
@@ -962,8 +962,10 @@ function find_parent1(data){
 		  var inputs = flatNodes(md_elem, "INPUT");
 		  for(var i=0;i<inputs.length;i++){
 		    if(inputs[i].type=='text'){
-		      inputs[i].value=data.uuid;
-		      break;
+                if(inputs[i].id.indexOf('uri')>-1){
+                    inputs[i].value = baseUrl + '/record/xml/' + data.uuid;
+                }
+                else inputs[i].value=data.uuid;
 		    }  
 		  }
 	}	  
@@ -1256,6 +1258,7 @@ function hlname(obj){
 function hlname1(f){
 	var inputs = flatNodes(md_elem, "INPUT");
 	inputs[0].value = f.uri;
+    inputs[1].value = f.uri;
     $('#md-dialog').modal('hide');
 }
 

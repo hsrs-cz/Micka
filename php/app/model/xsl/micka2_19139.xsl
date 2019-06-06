@@ -77,29 +77,29 @@
 	  <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8">utf-8</gmd:MD_CharacterSetCode>
 	</gmd:characterSet>
 
-	<xsl:for-each select="parentIdentifier">
-        <gmd:parentIdentifier>
-            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-        </gmd:parentIdentifier>
-	</xsl:for-each>
+    <xsl:call-template name="txt">
+        <xsl:with-param name="s" select="."/>
+        <xsl:with-param name="name" select="'parentIdentifier'"/>
+        <xsl:with-param name="lang" select="$mdLang"/>
+    </xsl:call-template>
     
 	<gmd:hierarchyLevel>
   		<gmd:MD_ScopeCode codeList="{$clx}#MD_ScopeCode" codeListValue="{hierarchyLevel/MD_ScopeCode}"><xsl:value-of select="hierarchyLevel/MD_ScopeCode"/></gmd:MD_ScopeCode>
 	</gmd:hierarchyLevel>
 				
-	<xsl:for-each select="hierarchyLevelName">
-		<gmd:hierarchyLevelName>
-		  <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-		</gmd:hierarchyLevelName>
-	</xsl:for-each>
+    <xsl:call-template name="txt">
+        <xsl:with-param name="s" select="."/>
+        <xsl:with-param name="name" select="'hierarchyLevelName'"/>
+        <xsl:with-param name="lang" select="$mdLang"/>
+    </xsl:call-template>
 
 	<xsl:for-each select="contact">
-  	<gmd:contact>
-  		<xsl:call-template name="contact">
-     		<xsl:with-param name="org" select="."/>
-    		<xsl:with-param name="mdLang" select="$mdLang"/>
-     	</xsl:call-template>
-  	</gmd:contact>
+        <gmd:contact>
+            <xsl:call-template name="contact">
+                <xsl:with-param name="org" select="."/>
+                <xsl:with-param name="mdLang" select="$mdLang"/>
+            </xsl:call-template>
+        </gmd:contact>
 	</xsl:for-each>
 	<gmd:dateStamp>
 		<gco:Date><xsl:value-of select="dateStamp"/></gco:Date>
