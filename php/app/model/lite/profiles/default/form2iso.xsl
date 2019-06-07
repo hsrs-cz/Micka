@@ -46,7 +46,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	</gmd:language>
 	<xsl:if test="parentIdentifier">
 		<gmd:parentIdentifier>
-			<gco:CharacterString><xsl:value-of select="parentIdentifier"/></gco:CharacterString>
+			<gmx:Anchor xlink:href="{$mickaURL}/record/xml/{parentIdentifier}"><xsl:value-of select="parentIdentifier"/></gmx:Anchor>
 		</gmd:parentIdentifier>
 	</xsl:if>
 	<gmd:hierarchyLevel>
@@ -75,7 +75,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
     <xsl:choose>
 	    <xsl:when test="inspireEU='on'">
 	        <gmd:hierarchyLevelName>
-	            <gco:CharacterString>http://geoportal.gov.cz/inspire</gco:CharacterString>
+	            <gmx:Anchor xlink:href="http://geoportal.gov.cz/inspire">http://geoportal.gov.cz/inspire</gmx:Anchor>
 	        </gmd:hierarchyLevelName>    
 	    </xsl:when>
 	    <xsl:when test="not(hlName)">
