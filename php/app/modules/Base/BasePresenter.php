@@ -57,13 +57,16 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             define("CONNECTION_PROXY", $this->context->parameters['app']['proxy']);
         } 
 
-        $this->context->parameters['hostUrl'] = $url->hostUrl;
+        $this->context->parameters['hostUrl'] = isset($this->context->parameters['app']['mickaUrl']) && $this->context->parameters['app']['mickaUrl'] != ''
+            ? $this->context->parameters['app']['mickaUrl']
+            : $url->hostUrl;
         $this->context->parameters['basePath'] = rtrim($url->basePath,'/');
         $this->context->parameters['locale'] = $locale;
         $this->context->parameters['cswUrl'] = strpos($url->path, '/filter/') === false
             ? $this->context->parameters['hostUrl'] . $this->context->parameters['basePath'] . '/csw/'
             : $this->context->parameters['hostUrl'] . $url->path  . '/';
         $tmp_appparameters = $this->context->parameters;
+
         define("CSW_TIMEOUT", 30);
         define("HTTP_XML", "Content-type: application/xml; charset=utf-8");
         define("HTTP_SOAP", "Content-type: application/soap+xml; charset=utf-8"); //TODO ověřit
