@@ -22,9 +22,8 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         global $tmp_nbcontext, $tmp_identity, $tmp_appparameters;
         $tmp_nbcontext = $this->context->getByType('Nette\Database\Context');
         $tmp_identity = $this->user;
-        $tmp_appparameters = $this->context->parameters;
-        $tmp_appparameters['appDefaultLocale'] = $this->translator->getDefaultLocale();
-        $tmp_appparameters['appLocale'] = $this->translator->getLocale();
+        $this->context->parameters['appDefaultLocale'] = $this->translator->getDefaultLocale();
+        $this->context->parameters['appLocale'] = $this->translator->getLocale();
         //$tmp_appparameters['appUrl'] = $this->link(':Catalog:Default:default');
         $dir = dirname($this->getReflection()->getFileName());
         $this->layoutTheme = file_exists("$dir/templates/" . $this->context->parameters['app']['layoutTheme'] . "/Default/default.latte")
@@ -58,12 +57,13 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             define("CONNECTION_PROXY", $this->context->parameters['app']['proxy']);
         } 
 
-        $tmp_appparameters['hostUrl'] = $url->hostUrl;
-        $tmp_appparameters['basePath'] = rtrim($url->basePath,'/');
-        $tmp_appparameters['locale'] = $locale;
-        $tmp_appparameters['cswUrl'] = strpos($url->path, '/filter/') === false
-            ? $tmp_appparameters['hostUrl'] . $tmp_appparameters['basePath'] . '/csw/'
-            : $tmp_appparameters['hostUrl'] . $url->path  . '/';
+        $this->context->parameters['hostUrl'] = $url->hostUrl;
+        $this->context->parameters['basePath'] = rtrim($url->basePath,'/');
+        $this->context->parameters['locale'] = $locale;
+        $this->context->parameters['cswUrl'] = strpos($url->path, '/filter/') === false
+            ? $this->context->parameters['hostUrl'] . $this->context->parameters['basePath'] . '/csw/'
+            : $this->context->parameters['hostUrl'] . $url->path  . '/';
+        $tmp_appparameters = $this->context->parameters;
         define("CSW_TIMEOUT", 30);
         define("HTTP_XML", "Content-type: application/xml; charset=utf-8");
         define("HTTP_SOAP", "Content-type: application/soap+xml; charset=utf-8"); //TODO ověřit
