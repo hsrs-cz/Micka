@@ -904,7 +904,7 @@ xmlns:php="http://php.net/xsl">
 </xsl:choose>
 
 <!-- 10.1.d -->
-<test code="10.1d" level="c">
+<test code="10.1 d" level="c">
     <description><xsl:value-of select="$labels/test[@code='10.1.d']"/> = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']/*[name()=$LANG]"/></description>
     <xpath>identificationInfo[1]/*/pointOfContact/[*/role/*/@codeListValue='custodian']</xpath>
     <xsl:if test="string-length(//gmd:contact[*/gmd:role/*/@codeListValue='pointOfContact']/*/gmd:organisationName/*)>0">

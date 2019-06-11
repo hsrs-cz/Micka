@@ -108,7 +108,6 @@
                         <xsl:with-param name="name" select="'name'"/>
                         <xsl:with-param name="path" select="'linkage-name[]'"/>
                         <xsl:with-param name="value" select="*/gmd:name"/>
-                        <xsl:with-param name="codes" select="'linkageName'"/>
                         <xsl:with-param name="class" select="'cond inp2'"/>
                         <xsl:with-param name="tags" select="1"/>
                     </xsl:call-template>
@@ -170,43 +169,45 @@
     </div>
     
     <!-- 1.5 identifier -->
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier">
-        <fieldset>
-            <div class="row">
-                <xsl:call-template name="drawLabel">
-                    <xsl:with-param name="name" select="'identifier'"/>
-                    <xsl:with-param name="class" select="$m"/>
-                    <xsl:with-param name="valid" select="'1.5'"/>
-                    <xsl:with-param name="dupl" select="1"/>
-                </xsl:call-template>			
-            </div>
+    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier|.">
+        <xsl:if test="normalize-space(*/gmd:code/@xlink:href|*/gmd:code)!='' or (normalize-space(*/gmd:code/@xlink:href|*/gmd:code)='' and position()=last())">
+            <fieldset>
+                <div class="row">
+                    <xsl:call-template name="drawLabel">
+                        <xsl:with-param name="name" select="'identifier'"/>
+                        <xsl:with-param name="class" select="$m"/>
+                        <xsl:with-param name="valid" select="'1.5'"/>
+                        <xsl:with-param name="dupl" select="1"/>
+                    </xsl:call-template>			
+                </div>
 
-            <xsl:call-template name="drawAnchor">
-                <xsl:with-param name="path" select="'identifier'"/>
-                <xsl:with-param name="value" select="*/gmd:code"/>
-                <xsl:with-param name="valid" select="'1.5'"/>
-                <xsl:with-param name="class" select="'inp2'"/>
-                <xsl:with-param name="req" select="not($serv)"/>
-            </xsl:call-template>
-            
-            <xsl:call-template name="drawInput">
-                <xsl:with-param name="name" select="'codeSpace'"/>
-                <xsl:with-param name="path" select="'identifier-codeSpace[]'"/>
-                <xsl:with-param name="value" select="*/gmd:codeSpace"/>
-                <xsl:with-param name="class" select="'short inp2'"/>
-            </xsl:call-template>
-            <!--div class="col-xs-12 col-md-8">
-                <select name="identifier[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
-                    <xsl:if test="not($serv)"><xsl:attribute name="required">required</xsl:attribute></xsl:if>
-                    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
-                        <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
-                    </xsl:for-each>
-                    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code[not(*/@xlink:href)]">
-                        <option value="{*}" selected="selected"><xsl:value-of select="*"/></option>
-                    </xsl:for-each>
-                </select>
-            </div-->       
-        </fieldset>
+                <xsl:call-template name="drawAnchor">
+                    <xsl:with-param name="path" select="'identifier'"/>
+                    <xsl:with-param name="value" select="*/gmd:code"/>
+                    <xsl:with-param name="valid" select="'1.5'"/>
+                    <xsl:with-param name="class" select="'inp2'"/>
+                    <xsl:with-param name="req" select="not($serv)"/>
+                </xsl:call-template>
+                
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="name" select="'codeSpace'"/>
+                    <xsl:with-param name="path" select="'identifier-codeSpace[]'"/>
+                    <xsl:with-param name="value" select="*/gmd:codeSpace"/>
+                    <xsl:with-param name="class" select="'short inp2'"/>
+                </xsl:call-template>
+                <!--div class="col-xs-12 col-md-8">
+                    <select name="identifier[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
+                        <xsl:if test="not($serv)"><xsl:attribute name="required">required</xsl:attribute></xsl:if>
+                        <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
+                            <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
+                        </xsl:for-each>
+                        <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code[not(*/@xlink:href)]">
+                            <option value="{*}" selected="selected"><xsl:value-of select="*"/></option>
+                        </xsl:for-each>
+                    </select>
+                </div-->       
+            </fieldset>
+        </xsl:if>
     </xsl:for-each>
 
     <!-- 1.6 operatesOn -->
@@ -341,7 +342,6 @@
     </xsl:if>
     
     <!-- 3.1 keywords -->
-
     <xsl:choose>
         <xsl:when test="$serv">
    	  	
