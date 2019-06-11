@@ -512,9 +512,8 @@
 
     
     <!-- datum --> 
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date|/."> 
+    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date|."> 
         <xsl:if test="normalize-space(*/gmd:date)!='' or (normalize-space(*/gmd:date)='' and position()=last())">
-
             <fieldset>
                 <div class="row">
                     <xsl:call-template name="drawLabel">
@@ -544,7 +543,7 @@
         </xsl:if>
     </xsl:for-each>  
 
-    <xsl:for-each select="gmd:identificationInfo/*/*/*/gmd:temporalElement|/.">
+    <xsl:for-each select="gmd:identificationInfo/*/*/*/gmd:temporalElement|.">
         <xsl:if test="string-length(*/gmd:extent)>0 or(string-length(*/gmd:extent)=0 and position()=last())">
             <div class="row">
                 <xsl:call-template name="drawLabel">

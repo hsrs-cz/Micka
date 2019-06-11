@@ -46,7 +46,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 	</gmd:language>
 	<xsl:if test="parentIdentifier">
 		<gmd:parentIdentifier>
-			<gmx:Anchor xlink:href="{$mickaURL}/record/xml/{parentIdentifier}"><xsl:value-of select="parentIdentifier"/></gmx:Anchor>
+			<gco:CharacterString><xsl:value-of select="parentIdentifier"/></gco:CharacterString>
 		</gmd:parentIdentifier>
 	</xsl:if>
 	<gmd:hierarchyLevel>
@@ -67,15 +67,15 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
         </gmd:hierarchyLevelName>     
     </xsl:for-each>
-    <xsl:if test="hierarchyLevel='service'">
-        <gmd:hierarchyLevelName>
+    <gmd:hierarchyLevelName>
+        <xsl:if test="hierarchyLevel='service'">
             <gco:CharacterString><xsl:value-of select="$codeLists/inspireServiceType/value[@name='service']/*[name()=$mdlang]"/></gco:CharacterString>
-        </gmd:hierarchyLevelName>
-    </xsl:if>
+        </xsl:if>
+    </gmd:hierarchyLevelName>
     <xsl:choose>
 	    <xsl:when test="inspireEU='on'">
 	        <gmd:hierarchyLevelName>
-	            <gmx:Anchor xlink:href="http://geoportal.gov.cz/inspire">http://geoportal.gov.cz/inspire</gmx:Anchor>
+	            <gco:CharacterString>http://geoportal.gov.cz/inspire</gco:CharacterString>
 	        </gmd:hierarchyLevelName>    
 	    </xsl:when>
 	    <xsl:when test="not(hlName)">
