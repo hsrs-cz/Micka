@@ -268,7 +268,7 @@
     <xsl:choose>
         <!-- copies metadata from linked metadata record -->
         <xsl:when test="//inspire_common:MetadataUrl/inspire_common:URL">
-            <xsl:copy-of select="document(//inspire_common:MetadataUrl/inspire_common:URL)/*/*"/>
+            <xsl:copy-of select="document(//inspire_common:MetadataUrl/inspire_common:URL)/*"/>
         </xsl:when>
         <xsl:otherwise>
 
