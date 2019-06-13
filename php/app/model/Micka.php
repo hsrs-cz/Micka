@@ -16,8 +16,8 @@ class Micka
     private $mickaVersion = [
         'name' => 'Micka',
         'version' => '6.0',
-        'version_id' => 60276,
-        'revision' => 20190510.01
+        'version_id' => 60316,
+        'revision' => 20190613.01
     ];
 
     public function getMickaVersion()
