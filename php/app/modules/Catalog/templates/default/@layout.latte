@@ -117,7 +117,7 @@
 		  <a href="#micka-body" title="To Top">
 			<span class="glyphicon glyphicon-chevron-up"></span>
 		  </a>
-		  <p>{$parameters['contact']['title'][$appLang]} <a href="{$parameters['contact']['www']}" target="_blank">{$parameters['contact']['org'][$appLang]}</a></p>
+		  <p>{ifset $parameters['contact']['title'][$appLang]}{$parameters['contact']['title'][$appLang]}{/ifset}{if isset($parameters['contact']['www']) && isset($parameters['contact']['org'][$appLang])} <a href="{$parameters['contact']['www']}" target="_blank">{$parameters['contact']['org'][$appLang]}</a>{/if}</p>
 		</footer>
 		
 	</div><!-- page container -->
