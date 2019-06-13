@@ -616,7 +616,7 @@
     </value>
     <value name="dimensionGroup" code="8">
         <cze>skupina rozměrů</cze>
-		<eng>dimension group</eng>
+        <eng>dimension group</eng>
     </value>
     <value name="feature" code="9">
         <cze>geoprvek - instance</cze>
@@ -1450,6 +1450,11 @@
     <title lang="cze">Témata INSPIRE</title>
     <title lang="eng">INSPIRE themes</title>
     <title lang="spa">Temas INSPIRE</title>
+    <thesaurus uri="https://www.eionet.europa.eu/gemet/inspire_themes" date="2008-06-01" dateType="publication">
+        <eng>GEMET - INSPIRE themes, version 1.0</eng>
+        <cze>GEMET - INSPIRE themes, version 1.0</cze>
+    </thesaurus>
+    
     <!-- ANNEX I -->
     <value uri="http://inspire.ec.europa.eu/theme/rs" spec="http://inspire.ec.europa.eu/id/document/tg/rs" cenia="base" name="Souřadnicové referenční systémy" code="Coordinate reference systems" publication="2010-05-03" n="I.1">
         <cze>Souřadnicové referenční systémy</cze>
@@ -1633,7 +1638,7 @@
     <title lang="esp">Especificaciones</title>
 	<!--value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat"
         code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value-->
-	<value code="Interoperability"  uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">
+	<value code="Interoperability" uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">
         <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">Interoperabilita 1089/2010</cze>
 		<eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability 1089/2010</eng>
         <spa name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperabilidad 1089/2010</spa>
@@ -1777,6 +1782,11 @@
    </crType>
 
 <serviceKeyword>
+    <thesaurus uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory" date="2010-01-19" dateType="publication">
+        <eng>ISO - 19119 geographic services taxonomy</eng>
+        <cze>ISO - 19119 geographic services taxonomy</cze>
+    </thesaurus>
+
     <value id="100" name="humanInteractionService" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanInteractionService">
         <cze qtip="Aplikace pro koncového uživatele">Geografické služby interakce s člověkem</cze>
 		<eng qtip="This category comprises the following subcategories:">Geographic human interaction services</eng>
@@ -2127,7 +2137,7 @@
     </value>
     <value name="originator" code="6">
         <cze>původce</cze>
-		    <eng>originator</eng>
+		<eng>originator</eng>
         <spa>originador</spa>
     </value>
     <value name="pointOfContact" code="7">
@@ -2580,36 +2590,36 @@
         <spa qtip="Se desconocen las condiciones de acceso y utilización.">se desconocen las condiciones de acceso y utilización.</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by/4.0">
-        <cze qtip="">Creative Commons BY 4.0</cze>
-        <eng qtip="">Creative Commons BY 4.0</eng>
+        <cze qtip="Uveďte původ">Creative Commons BY 4.0</cze>
+        <eng qtip="Attribution">Creative Commons BY 4.0</eng>
         <spa qtip="">Creative Commons BY 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-sa/4.0">
-        <cze qtip="">Creative Commons BY-SA 4.0</cze>
-        <eng qtip="">Creative Commons BY-SA 4.0</eng>
+        <cze qtip="Uveďte původ – Zachovejte licenci">Creative Commons BY-SA 4.0</cze>
+        <eng qtip="Attribution – Share Alike">Creative Commons BY-SA 4.0</eng>
         <spa qtip="">Creative Commons BY-SA 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nd/4.0">
-        <cze qtip="">Creative Commons BY-ND 4.0</cze>
-        <eng qtip="">Creative Commons BY-ND 4.0</eng>
+        <cze qtip="Uveďte původ – Nezpracovávejte">Creative Commons BY-ND 4.0</cze>
+        <eng qtip="Attribution – No Derivatives">Creative Commons BY-ND 4.0</eng>
         <spa qtip="">Creative Commons BY-ND 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nc/4.0">
-        <cze qtip="">Creative Commons BY-NC 4.0</cze>
-        <eng qtip="">Creative Commons BY-NC 4.0</eng>
+        <cze qtip="Uveďte původ – Neužívejte komerčně">Creative Commons BY-NC 4.0</cze>
+        <eng qtip="Attribution – Non Commercial">Creative Commons BY-NC 4.0</eng>
         <spa qtip="">Creative Commons BY-NC 4.0</spa>
    </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nc-sa/4.0">
-        <cze qtip="">Creative Commons BY-NC-SA 4.0</cze>
-        <eng qtip="">Creative Commons BY-NC-SA 4.0</eng>
+        <cze qtip="Uveďte původ – Neužívejte komerčně – Zachovejte licenci">Creative Commons BY-NC-SA 4.0</cze>
+        <eng qtip="Attribution – Non Commercial – Share Alike">Creative Commons BY-NC-SA 4.0</eng>
         <spa qtip="">Creative Commons BY-NC-SA 4.0</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by-nc-nd/4.0">
-        <cze qtip="">Creative Commons BY-NC-ND 4.0</cze>
-        <eng qtip="">Creative Commons BY-NC-ND 4.0</eng>
+        <cze qtip="Uveďte původ – Neužívejte komerčně – Nezpracovávejte">Creative Commons BY-NC-ND 4.0</cze>
+        <eng qtip="Attribution – Non Commercial – No Derivatives">Creative Commons BY-NC-ND 4.0</eng>
         <spa qtip="">Creative Commons BY-NC-ND 4.0</spa>
    </value>
-	<value name="" uri="http://creativecommons.org/cc0" qtip="">
+    <value name="" uri="http://creativecommons.org/cc0" qtip="">
         <cze qtip="">Creative Commons CC0</cze>
         <eng qtip="">Creative Commons CC0</eng>
         <spa qtip="">Creative Commons CC0</spa>
@@ -2628,40 +2638,40 @@
     </value>
 	<value name="" uri="http://opendata.gov.cz/definition/opendata">
         <cze qtip="Otevřená data ČR.">Otevřená data ČR</cze>
-		 <eng>Open Data of the Czech republic</eng>
+		<eng>Open Data of the Czech republic</eng>
         <spa>Datos abiertos de la República Checa</spa>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">
-        <cze qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">veřejný přístup omezen podle Článku 13(1)(a) Směrnice INSPIRE</cze>
+        <cze qtip="utajení jednání orgánů veřejné správy stanovené zákonem">veřejný přístup omezen podle Článku 13(1)(a) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">public access limited according to Article 13(1)(a) of the INSPIRE Directive</eng>
         <spa qtip="El acceso del público a los conjuntos y servicios de datos espaciales afectaría negativamente a la confidencialidad de los procedimientos de las autoridades públicas, cuando dicha confidencialidad esté prevista por ley.">acceso del público limitado de acuerdo al artículo 13, apartado 1, letra a), de la Directiva INSPIRE</spa>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b">
-        <cze qtip="Public access to spatial data sets and services would adversely affect international relations, public security or national defence.">veřejný přístup omezen podle Článku 13(1)(b) Směrnice INSPIRE</cze>
+        <cze qtip="mezinárodní vztahy, veřejná bezpečnost nebo národní obrana">veřejný přístup omezen podle Článku 13(1)(b) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect international relations, public security or national defence.">public access limited according to Article 13(1)(b) of the INSPIRE Directive</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c">
-        <cze qtip="Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.">veřejný přístup omezen podle Článku 13(1)(c) Směrnice INSPIRE</cze>
+        <cze qtip="výkon spravedlnosti, právo na spravedlivé soudní řízení nebo způsobilost orgánu veřejné správy k provádění trestního nebo disciplinárního šetření">veřejný přístup omezen podle Článku 13(1)(c) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.">public access limited according to Article 13(1)(c) of the INSPIRE Directive</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d">
-        <cze qtip="Public access to spatial data sets and services would adversely affect the confidentiality of commercial or industrial information, where such confidentiality is provided for by national or Community law to protect a legitimate economic interest, including the public interest in maintaining statistical confidentiality and tax secrecy.">veřejný přístup omezen podle Článku 13(1)(d) Směrnice INSPIRE</cze>
+        <cze qtip="utajení obchodních nebo průmyslových informací stanovené vnitrostátním právem nebo právními předpisy EU">veřejný přístup omezen podle Článku 13(1)(d) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of commercial or industrial information, where such confidentiality is provided for by national or Community law to protect a legitimate economic interest, including the public interest in maintaining statistical confidentiality and tax secrecy.">public access limited according to Article 13(1)(d) of the INSPIRE Directive</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e">
-        <cze qtip="Public access to spatial data sets and services would adversely affect intellectual property rights.">veřejný přístup omezen podle Článku 13(1)(e) Směrnice INSPIRE</cze>
+        <cze qtip="práva duševního vlastnictví">veřejný přístup omezen podle Článku 13(1)(e) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect intellectual property rights.">public access limited according to Article 13(1)(e) of the INSPIRE Directive</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f">
-        <cze qtip="Public access to spatial data sets and services would adversely affect the confidentiality of personal data and/or files relating to a natural person where that person has not consented to the disclosure of the information to the public, where such confidentiality is provided for by national or Community law.">veřejný přístup omezen podle Článku 13(1)(f) Směrnice INSPIRE</cze>
+        <cze qtip="utajení osobních údajů a/nebo spisů týkajících se fyzické osoby">veřejný přístup omezen podle Článku 13(1)(f) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of personal data and/or files relating to a natural person where that person has not consented to the disclosure of the information to the public, where such confidentiality is provided for by national or Community law.">public access limited according to Article 13(1)(f) of the INSPIRE Directive</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g">
-        <cze qtip="Public access to spatial data sets and services would adversely affect the interests or protection of any person who supplied the information requested on a voluntary basis without being under, or capable of being put under, a legal obligation to do so, unless that person has consented to the release of the information concerned.">veřejný přístup omezen podle Článku 13(1)(g) Směrnice INSPIRE</cze>
+        <cze qtip="zájmy nebo ochrana osoby, která poskytla požadované informace">veřejný přístup omezen podle Článku 13(1)(g) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the interests or protection of any person who supplied the information requested on a voluntary basis without being under, or capable of being put under, a legal obligation to do so, unless that person has consented to the release of the information concerned.">public access limited according to Article 13(1)(g) of the INSPIRE Directive</eng>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h">
-        <cze qtip="Public access to spatial data sets and services would adversely affect the protection of the environment to which such information relates, such as the location of rare species.">veřejný přístup omezen podle Článku 13(1)(h) Směrnice INSPIRE</cze>
+        <cze qtip="ochrana životního prostředí">veřejný přístup omezen podle Článku 13(1)(h) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the protection of the environment to which such information relates, such as the location of rare species.">public access limited according to Article 13(1)(h) of the INSPIRE Directive</eng>
     </value>
 </limitationsAccess>
@@ -2729,12 +2739,12 @@
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable">
         <cze>interoperabilní</cze>
-		    <eng>interoperable</eng>
+		<eng>interoperable</eng>
         <spa>interoperable</spa>
     </value>
 	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised">
         <cze>harmonizované</cze>
-		    <eng>harmonised</eng>
+		<eng>harmonised</eng>
         <spa>harmonizado</spa>
     </value>
 </sds>
@@ -2775,9 +2785,9 @@
 <hlname>
     <title lang="cze">Úroveň v hierarchii</title>
     <title lang="eng">Hierarchy level name</title>
-	  <value uri="http://geoportal.gov.cz/inspire">
+	<value uri="http://geoportal.gov.cz/inspire">
         <cze>Pro INSPIRE EU</cze>
-		    <eng>For INSPIRE EU</eng>
+		<eng>For INSPIRE EU</eng>
         <spa>Para INSPIRE EU</spa>
     </value>
 </hlname>

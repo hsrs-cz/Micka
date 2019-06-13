@@ -31,7 +31,7 @@
 		<xsl:with-param name="matched" select="@numberOfRecordsMatched"/>
 		<xsl:with-param name="returned" select="@numberOfRecordsReturned"/>
 		<xsl:with-param name="next" select="@nextRecord"/>
-		<xsl:with-param name="url" select="concat($mickaURL, '?service=CSW&amp;request=GetRecords&amp;query=',$CONSTRAINT,'&amp;format=text/html&amp;language=',$lang,'&amp;maxrecords=',$MAXRECORDS,'&amp;sortby=',$SORTBY,'&amp;startposition')"/>
+		<xsl:with-param name="url" select="concat($mickaURL, '/?service=CSW&amp;request=GetRecords&amp;query=',$CONSTRAINT,'&amp;format=text/html&amp;language=',$lang,'&amp;maxrecords=',$MAXRECORDS,'&amp;sortby=',$SORTBY,'&amp;startposition')"/>
 	</xsl:call-template>  	
 	
 </xsl:template>

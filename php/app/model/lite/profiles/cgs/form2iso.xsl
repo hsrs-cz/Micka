@@ -479,7 +479,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                     <xsl:call-template name="txtOut">
     						          <xsl:with-param name="name" select="'keyword'"/>
     						          <xsl:with-param name="t" select="keyword"/>
-    					           </xsl:call-template>					
+    					           </xsl:call-template>
       							</xsl:for-each>
     						</gmd:MD_Keywords>	
     					</gmd:descriptiveKeywords>

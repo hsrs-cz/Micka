@@ -509,7 +509,6 @@ class MdXml2Array
         $OK=true; 
       }
     }
-
     //--- other import types
     if(!$OK) {
       $rs = array();
@@ -517,7 +516,6 @@ class MdXml2Array
       $rs[0]['report'] = "Bad metadata document format!";
       return $rs;
     }
-    
     $md = $this->xml2array($xml, $xslName);
     //echo "<pre>"; var_dump($md); exit;
     $lang=$md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'];
@@ -582,7 +580,6 @@ class MdXml2Array
         }
         if(!strpos(strtolower($url), "getcapabilities")) $url .= "&REQUEST=GetCapabilities";
     }    
-    //echo "input url= <a href='$url'>$url</a>"; //TODO potom dat do reportu
     $xp  = new \XsltProcessor();
     $xml = new \DomDocument;
     $xsl = new \DomDocument;
@@ -598,7 +595,7 @@ class MdXml2Array
     }
 	$s = curl_exec($c); 
     curl_close($c);
-    //die ($service);
+    //die ($type);
     if(strpos($url,'.kmz')!==false){
         $tmp = __DIR__ .'/../../logs/'.time().'.zip';
         file_put_contents($tmp, $s);

@@ -68,7 +68,7 @@
 
 	<!--h2 class="noprint"-->
 	<ol class="breadcrumb">
-		<li class="active"><a href="{$mickaURL}" tooltip="tooltip" data-tooltip="tooltip" data-original-title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
+		<li class="active"><a href="{$mickaURL}/" tooltip="tooltip" data-tooltip="tooltip" data-original-title="{$msg[@eng='List']}" data-container="body" data-placement="bottom"><i class="fa fa-arrow-left fa-lg"></i></a></li>
 		<li><xsl:value-of select="$msg[@eng='basicMetadata']"/></li>
 		<li>		
 			<xsl:if test="../@read=1">
