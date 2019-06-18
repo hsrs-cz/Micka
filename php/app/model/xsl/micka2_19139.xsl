@@ -60,8 +60,10 @@
 
    <xsl:variable name="schLoc">
    	 <xsl:choose>
+   		<!--xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:when-->
    		<xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:when>
-   		<xsl:otherwise>http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:otherwise>
+   		<!--xsl:otherwise>http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:otherwise-->
+   		<xsl:otherwise>http://www.isotc211.org/2005/gmd https://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/gmx https://www.isotc211.org/2005/gmx/gmx.xsd</xsl:otherwise>
    	</xsl:choose>
   </xsl:variable>
    	
@@ -71,7 +73,7 @@
 		<gco:CharacterString><xsl:value-of select="@uuid"/></gco:CharacterString>
 	</gmd:fileIdentifier>
 	<gmd:language>
-	  <gmd:LanguageCode codeList="{$cl}#CI_LanguageCode" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
+	  <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
 	</gmd:language>
 	<gmd:characterSet>
 	  <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8">utf-8</gmd:MD_CharacterSetCode>
@@ -135,7 +137,7 @@
 		<gmd:locale>
 		  <gmd:PT_Locale id="locale-{.}">
 	   		<gmd:languageCode>
-	       		<gmd:LanguageCode codeList="{$cl}#LanguageCode" codeListValue="{.}"/>
+	       		<gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{.}"/>
 	   		</gmd:languageCode>
 	   		<gmd:characterEncoding>
 	       		<gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8"/>
@@ -445,7 +447,7 @@
 					
 	<xsl:for-each select="identificationInfo/*/language">
     	<gmd:language>
-		    <gmd:LanguageCode codeList="{$cl}#CI_LanguageCode" codeListValue="{normalize-space(.)}"><xsl:value-of select="normalize-space(.)"/></gmd:LanguageCode>
+		    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{normalize-space(.)}"><xsl:value-of select="normalize-space(.)"/></gmd:LanguageCode>
 		</gmd:language>
 	</xsl:for-each>
 
@@ -463,7 +465,7 @@
 		
     <xsl:for-each select="identificationInfo/*/serviceType">
         <srv:serviceType>
-          <gco:LocalName codeSpace="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+          <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
         </srv:serviceType>
     </xsl:for-each>
     <xsl:for-each select="identificationInfo/*/serviceTypeVersion">
@@ -471,7 +473,6 @@
           <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString> 
         </srv:serviceTypeVersion>
     </xsl:for-each>    
-
 
 		<xsl:for-each select="identificationInfo/*/environmentDescription">
       		<gmd:environmentDescription>
@@ -1404,7 +1405,7 @@
   <xsl:template match="FC_FeatureCatalogue" 
   	xmlns:gfc="http://www.isotc211.org/2005/gfc"
   	xmlns:gmx="http://www.isotc211.org/2005/gmx"
-  	xmlns:gml="http://www.opengis.net/gml/3.2"
+  	xmlns:gml="http://www.opengis.net/gml"
   	xmlns:gco="http://www.isotc211.org/2005/gco"  	
   	>
   	<gfc:FC_FeatureCatalogue xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd" uuid="{@uuid}">
@@ -1431,7 +1432,7 @@
   		<gmx:versionNumber><gco:CharacterString><xsl:value-of select="versionNumber"/></gco:CharacterString></gmx:versionNumber>
   		<gmx:versionDate><gco:Date><xsl:value-of select="versionDate"/></gco:Date></gmx:versionDate>
   		<gmx:language>
-	  		<gmd:LanguageCode codeList="{$cl}#CI_LanguageCode" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
+	  		<gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
   		</gmx:language>
   		<gfc:producer>
 			<xsl:call-template name="contact">

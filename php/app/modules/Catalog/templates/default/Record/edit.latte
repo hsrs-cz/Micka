@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>MICKA - {_messages.frontend.app_title}</title>
+	<title>{$pageTitle}</title>
 	<link rel="shortcut icon" href="{$basePath}{$themePath}/favicon.png">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css">
 	<link title="{_messages.frontend.app_title}" href="csw/opensearch.php" type="application/opensearchdescription+xml" rel="search">
@@ -134,13 +134,23 @@
 					</div>
 					
 					{*  GEMET *}
-					<label for="message-text" class="control-label">GEMET</label>
+					<label for="gemet" class="control-label">GEMET</label>
 					<div class="input-group">
 						<select id="gemet" class="form-control" data-placeholder="GEMET"></select>
                         <span class="input-group-btn">
                             <button id="thes-gemet-ok" class="btn btn-default" type="button">{_messages.frontend.fill}</button>
                         </span>
 					</div> 
+
+					{*  GEOLOGY *}
+					<label for="message-text" class="control-label">CGS</label>
+					<div class="input-group">
+						<select id="cgs" class="form-control" data-placeholder="Vyberte téma CGS"></select>
+                        <span class="input-group-btn">
+                            <button id="thes-geology-ok" class="btn btn-default" type="button">{_messages.frontend.fill}</button>
+                        </span>
+					</div> 
+
                 </div>
             </div>
         </div>
@@ -151,11 +161,10 @@
            {* <a href="micka" style="background: url('{$basePath}{$themePath}/img/settings.png') no-repeat; padding-left:20px;" onclick="window.open('?ak=rec_admin&recno={$record['recno']|noescape}', '_blank', 'width=400,height=600,resizable=yes'); return false">{_messages.frontend.language}</a> *}
         {/if}
     </div>
-    {dump}
     {if $dataBox == ''}
         <form id="md_inpform" class="md_inpform" action="{link Record:save $record['uuid'], f=>$detail}" method="post">
     {else}
-        <form id="md_inpform" action="{link Record:save $record['uuid'], f=>$detail}" method="post" onsubmit="return submitCheck();">
+        <form id="md_inpform" action="{link Record:save $record['uuid']}" method="post">
         <input type="hidden" name="mickaLite" value="true">
     {/if}
         <input type="hidden" name="afterpost" value="end">
@@ -321,11 +330,10 @@
                     {if $form['md_id'] == 121}
                         <div style="margin-left:200px;" id="parent-text"></div>
                     {/if}
-                    {if $form['max_nb'] != 1 && $form['md_id'] != 88}
-                        {* md_id=88: keywords hack*}
-                        <a href="#" class="plus" onclick="md_pridej(this, true); return false;"><i class="fa fa-plus-square"></i></a>
-                        <a href="#" class="plus" onclick="md_pridej(this); return false;"><i class="fa fa-plus-square-o"></i></a>
-                        <a href="#" class="minus" onclick="md_smaz(this); return false;"><i class="fa fa-minus-square-o"></i></a>
+                    {if $form['max_nb'] != 1}
+                        <a href="#" class="plus" onclick="md_pridej(this, true); return false;" title="{_messages.frontend.copy}"><i class="fa fa-plus-square"></i></a>
+                        <a href="#" class="plus" onclick="md_pridej(this); return false;" title="{_messages.frontend.new}"><i class="fa fa-plus-square-o"></i></a>
+                        <a href="#" class="minus" onclick="md_smaz(this); return false;" title="{_messages.frontend.delete}"><i class="fa fa-minus-square-o"></i></a>
                     {/if}
                     {if $form['pack'] == 1}<div id="PB_{$form['md_path']}" style="display:none; padding-left:0px; border: 0px;">{/if}
                     {if $form['pack'] == 2}<div id="PB_{$form['md_path']}" style="display:block; padding-left:0px; border: 0px;">{/if}

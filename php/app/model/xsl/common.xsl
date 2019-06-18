@@ -105,7 +105,7 @@
                 </gmd:contactInfo>
             </xsl:if>
             <gmd:role>
-                <gmd:CI_RoleCode codeListValue="{role/CI_RoleCode}" codeList="./resources/codeList.xml#CI_RoleCode"><xsl:value-of select="role/CI_RoleCode"/></gmd:CI_RoleCode>
+                <gmd:CI_RoleCode codeListValue="{role/CI_RoleCode}" codeList="{$clx}#CI_RoleCode"><xsl:value-of select="role/CI_RoleCode"/></gmd:CI_RoleCode>
             </gmd:role>
         </gmd:CI_ResponsibleParty>
       </xsl:for-each>  

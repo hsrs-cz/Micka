@@ -567,9 +567,11 @@ function thes(obj){
   
     $('#thes-gemet-ok').on('click', function(){
         gemet.process(langs.split('|'), function(data){
+            console.log(data);
             fromThesaurus({ //TODO take from thesaurus client
                 thesName: 'GEMET - Concepts, version 3.1',
                 thesDate: (HS.getLang(3)=='cze') ? '20.07.2012' : '2012-07-20',
+                thesUri: data.uri.substr(0, data.uri.lastIndexOf("/")),
                 uri: data.uri,
                 terms: data.labels
             });
@@ -591,7 +593,8 @@ function thes(obj){
                 fromThesaurus({
                     thesName: data.thesaurus.langs,
                     thesDate: data.thesaurus.date,
-                    uri: data.thesaurus.uri,
+                    thesUri: data.results[0].uri.substr(0,data.results[0].uri.lastIndexOf("/")),
+                    uri: data.results[0].uri,
                     terms: data.results[0].langs
                 });
                 $("#md-keywords").modal('hide');
@@ -606,7 +609,7 @@ function fromThesaurus(data){
     if(!md_elem) return false;
     var last = -1;
     var vyplneno=0;
-    var mainLang = langs.substring(0,3);
+    var mainLang = $("#30").val();
     var thesName = data.thesName;
     if(typeof thesName === 'object') thesName = data.thesName[mainLang];
     
@@ -614,7 +617,7 @@ function fromThesaurus(data){
 	var inputs = flatNodes(md_elem, "INPUT"); 
 	var selects = flatNodes(md_elem, "SELECT"); 
   	for(i=0;i<inputs.length;i++){
-	    if(inputs[i].id=='3600'+mainLang){
+	    if(inputs[i].id == '3600'+data.thesUri || inputs[i].id=='3600'+mainLang){
 	    	if(inputs[i].value==''){
 	    	  	var currThesNode = md_elem;
 	    		break;
@@ -622,11 +625,18 @@ function fromThesaurus(data){
 	    }
 	}
   	if(!currThesNode){
-	  	var inp2 = flatNodes(md_elem.parentNode.parentNode, "INPUT");
+	  	var inp2 = flatNodes(md_elem.parentNode, "INPUT");
 	  	for(i=0;i<inp2.length;i++){
-	  		if(inp2[i].id=='3600'+mainLang){
+	  		if(inp2[i].id=='3600uri'){
+	  			if((inp2[i].value)==data.thesUri){
+	  				currThesNode = inp2[i].parentNode.parentNode.parentNode;
+                    break;
+	  			}
+	  		}
+	  		else if(inp2[i].id=='3600'+mainLang){
 	  			if((inp2[i].value)==thesName){
 	  				currThesNode = inp2[i].parentNode.parentNode.parentNode;
+                    break;
 	  			}
 	  		}
 		}
@@ -655,7 +665,7 @@ function fromThesaurus(data){
 	  } 
       if(inputs[i].id=='3940') inputs[i].value = data.thesDate; 
       else if(inputs[i].id=='3600uri'){
-          inputs[i].value = data.uri;
+          inputs[i].value = data.thesUri;
       }
   } 
   // fill the kewords

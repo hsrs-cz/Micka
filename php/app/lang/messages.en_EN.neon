@@ -114,6 +114,7 @@ frontend:
     cookbook: "Cookbook"
     contact: "Contact"
     mdcontact: "Metadata contact"
+    mdparty: "Metadata Organisation"
     copy: "Clone"
     select: "select"
     map: "Map"

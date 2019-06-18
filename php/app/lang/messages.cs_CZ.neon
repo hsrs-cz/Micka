@@ -118,6 +118,7 @@ frontend:
     cookbook: "Kuchařka"
     contact: "Kontakt"
     mdcontact: "Kontakt - metadata"
+    mdparty: "Organizace - metadata"
     copy: "Zkopírovat"
     map: "Mapa"
 

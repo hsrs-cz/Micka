@@ -730,7 +730,7 @@ xmlns:php="http://php.net/xsl">
 </xsl:choose>
 
 <!-- 9.1.d -->
-<test code="9.1 d" level="c">
+<test code="9.1d" level="c">
     <description><xsl:value-of select="$labels/test[@code='9.1.d']"/> = <xsl:value-of select="$codelists/role/value[@name='custodian']/*[name()=$LANG]"/></description>
     <xpath>identificationInfo[1]/*/pointOfContact/[*/role/*/@codeListValue='custodian']</xpath>
     <xsl:if test="string-length(//gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue='custodian']/*/gmd:organisationName/*)>0">
@@ -780,7 +780,7 @@ xmlns:php="http://php.net/xsl">
 				    </xsl:choose>
 			    </test>
 			   	
-			   	<xsl:if test="position()=1 and $codelists/role/value[@name=$k1]!=''">
+			   	<!--xsl:if test="position()=1 and $codelists/role/value[@name=$k1]!=''">
 		  			<test code="d">
 						<description>Role = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']/*[name()=$LANG]"/></description>
 						<xpath>role/*/@codeListValue and //contact[*/role/*/@codeListValue='pointOfContact']</xpath>
@@ -791,7 +791,7 @@ xmlns:php="http://php.net/xsl">
 						    </xsl:when>
 					    </xsl:choose>
 			    	</test>
-		    	</xsl:if>
+		    	</xsl:if-->
 			</test>
 		</xsl:for-each>	
 		
@@ -805,7 +805,7 @@ xmlns:php="http://php.net/xsl">
 </xsl:choose>
 
 <!-- 10.1.d -->
-<test code="10.1 d" level="c">
+<test code="10.1d" level="c">
     <description><xsl:value-of select="$labels/test[@code='10.1.d']"/> = <xsl:value-of select="$codelists/role/value[@name='pointOfContact']/*[name()=$LANG]"/></description>
     <xpath>identificationInfo[1]/*/pointOfContact/[*/role/*/@codeListValue='custodian']</xpath>
     <xsl:if test="string-length(//gmd:contact[*/gmd:role/*/@codeListValue='pointOfContact']/*/gmd:organisationName/*)>0">

@@ -1050,10 +1050,11 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                                         <xsl:with-param name="t" select="."/>
                                                         <xsl:with-param name="locale" select="//locale"/>
                                                     </xsl:call-template>
+                                                    <xsl:variable name="v" select="."/>
                                                     <gmd:date>
                                                         <gmd:CI_Date>
                                                             <gmd:date>
-                                                                <gco:Date><xsl:value-of select="$codeLists/sds/value[@uri=.]/@publication"/></gco:Date>
+                                                                <gco:Date><xsl:value-of select="$codeLists/sds/value[@uri=$v]/@publication"/></gco:Date>
                                                             </gmd:date>
                                                             <gmd:dateType>
                                                                 <gmd:CI_DateTypeCode codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/Codelist/ML_gmxCodelists.xml#CI_DateTypeCode" codeListValue="publication"/>
