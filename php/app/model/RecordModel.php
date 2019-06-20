@@ -302,7 +302,7 @@ class RecordModel extends \BaseModel
                     'recno'=>$recno,
                     'md_value'=>$uuid,
                     'md_id'=>38,
-                    'md_path'=>'0_0_38_0_',
+                    'md_path'=>'0_00_38_00_',
                     'lang'=>'xxx',
                     'package_id'=>0
                 ];
@@ -312,7 +312,7 @@ class RecordModel extends \BaseModel
                     'recno'=>$recno,
                     'md_value'=>$lang,
                     'md_id'=>5527,
-                    'md_path'=>'0_0_39_0_5527_0_',
+                    'md_path'=>'0_00_39_00_5527_00_',
                     'lang'=>'xxx',
                     'package_id'=>0
                 ];
@@ -322,7 +322,7 @@ class RecordModel extends \BaseModel
                     'recno'=>$recno,
                     'md_value'=>Date("Y-m-d"),
                     'md_id'=>44,
-                    'md_path'=>'0_0_44_0_',
+                    'md_path'=>'0_00_44_00_',
                     'lang'=>'xxx',
                     'package_id'=>0
                 ];
@@ -917,7 +917,7 @@ class RecordModel extends \BaseModel
             $data[0]['recno'] = $recno;
             $data[0]['md_value'] = $date;
             $data[0]['md_id'] = '44';
-            $data[0]['md_path'] = '0_0_44_0';
+            $data[0]['md_path'] = '0_00_44_00';
             $data[0]['lang'] = 'xxx';
             $data[0]['package_id'] = '0';
             $this->seMdValues($data, $recno=0);

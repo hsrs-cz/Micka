@@ -131,6 +131,7 @@ class MdEditForm  extends \BaseModel
             if ($is_label == 0) {
                 $path = getMdPath($md_path) . "['" . $value_lang . "']";
                 $eval_label = '$rs=isset($this->form_values' . $path . ') ? $this->form_values' . "$path : '';";
+                //dump($md_path, $path, $eval_label); 
                 eval ($eval_label);
             }
 		}
@@ -307,9 +308,10 @@ class MdEditForm  extends \BaseModel
             $this->md_id_data[$row->md_id] = $row;
         }
         $this->form_standard_schema = $this->standard_schema_model[0][0];
-        $this->getRepeatFormData(isset($this->form_values[0][0]) ? $this->form_values[0][0] : []);
+        $this->getRepeatFormData(isset($this->form_values[0][00]) ? $this->form_values[0][00] : []);
         $this->getFormData($this->form_standard_schema);
         $rs = $this->form_data;
+        //dump($rs); exit;
         return $rs;
     }
     
@@ -320,7 +322,8 @@ class MdEditForm  extends \BaseModel
             $end_div_rb = 0;
             $path .= $key_md_id.'_';
             foreach ($row as $key_sequence => $value) {
-                $path .= $key_sequence.'_';
+                //$path .= $key_sequence.'_';
+                $path .= strlen($key_sequence) === 1 ? "0$key_sequence" . '_' : $key_sequence . '_';
                 $md_id_data = isset($this->md_id_data[$key_md_id]) ? $this->md_id_data[$key_md_id] : array();
                 if (isset($md_id_data->md_id)) {
                     if ($key_sequence > 0) {
@@ -333,11 +336,11 @@ class MdEditForm  extends \BaseModel
                     $form_row['start_div'] = 1;
                     $form_row['end_div'] = Array(); 
                     $form_row['md_id'] = $md_id_data->md_id;
-                    $form_row['md_path'] = '0_0_'.$path;
+                    $form_row['md_path'] = '0_00_'.$path;
                     $form_row['el_id'] = $md_id_data->el_id;
                     $form_row['package_id'] = $md_id_data->package_id;
                     if ($md_id_data->form_pack == 1) {
-                        $form_row['pack'] = $this->getIsData('0_0_'.$path) ? 2 : 1;
+                        $form_row['pack'] = $this->getIsData('0_00_'.$path) ? 2 : 1;
                         $end_div_pack = 1;
                     } else {
                         $form_row['pack'] = 0;
@@ -347,11 +350,12 @@ class MdEditForm  extends \BaseModel
                     $form_row['next_lang'] = 0;
                     if ($md_id_data->form_code == 'R') {
                         if ($key_sequence == 0) {
-                            $rb_id = $key_md_id . '_' . $key_sequence;
+                            $rb_id = $key_md_id . '_' ;
+                            $rb_id .= strlen($key_sequence) === 1 ? "0$key_sequence" : $key_sequence;
                         }
                         $form_row['rb'] = 1;
 						$form_row['rb_id'] = $this->getRbId($path);
-						$form_row['rb_checked'] = $this->getIsData('0_0_'.$path) ? 1 : 0;
+						$form_row['rb_checked'] = $this->getIsData('0_00_'.$path) ? 1 : 0;
                         $end_div_rb = 1;
                     } else {
                         $form_row['rb'] = 0;
@@ -361,7 +365,7 @@ class MdEditForm  extends \BaseModel
 					} else {
                         $form_row['form_code'] = $md_id_data->form_code;
                     }
-                    $form_row['value'] = $this->getFormValue(($md_id_data->md_left+1)-$md_id_data->md_right, $md_id_data->form_code, $md_id_data->from_codelist, $md_id_data->el_id, $form_row['value_lang'], '0_0_'.$path);
+                    $form_row['value'] = $this->getFormValue(($md_id_data->md_left+1)-$md_id_data->md_right, $md_id_data->form_code, $md_id_data->from_codelist, $md_id_data->el_id, $form_row['value_lang'], '0_00_'.$path);
                     $form_row['mandt_code'] = $md_id_data->mandt_code;
                     $form_row['inspire_code'] = $md_id_data->inspire_code;
                     $form_row['is_uri'] = $md_id_data->is_uri;
@@ -386,7 +390,7 @@ class MdEditForm  extends \BaseModel
                                 if ($k > 0) {
                                     $form_row['next_lang'] = 1;
                                     $form_row['value_lang'] = $lang;
-                                    $form_row['value'] = $this->getFormValue(0, $md_id_data->form_code, $md_id_data->from_codelist, $md_id_data->el_id, $lang,  '0_0_'.$path);
+                                    $form_row['value'] = $this->getFormValue(0, $md_id_data->form_code, $md_id_data->from_codelist, $md_id_data->el_id, $lang,  '0_00_'.$path);
                                     array_push($this->form_data, $form_row);
                                 }
                             }
@@ -398,7 +402,8 @@ class MdEditForm  extends \BaseModel
                 }
                 // END SEQUENCE
                 // -path sequence
-                $path = substr($path, 0,  0-(strlen($key_sequence)+1));
+                $order = strlen($key_sequence) === 1 ? "0$key_sequence" : $key_sequence;
+                $path = substr($path, 0,  0-(strlen($order)+1));
             }
             // END MD_ID
             if ($end_div_rs == 0) {
@@ -466,8 +471,9 @@ class MdEditForm  extends \BaseModel
                         if ($md_id_data->md_left+1 == $md_id_data->md_right) {
                             $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=1;";
                         } else {
-                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=" . '$this->standard_schema_model[0][0]' . getMdPath(substr($md_id_data->md_path, 4)) . ";";
+                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=" . '$this->standard_schema_model[0][00]' . getMdPath(substr($md_id_data->md_path, 4)) . ";";
                         }
+                        //dump($eval_label);
                         eval ($eval_label);
                     }
                 }
