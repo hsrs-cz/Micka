@@ -65,8 +65,7 @@ function md_pridej(obj, clone){
     var elementy = md_getSimilar(dold.parentNode, pom[0]);
     if(!clone) md_removeDuplicates(dnew);
     for(var i=0;i<elementy.length;i++) {
-        if(i<10) md_setName(elementy[i], pom[0]+"_0"+i+"_");
-        else md_setName(elementy[i], pom[0]+"_"+i+"_");
+        md_setName(elementy[i], pom[0]+"_"+i+"_");
     }
     if(!clone){
         // --- vycisteni ---
@@ -146,8 +145,7 @@ function md_smaz(obj){
   if(elementy.length>1) cont.removeChild(toDel);
   var elementy = md_getSimilar(cont, pom[0]);
   for(var i=0;i<elementy.length;i++) {
-      if(i<10) md_setName(elementy[i], pom[0]+"_0"+i+"_");
-      else md_setName(elementy[i], pom[0]+"_"+i+"_");
+      md_setName(elementy[i], pom[0]+"_"+i+"_");
   }
 }
 
