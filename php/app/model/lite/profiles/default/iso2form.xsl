@@ -73,7 +73,7 @@
     <!-- 1.4 linkage -->
     <div>
         <xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine|.">
-            <xsl:if test="normalize-space(*/gmd:linkage)!='' or (normalize-space(*/gmd:linkage)='' and position()=last())">
+            <xsl:if test="normalize-space(*/gmd:linkage)!='' or position()=last()">
                 <fieldset>
                     <div class="row">
                         <xsl:call-template name="drawLabel">
@@ -169,47 +169,49 @@
     </div>
     
     <!-- 1.5 identifier -->
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier|.">
-        <xsl:if test="normalize-space(*/gmd:code/@xlink:href|*/gmd:code)!='' or (normalize-space(*/gmd:code/@xlink:href|*/gmd:code)='' and position()=last())">
-            <fieldset>
-                <div class="row">
-                    <xsl:call-template name="drawLabel">
-                        <xsl:with-param name="name" select="'identifier'"/>
-                        <xsl:with-param name="class" select="$m"/>
+    <div>
+        <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier|.">
+            <xsl:if test="normalize-space(*/gmd:code/@xlink:href|*/gmd:code)!='' or position()=last()">
+                <fieldset>
+                    <div class="row">
+                        <xsl:call-template name="drawLabel">
+                            <xsl:with-param name="name" select="'identifier'"/>
+                            <xsl:with-param name="class" select="$m"/>
+                            <xsl:with-param name="valid" select="'1.5'"/>
+                            <xsl:with-param name="dupl" select="1"/>
+                        </xsl:call-template>			
+                    </div>
+
+                    <xsl:call-template name="drawAnchor">
+                        <xsl:with-param name="path" select="'identifier'"/>
+                        <xsl:with-param name="value" select="*/gmd:code"/>
                         <xsl:with-param name="valid" select="'1.5'"/>
-                        <xsl:with-param name="dupl" select="1"/>
-                    </xsl:call-template>			
-                </div>
-
-                <xsl:call-template name="drawAnchor">
-                    <xsl:with-param name="path" select="'identifier'"/>
-                    <xsl:with-param name="value" select="*/gmd:code"/>
-                    <xsl:with-param name="valid" select="'1.5'"/>
-                    <xsl:with-param name="class" select="'inp2'"/>
-                    <xsl:with-param name="req" select="not($serv)"/>
-                </xsl:call-template>
-                
-                <xsl:call-template name="drawInput">
-                    <xsl:with-param name="name" select="'codeSpace'"/>
-                    <xsl:with-param name="path" select="'identifier-codeSpace[]'"/>
-                    <xsl:with-param name="value" select="*/gmd:codeSpace"/>
-                    <xsl:with-param name="class" select="'short inp2'"/>
-                </xsl:call-template>
-                <!--div class="col-xs-12 col-md-8">
-                    <select name="identifier[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
-                        <xsl:if test="not($serv)"><xsl:attribute name="required">required</xsl:attribute></xsl:if>
-                        <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
-                            <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
-                        </xsl:for-each>
-                        <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code[not(*/@xlink:href)]">
-                            <option value="{*}" selected="selected"><xsl:value-of select="*"/></option>
-                        </xsl:for-each>
-                    </select>
-                </div-->       
-            </fieldset>
-        </xsl:if>
-    </xsl:for-each>
-
+                        <xsl:with-param name="class" select="'inp2'"/>
+                        <xsl:with-param name="req" select="not($serv)"/>
+                    </xsl:call-template>
+                    
+                    <xsl:call-template name="drawInput">
+                        <xsl:with-param name="name" select="'codeSpace'"/>
+                        <xsl:with-param name="path" select="'identifier-codeSpace[]'"/>
+                        <xsl:with-param name="value" select="*/gmd:codeSpace"/>
+                        <xsl:with-param name="class" select="'short inp2'"/>
+                    </xsl:call-template>
+                    <!--div class="col-xs-12 col-md-8">
+                        <select name="identifier[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
+                            <xsl:if test="not($serv)"><xsl:attribute name="required">required</xsl:attribute></xsl:if>
+                            <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
+                                <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
+                            </xsl:for-each>
+                            <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code[not(*/@xlink:href)]">
+                                <option value="{*}" selected="selected"><xsl:value-of select="*"/></option>
+                            </xsl:for-each>
+                        </select>
+                    </div-->       
+                </fieldset>
+            </xsl:if>
+        </xsl:for-each>
+    </div>
+    
     <!-- 1.6 operatesOn -->
     <xsl:if test="$serv">
         <div class="row">
@@ -397,7 +399,7 @@
                 <xsl:with-param name="name" select="'spatialScope'"/>
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*/gmd:keyword[contains(*/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope')]"/>
                 <xsl:with-param name="codes" select="'spatialScope'"/>
-                <xsl:with-param name="multi" select="'2'"/>
+                <xsl:with-param name="multi" select="1"/>
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template> 
 
@@ -422,28 +424,29 @@
     </xsl:choose>
 
     <!-- other free KW -->
-    <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)=0]/*/gmd:keyword|/."> 
-        <xsl:if test="gco:CharacterString|gmx:Anchor!='' or (gco:CharacterString|gmx:Anchor='' and position()=last())">
+    <div>
+        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)=0 and not(contains(*/gmd:keyword/gmx:Anchor/@xlink:href,'SpatialScope'))]/*/gmd:keyword|/">
+            <xsl:if test="*|*/@xlink:href!='' or position()=last()">
 
-            <fieldset>
-                <div class="row">
-                    <xsl:call-template name="drawLabel">
+                <fieldset>
+                    <div class="row">
+                        <xsl:call-template name="drawLabel">
+                            <xsl:with-param name="name" select="'fkw'"/>
+                            <xsl:with-param name="class" select="'mand wide'"/>
+                            <xsl:with-param name="dupl" select="1"/>
+                        </xsl:call-template>
+                    </div>
+                    <xsl:call-template name="drawInput">
+                        <xsl:with-param name="value" select="."/>
                         <xsl:with-param name="name" select="'fkw'"/>
-                        <xsl:with-param name="class" select="'mand wide'"/>
-                        <xsl:with-param name="dupl" select="1"/>
-                    </xsl:call-template>			
-                </div>
-                <xsl:call-template name="drawInput">
-                    <xsl:with-param name="value" select="."/>
-                    <xsl:with-param name="name" select="'fkw'"/>
-                    <xsl:with-param name="path" select="'fkw-keyword[]'"/>
-                    <xsl:with-param name="class" select="'inp2'"/>
-                    <xsl:with-param name="langs" select="$langs"/>
-                </xsl:call-template>
-            </fieldset>
-        </xsl:if>
-    </xsl:for-each>
-
+                        <xsl:with-param name="path" select="'fkw-keyword[]'"/>
+                        <xsl:with-param name="class" select="'inp2'"/>
+                        <xsl:with-param name="langs" select="$langs"/>
+                    </xsl:call-template>
+                </fieldset>
+            </xsl:if>
+        </xsl:for-each>
+    </div>
 
 	<xsl:variable name="kwg">
 	 	<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/gmd:MD_Keywords[substring(gmd:thesaurusName/*/gmd:title/gco:CharacterString,1,15) = 'GEMET - Concept']/gmd:keyword">
@@ -522,7 +525,7 @@
     
     <!-- datum --> 
     <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date|."> 
-        <xsl:if test="normalize-space(*/gmd:date)!='' or (normalize-space(*/gmd:date)='' and position()=last())">
+        <xsl:if test="normalize-space(*/gmd:date)!='' or position()=last()">
             <fieldset>
                 <div class="row">
                     <xsl:call-template name="drawLabel">
@@ -553,7 +556,7 @@
     </xsl:for-each>  
 
     <xsl:for-each select="gmd:identificationInfo/*/*/*/gmd:temporalElement|.">
-        <xsl:if test="string-length(*/gmd:extent)>0 or(string-length(*/gmd:extent)=0 and position()=last())">
+        <xsl:if test="string-length(*/gmd:extent)>0 position()=last()">
             <div class="row">
                 <xsl:call-template name="drawLabel">
                     <xsl:with-param name="name" select="'timeExtent'"/>
@@ -631,7 +634,7 @@
     <xsl:if test="gmd:hierarchyLevel/*/@codeListValue!='application'">
         <div>
             <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'https://data.europa.eu/eli/')]|/.">
-                <xsl:if test="string-length(*/gmd:specification)>0 or (string-length(*/gmd:specification)=0 and position()=last())">
+                <xsl:if test="string-length(*/gmd:specification)>0 or and position()=last()">
                     <fieldset>
                         <div class="row">
                             <xsl:call-template name="drawLabel">
@@ -769,7 +772,7 @@
         <!-- IOD-3 encoding (distribution format)  -->
         <div>
             <xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat|/.">
-                <xsl:if test="*/gmd:name/*!='' or (string-length(*/gmd:name/*)=0 and position()=last())">
+                <xsl:if test="*/gmd:name/*!='' or position()=last()">
                     <fieldset>
                         <div class="row">
                             <xsl:call-template name="drawLabel">
@@ -811,7 +814,7 @@
         <!-- IOD-4 topological consistency -->
         <div>
         <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency|.">
-            <xsl:if test="string-length(gmd:nameOfMeasure)>0 or(string-length(gmd:nameOfMeasure)=0 and position()=last())">
+            <xsl:if test="string-length(gmd:nameOfMeasure)>0 or position()=last()">
 
                 <fieldset>
                     <div class="row">
@@ -1032,7 +1035,7 @@
             <!-- IOS-3 operation metadata -->
             <div>
                 <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations|.">
-                    <xsl:if test="normalize-space(*/srv:operationName/*) or (string-length(*/srv:operationName/*)=0 and position()=last())">
+                    <xsl:if test="normalize-space(*/srv:operationName/*) or position()=last()">
                         <fieldset>
                             <div class="row">
                                 <xsl:call-template name="drawLabel">
@@ -1091,7 +1094,7 @@
 <xsl:if test="not($serv)">
     <div>
     <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceMaintenance|/.">
-        <xsl:if test="string-length(*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue)>0 or(string-length(*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue)=0 and position()=last())">
+        <xsl:if test="string-length(*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue)>0 or position()=last()">
 
             <fieldset>
                 <div class="row">

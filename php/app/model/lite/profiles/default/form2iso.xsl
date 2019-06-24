@@ -313,22 +313,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                             </gmd:descriptiveKeywords>
                         </xsl:when>
                         <xsl:otherwise>
-                            <gmd:descriptiveKeywords>
-                                <gmd:MD_Keywords>
-                                    <gmd:keyword></gmd:keyword>
-                                    <gmd:thesaurusName>
-                                        <gmd:CI_Citation>
-                                            <gmd:title></gmd:title>
-                                            <gmd:date>
-                                                <gmd:CI_Date>
-                                                    <gmd:date></gmd:date>
-                                                    <gmd:dateType></gmd:dateType>
-                                                </gmd:CI_Date>
-                                            </gmd:date>
-                                        </gmd:CI_Citation>
-                                    </gmd:thesaurusName>
-                                </gmd:MD_Keywords>
-                            </gmd:descriptiveKeywords>
+
                         </xsl:otherwise>
                     </xsl:choose>
 
@@ -365,30 +350,24 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                             </gmd:CI_Date></gmd:date>
                                         </gmd:CI_Citation>
                                     </gmd:thesaurusName>
-
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if>
-
-					<xsl:if test="geology">
+					<xsl:if test="spatialScope">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>
-	              				<xsl:for-each select="geology/item">
+	              				<xsl:for-each select="spatialScope">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'keyword'"/>
-                                        <xsl:with-param name="codes" select="$codeLists/cgsThemes"/>
+                                        <xsl:with-param name="codes" select="$codeLists/spatialScope"/>
                                         <xsl:with-param name="t" select="."/>
                                         <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
 	  							</xsl:for-each>
 	  							<gmd:thesaurusName>
 	  								<gmd:CI_Citation>
-                                            <gmd:title>
-                                                <gmx:Anchor xlink:href="https://registry.geology.cz/CGSGeoscientificTheme">Geovědní témata ČGS</gmx:Anchor>
-                                            </gmd:title>
-	  									<gmd:date><gmd:CI_Date>
-	  										<gmd:date><gco:Date>2018</gco:Date></gmd:date>
-	  										<gmd:dateType><gmd:CI_DateTypeCode codeListValue="publication" codeList="{$cl}#CI_DateTypeCode">publication</gmd:CI_DateTypeCode></gmd:dateType>
+	  									<gmd:title></gmd:title>
+	  									<gmd:date><gmd:CI_Date><gmd:dateType><gmd:CI_DateTypeCode codeListValue=""></gmd:CI_DateTypeCode></gmd:dateType>
 	  									</gmd:CI_Date></gmd:date>
 	  								</gmd:CI_Citation>
 	  							</gmd:thesaurusName>
@@ -396,57 +375,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 						</gmd:descriptiveKeywords>
 					</xsl:if>
 
-					<!-- <xsl:if test="gemet">
-					<descriptiveKeywords>
-						<MD_Keywords>
-              				<xsl:for-each select="gemet">
-    							<keyword>
-  							  		<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-  						  		</keyword>
-  							</xsl:for-each>
-  							<thesaurusName>
-  								<CI_Citation>
-  									<title>
-  										<gco:CharacterString><xsl:value-of select="gemetCit"/></gco:CharacterString>
-  									</title>
-  									<date><CI_Date>
-  										<date><gco:Date><xsl:value-of select="gemetDate"/></gco:Date></date>
-  										<dateType><CI_DateTypeCode codeListValue="revision" codeList="{$cl}#CI_DateTypeCode">revision</CI_DateTypeCode></dateType>
-  									</CI_Date></date>
-  								</CI_Citation>
-  							</thesaurusName>
-						</MD_Keywords>	
-					</descriptiveKeywords>
-					</xsl:if> -->
-                    
-                    <xsl:if test="normalize-space(enduse)!=''">
-                        <gmd:descriptiveKeywords>
-                            <gmd:MD_Keywords>
-                                <xsl:for-each select="enduse/item">
-                                    <xsl:call-template name="registryOut">
-                                        <xsl:with-param name="name" select="'keyword'"/>
-                                        <xsl:with-param name="uri" select="'http://inspire.ec.europa.eu/codelist/EndusePotentialValue'"/>
-                                        <xsl:with-param name="id" select="."/>
-                                        <xsl:with-param name="mdlang" select="$mdlang"/>
-                                        <xsl:with-param name="locale" select="locale"/>
-                                    </xsl:call-template>
-                                </xsl:for-each>
-                                <gmd:thesaurusName>
-                                    <gmd:CI_Citation>
-                                        <gmd:title>
-                                            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/codelist/EndusePotentialValue">Inspire registry - Enduse potential value</gmx:Anchor>
-                                        </gmd:title>
-                                        <gmd:date><gmd:CI_Date>
-                                            <gmd:date><gco:Date>2008-06-01</gco:Date></gmd:date>
-                                            <gmd:dateType><gmd:CI_DateTypeCode codeListValue="publication" codeList="{$cl}#CI_DateTypeCode">publication</gmd:CI_DateTypeCode></gmd:dateType>
-                                        </gmd:CI_Date></gmd:date>
-                                    </gmd:CI_Citation>
-                                </gmd:thesaurusName>
-                            </gmd:MD_Keywords>	
-                        </gmd:descriptiveKeywords>
-                    </xsl:if>
 
-					
 					<!-- other kw -->
 					<xsl:for-each select="othes">
 					   <gmd:descriptiveKeywords>
@@ -472,7 +401,24 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 					   </gmd:descriptiveKeywords>
 					</xsl:for-each>
 
-					<xsl:if test="normalize-space(fkw/item)!=''">
+                    <gmd:descriptiveKeywords>
+                        <gmd:MD_Keywords>
+                            <gmd:keyword></gmd:keyword>
+                            <gmd:thesaurusName>
+                                <gmd:CI_Citation>
+                                    <gmd:title></gmd:title>
+                                    <gmd:date>
+                                        <gmd:CI_Date>
+                                            <gmd:date></gmd:date>
+                                            <gmd:dateType></gmd:dateType>
+                                        </gmd:CI_Date>
+                                    </gmd:date>
+                                </gmd:CI_Citation>
+                            </gmd:thesaurusName>
+                        </gmd:MD_Keywords>
+                    </gmd:descriptiveKeywords>
+
+                    <xsl:if test="normalize-space(fkw/item)!=''">
                         <gmd:descriptiveKeywords>
     						<gmd:MD_Keywords>
                   				<xsl:for-each select="fkw/item">
