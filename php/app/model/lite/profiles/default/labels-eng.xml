@@ -750,7 +750,12 @@ against which data is being evaluated.</p>
 			<h3>Text</h3> 
 		</help>
 	</msg>
-
+	<msg name="spatialScope">
+		<label>Spatial scope</label>
+		<help>
+			<h3>Administrative level that the data set intends to cover.</h3>
+		</help>
+	</msg>
     <!-- user specified -->
    	<msg name="geology">
 		<label>CGS themes</label>

@@ -392,6 +392,15 @@
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template> 
     
+            <!-- Spatial scope -->
+            <xsl:call-template name="drawInput">
+                <xsl:with-param name="name" select="'spatialScope'"/>
+                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*/gmd:keyword[contains(*/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope')]"/>
+                <xsl:with-param name="codes" select="'spatialScope'"/>
+                <xsl:with-param name="multi" select="'2'"/>
+                <xsl:with-param name="valid" select="'3'"/>
+            </xsl:call-template> 
+
        		<!-- ostatni KW s thesaurem-->
             <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[substring(gmd:thesaurusName/*/gmd:title/*,1,15) != 'GEMET - INSPIRE' and string-length(gmd:thesaurusName/*/gmd:title/*)>0]">
                 <xsl:variable name="i" select="position()-1"/>

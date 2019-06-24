@@ -65,7 +65,8 @@ function md_pridej(obj, clone){
     var elementy = md_getSimilar(dold.parentNode, pom[0]);
     if(!clone) md_removeDuplicates(dnew);
     for(var i=0;i<elementy.length;i++) {
-        md_setName(elementy[i], pom[0]+"_"+i+"_");
+        if(i<10) md_setName(elementy[i], pom[0]+"_0"+i+"_");
+        else md_setName(elementy[i], pom[0]+"_"+i+"_");
     }
     if(!clone){
         // --- vycisteni ---
@@ -145,7 +146,8 @@ function md_smaz(obj){
   if(elementy.length>1) cont.removeChild(toDel);
   var elementy = md_getSimilar(cont, pom[0]);
   for(var i=0;i<elementy.length;i++) {
-      md_setName(elementy[i], pom[0]+"_"+i+"_");
+      if(i<10) md_setName(elementy[i], pom[0]+"_0"+i+"_");
+      else md_setName(elementy[i], pom[0]+"_"+i+"_");
   }
 }
 
@@ -848,13 +850,13 @@ function cover1(){
 	var divs = flatNodes(md_elem.parentNode, "DIV");
 	var toClone = null;
 	for(var i=0;i<divs.length;i++){
-		if(divs[i].id=='2078_0_'){
+		if(divs[i].id=='2078_00_'){
 			toClone = divs[i];
 			md_dexpand1(divs[i]);
 			var divs2 = flatNodes(flatNodes(divs[i], "DIV")[0],"DIV");
 			md_dexpand1(divs2[0]);
 		}	
-		else if (divs[i].id=='2078_1_') toClone = null;
+		else if (divs[i].id=='2078_01_') toClone = null;
 	}
 	if(toClone){
 		var a = flatNodes(toClone, "A");
@@ -873,10 +875,10 @@ function cover1(){
 		else if(inputs[i].id=='1020uri') {
 			inputs[i].value='https://publications.europa.eu/resource/authority/country/CZE';
 		}	
-		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_0_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#percent';	
-		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_0_2101')>0) inputs[i].value= $('#cover-perc').val();	
-		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_1_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#km2';	
-		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_1_2101')>0) inputs[i].value= $('#cover-km').val();	
+		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_00_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#percent';	
+		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_00_2101')>0) inputs[i].value= $('#cover-perc').val();	
+		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_01_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#km2';	
+		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_01_2101')>0) inputs[i].value= $('#cover-km').val();	
 	}
 	$("#md-dialog").modal('hide');
 	return false;

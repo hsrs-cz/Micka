@@ -687,4 +687,10 @@ against which data is being evaluated.</p>
     <msg name="sel">
         <label>Select</label>
     </msg>
+	<msg name="spatialScope">
+		<label>Spatial scope</label>
+		<help>
+			<h3>Administrative level that the data set intends to cover.</h3>
+		</help>
+	</msg>
 </labels>
