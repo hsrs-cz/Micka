@@ -1,3 +1,4 @@
+{dump}
 <!DOCTYPE html>
 <html class="x-border-box">
 <head>
@@ -254,7 +255,7 @@
                 {* Opakování pro další jazyk END *}
             {else}
                     {if $form['start_div'] == 1}
-                        <div id="{$form['md_id']}_{$form['repeat']}_" class="t">
+                        <div id="{$form['md_id']}_{if strlen($form['repeat']) === 1}0{/if}{$form['repeat']}_" class="t">
                     {/if}
 
                     {if $form['pack'] == 1}

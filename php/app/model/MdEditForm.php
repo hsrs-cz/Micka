@@ -471,7 +471,7 @@ class MdEditForm  extends \BaseModel
                         if ($md_id_data->md_left+1 == $md_id_data->md_right) {
                             $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=1;";
                         } else {
-                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=" . '$this->standard_schema_model[0][00]' . getMdPath(substr($md_id_data->md_path, 4)) . ";";
+                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=" . '$this->standard_schema_model[0][00]' . getMdPath(substr($md_id_data->md_path, 5)) . ";";
                         }
                         //dump($eval_label);
                         eval ($eval_label);
