@@ -24,7 +24,8 @@ class MdEditForm  extends \BaseModel
         $this->appParameters = $appParameters;
     }
 
-	private function setFormValuesArray($md_values) {
+    private function setFormValuesArray($md_values) 
+    {
 		$rs = array();
         foreach($md_values as $row) {
             $md_path = getMdPath($row->md_path);
@@ -40,7 +41,8 @@ class MdEditForm  extends \BaseModel
 		$this->form_values = $rs;
 	}
 	
-	private function sortMdLangs() {
+    private function sortMdLangs()
+    {
 		if (count($this->md_langs) > 1 && $this->md_langs[0] != $this->md_first_lang) {
 			$key = array_search($this->md_first_lang, $this->md_langs);
 			if ($key === FALSE) {
@@ -54,7 +56,8 @@ class MdEditForm  extends \BaseModel
 		}
 	}
 	
-	private function setCodeListArray($inspire=FALSE) {
+    private function setCodeListArray($inspire=FALSE)
+    {
 		$sql = "
 			SELECT codelist.el_id, label.label_text, codelist.codelist_id, codelist.codelist_domain, codelist.codelist_name
 			FROM (label INNER JOIN codelist ON label.label_join = codelist.codelist_id)
@@ -74,7 +77,8 @@ class MdEditForm  extends \BaseModel
 		}
 	}
 
-	private function setButtonLabelArray() {
+    private function setButtonLabelArray()
+    {
         $this->button_label = $this->db->query("SELECT label_text, label_join
                 FROM label
                 WHERE lang=? AND label.label_type=?
@@ -82,7 +86,8 @@ class MdEditForm  extends \BaseModel
             ",$this->appLang, 'BT')->fetchAll();
 	}
 
-	private function getComboCodeList($from_codelist, $md_value) {
+    private function getComboCodeList($from_codelist, $md_value)
+    {
 		$rs = '';
 		if ($from_codelist == '') {
             // SET ERROR2LOG
@@ -122,7 +127,8 @@ class MdEditForm  extends \BaseModel
 		return $rs;
 	}
 
-	private function getMdValue($is_label, $md_path, $value_lang) {
+    private function getMdValue($is_label, $md_path, $value_lang)
+    {
 		$rs = '';
 		if ($md_path == '' || $value_lang == '') {
             // SET ERROR2LOG
@@ -138,12 +144,14 @@ class MdEditForm  extends \BaseModel
 		return $rs;
 	}
 
-    public function getValuesUri($recno) {
+    public function getValuesUri($recno)
+    {
 		$sql = "SELECT md_path, md_value FROM edit_md_values WHERE recno=? AND lang='uri'";
         return $this->db->query($sql, $recno)->fetchPairs();
     }
     
-	private function getButtonExe($button) {
+    private function getButtonExe($button)
+    {
 		$rs = array();
 		$rs['text'] = '';
 		$rs['action'] = '';
@@ -156,7 +164,8 @@ class MdEditForm  extends \BaseModel
 		return $rs;
 	}
 
-	private function getIsData($md_path) {
+    private function getIsData($md_path)
+    {
 		$rs = FALSE;
 		$path = getMdPath($md_path);
 		$eval_label = '$rs=isset($this->form_values' . $path . ') ? TRUE : FALSE;';
@@ -164,7 +173,8 @@ class MdEditForm  extends \BaseModel
 		return $rs;
 	}
 
-	private function getMdStandardSchema($recno, $mds, $profil_id, $package_id, $md_id_start=-1) {
+    private function getMdStandardSchema($recno, $mds, $profil_id, $package_id, $md_id_start=-1)
+    {
 		if ($mds == 10) {
 			$mds = 0;
 		}
@@ -230,7 +240,8 @@ class MdEditForm  extends \BaseModel
 		return $this->db->query($sql)->fetchAll();;
 	}
     
-    private function isInspirePackage($mds, $profil) {
+    private function isInspirePackage($mds, $profil)
+    {
         $rs = FALSE;
         if ($mds != '' && $profil != '') {
             $sql = "SELECT is_inspire FROM profil_names WHERE md_standard=? AND profil_id=?";
@@ -241,7 +252,8 @@ class MdEditForm  extends \BaseModel
         return $rs;
     }
     
-    public function isProfil($mds, $profil_id) {
+    public function isProfil($mds, $profil_id)
+    {
         if ($this->db->query("SELECT profil_id FROM profil_names
             WHERE is_vis=1 AND md_standard=? AND profil_id=?", $mds, $profil_id)->fetch()
             == NULL) {
@@ -251,7 +263,8 @@ class MdEditForm  extends \BaseModel
         }
     }
     
-    public function getEditLiteForm($recordModel, $profil_id, $editLiteTemplate) {
+    public function getEditLiteForm($recordModel, $profil_id, $editLiteTemplate)
+    {
         if ($editLiteTemplate == '') {
             return '';
         }
@@ -275,7 +288,8 @@ class MdEditForm  extends \BaseModel
         return $cswClient->processTemplate($recordModel->pxml, $template, $params);
     }
 
-    public function getEditForm($mds, $recno, $md_langs, $profil, $package, $md_values) {
+    public function getEditForm($mds, $recno, $md_langs, $profil, $package, $md_values)
+    {
         $this->mds = $mds;
         if ($mds == 1 || $mds == 2) {
             $profil = -1;
@@ -307,15 +321,16 @@ class MdEditForm  extends \BaseModel
             }
             $this->md_id_data[$row->md_id] = $row;
         }
-        $this->form_standard_schema = $this->standard_schema_model[0][0];
-        $this->getRepeatFormData(isset($this->form_values[0][00]) ? $this->form_values[0][00] : []);
+        $this->form_standard_schema = $this->standard_schema_model[0]['00'];
+        $this->getRepeatFormData(isset($this->form_values[0]['00']) ? $this->form_values[0]['00'] : []);
         $this->getFormData($this->form_standard_schema);
         $rs = $this->form_data;
         //dump($rs); exit;
         return $rs;
     }
     
-    private function getFormData($standard_schema, $path='') {
+    private function getFormData($standard_schema, $path='')
+    {
         foreach ($standard_schema as $key_md_id => $row) {
             $end_div_rs = 0;
             $end_div_pack = 0;
@@ -426,7 +441,8 @@ class MdEditForm  extends \BaseModel
         return $end_div_rs;
     }
     
-	private function getFormValue($is_label, $form_code, $from_codelist, $el_id, $value_lang, $md_path) {
+    private function getFormValue($is_label, $form_code, $from_codelist, $el_id, $value_lang, $md_path)
+    {
 		$rs = $this->getMdValue($is_label, $md_path, $value_lang);
 		switch ($form_code) {
 			case 'D' :
@@ -444,11 +460,13 @@ class MdEditForm  extends \BaseModel
 		return $rs;
 	}
     
-	private function setMdLangsNew($md_langs) {
+    private function setMdLangsNew($md_langs)
+    {
 		$this->md_langs = getMdLangs($md_langs);
 	}
     
-	private function getRbId($path) {
+    private function getRbId($path)
+    {
         $rs = $path;
         $pom = explode('_', $path);
         $i = count($pom);
@@ -456,7 +474,8 @@ class MdEditForm  extends \BaseModel
 		return $rs;
 	}
     
-    private function getRepeatFormData($data, $path='') {
+    private function getRepeatFormData($data, $path='')
+    {
         foreach ($data as $key_md_id => $row) {
             if (is_numeric($key_md_id) === FALSE) {
                 continue;
@@ -469,11 +488,10 @@ class MdEditForm  extends \BaseModel
                     if (count($md_id_data) > 0) {
                         $path_new = getMdPath(substr($path, 0,  0-(strlen($key_sequence)+1)));
                         if ($md_id_data->md_left+1 == $md_id_data->md_right) {
-                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=1;";
+                            $eval_label = '$this->form_standard_schema' . $path_new . '["'. $key_sequence . '"]' . "=1;";
                         } else {
-                            $eval_label = '$this->form_standard_schema' . $path_new . '['. $key_sequence . ']' . "=" . '$this->standard_schema_model[0][00]' . getMdPath(substr($md_id_data->md_path, 5)) . ";";
+                            $eval_label = '$this->form_standard_schema' . $path_new . '["'. $key_sequence . '"]' . "=" . '$this->standard_schema_model[0]["00"]' . getMdPath(substr($md_id_data->md_path, 5)) . ";";
                         }
-                        //dump($eval_label);
                         eval ($eval_label);
                     }
                 }
@@ -485,7 +503,9 @@ class MdEditForm  extends \BaseModel
             $path = $this->str_lreplace($key_md_id.'_', '', $path);
         }
     }
-    function str_lreplace($search, $replace, $subject) {
+
+    private function str_lreplace($search, $replace, $subject)
+    {
         $pos = strrpos($subject, $search);
         if($pos !== FALSE) {
             $subject = substr($subject, 0, $pos);

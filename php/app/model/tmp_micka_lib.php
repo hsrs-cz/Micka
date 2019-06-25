@@ -180,6 +180,7 @@ function setRowZero($arr){
  * @param string $md_path hodnota z tabulky md_values.md_path
  * @return string
  */
+/*
 function getMdPath($md_path) {
 	$rs = '';
 	if (substr($md_path, strlen($md_path)-1) == '_') {
@@ -190,6 +191,19 @@ function getMdPath($md_path) {
 	$rs = '[' . $rs . ']';
 	return $rs;
 }
+*/
+function getMdPath($md_path, $delimiterIn='_') {
+    if (substr($md_path, strlen($md_path)-1) == $delimiterIn) {
+        $md_path = substr($md_path, 0, strlen($md_path)-1);
+    }
+    $path = explode('_', $md_path);
+    $rs = '';
+    foreach ($path as $key => $value) {
+        $rs .= $key % 2 ==0 ? '[' . $value . ']' : '["' . $value . '"]';
+    }
+    return $rs;
+}
+
 
 /**
  * Určení počtu jazyků

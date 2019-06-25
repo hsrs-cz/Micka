@@ -1038,7 +1038,7 @@ class RecordModel extends \BaseModel
                     if ($value == '') {
                         $data_error = 1;
                     }
-                    $eval_text_tmp .= '[' . $value . ']';
+                    $eval_text_tmp .= '["' . $value . '"]';
                 }
             }
             if ($data_error === 1) {
@@ -1056,15 +1056,16 @@ class RecordModel extends \BaseModel
             }
             $eval_text .= $eval_text_tmp;
         }
-        $eval_text .= getMdOtherLangs($this->recordMd->lang, 'xxx', '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['langs']");
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['uuid']='".rtrim($this->recordMd->uuid)."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['langs']='".(substr_count($this->recordMd->lang,'|')+1)."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['updated']='".$this->recordMd->create_date."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x1']='".$this->recordMd->x1."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x2']='".$this->recordMd->x2."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y1']='".$this->recordMd->y1."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
+        $eval_text .= getMdOtherLangs($this->recordMd->lang, 'xxx', '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['langs']");
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['uuid']='".rtrim($this->recordMd->uuid)."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['langs']='".(substr_count($this->recordMd->lang,'|')+1)."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['updated']='".$this->recordMd->create_date."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['x1']='".$this->recordMd->x1."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['x2']='".$this->recordMd->x2."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['y1']='".$this->recordMd->y1."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['y2']='".$this->recordMd->y2."';\n";
         //\Tracy\Debugger::log($eval_text, 'ERROR_MAKE_XML');
+        //echo '<xmp>'; print_r($eval_text); echo '</xmp>'; exit;
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
         return $xml->saveXML();
