@@ -1156,24 +1156,15 @@
     </xsl:if>
     
 	<xsl:for-each select="gfc:featureType">
-		<a name="{*/gfc:valueType/*}"/>
-			<h2><xsl:value-of select="*/gfc:valueType/*"/></h2>
-            <xsl:if test="*/gco:LocalName">
-                <div class="micka-row">
-                    <label><xsl:value-of select="$msg[@eng='Name']"/></label>
-                    <div class="c"><xsl:value-of select="*/gco:LocalName"/></div>
-                </div>
-            </xsl:if>
+		<a name="{*/gfc:typeName/*}"/>
+			<h2><xsl:value-of select="*/gfc:typeName/*"/></h2>
             <xsl:if test="*/gfc:definition">
                 <div class="micka-row">
-                    <label><xsl:value-of select="$msg[@eng='Definition']"/></label>
-                    <div class="c">
-                        <xsl:call-template name="multi">
-                            <xsl:with-param name="el" select="*/gfc:definition"/>
-                            <xsl:with-param name="lang" select="$lang"/>
-                            <xsl:with-param name="mdlang" select="*/gmd:language/gmd:LanguageCode/@codeListValue"/>
-                        </xsl:call-template>
-                    </div>
+                    <xsl:call-template name="multi">
+                        <xsl:with-param name="el" select="*/gfc:definition"/>
+                        <xsl:with-param name="lang" select="$lang"/>
+                        <xsl:with-param name="mdlang" select="*/gmd:language/gmd:LanguageCode/@codeListValue"/>
+                    </xsl:call-template>
                 </div>
             </xsl:if>
 
@@ -1209,7 +1200,7 @@
                                     </xsl:call-template>
                                 </td> 
                                 <td><xsl:value-of select="*/gfc:valueType"/></td>
-                                <td><xsl:value-of select="*/gfc:valueMeasurementUnit/*/gml32:identifier"/></td>
+                                <td><xsl:value-of select="*/gfc:valueMeasurementUnit/*/gml:identifier"/></td>
                                 <td><xsl:value-of select="*/gfc:code"/></td>
                             
                             <!-- domeny -->
