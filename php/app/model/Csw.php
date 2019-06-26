@@ -153,15 +153,15 @@ class Csw{
                 "NS" => 'json',
                 "httpHdr" => array(
                     "Content-Type: application/json\n"
-               ),
-                    "header" => '{
-                    "title":"[title]","subtitle":"[subtitle]",
-                    "matched": [matched],
-                    "returned": [returned],
-                    "next": [next],
-                    "records":[',
-                    "footer" => "]}",
-                    "template" => "json"
+                ),
+                "header" => '{
+                "title":"[title]","subtitle":"[subtitle]",
+                "matched": [matched],
+                "returned": [returned],
+                "next": [next],
+                "records":[',
+                "footer" => "]}",
+                "template" => "json"
             ),
             "sitemap" => array(
                 "NS" => "http://www.sitemaps.org/schemas/sitemap/0.9",
@@ -862,6 +862,7 @@ class Csw{
       while (($xml = $export->fetchXML()) != FALSE) {
           $this->xml->loadXML($xml);
           $output = $this->xp->transformToXML($this->xml);
+          //echo($output); die();
 
           if($this->params['OUTPUTSCHEMA']=='json'){
               eval($output);
