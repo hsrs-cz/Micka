@@ -55,8 +55,8 @@
 		<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName!=''">
 			$rec['imgURL'] = '<xsl:value-of disable-output-escaping="yes" select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName"/>';
 		</xsl:if>		
-        <xsl:if test="gmd:identificationInfo//gmd:westBoundLongitude">		
-            $rec['bbox'] = [<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:westBoundLongitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:southBoundLatitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:eastBoundLongitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:northBoundLatitude)"/>];
+        <xsl:if test="string-length(gmd:identificationInfo//gmd:EX_GeographicBoundingBox)!=0">
+            $rec['bbox'] = [<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:westBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:southBoundLatitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:eastBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:northBoundLatitude/*)"/>];
         </xsl:if>
 		$rec['contact'] = '<xsl:call-template name="multi">
 		    	<xsl:with-param name="el" select="gmd:contact/*/gmd:organisationName"/>

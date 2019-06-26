@@ -59,9 +59,9 @@
 	<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName!=''">
 		$rec['imgURL'] = '<xsl:value-of select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName"/>';
 	</xsl:if>
-	<xsl:if test="gmd:identificationInfo//gmd:westBoundLongitude">		
-		$rec['bbox'] = [<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:westBoundLongitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:southBoundLatitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:eastBoundLongitude)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:northBoundLatitude)"/>];
-	</xsl:if>
+    <xsl:if test="string-length(gmd:identificationInfo//gmd:EX_GeographicBoundingBox)!=0">
+        $rec['bbox'] = [<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:westBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:southBoundLatitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:eastBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:northBoundLatitude/*)"/>];
+    </xsl:if>
 	<xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact">
 		$c = array();
 		$c['organisationName'] = '<xsl:call-template name="multi">

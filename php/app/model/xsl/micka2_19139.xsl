@@ -488,7 +488,7 @@
 		    		</gmd:description>
 			    </xsl:for-each>
 			  
-				<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox">
+				<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox[string-length(westBoundLongitude)!=0]">
 					<gmd:geographicElement>
 						<gmd:EX_GeographicBoundingBox>
 							<gmd:westBoundLongitude>
