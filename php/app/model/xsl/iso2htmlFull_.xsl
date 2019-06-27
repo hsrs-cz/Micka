@@ -745,7 +745,7 @@
 				<label><xsl:value-of select="$msg[@eng='MDIdentifier']"/></label>
 				<div class="c" id="file-identifier"><xsl:value-of select="$fid"/></div>
 			</div>
-			<xsl:if test="gmd:parentIdentifier!=''">
+			<!--xsl:if test="gmd:parentIdentifier!=''">
 				<xsl:variable name="pilink" select="php:function('getMetadata', concat('identifier=', $apos, gmd:parentIdentifier/*, $apos))"/>
 				<div class="micka-row">
 					<label><xsl:value-of select="$msg[@eng='Parent Identifier']"/></label>
@@ -753,7 +753,7 @@
 						<xsl:value-of select="gmd:parentIdentifier"/>
 					</div>
 				</div>
-			</xsl:if>
+			</xsl:if-->
 			 <div class="micka-row">
 				<label><xsl:value-of select="$msg[@eng='Metadata Contact']"/></label>
 				<div class="c">
