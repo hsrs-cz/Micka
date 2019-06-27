@@ -51,7 +51,7 @@ function getMetadataById($id, $esn='full'){
 	$params['ELEMENTSETNAME'] = $esn;
 	$params['buffered'] = true;
 	$result = $csw->run($params);
-	//file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
+	//file_put_contents(__DIR__ . "/../../log/getMetadataById".uniqid().".txt", print_r($params, true).$result);
 	$dom = new DOMDocument();
 	$dom->loadXML($result);
 	return $dom;
@@ -74,7 +74,7 @@ function getData($s)
     }
     $result = curl_exec ($ch);
     curl_close ($ch);
-    //file_put_contents(__DIR__ . "/../../log/csw-getData.xml", $s.$result);
+    //file_put_contents(__DIR__ . "/../../log/csw-getData".uniqid().".xml", $s.$result);
     if($result) $dom->loadXML($result);
     return $dom;
 }

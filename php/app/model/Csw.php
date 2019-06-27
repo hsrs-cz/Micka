@@ -1017,7 +1017,7 @@ class Csw{
         $this->params['root'] = "csw:GetRecordByIdResponse";
         $this->params['elementSet'] = $this->getParamL('ELEMENTSETNAME');
         $this->params['user'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
-        $this->params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
+        $this->params['USER'] = $this->params['user']; //FIXME
         $this->params['REWRITE'] = REWRITE_MODE;
         $this->params['THEME'] = MICKA_THEME;
         $this->params['lang'] = $this->getParamL('LANGUAGE');
@@ -1046,6 +1046,16 @@ class Csw{
         return $output;
     }
 
+    
+    // returns title from last XML
+    function getTitle(){
+        $this->xsl->load(__DIR__ . "/xsl/out/json-brief.xsl");
+        $this->xp->importStyleSheet($this->xsl);
+        $output = $this->xp->transformToXML($this->xml);
+        return $output['title'];
+    }
+    
+    
   function harvest($io = true){
     //var_dump($this->params);
     include(PHPPRG_DIR.'/Harvest.php');
