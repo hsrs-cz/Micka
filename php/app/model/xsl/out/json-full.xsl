@@ -56,10 +56,10 @@
             <xsl:if test="count(@*) &gt; 0 and (count(child::*) &gt; 0 or text())">, </xsl:if>
             <xsl:apply-templates select="./*" mode="detect" />
             <xsl:if test="count(child::*) = 0 and text() and not(@*)">
-                <xsl:text>'</xsl:text><xsl:value-of select="name()"/>' => '<xsl:value-of select="text()"/><xsl:text>"</xsl:text>
+                <xsl:text>'</xsl:text><xsl:value-of select="name()"/>' => '<xsl:value-of select="php:function('addslashes', string(text()))"/><xsl:text>"</xsl:text>
             </xsl:if>
             <xsl:if test="count(child::*) = 0 and text() and @*">
-                <xsl:text>'text' => '</xsl:text><xsl:value-of select="text()"/><xsl:text>'</xsl:text>
+                <xsl:text>'text' => '</xsl:text><xsl:value-of select="php:function('addslashes', string(text()))"/><xsl:text>'</xsl:text>
             </xsl:if>
         <xsl:text>]</xsl:text>
         <xsl:if test="position() &lt; last()">, </xsl:if>
