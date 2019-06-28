@@ -55,10 +55,13 @@ class ArrayMdXml2MdValues extends \BaseModel
 	
 	private function setReport($recno, $mode, $text) {
         $text = str_replace(
-            array("['", "[0]", "']"),
+            array("['", "[00]", "']"),
             array("/","",""),
             $text 
         );
+        if (strlen($recno) === 2 && $recno{0} === '0') {
+            $recno = $recno{1};
+        }
         if ($recno > -1) {
             switch ($mode) {
                 case 'info':
@@ -117,7 +120,7 @@ class ArrayMdXml2MdValues extends \BaseModel
 			}
             $md_value = str_replace('\"', '"', $md_value);
 			$record['md_value'] = $md_value;
-			$record['md_path'] = '0_' . $md_path;
+			$record['md_path'] = $md_path;
 			if ($md_lang == 'uri') {
 				$record['lang'] = $md_lang;
 			} elseif ($multi_lang == 0) {
@@ -136,17 +139,21 @@ class ArrayMdXml2MdValues extends \BaseModel
 	}
     
 	private function setLangMd($recno) {
+        $idx = strlen($recno) === 1 ? "0$recno" : $recno;
+        if (strlen($recno) === 2 && $recno{0} === '0') {
+            $recno = $recno{1};
+        }
         switch ($this->md_standard) {
             case 0:
                 $this->md[$recno]['lang'] = 
-                    isset($this->arrayXml['MD_Metadata'][$recno]['language'][0]['LanguageCode'][0]['@'])
-                    ? $this->arrayXml['MD_Metadata'][$recno]['language'][0]['LanguageCode'][0]['@']
+                    isset($this->arrayXml['MD_Metadata'][$idx]['language']['00']['LanguageCode']['00']['@'])
+                    ? $this->arrayXml['MD_Metadata'][$idx]['language']['00']['LanguageCode']['00']['@']
                     : '';
                 break;
             case 1:
                 $this->md[$recno]['lang'] = 
-                    isset($this->arrayXml['metadata'][$recno]['language'][0]['@'])
-                    ? $this->arrayXml['metadata'][$recno]['language'][0]['@']
+                    isset($this->arrayXml['metadata'][$idx]['language']['00']['@'])
+                    ? $this->arrayXml['metadata'][$idx]['language']['00']['@']
                     : '';
                 break;
             default:
@@ -166,17 +173,21 @@ class ArrayMdXml2MdValues extends \BaseModel
 	}
 
 	private function setLangsMd($recno, $iso_lang) {
+        $idx = strlen($recno) === 1 ? "0$recno" : $recno;
+        if (strlen($recno) === 2 && $recno{0} === '0') {
+            $recno = $recno{1};
+        }
 		$lang_change = FALSE;
 		$md_lang = array();
 		switch ($iso_lang) {
 		case 'MD':
-			if(isset($this->arrayXml['MD_Metadata'][$recno]['locale']) && is_array($this->arrayXml['MD_Metadata'][$recno]['locale'])) {
-				foreach ($this->arrayXml['MD_Metadata'][$recno]['locale'] as $value) {
-                    $l = $value['PT_Locale'][0]['languageCode'][0]['LanguageCode'][0]['@'];
+			if(isset($this->arrayXml['MD_Metadata'][$idx]['locale']) && is_array($this->arrayXml['MD_Metadata'][$idx]['locale'])) {
+				foreach ($this->arrayXml['MD_Metadata'][$idx]['locale'] as $value) {
+                    $l = $value['PT_Locale']['00']['languageCode']['00']['LanguageCode']['00']['@'];
                     if ($lang_change && $l != '') {
                         // změna výchozího jazyka
                         $this->md[$recno]['lang'] = $l;
-                        $this->arrayXml['MD_Metadata'][$recno]['language'][0]['LanguageCode'][0]['@'] = $l;
+                        $this->arrayXml['MD_Metadata'][$idx]['language']['00']['LanguageCode']['00']['@'] = $l;
                     }
                     switch ($l) {
                         case 'en':
@@ -191,15 +202,15 @@ class ArrayMdXml2MdValues extends \BaseModel
                         $md_lang[] = $l;
                     }
 				}
-                unset($this->arrayXml['MD_Metadata'][$recno]['locale']);
-			} elseif(isset($this->arrayXml['MD_Metadata'][$recno]['identificationInfo'][0]['MD_DataIdentification'][0]['citation'][0]['CI_Citation'][0]['title'][0])
-				&& is_array($this->arrayXml['MD_Metadata'][$recno]['identificationInfo'][0]['MD_DataIdentification'][0]['citation'][0]['CI_Citation'][0]['title'][0])) {
-				foreach ($this->arrayXml['MD_Metadata'][$recno]['identificationInfo'][0]['MD_DataIdentification'][0]['citation'][0]['CI_Citation'][0]['title'][0] as $key=>$value) {
+                unset($this->arrayXml['MD_Metadata'][$idx]['locale']);
+			} elseif(isset($this->arrayXml['MD_Metadata'][$idx]['identificationInfo']['00']['MD_DataIdentification']['00']['citation']['00']['CI_Citation']['00']['title']['00'])
+				&& is_array($this->arrayXml['MD_Metadata'][$idx]['identificationInfo']['00']['MD_DataIdentification']['00']['citation']['00']['CI_Citation']['00']['title']['00'])) {
+				foreach ($this->arrayXml['MD_Metadata'][$idx]['identificationInfo']['00']['MD_DataIdentification']['00']['citation']['00']['CI_Citation']['00']['title']['00'] as $key=>$value) {
 					if (substr($key,0,1) == '@') {
 						$l = substr($key,1);
 						if ($lang_change && $l != '') {
 							$this->md[$recno]['lang'] = $l;
-							$this->arrayXml['MD_Metadata'][$recno]['language'][0]['LanguageCode'][0]['@'] = $l;
+							$this->arrayXml['MD_Metadata'][$idx]['language']['00']['LanguageCode']['00']['@'] = $l;
 						}
 						switch ($l) {
 							case '':
@@ -227,12 +238,12 @@ class ArrayMdXml2MdValues extends \BaseModel
 			}
 		case 'MS':
 		case 'MC':
-			if(isset($this->arrayXml['MD_Metadata'][$recno]['locale']) && is_array($this->arrayXml['MD_Metadata'][$recno]['locale'])) {
-				foreach ($this->arrayXml['MD_Metadata'][$recno]['locale'] as $value) {
-                    $l = $value['PT_Locale'][0]['languageCode'][0]['LanguageCode'][0]['@'];
+			if(isset($this->arrayXml['MD_Metadata'][$idx]['locale']) && is_array($this->arrayXml['MD_Metadata'][$idx]['locale'])) {
+				foreach ($this->arrayXml['MD_Metadata'][$idx]['locale'] as $value) {
+                    $l = $value['PT_Locale']['00']['languageCode']['00']['LanguageCode']['00']['@'];
                     if ($lang_change && $l != '') {
                         $this->md[$recno]['lang'] = $l;
-                        $this->arrayXml['MD_Metadata'][$recno]['language'][0]['LanguageCode'][0]['@'] = $l;
+                        $this->arrayXml['MD_Metadata'][$idx]['language']['00']['LanguageCode']['00']['@'] = $l;
                     }
                     switch ($l) {
                         case 'en':
@@ -247,15 +258,15 @@ class ArrayMdXml2MdValues extends \BaseModel
                         $md_lang[] = $l;
                     }
 				}
-                unset($this->arrayXml['MD_Metadata'][$recno]['locale']);
-			} elseif(isset($this->arrayXml['MD_Metadata'][$recno]['identificationInfo'][0]['SV_ServiceIdentification'][0]['citation'][0]['CI_Citation'][0]['title'][0])
-				&& is_array($this->arrayXml['MD_Metadata'][$recno]['identificationInfo'][0]['SV_ServiceIdentification'][0]['citation'][0]['CI_Citation'][0]['title'][0])) {
-				foreach ($this->arrayXml['MD_Metadata'][$recno]['identificationInfo'][0]['SV_ServiceIdentification'][0]['citation'][0]['CI_Citation'][0]['title'][0] as $key=>$value) {
+                unset($this->arrayXml['MD_Metadata'][$idx]['locale']);
+			} elseif(isset($this->arrayXml['MD_Metadata'][$idx]['identificationInfo']['00']['SV_ServiceIdentification']['00']['citation']['00']['CI_Citation']['00']['title']['00'])
+				&& is_array($this->arrayXml['MD_Metadata'][$idx]['identificationInfo']['00']['SV_ServiceIdentification']['00']['citation']['00']['CI_Citation']['00']['title']['00'])) {
+				foreach ($this->arrayXml['MD_Metadata'][$idx]['identificationInfo']['00']['SV_ServiceIdentification']['00']['citation']['00']['CI_Citation']['00']['title']['00'] as $key=>$value) {
 					if (substr($key,0,1) == '@') {
 						$l = substr($key,1);
 						if ($lang_change && $l != '') {
 							$this->md[$recno]['lang'] = $l;
-							$this->arrayXml['MD_Metadata'][$recno]['language'][0]['LanguageCode'][0]['@'] = $l;
+							$this->arrayXml['MD_Metadata'][$idx]['language']['00']['LanguageCode']['00']['@'] = $l;
 						}
 						switch ($l) {
 							case '':
@@ -299,6 +310,10 @@ class ArrayMdXml2MdValues extends \BaseModel
         $level++;
         $el_pom = '';
         foreach ($md as $key => $item) {
+            $key2 = strlen($key) === 1 ? "0$key" : $key;
+            if (strlen($key) === 2 && $key{0} === '0') {
+                $key = $key{1};
+            }
             if ($level == 2) {
                 $recno_in = $key;
             }
@@ -308,10 +323,12 @@ class ArrayMdXml2MdValues extends \BaseModel
                 $path_md_pom = $path_md;
             }
             if (is_array($item)) {
-                if ($level != 2) {
+                if ($level === 2) {
+                    $path_md .= "00_";
+                }  else {
                     if(is_numeric($key)) {
                         $elements .= "[" . $key . "]";
-                        $path_md .= $key . "_";
+                        $path_md .= $key2 . "_";
                     } else {
                         $elements .= "['" . $key . "']";
                         $path_el .= "['" . $key . "']";
@@ -327,7 +344,7 @@ class ArrayMdXml2MdValues extends \BaseModel
             } else {
                 if(is_numeric($key)) {
                     $elements .= "[" . $key . "]";
-                    $path_md .= $key . "_";
+                    $path_md .= $key2 . "_";
                 } else {
                     if ($key{0} == '@') { // lang
                         if (strlen($key) > 1) {
@@ -337,7 +354,7 @@ class ArrayMdXml2MdValues extends \BaseModel
                         $elements .= "['" . $key . "']";
                         $path_el .= "['" . $key . "']";
                         $pom = $this->getElementsData($path_el);
-                        $path_md .= $pom['md_id'] . "_0_";
+                        $path_md .= $pom['md_id'] . "_00_";
                     }
                 }
                 if(substr_count($elements,"']['") > 1) {
@@ -376,67 +393,81 @@ class ArrayMdXml2MdValues extends \BaseModel
     
 	private function setMd() {
 		if (array_key_exists('MD_Metadata', $this->arrayXml)) {
-			foreach ($this->arrayXml['MD_Metadata'] as $x=>$md) {
-				$this->md[$x]['iso'] = isset($md['identificationInfo'][0]['SV_ServiceIdentification']) ? 'MS' : 'MD';
-				if ($this->md[$x]['iso'] == 'MS' 
-                    && isset($this->arrayXml['MD_Metadata'][$x]['hierarchyLevelName'][0]['@'])
-                    && $this->arrayXml['MD_Metadata'][$x]['hierarchyLevelName'][0]['@'] == 'MapContext') {
+			foreach ($this->arrayXml['MD_Metadata'] as $idx=>$md) {
+                $recno = $idx;
+                if (strlen($recno) === 2 && $recno{0} === '0') {
+                    $recno = $recno{1};
+                }
+				$this->md[$recno]['iso'] = isset($md['identificationInfo']['00']['SV_ServiceIdentification']) ? 'MS' : 'MD';
+				if ($this->md[$recno]['iso'] == 'MS' 
+                    && isset($this->arrayXml['MD_Metadata'][$idx]['hierarchyLevelName']['00']['@'])
+                    && $this->arrayXml['MD_Metadata'][$idx]['hierarchyLevelName']['00']['@'] == 'MapContext') {
 					//   /MD_Metadata/hierarchyLevelName
-					$this->md[$x]['iso'] = 'MC';
+					$this->md[$recno]['iso'] = 'MC';
 				}
 				// uuid
-				$this->md[$x]['uuid'] = '';
-				if (isset($this->arrayXml['MD_Metadata'][$x]['fileIdentifier'][0]['@']) && $this->arrayXml['MD_Metadata'][$x]['fileIdentifier'][0]['@'] != '') {
-					$this->md[$x]['uuid'] = $this->arrayXml['MD_Metadata'][$x]['fileIdentifier'][0]['@'];
+				$this->md[$recno]['uuid'] = '';
+				if (isset($this->arrayXml['MD_Metadata'][$idx]['fileIdentifier']['00']['@']) && $this->arrayXml['MD_Metadata'][$idx]['fileIdentifier']['00']['@'] != '') {
+					$this->md[$recno]['uuid'] = $this->arrayXml['MD_Metadata'][$idx]['fileIdentifier']['00']['@'];
 				}
-				$this->setLangMd($x, $this->md[$x]['iso']);
-				$this->setLangsMd($x, $this->md[$x]['iso']);
+				$this->setLangMd($recno, $this->md[$recno]['iso']);
+				$this->setLangsMd($recno, $this->md[$recno]['iso']);
 			}
 		}
 		if (array_key_exists('metadata', $this->arrayXml)) {
-			foreach ($this->arrayXml['metadata'] as $x=>$md) {
-				$this->md[$x]['iso'] = 'DC';
+			foreach ($this->arrayXml['metadata'] as $idx=>$md) {
+                $recno = $idx;
+                if (strlen($recno) === 2 && $recno{0} === '0') {
+                    $recno = $recno{1};
+                }
+				$this->md[$recno]['iso'] = 'DC';
 				// uuid
-				$this->md[$x]['uuid'] = '';
-				if (isset($this->arrayXml['metadata'][$x]['identifier']) && is_array($this->arrayXml['metadata'][$x]['identifier'])) {
-					$z = -1;
-					for ($y = 0; $y < count($this->arrayXml['metadata'][$x]['identifier']); $y++) {
-						if (isset($this->arrayXml['metadata'][$x]['identifier'][$y]['@']) && $this->arrayXml['metadata'][$x]['identifier'][$y]['@'] != '') {
-							$pom = $this->getDcUuid($this->arrayXml['metadata'][$x]['identifier'][$y]['@']);
+				$this->md[$recno]['uuid'] = '';
+				if (isset($this->arrayXml['metadata'][$idx]['identifier']) && is_array($this->arrayXml['metadata'][$idx]['identifier'])) {
+					$z = '';
+					for ($y = 0; $y < count($this->arrayXml['metadata'][$idx]['identifier']); $y++) {
+                        $y2 = strlen($y) === 1 ? "0$y" : $y;
+						if (isset($this->arrayXml['metadata'][$idx]['identifier'][$y2]['@']) && $this->arrayXml['metadata'][$idx]['identifier'][$y2]['@'] != '') {
+							$pom = $this->getDcUuid($this->arrayXml['metadata'][$idx]['identifier'][$y2]['@']);
 							if ($pom != -1) {
-								$this->md[$x]['uuid'] = $pom;
-								$z = $y;
+								$this->md[$recno]['uuid'] = $pom;
+								$z = $y2;
 								break;
 							}
 						}
 					}
-					if ($z > -1) {
+					if ($z != '') {
 						//odstarnění uuid z pole
-						array_splice($this->arrayXml['metadata'][$x]['identifier'],$z,1);
+						array_splice($this->arrayXml['metadata'][$idx]['identifier'], $z ,1);
 					}
 				}
-				$this->setLangMd($x, $this->md[$x]['iso']);
-				$this->setLangsMd($x, $this->md[$x]['iso']);
+				$this->setLangMd($recno, $this->md[$recno]['iso']);
+				$this->setLangsMd($recno, $this->md[$recno]['iso']);
 			}
 		}
 		if (array_key_exists('FC_FeatureCatalogue', $this->arrayXml)) {
-			foreach ($this->arrayXml['FC_FeatureCatalogue'] as $x=>$md) {
-				$this->md[$x]['iso'] = 'FC';
+			foreach ($this->arrayXml['FC_FeatureCatalogue'] as $idx=>$md) {
+                $recno = $idx;
+                if (strlen($recno) === 2 && $recno{0} === '0') {
+                    $recno = $recno{1};
+                }
+				$this->md[$recno]['iso'] = 'FC';
 				// uuid
-				$this->md[$x]['uuid'] = '';
-				$z = -1;
-				for ($y = 0; $y < count($this->arrayXml['FC_FeatureCatalogue'][$x]['id']); $y++) {
-					if (isset($this->arrayXml['FC_FeatureCatalogue'][$x]['id'][$y]['@']) && $this->arrayXml['FC_FeatureCatalogue'][$x]['id'][$y]['@'] != '') {
-						$this->md[$x]['uuid'] = $this->arrayXml['FC_FeatureCatalogue'][$x]['id'][$y]['@'];
+				$this->md[$recno]['uuid'] = '';
+				$z = '';
+				for ($y = 0; $y < count($this->arrayXml['FC_FeatureCatalogue'][$idx]['id']); $y++) {
+                    $y2 = strlen($y) === 1 ? "0$y" : $y;
+                    if (isset($this->arrayXml['FC_FeatureCatalogue'][$idx]['id'][$y2]['@']) && $this->arrayXml['FC_FeatureCatalogue'][$idx]['id'][$y2]['@'] != '') {
+						$this->md[$recno]['uuid'] = $this->arrayXml['FC_FeatureCatalogue'][$idx]['id'][$y2]['@'];
 						$z = $y;
 					}
 				}
-				if ($z > -1) {
+				if ($z != '') {
 					//odstarnění uuid z pole
-					unset($this->arrayXml['FC_FeatureCatalogue'][$x]['id']);
+					unset($this->arrayXml['FC_FeatureCatalogue'][$idx]['id']);
 				}
-				$this->setLangMd($x, $this->md[$x]['iso']);
-				$this->setLangsMd($x, $this->md[$x]['iso']);
+				$this->setLangMd($recno, $this->md[$recno]['iso']);
+				$this->setLangsMd($recno, $this->md[$recno]['iso']);
 			}
 		}
 	}
