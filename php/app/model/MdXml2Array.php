@@ -218,9 +218,9 @@ class MdXml2Array
         else {
             $dom = $xml;
         }
-            //--- ladeni ---
-            //header('Content-type: application/xml'); echo $dom->saveXML(); exit;
-            // ---
+        //--- ladeni ---
+        //header('Content-type: application/xml'); echo $dom->saveXML(); exit;
+        // ---
         //$this->xml = $xml;
         //--- vyreseni locales ---
         $locales = $dom->getElementsByTagNameNS("http://www.isotc211.org/2005/gmd", "PT_Locale");
@@ -307,7 +307,7 @@ class MdXml2Array
             $data = iconv('UTF-8', MICKA_CHARSET . '//TRANSLIT', $data);
         }
         */
-        //echo "<pre>".$data; //exit;
+        //echo "<pre>".$data; exit;
         eval($data);
         // odstraneni Locale a dateTime
         for($i=0; $i<count($md['MD_Metadata']); $i++){
@@ -628,40 +628,6 @@ class MdXml2Array
         $params['url'] = $url;
         return $this->importXML($s, $type, $langs, $lang, $params, $updateType);
 
-
-
-        /*
-        if(!isset($md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'])) {
-            $md['MD_Metadata'][0]["language"][0]["LanguageCode"][0]['@'] = $lang;
-        }
-        $url1 = isset($md["MD_Metadata"][0]["distributionInfo"][0]["MD_Distribution"][0]["transferOptions"][0]["MD_DigitalTransferOptions"][0]["onLine"][0]["CI_OnlineResource"][0]["linkage"][0]["@"])
-                ? $md["MD_Metadata"][0]["distributionInfo"][0]["MD_Distribution"][0]["transferOptions"][0]["MD_DigitalTransferOptions"][0]["onLine"][0]["CI_OnlineResource"][0]["linkage"][0]["@"]
-                : '';
-        //var_dump($md); exit;
-        // --- vyhledani duplicitniho zaznamu ---
-        if($updateType == "all"){
-            require PHPPRG_DIR . '/MdExport.php';
-            $export = new MdExport($_SESSION['u'], 1, 10, null); 
-            $ddata = $export->getdata(array(
-                "@linkage = '".$url1."'",
-                "And",
-                "@type = 'service'"
-                    
-            ));
-            // nalezen záznam
-            if(count($ddata["data"]) > 0){
-                if(count($ddata["data"]) > 1){ 
-                    echo 'More records found with this URL.';
-                    foreach ($ddata["data"] as $row) echo "<br>". $row['uuid'].": ". $row['title'];
-                    echo '<br>The record will be added as new.';
-                }
-                else{
-                    echo "found record: <b>".$ddata["data"][0]['uuid']."</b> ".$ddata["data"][0]['title'] ;
-                    $md['MD_Metadata'][0]["fileIdentifier"][0]['@'] = $ddata["data"][0]['uuid'];
-                }
-            }
-        }
-            return $md;*/
     } // konec funkce importService
 
     function importXML($xmlString, $type, $langs, $lang_main, $params=array(), $updateType="", $md_rec="", $fc="")

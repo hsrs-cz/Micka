@@ -65,7 +65,7 @@ function testConnection($url){
     else if(strpos($s, 'WMT_MS_Capabilities')!==false) $result = 'WMS-1.1.0';
     else if(strpos($s, 'http://www.opengis.net/wfs/2.0')!==false) $result = 'WFS-2.0.0';
     else if(strpos($s, 'WFS_Capabilities')!==false) $result = 'WFS-1.0.0';
-    else if(strpos($s. 'feed')!==false && strpos($s, "http://inspire.ec.europa.eu/schemas/inspire_dls/1.0")!==false) $result = 'download-ATOM';
+    else if(strpos($s, 'feed')!==false && strpos($s, "http://inspire.ec.europa.eu/schemas/inspire_dls/1.0")!==false) $result = 'download-ATOM';
     else if(strpos($s, "SourceCRS>")!==false) $result = 'transformation - WCTS';
     else if(strpos($s, '"http://www.opengis.net/cat/csw/2.0.2"')!==false) $result = 'CSW-2.0.2';
     else if(strpos($s, "MD_Metadata>")!==false) $result = 'ISO 19139 metadata';

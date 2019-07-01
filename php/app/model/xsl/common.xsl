@@ -57,13 +57,11 @@
                         <xsl:for-each select="contactInfo/*/address/CI_Address">
                             <gmd:address>
                                 <gmd:CI_Address>
-
-                                        <xsl:call-template name="txt">
-                                            <xsl:with-param name="s" select="."/>
-                                            <xsl:with-param name="name" select="'deliveryPoint'"/>                      
-                                            <xsl:with-param name="lang" select="$mdLang"/>                      
-                                        </xsl:call-template> 
-
+                                    <xsl:call-template name="txt">
+                                        <xsl:with-param name="s" select="."/>
+                                        <xsl:with-param name="name" select="'deliveryPoint'"/>                      
+                                        <xsl:with-param name="lang" select="$mdLang"/>                      
+                                    </xsl:call-template> 
                                     <xsl:for-each select="city">
                                         <gmd:city>
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
@@ -101,6 +99,12 @@
                                 </gmd:CI_OnlineResource>
                             </gmd:onlineResource>
                         </xsl:for-each>
+                        <xsl:call-template name="txt">
+                            <xsl:with-param name="s" select="contactInfo/*"/>
+                            <xsl:with-param name="name" select="'hoursOfService'"/>                      
+                            <xsl:with-param name="lang" select="$mdLang"/>                      
+                        </xsl:call-template> 
+
                     </gmd:CI_Contact>
                 </gmd:contactInfo>
             </xsl:if>

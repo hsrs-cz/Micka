@@ -40,7 +40,7 @@
   			</xsl:when>		
   			<xsl:otherwise>
   	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$el/*"/>
+  	    			<xsl:with-param name="str" select="normalize-space($el/*)"/>
       			</xsl:call-template>
       		</xsl:otherwise>
   		</xsl:choose>		

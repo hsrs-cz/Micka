@@ -18,7 +18,7 @@
 <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="no"/>
 <xsl:variable name="cl" select="document('../../../config/codelists.xml')/map" />   
 <xsl:variable name="mdlang" select="//gmd:language/*/@codeListValue"/>
-
+    
 	<!--xsl:template match="/">
 		<xsl:apply-templates select="./*"/>
   	</xsl:template-->
@@ -118,6 +118,7 @@
 							<xsl:variable name="kw" select="*"/>
 							<gmd:keyword>
 								<gmx:Anchor xlink:href="{$cl/inspireKeywords/value[*=$kw]/@uri}"><xsl:value-of select="$kw"/></gmx:Anchor>
+                                <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
 							</gmd:keyword>
 						</xsl:otherwise>
 					</xsl:choose>
@@ -145,6 +146,7 @@
 							<xsl:variable name="kw" select="normalize-space(*)"/>
 							<gmd:keyword>
 								<gmx:Anchor xlink:href="{$cl/cgsThemes/value[@name=$kw]/@uri}"><xsl:value-of select="$kw"/></gmx:Anchor>
+                                <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
 							</gmd:keyword>
 						</xsl:otherwise>
 					</xsl:choose>
