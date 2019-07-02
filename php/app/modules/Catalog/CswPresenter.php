@@ -317,78 +317,84 @@ class CswPresenter extends \BasePresenter
     /** @resource Catalog:Guest */
 	public function renderOpensearch()
 	{
-        $csw = new \Csw();
+        $csw = new \Micka\Csw();
+        $get = $this->context->getByType('Nette\Http\Request')->getQuery();
 
         // description dokument
-        if(!$_GET['q'] && !$_GET['bbox'] && !$_GET['id']){
+        if (!$get['q'] && !$get['bbox'] && !$get['id']) {
             $port = ($_SERVER['SERVER_PORT'] == 80) ? '': ':'.$_SERVER['SERVER_PORT'];
-            $path = "http://".$_SERVER['SERVER_NAME'].$port.dirname($_SERVER['SCRIPT_NAME'])."/";
+            $path = "http://".$_SERVER['SERVER_NAME'] . $port . dirname($_SERVER['SCRIPT_NAME']) . "/";
             header("Content-type: application/xml");
-            $lang = isset($_GET['language']) ? htmlspecialchars($_GET['language']) : "";
-            if($lang!='cze') $lang = 'eng';
-            $csw->xml->load(dirname(__FILE__)."/../cfg/cswConfig-$lang.xml");
-            $csw->xsl->load(dirname(__FILE__)."/../include/xsl/openSearch.xsl");
+            $lang = isset($get['language']) ? $get['language'] : "eng";
+            if ($lang != 'cze') {
+                $lang = 'eng';
+            }
+            $csw->xml->load(dirname(__FILE__)."/../../config/cswConfig-$lang.xml");
+            $csw->xsl->load(dirname(__FILE__)."/../../model/xsl/openSearch.xsl");
             $csw->xp->importStyleSheet($csw->xsl);
             $csw->xp->setParameter('', 'path', $path);
             echo $csw->xp->transformToXML($csw->xml);
-            exit;
+            $this->terminate();
         }
 
-        $params['LANGUAGE'] = htmlspecialchars($_GET['language']); 
-        $params['q'] = htmlspecialchars($_GET['q']);
-        $params['DEBUG'] = htmlspecialchars($_GET['debug']);
-        $params['STARTPOSITION'] = htmlspecialchars($_GET['start']);
-        $params['FORMAT'] = trim(htmlspecialchars($_GET['format']));
+        $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : 'eng'; 
+        $params['q'] = isset($get['q']) ? $_GET['q'] : '' ;
+        $params['DEBUG'] = isset($get['debug']) ? $_GET['debug'] : '';
+        $params['STARTPOSITION'] = isset($get['start']) ? $_GET['start'] : '';
+        $params['FORMAT'] = isset($get['format']) ? trim($_GET['format']) : '';
 
-        if($params['q']){
-            $params['q'] = preg_replace('/\s+/', ' ',trim($params['q']));
+        if($params['q'] != '') {
+            $params['q'] = preg_replace('/\s+/', ' ', trim($params['q']));
             //$tokens = explode(" ", $params['q']);
-            if(DB_DRIVER=='oracle'){ //TODO doladit
-                //$tokens = implode("* & *", $tokens);
-                $params['CONSTRAINT'] .= "anytext like '".$params['q']."*'";
-            }
-            else{
-                $tokens = explode(" ", $params['q']);
-                foreach($tokens as $token){
-                    if($params['CONSTRAINT']!='') $params['CONSTRAINT'] .= " AND "; 
-                    $params['CONSTRAINT'] .= "anytext like '*".$token."*'";
+            $tokens = explode(" ", $params['q']);
+            foreach($tokens as $token){
+                if (isset($params['CONSTRAINT']) && $params['CONSTRAINT'] != '') {
+                    $params['CONSTRAINT'] .= " AND ";
+                } else {
+                    $params['CONSTRAINT'] = '';
                 }
+                $params['CONSTRAINT'] .= "anytext like '*" . $token . "*'";
             }
         }
-        if($_GET['id']) $params['CONSTRAINT'] = "identifier = '".htmlspecialchars($_GET['id'])."'";
-        if($_GET['bbox']){
-            if($params['CONSTRAINT']) $params['CONSTRAINT'] .= " AND ";
-            $box = str_replace(","," ",htmlspecialchars($_GET['bbox']));
-            $params['CONSTRAINT'] .= "_BBOX_='".$box."'"; 
+        if (isset($get['id']) && $get['id']) {
+            $params['CONSTRAINT'] = "identifier = '" . $get['id'] . "'";
+        }
+        if (isset($get['bbox']) && $get['bbox']) {
+            if (isset($params['CONSTRAINT']) && $params['CONSTRAINT'] != '') {
+                $params['CONSTRAINT'] .= " AND ";
+            } else {
+                $params['CONSTRAINT'] = '';
+            }
+            $box = str_replace(",", " ", $get['bbox']);
+            $params['CONSTRAINT'] .= "_BBOX_='" . $box . "'"; 
         }
         /*if($params['LANG']){
             if($params['CONSTRAINT']) $params['CONSTRAINT'] .= " AND ";
           $params['CONSTRAINT'] .= "_LANGUAGE_='".$params['LANG']."'";  
         }*/
-        $params['STARTPOSITION'] = htmlspecialchars($_GET['start']);
-        if(!$params['STARTPOSITION'])$params['STARTPOSITION']=1;
+        $params['STARTPOSITION'] = isset($get['start']) && $get['start'] != '' ? $get['start'] : 1;
         $csw->headers = array();
-        switch ($params['FORMAT']){
+        switch ($params['FORMAT']) {
             case 'rss': 
                 $csw->headers[] = "Content-type: application/rss+xml";
-                $params['OUTPUTSCHEMA'] = $csw->schemas['rss'];
+                $params['OUTPUTSCHEMA'] = $csw->sch['rss'];
                 break; 
             case 'atom': 
                 $csw->headers[] = "Content-type: application/xml";
-                $params['OUTPUTSCHEMA'] = $csw->schemas['atom'];
+                $params['OUTPUTSCHEMA'] = $csw->sch['atom'];
                 break; 
             case 'kml': 
                 $csw->headers[] = "Content-Type: application/vnd.google-earth.kml+xml\n";
                 $csw->headers[] = "Content-Disposition: filename=micka-open.kml";
-                $params['OUTPUTSCHEMA'] = $csw->schemas['kml'];
+                $params['OUTPUTSCHEMA'] = $csw->sch['kml'];
                 break; 
             case 'rdf': 
                 $csw->headers[] = "Content-type: application/rdf+xml";
-                $params['OUTPUTSCHEMA'] = $csw->schemas['rdf'];
+                $params['OUTPUTSCHEMA'] = $csw->sch['rdf'];
                 break;
             default: 
                 $csw->headers[] = "Content-type: text/html";
-                $params['OUTPUTSCHEMA'] = $csw->schemas['os'];
+                $params['OUTPUTSCHEMA'] = $csw->sch['os'];
                 $params['FORMAT'] = 'html';
                 break;
         }
