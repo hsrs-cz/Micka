@@ -556,7 +556,7 @@
     </xsl:for-each>  
 
     <xsl:for-each select="gmd:identificationInfo/*/*/*/gmd:temporalElement|.">
-        <xsl:if test="string-length(*/gmd:extent)>0 position()=last()">
+        <xsl:if test="string-length(*/gmd:extent) &gt; 0 or position()=last()">
             <div class="row">
                 <xsl:call-template name="drawLabel">
                     <xsl:with-param name="name" select="'timeExtent'"/>
@@ -634,7 +634,7 @@
     <xsl:if test="gmd:hierarchyLevel/*/@codeListValue!='application'">
         <div>
             <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'https://data.europa.eu/eli/')]|/.">
-                <xsl:if test="string-length(*/gmd:specification)>0 or and position()=last()">
+                <xsl:if test="string-length(*/gmd:specification)&gt;0 or position()=last()">
                     <fieldset>
                         <div class="row">
                             <xsl:call-template name="drawLabel">
