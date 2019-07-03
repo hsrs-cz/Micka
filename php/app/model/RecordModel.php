@@ -540,6 +540,7 @@ class RecordModel extends \BaseModel
         if ($this->recordMd === NULL) {
             return '';
         }
+        $this->setRecordMdValues();
         $title_app = '';
         $title_eng = '';
         $title_other = '';

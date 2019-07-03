@@ -1052,7 +1052,8 @@ class Csw{
         $this->xsl->load(__DIR__ . "/xsl/out/json-brief.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $output = $this->xp->transformToXML($this->xml);
-        return $output['title'];
+        eval($output);
+        return isset($rec['title']) ? $rec['title'] : '';
     }
     
     

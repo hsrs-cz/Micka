@@ -68,7 +68,7 @@ class RecordPresenter extends \BasePresenter
         $this->template->record = $csw->run($csw->dirtyParams($request));
         $this->template->urlParams = $this->context->getByType('Nette\Http\Request')->getQuery();
         $this->template->appLang = $appLang;
-        $this->template->pageTitle .= $csw->getTitle();
+        $this->template->pageTitle .= ': ' . $csw->getTitle();
 	}
     
     /** @resource Catalog:Guest */
@@ -90,7 +90,7 @@ class RecordPresenter extends \BasePresenter
         $this->template->rec = $mdr;
         $this->template->appLang = $appLang;
         $this->template->detail = 'full';
-        $this->template->pageTitle = $this->template->pageTitle .= ': ' . $mdr->title;
+        $this->template->pageTitle .= ': ' . $this->recordModel->getMdTitle($appLang);
 	}
     
     /** @resource Catalog:Guest */
