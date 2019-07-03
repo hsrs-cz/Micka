@@ -179,7 +179,7 @@
     </xsl:template>
 	
 	<!-- 8.1 -->
-	<xsl:template match="gmd:resourceConstraints[contains(*/gmd:useLimitation/*, 'nejsou známy') or contains(*/gmd:useLimitation/*, 'unknown') or contains(*/gmd:useLimitation/*, 'žádné podmínky') or contains(*/gmd:useLimitation/*, 'no conditions')]">
+	<xsl:template match="gmd:resourceConstraints[*/gmd:useLimitation/*!='']">
         <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
                 <gmd:useLimitation></gmd:useLimitation>
@@ -225,6 +225,14 @@
         </gmd:resourceConstraints>
 	</xsl:template>
 	
+    
+    <xsl:template match="gmd:otherConstraints[contains(*,'http://opendata.gov.cz/definition/opendata')]">
+        <gmd:otherConstraints>
+            <gmx:Anchor xlink:href="http://opendata.gov.cz/definition/opendata"><xsl:value-of select="*"/></gmx:Anchor>
+        </gmd:otherConstraints>
+    </xsl:template>
+
+    
 	<!-- protocol -->
 	<xsl:template match="gmd:protocol">
         <xsl:choose>
