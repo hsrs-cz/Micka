@@ -179,15 +179,15 @@
                             <xsl:with-param name="class" select="$m"/>
                             <xsl:with-param name="valid" select="'1.5'"/>
                             <xsl:with-param name="dupl" select="1"/>
-                        </xsl:call-template>			
+                        </xsl:call-template>
                     </div>
 
                     <xsl:call-template name="drawAnchor">
                         <xsl:with-param name="path" select="'identifier'"/>
                         <xsl:with-param name="value" select="*/gmd:code"/>
                         <xsl:with-param name="valid" select="'1.5'"/>
-                        <xsl:with-param name="class" select="'inp2'"/>
-                        <xsl:with-param name="req" select="not($serv)"/>
+                        <xsl:with-param name="class" select="concat('inp2 ',$m)"/>
+                        <!--xsl:with-param name="req" select="not($serv)"/-->
                     </xsl:call-template>
                     
                     <xsl:call-template name="drawInput">
@@ -374,9 +374,9 @@
                 <input type="hidden" name="othes-dateType" value="{gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue}"/>
             
                 <xsl:for-each select="gmd:keyword">
-                    <input type="hidden" name="othes_{$i}_kw_{position()-1}_TXT" value="{gco:CharacterString}"/>
+                    <input type="hidden" name="othes[{$i}][kw][{position()-1}][TXT]" value="{gco:CharacterString}"/>
                     <xsl:for-each select="gmd:PT_FreeText/gmd:textGroup">
-                        <input type="hidden" name="othes_{$i}_kw_{position()-1}_TXT{substring-after(gmd:LocalisedCharacterString/@locale,'-')}" value="{gmd:LocalisedCharacterString}"/>
+                        <input type="hidden" name="othes[{$i}][kw][{position()-1}][{substring-after(gmd:LocalisedCharacterString/@locale,'-')}]" value="{gmd:LocalisedCharacterString}"/>
                     </xsl:for-each>
                 </xsl:for-each>  
             </xsl:for-each>
@@ -399,22 +399,28 @@
                 <xsl:with-param name="name" select="'spatialScope'"/>
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*/gmd:keyword[contains(*/@xlink:href, 'http://inspire.ec.europa.eu/metadata-codelist/SpatialScope')]"/>
                 <xsl:with-param name="codes" select="'spatialScope'"/>
-                <xsl:with-param name="multi" select="1"/>
+                <xsl:with-param name="multi" select="0"/>
                 <xsl:with-param name="valid" select="'3'"/>
             </xsl:call-template> 
 
        		<!-- ostatni KW s thesaurem-->
             <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[substring(gmd:thesaurusName/*/gmd:title/*,1,15) != 'GEMET - INSPIRE' and string-length(gmd:thesaurusName/*/gmd:title/*)>0]">
                 <xsl:variable name="i" select="position()-1"/>
-                <input type="hidden" name="othes_{$i}_title" value="{gmd:thesaurusName/*/gmd:title/gco:CharacterString}"/>
-                <input type="hidden" name="othes_{$i}_date" value="{gmd:thesaurusName/*/gmd:date/*/gmd:date/*}"/>
-                <input type="hidden" name="othes_{$i}_dateType" value="{gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue}"/>
+                <input type="hidden" name="othes-title[{$i}][TXT]" value="{gmd:thesaurusName/*/gmd:title/*}"/>
+                <input type="hidden" name="othes-title[{$i}][uri]" value="{gmd:thesaurusName/*/gmd:title/*/@xlink:href}"/>
+                <xsl:for-each select="gmd:thesaurusName/*/gmd:title/*/gmd:textGroup/*">
+                    <xsl:variable name="p" select="position()-1"/>
+                    <input type="hidden" name="othes-title[{$i}][{substring-after(@locale,'-')}]" value="{.}"/>
+                </xsl:for-each>
+                <input type="hidden" name="othes-date[{$i}]" value="{gmd:thesaurusName/*/gmd:date/*/gmd:date/*}"/>
+                <input type="hidden" name="othes-dateType[{$i}]" value="{gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue}"/>
                 
                 <xsl:for-each select="gmd:keyword">
                		<xsl:variable name="p" select="position()-1"/>
-                  	<input type="hidden" name="othes_{$i}_kw_{$p}_TXT" value="{gco:CharacterString}"/>
+                  	<input type="hidden" name="othes-kw[{$i}][{$p}][TXT]" value="{*}"/>
+                    <input type="hidden" name="othes-kw[{$i}][{$p}][uri]" value="{*/@xlink:href}"/>
                   	<xsl:for-each select="gmd:PT_FreeText/gmd:textGroup">
-                  		<input type="hidden" name="othes_{$i}_kw_{$p}_TXT{substring-after(gmd:LocalisedCharacterString/@locale,'-')}" value="{gmd:LocalisedCharacterString}"/>
+                  		<input type="hidden" name="othes-kw[{$i}][{$p}][{substring-after(gmd:LocalisedCharacterString/@locale,'-')}]" value="{gmd:LocalisedCharacterString}"/>
                   	</xsl:for-each>
                 </xsl:for-each>  
             </xsl:for-each>
@@ -425,7 +431,7 @@
 
     <!-- other free KW -->
     <div>
-        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[string-length(*/gmd:thesaurusName/*/gmd:title/*)=0 and not(contains(*/gmd:keyword/gmx:Anchor/@xlink:href,'SpatialScope'))]/*/gmd:keyword|/">
+        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[not(contains(*/gmd:keyword/gmx:Anchor/@xlink:href,'SpatialScope')) and string(*/gmd:thesaurusName/*/gmd:title/*)='']/*/gmd:keyword|/">
             <xsl:if test="*|*/@xlink:href!='' or position()=last()">
 
                 <fieldset>

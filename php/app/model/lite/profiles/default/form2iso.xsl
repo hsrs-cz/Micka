@@ -377,10 +377,10 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 
 
 					<!-- other kw -->
-					<xsl:for-each select="othes">
+					<xsl:for-each select="othes/item">
 					   <gmd:descriptiveKeywords>
 					     <gmd:MD_Keywords>	
-    					   <xsl:for-each select="kw">
+    					   <xsl:for-each select="kw/item">
     					   		<xsl:call-template name="txtOut">
     					   			<xsl:with-param name="name" select="'keyword'"/>
     					   			<xsl:with-param name="t" select="."/>
@@ -388,9 +388,10 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
     					   </xsl:for-each>
   							<gmd:thesaurusName>
   								<gmd:CI_Citation>
-  									<gmd:title>
-  										<gco:CharacterString><xsl:value-of select="title"/></gco:CharacterString>
-  									</gmd:title>
+  									<xsl:call-template name="txtOut">
+                                        <xsl:with-param name="name" select="'title'"/>
+                                        <xsl:with-param name="t" select="title"/>
+                                    </xsl:call-template>
   									<gmd:date><gmd:CI_Date>
   										<gmd:date><gco:Date><xsl:value-of select="php:function('date2iso', string(date))"/></gco:Date></gmd:date>
   										<gmd:dateType><gmd:CI_DateTypeCode codeListValue="{dateType}" codeList="{$cl}#CI_DateTypeCode"><xsl:value-of select="dateType"/></gmd:CI_DateTypeCode></gmd:dateType>
@@ -400,23 +401,6 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 					     </gmd:MD_Keywords>	
 					   </gmd:descriptiveKeywords>
 					</xsl:for-each>
-
-                    <gmd:descriptiveKeywords>
-                        <gmd:MD_Keywords>
-                            <gmd:keyword></gmd:keyword>
-                            <gmd:thesaurusName>
-                                <gmd:CI_Citation>
-                                    <gmd:title></gmd:title>
-                                    <gmd:date>
-                                        <gmd:CI_Date>
-                                            <gmd:date></gmd:date>
-                                            <gmd:dateType></gmd:dateType>
-                                        </gmd:CI_Date>
-                                    </gmd:date>
-                                </gmd:CI_Citation>
-                            </gmd:thesaurusName>
-                        </gmd:MD_Keywords>
-                    </gmd:descriptiveKeywords>
 
                     <xsl:if test="normalize-space(fkw/item)!=''">
                         <gmd:descriptiveKeywords>
