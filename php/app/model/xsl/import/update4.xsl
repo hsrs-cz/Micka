@@ -179,7 +179,7 @@
     </xsl:template>
 	
 	<!-- 8.1 -->
-	<xsl:template match="gmd:resourceConstraints[ontains(*/gmd:useLimitation/*, 'nejsou známy') or contains(*/gmd:useLimitation/*, 'unknown') or contains(*/gmd:useLimitation/*, 'žádné podmínky') or contains(*/gmd:useLimitation/*, 'no conditions')]">
+	<xsl:template match="gmd:resourceConstraints[contains(*/gmd:useLimitation/*, 'nejsou známy') or contains(*/gmd:useLimitation/*, 'unknown') or contains(*/gmd:useLimitation/*, 'žádné podmínky') or contains(*/gmd:useLimitation/*, 'no conditions')]">
         <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
                 <gmd:useLimitation></gmd:useLimitation>
