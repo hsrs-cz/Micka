@@ -5,24 +5,23 @@
 <xsl:template match="/"  xmlns:ows="http://www.opengis.net/ows" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
-	xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
+    xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"
     xmlns:geo="http://a9.com/-/opensearch/extensions/geo/1.0/">
-    <ShortName><xsl:value-of select="//ows:ServiceIdentification/ows:Title"/></ShortName>
-    <Description><xsl:value-of select="//ows:ServiceIdentification/ows:Abstract"/></Description>
+    <ShortName><xsl:value-of select="$title"/></ShortName>
+    <Description><xsl:value-of select="$abstract"/></Description>
     <!--URL of this document--> 
-    <Url type="application/opensearchdescription+xml" rel="self" template="{$path}opensearch.php"/>
+    <Url type="application/opensearchdescription+xml" rel="self" template="{$cswURL}/../opensearch/"/>
 
-    <Url template="{$path}opensearch.php?format=atom&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/atom+xml"/>
-    <Url template="{$path}opensearch.php?format=rdf&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/rdf+xml"/>
-    <Url template="{$path}opensearch.php?format=kml&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/vnd.google-earth.kml+xml"/>
+    <Url template="{$cswURL}?format=application/xml&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}&amp;outputSchema=http://www.w3.org/2005/Atom" type="application/atom+xml"/>
+    <Url template="{$cswURL}?format=rdf&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/rdf+xml"/>
+    <Url template="{$cswURL}?format=kml&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/vnd.google-earth.kml+xml"/>
 
-    <Url template="{$path}../?request=GetRecords&amp;format=text/html&amp;query=Anytext like '{{searchTerms}}*'" type="text/html"/>
+    <Url template="{$cswURL}..?request=GetRecords&amp;format=text/html&amp;query=Fulltext='{{searchTerms}}'" type="text/html"/>
     
-    <Contact><xsl:value-of select="//ows:ServiceProvider/ows:ServiceContact/ows:ContactInfo/ows:Address/ows:ElectronicMailAddress"/> (<xsl:value-of select="//ows:ServiceProvider/ows:ServiceContact/ows:IndividualName"/>)</Contact>
-    <Tags><xsl:for-each select="//ows:Keywords"><xsl:value-of select="."/> </xsl:for-each></Tags>
-    <Image type="image/gif" width="16" height="16"><xsl:value-of select="$path"/>../img/favicon.gif</Image>
-    <Image type="image/vnd.microsoft.icon" width="16" height="16"><xsl:value-of select="$path"/>../favicon.ico</Image>
-    <Developer><xsl:value-of select="//ows:ServiceProvider/ows:ProviderName"/></Developer>
+    <Contact><xsl:value-of select="$email"/></Contact>
+    <Tags>metadata catalogue</Tags>
+    <Image type="image/png" width="16" height="16"><xsl:value-of select="$cswURL"/>../layout/default/img/favicon.png</Image>
+    <Developer><xsl:value-of select="$org"/></Developer>
     <Language>*</Language>
     <OutputEncoding>UTF-8</OutputEncoding>
     <InputEncoding>UTF-8</InputEncoding>

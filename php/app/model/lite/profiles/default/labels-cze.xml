@@ -204,9 +204,17 @@ Příklad: D2.8.I.7 Data Specification on Transport Networks – version 3.1)
 		<label>8.1. Podmínky pro přístup a užití</label>
 		<help>Podmínky vztahující se k přístupu a užití datové sady. Vyberte z číselníku nebo zadejte text a potvrďte ENTER.</help>
 	</msg>
+	<msg name="accessCondTxt">
+		<label>8.1. text</label>
+		<help>Podmínky vztahující se k přístupu a užití datové sady. Zadejte volný text.</help>
+	</msg>
 	<msg name="limitationsAccess">
 		<label>8.2. Omezení věřejného přístupu</label>
-		<help>Omezení veřejného přístupu k datové sadě. Vyberte z číselníku nebo zadejte text a potvrďte ENTER.</help>
+		<help>Omezení veřejného přístupu k datové sadě. Vyberte z číselníku.</help>
+	</msg>
+	<msg name="limitationsAccessTxt">
+		<label>8.2. text</label>
+		<help>Omezení veřejného přístupu k datové sadě. Zadejte volný text.</help>
 	</msg>
 	<msg name="linkage">
 		<label>1.4 Odkaz</label>

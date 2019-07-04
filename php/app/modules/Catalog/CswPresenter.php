@@ -317,6 +317,7 @@ class CswPresenter extends \BasePresenter
     /** @resource Catalog:Guest */
 	public function renderOpensearch()
 	{
+        //echo "<pre>"; var_dump($this->context->parameters); die();
         $csw = new \Micka\Csw();
         $get = $this->context->getByType('Nette\Http\Request')->getQuery();
 
@@ -326,13 +327,24 @@ class CswPresenter extends \BasePresenter
             $path = "http://".$_SERVER['SERVER_NAME'] . $port . dirname($_SERVER['SCRIPT_NAME']) . "/";
             header("Content-type: application/xml");
             $lang = isset($get['language']) ? $get['language'] : "eng";
-            if ($lang != 'cze') {
+            if ($lang != 'cze'){
                 $lang = 'eng';
             }
-            $csw->xml->load(dirname(__FILE__)."/../../config/cswConfig-$lang.xml");
+            $csw->xml->loadXML("<root></root>");
             $csw->xsl->load(dirname(__FILE__)."/../../model/xsl/openSearch.xsl");
             $csw->xp->importStyleSheet($csw->xsl);
-            $csw->xp->setParameter('', 'path', $path);
+            $params = array(
+                'mickaURL' => $this->context->parameters['basePath'],
+                'cswURL' => $this->context->parameters['cswUrl'],
+                'LANG' => $lang,
+                'MICKA_LANG' => MICKA_LANG,
+                //'LANG_OTHER' => $olang,
+                'org' => $this->context->parameters['contact']['org'][$lang],
+                'email' => $this->context->parameters['contact']['email'],
+                'title' => $this->context->parameters['contact']['title'][$lang],
+                'abstract' => $this->context->parameters['contact']['abstract'][$lang]
+            );
+            $csw->xp->setParameter('', $params);
             echo $csw->xp->transformToXML($csw->xml);
             $this->terminate();
         }

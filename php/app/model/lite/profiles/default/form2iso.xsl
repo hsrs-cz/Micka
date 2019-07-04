@@ -416,7 +416,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                     </xsl:if>
 
 					<!-- 8.1 Conditions Access and use -->
-                    <xsl:if test="accessCond">
+                    <xsl:if test="accessCond or accessCondTxt/*">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>
                                 <gmd:useConstraints>
@@ -430,12 +430,16 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
                                 </xsl:for-each>
+                                <xsl:call-template name="txtOut">
+                                    <xsl:with-param name="name" select="'otherConstraints'"/>
+                                    <xsl:with-param name="t" select="accessCondTxt"/>
+                                </xsl:call-template>
                             </gmd:MD_LegalConstraints>
                         </gmd:resourceConstraints>
 					</xsl:if>
 
                     <!-- 8.2 Limitations -->
-                    <xsl:if test="limitationsAccess">
+                    <xsl:if test="limitationsAccess or limitationsAccessTxt/*">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>
                                 <gmd:accessConstraints>
@@ -449,6 +453,10 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
                                 </xsl:for-each>
+                                <xsl:call-template name="txtOut">
+                                    <xsl:with-param name="name" select="'otherConstraints'"/>
+                                    <xsl:with-param name="t" select="limitationsAccessTxt"/>
+                                </xsl:call-template>
                             </gmd:MD_LegalConstraints>
                         </gmd:resourceConstraints>
 					</xsl:if>

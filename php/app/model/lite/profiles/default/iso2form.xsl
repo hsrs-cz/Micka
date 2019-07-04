@@ -677,25 +677,41 @@
   	<!-- Conditions applying to access and use --> 
 	<xsl:call-template name="drawInput">
 	  	<xsl:with-param name="name" select="'accessCond'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints]"/>
+	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints  and */@xlink:href]"/>
 	    <xsl:with-param name="codes" select="'accessCond'"/>
 	    <xsl:with-param name="multi" select="'2'"/>
-        <xsl:with-param name="req" select="1"/>
+        <xsl:with-param name="class" select="'mand'"/>
 	    <xsl:with-param name="valid" select="'8.1'"/>
-        <xsl:with-param name="tags" select="1"/>
-	    <!-- <xsl:with-param name="class" select="'mandatory'"/>  -->
 	</xsl:call-template>    
     
+  	<!-- Conditions applying to access and use --> 
+	<xsl:call-template name="drawInput">
+	  	<xsl:with-param name="name" select="'accessCondTxt'"/>
+	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints  and not(*/@xlink:href)]"/>
+        <xsl:with-param name="class" select="'mand'"/>
+	    <xsl:with-param name="valid" select="'8.1'"/>
+        <xsl:with-param name="type" select="'textarea'"/>
+        <xsl:with-param name="langs" select="$langs"/>        
+	</xsl:call-template>    
+
   	<!-- Limitation on public access --> 
 	<xsl:call-template name="drawInput">
 	  	<xsl:with-param name="name" select="'limitationsAccess'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints]"/>
+	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints  and */@xlink:href]"/>
 	    <xsl:with-param name="codes" select="'limitationsAccess'"/>
 	    <xsl:with-param name="multi" select="'2'"/>
 	    <xsl:with-param name="valid" select="'8.2'"/>
-        <xsl:with-param name="req" select="1"/>
-        <xsl:with-param name="tags" select="1"/>
-	    <!-- <xsl:with-param name="class" select="'mandatory'"/>  -->
+        <xsl:with-param name="class" select="'mand'"/>	
+    </xsl:call-template>
+
+  	<!-- Limitation on public access - text --> 
+	<xsl:call-template name="drawInput">
+	  	<xsl:with-param name="name" select="'limitationsAccessTxt'"/>
+	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints  and not(*/@xlink:href)]"/>
+        <xsl:with-param name="type" select="'textarea'"/> 
+        <xsl:with-param name="class" select="'mand'"/>
+	    <xsl:with-param name="valid" select="'8.2'"/>
+        <xsl:with-param name="langs" select="$langs"/>
 	</xsl:call-template>
 
 	<!-- 9. Responsible party -->

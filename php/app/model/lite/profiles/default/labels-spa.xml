@@ -250,6 +250,13 @@ metadata.
 			</p>
 		</help>
 	</msg>
+	<msg name="accessCondTxt">
+		<label>8.1. Access and use - text</label>
+		<help>
+			<h3>8.1. Conditions applying to access and use</h3>
+			<p>restrictions on the access and use of a resource or metadata.</p>
+		</help>
+	</msg>
 	<msg name="limitationsAccess">
 		<label>8.2. Licence</label>
 		<help>
@@ -257,6 +264,16 @@ metadata.
 			<p>access constraints applied to assure the protection of
 privacy or intellectual property, and any special restrictions
 or limitations on obtaining the resource.
+			</p>
+		</help>
+	</msg>
+	<msg name="limitationsAccessTxt">
+		<label>8.2. Licence - text</label>
+		<help>
+			<h3>8.2. Limitations on public access</h3>
+			<p>access constraints applied to assure the protection of
+privacy or intellectual property, and any special restrictions
+or limitations on obtaining the resource. 
 			</p>
 		</help>
 	</msg>
