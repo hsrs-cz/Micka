@@ -7,12 +7,28 @@ function getMime($s){
     if(!$m) return '';
     return str_replace('"','',$m[1]);
 }
+
 // --- string without mime
 function noMime($s){
     if(!$s) return '';
     $p = '/mimeType=(.+?)(\s|$)/';
     $r = '';
     return trim(preg_replace($p, $r, $s));
+}
+
+// --- string without mime
+function getCRS($s){
+    if(!$s) return '';
+    $p = '/CRS=EPSG:(.+?)(\s|$|\.|\,)/';
+    preg_match_all($p, $s, $m);
+    if(!$m) return '';
+    $data = '';
+    foreach($m[1] as $item){
+        $data .= "<c>$item</c>";
+    }
+    $dom = new DomDocument;
+    $dom->loadXML('<root>'.$data.'</root>');
+    return $dom;
 }
 
 // pro XSLT - dotaz na metadata

@@ -7,7 +7,8 @@
   xmlns="http://www.w3.org/2005/Atom"
   xmlns:georss="http://www.georss.org/georss" 
   xmlns:xlink="http://www.w3.org/1999/xlink"  
-  xmlns:php="http://php.net/xsl"   
+  xmlns:php="http://php.net/xsl"
+  xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/"
   xmlns:inspire_dls="http://inspire.ec.europa.eu/schemas/inspire_dls/1.0"  
 >
 
@@ -25,7 +26,7 @@
 	<xsl:variable name="mdlang" select="gmd:language/gmd:LanguageCode/@codeListValue"/>
 	<xsl:variable name="lang2" select="$cl/language/value[$LANGUAGE]/@code2"/>
 	
-	<feed xmlns:openSearch="http://a9.com/-/spec/opensearch/1.1/" xml:lang="{$lang2}">
+	<feed xml:lang="{$lang2}">
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
 				<xsl:attribute name="xsi:schemaLocation">http://www.w3.org/2005/Atom http://inspire-geoportal.ec.europa.eu/schemas/inspire/atom/1.0/atom.xsd</xsl:attribute>
@@ -36,7 +37,7 @@
 		</xsl:choose>
 		
       	<!-- title for pre-defined dataset -->
-      	<title><xsl:call-template name="multi">
+      	<title xml:lang="{$lang2}"><xsl:call-template name="multi">
 	    	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 	    	<xsl:with-param name="lang" select="$LANGUAGE"/>
 	    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -69,18 +70,18 @@
 		<!-- link to download service ISO 19139 metadata -->
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-	    		<link href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" rel="describedby" type="application/xml"/>
+	    		<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
 			</xsl:when>
 			<xsl:otherwise>
-				<link href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" rel="describedby" type="application/xml"/>
+				<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	  	
 	  	<!-- Link to Open Search XML description -->
-		<link href="{$mickaURL}/opensearch/" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
+		<link rel="search" href="{$mickaURL}/opensearch/" hreflang="{$lang2}" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
-	    <link href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={gmd:fileIdentifier}" rel="self" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
+	    <link rel="self" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" hreflang="{$lang2}" type="application/atom+xml" title="This document"/>
 
 	  	<!-- links to INSPIRE Spatial Object Type definitions for this pre-defined dataset -->
 	  	<!-- TO BE DONE -->
@@ -255,6 +256,11 @@
 				</xsl:call-template>
 			</xsl:variable>
 			<entry>
+                <xsl:variable name="crs" select="php:function('getCRS',string(*/gmd:description/*))"/>
+                <xsl:for-each select="$crs/*/*">
+                    <category term="http://www.opengis.net/def/crs/EPSG/0/{.}" label="EPSG:{.}"/>
+                </xsl:for-each>
+                <!--c><xsl:value-of select="string($crs)"></c-->
 				<id><xsl:value-of select="*/gmd:linkage"/></id>
 		      	<!-- descriptive summary -->
 	      		<xsl:variable name="pos" select="position()"/>
@@ -304,7 +310,6 @@
 			  	</title>
 			  	<updated><xsl:value-of select="$updated"/>T00:00:00</updated>
 		  		<xsl:copy-of select="$bbox"/>
-		  			
 			  	<!-- rights, access restrictions 
 		      	<xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints">
 		      		<rights><xsl:value-of select="./*"/></rights>
@@ -396,6 +401,6 @@
 	<xsl:value-of select="$year"/>
 </xsl:template> 
 
-<xsl:include href="client/common_cli.xsl" />
+<xsl:include href="client/common_cli.xsl"/>
   
 </xsl:stylesheet>
