@@ -77,7 +77,7 @@
 		</xsl:choose>
 	  	
 	  	<!-- Link to Open Search XML description -->
-		<link href="{$mickaURL}/opensearch.php" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
+		<link href="{$mickaURL}/opensearch/" hreflang="{$lang2}" rel="search" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
 	    <link href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={gmd:fileIdentifier}" rel="self" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
