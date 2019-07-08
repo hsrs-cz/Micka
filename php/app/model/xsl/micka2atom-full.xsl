@@ -68,14 +68,8 @@
 	  	</subtitle>
 
 		<!-- link to download service ISO 19139 metadata -->
-		<xsl:choose>
-			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
-	    		<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
-			</xsl:when>
-			<xsl:otherwise>
-				<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
-			</xsl:otherwise>
-		</xsl:choose>
+   		<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
+   		<link rel="describedby" href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" type="text/html"/>
 	  	
 	  	<!-- Link to Open Search XML description -->
 		<link rel="search" href="{$mickaURL}/opensearch/" hreflang="{$lang2}" title="OpenSearch" type="application/opensearchdescription+xml"/>
