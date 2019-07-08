@@ -10,13 +10,18 @@
     <ShortName><xsl:value-of select="$title"/></ShortName>
     <Description><xsl:value-of select="$abstract"/></Description>
     <!--URL of this document--> 
-    <Url type="application/opensearchdescription+xml" rel="self" template="{$cswURL}/../opensearch/"/>
+    <Url type="application/opensearchdescription+xml" rel="self" template="{$cswURL}../opensearch/"/>
 
     <Url template="{$cswURL}?format=application/xml&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}&amp;outputSchema=http://www.w3.org/2005/Atom" type="application/atom+xml"/>
     <Url template="{$cswURL}?format=rdf&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/rdf+xml"/>
     <Url template="{$cswURL}?format=kml&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/vnd.google-earth.kml+xml"/>
 
     <Url template="{$cswURL}..?request=GetRecords&amp;format=text/html&amp;query=Fulltext='{{searchTerms}}'" type="text/html"/>
+    
+    <!--Describe Spatial Data Set Operation request URL template to be used in order to retrieve the description of Spatial Object Types in a Spatial Dataset-->
+    <Url rel="describedby" type="application/atom+xml" template="{$cswURL}?RESID={{inspire_dls:spatial_dataset_identifier_code?}}&amp;RESNS={{inspire_dls:spatial_dataset_identifier_namespace?}}&amp;CRS={{inspire_dls:crs?}}&amp;language={{language?}}&amp;format=application/xml&amp;q={{searchTerms?}}"/>
+    <!--Get Spatial Data Set Operation request URL template to be used in order to retrieve a Spatial Dataset-->
+    <Url type="application/x-filegdb" rel="results" template="{$cswURL}?RESID={{inspire_dls:spatial_dataset_identifier_code?}}&amp;RESNS={{inspire_dls:spatial_dataset_identifier_namespace?}}&amp;CRS={{inspire_dls:crs?}}&amp;language={{language?}}&amp;format=application/xml&amp;q={{searchTerms?}}"/>
     
     <Contact><xsl:value-of select="$email"/></Contact>
     <Tags>metadata catalogue</Tags>

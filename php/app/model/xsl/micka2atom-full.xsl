@@ -68,7 +68,7 @@
 	  	</subtitle>
 
 		<!-- link to download service ISO 19139 metadata -->
-   		<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
+   		<link rel="describedby" href="{$mickaURL}/csw/?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&amp;ID={gmd:fileIdentifier}#_{gmd:fileIdentifier}" type="application/xml"/>
    		<link rel="describedby" href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" type="text/html"/>
 	  	
 	  	<!-- Link to Open Search XML description -->

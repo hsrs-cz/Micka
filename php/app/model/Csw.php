@@ -334,7 +334,7 @@ class Csw{
 	  		}
 	  	}
 	  	// rss kanál
-	  	else if(isset($params['REQUEST']) && $params['REQUEST']=='rss'){
+	  	/*else if(isset($params['REQUEST']) && $params['REQUEST']=='rss'){
 	  		$dni = intval($params['DAYS']);
 	  		unset($params['DAYS']);
 	  		$params['REQUEST'] = 'GetRecords';
@@ -351,12 +351,29 @@ class Csw{
 	  		    $params['SORTBY'] = "date:D";
 	  		}
 	  		if(!$params['USER']) $params['USER'] = 'dummy';
-	  	}
+	  	}*/
 	  	else if(isset($params['ID']) && isset($params['FORMAT'])){
 	  		$params['TYPENAMES'] = 'gmd:MD_Metadata';
 	  		$params['REQUEST'] = 'GetRecordById';
 	  	}
-	  	//var_dump($params);
+        $q1 = '';
+        if(isset($params['RESID']) && isset($params['RESID'])){
+            $q1 = " and resourceidentifier=".$params['RESID'];
+        }
+        if(isset($params['BBOX']) && isset($params['BBOX'])){
+            $q1 = " and BBOX=".$params['BBOX'];
+        }
+        if(isset($params['RESNS']) && isset($params['RESNS'])){
+            //TODO dodelat
+            //$q1 = " and BBOX=".$params['BBOX'];
+        }
+	  	//echo "<pre>"; var_dump($params); die();
+        if(isset($params['Q']) && isset($params['Q'])){
+            $params['CONSTRAINT'] = "FullText=".$params['Q'];
+        }
+        if($q1){
+            $params['CONSTRAINT'] = $params['CONSTRAINT'] ? "(".$params['CONSTRAINT'].") and ".$q1: $q1;
+        }
   		return $params;
   	}
 
