@@ -11,5 +11,13 @@
         <li>
             <a n:href=":Admin:Profile:default">{_messages.management.profiles}</a>
         </li>
+        {foreach $addModules as $row}
+            <li>
+            {var $module = $row['module']}
+            {var $presenter = $row['presenter']}
+            {var $action = $row['action']}
+                <a n:href=":{$module}:{$presenter}:{$action}">{_}{$module|lower}.frontend.title{/_}</a>
+            </li>
+        {/foreach}
     </ul>
 </div>
