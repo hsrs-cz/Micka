@@ -75,7 +75,7 @@
 		<link rel="search" href="{$mickaURL}/opensearch/" hreflang="{$lang2}" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
-	    <link rel="self" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" hreflang="{$lang2}" type="application/atom+xml" title="This document"/>
+	    <link rel="self" href="{$mickaURL}/record/atom/{gmd:fileIdentifier}" hreflang="{$lang2}" type="application/atom+xml" title="This document"/>
 
 	  	<!-- links to INSPIRE Spatial Object Type definitions for this pre-defined dataset -->
 	  	<!-- TO BE DONE -->

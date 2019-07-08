@@ -283,5 +283,24 @@ class RecordPresenter extends \BasePresenter
         $this->recordModel->deleteMdById($id);
         $this->redirect(':Catalog:Default:default');
     }
+
+    /** @resource Catalog:Guest */
+	public function renderAtom($id)
+	{
+        $get = $this->context->getByType('Nette\Http\Request')->getQuery();
+        $params = array();
+        $params['SERVICE'] = 'CSW';
+        $params['VERSION'] = '2.0.2';
+        $params['REQUEST'] = 'GetRecordById';
+        $params['DEBUG'] = $get['debug'];
+        $params['ID'] = $id;
+        $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : 'eng'; 
+        $params['OUTPUTSCHEMA'] = 'http://www.w3.org/2005/Atom';
+        $csw = new \Micka\Csw;
+        $result = $csw->run($params);
+        $csw->setHeader();
+        echo $result;
+        $this->terminate();
+	}
     
 }
