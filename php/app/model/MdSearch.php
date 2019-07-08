@@ -1218,8 +1218,7 @@ class MdSearch
                     $sql_final
                 );
             }
-            //$sql_final = str_replace('AS title', 'AS title ' . $selectBbox, $sql_final);
-            //print_r($sql_final); exit;
+            $sql_final = str_replace('AS title', 'AS title ' . $selectBbox, $sql_final);
             if ($this->paginator === TRUE) {
                 $select_limit = " LIMIT " . $this->maxRecords . " OFFSET $ofs";
              } else {
