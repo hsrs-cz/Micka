@@ -315,9 +315,8 @@ class CswPresenter extends \BasePresenter
 	}
     
     /** @resource Catalog:Guest */
-	public function renderOpensearch()
+	public function renderOpensearch($id)
 	{
-        //echo "<pre>"; var_dump($this->context->parameters); die();
         $csw = new \Micka\Csw();
         $get = $this->context->getByType('Nette\Http\Request')->getQuery();
 
@@ -459,8 +458,21 @@ class CswPresenter extends \BasePresenter
 	}
     
     /** @resource Catalog:Guest */
-	public function renderTest()
+	public function renderAtom($id)
 	{
+        $get = $this->context->getByType('Nette\Http\Request')->getQuery();
+        $params = array();
+        $params['SERVICE'] = 'CSW';
+        $params['VERSION'] = '2.0.2';
+        $params['CONSTRAINT_LANGUAGE'] = 'CQL';
+        $params['REQUEST'] = 'GetRecorById';
+        $params['ID'] = $id;
+        $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : 'eng'; 
+        $params['OUTPUTSCHEMA'] = 'http://www.w3.org/2005/Atom';
+        $csw = new \Micka\Csw;
+        $result = $csw->run($params);
+        $csw->setHeader();
+        echo $result;
         $this->terminate();
 	}
 }

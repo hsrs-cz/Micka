@@ -62,7 +62,8 @@ class RouterFactory
             $router[] = new Route('[<locale=' . $locale . '>/]suggest', ['module' => 'Catalog', 'presenter' => 'Suggest', 'action' => 'default']);
             $router[] = new Route('[<locale=' . $locale . '>/]csw', ['module' => 'Catalog', 'presenter' => 'Csw', 'action' => 'default']);
             $router[] = new Route('[<locale=' . $locale . '>/]csw/filter[/<id>]', ['module' => 'Catalog', 'presenter' => 'Csw', 'action' => 'filter']);
-            $router[] = new Route('opensearch', ['module' => 'Catalog', 'presenter' => 'Csw', 'action' => 'opensearch']);
+            $router[] = new Route('opensearch[/<id>]', ['module' => 'Catalog', 'presenter' => 'Csw', 'action' => 'opensearch']);
+            $router[] = new Route('atom[/<id>]', ['module' => 'Catalog', 'presenter' => 'Csw', 'action' => 'atom']);
             $router[] = new Route('[<locale=' . $locale . '>/]about', ['module' => 'Catalog', 'presenter' => 'Micka', 'action' => 'about']);
             $router[] = new Route('[<locale=' . $locale . '>/]help', ['module' => 'Catalog', 'presenter' => 'Micka', 'action' => 'help']);
             $router[] = new Route('[<locale=' . $locale . '>/]<module=Catalog>/<presenter=Default>/<action=default>', 'Catalog:Default:default');
