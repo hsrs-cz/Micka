@@ -88,7 +88,7 @@
 	    <link rel="up" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$vazby//gmd:MD_Metadata/gmd:fileIdentifier/*}" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
 	    
 	    <!-- identifier -->
-      	<id><xsl:value-of select="concat($mickaURL, '/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=',gmd:fileIdentifier)"/></id>
+      	<id><xsl:value-of select="concat($mickaURL, '/record/atom/',gmd:fileIdentifier)"/></id>
       	
       	<!-- rights, access restrictions -->
       	<rights type="html"><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
