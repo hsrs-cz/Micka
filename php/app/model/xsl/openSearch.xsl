@@ -15,7 +15,7 @@
     <ShortName><xsl:value-of select="$title"/></ShortName>
     <Description><xsl:value-of select="$abstract"/></Description>
     <!--URL of this document--> 
-    <Url rel="self" type="application/opensearchdescription+xml" template="{substring-before($cswURL, 'csw')}opensearch"/>
+    <Url rel="self" type="application/opensearchdescription+xml" template="{substring-before($cswURL, 'csw')}opensearch/{$ID}"/>
 
     <Url rel="results" template="{$cswURL}?format=application/xml&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}&amp;outputSchema=http://www.w3.org/2005/Atom" type="application/atom+xml"/>
     <Url rel="results" template="{$cswURL}?format=rdf&amp;q={{searchTerms?}}&amp;id={{geo:uid?}}&amp;bbox={{geo:bbox?}}&amp;start={{startIndex?}}&amp;language={{language?}}" type="application/rdf+xml"/>
