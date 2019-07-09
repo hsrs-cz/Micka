@@ -25,7 +25,7 @@
     
     <!--Describe Spatial Data Set Operation request URL template to be used in order to retrieve the description of Spatial Object Types in a Spatial Dataset-->
     <Url rel="results" type="application/atom+xml" template="{$cswURL}?RESID={{inspire_dls:spatial_dataset_identifier_code?}}&amp;RESNS={{inspire_dls:spatial_dataset_identifier_namespace?}}&amp;CRS={{inspire_dls:crs?}}&amp;language={{language?}}&amp;format=application/xml&amp;q={{searchTerms?}}"/>
-    <Url rel="desribedby" type="application/atom+xml" template="{$cswURL}?RESID={{inspire_dls:spatial_dataset_identifier_code?}}&amp;RESNS={{inspire_dls:spatial_dataset_identifier_namespace?}}&amp;CRS={{inspire_dls:crs?}}&amp;language={{language?}}&amp;format=application/xml&amp;q={{searchTerms?}}"/>
+    <Url rel="describedby" type="application/atom+xml" template="{$cswURL}?RESID={{inspire_dls:spatial_dataset_identifier_code?}}&amp;RESNS={{inspire_dls:spatial_dataset_identifier_namespace?}}&amp;CRS={{inspire_dls:crs?}}&amp;language={{language?}}&amp;format=application/xml&amp;q={{searchTerms?}}"/>
     <!--Get Spatial Data Set Operation request URL template to be used in order to retrieve a Spatial Dataset-->
     <Url rel="results" type="application/x-filegdb" template="{$cswURL}?RESID={{inspire_dls:spatial_dataset_identifier_code?}}&amp;RESNS={{inspire_dls:spatial_dataset_identifier_namespace?}}&amp;CRS={{inspire_dls:crs?}}&amp;language={{language?}}&amp;format=application/xml&amp;q={{searchTerms?}}"/>
    
