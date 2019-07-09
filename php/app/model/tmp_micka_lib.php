@@ -54,7 +54,6 @@ function getMetadata($s, $esn='summary'){
 }
 
 function getMetadataById($id, $esn='full'){
-    $s = stripslashes($s); // FIXME - nevim, co to udela, pokud je apostrof v retezci
 	$csw = new \Micka\Csw();
 	$params["ID"] = $id;
 	//$params['CONSTRAINT_LANGUAGE'] = 'CQL';

@@ -1007,7 +1007,7 @@ class Csw{
                     break;
             }
         }
-        if(strpos($this->params['FORMAT'],'json')!==false){
+        if(isset($this->params['FORMAT']) && strpos($this->params['FORMAT'],'json')!==false){
             $sablona = "out/json";
         }
         switch ($this->getParamL('ELEMENTSETNAME')){ //TODO - nefunguje v sablone
@@ -1043,13 +1043,13 @@ class Csw{
         $this->setXSLParams($this->params);
 
         // --- HTML ---
-        if($this->params['FORMAT']=='text/html'){
+        if(isset($this->params['FORMAT']) && $this->params['FORMAT']=='text/html'){
             if(isset($this->params['TEMPLATE']) && $this->params['TEMPLATE']) $sablona = $this->params['TEMPLATE'];
             else $sablona = "iso2htmlFull_";
             $output = $this->asHTML($this->xml, $sablona);
             $this->isXML = false;
         }
-        else if(strpos($this->params['FORMAT'],'json')!==false){
+        else if(isset($this->params['FORMAT']) && strpos($this->params['FORMAT'],'json')!==false){
             $output = $this->xp->transformToXML($this->xml);
             //die($output);
             eval($output);

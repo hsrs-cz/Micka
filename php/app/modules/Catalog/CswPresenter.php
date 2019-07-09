@@ -321,7 +321,7 @@ class CswPresenter extends \BasePresenter
         $get = $this->context->getByType('Nette\Http\Request')->getQuery();
 
         // description dokument
-        if (!$get['q'] && !$get['bbox'] && !$get['id']) {
+        //if (!$get['q'] && !$get['bbox'] && !$get['id']) {
             $port = ($_SERVER['SERVER_PORT'] == 80) ? '': ':'.$_SERVER['SERVER_PORT'];
             $path = "http://".$_SERVER['SERVER_NAME'] . $port . dirname($_SERVER['SCRIPT_NAME']) . "/";
             header("Content-type: application/xml");
@@ -329,7 +329,7 @@ class CswPresenter extends \BasePresenter
             if ($lang != 'cze'){
                 $lang = 'eng';
             }
-            $csw->xml->loadXML("<root></root>");
+            else $csw->xml->loadXML("<root></root>");
             $csw->xsl->load(dirname(__FILE__)."/../../model/xsl/openSearch.xsl");
             $csw->xp->importStyleSheet($csw->xsl);
             $params = array(
@@ -337,6 +337,7 @@ class CswPresenter extends \BasePresenter
                 'cswURL' => $this->context->parameters['cswUrl'],
                 'LANG' => $lang,
                 'MICKA_LANG' => MICKA_LANG,
+                'ID' => $id,
                 //'LANG_OTHER' => $olang,
                 'org' => $this->context->parameters['contact']['org'][$lang],
                 'email' => $this->context->parameters['contact']['email'],
@@ -346,9 +347,9 @@ class CswPresenter extends \BasePresenter
             $csw->xp->setParameter('', $params);
             echo $csw->xp->transformToXML($csw->xml);
             $this->terminate();
-        }
+        //}
 
-        $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : 'eng'; 
+        /*$params['LANGUAGE'] = isset($get['language']) ? $get['language'] : 'eng'; 
         $params['q'] = isset($get['q']) ? $_GET['q'] : '' ;
         $params['DEBUG'] = isset($get['debug']) ? $_GET['debug'] : '';
         $params['STARTPOSITION'] = isset($get['start']) ? $_GET['start'] : '';
@@ -379,10 +380,10 @@ class CswPresenter extends \BasePresenter
             $box = str_replace(",", " ", $get['bbox']);
             $params['CONSTRAINT'] .= "_BBOX_='" . $box . "'"; 
         }
-        /*if($params['LANG']){
+        if($params['LANG']){
             if($params['CONSTRAINT']) $params['CONSTRAINT'] .= " AND ";
           $params['CONSTRAINT'] .= "_LANGUAGE_='".$params['LANG']."'";  
-        }*/
+        }
         $params['STARTPOSITION'] = isset($get['start']) && $get['start'] != '' ? $get['start'] : 1;
         $csw->headers = array();
         switch ($params['FORMAT']) {
@@ -422,7 +423,7 @@ class CswPresenter extends \BasePresenter
         $result = $csw->run($params);
         $csw->setHeader();
         echo $result;
-        $this->terminate();
+        $this->terminate();*/
 	}
     
     /** @resource Catalog:Guest */

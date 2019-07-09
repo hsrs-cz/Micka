@@ -72,7 +72,7 @@
    		<link rel="describedby" href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" type="text/html"/>
 	  	
 	  	<!-- Link to Open Search XML description -->
-		<link rel="search" href="{$mickaURL}/opensearch/" hreflang="{$lang2}" title="OpenSearch" type="application/opensearchdescription+xml"/>
+		<link rel="search" href="{$mickaURL}/opensearch/{gmd:fileIdentifier}" hreflang="{$lang2}" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
 	    <link rel="self" href="{$mickaURL}/record/atom/{gmd:fileIdentifier}" hreflang="{$lang2}" type="application/atom+xml" title="This document"/>
