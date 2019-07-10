@@ -26,7 +26,7 @@
 	<xsl:variable name="mdlang" select="gmd:language/gmd:LanguageCode/@codeListValue"/>
 	<xsl:variable name="lang2" select="$cl/language/value[$LANGUAGE]/@code2"/>
 	
-	<feed xml:lang="{$lang2}">
+	<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="{$lang2}">
 		<xsl:choose>
 			<xsl:when test="gmd:hierarchyLevel/*/@codeListValue='service'">
 				<xsl:attribute name="xsi:schemaLocation">http://www.w3.org/2005/Atom http://inspire-geoportal.ec.europa.eu/schemas/inspire/atom/1.0/atom.xsd</xsl:attribute>
@@ -68,7 +68,7 @@
 	  	</subtitle>
 
 		<!-- link to download service ISO 19139 metadata -->
-   		<link rel="describedby" href="{$mickaURL}/csw/?SERVICE=CSW&amp;VERSION=2.0.2&amp;REQUEST=GetRecordById&amp;OUTPUTSCHEMA=http://www.isotc211.org/2005/gmd&amp;ID={gmd:fileIdentifier}#_{gmd:fileIdentifier}" type="application/xml"/>
+   		<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
    		<link rel="describedby" href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" type="text/html"/>
 	  	
 	  	<!-- Link to Open Search XML description -->
@@ -85,8 +85,10 @@
 	    
 	    <!-- upward link to the corresponding download service feed -->
 		<xsl:variable name="vazby" select="php:function('getMetadata', concat('uuidRef=',gmd:fileIdentifier/*))"/>
-	    <link rel="up" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$vazby//gmd:MD_Metadata/gmd:fileIdentifier/*}" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="This document"/>
-	    
+        <xsl:if test="$vazby//gmd:MD_Metadata">
+            <link rel="up" href="{$mickaURL}/record/atom/{$vazby//gmd:MD_Metadata/gmd:fileIdentifier/*}" hreflang="{$cl/language/value[@name]/@code2}" type="application/atom+xml" title="Service feed"/>
+	    </xsl:if>
+        
 	    <!-- identifier -->
       	<id><xsl:value-of select="concat($mickaURL, '/record/atom/',gmd:fileIdentifier)"/></id>
       	
@@ -148,15 +150,15 @@
 				</xsl:for-each>
 				
 				<!-- link itself -->
-				<id><xsl:value-of select="concat($mickaURL, '/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
+				<id><xsl:value-of select="concat($mickaURL, '/record/xml/', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
 				
 				<!--link to subfeed for the dataset-->
-				<link rel="alternate" href="{$mickaURL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id={$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
+				<link rel="alternate" href="{$mickaURL}/record/atom/{$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
 				
 				<!-- link to dataset metadata record -->
 				<link rel="describedby" href="{@xlink:href}" type="application/xml"/>
 				
-				<xsl:choose>		
+				<xsl:choose>
 					<xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*">
 						<published><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*"/>T00:00:00</published>							
 					</xsl:when>
