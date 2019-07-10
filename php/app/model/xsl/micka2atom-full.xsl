@@ -150,10 +150,10 @@
 				</xsl:for-each>
 				
 				<!-- link itself -->
-				<id><xsl:value-of select="concat($mickaURL, '/record/xml/', $md//gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
+				<id><xsl:value-of select="concat($mickaURL, '/record/xml/', $md//gmd:fileIdentifier, '?lang=',$LANGUAGE)"/></id>
 				
 				<!--link to subfeed for the dataset-->
-				<link rel="alternate" href="{$mickaURL}/record/atom/{$md//gmd:fileIdentifier}&amp;lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
+				<link rel="alternate" href="{$mickaURL}/record/atom/{$md//gmd:fileIdentifier}?lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
 				
 				<!-- link to dataset metadata record -->
 				<link rel="describedby" href="{@xlink:href}" type="application/xml"/>
