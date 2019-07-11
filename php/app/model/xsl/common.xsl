@@ -9,34 +9,30 @@
     xmlns:php="http://php.net/xsl" 
 >
 
-
   <xsl:template name="contact">
       <xsl:param name="org"/>
       <xsl:param name="mdLang"/>
       <xsl:for-each select="$org/CI_ResponsibleParty">
-      <gmd:CI_ResponsibleParty>
-        <xsl:if test="id">
-          <xsl:attribute name="uuid"><xsl:value-of select="id"/></xsl:attribute>
-        </xsl:if>
-            <xsl:if test="individualName">
-                <xsl:call-template name="txt">
-                    <xsl:with-param name="s" select="."/>
-                    <xsl:with-param name="name" select="'individualName'"/>
-                    <xsl:with-param name="lang" select="$mdLang"/>
-                </xsl:call-template>
+         <gmd:CI_ResponsibleParty>
+            <xsl:if test="id">
+                <xsl:attribute name="uuid"><xsl:value-of select="id"/></xsl:attribute>
             </xsl:if>
-            <xsl:if test="organisationName">
-                <xsl:call-template name="txt">
-                    <xsl:with-param name="s" select="."/>
-                    <xsl:with-param name="name" select="'organisationName'"/>
-                    <xsl:with-param name="lang" select="$mdLang"/>
-                </xsl:call-template>
-            </xsl:if>
-            <xsl:if test="positionName">
-            <gmd:positionName>
-                <gco:CharacterString><xsl:value-of select="positionName"/></gco:CharacterString>
-            </gmd:positionName>
-            </xsl:if>
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="."/>
+                <xsl:with-param name="name" select="'individualName'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
+            </xsl:call-template>
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="."/>
+                <xsl:with-param name="name" select="'organisationName'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
+            </xsl:call-template>
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="."/>
+                <xsl:with-param name="name" select="'positionName'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
+            </xsl:call-template>
+
             <xsl:if test="contactInfo">
                 <gmd:contactInfo>
                     <gmd:CI_Contact>
@@ -77,11 +73,11 @@
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
                                         </gmd:postalCode>
                                     </xsl:for-each>
-                                    <xsl:for-each select="country">	
-                                        <gmd:country>
-                                            <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
-                                        </gmd:country>
-                                    </xsl:for-each>
+                                    <xsl:call-template name="txt">
+                                        <xsl:with-param name="s" select="."/>
+                                        <xsl:with-param name="name" select="'country'"/>
+                                        <xsl:with-param name="lang" select="$mdLang"/>                      
+                                    </xsl:call-template> 
                                     <xsl:for-each select="electronicMailAddress">
                                         <gmd:electronicMailAddress>
                                             <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
@@ -114,7 +110,6 @@
         </gmd:CI_ResponsibleParty>
       </xsl:for-each>  
     </xsl:template>
-
 
   
 <!-- pro multilingualni data-->

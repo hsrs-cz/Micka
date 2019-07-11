@@ -186,19 +186,21 @@
                 <gmd:useConstraints>
                     <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode">otherRestrictions</gmd:MD_RestrictionCode>
                 </gmd:useConstraints>
-                <gmd:otherConstraints>
-                    <xsl:choose>
-                        <xsl:when test="contains(*/gmd:useLimitation/*, 'nejsou známy') or contains(*/gmd:useLimitation/*, 'unknown')">
-                            <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
-                        </xsl:when>
-                        <xsl:when test="contains(*/gmd:useLimitation/*, 'žádné podmínky') or contains(*/gmd:useLimitation/*, 'no conditions')">
-                            <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:copy-of select="*/gmd:useLimitation/*"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
-                </gmd:otherConstraints>
+                <xsl:for-each select="*/gmd:useLimitation">
+                    <gmd:otherConstraints>
+                        <xsl:choose>
+                            <xsl:when test="contains(*, 'nejsou známy') or contains(*/gmd:useLimitation/*, 'unknown')">
+                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
+                            </xsl:when>
+                            <xsl:when test="contains(*, 'žádné podmínky') or contains(*/gmd:useLimitation/*, 'no conditions')">
+                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:copy-of select="*"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </gmd:otherConstraints>
+                </xsl:for-each>
             </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
 	</xsl:template>
