@@ -887,7 +887,7 @@
 									<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 									<xsl:with-param name="lang" select="$lang"/>
 									<xsl:with-param name="mdlang" select="$mdlang"/>
-								</xsl:call-template>							 
+								</xsl:call-template>
 							</a></div>
 					</xsl:for-each>
 				</div></div>
@@ -913,7 +913,7 @@
 										<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 										<xsl:with-param name="lang" select="$lang"/>
 										<xsl:with-param name="mdlang" select="$mdlang"/>
-									</xsl:call-template>							 
+									</xsl:call-template>
 								</a></div>
 						</xsl:for-each>
 					</xsl:for-each>
@@ -928,12 +928,11 @@
 					<xsl:value-of select="$msg[@eng='Feature catalogue']"/>
 				</label>
 				<div class="c">
-					<!-- <xsl:value-of select="gmd:featureCatalogueCitation/*/gmd:title"/> -->
 					<xsl:call-template name="multi">
 						<xsl:with-param name="el" select="gmd:featureCatalogueCitation/*/gmd:title"/>
 						<xsl:with-param name="lang" select="$lang"/>
 						<xsl:with-param name="mdlang" select="$mdlang"/>
-					</xsl:call-template>							 
+					</xsl:call-template>
 
 					<xsl:variable name="url">
 						<xsl:if test="gmd:featureCatalogueCitation/*/gmd:identifier">	
@@ -967,13 +966,13 @@
                                     </a>
   								</xsl:otherwise>
               				</xsl:choose>   
-						</div>						
+						</div>
 					</xsl:for-each>
 				</div>
 			</div>
-		</xsl:for-each>		
+		</xsl:for-each>
 
-		</div>		
+		</div>
 	</xsl:template>
 	
 	<!-- Dublin Core -->

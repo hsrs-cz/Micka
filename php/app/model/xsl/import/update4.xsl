@@ -322,4 +322,9 @@
         </gmd:CI_Citation>
     </xsl:template>
     
+    <!-- language as string - old FAO Geonetwork -->
+    <xsl:template match="gmd:language[string-length(gco:CharacterString) &gt; 0]">
+        <gmd:language><gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{*}"><xsl:value-of select="*"/></gmd:LanguageCode></gmd:language>
+    </xsl:template>
+    
 </xsl:stylesheet>
