@@ -1245,6 +1245,7 @@ class Csw{
    */
   function update($nodeName='', $editGroup='', $viewGroup='', $public=0, $stopOnError=true, $overwrite='all') {
     $recordModel = new \App\Model\RecordModel($this->dbContext, $this->user);
+    $recordModel->setAppParameters($this->appParameters);
     /*
     $importer = new MetadataImport($this->params['DEBUG']);
     $md = $importer->xml2array($this->xml, __DIR__ ."/xsl/update2micka.xsl");
