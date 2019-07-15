@@ -1243,7 +1243,7 @@ class Csw{
    * @param boolean $stopOnError If set true, insert no record if error occurs. Otherwise attempts to insert at least valid elements.
    * @return array Associative array with update results (both successful and failed records)
    */
-  function update($nodeName='', $editGroup='', $viewGroup='', $public=0, $stopOnError=true, $overwrite='all') {
+  function update($node=[], $editGroup='', $viewGroup='', $public=0, $stopOnError=true, $overwrite='all') {
     $recordModel = new \App\Model\RecordModel($this->dbContext, $this->user);
     $recordModel->setAppParameters($this->appParameters);
     /*
@@ -1272,7 +1272,8 @@ class Csw{
         $params['view_group'] = $viewGroup;
     }
     $params['stop_error'] = $stopOnError; // pokud dojde k chybě při importu pokračuje
-    $params['server_name'] = $nodeName; // jméno serveru ze kterého se importuje
+    $params['server_name'] = $node['name']; // jméno serveru ze kterého se importuje
+    $params['server_location'] = $node['source']; // jméno serveru ze kterého se importuje
     $params['valid_type'] = array('type' => 'array', 'short' => TRUE); // formát validace
     $params['update_type'] = $overwrite;
     $result = $recordModel->setXmlFromCsw($this->xml, $params);

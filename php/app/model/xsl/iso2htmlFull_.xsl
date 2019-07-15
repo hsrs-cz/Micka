@@ -900,22 +900,45 @@
 				<label><xsl:value-of select="$msg[@eng='Use']"/></label>
 				<div class="c">
 					 <xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn">
-						<!--xsl:variable name="siblinks" select="php:function('getMetadata', concat('identifier=',$opid))"/-->
-						<xsl:variable name="siblinks" select="php:function('getData', string(@xlink:href))"/>
-						<xsl:for-each select="$siblinks//gmd:MD_Metadata">
-							<xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
-							<xsl:variable name="url"><xsl:value-of select="concat('',normalize-space(gmd:fileIdentifier))"/></xsl:variable>
-							<div><a href="{$url}" class="t"  title="{$cl/updateScope/value[@name=$a]/*[name=$lang]}">
-								<xsl:call-template name="showres">
-									<xsl:with-param name="r" select="$a"/>
-								</xsl:call-template>
-									<xsl:call-template name="multi">
-										<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
-										<xsl:with-param name="lang" select="$lang"/>
-										<xsl:with-param name="mdlang" select="$mdlang"/>
-									</xsl:call-template>
-								</a></div>
-						</xsl:for-each>
+                        <!-- try primarly find records in catalogue itself -->
+                        <xsl:variable name="id" select="php:function('getUuid', string(@xlink:href))"/>
+                        <xsl:variable name="oo" select="php:function('getMetadataById', $id)"/>
+                        <xsl:choose>
+                            <xsl:when test="$oo">
+                                <xsl:for-each select="$oo//gmd:MD_Metadata">
+                                    <xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
+                                    <xsl:variable name="url"><xsl:value-of select="concat('',normalize-space(gmd:fileIdentifier))"/></xsl:variable>
+                                    <div><a href="{$url}" class="t"  title="{$cl/updateScope/value[@name=$a]/*[name=$lang]}">
+                                        <xsl:call-template name="showres">
+                                            <xsl:with-param name="r" select="$a"/>
+                                        </xsl:call-template>
+                                        <xsl:call-template name="multi">
+                                            <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+                                            <xsl:with-param name="lang" select="$lang"/>
+                                            <xsl:with-param name="mdlang" select="$mdlang"/>
+                                        </xsl:call-template>
+                                        </a></div>
+                                </xsl:for-each>
+                            </xsl:when>
+                            <!-- if not, follows href -->
+                            <xsl:otherwise>
+                                <xsl:variable name="siblinks" select="php:function('getData', string(@xlink:href))"/>
+                                <xsl:for-each select="$siblinks//gmd:MD_Metadata">
+                                    <xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
+                                    <xsl:variable name="url"><xsl:value-of select="concat('',normalize-space(gmd:fileIdentifier))"/></xsl:variable>
+                                    <div><a href="{$url}" class="t"  title="{$cl/updateScope/value[@name=$a]/*[name=$lang]}">
+                                        <xsl:call-template name="showres">
+                                            <xsl:with-param name="r" select="$a"/>
+                                        </xsl:call-template>
+                                        <xsl:call-template name="multi">
+                                            <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+                                            <xsl:with-param name="lang" select="$lang"/>
+                                            <xsl:with-param name="mdlang" select="$mdlang"/>
+                                        </xsl:call-template>
+                                        </a></div>
+                                </xsl:for-each>
+                            </xsl:otherwise>
+                        </xsl:choose>
 					</xsl:for-each>
 				</div>	
 			</div>
@@ -1291,7 +1314,7 @@
                                 <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
                                 <xsl:with-param name="lang" select="$lang"/>
                                 <xsl:with-param name="mdlang" select="$mdlang"/>
-                            </xsl:call-template>							 
+                            </xsl:call-template>
                         </a>
                         <xsl:choose>
                             <xsl:when test="$level &lt; 6">

@@ -31,6 +31,14 @@ function getCRS($s){
     return $dom;
 }
 
+function getUuid($s){
+    if(!$s) return '';
+    $p = '/(id|ID)=(.+?)(\s|$|\#|\&)/';
+    preg_match($p, $s, $m);
+    if(!$m) return '';
+    return str_replace('"','',$m[2]);
+}
+
 // pro XSLT - dotaz na metadata
 function getMetadata($s, $esn='summary'){
     $s = stripslashes($s); // FIXME - nevim, co to udela, pokud je apostrof v retezci

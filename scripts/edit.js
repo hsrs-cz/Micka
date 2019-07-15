@@ -1686,7 +1686,7 @@ var md_callBack = function(cb, uuid){
 
 var md_upload = function(obj, mime){
     var f=false;
-	micka.window(obj,'Nahrát soubor', 
+	micka.window(obj,'Vybrat soubor', 
         '<div class="input-group">'
             +'<input id="file-info" type="text" class="form-control" readonly>'
             +'<label class="input-group-btn"><span class="btn btn-primary">Vyber<input name="f" type="file" style="display: none;"/></span></label>'
@@ -1701,11 +1701,12 @@ var md_upload = function(obj, mime){
         $('#upload-confirm').prop('disabled', false);
     });
     $('#upload-confirm').on('click', function(e){
+        alert("Not implemented yet."); return;
         var form = new FormData();
         form.append("file", f, f.name);
         $('#file-progress').css({display:'block'});
         $.ajax({ 
-            url: '?ak=md_upload', 
+            url: baseUrl + '/suggest/files', 
             data: form, 
             processData: false, 
             contentType: false, 
