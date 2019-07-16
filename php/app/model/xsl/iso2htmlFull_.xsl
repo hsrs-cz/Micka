@@ -901,8 +901,13 @@
 				<div class="c">
 					 <xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn">
                         <!-- try primarly find records in catalogue itself -->
-                        <xsl:variable name="id" select="php:function('getUuid', string(@xlink:href))"/>
-                        <xsl:variable name="oo" select="php:function('getMetadataById', $id)"/>
+                        <xsl:variable name="id">
+                            <xsl:choose>
+                                <xsl:when test="@uuidref"><xsl:value-of select="@uuidref"/></xsl:when>
+                                <xsl:otherwise><xsl:value-of select="php:function('getUuid', string(@xlink:href))"/></xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="oo" select="php:function('getMetadataById', normalize-space($id))"/>
                         <xsl:choose>
                             <xsl:when test="$oo">
                                 <xsl:for-each select="$oo//gmd:MD_Metadata">
