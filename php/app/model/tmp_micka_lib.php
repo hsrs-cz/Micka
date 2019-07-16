@@ -62,6 +62,7 @@ function getMetadata($s, $esn='summary'){
 }
 
 function getMetadataById($id, $esn='full'){
+    if(!$id) return '';
 	$csw = new \Micka\Csw();
 	$params["ID"] = $id;
 	//$params['CONSTRAINT_LANGUAGE'] = 'CQL';
@@ -74,7 +75,7 @@ function getMetadataById($id, $esn='full'){
 	$params['ELEMENTSETNAME'] = $esn;
 	$params['buffered'] = true;
 	$result = $csw->run($params);
-	//file_put_contents(__DIR__ . "/../../log/getMetadataById".uniqid().".txt", print_r($params, true).$result);
+	file_put_contents(__DIR__ . "/../../log/getMetadataById".uniqid().".txt", print_r($params, true).$result);
 	$dom = new DOMDocument();
 	$dom->loadXML($result);
 	return $dom;
