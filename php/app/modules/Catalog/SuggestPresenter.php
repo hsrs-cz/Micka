@@ -115,5 +115,15 @@ class SuggestPresenter extends \BasePresenter
             $this->template->contacts = $contactsModel->findMdContacts();
         }
     }
+
+    /** @resource Catalog:Editor */
+	public function renderFiles()
+	{
+        $filesModel = new \App\Model\FilesModel($this->context->getByType('Nette\Database\Context'), $this->user);
+        $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
+                $filesModel->getFiles(), 
+                "application/json;charset=utf-8"
+            ));
+    }
     
 }

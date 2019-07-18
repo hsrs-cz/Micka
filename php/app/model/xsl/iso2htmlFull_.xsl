@@ -84,10 +84,10 @@
 			<xsl:if test="string-length($wmsURL)>0">
 				<xsl:choose>
 					<xsl:when test="contains($wmsURL,'?')">
-			   			<a class='map' href="{$viewerURL}{substring-before($wmsURL,'?')}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>		  				
+			   			<a class='map' href="{$viewerURL}{php:function('urlencode', substring-before($wmsURL,'?'))}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
 					</xsl:when>
 					<xsl:otherwise>
-						<a class='map' href="{$viewerURL}{$wmsURL}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
+						<a class='map' href="{$viewerURL}{php:function('urlencode', $wmsURL)}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:text> </xsl:text>
@@ -98,9 +98,9 @@
 						<xsl:when test="../@valid=1"><i class="fa fa-exclamation-triangle fa-fw"></i></xsl:when>
 						<xsl:otherwise><i class="fa fa-ban fa-fw"></i></xsl:otherwise>
 					</xsl:choose></a>
-				<a href="../edit/{../@uuid}?f=basic" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>				
-				<a href="../clone/{../@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>				
-				<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '../delete/{../@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>				
+				<a href="../edit/{../@uuid}?f=basic" class="edit" data-tooltip="tooltip" data-original-title="{$msg[@eng='edit']}"><i class="fa fa-pencil fa-fw"></i></a>
+				<a href="../clone/{../@uuid}" class="copy" data-tooltip="tooltip" data-original-title="{$msg[@eng='clone']}"><i class="fa fa-clone fa-fw"></i></a>
+				<a href="javascript: micka.confirmURL(HS.i18n('Delete record')+'?', '../delete/{../@uuid}');" class="delete" data-tooltip="tooltip" data-original-title="{$msg[@eng='delete']}"><i class="fa fa-trash fa-fw"></i></a>
 			</xsl:if>
 			<xsl:if test="../@read=1">
 				<xsl:if test="../@md_standard=0 or ../@md_standard=10">
@@ -108,7 +108,7 @@
 				</xsl:if>
 				<a href="../xml/{../@uuid}" class="xml" target="_blank" data-tooltip="tooltip" data-original-title="XML"><i class="fa fa-file-code-o fa-fw"></i></a>
 			</xsl:if>
-		</div>			
+		</div>
 	</ol>
 
 	<h1 title="{$cl/updateScope/value[@name=$hlevel]/*[name()=$lang]}" property="http://purl.org/dc/terms/title">
@@ -150,7 +150,7 @@
                     </div>
                 </div>
             </div>
-        </xsl:if>	
+        </xsl:if>
         
         <div class="micka-row" rel="http://www.w3.org/1999/02/22-rdf-syntax-ns#type">
             <label><xsl:value-of select="$msg[@eng='Type']"/></label>
@@ -167,7 +167,6 @@
                 </xsl:if>
             </div>
         </div>
-
 
         <div class="micka-row" rel="http://www.w3.org/ns/dcat#distribution">
             <label><xsl:value-of select="$msg[@eng='Resource Locator']"/></label>
@@ -359,7 +358,7 @@
                                     <xsl:choose>
                                         <xsl:when test="contains(*/@xlink:href, 'inspire.ec.europa.eu/theme')">
                                             <a property="http://www.w3.org/ns/dcat#theme"  typeof="http://www.w3.org/2000/01/rdf-schema#Resource" resource="{./*/@xlink:href}" href="{./*/@xlink:href}" title="{$theme}" target="_blank">
-                                                <img src="{$mickaURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
+                                                <img src="{$baseURL}/layout/default/img/inspire/{substring-after(./*/@xlink:href, 'theme/')}.png"/>
                                             </a>
                                             <xsl:text> </xsl:text>
                                         </xsl:when>
@@ -436,8 +435,6 @@
                         </div>
                     </div>
                 </xsl:for-each>
-
-
             </div>
         </div>
 
@@ -693,6 +690,16 @@
                                 </xsl:call-template>
                             </a>
                         </xsl:when>
+                        <xsl:when test="contains(*/@xlink:href,'inspire.europa.eu')">
+                            <a href="{gmx:Anchor/@xlink:href}" target="_blank">
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="."/>
+                                    <xsl:with-param name="lang" select="$lang"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    <xsl:with-param name="codelist" select="$cl/limitationsAccess"/>
+                                </xsl:call-template>
+                            </a>
+                        </xsl:when>
                         <xsl:otherwise>
                             <div>
                                 <xsl:call-template name="multi">
@@ -848,7 +855,7 @@
                                     <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
                                     <xsl:with-param name="lang" select="$lang"/>
                                     <xsl:with-param name="mdlang" select="$mdlang"/>
-                                </xsl:call-template>							 
+                                </xsl:call-template>
                             </a>
 							<xsl:call-template name="subsets">
 								<xsl:with-param name="fid" select="gmd:fileIdentifier"/>

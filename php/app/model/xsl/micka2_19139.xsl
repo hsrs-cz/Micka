@@ -25,7 +25,7 @@
     <xsl:variable name="clx">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml</xsl:variable>
 
 <xsl:template match="MD_Metadata" 
-	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
 	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0"
     xmlns:gco="http://www.isotc211.org/2005/gco">
 
@@ -676,8 +676,12 @@
                </srv:DCP>
                <srv:connectPoint>
                  <gmd:CI_OnlineResource>
-                   <gmd:linkage><gmd:URL><xsl:value-of select="*/connectPoint/*/linkage"/></gmd:URL></gmd:linkage>
-                   <gmd:protocol><gco:CharacterString><xsl:value-of select="*/connectPoint/*/protocol"/></gco:CharacterString></gmd:protocol>
+                    <gmd:linkage><gmd:URL><xsl:value-of select="*/connectPoint/*/linkage"/></gmd:URL></gmd:linkage>
+                    <xsl:call-template name="txt">
+                        <xsl:with-param name="s" select="*/connectPoint/*"/>
+                        <xsl:with-param name="name" select="'protocol'"/>
+                        <xsl:with-param name="lang" select="$mdLang"/>
+                    </xsl:call-template>
                  </gmd:CI_OnlineResource>
                </srv:connectPoint>
             </srv:SV_OperationMetadata>            
@@ -830,11 +834,11 @@
 								<gmd:CI_OnlineResource>
 									<gmd:linkage>
 										<gmd:URL><xsl:value-of select="*/linkage"/></gmd:URL>
-									</gmd:linkage>								
+									</gmd:linkage>
                                     <xsl:call-template name="txt">
-                			  			<xsl:with-param name="s" select="*"/>                      
-                			  			<xsl:with-param name="name" select="'protocol'"/>                      
-                			  			<xsl:with-param name="lang" select="$mdLang"/>                     
+                			  			<xsl:with-param name="s" select="*"/>
+                			  			<xsl:with-param name="name" select="'protocol'"/>
+                			  			<xsl:with-param name="lang" select="$mdLang"/>
             			  			</xsl:call-template>
 									<xsl:call-template name="txt">
                 			  			<xsl:with-param name="s" select="*"/>
@@ -842,16 +846,16 @@
                 			  			<xsl:with-param name="lang" select="$mdLang"/>                     
             			  			</xsl:call-template>
 									<xsl:call-template name="txt">
-                			  			<xsl:with-param name="s" select="*"/>                      
-                			  			<xsl:with-param name="name" select="'description'"/>                      
-                			  			<xsl:with-param name="lang" select="$mdLang"/>                     
+                			  			<xsl:with-param name="s" select="*"/> 
+                			  			<xsl:with-param name="name" select="'description'"/> 
+                			  			<xsl:with-param name="lang" select="$mdLang"/>
             			  			</xsl:call-template>
 									<gmd:function>
 										<gmd:CI_OnLineFunctionCode codeListValue="{*/function/CI_OnLineFunctionCode}" codeList="{$clx}#CI_OnLineFunctionCode"><xsl:value-of select="CI_OnlineResource/function/CI_OnLineFunctionCode"/></gmd:CI_OnLineFunctionCode>
-									</gmd:function>							
+									</gmd:function>	
 								</gmd:CI_OnlineResource>
 							</gmd:onLine>
-						</xsl:for-each>							            
+						</xsl:for-each>
             			<xsl:for-each select="MD_Distribution/transferOptions/offLine">
 							<gmd:offLine>
 					      <gmd:MD_Medium>
@@ -1132,7 +1136,7 @@
    </xsl:template>
    
    <!-- source -->
-	<xsl:template match="source" xmlns:gml="http://www.opengis.net/gml" >
+	<xsl:template match="source" xmlns:gml="http://www.opengis.net/gml/3.2" >
 			<gmd:source><gmd:LI_Source>
 				<xsl:call-template name="txt">
 				  <xsl:with-param name="s" select="LI_Source"/>
@@ -1405,7 +1409,7 @@
   <xsl:template match="FC_FeatureCatalogue" 
   	xmlns:gfc="http://www.isotc211.org/2005/gfc"
   	xmlns:gmx="http://www.isotc211.org/2005/gmx"
-  	xmlns:gml="http://www.opengis.net/gml"
+  	xmlns:gml="http://www.opengis.net/gml/3.2"
   	xmlns:gco="http://www.isotc211.org/2005/gco"  	
   	>
   	<gfc:FC_FeatureCatalogue xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd" uuid="{@uuid}">
@@ -1544,7 +1548,10 @@
   	</gfc:FC_FeatureCatalogue>
   </xsl:template> 
    
-    <xsl:template name="citation" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml">
+    <xsl:template name="citation" 
+        xmlns:gmd="http://www.isotc211.org/2005/gmd" 
+        xmlns:gco="http://www.isotc211.org/2005/gco" 
+        xmlns:gml="http://www.opengis.net/gml/3.2">
         <xsl:param name="cit"/>
         <xsl:param name="cl"/>
         <xsl:param name="mdLang"/>

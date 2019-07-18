@@ -119,105 +119,107 @@
 		<!-- entry for a "Dataset Feed" for a pre-defined dataset -->
 		<xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn">
 			<xsl:variable name="md" select="php:function('getData', string(@xlink:href))"/>
-			<xsl:variable name="mdlang1" select="$md//gmd:language/gmd:LanguageCode/@codeListValue"/>
-			<entry>
-				<!-- INSPIRE dataset identifier -->
-                <xsl:choose>
-                    <xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
-                        <inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/></inspire_dls:spatial_dataset_identifier_code>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*"/></inspire_dls:spatial_dataset_identifier_code>
-                    </xsl:otherwise>
-                </xsl:choose>
-				
-				<!-- optional namespace -->
-				<xsl:if test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace">
-					<inspire_dls:spatial_dataset_identifier_namespace><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace"/></inspire_dls:spatial_dataset_identifier_namespace>
-				</xsl:if>
+            <xsl:if test="$md//gmd:identificationInfo">
+                <xsl:variable name="mdlang1" select="$md//gmd:language/gmd:LanguageCode/@codeListValue"/>
+                <entry>
+                    <!-- INSPIRE dataset identifier -->
+                    <xsl:choose>
+                        <xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href">
+                            <inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*/@xlink:href"/></inspire_dls:spatial_dataset_identifier_code>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <inspire_dls:spatial_dataset_identifier_code><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code/*"/></inspire_dls:spatial_dataset_identifier_code>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    
+                    <!-- optional namespace -->
+                    <xsl:if test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace">
+                        <inspire_dls:spatial_dataset_identifier_namespace><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:codeSpace"/></inspire_dls:spatial_dataset_identifier_namespace>
+                    </xsl:if>
 
-				<!-- CRSs in which the pre-defined Dataset is available --> 
-				<xsl:for-each select="$md//gmd:referenceSystemInfo">
-					<category term="{*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href}" label="{*/gmd:referenceSystemIdentifier/*/gmd:code}"/>
-				</xsl:for-each>
-				
-				<!--  author FIXME - only certain roles? -->
-				<xsl:for-each select="$md//gmd:identificationInfo/*/gmd:pointOfContact">
-				  	<author>
-			        	<name><xsl:value-of select="*/gmd:organisationName/*"/></name>
-			        	<email><xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/></email>
-			    	</author>
-				</xsl:for-each>
-				
-				<!-- link itself -->
-				<id><xsl:value-of select="concat($mickaURL, '/record/xml/', $md//gmd:fileIdentifier, '?lang=',$LANGUAGE)"/></id>
-				
-				<!--link to subfeed for the dataset-->
-				<link rel="alternate" href="{$mickaURL}/record/atom/{$md//gmd:fileIdentifier}?lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
-				
-				<!-- link to dataset metadata record -->
-				<link rel="describedby" href="{@xlink:href}" type="application/xml"/>
-				
-				<xsl:choose>
-					<xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*">
-						<published><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*"/>T00:00:00</published>							
-					</xsl:when>
-					<xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*">
-						<published><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*"/>T00:00:00</published>							
-					</xsl:when>
-				</xsl:choose>
-				
-				<rights><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints"/></rights>
-				
-				<summary type="html"><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
-		      		<xsl:call-template name="multi">
-			    		<xsl:with-param name="el" select="$md//gmd:identificationInfo/*/gmd:abstract"/>
-			    		<xsl:with-param name="lang" select="$LANGUAGE"/>
-			    		<xsl:with-param name="mdlang" select="$mdlang1"/>
-			  		</xsl:call-template>
-			  		<xsl:if test="$md//gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
-			  			<div><img src="{$md//gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}" /></div>
-			  			<xsl:call-template name="multi">
-			    			<xsl:with-param name="el" select="$md//gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileDescription"/>
-			    			<xsl:with-param name="lang" select="$LANGUAGE"/>
-			    			<xsl:with-param name="mdlang" select="$mdlang"/>
-			  			</xsl:call-template>
-			  		</xsl:if>	
-			  		<div>Metadata:
-			  			<a href="{$mickaURL}/record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-			  			<a href="{$mickaURL}/record/xml/{$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-			  			<a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
-			  		</div>
-			  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
-			  	</summary>
-			  	
-			  	<!-- dataset title -->
-				<title>
-		      		<xsl:call-template name="multi">
-			    		<xsl:with-param name="el" select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
-			    		<xsl:with-param name="lang" select="$LANGUAGE"/>
-			    		<xsl:with-param name="mdlang" select="$mdlang1"/>
-			  		</xsl:call-template>
-				</title>
-				
-				<!-- dataset metadata update -->
-				<updated><xsl:value-of select="$md//gmd:dateStamp"/>T00:00:00</updated>
-				
-		      	<xsl:for-each select="$md//gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
-			        <georss:polygon>
-				      	<xsl:value-of select="gmd:westBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:southBoundLatitude"/>
-				      	<xsl:text> </xsl:text>
-				      	<xsl:value-of select="gmd:westBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:northBoundLatitude"/>
-				      	<xsl:text> </xsl:text>
-				      	<xsl:value-of select="gmd:eastBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:northBoundLatitude"/>
-				      	<xsl:text> </xsl:text>
-				       	<xsl:value-of select="gmd:eastBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:southBoundLatitude"/>
-				      	<xsl:text> </xsl:text>
-				      	<xsl:value-of select="gmd:westBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:southBoundLatitude"/>
-			        </georss:polygon>
-		      	</xsl:for-each>
-				
-			</entry>
+                    <!-- CRSs in which the pre-defined Dataset is available --> 
+                    <xsl:for-each select="$md//gmd:referenceSystemInfo">
+                        <category term="{*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href}" label="{*/gmd:referenceSystemIdentifier/*/gmd:code}"/>
+                    </xsl:for-each>
+                    
+                    <!--  author FIXME - only certain roles? -->
+                    <xsl:for-each select="$md//gmd:identificationInfo/*/gmd:pointOfContact">
+                        <author>
+                            <name><xsl:value-of select="*/gmd:organisationName/*"/></name>
+                            <email><xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/></email>
+                        </author>
+                    </xsl:for-each>
+                    
+                    <!-- link itself -->
+                    <id><xsl:value-of select="concat($mickaURL, '/record/xml/', $md//gmd:fileIdentifier, '?lang=',$LANGUAGE)"/></id>
+                    
+                    <!--link to subfeed for the dataset-->
+                    <link rel="alternate" href="{$mickaURL}/record/atom/{$md//gmd:fileIdentifier}?lang={$LANGUAGE}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
+                    
+                    <!-- link to dataset metadata record -->
+                    <link rel="describedby" href="{@xlink:href}" type="application/xml"/>
+                    
+                    <xsl:choose>
+                        <xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*">
+                            <published><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='publication']/*/gmd:date/*"/>T00:00:00</published>							
+                        </xsl:when>
+                        <xsl:when test="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*">
+                            <published><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:date[*/gmd:dateType/*/@codeListValue='creation']/*/gmd:date/*"/>T00:00:00</published>							
+                        </xsl:when>
+                    </xsl:choose>
+                    
+                    <rights><xsl:value-of select="$md//gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints"/></rights>
+                    
+                    <summary type="html"><xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
+                        <xsl:call-template name="multi">
+                            <xsl:with-param name="el" select="$md//gmd:identificationInfo/*/gmd:abstract"/>
+                            <xsl:with-param name="lang" select="$LANGUAGE"/>
+                            <xsl:with-param name="mdlang" select="$mdlang1"/>
+                        </xsl:call-template>
+                        <xsl:if test="$md//gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*">
+                            <div><img src="{$md//gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}" /></div>
+                            <xsl:call-template name="multi">
+                                <xsl:with-param name="el" select="$md//gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileDescription"/>
+                                <xsl:with-param name="lang" select="$LANGUAGE"/>
+                                <xsl:with-param name="mdlang" select="$mdlang"/>
+                            </xsl:call-template>
+                        </xsl:if>	
+                        <div>Metadata:
+                            <a href="{$mickaURL}/record/basic/{$md//gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
+                            <a href="{$mickaURL}/record/xml/{$md//gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+                            <a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={$md//gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+                        </div>
+                        <xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
+                    </summary>
+                    
+                    <!-- dataset title -->
+                    <title>
+                        <xsl:call-template name="multi">
+                            <xsl:with-param name="el" select="$md//gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
+                            <xsl:with-param name="lang" select="$LANGUAGE"/>
+                            <xsl:with-param name="mdlang" select="$mdlang1"/>
+                        </xsl:call-template>
+                    </title>
+                    
+                    <!-- dataset metadata update -->
+                    <updated><xsl:value-of select="$md//gmd:dateStamp"/>T00:00:00</updated>
+                    
+                    <xsl:for-each select="$md//gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
+                        <georss:polygon>
+                            <xsl:value-of select="gmd:westBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:southBoundLatitude"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="gmd:westBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:northBoundLatitude"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="gmd:eastBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:northBoundLatitude"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="gmd:eastBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:southBoundLatitude"/>
+                            <xsl:text> </xsl:text>
+                            <xsl:value-of select="gmd:westBoundLongitude"/><xsl:text> </xsl:text><xsl:value-of select="gmd:southBoundLatitude"/>
+                        </georss:polygon>
+                    </xsl:for-each>
+                    
+                </entry>
+            </xsl:if>
 		</xsl:for-each>
 
 		<!-- dataset extent -->

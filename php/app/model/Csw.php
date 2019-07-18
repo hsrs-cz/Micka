@@ -475,6 +475,7 @@ class Csw{
     }
     $this->params['timestamp'] = gmdate("Y-m-d\TH:i:s");
     $this->params['mickaURL'] = $this->mickaURL;
+    $this->params['baseURL'] = $this->appParameters['basePath'];
     $this->params['buffered'] = isset($params['buffered']) ? $params['buffered'] : '';
     //$this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ? $this->appParameters['appLocale'].'/' : '';
     $this->params['viewerURL'] = isset($this->appParameters['map']['viewerURL'])
