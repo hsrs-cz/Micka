@@ -15,8 +15,8 @@
 	<msg eng="Keywords">Keywords</msg>
 	<msg eng="Free">Free</msg>
 	<msg eng="Constraints">Constraints</msg>
-	<msg eng="Use Limitation">Use Limitation</msg>
-	<msg eng="Access Constraints">Access Constraints</msg>
+	<msg eng="Use Limitation">Access and use conditions</msg>
+	<msg eng="Access Constraints">Limitations on public access</msg>
 	<msg eng="Bounding box">Bounding box</msg>
 	<msg eng="Contact Info">Contact Info</msg>
 	<msg eng="Metadata Contact">Metadata Contact</msg>	

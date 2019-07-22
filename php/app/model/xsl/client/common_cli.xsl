@@ -6,46 +6,38 @@
 
 <!-- for multiligual elements -->
 <xsl:template name="multi" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <xsl:param name="el"/>
-  <xsl:param name="lang"/>
-  <xsl:param name="mdlang"/>
-  <xsl:variable name="txt" select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]"/>	
-  <xsl:variable name="uri" select="$el/*/@xlink:href"/>	
-  <xsl:choose>
-  	<xsl:when test="string-length($txt)>0">
-  		<xsl:choose>
-  			<xsl:when test="$uri">
-  				<a href="{$uri}" target="_blank">
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$txt"/>
-      			</xsl:call-template>                
-  				</a>
-  			</xsl:when>		
-  			<xsl:otherwise>
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$txt"/>
-      			</xsl:call-template>
-      		</xsl:otherwise>	
-  		</xsl:choose>
-  	</xsl:when>
-  	<xsl:otherwise>
-  		<xsl:choose>
-  			<xsl:when test="$uri">
-  				<a href="{$uri}" target="_blank">
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$el/*"/>
-      			</xsl:call-template>
-                <!--xsl:value-of select="php:function('hsEntitities',string($el/*))"/--> 
-  				</a>
-  			</xsl:when>		
-  			<xsl:otherwise>
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="normalize-space($el/*)"/>
-      			</xsl:call-template>
-      		</xsl:otherwise>
-  		</xsl:choose>		
-  	</xsl:otherwise>
-  </xsl:choose>
+    <xsl:param name="el"/>
+    <xsl:param name="lang"/>
+    <xsl:param name="mdlang"/>
+    <xsl:param name="codelist" select="''"/>
+    <xsl:variable name="uri" select="$el/*/@xlink:href"/>
+    <xsl:variable name="txt">
+        <xsl:choose>
+            <xsl:when test="$codelist and $codelist/value[@uri=$uri]">
+                <xsl:value-of select="$codelist/value[@uri=$uri]/*[name()=$lang]"/>
+            </xsl:when>
+            <xsl:when test="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]">
+                <xsl:value-of select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$el/*"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+        <xsl:when test="$uri">
+            <a href="{$uri}" target="_blank">
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str" select="$txt"/>
+            </xsl:call-template>                
+            </a>
+        </xsl:when>		
+        <xsl:otherwise>
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str" select="$txt"/>
+            </xsl:call-template>
+        </xsl:otherwise>	
+    </xsl:choose>
 </xsl:template>
 
 <!-- conversion of line breaks to <br> -->

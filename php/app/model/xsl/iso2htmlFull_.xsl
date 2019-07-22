@@ -663,8 +663,8 @@
 							<xsl:with-param name="el" select="*/gmd:specification/*/gmd:title"/>
 							<xsl:with-param name="lang" select="$lang"/>
 							<xsl:with-param name="mdlang" select="$mdlang"/>
+                            <xsl:with-param name="codelist" select="$cl/specifications"/>
 						</xsl:call-template>
-						<!--b><xsl:value-of select="$cl/compliant/value[@name=$k]"/></b-->
 					</xsl:for-each>
 				</div>
 			</div>
@@ -679,6 +679,7 @@
             <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue]">
                 <xsl:for-each select="*/gmd:otherConstraints">
                     <xsl:choose>
+                        <!-- CC -->
                         <xsl:when test="contains(*/@xlink:href,'://creativecommons.org')">
                             <xsl:variable name="licence" select="substring-after(*/@xlink:href,'creativecommons.org/licenses/')"/>							
                             <a href="{gmx:Anchor/@xlink:href}" target="_blank">
@@ -687,25 +688,18 @@
                                     <xsl:with-param name="el" select="."/>
                                     <xsl:with-param name="lang" select="$lang"/>
                                     <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    <xsl:with-param name="codelist" select="$cl/accessCond"/>
                                 </xsl:call-template>
                             </a>
                         </xsl:when>
-                        <xsl:when test="contains(*/@xlink:href,'inspire.europa.eu')">
-                            <a href="{gmx:Anchor/@xlink:href}" target="_blank">
-                                <xsl:call-template name="multi">
-                                    <xsl:with-param name="el" select="."/>
-                                    <xsl:with-param name="lang" select="$lang"/>
-                                    <xsl:with-param name="mdlang" select="$mdlang"/>
-                                    <xsl:with-param name="codelist" select="$cl/limitationsAccess"/>
-                                </xsl:call-template>
-                            </a>
-                        </xsl:when>
+                        <!-- other -->
                         <xsl:otherwise>
                             <div>
                                 <xsl:call-template name="multi">
                                     <xsl:with-param name="el" select="."/>
                                     <xsl:with-param name="lang" select="$lang"/>
                                     <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    <xsl:with-param name="codelist" select="$cl/accessCond"/>
                                 </xsl:call-template>
                             </div>
                         </xsl:otherwise>
@@ -732,11 +726,12 @@
                                 </a>
                             </xsl:when>
                             <xsl:otherwise>
-                            <xsl:call-template name="multi">
-                                <xsl:with-param name="el" select="."/>
-                                <xsl:with-param name="lang" select="$lang"/>
-                                <xsl:with-param name="mdlang" select="$mdlang"/>
-                            </xsl:call-template>
+                                <xsl:call-template name="multi">
+                                    <xsl:with-param name="el" select="."/>
+                                    <xsl:with-param name="lang" select="$lang"/>
+                                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                                    <xsl:with-param name="codelist" select="$cl/limitationsAccess"/>
+                                </xsl:call-template>
                             </xsl:otherwise>
                         </xsl:choose>
                     </div>
