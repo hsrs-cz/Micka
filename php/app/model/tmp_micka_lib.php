@@ -63,21 +63,11 @@ function getMetadata($s, $esn='summary'){
 
 function getMetadataById($id, $esn='full'){
     if(!$id) return '';
-	$csw = new \Micka\Csw();
-	$params["ID"] = $id;
-	//$params['CONSTRAINT_LANGUAGE'] = 'CQL';
-	//$params['TYPENAMES'] = 'gmd:MD_Metadata';
-	//$params['OUTPUTSCHEMA'] = "http://www.isotc211.org/2005/gmd";
-	$params['SERVICE'] = 'CSW';
-	$params['REQUEST'] = 'GetRecordById';
-	$params['VERSION'] = '2.0.2';
-	$params['ISGET'] = true;
-	$params['ELEMENTSETNAME'] = $esn;
-	$params['buffered'] = true;
-	$result = $csw->run($params);
-	file_put_contents(__DIR__ . "/../../log/getMetadataById".uniqid().".txt", print_r($params, true).$result);
+    $export = new \App\Model\MdSearch(0, 25, '');
+    $xmlstr = $export->getXmlRecords(array(), array("ID" =>"('".$id."')"));
+	//file_put_contents(__DIR__ . "/../../log/getMetadataById".uniqid().".txt", print_r($params, true).$xmlstr);
 	$dom = new DOMDocument();
-	$dom->loadXML($result);
+	$dom->loadXML($xmlstr);
 	return $dom;
 }
 

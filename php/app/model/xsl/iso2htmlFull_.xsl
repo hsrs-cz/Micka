@@ -466,8 +466,13 @@
 			<div class="micka-row">
                 <label><xsl:value-of select="$msg[@eng='Region']"/></label>
                 <div class="c" rel="http://purl.org/dc/terms/spatial" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
-                    <xsl:for-each select="gmd:identificationInfo/*/gmd:extent/*/gmd:geographicElement/gmd:EX_GeographicDescription">
-                        <a href="{gmd:geographicIdentifier/*/gmd:code/*/@xlink:href}" target="_blank"><xsl:value-of select="gmd:geographicIdentifier/*/gmd:code/*"/></a>
+                    <xsl:for-each select="gmd:identificationInfo/*/*/gmd:EX_Extent/gmd:geographicElement/gmd:EX_GeographicDescription">
+						<xsl:call-template name="multi">
+							<xsl:with-param name="el" select="gmd:geographicIdentifier/*/gmd:code"/>
+							<xsl:with-param name="lang" select="$lang"/>
+							<xsl:with-param name="mdlang" select="$mdlang"/>
+                            <xsl:with-param name="codelist" select="$cl/extents"/>
+						</xsl:call-template>
                     </xsl:for-each>
                 </div>
             </div>
@@ -911,7 +916,7 @@
                         </xsl:variable>
                         <xsl:variable name="oo" select="php:function('getMetadataById', normalize-space($id))"/>
                         <xsl:choose>
-                            <xsl:when test="$oo">
+                            <xsl:when test="$oo//gmd:MD_Metadata">
                                 <xsl:for-each select="$oo//gmd:MD_Metadata">
                                     <xsl:variable name="a" select="gmd:hierarchyLevel/*/@codeListValue"/>
                                     <xsl:variable name="url"><xsl:value-of select="concat('',normalize-space(gmd:fileIdentifier))"/></xsl:variable>
