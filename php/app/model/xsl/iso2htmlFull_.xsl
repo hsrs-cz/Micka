@@ -906,7 +906,7 @@
 			<div class="micka-row">
 				<label><xsl:value-of select="$msg[@eng='Use']"/></label>
 				<div class="c">
-					 <xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn">
+                    <xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn">
                         <!-- try primarly find records in catalogue itself -->
                         <xsl:variable name="id">
                             <xsl:choose>

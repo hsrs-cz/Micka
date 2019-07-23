@@ -355,6 +355,7 @@ SearchForm = function(){
 		if(typeof v=='string') v = [v]; 
 		if(result) result += " AND ";
 		for(i in v){
+            v[i] = v[i].replace("'", "\\\'");
 			if(like) v[i] = key +" like '*"+v[i]+"*'";
 			else v[i] = key +"='"+v[i]+"'";
 		}
