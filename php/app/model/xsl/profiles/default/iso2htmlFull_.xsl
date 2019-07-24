@@ -17,10 +17,10 @@
 	<xsl:output method="html"/>
 	
 	<xsl:variable name="apos">\'</xsl:variable>
-	<xsl:variable name="msg" select="document(concat('client/labels-', $lang, '.xml'))/messages/msg"/>
-	<xsl:variable name="cl" select="document('../../config/codelists.xml')/map"/>
+	<xsl:variable name="msg" select="document(concat('../../client/labels-', $lang, '.xml'))/messages/msg"/>
+	<xsl:variable name="cl" select="document('../../../../config/codelists.xml')/map"/>
 	<xsl:variable name="mdlang" select="*/gmd:language/gmd:LanguageCode/@codeListValue"/>
-	<xsl:include href="client/common_cli.xsl" />
+	<xsl:include href="../../client/common_cli.xsl" />
 
 	<xsl:template match="/*">
 		<div class="container panel panel-default" vocab="http://www.w3.org/ns/dcat#" typeof="http://www.w3.org/2000/01/rdf-schema#Resource">
