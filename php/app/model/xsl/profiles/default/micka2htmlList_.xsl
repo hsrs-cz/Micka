@@ -12,7 +12,7 @@
   xmlns:gco="http://www.isotc211.org/2005/gco" >
 <xsl:output method="html"/>
 
-<xsl:variable name="msg" select="document(concat('client/labels-',$lang,'.xml'))/messages/msg"/>  
+<xsl:variable name="msg" select="document(concat('../../client/labels-',$lang,'.xml'))/messages/msg"/>  
 <xsl:variable name="cl" select="document('../../config/codelists.xml')/map"/>
 
 <xsl:template match="results">
@@ -36,7 +36,7 @@
 	
 </xsl:template>
 
-<xsl:include href="client/common_cli.xsl" />
+<xsl:include href="../../client/common_cli.xsl" />
 <xsl:include href="htmlList.xsl" />
 
 
