@@ -28,13 +28,13 @@
         <xsl:when test="$uri">
             <a href="{$uri}" target="_blank">
             <xsl:call-template name="lf2br">
-                <xsl:with-param name="str" select="$txt"/>
+                <xsl:with-param name="str" select="normalize-space($txt)"/>
             </xsl:call-template>                
             </a>
         </xsl:when>		
         <xsl:otherwise>
             <xsl:call-template name="lf2br">
-                <xsl:with-param name="str" select="$txt"/>
+                <xsl:with-param name="str" select="normalize-space($txt)"/>
             </xsl:call-template>
         </xsl:otherwise>	
     </xsl:choose>

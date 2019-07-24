@@ -194,7 +194,6 @@ class Csw{
         $this->appParameters = $tmp_appparameters;
         $this->dbContext = $tmp_nbcontext;
         $this->mickaURL = $this->appParameters['hostUrl'] . $this->appParameters['basePath'] . $this->appParameters['locale'];
-
         $this->xml = new \DomDocument;
         $this->xsl = new \DomDocument;
         $this->xp = new \XsltProcessor();
@@ -566,7 +565,6 @@ class Csw{
     }
 
     function asHTML($xml, $template){
-    	//die($xml->saveXML());
         $u = parse_url($template);
         if(isset($u['scheme']) && ($u['scheme']=='http' || $u['scheme']=='https')){
             $ch = curl_init($template);
@@ -583,23 +581,12 @@ class Csw{
             if(!$this->xsl->loadXML($result)) die("Malformed xsl template ".$template);
     	}
         else {
-            if(!$this->xsl->load(__DIR__ ."/xsl/$template.xsl")) die("html template $template not loaded.");
+            $theme = isset($this->appParameters['app']["layoutTheme"]) ? $this->appParameters['app']["layoutTheme"] : 'default';
+            if(!$this->xsl->load(__DIR__ ."/xsl/profiles/$theme/$template.xsl")) die("html template $template not loaded.");
         }
         $this->xp->importStyleSheet($this->xsl);
-        if(!$this->params['LANGUAGE']) $this->params['LANGUAGE'] = MICKA_LANG;
-        $this->xp->setParameter('', 'LANGUAGE', $this->params['LANGUAGE']);
-        $this->xp->setParameter('', 'lang', $this->params['LANGUAGE']);
-        $this->xp->setParameter('', 'user', $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest');
-        $this->xp->setParameter('', 'theName', "default");
-        $this->xp->setParameter('', 'server', $_SERVER['HTTP_HOST']);
-        $this->xp->setParameter('', 'REWRITE', REWRITE_MODE);
-        //die($this->xsl->saveXML());
-        //die($template);
-        //echo " pred-transf ";
         $output = $this->xp->transformToXML($xml);
-        //echo ('za-transf ');
         $output = str_replace("&amp;", "&", $output);
-        //$this->headers[] = HTTP_HTML;
      	return $output;
     }
 
@@ -680,6 +667,7 @@ class Csw{
         return false;
     }
     $typeNames = $this->getParamL('TYPENAMES');
+    $theme = isset($this->appParameters['app']["layoutTheme"]) ? $this->appParameters['app']["layoutTheme"] : 'default';
 
     if($this->params['OUTPUTSCHEMA']){
       	if(!in_array($this->params['OUTPUTSCHEMA'], array_keys($this->schemas))){
@@ -739,25 +727,6 @@ class Csw{
       case 'hits': $sablona='micka2cat_hits'; break;
       case 'validate': $sablona='micka2cat_hits'; break;
       case 'results':
-        /*switch ($this->params['OUTPUTSCHEMA']){
-          case $this->schemas['csw']:
-              $sablona="micka2cat_dc";
-              break;
-          case $this->schemas['gmd']:
-              $sablona = "out-iso";
-              break;
-          case $this->schemas['native']: $sablona = "micka2native"; break;
-          case $this->schemas['rss']: $sablona="micka2osrss"; $format=""; break;
-          case $this->schemas['atom']: $sablona="micka2atom"; $format=""; break;
-          case $this->schemas['kml']: $sablona="micka2kml"; $format="kml"; break;
-          case $this->schemas['os']: $sablona="micka2os"; $format=""; break;
-          case $this->schemas['rdf']: $sablona="micka2rdf"; $format=""; break;
-          case $this->schemas['dcat']: $sablona="micka2dcat"; $format=""; break;
-          case $this->schemas['oai_dc']: $sablona="micka2oai_dc"; $format=""; break;
-          case $this->schemas['oai_marc']: $sablona="micka2oai_marc"; $format=""; break;
-          case $this->schemas['marc21']: $sablona="micka2marc21"; $format=""; break;
-          default: $this->exception(3, "OUTPUTSCHEMA", $this->params['OUTPUTSCHEMA']); break;
-        }*/
           $schema = $this->schemas[$this->params['OUTPUTSCHEMA']];
           $sablona = 'out/' . $schema['template'];
           $typeNames = (isset($schema['typeNames'])) ? $schema['typeNames']: ''; //TODO - jeste udleat, pokud neni outputschema
@@ -784,11 +753,10 @@ class Csw{
   $this->params['CATCLIENT_PATH'] = CATCLIENT_PATH;
   $this->params['lang'] = $this->params['LANGUAGE'] ? $this->params['LANGUAGE'] : MICKA_LANG;
 
-  //echo $this->params['FORMAT']; exit;
   if(strpos($format, 'html')!==false){
   		$this->headers[0] = HTTP_HTML;
   		$this->isXML = false;
-  		$sablona = 'micka2htmlList_';
+  		$sablona = "profiles/$theme/micka2htmlList_";
   		$isHTML = true;
   }
   else if(strpos($format, 'csv')!==false){
@@ -977,16 +945,11 @@ class Csw{
         	$qstr .= "'".urldecode($id)."'";
         }
         if($this->params['DEBUG']==1) var_dump($qstr);
-
-        //---- dotaz do Micky ------------------------------------------------------
-    	//$export = new MdExport($_SESSION['u'], 0, 25, $this->params['SORTBY']);
-    	//echo "<hr>".$qstr."<hr>";
-   		//$xmlstr = $export->getXML(array(), array("ID" =>"($qstr)"), true, true);
+        //---- database query ------------------------------------------------------
         $export = new \App\Model\MdSearch(0, 25, $this->params['SORTBY']);
    		$xmlstr = $export->getXmlRecords(array(), array("ID" =>"($qstr)"));
         //--------------------------------------------------------------------------
         if($xmlstr==-1) $this->exception(3, "Filter", "Invalid filter: ".$xmlstr);
-        //die($this->params['FORMAT']);
         $sablona = "micka2cat_19139";
         if(isset($this->params['OUTPUTSCHEMA']) && $this->params['OUTPUTSCHEMA']){
             if(!in_array($this->params['OUTPUTSCHEMA'], array_keys($this->schemas))){
@@ -1028,8 +991,6 @@ class Csw{
         //TODO - kaskadovani
         //---prevod XML do katalogu
         $this->xml->loadXML($xmlstr);
-        $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
-        $this->xp->importStyleSheet($this->xsl);
 
         //$this->params['requestId'] = $this->params['REQUESTID'];
         $this->params['root'] = "csw:GetRecordByIdResponse";
@@ -1051,14 +1012,16 @@ class Csw{
             $this->isXML = false;
         }
         else if(isset($this->params['FORMAT']) && strpos($this->params['FORMAT'],'json')!==false){
+            $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
             $output = $this->xp->transformToXML($this->xml);
-            //die($output);
             eval($output);
             $output = json_encode($rec);
             $this->isXML = false;
         }
         // --- XML ---
         else {
+            $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
+            $this->xp->importStyleSheet($this->xsl);
             $output = $this->xp->transformToXML($this->xml);
         }
         return $output;

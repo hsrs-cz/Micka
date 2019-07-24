@@ -34,8 +34,6 @@
 			  			</xsl:otherwise>
 			  		</xsl:choose>
 			  	</xsl:if>
-				<!-- <a href="?service=CSW&amp;request=GetRecordById&amp;version=2.0.2&amp;id={@uuid}&amp;language={$lang}&amp;format=text/html" class="basic" title="{$msg[@eng='basicMetadata']}"><i class="fa fa-map fa-fw"></i></a>
-				<a href="?ak=detailall&amp;language={$lang}&amp;uuid={@uuid}" class="full" title="{$msg[@eng='fullMetadata']}"></a><xsl:text> </xsl:text> -->
 				<xsl:if test="@edit=1">
 					<xsl:if test="@md_standard=0 or @md_standard=10">
 						<a href="record/valid/{@uuid}" class="valid{@valid}" data-tooltip="tooltip" data-original-title="{$msg[@eng='validate']}" target="_blank"><xsl:choose>
@@ -83,10 +81,6 @@
 			 <xsl:if test="gmd:hierarchyLevelName/*='http://geoportal.gov.cz/inspire'"><span class="for-inspire" title="{$msg[@eng='forInspire']}"></span></xsl:if>
 			
 			<br/>
-			<!-- <xsl:value-of select="$msg[@eng='Supervisor']"/>: 	
-			<a href="mailto:{gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue='pointOfContact']/*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress/*}">
-				<xsl:value-of select="gmd:identificationInfo/*/gmd:pointOfContact[*/gmd:role/*/@codeListValue='pointOfContact']/*/gmd:individualName"/>
-			</a>  -->
 		
 		</div>	
   
