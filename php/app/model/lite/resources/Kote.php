@@ -56,34 +56,34 @@ class Kote{
 	}
 	
 	// --- odesle multipart formular
-	function postFileForm($destination, $fileContent){
-		$showXml = false; //pripraveno
-		$eol = "\r\n";
-		$mime_boundary=md5(time());
-		$data = '--' . $mime_boundary . $eol;
-		$data .= 'Content-Disposition: form-data; name="dataFile"; filename="myMetadataFile.xml"' . $eol; //zavisle na JRC portalu
-	  	$data .= 'Content-Type: text/xml' . $eol . $eol;
-	 	$data .= $fileContent . $eol;
-	  	$data .= "--" . $mime_boundary . "--" . $eol . $eol; // finish with two eol's!!
-	  	$params = array('http' => array(
-	  	         'method' => 'POST',
-	  	         'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol,
-	  	         'content' => $data
-	  	));		
-	  	if($showXml){           
-	  		$params = array('http' => array(
-	  	          'method' => 'POST',
-	  	          'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol
-	  				.'Accept: application/xml' . $eol,
-	  	          'content' => $data
-	  	     ));
-	  	}
-	  	$ctx = stream_context_create($params);
-	  	if($showXml){
-	  		header('Content-Type: application/xml');
-	  	}
-	  	return file_get_contents($destination, FILE_TEXT, $ctx);  
-	}
+    function postFileForm($destination, $fileContent){
+        $showXml = false; //pripraveno
+        $eol = "\r\n";
+        $mime_boundary=md5(time());
+        $data = '--' . $mime_boundary . $eol;
+        $data .= 'Content-Disposition: form-data; name="dataFile"; filename="myMetadataFile.xml"' . $eol; //zavisle na JRC portalu
+        $data .= 'Content-Type: text/xml' . $eol . $eol;
+        $data .= $fileContent . $eol;
+        $data .= "--" . $mime_boundary . "--" . $eol . $eol; // finish with two eol's!!
+        $params = array('http' => array(
+                    'method' => 'POST',
+                    'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol,
+                    'content' => $data
+        ));		
+        if($showXml){           
+            $params = array('http' => array(
+                    'method' => 'POST',
+                    'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol
+                    .'Accept: application/xml' . $eol,
+                    'content' => $data
+                ));
+        }
+        $ctx = stream_context_create($params);
+        if($showXml){
+            header('Content-Type: application/xml');
+        }
+        return @file_get_contents($destination, FILE_TEXT, $ctx);
+    }
     
     function codeRow($s){
         if(is_array($s)) return $s;
