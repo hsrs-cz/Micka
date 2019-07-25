@@ -33,11 +33,6 @@ class RouterFactory
         if ($container->parameters['consoleMode']) {
             $router[] = new CliRouter(array('action' => 'Cli:Cli:default'));
         } else {
-            $router[] = $validatorRouter = new RouteList('Validator');
-            $validatorRouter[] = new Route('validator/form', 'Default:form');
-            $validatorRouter[] = new Route('validator/result', 'Default:result');
-            $validatorRouter[] = new Route('validator/<presenter>/<action>', 'Default:form');
-
             $router[] = $adminRouter = new RouteList('Admin');
             $adminRouter[] = new Route('[<locale=' . $locale . '>/]admin/<presenter>/<action>[/<id>]', 'Default:default');
 
