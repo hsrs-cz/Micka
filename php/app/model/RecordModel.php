@@ -210,13 +210,11 @@ class RecordModel extends \BaseModel
         return $mdRecno;
     }
 
-    private function recordValidate($xml)
+    public function recordValidate($xml)
     {
         $this->recordMd->valid = 0;
         $this->recordMd->prim = 0;
-        require_once __DIR__ . '/validator/resources/Validator.php';
-        $validator = new \Validator();
-        $validator->run($xml);
+        $validator = $this->validate($xml);
         $vResult = $validator->getPass();
         if ($vResult) {
             if ($vResult['fail'] == 0) {
@@ -224,6 +222,18 @@ class RecordModel extends \BaseModel
             }
             $this->recordMd->prim = $vResult['primary'];
         }
+    }
+    
+    public function validate($xml, $type='gmd', $lang='eng')
+    {
+        $path_validator = realpath($this->appParameters['appDir'] . "/modules/validator/model/Validator.php");
+        if ($path_validator === false) {
+            return false;
+        }
+        require_once $path_validator;
+        $validator = new \ValidatorModule\Validator($type, $lang, $this->appParameters['app']['layoutTheme']);
+        $validator->run($xml);
+        return $validator;
     }
     
     private function deleteMdValues($recno) {
