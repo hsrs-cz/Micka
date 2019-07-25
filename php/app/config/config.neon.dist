@@ -1,0 +1,30 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+php:
+    date.timezone: Europe/Prague
+
+
+application:
+    errorPresenter: Error:Error
+    mapping:
+        *: \*Module\*Presenter
+
+session:
+    expiration: 0
+
+
+services:
+    router: App\RouterFactory::createRouter
+    - App\Model\RecordModel
+    - App\Model\SuggestModel
+    - App\Model\CswModel
+    - App\Model\UserModel
+    - App\Security\AuthorizatorFactory
+    -
+        class: Nette\Security\Permission
+        factory: @App\Security\AuthorizatorFactory::create
+
+extensions:
+    translation: Kdyby\Translation\DI\TranslationExtension
