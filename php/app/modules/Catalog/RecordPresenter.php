@@ -292,7 +292,7 @@ class RecordPresenter extends \BasePresenter
         $params['REQUEST'] = 'GetRecordById';
         $params['DEBUG'] = $get['debug'];
         $params['ID'] = $id;
-        $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : 'eng'; 
+        $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : $this->appLang; 
         $params['OUTPUTSCHEMA'] = 'http://www.w3.org/2005/Atom';
         $csw = new \Micka\Csw;
         $result = $csw->run($params);
