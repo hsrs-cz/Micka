@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map>
+	<msg>
+		<titleCR>Validación de metadatos - Perfil nacional de la República Checa</titleCR>
+		<titleINSPIRE>Validación de metadatos - Perfil INSPIRE</titleINSPIRE>
+		<missing>Sin datos</missing>
+		<notValid>No válido</notValid>
+		<notEval>No evaluado</notEval>
+		<notLoad>El archivo no fue leído, probablemente corrupto o no XML</notLoad>
+		<mv>sin datos o no válido</mv>
+		<pass>aprobado</pass>
+		<fail>fallido</fail>
+		<warning>advertencias</warning>
+		<notice>avisos</notice>
+		<summary>Resumen</summary>
+		<version>modelo</version>
+		<ok>El registro de Metadatos es válido</ok>
+		<back>Atrás</back>
+	</msg>
+
+	<test code="1.1">Título del recurso</test>
+	<test code="1.2">Resumen del recurso</test>
+	<test code="1.3">Tipo de recurso</test>
+	<test code="1.4">Localización del recurso</test>
+	<test code="1.4.a">EN-LÍNEa</test>
+    <test code="1.4.b">Protocolo</test>
+	<test code="1.4.c">Servicio Web Soportado INSPIRE</test>
+	<test code="1.5">Identificador del recurso único</test>
+	<test code="1.5.a">Identificador del formulario</test>
+	<test code="1.5.a-xpath">CZ-[ID número de organización]-[ID en la organización]</test>
+	<test code="1.5.b">Espacio código</test>
+	<test code="1.6">Recurso acoplado</test>
+	<test code="1.6.a">EN-LÍNEA</test>
+	<test code="1.7">Idioma del recurso</test>
+	<test code="2.1">Categoría del tema</test>
+	<test code="2.2">Tipo de servicio</test>
+	<test code="2.2.a">Versión del tipo de servicio</test>
+	<test code="3">Palabras clave INSPIRE</test>
+	<test code="3.2">palabra clave</test>
+	<test code="3a">Tesauros + palabras claves</test>
+	<test code="4.1">Caja de delimitación geográfica (bbox)</test>
+	<test code="5a">Fecha de referencia - Fecha de publicación/ última revisión/ creación</test>
+	<test code="5a.a">Fecha de referencia - Fecha</test>
+	<test code="5a.b">Tipo de fecha</test>
+	<test code="5b">Extensión temporal</test>
+	<test code="6.1">Linaje</test>
+	<test code="6.2">Resolución espacial</test>
+	<test code="6.2.a">Denominador</test>
+	<test code="6.2.b">Distancia</test>
+	<test code="7">Conformidad</test>
+	<test code="7.1">Especificación</test>
+	<test code="7.2">Grado</test>
+	<test code="8.1">Condiciones de acceso y utilización</test>
+	<test code="8.2">Limitaciones al acceso del público</test>
+	<test code="9.1">Parte responsable</test>
+	<test code="10.1">Punto de contacto del Metadato</test>
+	<test code="10.2">Fecha del Metadato</test>
+	<test code="10.3">Idioma del Metadato</test>
+	<test code="9.1.d">Rol de la parte responsable</test>
+	<test code="10.1.d">Rol del contacto del Metadato</test>
+	<test code="11">Identificador de archivo</test>
+	<test code="12">Calidad de datos - alcance</test>
+
+	<test code="IO-1">Información del Sistema de Referencia</test>
+	<test code="IO-1a">Código como URI</test>
+	<test code="IO-1b">códigos requeridos INSPIRE</test>
+	<test code="IO-3">Codificación (Formato de distribución)</test>
+	<test code="IO-3a">Nombre</test>
+	<test code="IO-3b">Versión</test>
+	<test code="IO-3c">Especificicación</test>
+	<test code="IO-4">Consistencia topológica</test>
+	<test code="IO-4a">Resultado (valor/unidades)</test>
+	<test code="IO-5">Recurso Juego de caracteres</test>
+	<test code="IO-6">Tipo de representación espacial</test>
+
+	<test code="CZ-1">Identificador de archivo</test>
+	<test code="CZ-3">Calidad de datos - alcance</test>
+	<test code="CZ-4">Mantenimiento del recurso</test>
+	<test code="CZ-7">Propósito de la creación</test>
+	<test code="CZ-9">Tipo de acoplamiento</test>
+	<test code="CZ-91">Propósito</test>
+	<test code="CZ-10">Área de cobertura</test>
+	<test code="CZ-12">Versión del perfil nacional checo</test>
+	<test code="CZ-13">Identificación de proveedores INSPIRE obligatorios</test>
+	<test code="CZ-15">Formato de datos descargados</test>
+
+	<test code="IOD-1">Información del Sistema de Referencia</test>
+	<test code="IOD-1a">Código como URI</test>
+	<test code="IOD-1b">códigos requeridos INSPIRE</test>
+	<test code="IOD-3">Codificación (Formato de distribución)</test>
+	<test code="IOD-3a">Nombre</test>
+	<test code="IOD-3b">Versión</test>
+	<test code="IOD-3c">Especificación</test>
+	<test code="IOD-4">Consistencia topológica</test>
+	<test code="IOD-4a">Resultado (valor/unidades)</test>
+	<test code="IOD-5">Recurso Juego de caracteres</test>
+	<test code="IOD-6">Tipo de representación espacial</test>
+
+    <test code="IOS-1">Criterio</test>
+    <test code="IOS-2">Calidad del servicio</test>
+    <test code="IOS-3">Invocación del Metadatos</test>
+
+	<test code="Name">Nombre</test>
+	<test code="Keyword">Palabra clave</test>
+
+</map>

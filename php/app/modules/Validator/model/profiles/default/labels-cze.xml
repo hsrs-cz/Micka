@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map>
+	<msg>
+		<titleCR>Validace metadat proti INSPIRE/Národnímu profilu ČR</titleCR>
+		<titleINSPIRE>Validace metadat proti INSPIRE/Národnímu profilu ČR</titleINSPIRE>
+		<missing>Chybí</missing>
+		<notValid>Není validní</notValid>
+		<notEval>Nehodnoceno</notEval>
+		<notLoad>Nepodařilo se načíst soubor, pravděpodobně není ve formátu XML.</notLoad>
+		<mv>chybí nebo nevalidní</mv>
+		<pass>prošlo</pass>
+		<fail>chyb</fail>
+		<warning>výstrah</warning>
+		<notice>upozornění</notice>
+		<summary>Souhrn</summary>
+		<version>Verze</version>	
+		<ok>Metadatový záznam je validní</ok>	
+		<back>Zpět</back>	
+	</msg>
+	
+	<test code="1.1">Název (Resource title)</test>
+	<test code="1.2">Abstrakt (Resource abstract)</test>
+	<test code="1.3">Typ (Resource type)</test>
+	<test code="1.4">Odkaz (Resource locator)</test>
+	<test code="1.4.a">Dostupné ON-LINE</test>
+    <test code="1.4.b">Protokol</test>
+	<test code="1.4.c">Webová služba podporovaná INSPIRE</test>
+	<test code="1.5">Jedinečný identifikátor (Unique resource identifier)</test>
+	<test code="1.5.a">Tvar identifikátoru</test>
+	<test code="1.5.a-xpath">CZ-[IČ organizace]-[ID v organizaci]</test>
+	<test code="1.5.b">Prostor kódů</test>
+	<test code="1.6">Vázaný zdroj (Coupled resource)</test>
+	<test code="1.6.a">ON-LINE</test>
+	<test code="1.7">Jazyk (Resource language)</test>
+	<test code="2.1">Tematická kategorie (Topic category)</test>
+	<test code="2.2">Typ služby (Spatial data service type)</test>
+	<test code="2.2.a">Verze služby (Service Type version)</test>
+	<test code="3">Klíčová slova INSPIRE (Keyword)</test>
+	<test code="3.2">Klíčové slovo (Keyword)</test>
+	<test code="3a">Thesaurus + klíč. slova</test>
+	<test code="4.1">Geografické ohraničení (Geographic bounding box)</test>
+	<test code="5a">Referenční datum (Date of publication/ last revision/ creation)</test>
+	<test code="5a.a">Datum</test>
+	<test code="5a.b">Typ data</test>
+	<test code="5b">Časový rozsah (Temporal extent)</test>
+	<test code="6.1">Původ (Lineage)</test>
+	<test code="6.2">Prostorové rozlišení (Spatial resolution)</test>
+	<test code="6.2.a">Jmenovatel</test>
+	<test code="6.2.b">Vzdálenost</test>
+	<test code="7">Soulad</test>
+	<test code="7.1">Specifikace (Specification)</test>
+	<test code="7.2">Míra souladu (Degree)</test>
+	<test code="8.1">Podmínky pro přístup a užití (Conditions applying to access and use)</test>
+	<test code="8.2">Omezení veřejného přístupu (Limitations on public access)</test>
+	<test code="9.1.d">Role zodpovědné organizace (Responsible party role)</test>
+	<test code="9.1">Odpovědná organizace nebo osoba (Responsible party)</test>
+	<test code="10.1">Kontakt - metadata (Metadata point of contact)</test>
+	<test code="10.1.d">Role kontaktu metadat</test>
+	<test code="10.2">Datum metadat (Metadata date)</test>
+	<test code="10.3">Jazyk metadat (Metadata language)</test>
+	<test code="11">Identifikátor metadatového záznamu (File Identifier)</test>
+	<test code="12">Oblast působnosti - jakost</test>
+					
+	<test code="IO-1">Souřadnicový rerefenční systém (Reference System Information)</test>
+	<test code="IO-1a">Kód ve tvaru URI</test>
+	<test code="IO-1b">Kódy vyžadované INSPIRE</test>
+	<test code="IO-3">Distribuční formát (Kódování - Encoding)</test>
+	<test code="IO-3a">Název</test>
+	<test code="IO-3b">Verze</test>
+	<test code="IO-3c">Popis specifikace</test>
+	<test code="IO-4">Topologická správnost</test>
+	<test code="IO-4a">Výsledek (hodnota/jednotky)</test>
+	<test code="IO-5">Znaková sada (Resource Character set)</test>
+	<test code="IO-6">Typ prostorové reprezentace(Spatial Representation Type)</test>
+
+	<test code="CZ-1">Identifikátor metadatového záznamu (File Identifier)</test>
+	<test code="CZ-3">Oblast působnosti - jakost</test>
+	<test code="CZ-4">Četnost údržby a aktualizace (Resource Maintenance)</test>
+	<test code="CZ-7">Účel (Purpose)</test>
+	<test code="CZ-9">Typ vazby (CouplingType)</test>
+	<test code="CZ-91">Účel (Purpose)</test>
+	<test code="CZ-10">Pokrytí území (Area coverage)</test>
+	<test code="CZ-12">Verze národního profilu</test>
+	<test code="CZ-13">Identifikace povinných subjektů INSPIRE </test>
+	<test code="CZ-15">Formát stahovaných dat (Mime type)</test>
+
+	<test code="IOD-1">Souřadnicový rerefenční systém (Reference System Information)</test>
+	<test code="IOD-1a">Kód ve tvaru URI</test>
+	<test code="IOD-1b">Kódy vyžadované INSPIRE</test>
+	<test code="IOD-3">Distribuční formát (Kódování - Encoding)</test>
+	<test code="IOD-3a">Název</test>
+	<test code="IOD-3b">Verze</test>
+	<test code="IOD-3c">Popis specifikace</test>
+	<test code="IOD-4">Topologická správnost</test>
+	<test code="IOD-4a">Výsledek (hodnota/jednotky)</test>
+	<test code="IOD-5">Znaková sada (Resource Character set)</test>
+	<test code="IOD-6">Typ prostorové reprezentace(Spatial Representation Type)</test>
+
+    <test code="IOS-1">Kritéria (Criteria)</test>
+    <test code="IOS-2">Kvalita interoperabilní služby (Service quality)</test>
+    <test code="IOS-3">Metadata rozhraní (Operation metadata)</test>
+    
+	<test code="Name">Název</test>
+	<test code="Keyword">Klíčové slovo</test>
+	
+</map>

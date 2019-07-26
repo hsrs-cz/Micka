@@ -1,0 +1,5 @@
+parameters:
+    moduleValidator:
+        defaultUrl: 'http://ogc.beta.agiv.be/ogc/wms/vrbgINSP?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetCapabilities'
+        kotePath:  'model/lite/resources/Kote.php'
+        jrcValidatorPath: 'http://inspire-geoportal.ec.europa.eu/GeoportalProxyWebServices/resources/INSPIREResourceTester'

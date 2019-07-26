@@ -1,0 +1,16 @@
+{block content}
+<div class="container panel panel-default">
+    <h1>
+        <a n:href=":Admin:Default:default"><i class="fa fa-arrow-left"></i></a>
+        /
+        <a n:href=":Validator:Default:default">{_validator.frontend.title}</a>
+    </h1>
+    {$vypis|noescape}
+    <br>
+    <br>
+</div>
+{/block}
+
+{block content-js}
+    <link rel="stylesheet" href="{$basePath}{$themePath}/validator.css" type="text/css">  
+{/block}

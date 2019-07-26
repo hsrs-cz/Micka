@@ -1,0 +1,25 @@
+frontend:
+    title: OWS validator
+    file: Soubor
+    url: URL
+    type: Typ
+    typeGmd: Metadata - národní
+    typeGmdInspire: Metadata - INSPIRE
+    typeWms: WMS
+    typeDownload: Download
+    output: Výstup
+    outputHtml: HTML
+    outputXml: XML
+    outputJson: JSON
+    outputArray: Array
+    validator: Validátor
+    validatorLocal: Local
+    validatorJrc: JRC
+    onlyError: Jen chyby
+    orViewXml: Nebo XML
+    buttonOk: OK
+    buttonReset: Reset
+    urlError: 'URL: zdroj nenalezen.'
+    dataError: Data nenalezana.
+    configError: Nenalezen konfigurační soubor!!!
+    jrcError: 'JRC:  validace se nezdařila.'

@@ -1,0 +1,25 @@
+frontend:
+    title: OWS validator
+    file: File
+    url: URL
+    type: Typ
+    typeGmd: Metadata - national
+    typeGmdInspire: Metadata - INSPIRE
+    typeWms: WMS
+    typeDownload: Download
+    output: Output
+    outputHtml: HTML
+    outputXml: XML
+    outputJson: JSON
+    outputArray: Array
+    validator: Validator
+    validatorLocal: Local
+    validatorJrc: JRC
+    onlyError: Only error
+    orViewXml: Or XML
+    buttonOk: OK
+    buttonReset: Reset
+    urlError: 'URL: Source not found.'
+    dataError: Data not entered.
+    configError: Config error!!!
+    jrcError: 'JRC:  error'
