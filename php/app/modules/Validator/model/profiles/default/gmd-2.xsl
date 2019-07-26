@@ -14,7 +14,7 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:template match="//gmd:MD_Metadata[contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4')]|//gmi:MI_Metadata[contains(gmd:metadataStandardName/*,'/INSPIRE_TG2/CZ4')]">
 
-<xsl:variable name="codelists" select="document('../../../../config/codelists.xml')/map" />
+<xsl:variable name="codelists" select="document('../../../../../config/codelists.xml')/map" />
 <xsl:variable name="labels" select="document(concat('labels-',$LANG,'.xml'))/map" />
 <xsl:variable name="srv" select="gmd:identificationInfo/srv:SV_ServiceIdentification != ''"/>
 <xsl:variable name="hierarchy" select="gmd:hierarchyLevel/*/@codeListValue"/>
@@ -37,7 +37,7 @@ xmlns:php="http://php.net/xsl">
 <xsl:variable name="INSPIRE" select="$codelists/specifications/value[@code='INSPIRE']/@uri"/>
 <xsl:variable name="neInspire" select="gmd:dataQualityInfo/*/gmd:report[normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/*/@xlink:href)=normalize-space($INSPIRE)]" />
  
-<validationResult title="{$labels/msg/titleCR}" version="4.0.0 beta, CENIA 2017">
+<validationResult title="{$labels/msg/titleCR}" version="4.1 beta, CENIA 2019">
 
 <!-- identifikace -->
 <!-- 1.1 -->
@@ -383,11 +383,11 @@ xmlns:php="http://php.net/xsl">
                         <xsl:variable name="kw" select="."/>
 						<xsl:choose>
 							<xsl:when test="$codelists/inspireKeywords/value[@uri=$kw/gmx:Anchor/@xlink:href]">
-								<value><xsl:value-of select="gmx:Anchor/@xlink:href"/> (<xsl:value-of select="gmx:Anchor"/>)</value>
+								<value><xsl:value-of select="gmx:Anchor/@xlink:href"/> (<xsl:value-of select="*"/>)</value>
 								<pass>true</pass>
 							</xsl:when>
 							<xsl:otherwise>
-								<err><xsl:value-of select="*"/> - <xsl:value-of select="$labels/msg/notValid"/></err>
+								<err><xsl:value-of select="gmx:Anchor/@xlink:href"/> (<xsl:value-of select="*"/>) - <xsl:value-of select="$labels/msg/notValid"/></err>
 							</xsl:otherwise>
 						</xsl:choose>
 					</test>

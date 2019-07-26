@@ -154,7 +154,7 @@ function mdControl($xmlSource, $appLang)
         return array();
     }
     include("validator/resources/Validator.php");
-    $validator = new \Validator("gmd", $appLang);
+    $validator = new \ValidatorModule\Validator("gmd", $appLang);
     $validator->run($xmlSource);
     $a = $validator->asArray();
     for($i=0;$i<count($a);$i++){

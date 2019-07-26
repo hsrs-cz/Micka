@@ -304,7 +304,7 @@
 					  	<xsl:otherwise>
 					  		<xsl:value-of select="*/gmd:linkage"/>
 					  	</xsl:otherwise>
-				  	</xsl:choose>
+				  	</xsl:choose> - download
 			  	</title>
 			  	<updated><xsl:value-of select="$updated"/>T00:00:00</updated>
 		  		<xsl:copy-of select="$bbox"/>
