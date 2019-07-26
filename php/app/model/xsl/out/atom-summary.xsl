@@ -63,10 +63,10 @@
 	  	</xsl:for-each>
 
         <!-- link itself -->
-        <id><xsl:value-of select="concat($mickaURL, '/record/atom/', gmd:fileIdentifier, '?lang=',$LANGUAGE)"/></id>
+        <id><xsl:value-of select="concat($mickaURL, '/record/atom/', gmd:fileIdentifier)"/></id>
 
       	<!-- links to detail Atom description -->
-      	<link rel="alternate" type="application/atom+xml" href="{$mickaURL}/record/atom/{gmd:fileIdentifier}?language={$LANGUAGE}"/>
+      	<link rel="alternate" type="application/atom+xml" href="{$mickaURL}/record/atom/{gmd:fileIdentifier}"/>
       	
 	  	<!-- links to ISO metadata and alternative representations -->
       	<link rel="describedby" type="application/xml" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}"/>
