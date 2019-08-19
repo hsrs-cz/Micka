@@ -226,7 +226,7 @@ class RecordModel extends \BaseModel
     
     public function validate($xml, $type='gmd', $lang='eng')
     {
-        $path_validator = realpath($this->appParameters['appDir'] . "/modules/validator/model/Validator.php");
+        $path_validator = realpath($this->appParameters['appDir'] . "/modules/Validator/model/Validator.php");
         if ($path_validator === false) {
             return false;
         }
