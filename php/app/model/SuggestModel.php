@@ -244,9 +244,9 @@ class SuggestModel
                 break;
             case 'harvestFrom':
                 if($query != ''){
-                    $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name ILIKE ?", $query.'%')->fetchAll();
+                    $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name ILIKE ? ORDER BY name", $query.'%')->fetchAll();
                 }
-                else $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name != 'local'")->fetchAll();
+                else $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name != 'local' ORDER BY name")->fetchAll();
                 foreach($result as $row) {
                     $rs[] = array('id'=>$row->name,"text"=>$row->name);
                 }

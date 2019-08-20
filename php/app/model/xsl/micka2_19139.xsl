@@ -61,9 +61,9 @@
    <xsl:variable name="schLoc">
    	 <xsl:choose>
    		<!--xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:when-->
-   		<xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:when>
+   		<xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/gmd https://inspire.ec.europa.eu/draft-schemas/inspire-md-schemas-temp/apiso-inspire/apiso-inspire.xsd</xsl:when>
    		<!--xsl:otherwise>http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:otherwise-->
-   		<xsl:otherwise>http://www.isotc211.org/2005/gmd https://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/gmx https://www.isotc211.org/2005/gmx/gmx.xsd</xsl:otherwise>
+   		<xsl:otherwise>http://www.isotc211.org/2005/gmd https://inspire.ec.europa.eu/draft-schemas/inspire-md-schemas-temp/apiso-inspire/apiso-inspire.xsd</xsl:otherwise>
    	</xsl:choose>
   </xsl:variable>
    	

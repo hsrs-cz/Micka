@@ -987,7 +987,6 @@ class Csw{
         }
 
         $this->logText .= "[ID=".$qstr."]";
-
         //TODO - kaskadovani
         //---prevod XML do katalogu
         $this->xml->loadXML($xmlstr);
@@ -1021,6 +1020,8 @@ class Csw{
         // --- XML ---
         else {
             $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
+            //echo $this->xsl->saveXML(); die();
+            //die(__DIR__ . "/xsl/$sablona.xsl");
             $this->xp->importStyleSheet($this->xsl);
             $output = $this->xp->transformToXML($this->xml);
         }
