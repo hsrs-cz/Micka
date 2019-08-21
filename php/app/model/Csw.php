@@ -24,7 +24,7 @@ class Csw{
     var $requestType = null;
     var $input = "";
     var $subset = null;
-    var $headers = array(HTTP_XML);
+    var $headers = array();
     var $isXML = true;
     var $error = null;
 
@@ -531,7 +531,7 @@ class Csw{
     }
     if($this->params['SOAP']) $result = SOAP_HEADER.$result.SOAP_FOOTER;
     if($this->isXML) $result = XML_HEADER.$result;
-    $this->logText .= "|500|".(microtime(true)-$this->startTime);
+    $this->logText .= "|OK|".(microtime(true)-$this->startTime);
     $this->saveLog();
     return $result;
   }
@@ -679,7 +679,7 @@ class Csw{
     else {
         $this->params['OUTPUTSCHEMA'] = "http://www.isotc211.org/2005/gmd";
     }
-
+    
     //FIXME - dodelat zpracovani
     //if(!$qstr) $this->exception(2, "Constraint", "Empty request.");
 
@@ -698,7 +698,7 @@ class Csw{
     if($this->params['DEBUG']){
     	var_dump($qstr);
     }
-
+    //else $this->setHeaders($this->params['OUTPUTSCHEMA']);
     $format = isset($this->params['FORMAT']) ? $this->params['FORMAT'] : '';
     if(!isset($this->params['STARTPOSITION'])) $this->params['STARTPOSITION']=1;
     $this->params['SORTORDER'] = "ASC";
@@ -1010,6 +1010,7 @@ class Csw{
             $output = $this->asHTML($this->xml, $sablona);
             $this->isXML = false;
         }
+        // --- JSON ---
         else if(isset($this->params['FORMAT']) && strpos($this->params['FORMAT'],'json')!==false){
             $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
             $output = $this->xp->transformToXML($this->xml);
@@ -1019,6 +1020,7 @@ class Csw{
         }
         // --- XML ---
         else {
+            $this->setHeaders($this->params['OUTPUTSCHEMA']);
             $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
             //echo $this->xsl->saveXML(); die();
             //die(__DIR__ . "/xsl/$sablona.xsl");

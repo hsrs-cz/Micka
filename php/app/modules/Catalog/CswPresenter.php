@@ -114,40 +114,7 @@ class CswPresenter extends \BasePresenter
         echo $result;
         $this->terminate();
 	}
-    
-    /** @resource Catalog:Guest */
-	public function actionAtomlist()
-	{
-        echo '<?xml version="1.0" encoding="UTF-8"?>
-        <feed xmlns="http://www.w3.org/2005/Atom" xmlns:georss="http://www.georss.org/georss">
-            <entry>
-                <id>http://dev.bnhelp.cz/projects/corine/corine2012.zip</id>
-                <link rel="alternate" href="http://dev.bnhelp.cz/projects/corine/corine2012.zip" title="SHP" type="application/x-shapefile"/>
-                <summary type="html"><![CDATA[KML pokus (64 MB)]]></summary>
-                <title>KML</title>
-                <updated>2014-11-11T00:00:00</updated>
-                <georss:polygon>12.09 48.55 12.09 51.05 18.86 51.05 18.86 48.55 12.09 48.55</georss:polygon>
-            </entry>
-            <entry>
-                <id>http://dev.bnhelp.cz/projects/corine/corine2012gml.zip</id>
-                <link rel="alternate" href="http://dev.bnhelp.cz/projects/corine/corine2012gml.zip" title="GML" type="application/gml+xml"/>
-                <summary type="html"><![CDATA[GML ETRS89 (100 MB)]]></summary>
-                <title>Další pokus</title>
-                <updated>2014-11-11T00:00:00</updated>
-                <georss:polygon>12.09 48.55 12.09 51.05 18.86 51.05 18.86 48.55 12.09 48.55</georss:polygon>
-            </entry>
-            <entry>
-                <id>http://dev.bnhelp.cz/projects/corine/corine2012gml.zip</id>
-                <link rel="alternate" href="http://dev.bnhelp.cz/projects/corine/corine2012gml.zip" title="GML" type="application/gml+xml"/>
-                <summary type="html"><![CDATA[GML ETRS89 (100 MB)]]></summary>
-                <title>A ještě ěden</title>
-                <updated>2014-11-11T00:00:00</updated>
-                <georss:polygon>12.09 48.55 12.09 51.05 18.86 51.05 18.86 48.55 12.09 48.55</georss:polygon>
-            </entry>
-        </feed>';
-        $this->terminate();
-    }
-    
+        
     /** @resource Catalog:Guest */
 	public function renderFilter($id)
 	{

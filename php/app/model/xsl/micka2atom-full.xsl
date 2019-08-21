@@ -316,10 +316,10 @@
 	    	</entry>
 	    </xsl:for-each>
 	   
-	    <!-- vnejsi seznam - jeste vylepsit -->
+	    <!-- vnejsi seznam - jeste vylepsit 
 	    <xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine[*/gmd:function/*/@codeListValue='information']">
 			<xsl:copy-of select="document(*/gmd:linkage/*)/*/*"/>
-	    </xsl:for-each>
+	    </xsl:for-each>-->
 
     </feed>
 </xsl:template>

@@ -21,7 +21,7 @@
 			<!-- ikonky vpravo -->
 			<div class="icons">	  		
 				<xsl:if test="*/gmd:identificationInfo/*/srv:serviceType/*='download'">
-					<a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={*/gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
+					<a href="{$mickaURL}/record/atom/{*/gmd:fileIdentifier}" target="_blank" data-tooltip="tooltip" data-original-title="Atom"><i class="fa fa-feed fa-fw"></i></a>
 				</xsl:if>
 		  		<xsl:variable name="wmsURL" select="*/gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*[contains(protocol/*,'WMS') or contains(gmd:linkage/*,'WMS')]/gmd:linkage/*"/>		  		
 			  	<xsl:if test="string-length($wmsURL)>0">
