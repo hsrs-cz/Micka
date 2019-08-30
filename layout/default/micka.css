@@ -295,3 +295,7 @@ a.valid2 {
     background-color: #FBB !important;
     border-color: #E00 !important; 
 }
+
+.browse-graphic {
+    max-width: 100%;
+}

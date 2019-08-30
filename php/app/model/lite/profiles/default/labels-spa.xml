@@ -62,6 +62,14 @@
 		</help>
 	</msg>
 	<msg name="date">
+		<label>Date</label>
+		<help>
+			<h3>Reference date</h3>
+			<p>Reference date for the cited resource</p>
+			<p class="pozn"></p>
+		</help>
+	</msg>
+	<msg name="referenceDate">
 		<label>5a Date</label>
 		<help>
 			<h3>5a Reference date</h3>

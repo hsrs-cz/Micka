@@ -140,7 +140,7 @@
             <div class="micka-row">
                 <label><xsl:value-of select="$msg[@eng='Browse Graphic']"/></label>
                 <div class="c">
-                    <div><img src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>
+                    <div><img class="browse-graphic" src="{gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName/*}"/></div>
                     <div>
                         <xsl:call-template name="multi">
                             <xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileDescription"/>

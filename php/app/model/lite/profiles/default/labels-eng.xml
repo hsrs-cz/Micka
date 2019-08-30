@@ -61,10 +61,16 @@
 			<p>Seznam dalších klíčových slov - uveďte každé na nový řádek.</p>
 		</help>
 	</msg>
-	<msg name="date">
-		<label>5a Date</label>
+	<msg name="referenceDate">
+		<label>5a Reference date</label>
 		<help>
-			<h3>5a Reference date</h3>
+			Reference date for the cited resource.
+		</help>
+	</msg>
+	<msg name="date">
+		<label>Date</label>
+		<help>
+			<h3>date</h3>
 			<p>Reference date for the cited resource</p>
 			<p class="pozn"></p>
 		</help>

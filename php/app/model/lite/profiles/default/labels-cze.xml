@@ -17,7 +17,9 @@
 	</msg>
 	<msg name="title">
 		<label>1.1 Název</label>
-		<help>Charakteristický, často jedinečný název, pod kterým je zdroj znám. Měl by být unikátní v rámci organizace.</help>
+		<help>Charakteristický, často jedinečný název, pod kterým je zdroj znám. 
+        Měl by být unikátní v rámci organizace. Maximální délka je 250 znaků. 
+        Pokud data pocházejí z projektu, jeho název by měl být uveden v závorkách na konci názvu.</help>
 	</msg>
 	<msg name="abstract">
 		<label>1.2 Abstrakt</label>
@@ -65,8 +67,14 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 			Název tématu INSPIRE.
 		</help>
 	</msg>
-	<msg name="date">
+	<msg name="referenceDate">
 		<label>5a Referenční datum</label>
+		<help>
+			Jedná se buď o datum zveřejnění, poslední revize nebo vytvoření.
+		</help>
+	</msg>
+	<msg name="date">
+		<label>Datum</label>
 		<help>
 			Jedná se buď o datum zveřejnění, poslední revize nebo vytvoření. Tato událost, které se datum týká, se volí v následující položce.
 		</help>

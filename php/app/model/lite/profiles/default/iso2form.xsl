@@ -535,7 +535,7 @@
             <fieldset>
                 <div class="row">
                     <xsl:call-template name="drawLabel">
-                        <xsl:with-param name="name" select="'date'"/>
+                        <xsl:with-param name="name" select="'referenceDate'"/>
                         <xsl:with-param name="class" select="'mand wide'"/>
                         <xsl:with-param name="dupl" select="1"/>
                     </xsl:call-template>			
@@ -1147,7 +1147,7 @@
                     <xsl:with-param name="valid" select="'CZ-4'"/>
                 </xsl:call-template>
               
-                <!-- other maintenance fields -->
+                <!-- other maintenance fields 
                 <xsl:call-template name="drawInput">
                     <xsl:with-param name="name" select="'maintenanceScope'"/>
                     <xsl:with-param name="value" select="*/gmd:updateScope/*/@codeListValue"/>
@@ -1156,7 +1156,7 @@
                     <xsl:with-param name="multi" select="1"/>
                     <xsl:with-param name="class" select="'inp2 short'"/>
                     <xsl:with-param name="valid" select="'CZ-4'"/>
-                </xsl:call-template>
+                </xsl:call-template>-->
               
                 <xsl:call-template name="drawInput">
                     <xsl:with-param name="name" select="'maintenanceNote'"/>
