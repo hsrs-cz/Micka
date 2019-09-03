@@ -682,8 +682,8 @@
     <xsl:param name="mdlang" select="'eng'"/>
     <xsl:param name="locale" select="''"/>
     <xsl:element name="{$name}">
-        <gmx:Anchor xlink:href="{$id}"><xsl:value-of select="$locale/item"/>
-            <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$mdlang]/@code2))"/>
+        <gmx:Anchor xlink:href="{$id}">
+            <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$lang]/@code2))"/>
         </gmx:Anchor>
     </xsl:element>
 </xsl:template>

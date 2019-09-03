@@ -55,6 +55,11 @@ $config=array(
     "https://publications.europa.eu/resource/authority/country"=>array(
         "adapter"=> "skos",
         "url" => "http://publications.europa.eu/mdr/resource/authority/country/skos/countries-skos.rdf"
-    )
+    ),
+
+    // ---- priorityDataset
+    "http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset"=>array(
+        "adapter"=> "inspireRegistry"
+    ),
     
 );

@@ -374,6 +374,28 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if>
+                    
+					<xsl:if test="priorityDataset">
+						<gmd:descriptiveKeywords>
+							<gmd:MD_Keywords>
+	              				<xsl:for-each select="priorityDataset">
+                                    <xsl:call-template name="registryOut">
+                                        <xsl:with-param name="name" select="'keyword'"/>
+                                        <xsl:with-param name="uri" select="'http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset'"/>
+                                        <xsl:with-param name="id" select="."/>
+                                        <xsl:with-param name="locale" select="//locale"/>
+                                    </xsl:call-template>
+	  							</xsl:for-each>
+	  							<gmd:thesaurusName>
+	  								<gmd:CI_Citation>
+	  									<gmd:title></gmd:title>
+	  									<gmd:date><gmd:CI_Date><gmd:dateType><gmd:CI_DateTypeCode codeListValue=""></gmd:CI_DateTypeCode></gmd:dateType>
+	  									</gmd:CI_Date></gmd:date>
+	  								</gmd:CI_Citation>
+	  							</gmd:thesaurusName>
+							</gmd:MD_Keywords>
+						</gmd:descriptiveKeywords>
+					</xsl:if>
 
 
 					<!-- other kw -->

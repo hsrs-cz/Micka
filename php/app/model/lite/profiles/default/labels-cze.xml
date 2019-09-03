@@ -695,6 +695,12 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 			<h3>Administrative level that the data set intends to cover.</h3>
 		</help>
 	</msg>
+	<msg name="priorityDataset">
+		<label>Prioritní data</label>
+		<help>
+			<h3>todo</h3>
+		</help>
+	</msg>
     <!-- user specified -->
    	<msg name="geology">
 		<label>3 Témata ČGS</label>
