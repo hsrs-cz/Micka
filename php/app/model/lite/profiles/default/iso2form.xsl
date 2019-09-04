@@ -440,7 +440,7 @@
 
     <!-- other free KW -->
     <div>
-        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[not(contains(*/gmd:keyword/gmx:Anchor/@xlink:href,'SpatialScope')) and string(*/gmd:thesaurusName/*/gmd:title/*)='']/*/gmd:keyword|/">
+        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[not(*/gmd:keyword/gmx:Anchor/@xlink:href) and string(*/gmd:thesaurusName/*/gmd:title/*)='']/*/gmd:keyword|/">
             <xsl:if test="*|*/@xlink:href!='' or position()=last()">
 
                 <fieldset>

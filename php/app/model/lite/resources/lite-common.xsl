@@ -684,7 +684,19 @@
     <xsl:element name="{$name}">
         <gmx:Anchor xlink:href="{$id}">
             <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$lang]/@code2))"/>
-        </gmx:Anchor>
+            <xsl:if test="$locale">
+                <xsl:for-each select="$locale/item">
+                    <xsl:variable name="l" select="."/>
+                    <gmd:PT_FreeText>
+                        <gmd:textGroup>
+                            <gmd:LocalisedCharacterString locale="#locale-{$l}">
+                                <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$l]/@code2))"/>
+                            </gmd:LocalisedCharacterString>
+                        </gmd:textGroup>
+                    </gmd:PT_FreeText>
+                </xsl:for-each>
+            </xsl:if>
+          </gmx:Anchor>
     </xsl:element>
 </xsl:template>
 
