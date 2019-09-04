@@ -440,9 +440,9 @@
 
     <!-- other free KW -->
     <div>
-        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[not(*/gmd:keyword/gmx:Anchor/@xlink:href) and string(*/gmd:thesaurusName/*/gmd:title/*)='']/*/gmd:keyword|/">
-            <xsl:if test="*|*/@xlink:href!='' or position()=last()">
-
+        <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[not(*/gmd:keyword/gmx:Anchor/@xlink:href) and string(*/gmd:thesaurusName/*/gmd:title/*)='']/*/gmd:keyword|.">
+            <xsl:if test="gco:CharacterString or position()=last()">
+                
                 <fieldset>
                     <div class="row">
                         <xsl:call-template name="drawLabel">
