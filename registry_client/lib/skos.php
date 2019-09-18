@@ -7,13 +7,13 @@ function getRemoteData($uri, $config=false, $lang='en'){
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
     $data= curl_exec ($ch);
     curl_close ($ch);
-    echo $data; die;
+    //echo $data; die;
 
 
     $data = getDataByURL($url);
-    var_dump($data);
+    //var_dump($data);
     if(!$json){
-        die('nenalezeno: '. $url);
+        die('not found: '. $url);
     }
     $data = json_decode($json, 1);
     $result = array();

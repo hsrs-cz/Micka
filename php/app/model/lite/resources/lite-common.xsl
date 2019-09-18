@@ -211,7 +211,7 @@
 		<xsl:if test="$labels/msg[@name=$name]/label!=''">
             <div class="col-xs-12 col-md-4">
                 <label for="{$name}" class="{$class}{$lclassI}" id="V-{$valid}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
-                    <xsl:value-of select="$labels/msg[@name=$name]/label"/>
+                    <xsl:copy-of select="$labels/msg[@name=$name]/label"/>
                 </label>
             </div>
 		</xsl:if>

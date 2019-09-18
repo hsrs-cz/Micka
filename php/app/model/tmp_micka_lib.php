@@ -149,11 +149,10 @@ function applyTemplate($xmlSource, $xsltemplate, $user) {
 
 function mdControl($xmlSource, $appLang)
 {
-    //return array(); // TMP
     if ($xmlSource == '') {
         return array();
     }
-    include("validator/resources/Validator.php");
+    include_once(__DIR__ ."/../modules/Validator/model/Validator.php");
     $validator = new \ValidatorModule\Validator("gmd", $appLang);
     $validator->run($xmlSource);
     $a = $validator->asArray();

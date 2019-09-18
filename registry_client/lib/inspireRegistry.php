@@ -12,7 +12,7 @@ function getRemoteData($uri, $config=false, $lang='en'){
     $data = json_decode($json, 1);
     $result = array();
     foreach($data as $key=>$data){
-        // jen 1. pruchod
+        // only one item
         foreach($data['containeditems'] as $row){ 
             $result[$row['value']['id']] = array(
                 "id" => $row['value']['id'],

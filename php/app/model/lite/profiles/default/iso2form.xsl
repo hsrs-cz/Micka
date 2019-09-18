@@ -789,318 +789,329 @@
     <!-- Interoperability elements -->
     
     <!-- IOD-1 spatial reference system  -->
-    <xsl:if test="not($serv)">
-        <xsl:call-template name="drawInput">
-            <xsl:with-param name="name" select="'coorSys'"/>
-            <xsl:with-param name="value" select="gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code"/>
-            <xsl:with-param name="codes" select="'coordSys'"/>
-            <xsl:with-param name="class" select="'mandatory'"/>
-            <xsl:with-param name="multi" select="'2'"/> 
-            <xsl:with-param name="valid" select="'IOD-1'"/>
-            <xsl:with-param name="req" select="'1'"/>   
-        </xsl:call-template>
+    <xsl:choose>
+        <xsl:when test="$serv">
+            <xsl:call-template name="drawInput">
+                <xsl:with-param name="name" select="'coorSys'"/>
+                <xsl:with-param name="value" select="gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code"/>
+                <xsl:with-param name="codes" select="'coordSys'"/>
+                <xsl:with-param name="class" select="'mandatory'"/>
+                <xsl:with-param name="multi" select="'2'"/> 
+                <xsl:with-param name="valid" select="'IOD-1'"/>
+            </xsl:call-template>
 
-        <!-- IOD-3 encoding (distribution format)  -->
-        <div>
-            <xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat|/.">
-                <xsl:if test="*/gmd:name/*!='' or position()=last()">
-                    <fieldset>
-                        <div class="row">
-                            <xsl:call-template name="drawLabel">
-                                <xsl:with-param name="name" select="'encoding'"/>
-                                <xsl:with-param name="dupl" select="1"/>
-                                <xsl:with-param name="class" select="'mand'"/>
-                            </xsl:call-template>	
-                        </div>
-                        <xsl:call-template name="drawInput">
-                            <xsl:with-param name="name" select="'format'"/>
-                            <xsl:with-param name="path" select="'format-name[]'"/>
-                            <xsl:with-param name="value" select="*/gmd:name"/>
-                            <xsl:with-param name="codes" select="'format'"/>
-                            <xsl:with-param name="class" select="'inp2 short'"/>
-                            <xsl:with-param name="valid" select="'IOD-3'"/>
-                            <xsl:with-param name="tags" select="1"/>
-                        </xsl:call-template>
-                        <xsl:call-template name="drawInput">
-                            <xsl:with-param name="name" select="'format_version'"/>
-                            <xsl:with-param name="path" select="'format-version[]'"/>
-                            <xsl:with-param name="value" select="*/gmd:version"/>
-                            <xsl:with-param name="class" select="'inp2 short'"/>  
-                        </xsl:call-template>
-                        <xsl:call-template name="drawInput">
-                            <xsl:with-param name="name" select="'format_specification'"/>
-                            <xsl:with-param name="path" select="'format-specification[]'"/>
-                            <xsl:with-param name="value" select="*/gmd:specification"/>
-                            <xsl:with-param name="class" select="'inp2'"/>
-                            <xsl:with-param name="codes" select="'inspireKeywords'"/> 
-                            <xsl:with-param name="tags" select="1"/>
-                            <xsl:with-param name="multi" select="0"/>
-                            <xsl:with-param name="attr" select="'spec'"/>
-                        </xsl:call-template>
-                    </fieldset>
+            <div id="IOS">
+                <xsl:if test="gmd:identificationInfo/*/srv:serviceType!='other'">
+                    <xsl:attribute name="style">display:none</xsl:attribute>
                 </xsl:if>
-            </xsl:for-each>	    
-        </div>
-        
-        <!-- IOD-4 topological consistency -->
-        <div>
-        <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency|.">
-            <xsl:if test="string-length(gmd:nameOfMeasure)>0 or position()=last()">
-
-                <fieldset>
-                    <div class="row">
-                        <xsl:call-template name="drawLabel">
-                            <xsl:with-param name="name" select="'Topological'"/>
-                            <xsl:with-param name="class" select="'info'"/>
-                            <xsl:with-param name="valid" select="'IOD-4'"/>
-                            <xsl:with-param name="dupl" select="1"/>
-                        </xsl:call-template>		
-                    </div>
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalName'"/>
-                        <xsl:with-param name="path" select="'topological-name[]'"/>
-                        <xsl:with-param name="value" select="gmd:nameOfMeasure"/>
-                        <xsl:with-param name="class" select="'inp2'"/>
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalCode'"/>
-                        <xsl:with-param name="path" select="'topological-code[]'"/>
-                        <xsl:with-param name="value" select="gmd:measureIdentification/*/gmd:code"/>
-                        <xsl:with-param name="class" select="'inp2'"/>
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalMethodType'"/>
-                        <xsl:with-param name="path" select="'topological-mtype[]'"/>
-                        <xsl:with-param name="value" select="gmd:evaluationMethodType/*"/>
-                        <xsl:with-param name="codes" select="'evaluationMethodType'"/>
-                        <xsl:with-param name="class" select="'inp2 short'"/>
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalDesr'"/>
-                        <xsl:with-param name="path" select="'topological-descr[]'"/>
-                        <xsl:with-param name="value" select="gmd:evaluationMethodDescription"/>
-                        <xsl:with-param name="class" select="'inp2'"/>
-                        <xsl:with-param name="langs" select="$langs"/>
-                        <xsl:with-param name="type" select="'textarea'"/>
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalDate'"/>
-                        <xsl:with-param name="path" select="'topological-date[]'"/>
-                        <xsl:with-param name="value" select="substring-before(gmd:dateTime,'T')"/>
-                        <xsl:with-param name="class" select="'date inp2'"/>
-                        <xsl:with-param name="type" select="'date'"/>
-                    </xsl:call-template>
-
-                    <div class="row">
-                        <xsl:call-template name="drawLabel">
-                            <xsl:with-param name="name" select="'topologicalResult'"/>
-                            <xsl:with-param name="class" select="'info inp2'"/>
-                        </xsl:call-template>		
-                    </div>
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalValue'"/>
-                        <xsl:with-param name="path" select="'topological-value[]'"/>
-                        <xsl:with-param name="value" select="gmd:result/*/gmd:value"/>
-                        <xsl:with-param name="class" select="'short inp3'"/>
-                        <xsl:with-param name="type" select="'real'"/>
-                    </xsl:call-template>
-                        
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalUnit'"/>
-                        <xsl:with-param name="path" select="'topological-unit[]'"/>
-                        <xsl:with-param name="value" select="substring-after(gmd:result/*/gmd:valueUnit/@xlink:href,'#')"/>
-                        <xsl:with-param name="class" select="'inp3 short'"/>
-                        <xsl:with-param name="codes" select="'units'"/>
-                    </xsl:call-template>
-                    
-                    <!--div class="row">
-                        <xsl:call-template name="drawLabel">
-                            <xsl:with-param name="name" select="'topologicalKResult'"/>
-                            <xsl:with-param name="class" select="'info inp2'"/>
-                        </xsl:call-template>
-                    </div>
-                            
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalKTitle'"/>
-                        <xsl:with-param name="path" select="'topological-specification[]'"/>
-                        <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title"/>
-                        <xsl:with-param name="class" select="'inp3'"/>
-                        <xsl:with-param name="action" select="'fspec(this)'"/>  
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalSpecDate'"/>
-                        <xsl:with-param name="path" select="'topological-specDate[]'"/>
-                        <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date"/>
-                        <xsl:with-param name="class" select="'date inp3'"/>
-                        <xsl:with-param name="type" select="'date'"/>
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalSpecDateType'"/>
-                        <xsl:with-param name="path" select="'topological-specDateType[]'"/>
-                        <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date/*/gmd:dateType/*/@codeListValue"/>
-                        <xsl:with-param name="codes" select="'dateType'"/>
-                        <xsl:with-param name="class" select="'short inp3'"/>
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalExpl'"/>
-                        <xsl:with-param name="path" select="'topological-explanation[]'"/>
-                        <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:explanation"/>
-                        <xsl:with-param name="class" select="'inp inp3'"/>  
-                    </xsl:call-template>
-
-                    <xsl:call-template name="drawInput">
-                        <xsl:with-param name="name" select="'topologicalPass'"/>
-                        <xsl:with-param name="path" select="'topological-pass[]'"/>
-                        <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"/>
-                        <xsl:with-param name="class" select="'short inp3'"/>
-                        <xsl:with-param name="codes" select="'compliant'"/>
-                    </xsl:call-template-->
-                        
-                        <!-- <xsl:for-each select="gmd:result|/.">
-                            <xsl:if test="string-length(*/gmd:value)>0 or(position()=1)">
-                            <div class="cl" id="topological_{$pos}_result_{position()-1}">
-                                <div style="float: left; width:300px;">
-                                <xsl:call-template name="drawInput">
-                                    <xsl:with-param name="name" select="'topologicalResult'"/>
-                                    <xsl:with-param name="path" select="concat('topological_',$pos,'_result_', position()-1, '_value')"/>
-                                    <xsl:with-param name="values" select="*/gmd:value"/>
-                                    <xsl:with-param name="class" select="'num'"/>
-                                    <xsl:with-param name="valid" select="'IO-4'"/>
-                                </xsl:call-template>
-                                </div>
-                                
-                                <div style="float: left; width:325px;">
-                                <xsl:call-template name="drawRow">
-                                    <xsl:with-param name="name" select="'topologicalUnit'"/>
-                                    <xsl:with-param name="path" select="concat('topological_',$pos,'_result_', position()-1, '_unit')"/>
-                                    <xsl:with-param name="value" select="substring-after(*/gmd:valueUnit/@xlink:href,'#')"/>
-                                    <xsl:with-param name="class" select="''"/>
-                                    <xsl:with-param name="valid" select="'IO-4'"/>
-                                    <xsl:with-param name="type" select="'cselect'"/>
-                                    <xsl:with-param name="codes" select="'units'"/>
-                                </xsl:call-template>
-                                </div>
-                                <span class="duplicate"></span>
-                            </div>
-                            </xsl:if>                         
-                        </xsl:for-each>--> 
-
-                </fieldset>
-            </xsl:if>
-        </xsl:for-each>
-        </div>
-        
-        <!-- IO-5 codepage -->
-        <xsl:call-template name="drawInput">
-            <xsl:with-param name="name" select="'characterSet'"/>
-            <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:characterSet/*/@codeListValue"/>
-            <xsl:with-param name="codes" select="'characterSet'"/>
-            <xsl:with-param name="multi" select="'2'"/>
-            <xsl:with-param name="valid" select="'IOD-5'"/>
-            <xsl:with-param name="class" select="'cond'"/>
-        </xsl:call-template>
-
-        <!-- IOD-6 spatial representation type -->
-        <xsl:call-template name="drawInput">
-            <xsl:with-param name="name" select="'spatial'"/>
-            <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue"/>
-            <xsl:with-param name="codes" select="'spatialRepresentationType'"/>
-            <xsl:with-param name="multi" select="'2'"/>
-            <xsl:with-param name="req" select="1"/>
-            <xsl:with-param name="valid" select="'IOD-6'"/>
-        </xsl:call-template>
-
-    </xsl:if> 
-
-    <xsl:if test="$serv">
-        <div id="IOS">
-            <xsl:if test="gmd:identificationInfo/*/srv:serviceType!='other'">
-                <xsl:attribute name="style">display:none</xsl:attribute>
-            </xsl:if>
-            <!-- IOS-1 - Invocable  --> 
-            <xsl:call-template name="drawInput">
-                <xsl:with-param name="name" select="'sds'"/>
-                <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title"/>
-                <xsl:with-param name="codes" select="'sds'"/>
-                <xsl:with-param name="valid" select="'IOS-1'"/>
-                <xsl:with-param name="multi" select="0"/>
-                <xsl:with-param name="class" select="'short'"/>
-            </xsl:call-template>
-            <!-- IOS-2 - quality  --> 
-            <div class="row">
-                <xsl:call-template name="drawLabel">
-                    <xsl:with-param name="name" select="'serviceQuality'"/>
-                    <xsl:with-param name="class" select="'mand'"/>
+                <!-- IOS-1 - Invocable  --> 
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="name" select="'sds'"/>
+                    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title"/>
+                    <xsl:with-param name="codes" select="'sds'"/>
+                    <xsl:with-param name="valid" select="'IOS-1'"/>
+                    <xsl:with-param name="multi" select="0"/>
+                    <xsl:with-param name="class" select="'short'"/>
+                </xsl:call-template>
+                <!-- IOS-2 - quality  --> 
+                <div class="row">
+                    <xsl:call-template name="drawLabel">
+                        <xsl:with-param name="name" select="'serviceQuality'"/>
+                        <xsl:with-param name="class" select="'mand'"/>
+                        <xsl:with-param name="valid" select="'IOS-2'"/>
+                    </xsl:call-template>		
+                </div>
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="name" select="'availability'"/>
+                    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[1]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
                     <xsl:with-param name="valid" select="'IOS-2'"/>
-                </xsl:call-template>		
+                    <xsl:with-param name="class" select="'inp2'"/>
+                    <xsl:with-param name="type" select="'real'"/>
+                </xsl:call-template>
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="name" select="'performance'"/>
+                    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[2]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
+                    <xsl:with-param name="valid" select="'IOS-2'"/>
+                    <xsl:with-param name="class" select="'inp2'"/>
+                    <xsl:with-param name="type" select="'real'"/>
+                </xsl:call-template>
+                <xsl:call-template name="drawInput">
+                    <xsl:with-param name="name" select="'capacity'"/>
+                    <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[3]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
+                    <xsl:with-param name="valid" select="'IOS-2'"/>
+                    <xsl:with-param name="class" select="'inp2'"/>
+                    <xsl:with-param name="type" select="'real'"/>
+                </xsl:call-template>
+
+                <!-- IOS-3 operation metadata -->
+                <div>
+                    <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations|.">
+                        <xsl:if test="normalize-space(*/srv:operationName/*) or position()=last()">
+                            <fieldset>
+                                <div class="row">
+                                    <xsl:call-template name="drawLabel">
+                                        <xsl:with-param name="name" select="'operation'"/>
+                                        <xsl:with-param name="class" select="'info'"/>
+                                        <xsl:with-param name="valid" select="'IOS-3'"/>
+                                        <xsl:with-param name="dupl" select="1"/>
+                                    </xsl:call-template>		
+                                </div>
+                                <xsl:call-template name="drawInput">
+                                    <xsl:with-param name="name" select="'operationName'"/>
+                                    <xsl:with-param name="path" select="'operation-name[]'"/>
+                                    <xsl:with-param name="value" select="*/srv:operationName"/>
+                                    <xsl:with-param name="class" select="'inp2'"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="drawInput">
+                                    <xsl:with-param name="name" select="'url'"/>
+                                    <xsl:with-param name="path" select="'operation-url[]'"/>
+                                    <xsl:with-param name="value" select="*/srv:connectPoint/*/gmd:linkage/gmd:URL"/>
+                                    <xsl:with-param name="type" select="'plain'"/>
+                                    <xsl:with-param name="class" select="'inp2'"/>
+                                </xsl:call-template>
+                                <xsl:call-template name="drawInput">
+                                    <xsl:with-param name="name" select="'protocol'"/>
+                                    <xsl:with-param name="path" select="'operation-protocol[]'"/>
+                                    <xsl:with-param name="value" select="*/srv:connectPoint/*/gmd:protocol"/>
+                                    <xsl:with-param name="class" select="'inp2'"/>
+                                </xsl:call-template>
+                            </fieldset>    
+                        </xsl:if>
+                    </xsl:for-each>
+                </div>
             </div>
+        </xsl:when>
+        <xsl:otherwise>
             <xsl:call-template name="drawInput">
-                <xsl:with-param name="name" select="'availability'"/>
-                <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[1]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
-                <xsl:with-param name="valid" select="'IOS-2'"/>
-                <xsl:with-param name="class" select="'inp2'"/>
-                <xsl:with-param name="type" select="'real'"/>
-            </xsl:call-template>
-            <xsl:call-template name="drawInput">
-                <xsl:with-param name="name" select="'performance'"/>
-                <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[2]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
-                <xsl:with-param name="valid" select="'IOS-2'"/>
-                <xsl:with-param name="class" select="'inp2'"/>
-                <xsl:with-param name="type" select="'real'"/>
-            </xsl:call-template>
-            <xsl:call-template name="drawInput">
-                <xsl:with-param name="name" select="'capacity'"/>
-                <xsl:with-param name="value" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_ConceptualConsistency[gmd:nameOfMeasure/*/@xlink:href=$codeLists/serviceQuality/value[3]/@uri]/gmd:result/gmd:DQ_QuantitativeResult/gmd:value/gco:Record"/>
-                <xsl:with-param name="valid" select="'IOS-2'"/>
-                <xsl:with-param name="class" select="'inp2'"/>
-                <xsl:with-param name="type" select="'real'"/>
+                <xsl:with-param name="name" select="'coorSys'"/>
+                <xsl:with-param name="value" select="gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code"/>
+                <xsl:with-param name="codes" select="'coordSys'"/>
+                <xsl:with-param name="class" select="'mandatory'"/>
+                <xsl:with-param name="multi" select="'2'"/> 
+                <xsl:with-param name="valid" select="'IOD-1'"/>
+                <xsl:with-param name="req" select="'1'"/>   
             </xsl:call-template>
 
-            <!-- IOS-3 operation metadata -->
+            <!-- IOD-3 encoding (distribution format)  -->
             <div>
-                <xsl:for-each select="gmd:identificationInfo/*/srv:containsOperations|.">
-                    <xsl:if test="normalize-space(*/srv:operationName/*) or position()=last()">
+                <xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat|/.">
+                    <xsl:if test="*/gmd:name/*!='' or position()=last()">
                         <fieldset>
                             <div class="row">
                                 <xsl:call-template name="drawLabel">
-                                    <xsl:with-param name="name" select="'operation'"/>
-                                    <xsl:with-param name="class" select="'info'"/>
-                                    <xsl:with-param name="valid" select="'IOS-3'"/>
+                                    <xsl:with-param name="name" select="'encoding'"/>
                                     <xsl:with-param name="dupl" select="1"/>
-                                </xsl:call-template>		
+                                    <xsl:with-param name="class" select="'mand'"/>
+                                </xsl:call-template>	
                             </div>
                             <xsl:call-template name="drawInput">
-                                <xsl:with-param name="name" select="'operationName'"/>
-                                <xsl:with-param name="path" select="'operation-name[]'"/>
-                                <xsl:with-param name="value" select="*/srv:operationName"/>
-                                <xsl:with-param name="class" select="'inp2'"/>
+                                <xsl:with-param name="name" select="'format'"/>
+                                <xsl:with-param name="path" select="'format-name[]'"/>
+                                <xsl:with-param name="value" select="*/gmd:name"/>
+                                <xsl:with-param name="codes" select="'format'"/>
+                                <xsl:with-param name="class" select="'inp2 short'"/>
+                                <xsl:with-param name="valid" select="'IOD-3'"/>
+                                <xsl:with-param name="tags" select="1"/>
                             </xsl:call-template>
                             <xsl:call-template name="drawInput">
-                                <xsl:with-param name="name" select="'url'"/>
-                                <xsl:with-param name="path" select="'operation-url[]'"/>
-                                <xsl:with-param name="value" select="*/srv:connectPoint/*/gmd:linkage/gmd:URL"/>
-                                <xsl:with-param name="type" select="'plain'"/>
-                                <xsl:with-param name="class" select="'inp2'"/>
+                                <xsl:with-param name="name" select="'format_version'"/>
+                                <xsl:with-param name="path" select="'format-version[]'"/>
+                                <xsl:with-param name="value" select="*/gmd:version"/>
+                                <xsl:with-param name="class" select="'inp2 short'"/>  
                             </xsl:call-template>
                             <xsl:call-template name="drawInput">
-                                <xsl:with-param name="name" select="'protocol'"/>
-                                <xsl:with-param name="path" select="'operation-protocol[]'"/>
-                                <xsl:with-param name="value" select="*/srv:connectPoint/*/gmd:protocol"/>
+                                <xsl:with-param name="name" select="'format_specification'"/>
+                                <xsl:with-param name="path" select="'format-specification[]'"/>
+                                <xsl:with-param name="value" select="*/gmd:specification"/>
                                 <xsl:with-param name="class" select="'inp2'"/>
+                                <xsl:with-param name="codes" select="'inspireKeywords'"/> 
+                                <xsl:with-param name="tags" select="1"/>
+                                <xsl:with-param name="multi" select="0"/>
+                                <xsl:with-param name="attr" select="'spec'"/>
                             </xsl:call-template>
-                        </fieldset>    
+                        </fieldset>
                     </xsl:if>
-                </xsl:for-each>
+                </xsl:for-each>	    
             </div>
-        </div>
-    </xsl:if>
+            
+            <!-- IOD-4 topological consistency -->
+            <div>
+            <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_TopologicalConsistency|.">
+                <xsl:if test="string-length(gmd:nameOfMeasure)>0 or position()=last()">
+
+                    <fieldset>
+                        <div class="row">
+                            <xsl:call-template name="drawLabel">
+                                <xsl:with-param name="name" select="'Topological'"/>
+                                <xsl:with-param name="class" select="'info'"/>
+                                <xsl:with-param name="valid" select="'IOD-4'"/>
+                                <xsl:with-param name="dupl" select="1"/>
+                            </xsl:call-template>		
+                        </div>
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalName'"/>
+                            <xsl:with-param name="path" select="'topological-name[]'"/>
+                            <xsl:with-param name="value" select="gmd:nameOfMeasure"/>
+                            <xsl:with-param name="class" select="'inp2'"/>
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalCode'"/>
+                            <xsl:with-param name="path" select="'topological-code[]'"/>
+                            <xsl:with-param name="value" select="gmd:measureIdentification/*/gmd:code"/>
+                            <xsl:with-param name="class" select="'inp2'"/>
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalMethodType'"/>
+                            <xsl:with-param name="path" select="'topological-mtype[]'"/>
+                            <xsl:with-param name="value" select="gmd:evaluationMethodType/*"/>
+                            <xsl:with-param name="codes" select="'evaluationMethodType'"/>
+                            <xsl:with-param name="class" select="'inp2 short'"/>
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalDesr'"/>
+                            <xsl:with-param name="path" select="'topological-descr[]'"/>
+                            <xsl:with-param name="value" select="gmd:evaluationMethodDescription"/>
+                            <xsl:with-param name="class" select="'inp2'"/>
+                            <xsl:with-param name="langs" select="$langs"/>
+                            <xsl:with-param name="type" select="'textarea'"/>
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalDate'"/>
+                            <xsl:with-param name="path" select="'topological-date[]'"/>
+                            <xsl:with-param name="value" select="substring-before(gmd:dateTime,'T')"/>
+                            <xsl:with-param name="class" select="'date inp2'"/>
+                            <xsl:with-param name="type" select="'date'"/>
+                        </xsl:call-template>
+
+                        <div class="row">
+                            <xsl:call-template name="drawLabel">
+                                <xsl:with-param name="name" select="'topologicalResult'"/>
+                                <xsl:with-param name="class" select="'info inp2'"/>
+                            </xsl:call-template>		
+                        </div>
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalValue'"/>
+                            <xsl:with-param name="path" select="'topological-value[]'"/>
+                            <xsl:with-param name="value" select="gmd:result/*/gmd:value"/>
+                            <xsl:with-param name="class" select="'short inp3'"/>
+                            <xsl:with-param name="type" select="'real'"/>
+                        </xsl:call-template>
+                            
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalUnit'"/>
+                            <xsl:with-param name="path" select="'topological-unit[]'"/>
+                            <xsl:with-param name="value" select="substring-after(gmd:result/*/gmd:valueUnit/@xlink:href,'#')"/>
+                            <xsl:with-param name="class" select="'inp3 short'"/>
+                            <xsl:with-param name="codes" select="'units'"/>
+                        </xsl:call-template>
+                        
+                        <!--div class="row">
+                            <xsl:call-template name="drawLabel">
+                                <xsl:with-param name="name" select="'topologicalKResult'"/>
+                                <xsl:with-param name="class" select="'info inp2'"/>
+                            </xsl:call-template>
+                        </div>
+                                
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalKTitle'"/>
+                            <xsl:with-param name="path" select="'topological-specification[]'"/>
+                            <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title"/>
+                            <xsl:with-param name="class" select="'inp3'"/>
+                            <xsl:with-param name="action" select="'fspec(this)'"/>  
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalSpecDate'"/>
+                            <xsl:with-param name="path" select="'topological-specDate[]'"/>
+                            <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date"/>
+                            <xsl:with-param name="class" select="'date inp3'"/>
+                            <xsl:with-param name="type" select="'date'"/>
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalSpecDateType'"/>
+                            <xsl:with-param name="path" select="'topological-specDateType[]'"/>
+                            <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:date/*/gmd:dateType/*/@codeListValue"/>
+                            <xsl:with-param name="codes" select="'dateType'"/>
+                            <xsl:with-param name="class" select="'short inp3'"/>
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalExpl'"/>
+                            <xsl:with-param name="path" select="'topological-explanation[]'"/>
+                            <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:explanation"/>
+                            <xsl:with-param name="class" select="'inp inp3'"/>  
+                        </xsl:call-template>
+
+                        <xsl:call-template name="drawInput">
+                            <xsl:with-param name="name" select="'topologicalPass'"/>
+                            <xsl:with-param name="path" select="'topological-pass[]'"/>
+                            <xsl:with-param name="value" select="gmd:result/gmd:DQ_ConformanceResult/gmd:pass/gco:Boolean"/>
+                            <xsl:with-param name="class" select="'short inp3'"/>
+                            <xsl:with-param name="codes" select="'compliant'"/>
+                        </xsl:call-template-->
+                            
+                            <!-- <xsl:for-each select="gmd:result|/.">
+                                <xsl:if test="string-length(*/gmd:value)>0 or(position()=1)">
+                                <div class="cl" id="topological_{$pos}_result_{position()-1}">
+                                    <div style="float: left; width:300px;">
+                                    <xsl:call-template name="drawInput">
+                                        <xsl:with-param name="name" select="'topologicalResult'"/>
+                                        <xsl:with-param name="path" select="concat('topological_',$pos,'_result_', position()-1, '_value')"/>
+                                        <xsl:with-param name="values" select="*/gmd:value"/>
+                                        <xsl:with-param name="class" select="'num'"/>
+                                        <xsl:with-param name="valid" select="'IO-4'"/>
+                                    </xsl:call-template>
+                                    </div>
+                                    
+                                    <div style="float: left; width:325px;">
+                                    <xsl:call-template name="drawRow">
+                                        <xsl:with-param name="name" select="'topologicalUnit'"/>
+                                        <xsl:with-param name="path" select="concat('topological_',$pos,'_result_', position()-1, '_unit')"/>
+                                        <xsl:with-param name="value" select="substring-after(*/gmd:valueUnit/@xlink:href,'#')"/>
+                                        <xsl:with-param name="class" select="''"/>
+                                        <xsl:with-param name="valid" select="'IO-4'"/>
+                                        <xsl:with-param name="type" select="'cselect'"/>
+                                        <xsl:with-param name="codes" select="'units'"/>
+                                    </xsl:call-template>
+                                    </div>
+                                    <span class="duplicate"></span>
+                                </div>
+                                </xsl:if>                         
+                            </xsl:for-each>--> 
+
+                    </fieldset>
+                </xsl:if>
+            </xsl:for-each>
+            </div>
+            
+            <!-- IO-5 codepage -->
+            <xsl:call-template name="drawInput">
+                <xsl:with-param name="name" select="'characterSet'"/>
+                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:characterSet/*/@codeListValue"/>
+                <xsl:with-param name="codes" select="'characterSet'"/>
+                <xsl:with-param name="multi" select="'2'"/>
+                <xsl:with-param name="valid" select="'IOD-5'"/>
+                <xsl:with-param name="class" select="'cond'"/>
+            </xsl:call-template>
+
+            <!-- IOD-6 spatial representation type -->
+            <xsl:call-template name="drawInput">
+                <xsl:with-param name="name" select="'spatial'"/>
+                <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue"/>
+                <xsl:with-param name="codes" select="'spatialRepresentationType'"/>
+                <xsl:with-param name="multi" select="'2'"/>
+                <xsl:with-param name="req" select="1"/>
+                <xsl:with-param name="valid" select="'IOD-6'"/>
+            </xsl:call-template>
+
+        </xsl:otherwise> 
+    </xsl:choose>
+
     
     <!-- CZECH additional elements -->
 	<xsl:choose>
