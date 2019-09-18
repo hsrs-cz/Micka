@@ -696,7 +696,7 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		</help>
 	</msg>
 	<msg name="priorityDataset">
-		<label><a href="https://geoportal.gov.cz/web/guest/pds/" target="_blank">Prioritní data</a></label>
+		<label>Prioritní data <a href="https://geoportal.gov.cz/web/guest/pds/" target="_blank"><i class="fa fa-info-circle"></i></a></label>
 		<help>
 			<h3>Toto klíčové slovo vyplňují pouze poskytovatelé tzv.  Prioritních dat Evropské komise  (Priority data sets). Jedná se o datové sady vytvářené v rámci plnění reportingových povinností Evropské komise v oblasti životního prostředí. Prosím vyberte z číselníku. </h3>
 		</help>
