@@ -228,19 +228,19 @@ class Validator
             $output .= '<div class="msg-ok">'.(string) $this->msg->msg->ok.'</div>';
         }
         $output .= $this->createHTML($result);
-        $output .= "<div style='clear:both; border-bottom:1px solid #909090; margin: 10px 0px 8px 0px;'></div>
-            <div class='row valid-legend' style='height:16px;'>
-            <div style='float:right'>".(string)$this->msg->msg->version. 
-            ": ".$this->version."</div>
-            <span class='pass'>".(string)$this->msg->msg->pass. 
-            ": <b>".$this->pass."</b> </span> 
-            <span class='fail'>".(string)$this->msg->msg->fail.
-            ": <b>".$this->fail."</b> </span> 
-            <span class='warning'> ".(string)$this->msg->msg->warning.
-            ": <b>".$this->warn."</b> </span>
-            <span class='notice'> ".(string)$this->msg->msg->notice.
-            ": <b>".$this->notice."</b> </span>
-            </div></div>";  		
+        $output .= '<div style="clear:both; border-bottom:1px solid #909090; margin: 10px 0px 8px 0px;"></div>
+            <div class="row valid-legend" style="height:16px;">
+            <div style="float:right">'.(string)$this->msg->msg->version. 
+            ': '.$this->version.'</div>
+            <span class="pass"><i class="fa fa-check-circle fa-fw fa-lg"></i>'.(string)$this->msg->msg->pass. 
+            ': <b>'.$this->pass.'</b> </span> 
+            <span class="fail"><i class="fa fa-ban fa-fw fa-lg"></i>'.(string)$this->msg->msg->fail.
+            ': <b>'.$this->fail.'</b> </span> 
+            <span class="warning"><i class="fa fa-exclamation-triangle fa-fw fa-lg"></i>'.(string)$this->msg->msg->warning.
+            ': <b>'.$this->warn.'</b> </span>
+            <span class="notice"><i class="fa fa-info-circle fa-fw fa-lg"></i>'.(string)$this->msg->msg->notice.
+            ': <b>'.$this->notice.'</b> </span>
+            </div></div>';
         return $output;
     }
 

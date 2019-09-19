@@ -2,6 +2,7 @@ php/app/config/config.local.neon
 php/app/config/codelists.xml
 php/www/registry_client/cache/*
 php/log/*
+php/data/*
 php/temp/*
 php/vendor/*
 php/composer.lock
