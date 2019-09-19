@@ -1,5 +1,5 @@
-HS.Lang.cze['Draw bounding box'] = 'Ohraničující obdélník';
-HS.Lang.cze['Clear graphics'] = 'Vymazat zákres';
+HS.Lang.cze['Draw extent'] = 'Zadat rozsah';
+HS.Lang.cze['Clear extent'] = 'Vymazat rozsah';
 HS.Lang.cze['Delete record'] = 'Smazat záznam';
 HS.Lang.cze['Delete'] = 'Smazat';
 HS.Lang.cze['Add new thesaurus'] = 'Přidat nový thesaurus';

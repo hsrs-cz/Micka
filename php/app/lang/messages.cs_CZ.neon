@@ -143,7 +143,7 @@ frontend:
     close: "Zavřít"
     login: "Přihlásit se"
     logout: "Odhlásit se"
-    inside: "Pouze uvnitř"
+    inside: "Pouze uvnitř zadaného rozsahu"
     about: "O aplikaci"
     save: "Uložit"
     save_edit: "Uložit a pokračovat"

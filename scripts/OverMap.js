@@ -24,7 +24,7 @@ function OverMap(config){
 		source: new ol.source.Vector({features: this.searchfeatures}),
 		style: new ol.style.Style({
 			fill: new ol.style.Fill({
-			    color: [255,0,0,0.25] //TODO - configurable
+			    color: [255,0,0,0.1] //TODO - configurable
 			}),
 			stroke: new ol.style.Stroke({
 			    color: '#F00000', //TODO - configurable
@@ -72,7 +72,7 @@ function OverMap(config){
 	
 	var drawBoxControl = createControl({
         icon: '<i class="fa fa-crop"></i>',
-        title: HS.i18n('Draw bounding box'),
+        title: HS.i18n('Draw extent'),
         className: 'bbox-control',
         handler: function(){
             _overmap.dragBoxInteraction.setActive(true);
@@ -81,7 +81,7 @@ function OverMap(config){
 
 	var eraseGeomControl = createControl({
         icon: '<i class="fa fa-close"></i>',
-        title: HS.i18n('Clear graphics'),
+        title: HS.i18n('Clear extent'),
         className: 'erase-control',
         handler: this.clear
 	});
