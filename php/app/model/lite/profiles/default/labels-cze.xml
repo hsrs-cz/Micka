@@ -6,7 +6,7 @@
 	</msg>
 	<msg name="inspireEU">
 		<label>CZ-11 Harvestovat na geoportál EU</label>
-		<help>Označuje, zda bude záznam harvestován na evropský INSPIRE geoportál (Podléhá dalšímu schválení správcem národního geoportálu). 
+		<help>Označuje, zda bude záznam harvestován na evropský geoportál INSPIRE (Podléhá dalšímu schválení správcem národního geoportálu). 
 			    Pokud není označen, bude prezentován pouze na národním geoportálu.
 			<p class="pozn">Hodnota je podle národního profilu http://geoportal.gov.cz/inspire</p>
 		</help>
@@ -94,7 +94,8 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
 	<msg name="spatialExt">
 		<label>4.1 Geografické ohraničení</label>
 		<help>
-			Pomocí Ctrl-myš zadejte minimální obdélník rozsahu zdroje. Rozsah nemusíte zadávat, pokud zadáte geografický identifikátor.
+			Pomocí nástroje v mapě pro zadání rozsahu zadejte minimální obdélník rozsahu zdroje. 
+            Pokud zadáte geografický identifikátor, rozsah se doplní automaticky.
 		</help>
 	</msg>
 	<msg name="extentId">
@@ -227,18 +228,18 @@ Příklad: D2.8.I.7 Data Specification on Transport Networks – version 3.1)
 	<msg name="linkage">
 		<label>1.4 Odkaz</label>
 		<help>
-			<p>Tato položka definuje odkaz(y) na zdroj a/nebo odkaz na další informace o zdroji. Povinný, pokud je k dispozici adresa URL pro získání dalších informací o zdroji a/nebo pro přístup k souvisejícím službám. 
-V případě, že data jsou dostupná formou služby OGC, půjde o odkaz na GetCapabilities. Jako součást URL je třeba uvádět tyto parametry:
-SERVICE=&lt;kód služby&gt; a REQUEST=GetCapabilities, kde kód služby je WMS/WFS/WCS/CSW apod. 
-Příklad:
-http://portal.mysite.cz/services/wms?SERVICE=WMS&amp;REQUEST=GetCapabilities 
-U nestandardních služeb – mimo rámec INSPIRE - bude poskytován odkaz na tradiční přípojný bod služby.
-</p>
+			Tato položka definuje odkaz(y) na zdroj a/nebo odkaz na další informace o zdroji. Povinný, pokud je k dispozici adresa URL pro získání dalších informací o zdroji a/nebo pro přístup k souvisejícím službám. 
+V případě, že data jsou dostupná formou služby OGC, půjde o odkaz na GetCapabilities. 
 		</help>
 	</msg>
     <msg name="url">
         <label>URL</label>
-        <help>Adresa</help>
+        <help>Adresa. Jako součást URL je třeba uvádět tyto parametry:
+SERVICE=&lt;kód služby&gt; a REQUEST=GetCapabilities, kde kód služby je WMS/WFS/WCS/CSW apod. 
+Příklad:
+http://portal.mysite.cz/services/wms?SERVICE=WMS&amp;REQUEST=GetCapabilities 
+U nestandardních služeb – mimo rámec INSPIRE - bude poskytován odkaz na tradiční přípojný bod služby.
+</help>
     </msg>
     <msg name="function">
         <label>Funkce</label>
@@ -250,11 +251,11 @@ U nestandardních služeb – mimo rámec INSPIRE - bude poskytován odkaz na tr
 	</msg>
 	<msg name="name">
 		<label>Název</label>
-        <help></help>
+        <help>Název odkazu</help>
 	</msg>
 	<msg name="description">
-		<label>Popis</label>
-        <help></help>
+		<label>Popis odkazu</label>
+        <help>Popis odkazu.</help>
 	</msg>
 	<msg name="distributor">
 		<label>Distributor</label>
@@ -393,15 +394,15 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		</help>
 	</msg>
 	<msg name="www">
-		<label>www</label>
+		<label>WWW</label>
 		<help>Webové stránky organizace</help>
 	</msg>
 	<msg name="email">
-		<label>email</label>
+		<label>E-mail</label>
 		<help>E-mailová adresa</help>
 	</msg>
 	<msg name="phone">
-		<label>telefon</label>
+		<label>Telefon</label>
 		<help>Telefonní číslo</help>
 	</msg>
 	<msg name="postalCode">
@@ -696,7 +697,8 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
 		</help>
 	</msg>
 	<msg name="priorityDataset">
-		<label>Prioritní data <a href="https://geoportal.gov.cz/web/guest/pds/" target="_blank"><i class="fa fa-info-circle"></i></a></label>
+		<label>Prioritní data</label>
+        <a href="https://geoportal.gov.cz/web/guest/pds/" target="_blank"><i class="fa fa-info-circle"></i></a>
 		<help>
 			<h3>Toto klíčové slovo vyplňují pouze poskytovatelé tzv.  Prioritních dat Evropské komise  (Priority data sets). Jedná se o datové sady vytvářené v rámci plnění reportingových povinností Evropské komise v oblasti životního prostředí. Prosím vyberte z číselníku. </h3>
 		</help>
