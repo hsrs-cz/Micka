@@ -688,7 +688,7 @@
                         <xsl:when test="contains(*/@xlink:href,'://creativecommons.org')">
                             <xsl:variable name="licence" select="substring-after(*/@xlink:href,'creativecommons.org/licenses/')"/>							
                             <a href="{gmx:Anchor/@xlink:href}" target="_blank">
-                                <img src="http://licensebuttons.net/l/{$licence}/88x31.png"/><br/>
+                                <div><img src="http://licensebuttons.net/l/{$licence}/88x31.png"/></div>
                                 <xsl:call-template name="multi">
                                     <xsl:with-param name="el" select="."/>
                                     <xsl:with-param name="lang" select="$lang"/>
