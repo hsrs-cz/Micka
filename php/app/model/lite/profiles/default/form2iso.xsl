@@ -325,34 +325,25 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                                         <xsl:with-param name="name" select="'keyword'"/>
                                         <xsl:with-param name="codes" select="$codeLists/serviceKeyword"/>
                                         <xsl:with-param name="t" select="."/>
+                                        <xsl:with-param name="attrib" select="'name'"/>
                                         <xsl:with-param name="locale" select="//locale"/>
                                     </xsl:call-template>
 	  							</xsl:for-each>
-	  							<gmd:thesaurusName>
-	  								<gmd:CI_Citation>
-	  									<gmd:title>
-	  										<gco:CharacterString>ISO - 19119 geographic services taxonomy</gco:CharacterString>
-	  									</gmd:title>
-	  									<gmd:date><gmd:CI_Date>
-	  										<gmd:date><gco:Date>2010-01-19</gco:Date></gmd:date>
-	  										<gmd:dateType><gmd:CI_DateTypeCode codeListValue="publication" codeList="{$cl}#CI_DateTypeCode">publication</gmd:CI_DateTypeCode></gmd:dateType>
-	  									</gmd:CI_Date></gmd:date>
-	  								</gmd:CI_Citation>
-	  							</gmd:thesaurusName>
-                                    <gmd:thesaurusName>
-                                        <gmd:CI_Citation>
-                                            <gmd:title>
-                                                <gmx:Anchor xlink:href="{$codeLists/serviceKeyword/thesaurus/@uri}"><xsl:value-of select="$codeLists/inspireKeywords/thesaurus/*"/></gmx:Anchor>
-                                            </gmd:title>
-                                            <gmd:date><gmd:CI_Date>
-                                                <gmd:date><gco:Date><xsl:value-of select="$codeLists/serviceKeyword/thesaurus/@date"/></gco:Date></gmd:date>
-                                                <gmd:dateType><gmd:CI_DateTypeCode codeListValue="{$codeLists/serviceKeyword/thesaurus/@dateType}" codeList="{$cl}#CI_DateTypeCode"><xsl:value-of select="$codeLists/inspireKeywords/thesaurus/@dateType"/></gmd:CI_DateTypeCode></gmd:dateType>
-                                            </gmd:CI_Date></gmd:date>
-                                        </gmd:CI_Citation>
-                                    </gmd:thesaurusName>
+                                <gmd:thesaurusName>
+                                    <gmd:CI_Citation>
+                                        <gmd:title>
+                                            <gmx:Anchor xlink:href="{$codeLists/serviceKeyword/thesaurus/@uri}"><xsl:value-of select="$codeLists/serviceKeyword/thesaurus/*"/></gmx:Anchor>
+                                        </gmd:title>
+                                        <gmd:date><gmd:CI_Date>
+                                            <gmd:date><gco:Date><xsl:value-of select="$codeLists/serviceKeyword/thesaurus/@date"/></gco:Date></gmd:date>
+                                            <gmd:dateType><gmd:CI_DateTypeCode codeListValue="{$codeLists/serviceKeyword/thesaurus/@dateType}" codeList="{$cl}#CI_DateTypeCode"><xsl:value-of select="$codeLists/serviceKeyword/thesaurus/@dateType"/></gmd:CI_DateTypeCode></gmd:dateType>
+                                        </gmd:CI_Date></gmd:date>
+                                    </gmd:CI_Citation>
+                                </gmd:thesaurusName>
 							</gmd:MD_Keywords>
 						</gmd:descriptiveKeywords>
 					</xsl:if>
+
 					<xsl:if test="spatialScope">
 						<gmd:descriptiveKeywords>
 							<gmd:MD_Keywords>
@@ -485,9 +476,18 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                     
                     <gmd:resourceConstraints>
                         <gmd:MD_LegalConstraints>
-                            <gmd:useConstraints>
+                            <gmd:accessConstraints>
                                 <gmd:MD_RestrictionCode codeListValue=""/>
-                            </gmd:useConstraints>
+                            </gmd:accessConstraints>
+                            <gmd:otherConstraints></gmd:otherConstraints>
+                        </gmd:MD_LegalConstraints>
+                    </gmd:resourceConstraints>
+
+                    <gmd:resourceConstraints>
+                        <gmd:MD_LegalConstraints>
+                            <gmd:accessConstraints>
+                                <gmd:MD_RestrictionCode codeListValue=""/>
+                            </gmd:accessConstraints>
                             <gmd:otherConstraints></gmd:otherConstraints>
                         </gmd:MD_LegalConstraints>
                     </gmd:resourceConstraints>
