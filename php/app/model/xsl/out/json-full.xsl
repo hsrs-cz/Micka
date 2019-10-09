@@ -56,7 +56,7 @@
             <xsl:if test="count(@*) &gt; 0 and (count(child::*) &gt; 0 or text())">, </xsl:if>
             <xsl:apply-templates select="./*" mode="detect" />
             <xsl:if test="count(child::*) = 0 and text() and not(@*)">
-                <xsl:text>'</xsl:text><xsl:value-of select="name()"/>' => '<xsl:value-of select="php:function('addslashes', string(text()))"/><xsl:text>"</xsl:text>
+                <xsl:text>'</xsl:text><xsl:value-of select="name()"/>' => '<xsl:value-of select="php:function('addslashes', string(text()))"/><xsl:text>'</xsl:text>
             </xsl:if>
             <xsl:if test="count(child::*) = 0 and text() and @*">
                 <xsl:text>'text' => '</xsl:text><xsl:value-of select="php:function('addslashes', string(text()))"/><xsl:text>'</xsl:text>
@@ -66,12 +66,12 @@
     </xsl:template>
  
     <xsl:template match="@*" mode="attr">
-        <xsl:text>'</xsl:text><xsl:value-of select="local-name()"/>' => '<xsl:value-of select="."/><xsl:text>'</xsl:text>
+        <xsl:text>'</xsl:text><xsl:value-of select="local-name()"/>' => '<xsl:value-of select="php:function('addslashes', string(.))"/><xsl:text>'</xsl:text>
         <xsl:if test="position() &lt; last()">,</xsl:if>
     </xsl:template>
  
     <xsl:template match="node/@TEXT | text()" name="removeBreaks">
-        <xsl:param name="pText" select="normalize-space(.)"/>
+        <xsl:param name="pText" select="php:function('addslashes', string(.))"/>
         <xsl:choose>
             <xsl:when test="not(contains($pText, '&#xA;'))"><xsl:copy-of select="$pText"/></xsl:when>
             <xsl:otherwise>

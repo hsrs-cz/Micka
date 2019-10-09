@@ -34,7 +34,7 @@
         </xsl:when>		
         <xsl:otherwise>
             <xsl:call-template name="lf2br">
-                <xsl:with-param name="str" select="normalize-space($txt)"/>
+                <xsl:with-param name="str" select="$txt"/>
             </xsl:call-template>
         </xsl:otherwise>	
     </xsl:choose>
@@ -49,16 +49,16 @@
 			<a href="{$str}"><xsl:value-of select="$str"/></a>
         </xsl:when>
         <!-- line breaks to <br> -->
-        <xsl:when test="contains($str,'&#xA;')">
+        <xsl:when test="contains($str,'&#xa;')">
             <xsl:call-template name="lf2br">
                 <xsl:with-param name="str">
-                    <xsl:value-of select="substring-before($str,'&#xA;')"/>
+                    <xsl:value-of select="substring-before($str,'&#xa;')"/>
                 </xsl:with-param>
             </xsl:call-template>
             <br/>
             <xsl:call-template name="lf2br">
                 <xsl:with-param name="str">
-                    <xsl:value-of select="substring-after($str,'&#xA;')"/>
+                    <xsl:value-of select="substring-after($str,'&#xa;')"/>
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:when>

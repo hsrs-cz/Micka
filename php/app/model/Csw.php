@@ -849,7 +849,6 @@ class Csw{
           $this->xml->loadXML($xml);
           $output = $this->xp->transformToXML($this->xml);
           //echo($output); die();
-
           if($this->params['OUTPUTSCHEMA']=='json'){
               eval($output);
               $output = json_encode($rec);

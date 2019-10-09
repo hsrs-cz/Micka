@@ -149,7 +149,7 @@ frontend:
     save: "Save"
     save_edit: "Save and continue editing"
     cancel: "Cancel"
-    cancel_edit: "Cancel editing"
+    cancel_edit: "Cancel and stop editing"
     stop: "Stop"
     stop_edit: "Save and stop editing"
     keywords: "Keywords"
