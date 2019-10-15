@@ -46,32 +46,69 @@
 		<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine">
 			$l['url'] = '<xsl:value-of disable-output-escaping="yes" select="php:function('addslashes', normalize-space(*/gmd:linkage/gmd:URL))"/>';
 			$l['protocol'] = '<xsl:value-of select="normalize-space(*/gmd:protocol)"/>';
+            <xsl:if test="*/gmd:description">
+                $l['description'] = '<xsl:value-of select="normalize-space(*/gmd:description)"/>';
+            </xsl:if>
             $rec['links'][] = $l;
 		</xsl:for-each>
-		$rec['formats'] = array();
-		<xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat">
+		//$rec['formats'] = array();
+		<!--xsl:for-each select="gmd:distributionInfo/*/gmd:distributionFormat">
 			$rec['formats'][] = '<xsl:value-of select="*/gmd:name"/>';
-		</xsl:for-each>
+		</xsl:for-each-->
 		<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName!=''">
 			$rec['imgURL'] = '<xsl:value-of disable-output-escaping="yes" select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName"/>';
 		</xsl:if>		
         <xsl:if test="string-length(gmd:identificationInfo//gmd:EX_GeographicBoundingBox)!=0">
             $rec['bbox'] = [<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:westBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:southBoundLatitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:eastBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:northBoundLatitude/*)"/>];
         </xsl:if>
-		$rec['contact'] = '<xsl:call-template name="multi">
-		    	<xsl:with-param name="el" select="gmd:contact/*/gmd:organisationName"/>
+        $rec['contacts'] = [];
+        <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact">
+            $contact['organisationName'] = '<xsl:call-template name="multi">
+                    <xsl:with-param name="el" select="*/gmd:organisationName"/>
+                    <xsl:with-param name="lang" select="$lang"/>
+                    <xsl:with-param name="mdlang" select="$mdlang"/>
+                </xsl:call-template>';
+            $contact['email'] = '<xsl:value-of select="*/gmd:contactInfo/*/gmd:address/*/gmd:electronicMailAddress"/>';
+            $contact['role'] = '<xsl:value-of select="*/gmd:role/*/@codeListValue"/>';
+            $rec['contacts'][] = $contact;
+        </xsl:for-each>
+        
+        $rec['dates'] = [];
+         <xsl:for-each select="gmd:identificationInfo/*/gmd:citation/*/gmd:date">
+            $d['date'] = '<xsl:value-of select="*/gmd:date"/>';
+            $d['dateType'] = '<xsl:value-of select="*/gmd:dateType/*/@codeListValue"/>';
+            $rec['dates'][] = $d;
+         </xsl:for-each>
+         
+        $rec['keywords'] = array();
+		<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*/gmd:keyword">
+			$kw['title'] = '<xsl:call-template name="multi">
+		    	<xsl:with-param name="el" select="."/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
 		  	</xsl:call-template>';
-		$rec['inspireKeywords'] = array();
-		<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*,'INSPIRE')]/*/gmd:keyword[gco:CharacterString!='']">
-			$rec['inspireKeywords'][] = '<xsl:value-of select="gco:CharacterString"/>';
+            <xsl:if test="*/@xlink:href">
+                $kw['uri'] = '<xsl:value-of select="*/@xlink:href"/>';
+            </xsl:if>
+            $rec['keywords'][] = $kw;
 		</xsl:for-each> 
 		<xsl:variable name="degree" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult[contains(gmd:specification/*/gmd:title, 'INSPIRE') or contains(gmd:specification/*/gmd:title, 'Commission')]/gmd:pass/*"/>
-		$rec['degree'] = <xsl:choose>
+		$rec['degree'] = 
+        <xsl:choose>
 			<xsl:when test="$degree!=''"><xsl:value-of select="$degree"/>;</xsl:when>
 			<xsl:otherwise>null;</xsl:otherwise>
-		</xsl:choose>	
+		</xsl:choose>
+        <xsl:if test="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator">
+            $rec['scales'] = [];
+            <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator">
+                $rec['scales'][] = '<xsl:value-of select="*"/>';
+            </xsl:for-each>
+        </xsl:if>
+        <xsl:if test="gmd:identificationInfo/*/gmd:resourceMaintenance/*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue">
+            $rec['updateFrequency'] = '<xsl:value-of select="gmd:identificationInfo/*/gmd:resourceMaintenance/*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue"/>';
+        </xsl:if>
+        $rec['dateStamp'] = '<xsl:value-of select="gmd:dateStamp"/>';
+        
 
     $json['records'][] =$rec;
 </xsl:template>	

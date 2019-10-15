@@ -2,15 +2,12 @@
 
 <link rel="stylesheet" href="{$basePath}{$themePath}/edit.css" type="text/css">
 <style type="text/css">
-.odd {
-	text-align: justify;
-	font-size: 12px;
-	font-family: Arial, Helvetica, sans-serif;
-	margin-top: 5px;
-	margin-bottom: 20px;
-}
-.odd img {
-	border:1px solid gray
+
+img.hs-example {
+	border:1px solid #EEE;
+    box-shadow: 6px 6px 12px 3px rgba(0,0,0,0.5);
+    margin: 10px 30px 10px 5px;
+    float: left;
 }
 .vysl {
 	font-style: italic;
@@ -31,6 +28,7 @@ table.cookbook td {
 	vertical-align: top;
 }
 </style>
+
 <div class="container panel panel-default">
 <h1>Micka - nápověda</h1>
 <br />
@@ -48,7 +46,7 @@ table.cookbook td {
 <p>Micka je systém pro práci s metadaty prostorových dat podle standardů ISO, OGC a INSPIRE.</p>
 
 <h3>Podporované standardy</h3>
-<p class="odd"> Systém je utvořen tak, že je možno  implementovat libovolný standard, který je reprezentován XML dokumentem. Pro vložení struktury standardu existuje zvláštní správcovský modul. <br />
+<p> Systém je utvořen tak, že je možno  implementovat libovolný standard, který je reprezentován XML dokumentem. Pro vložení struktury standardu existuje zvláštní správcovský modul. <br />
   V současné verzi jsou podporovány tyto standardy:
   <ul>
     <li>Metadata prostorových dat (ISO 19115)</li>
@@ -77,15 +75,16 @@ a pracovat s uživatelskými profily (podmnožinou položek).
 <p> Uživatelské prostředí je vícejazyčné, v současné době je podporováno 12 jazyků.
 Výběr jazyků je nastaven v konfiguračním souboru aplikace, proto nemusí být v aplikaci všechny přístupné. 
 Další jazyky je možno přidat na přání. Přepínat mezi jazyky je možno ťuknutím na odpovídající vlaječky 
-v postranní liště programu. </p>
-<p class="odd">
+v postranní liště programu. 
+</p>
+<p>
   Samotná metadata je možno paralelně vyplňovat v různých jazycích podle volby uživatele. 
   Ve všech případech je používána kódová stránka UTF-8. 
 </p>
 
 <a id="vyhled"></a>
 <h2>2. Vyhledávání záznamů </h2>
-<img src="{$basePath}{$themePath}/img/help_search_cs.png" border="0" style="float:left; margin-right:15px"/>
+<img src="{$basePath}{$themePath}/img/help_search_cs.png" class="hs-example"/>
 <p>
 	Aplikace podporuje základní vyhledávání záznamů. Po výběru ve vyhledávacím formuláři jsou ihned vybrané záznamy 
     zobrazeny v prvé části aplikace. Vyhledávací formulář je možno konfigurovat podle potřeby.
@@ -122,10 +121,10 @@ v postranní liště programu. </p>
 
 <h3>Vytvoření nového záznamu:</h3>
 <p>  
-	V levém menu zvolte "<b>Nový záznam</b>".  
+	V menu zvolte "<b>Nový záznam</b>".  
   Zobrazí se dialog pro vytvoření nového záznamu:
 </p>
-  <img src="{$basePath}{$themePath}/img/help_new_cs.png" xstyle="float:left; margin-right:20px"/><br /><br />
+<img src="{$basePath}{$themePath}/img/help_new_cs.png" class="hs-example"/><br /><br />
 
 <p>Zde nastavíte: 
 <ul>
@@ -246,7 +245,7 @@ Význam jednotlivých prvků je popsán pod obrázkem.
 <p>
 	Do menu administrace mají přístup pouze osoby s právy administrátora.
 </p>	
-{if $user->isInRole('editorXXX')}
+{if $user->isInRole('admin')}
   Zde jsou tyto funkce:
 
     <h3>Harvestování</h3>
