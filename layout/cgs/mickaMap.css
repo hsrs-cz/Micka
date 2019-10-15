@@ -1,0 +1,199 @@
+<style>
+.ble {}
+/*obecne*/
+select {background-color:white}
+button {background-color:#9CC0D1}
+td {xfont-family:arial; font-size:11}
+body {font-family:sans-serif; background-color: white; #F0EEE1; font-size:13px; margin:0px;}
+a {color:#0000A0; text-decoration: none; border: 0px; margin:0px;}
+a:hover {color:#FF0000; text-decoration: underline}
+hr {color:#A9D0A8;} 
+img {border: 0px;}
+
+
+/*mapa - nadpis*/
+.nadpis  {color: #FFFFFF; background-color: #081C73; font-weight:bold;font-size:14px;
+          text-align: left;
+          #background-image: url(nadpis.gif);
+          background-repeat: repeat-y;
+          background-position: top right;
+          padding-left:6px;
+          xpadding-top:2px;
+          padding-bottom:3px;
+          }
+
+/*nadpisy p�i dotazech apod.*/
+.nadpis2 {color:#000050; text-align:center; font-weight:bold; font-size:14; padding:5px;}
+
+/*nadpis seznamu projektu apod.*/
+.nadpis3 {color:#FFFFFF; text-align:center; font-family:verdana; font-weight:bold; font-size:18px; 
+          padding:5px; background-color:#081c73;
+          border: 1px #909090 solid;
+          }
+
+/*mapa - horni a dolni lista */
+.lista   { border:0px #909090 solid; }
+
+
+/*mapa - seznam vrstev napravo*/
+.panel   {background-color: #FFFFFF; #bfd8d8; border-width: 0px; 
+          border-color:#1c45a3;
+          border-style:solid;
+          }
+
+/*mapa - tlacitka vlevo*/
+.abut img {border-width:1px; background:#EEEEEE; border-color: #FFFFFF; border-style: outset}
+.abut:hover {background-color:#B8B69F;}
+.abut:hover img {background-color:#B8B69F; border-color:#5000A0;}
+
+/* zmacknuta tlacitka */
+.abutsel img {border-width:1px; border-color: #f0fff0; border-style:inset; background-color:#F0C000;}
+
+/*mapa - tlacitka vpravo*/
+.abut1 img {border:1px white solid;}
+.abut1:hover {background-color:#B8B69F; }
+.abut1:hover img {background: #B8B69F; border-color:#5000A0; border-style: solid;}
+
+/*mapa - sipky v ramecku kolem mapy*/
+.sipka img {border-style:none; filter:gray;}
+.sipka:hover img {filter: none}
+}
+.wmstr {border-color: white; border-style: dashed; border-width: 0px; }
+.legend {font-size:9px;}
+
+.lyrLabel {color: black;}
+.lyrLabelG {color: #999999}
+.lyrLabel:hover {color: black; text-decoration: none;}
+.lyrLabelG:hover {color: #999999; text-decoration: none;}
+.lyrLabelURL {color: #000090; text-decoration: underline;}
+.lyrLabelURLG {color: #999999; text-decoration: underline}
+.ii {color: #000060; font-weight: bold;}
+
+/*mapa - hlasky v dolni liste*/
+#hlaska {color: #000090}
+#GPStext {color:red; font-weight: bold;}
+
+/*varovne hlasky*/
+.warning {color: red;}
+
+/*jmeno uzivatele*/
+.usr {font-weight:bold; color:red;}
+
+/*informace o objektech*/
+/*jmena poli*/
+.odp_pole {color: #500000; background-color: #FFFFFF; padding-left: 3px; width:40%}
+/*hodnoty*/
+.odp_hodn {background-color: #FFFFFF; padding-left: 3px;}
+/*zahlavi pro kazdou vetu*/
+.odp_rec  {color:#000000; background-color: #184D73; font-weight:bold;
+	background-image: url(blue_lista.jpg);
+        background-repeat: repeat-x;
+        background-position: top;
+	}
+.odp_rec td {padding-left: 3px;}
+/*tabulka s odpovedi*/
+.odp_tab  {background-color: #5282a5; }
+/*nadpis odpovedi - ???*/
+.odp_nadpis td{color: #035DA7}
+
+/*mapa - pro httpd verzi*/
+#mapa_box {
+  border:1px #000050 solid;
+  width:0; 
+  height:0; 
+  position:absolute;
+  top:0; left:0;
+  font-size: 0;
+  visibility: hidden;
+  background-color:#B0B0FF;
+ 	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity: 0.5;
+}
+
+#ref_box {
+  border:1px #000050 solid;
+  width:0; 
+  height:0; 
+  position:absolute;
+  top:0; left:0;
+  font-size: 0;
+  visibility: hidden;
+  background-color:#0000FF;
+ 	filter:alpha(opacity=50);
+	-moz-opacity:0.5;
+	opacity: 0.5;
+}
+
+#mapframe {
+	background: #EBEBEB;
+	border: 0px #80FF00 solid;
+	position: relative;
+	float: left;
+}
+#mapborder {position:absolute; left:11px; top:11px; border: solid 1px gray;}
+#mapa {background: #FFF; border: 0px #0000A0 solid; position: absolute; top:0px; left:0px;}
+.sip {position:absolute; text-align: center; vertical-align: center; font-size: 0px;}
+.xsip a img {width:9px; height:9px;}
+#wait {position:absolute; left:20px; top:20px; z-order:500;}
+
+.htd {background-color:#FFFFA0; color:black; font-weight:bold; border-color:#009000; border-width:5px; border-style:solid}
+.xxram {background-color: #9c0000; border-width:1; border-color:#909090; border-style:solid}
+
+/*textove vstupy obecne*/
+.inp {background-color:white; border: 1px #184D73 solid}
+
+/*vstupni formulare-tabulka na pozadi*/
+.inpform {background-color: #bdd7d6;  border:1px #184D73 solid;}
+
+/*en - nadpis v list*/
+.en_title {
+  font-size: 14px; 
+  font-weight: bold;
+  color: #000050;
+}
+
+/*en - hlaska pri cekani*/
+#en_wait {
+  position: absolute;
+  top: 28px;
+  left: 5px;
+  font: bold 12px;
+  padding: 2px;
+  color: #F00000;
+  display: visible;
+}
+
+#wbublina {
+  width:212;
+  height:50;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=img/bublina.png);
+}
+
+#wbublinal {
+  width:212;
+  height:50;
+  filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=img/bublinal.png);
+}
+
+#bublina {
+  width:212;
+  height:50;
+  background: url(img/bublina.png);
+}
+
+#bublinal {
+  width:212;
+  height:50;
+  background: url(img/bublinal.png);
+}
+
+#helpbg {
+
+}
+
+#whelpbg {
+
+}
+#overDiv {position:absolute; visibility:hidden; z-index:1000;}
+

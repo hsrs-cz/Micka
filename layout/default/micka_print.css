@@ -1,0 +1,11 @@
+/* css file for printing */
+
+#headBox, #leftBox, #menuBox, #naviBox, #loginBox {display: none}
+#dataBox {width: 100%; margin-left: 0px;}
+
+div.print {display: block}
+div.display {display:none}
+
+.breadcrumb {display:none !important}
+
+a[href]:after { content: none }
