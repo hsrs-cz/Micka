@@ -6,3 +6,6 @@ php/data/*
 php/temp/*
 php/vendor/*
 php/composer.lock
+layout/*
+!layout/default
+!layout/.gitignore
