@@ -567,7 +567,6 @@ function thes(obj){
   
     $('#thes-gemet-ok').on('click', function(){
         gemet.process(langs.split('|'), function(data){
-            console.log(data);
             fromThesaurus({ //TODO take from thesaurus client
                 thesName: 'GEMET - Concepts, version 3.1',
                 thesDate: (HS.getLang(3)=='cze') ? '20.07.2012' : '2012-07-20',
@@ -582,20 +581,21 @@ function thes(obj){
 
     $('#thes-inspire-ok').on('click', function(){ localThes("#inspire", "inspireKeywords"); });
     $('#thes-geology-ok').on('click', function(){ localThes("#cgs", "cgsThemes"); });
-    $('#thes-inspire-service-ok').on('click', function(){ localThes("#inspire-service", "serviceKeyword"); });
+    $('#thes-inspire-service-ok').on('click', function(){ localThes("#inspire-service", "serviceKeyword", "id"); });
     
-    function localThes(element, type){
+    function localThes(element, type, textItem){
         var uri = $(element).select2('data')[0].uri;
         var url =baseUrl + '/suggest/mdlists?type='+type+'&request=getValue&code='+uri;
         $.ajax({url: url})
         .done(function(data){
-            if(data.results && data.results[0]){ 
+            if(data.results && data.results[0]){
+            var terms = textItem ? data.results[0][textItem] : data.results[0].langs;
                 fromThesaurus({
                     thesName: data.thesaurus.langs,
                     thesDate: data.thesaurus.date,
                     thesUri: data.results[0].uri.substr(0,data.results[0].uri.lastIndexOf("/")),
                     uri: data.results[0].uri,
-                    terms: data.results[0].langs
+                    terms: terms
                 });
                 $("#md-keywords").modal('hide');
                 return;
@@ -678,6 +678,11 @@ function fromThesaurus(data){
   } 
   // if terms are available
   if(data.terms){
+      if(typeof(data.terms)==='string'){
+          var t = {};
+          t[mainLang] = data.terms;
+          data.terms = t;
+      }
 	  for(i=0;i<inputs.length;i++){
 		  for(var l in data.terms) if(inputs[i].id=='530'+l){
 			  inputs[i].value=data.terms[l];

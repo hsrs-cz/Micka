@@ -38,7 +38,7 @@
                 </gmd:hierarchyLevelName>
             </xsl:when>
             <xsl:otherwise>
-                <copy-of select="."/>
+                <xsl:copy-of select="."/>
             </xsl:otherwise>
         </xsl:choose>
     </xsl:template>
@@ -47,7 +47,7 @@
     <xsl:template match="gmd:parentIdentifier">
         <xsl:choose>
             <xsl:when test="*/@xlink:href">
-                <copy-of select="."/>
+                <xsl:copy-of select="."/>
             </xsl:when>
             <xsl:otherwise>
                 <gmd:parentIdentifier>
@@ -255,9 +255,7 @@
         <xsl:choose>
             <xsl:when test="$cl/linkageName/value[@uri=$k]">
                 <gmd:name>
-                    <gmx:Anchor xlink:href="{$cl/linkageName/value[@uri=$k]/@uri}">
-                        <xsl:value-of select="$cl/linkageName/value[@uri=$k]/*[local-name()=$mdlang]"/>
-                    </gmx:Anchor>
+                    <gmx:Anchor xlink:href="{$cl/linkageName/value[@uri=$k]/@uri}"><xsl:value-of select="$cl/linkageName/value[@uri=$k]/*[local-name()=$mdlang]"/></gmx:Anchor>
                 </gmd:name>
             </xsl:when>
             <xsl:otherwise>
@@ -307,17 +305,19 @@
     <!-- INSPIRE specifications -->
     <xsl:template match="gmd:DQ_ConformanceResult/gmd:specification/gmd:CI_Citation">
         <gmd:CI_Citation>
-            <xsl:variable name="s" select="gmd:title/gco:CharacterString"/>
+            <xsl:variable name="s" select="normalize-space(gmd:title/gco:CharacterString)"/>
             <xsl:choose>
-                <xsl:when test="$s!='' and $cl/specifications/value[contains(*/@name, $s)]/@uri">
+                <xsl:when test="$s!='' and $cl/specifications/value/*[contains(@name, $s)]/../@uri">
                     <gmd:title>
-                        <gmx:Anchor xlink:href="{$cl/specifications/value[contains(*/@name, $s)]/@uri}"><xsl:value-of select="$s"/></gmx:Anchor>
-                    </gmd:title>
+                        <gmx:Anchor xlink:href="{$cl/specifications/value/*[contains(@name, $s)]/../@uri}"><xsl:value-of select="$s"/></gmx:Anchor>
+                        <xsl:copy-of select="gmd:title/gmd:PT_FreeText"/>
+                   </gmd:title>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:copy-of select="gmd:title"/>
                 </xsl:otherwise>
             </xsl:choose>
+            <xsl:copy-of select="gmd:alternateTitle"/>
             <xsl:copy-of select="gmd:date"/>
         </gmd:CI_Citation>
     </xsl:template>

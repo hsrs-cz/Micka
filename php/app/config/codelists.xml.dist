@@ -1631,18 +1631,31 @@
         <spa>Recursos minerales</spa>
     </value>
   </inspireKeywords>
+
   <specifications>
     <title lang="eng">Specifications</title>
     <title lang="cze">Specifikace</title>
-    <title lang="esp">Especificaciones</title>
+    <title lang="dan">Specifications</title>
+    <title lang="ger">Specifications</title>
+    <title lang="spa">Especificaciones</title>
 	<value code="Interoperability" uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">
         <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">INSPIRE - Interoperabilita 1089/2010</cze>
-		<eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">INSPIRE - Interoperability 1089/2010</eng>
+        <eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">INSPIRE - Interoperability 1089/2010</eng>
+        <dan name="Kommissionens forordning (EU) nr. 1089/2010 af 23. november 2010 om gennemførelse af Europa-Parlamentets og Rådets direktiv 2007/2/EF for så vidt angår interoperabilitet for geodatasæt og -tjenester">INSPIRE - Interoperabilita 1089/2010</dan>
+        <fra name="Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques">INSPIRE - Interoperability 1089/2010</fra>
+        <ger name="Verordnung (EG) Nr. 1089/2010 der Kommission vom 23. November 2010 zur Durchführung der Richtlinie 2007/2/EG des Europäischen Parlaments und des Rates hinsichtlich der Interoperabilität von Geodatensätzen und -diensten">INSPIRE - Interoperabilität 1089/2010</ger>
+        <ita name="Regolamento (UE) n . 1089/2010 della Commissione del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali ">INSPIRE - Interoperability 1089/2010</ita>
+        <slo name="Nariadenie Komisie (EÚ) č. 1089/2010 z 23. novembra 2010 , ktorým sa vykonáva smernica Európskeho parlamentu a Rady 2007/2/ES, pokiaľ ide o interoperabilitu súborov a služieb priestorových údajov">INSPIRE - Interoperabilita 1089/2010</slo>
         <spa name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">INSPIRE - Interoperabilidad 1089/2010</spa>
     </value>
     <value code="Network" uri="https://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">
         <cze name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby">INSPIRE - Síťové služby 976/2009</cze>
-		<eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">INSPIRE - Network services 976/2009</eng>
+        <dan name="Kommissionens forordning (EF) n r. 976/2009 af 19. oktober 2009 om gennemførelse af Europa-Parlamentets og Rådets direktiv 2007/2/EF for så vidt angår nettjenesterne">INSPIRE - Network services 976/2009</dan>
+        <eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">INSPIRE - Network services 976/2009</eng>
+        <fra name="Règlement (CE) n o 976/2009 de la Commission du 19 octobre 2009 portant modalités d’application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne les services en réseau">INSPIRE - Network services 976/2009</fra>
+        <ger name="Verordnung (EG) Nr. 976/2009 der Kommission vom 19. Oktober 2009 zur Durchführung der Richtlinie 2007/2/EG des Europäischen Parlaments und des Rates hinsichtlich der Netzdienste">INSPIRE - Rates hinsichtlich der Netzdienste 976/2009</ger>
+        <ita name="Regolamento (CE) n . 976/2009 della Commissione del 19 ottobre 2009 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda i servizi di rete">INSPIRE - Network services 976/2009</ita>
+        <slo name="Nariadenie Komisie (ES) č. 976/2009 z 19. októbra 2009 , ktorým sa vykonáva smernica Európskeho parlamentu a Rady 2007/2/ES, pokiaľ ide o sieťové služby">INSPIRE - Síťové služby 976/2009</slo>
         <spa name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">INSPIRE - Servicios de Red 976/2009</spa>
     </value>
     <value code="Download" uri="https://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">
@@ -1657,7 +1670,7 @@
     </value>
     <value code="Access" uri="https://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">
         <cze name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" >Přístup k datovým sadám a službám 268/2010</cze>
-		<eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
+        <eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
         <spa name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Acceso y acceso a base de datos espaciales 268/2010</spa>
     </value>
     <value code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">
@@ -1667,7 +1680,7 @@
     </value>
     <value code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">
         <cze name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" >SMĚRNICE INSPIRE 2007/2/ES</cze>
-		<eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
+        <eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
         <spa name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">DIRECTIVA INSPIRE 2007/2/ES</spa>
     </value>
   </specifications>
@@ -1675,7 +1688,7 @@
   <serviceType>
     <title lang="eng">Service type</title>
     <title lang="cze">Typ služby</title>
-    <title lang="esp">Service type</title>
+    <title lang="spa">Service type</title>
   	<value name="view" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/view" code="">
         <cze>prohlížecí</cze>
 		<eng>view</eng>
@@ -1782,6 +1795,7 @@
     <thesaurus uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory" date="2010-01-19" dateType="publication">
         <eng>ISO - 19119 geographic services taxonomy</eng>
         <cze>ISO - 19119 geographic services taxonomy</cze>
+        <ger>ISO - 19119 geographic services taxonomy</ger>
     </thesaurus>
 
     <value id="100" name="humanInteractionService" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanInteractionService">

@@ -246,7 +246,7 @@ class SuggestModel
                 if($query != ''){
                     $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name ILIKE ? ORDER BY name", $query.'%')->fetchAll();
                 }
-                else $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name != 'local' ORDER BY name")->fetchAll();
+                else $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name IS NOT NULL ORDER BY name")->fetchAll();
                 foreach($result as $row) {
                     $rs[] = array('id'=>$row->name,"text"=>$row->name);
                 }

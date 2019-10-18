@@ -338,10 +338,10 @@ SearchForm = function(a,b){
 
 	$("#md-status").select2({
 		data: [
-            {id: -1, text: HS.i18n('pending')},
+            //{id: -1, text: HS.i18n('pending')},
             {id:  0, text: HS.i18n('private')},
-            {id:  1, text: HS.i18n('public')},
-            {id:  2, text: HS.i18n('for portal')}
+            {id:  1, text: HS.i18n('public')}
+            //,{id:  2, text: HS.i18n('for portal')}
 	   ],
 	   //templateResult: templateResult,
 	   theme: 'bootstrap',
