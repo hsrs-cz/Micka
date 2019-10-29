@@ -14,9 +14,17 @@
 <xsl:template match="/">
     <results>
         <xsl:for-each select="//gmd:MD_Metadata|//gmi:MI_Metadata">
-            <gmd:MD_Metadata>
-                <xsl:apply-templates select="./*"/>
-            </gmd:MD_Metadata>
+            <xsl:choose>
+                <!-- only czech records are translated to new czech profile -->
+                <xsl:when test="*/gmd:language/*/@codeListValue='cze'">
+                    <gmd:MD_Metadata>
+                        <xsl:apply-templates select="./*"/>
+                    </gmd:MD_Metadata>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:copy-of select="."/>
+                </xsl:otherwise>
+            </xsl:choose>
         </xsl:for-each>
     </results>
 </xsl:template>
