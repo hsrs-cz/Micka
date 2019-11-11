@@ -485,7 +485,7 @@ class Csw{
         $this->params['CB'] = "";
         if(isset($_SESSION["micka"]["cb"])) $this->params['CB'] .= $_SESSION["micka"]["cb"];
     }
-    if(!isset($this->params['LANGUAGE'])) $this->params['LANGUAGE'] = MICKA_LANG;
+    //if(!isset($this->params['LANGUAGE'])) $this->params['LANGUAGE'] = MICKA_LANG;
     if(!isset($this->params['DEBUG'])) $this->params['DEBUG'] = 0;
     if(!isset($this->params['SOAP'])) $this->params['SOAP'] = false;
     if(!isset($this->params['SORTBY'])) $this->params['SORTBY'] = "";
@@ -750,7 +750,7 @@ class Csw{
         if($version=="2.0.0") $sablona .= "200";
       }
       $this->params['CATCLIENT_PATH'] = CATCLIENT_PATH;
-      $this->params['lang'] = $this->params['LANGUAGE'] ? $this->params['LANGUAGE'] : MICKA_LANG;
+      $this->params['lang'] = $this->params['LANGUAGE'] ? $this->params['LANGUAGE'] : ""; //MICKA_LANG;
 
       if(strpos($format, 'html')!==false){
             $this->headers[0] = HTTP_HTML;
@@ -842,7 +842,7 @@ class Csw{
           while (($xml = $export->fetchXML()) != FALSE) {
               $this->xml->loadXML($xml);
               $output = $this->xp->transformToXML($this->xml);
-              //echo($output); die();
+              //echo($output); //die();
               if($this->params['OUTPUTSCHEMA']=='json'){
                   eval($output);
                   $output = json_encode($rec);
