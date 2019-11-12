@@ -637,6 +637,7 @@ class Csw{
         $params = array_merge($params,  $this->appParameters['contact']);
         $this->setXSLParams($params);
         $processed = $this->xp->transformToXML($this->xml);
+        header("Content-type: application/xml");
         return $processed;
     }
 
@@ -645,7 +646,7 @@ class Csw{
         $this->xsl->load(__DIR__ . "/xsl/describeRecord.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $processed = $this->xp->transformToXML($this->xml);
-        //header("Content-type: application/xml");
+        header("Content-type: application/xml");
         //$processed = file_get_contents(PHPPRG_DIR."/../xsl/describeRecord.xml");
         return $processed;
     }
