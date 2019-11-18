@@ -18,11 +18,7 @@
 <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="no"/>
 <xsl:variable name="cl" select="document('../../../config/codelists.xml')/map" />   
 <xsl:variable name="mdlang" select="//gmd:language/*/@codeListValue"/>
-    
-	<!--xsl:template match="/">
-		<xsl:apply-templates select="./*"/>
-  	</xsl:template-->
-      
+
     <xsl:template match="@*|node()">
 	    <xsl:copy>
 	        <xsl:apply-templates select="@*|node()"/>
@@ -179,7 +175,7 @@
     </xsl:template>
 	
 	<!-- 8.1 -->
-	<xsl:template match="gmd:resourceConstraints[*/gmd:useLimitation/*!='']">
+	<xsl:template match="gmd:resourceConstraints[*/gmd:useLimitation/*]">
         <gmd:resourceConstraints>
             <gmd:MD_LegalConstraints>
                 <gmd:useLimitation></gmd:useLimitation>
@@ -189,12 +185,12 @@
                 <xsl:for-each select="*/gmd:useLimitation">
                     <gmd:otherConstraints>
                         <xsl:choose>
-                            <xsl:when test="contains(*, 'nejsou známy') or contains(*/gmd:useLimitation/*, 'unknown')">
-                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
+                            <xsl:when test="contains(*, 'nejsou známy') or contains(*, 'unknown')">
+                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply"><xsl:value-of select="*"/></gmx:Anchor>
                                 <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                             </xsl:when>
-                            <xsl:when test="contains(*, 'žádné podmínky') or contains(*/gmd:useLimitation/*, 'no conditions')">
-                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
+                            <xsl:when test="contains(*, 'žádné podmínky') or contains(*, 'no conditions')">
+                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown"><xsl:value-of select="*"/></gmx:Anchor>
                                 <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                             </xsl:when>
                             <xsl:otherwise>
@@ -219,7 +215,7 @@
                     <xsl:when test="contains(*/gmd:otherConstraints/*, 'Bez omezení') or contains(*/gmd:otherConstraints/*, 'no limitations')">
                         <gmd:otherConstraints>
                             <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"><xsl:value-of select="*/gmd:otherConstraints/*"/></gmx:Anchor>
-                            <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
+                            <xsl:for-each select="*/gmd:otherConstraints/gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                         </gmd:otherConstraints>
                     </xsl:when>
                     <xsl:otherwise>
