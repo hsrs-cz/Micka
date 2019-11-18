@@ -28,7 +28,7 @@
 <xsl:template match="gmd:MD_Metadata">
     <xsl:choose>
         <!-- only czech records are translated to new czech profile -->
-        <xsl:when test="*/gmd:language/*/@codeListValue='cze'">
+        <xsl:when test="gmd:language/*/@codeListValue='cze'">
             <gmd:MD_Metadata>
                 <xsl:apply-templates select="./*"/>
             </gmd:MD_Metadata>
