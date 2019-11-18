@@ -714,7 +714,7 @@ class Csw{
         }
     }
     if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= MAXRECORDS;
-    if($this->params['MAXRECORDS']>LIMITMAXRECORDS) $this->params['MAXRECORDS'] = $this->params['MAXRECORDS']= LIMITMAXRECORDS;
+    if($this->params['MAXRECORDS']>$this->appParameters['app']['limitMaxRecords']) $this->params['MAXRECORDS']= $this->appParameters['app']['limitMaxRecords'];
     if(!$this->params['STARTPOSITION'] || $this->params['STARTPOSITION']==0) $this->params['STARTPOSITION'] = 1;
     $resultType = $this->getParamL('RESULTTYPE');
     if(!$resultType) $resultType = 'results';
@@ -843,7 +843,7 @@ class Csw{
           while (($xml = $export->fetchXML()) != FALSE) {
               $this->xml->loadXML($xml);
               $output = $this->xp->transformToXML($this->xml);
-              //echo($output); //die();
+              //echo($output); die();
               if($this->params['OUTPUTSCHEMA']=='json'){
                   eval($output);
                   $output = json_encode($rec);

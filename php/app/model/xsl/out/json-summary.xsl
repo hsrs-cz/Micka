@@ -31,12 +31,12 @@
            $rec['serviceType']="<xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/*"/>";
       	</xsl:when>
 	</xsl:choose>
-		$rec['title'] = <xsl:call-template name="multi">
+		$rec['title'] = <xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
 		  	</xsl:call-template> 
-		$rec['abstract'] = <xsl:call-template name="multi">
+		$rec['abstract'] = <xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:abstract"/>
 		      	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -46,7 +46,7 @@
 			$l['url'] = "<xsl:value-of disable-output-escaping="yes" select="php:function('addslashes', normalize-space(*/gmd:linkage/gmd:URL))"/>";
 			$l['protocol'] = "<xsl:value-of select="normalize-space(*/gmd:protocol)"/>";
             <xsl:if test="*/gmd:description">
-                $l['description'] = <xsl:call-template name="multi">
+                $l['description'] = <xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gmd:description"/>
 		      	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -60,13 +60,13 @@
 		</xsl:for-each-->
 		<xsl:if test="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName!=''">
 			$rec['imgURL'] = "<xsl:value-of disable-output-escaping="yes" select="gmd:identificationInfo/*/gmd:graphicOverview/*/gmd:fileName"/>";
-		</xsl:if>		
+		</xsl:if>
         <xsl:if test="string-length(gmd:identificationInfo//gmd:EX_GeographicBoundingBox)!=0">
             $rec['bbox'] = [<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:westBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:southBoundLatitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:eastBoundLongitude/*)"/>,<xsl:value-of select="normalize-space(gmd:identificationInfo//gmd:northBoundLatitude/*)"/>];
         </xsl:if>
         $rec['contacts'] = [];
         <xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact">
-            $contact['organisationName'] = <xsl:call-template name="multi">
+            $contact['organisationName'] = <xsl:call-template name="jmulti">
                     <xsl:with-param name="el" select="*/gmd:organisationName"/>
                     <xsl:with-param name="lang" select="$lang"/>
                     <xsl:with-param name="mdlang" select="$mdlang"/>
@@ -85,7 +85,7 @@
          
         $rec['keywords'] = array();
 		<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*/gmd:keyword">
-			$kw['title'] = <xsl:call-template name="multi">
+			$kw['title'] = <xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="."/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -120,12 +120,12 @@
 <xsl:template match="gfc:FC_FeatureCatalogue" xmlns:gfc="http://www.isotc211.org/2005/gfc" xmlns:gmx="http://www.isotc211.org/2005/gmx">
     <xsl:variable name="mdlang" select="../@lang"/>
     $rec['trida']='fc';
-    $rec['title'] = <xsl:call-template name="multi">
+    $rec['title'] = <xsl:call-template name="jmulti">
             <xsl:with-param name="el" select="gmx:name"/>
             <xsl:with-param name="lang" select="$lang"/>
             <xsl:with-param name="mdlang" select="$mdlang"/>
         </xsl:call-template> 
-    $rec['abstract'] = <xsl:call-template name="multi">
+    $rec['abstract'] = <xsl:call-template name="jmulti">
             <xsl:with-param name="el" select="gmx:scope"/>
             <xsl:with-param name="lang" select="$lang"/>
             <xsl:with-param name="mdlang" select="$mdlang"/>
@@ -152,17 +152,16 @@
     $rec['bbox'] = "<xsl:value-of select="ows:BoundingBox/ows:LowerCorner"/><xsl:text> </xsl:text><xsl:value-of select="ows:BoundingBox/ows:UpperCorner"/>";
     $json['records'][] =$rec;
 </xsl:template> 
-	
 
  <!-- multilingual fields -->
-<xsl:template name="multi">
+<xsl:template name="jmulti">
     <xsl:param name="el"/>
     <xsl:param name="lang"/>
     <xsl:param name="mdlang"/>
   
     <xsl:choose>
         <xsl:when test="$lang">
-            <xsl:variable name="txt" select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[@locale=concat('#locale-',$lang)]"/>	
+            <xsl:variable name="txt" select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[@locale=concat('#locale-',$lang)]"/>
             "<xsl:choose>
                 <xsl:when test="string-length($txt)>0">
                   <xsl:value-of select="php:function('addslashes', normalize-space($txt))"/>
@@ -181,6 +180,5 @@
         </xsl:otherwise>
     </xsl:choose>
 </xsl:template>
-
   
 </xsl:stylesheet>

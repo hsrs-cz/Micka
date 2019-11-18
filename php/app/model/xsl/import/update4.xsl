@@ -191,9 +191,11 @@
                         <xsl:choose>
                             <xsl:when test="contains(*, 'nejsou známy') or contains(*/gmd:useLimitation/*, 'unknown')">
                                 <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
+                                <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                             </xsl:when>
                             <xsl:when test="contains(*, 'žádné podmínky') or contains(*/gmd:useLimitation/*, 'no conditions')">
                                 <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown"><xsl:value-of select="*/gmd:useLimitation/*"/></gmx:Anchor>
+                                <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                             </xsl:when>
                             <xsl:otherwise>
                                 <xsl:copy-of select="*"/>
@@ -217,6 +219,7 @@
                     <xsl:when test="contains(*/gmd:otherConstraints/*, 'Bez omezení') or contains(*/gmd:otherConstraints/*, 'no limitations')">
                         <gmd:otherConstraints>
                             <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"><xsl:value-of select="*/gmd:otherConstraints/*"/></gmx:Anchor>
+                            <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                         </gmd:otherConstraints>
                     </xsl:when>
                     <xsl:otherwise>
