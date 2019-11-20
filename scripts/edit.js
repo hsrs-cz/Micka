@@ -391,7 +391,7 @@ function start(){
 	var parent = document.getElementById("50");
 	if(parent && parent.value){
 		$("#parent-text").html("...");
-		$.ajax(baseUrl + "/csw/?format=json&query=" + encodeURIComponent("identifier="+parent.value))
+		$.ajax(baseUrl + "/csw/?format=json&query=" + encodeURIComponent("identifier="+parent.value) + '&language='+lang)
         .done(function(data){
             $("#parent-text").html(data.title);
         });
@@ -755,7 +755,7 @@ function fc(obj){
     md_dexpand1(obj.parentNode);
     $("#parent-select").select2({
         ajax: {
-            url: baseUrl + '/csw/?format=application/json&elementsetname=full&lang='+lang,
+            url: baseUrl + '/csw/?format=application/json&elementsetname=full&language='+lang,
             dataType: 'json',
             delay: 300,
             data: function(params){
@@ -904,7 +904,7 @@ function find_parent(obj){
     $("#md-content").html(html);
     $("#parent-select").select2({
         ajax: {
-            url: baseUrl + '/csw/?elementsetname=brief&maxrecords=20&sortby=title&format=application/json&&lang='+lang,
+            url: baseUrl + '/csw/?elementsetname=brief&maxrecords=20&sortby=title&format=application/json&language='+lang,
             dataType: 'json',
             delay: 300,
             data: function(params){
@@ -1651,7 +1651,7 @@ var checkId = function(o){
 	if(nody[0].value || nody[1].value){
         var q = encodeURIComponent("ResourceIdentifier="+nody[1].value);
 		$.ajax({
-            url: baseUrl + "/csw/?request=GetRecords&format=text/json&query="+q
+            url: baseUrl + "/csw/?request=GetRecords&format=text/json&query="+q+'&language='+lang
         })
         .done(function(r){
             var uuid = document.forms[1].uuid.value;

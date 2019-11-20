@@ -155,7 +155,7 @@ xmlns:php="http://php.net/xsl">
         <value><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[*/gmd:code/*/@xlink:href]/*/gmd:code/*/@xlink:href"/><xsl:text> </xsl:text><xsl:value-of select="gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code"/></value>
         <pass>true</pass>
        
-        <test code="a" level="c">
+        <!--test code="a" level="c">
             <description><xsl:value-of select="$labels/test[@code='1.5.a']"/></description>
             <xpath>identificationInfo/*/citation/*/identifier/*/code/*/@xlink:href</xpath>
             <xsl:choose>
@@ -167,7 +167,7 @@ xmlns:php="http://php.net/xsl">
                     <err><xsl:value-of select="$labels/msg/notValid"/> URI</err>
                 </xsl:otherwise>
             </xsl:choose>
-        </test>
+        </test-->
     </xsl:if>
 </test>
   
@@ -190,7 +190,7 @@ xmlns:php="http://php.net/xsl">
 				   		<xsl:otherwise>
 				   			<err><xsl:value-of select="@xlink:title"/>: <xsl:value-of select="@xlink:href"/> OFF-LINE</err>
 				   		</xsl:otherwise>
-		   	 		</xsl:choose>  					
+		   	 		</xsl:choose>
   				</test>
   			</xsl:for-each>
   		</xsl:if>

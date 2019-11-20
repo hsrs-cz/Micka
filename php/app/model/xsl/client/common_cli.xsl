@@ -109,7 +109,7 @@
             </xsl:otherwise>
         </xsl:choose>
     </xsl:variable>
-    <xsl:value-of select="php:function('addslashes', string($txt))"/>
+    <xsl:value-of select="php:function('json_encode', string($txt))"/>
 </xsl:template>
 
 <!-- PAGINATOR -->

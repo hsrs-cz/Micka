@@ -27,12 +27,12 @@
 	<xsl:if test="gmd:identificationInfo/*/srv:serviceType">
 		$rec['serviceType']='<xsl:value-of select="gmd:identificationInfo/*/srv:serviceType/*"/>';
 	</xsl:if>
-	$rec['title'] = '<xsl:call-template name="multi">
+	$rec['title'] = '<xsl:call-template name="jmulti">
 			<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 			<xsl:with-param name="lang" select="$lang"/>
 	    	<xsl:with-param name="mdlang" select="$mdlang"/>
 	  	</xsl:call-template>'; 
-	$rec['abstract'] = '<xsl:call-template name="multi">
+	$rec['abstract'] = '<xsl:call-template name="jmulti">
 		   	<xsl:with-param name="el" select="gmd:identificationInfo/*/gmd:abstract"/>
 		   	<xsl:with-param name="lang" select="$lang"/>
 		   	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -48,7 +48,7 @@
 		</xsl:if>
 		<xsl:if test="*/gmd:description">
 			$l = array();
-			$l['description'] = '<xsl:call-template name="multi">
+			$l['description'] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gmd:description"/>
 		      	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -64,12 +64,12 @@
     </xsl:if>
 	<xsl:for-each select="gmd:identificationInfo/*/gmd:pointOfContact">
 		$c = array();
-		$c['organisationName'] = '<xsl:call-template name="multi">
+		$c['organisationName'] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gmd:organisationName"/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
 		  	</xsl:call-template>';
-		$c['individualName'] = '<xsl:call-template name="multi">
+		$c['individualName'] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gmd:individualName"/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -83,12 +83,12 @@
 	</xsl:for-each>	  	
 	<xsl:for-each select="gmd:contact">
 		$c = array();
-		$c['organisationName'] = '<xsl:call-template name="multi">
+		$c['organisationName'] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gmd:organisationName"/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
 		  	</xsl:call-template>';
-		$c['individualName'] = '<xsl:call-template name="multi">
+		$c['individualName'] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gmd:individualName"/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -109,13 +109,13 @@
 	</xsl:for-each> 
 	<xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords">
 		$kw = array();
-		$kw['thesaurus'] = '<xsl:call-template name="multi">
+		$kw['thesaurus'] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gmd:thesaurusName/*/gmd:title"/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
 		  	</xsl:call-template>';
 		  	<xsl:for-each select="*/gmd:keyword">
-		  		$kw['keywords'][] = '<xsl:call-template name="multi">
+		  		$kw['keywords'][] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="."/>
 		    	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -145,7 +145,7 @@
     <xsl:variable name="mdlang" select="gmx:language/*/@codeListValue"/>
     $rec = array();
     $rec['trida']='fc';
-    $rec['title'] = '<xsl:call-template name="multi">
+    $rec['title'] = '<xsl:call-template name="jmulti">
 			   		<xsl:with-param name="el" select="gmx:name"/>
 			   		<xsl:with-param name="lang" select="$lang"/>
 			   		<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -154,7 +154,7 @@
     <xsl:for-each select="gmx:name/*/gmd:textGroup">
         $rec['titles']['<xsl:value-of select="substring-after(*/@locale,'-')"/>'] = '<xsl:value-of select="*"/>';
     </xsl:for-each>
-    $rec['abstract'] = '<xsl:call-template name="multi">
+    $rec['abstract'] = '<xsl:call-template name="jmulti">
 		   		<xsl:with-param name="el" select="gmx:scope"/>
 		   		<xsl:with-param name="lang" select="$lang"/>
 		   		<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -164,7 +164,7 @@
     $f = array();
     <xsl:for-each select="gfc:featureType">
         $f_['name'] = '<xsl:value-of select="*/gfc:typeName/*"/>';
-        $f_['definition'] = '<xsl:call-template name="multi">
+        $f_['definition'] = '<xsl:call-template name="jmulti">
 		    	<xsl:with-param name="el" select="*/gfc:definition"/>
 		      	<xsl:with-param name="lang" select="$lang"/>
 		    	<xsl:with-param name="mdlang" select="$mdlang"/>
@@ -191,7 +191,7 @@
 	
 
  <!-- pro multiligualni nazvy -->
-  <xsl:template name="multi">
+  <xsl:template name="jmulti">
     <xsl:param name="el"/>
     <xsl:param name="lang"/>
     <xsl:param name="mdlang"/>
@@ -199,10 +199,10 @@
     <xsl:variable name="txt" select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[@locale=concat('#locale-',$lang)]"/>	
      <xsl:choose>
     	<xsl:when test="string-length($txt)>0">
-    	  <xsl:value-of select="php:function('addslashes', normalize-space($txt))"/>
+    	  <xsl:value-of select="php:function('json_encode', normalize-space($txt))"/>
     	</xsl:when>
     	<xsl:otherwise>
-    	  <xsl:value-of select="php:function('addslashes', normalize-space($el/gco:CharacterString))"/>
+    	  <xsl:value-of select="php:function('json_encode', normalize-space($el/gco:CharacterString))"/>
     	</xsl:otherwise>
     </xsl:choose>
   </xsl:template>
