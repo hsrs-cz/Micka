@@ -1,7 +1,7 @@
 <?php
 namespace CatalogModule;
 
-use App\Model;
+use App\Model, Nette;
 
 /** @resource Catalog:Guest */
 class RecordPresenter extends \BasePresenter
@@ -108,18 +108,18 @@ class RecordPresenter extends \BasePresenter
         
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Catalog:Guest */
     public function renderNew() 
     {
         $mcl = new \App\Model\CodeListModel($this->context->getByType('Nette\Database\Context'), $this->user);
         $this->template->mdStandard = $mcl->getStandardsLabel($this->appLang, TRUE);
-        $this->template->groups = $this->user->getIdentity()->data['groups'];
+        $this->template->groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
         $this->template->edit_group = $this->context->parameters['app']['defaultEditGroup'];
-        $this->template->view_group = $this->context->parameters['app']['defaultViewGroup'];;
+        $this->template->view_group = $this->context->parameters['app']['defaultViewGroup'];
         $this->template->mdLangs = $mcl->getLangsLabel($this->appLang);
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Catalog:Guest */
     public function actionCancel($id) 
     {
         $this->recordModel->deleteEditRecords();
@@ -127,7 +127,7 @@ class RecordPresenter extends \BasePresenter
         $this->redirect(':Catalog:Default:default');
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Catalog:Guest */
     public function actionSave($id) 
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
@@ -140,12 +140,30 @@ class RecordPresenter extends \BasePresenter
         }
         switch ($post['afterpost']) {
             case 'end':
-                $this->recordModel->setEditRecord2Md();
-                $this->restoreUrl($this->getParam('id'), $this->getParam('f'));
-                $this->redirect(':Catalog:Default:default');
+                if ($this->user->isLoggedIn()) {
+                    $this->recordModel->setEditRecord2Md();
+                    $this->restoreUrl($this->getParam('id'), $this->getParam('f'));
+                    $this->redirect(':Catalog:Default:default');
+                }
                 break;
             case 'save':
-                $this->recordModel->setEditRecord2Md();
+                if ($this->user->isLoggedIn()) {
+                    $this->recordModel->setEditRecord2Md();
+                }
+                break;
+            case 'xml':
+                $mdr = $this->recordModel->getRecordMd();
+                header("Content-Type: application/force-download");
+                header("Content-Type: application/octet-stream");
+                header("Content-Type: application/download");
+                header('Content-Disposition: attachment; filename=metadata.xml');
+                header("Content-Transfer-Encoding: binary");
+                header("Cache-control: private"); //use this to open files directly
+                header('Expires: 0');
+                header("Pragma: no-cache");
+                header("Connection: close");
+                echo ltrim($mdr->pxml);
+                $this->terminate();
                 break;
             default:
         }
@@ -158,7 +176,7 @@ class RecordPresenter extends \BasePresenter
         $this->redirect(':Catalog:Record:edit', [$id, 'profil'=>$profil, 'package'=>$package, 'f' => $this->getParam('f')]);
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Catalog:Guest */
     public function actionEdit($id) 
     {
         if($id == 'new') {
@@ -185,7 +203,7 @@ class RecordPresenter extends \BasePresenter
         }
     }
 
-    /** @resource Catalog:Editor */
+    /** @resource Catalog:Guest */
     public function renderEdit($id) 
     {
         $rmd = $this->recordModel->findMdById($id,'edit_md','edit');
@@ -235,7 +253,7 @@ class RecordPresenter extends \BasePresenter
             $this->template->dataType = $rmd->data_type;
             $this->template->view_group = $rmd->view_group;
             $this->template->edit_group = $rmd->edit_group;
-            $this->template->groups = $this->user->getIdentity()->data['groups'];
+            $this->template->groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
             $this->template->mdControl = ($mds == 0 || $mds == 10) 
                     ? mdControl($rmd->pxml, $this->appLang)
                     : [];
