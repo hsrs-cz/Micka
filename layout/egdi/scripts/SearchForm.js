@@ -12,7 +12,7 @@ SearchForm = function(a,b){
 	* Collect the queryables and fires the search
 	*/
 	this.search = function(run){
-        console.log('search', run);
+        //console.log('search', run);
         if(run !== 1) return false;
         $("#wait").show();
 		result = "";
@@ -118,10 +118,10 @@ SearchForm = function(a,b){
         _this.search()
     });
 	
-	/*$('#res-type').on('select2:close', function(e){
+	$('#res-type').on('select2:close', function(e){
 		changeType(e.target.value);
-        _this.search();
-	});*/
+        //_this.search();
+	});
 	
 	/*$('#kw-2').select2({
 		ajax: {

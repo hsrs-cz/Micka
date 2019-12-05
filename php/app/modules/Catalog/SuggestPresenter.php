@@ -81,23 +81,6 @@ class SuggestPresenter extends \BasePresenter
             $this->suggestModel->getAnswer($params), 
             "application/json;charset=utf-8"
         ));
-        // using catalogue service 
-        /*$params = array('OUTPUTSCHEMA' => 'json', 'QUERY' => '', 'ELEMENTSETNAME' => 'brief');
-        if ($this->getParameter('id') != '') {
-            $params['ID'] = $this->getParameter('id');
-        } else {
-            if ($this->getParameter('type') == 'featureCatalogue') {
-                $params['QUERY'] = "type='featureCatalogue'";
-            }
-            if($this->getParameter('q')){
-                if($params['QUERY'] !='') $params['QUERY'] .= ' AND ';
-                $params['QUERY'] = "Title like '".$this->getParameter('q')."*'";
-            }
-        }
-        $csw = new \Micka\Csw;
-        $params = $csw->dirtyParams($params);
-        //$this->template->records = 
-        $csw->run($params);*/
     }
     
     /** @resource Catalog:Editor */

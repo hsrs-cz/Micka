@@ -160,11 +160,13 @@
 
 <xsl:template match="rec/csw:Record" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:dc="http://purl.org/dc/elements/1.1/" 
     xmlns:dct="http://purl.org/dc/terms/" xmlns:ows="http://www.opengis.net/ows">
-    <item>
+    <entry>
+      <!-- link itself -->
+      <id><xsl:value-of select="concat($mickaURL, '/record/atom/', dc:identifier[1])"/></id>
+      <!-- links to detail Atom description -->
+      <link rel="alternate" type="application/atom+xml" href="{$mickaURL}/record/atom/{dc:identifier[1]}"/>
+      <summary><xsl:value-of select="dct:abstract"/></summary>
       <title><xsl:value-of select="dc:title"/></title>
-      <guid isPermaLink="false">urn:uuid:<xsl:value-of select="dc:identifier[1]"/></guid>
-      <link>../reords/basic/<xsl:value-of select="dc:identifier[1]"/></link>
-      <description><xsl:value-of select="dct:abstract"/></description>
       <pubDate><xsl:call-template name="formatDate">
           <xsl:with-param name="DateTime" select="dc:date"/>
         </xsl:call-template> 00:00:00 GMT</pubDate>
@@ -181,7 +183,7 @@
 	       	<xsl:value-of select="substring-after(ows:LowerCorner,' ')"/><xsl:text> </xsl:text><xsl:value-of select="substring-before(ows:LowerCorner,' ')"/>
         </georss:polygon>
       </xsl:for-each>
-    </item>
+    </entry>
 </xsl:template>
 
 <xsl:template match="rec/gfc:FC_FeatureCatalogue" xmlns:gfc="http://www.isotc211.org/2005/gfc">

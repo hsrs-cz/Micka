@@ -320,7 +320,6 @@ class Csw{
 	  		$params['ISGET'] = true;
 	  		if(!isset($params['FORMAT']) || strpos($params['FORMAT'],'json')!==false){
 	  			$params['FORMAT'] = "application/json";
-	  			//$params['ELEMENTSETNAME'] = 'full';
 	  		}
 	  		if(!isset($params['USER'])) $params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
 	  		if(isset($params['START'])){
@@ -333,25 +332,6 @@ class Csw{
 	  			$params['MAXRECORDS'] = intval($params['LIMIT']);
 	  		}
 	  	}
-	  	// rss kanál
-	  	/*else if(isset($params['REQUEST']) && $params['REQUEST']=='rss'){
-	  		$dni = intval($params['DAYS']);
-	  		unset($params['DAYS']);
-	  		$params['REQUEST'] = 'GetRecords';
-	  		$params['CONSTRAINT'] = "modified >= '".date("Y-m-d", time()-($dni*3600*24))."'";
-	  		$params['TYPENAMES'] = 'gmd:MD_Metadata';
-	  		$params['OUTPUTSCHEMA'] = 'http://www.georss.org/georss';
-	  		if(isset($params['START'])){
-	  			$params['STARTPOSITION'] = intval($params['START']);
-	  		}
-	  		if(isset($params['LIMIT'])){
-	  			$params['MAXRECORDS'] = intval($params['LIMIT']);
-	  		}
-	  		if(!isset($params['SORTBY'])){
-	  		    $params['SORTBY'] = "date:D";
-	  		}
-	  		if(!$params['USER']) $params['USER'] = 'dummy';
-	  	}*/
 	  	else if(isset($params['ID']) && isset($params['FORMAT'])){
 	  		$params['TYPENAMES'] = 'gmd:MD_Metadata';
 	  		$params['REQUEST'] = 'GetRecordById';
@@ -391,9 +371,9 @@ class Csw{
   	}
 
   function processParams($params){
-  	if(!isset($params["ISGET"]) || !$params["ISGET"]){
-   		$this->input = file_get_contents('php://input', false, null, null, CSW_MAXFILESIZE); //TODO obslouzit chybu
-  	}
+    if(!isset($params["ISGET"]) || !$params["ISGET"]){
+        $this->input = file_get_contents('php://input', false, null, null, CSW_MAXFILESIZE); //TODO obslouzit chybu
+    }
 
     // POST
     if($this->input){
@@ -405,8 +385,6 @@ class Csw{
 		$processed = $this->xp->transformToXML($this->xml);
 		$IDs = Array();
 		$processed = html_entity_decode($processed);
-		//$processed = str_replace("&amp;", "&", $processed);
-		//echo $processed; die;
 		eval($processed);
 		$this->params = $params;
 		$this->requestType=1;
@@ -485,7 +463,7 @@ class Csw{
         $this->params['CB'] = "";
         if(isset($_SESSION["micka"]["cb"])) $this->params['CB'] .= $_SESSION["micka"]["cb"];
     }
-    //if(!isset($this->params['LANGUAGE'])) $this->params['LANGUAGE'] = MICKA_LANG;
+    if(!isset($this->params['LANGUAGE']) && !isset($this->params['isCSW'])) $this->params['LANGUAGE'] = MICKA_LANG;
     if(!isset($this->params['DEBUG'])) $this->params['DEBUG'] = 0;
     if(!isset($this->params['SOAP'])) $this->params['SOAP'] = false;
     if(!isset($this->params['SORTBY'])) $this->params['SORTBY'] = "";

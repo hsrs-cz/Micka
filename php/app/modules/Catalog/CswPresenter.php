@@ -79,11 +79,7 @@ class CswPresenter extends \BasePresenter
             if(!isset($params['OUTPUTSCHEMA'])) $params['OUTPUTSCHEMA']="http://www.isotc211.org/2005/gmd"; //TODO docasne, pak nezavisle
             $params = $csw->dirtyParams($params);
         }
-
-
-        // FIXME docany kvuli zpetne kompatibilite
-        //$params['LANGUAGE'] = $params['LANG'];
-        //var_dump($params); die;
+        $params['isCSW'] = true;
         $result = $csw->run($params);
         $csw->setHeader();
         echo $result;
@@ -108,7 +104,8 @@ class CswPresenter extends \BasePresenter
         $params['STARTPOSITION'] = htmlspecialchars($_GET['start']);
         $params['LANGUAGE'] = htmlspecialchars($_GET['LANG']);
         $params['DEBUG'] = 0;
-
+        $params['isCSW'] = true;
+        
         $result = $csw->run($params);
         $csw->setHeader();
         echo $result;
