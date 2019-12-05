@@ -162,19 +162,19 @@
     <xsl:choose>
         <xsl:when test="$lang">
             <xsl:variable name="txt" select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[@locale=concat('#locale-',$lang)]"/>
-            <xsl:choose>
+            '<xsl:choose>
                 <xsl:when test="string-length($txt)>0">
-                  <xsl:value-of select="php:function('json_encode', normalize-space($txt))"/>
+                  <xsl:value-of select="php:function('addslashes', normalize-space($txt))"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:value-of select="php:function('json_encode', normalize-space($el/gco:CharacterString))"/>
+                  <xsl:value-of select="php:function('addslashes', normalize-space($el/gco:CharacterString))"/>
                 </xsl:otherwise>
-            </xsl:choose>;
+            </xsl:choose>';
         </xsl:when>
         <xsl:otherwise>[
-            '<xsl:value-of select="$mdlang"/>' =<xsl:text disable-output-escaping="yes">&gt;</xsl:text> <xsl:value-of select="php:function('json_encode', normalize-space($el/gco:CharacterString))"/>
+            '<xsl:value-of select="$mdlang"/>' =<xsl:text disable-output-escaping="yes">&gt;</xsl:text> <xsl:value-of select="php:function('addslashes', normalize-space($el/gco:CharacterString))"/>
             <xsl:for-each select="$el/*/gmd:textGroup/*">
-                ,'<xsl:value-of select="substring-after(@locale,'-')"/>' =<xsl:text disable-output-escaping="yes">&gt;</xsl:text> <xsl:value-of select="php:function('json_encode', normalize-space(.))"/>
+                ,'<xsl:value-of select="substring-after(@locale,'-')"/>' =<xsl:text disable-output-escaping="yes">&gt;</xsl:text> <xsl:value-of select="php:function('addslashes', normalize-space(.))"/>
             </xsl:for-each>
             ];
         </xsl:otherwise>

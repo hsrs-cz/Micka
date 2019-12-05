@@ -824,7 +824,7 @@ class Csw{
               //echo($output); die();
               if($this->params['OUTPUTSCHEMA']=='json'){
                   eval($output);
-                  $output = json_encode($rec);
+                  $output = str_replace("\\\\\\", "\\", json_encode($rec));
                   if($i>0) $output = ",".$output;
               }
               if($this->params['buffered']) $result .= $output;
