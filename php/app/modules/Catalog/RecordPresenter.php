@@ -255,7 +255,7 @@ class RecordPresenter extends \BasePresenter
             $this->template->edit_group = $rmd->edit_group;
             $this->template->groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
             $this->template->mdControl = ($mds == 0 || $mds == 10) 
-                    ? mdControl($rmd->pxml, $this->appLang)
+                    ? mdControl($rmd->pxml, $this->appLang, $this->layoutTheme)
                     : [];
             $this->template->profils = $mcl->getMdProfils($this->appLang,$mds);
             $this->template->packages = $mcl->getMdPackages($this->appLang, $mds, $profil);

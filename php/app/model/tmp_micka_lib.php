@@ -147,13 +147,13 @@ function applyTemplate($xmlSource, $xsltemplate, $user) {
 	return $rs;
 }
 
-function mdControl($xmlSource, $appLang)
+function mdControl($xmlSource, $appLang, $profile='default')
 {
     if ($xmlSource == '') {
         return array();
     }
     include_once(__DIR__ ."/../modules/Validator/model/Validator.php");
-    $validator = new \ValidatorModule\Validator("gmd", $appLang);
+    $validator = new \ValidatorModule\Validator("gmd", $appLang, $profile);
     $validator->run($xmlSource);
     $a = $validator->asArray();
     for($i=0;$i<count($a);$i++){
