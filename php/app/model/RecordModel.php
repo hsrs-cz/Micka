@@ -22,7 +22,8 @@ class RecordModel extends \BaseModel
         $this->appParameters = $appParameters;
     }
     
-    private function initialVariables() {
+    private function initialVariables()
+    {
         $this->geomMd['x1'] = NULL;
         $this->geomMd['x2'] = NULL;
         $this->geomMd['y1'] = NULL;
@@ -32,6 +33,7 @@ class RecordModel extends \BaseModel
         $this->titleMd['title'] = NULL;
         $this->titleMd['title_lang_main'] = NULL;
     }
+
     private function setRecordMdById($id, $typeTableMd, $right)
     {
         if ($id == '') {
@@ -64,7 +66,7 @@ class RecordModel extends \BaseModel
         return;
     }
     
-    private function isRight2MdRecord($right)
+    private function isRight2MdRecord($right, $table='md')
     {
         if ($this->recordMd === NULL) {
             return FALSE;
@@ -74,36 +76,40 @@ class RecordModel extends \BaseModel
         }
         switch ($right) {
             case 'read':
-                if($this->recordMd->data_type > 0) {
+                if ($this->recordMd->data_type > 0) {
                     return TRUE;
                 }
-                if($this->user->isLoggedIn()) {
-                    if($this->recordMd->create_user == $this->user->getIdentity()->username) {
+                if ($this->user->isLoggedIn()) {
+                    if ($this->recordMd->create_user == $this->user->getIdentity()->username) {
                         return TRUE;
                     }
-                    if($this->user->isLoggedIn()) {
-                        foreach ($this->user->getIdentity()->data['groups'] as $row) {
-                            if ($row == $this->recordMd->view_group) {
-                                return TRUE;
-                            }
-                            if ($row == $this->recordMd->edit_group) {
-                                return TRUE;
-                            }
+                    foreach ($this->user->getIdentity()->data['groups'] as $row) {
+                        if ($row == $this->recordMd->view_group) {
+                            return TRUE;
                         }
+                        if ($row == $this->recordMd->edit_group) {
+                            return TRUE;
+                        }
+                    }
+                } else {
+                    if ($this->recordMd->create_user === 'guest') {
+                        return TRUE;
                     }
                 }
                 return FALSE;
             case 'edit':
-                if($this->user->isLoggedIn()) {
-                    if($this->recordMd->create_user == $this->user->getIdentity()->username) {
+                if ($this->user->isLoggedIn()) {
+                    if ($this->recordMd->create_user == $this->user->getIdentity()->username) {
                         return TRUE;
                     }
-                    if($this->user->isLoggedIn()) {
-                        foreach ($this->user->getIdentity()->data['groups'] as $row) {
-                            if ($row == $this->recordMd->edit_group) {
-                                return TRUE;
-                            }
+                    foreach ($this->user->getIdentity()->data['groups'] as $row) {
+                        if ($row == $this->recordMd->edit_group) {
+                            return TRUE;
                         }
+                    }
+                } else {
+                    if ($this->recordMd->create_user === 'guest') {
+                        return TRUE;
                     }
                 }
                 return FALSE;
@@ -144,7 +150,7 @@ class RecordModel extends \BaseModel
         $data['data_type'] = $this->recordMd->data_type; 
         $data['edit_group'] = $this->recordMd->edit_group; 
         $data['view_group'] = $this->recordMd->view_group;
-        $data['last_update_user'] = $this->user->identity->username;
+        $data['last_update_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
         $data['last_update_date'] = Date("Y-m-d");
         if ($this->langMd !== NULL) {
             $data['lang'] = $this->langMd; 
@@ -236,12 +242,14 @@ class RecordModel extends \BaseModel
         return $validator;
     }
     
-    private function deleteMdValues($recno) {
+    private function deleteMdValues($recno)
+    {
         $this->db->query("DELETE FROM md_values WHERE recno=?", $recno);
         return;
     }
     
-    private function deleteEditMdValuesByProfil($editRecno, $mds, $profil_id, $package_id) {
+    private function deleteEditMdValuesByProfil($editRecno, $mds, $profil_id, $package_id)
+    {
         $sql = "DELETE FROM edit_md_values WHERE recno=?";
 		if ($mds == 0 || $mds == 10) {
 			$sql .= " AND md_id<>38";
@@ -260,7 +268,8 @@ class RecordModel extends \BaseModel
         return;
     }
 
-    private function deleteEditMdValuesByLite($editRecno, $mds, $del_md_id,$table='edit_md_values') {
+    private function deleteEditMdValuesByLite($editRecno, $mds, $del_md_id,$table='edit_md_values')
+    {
 		if ($mds == 0 || $mds == 10) {
             if (isset($del_md_id[38])) {
                 unset($del_md_id[38]);
@@ -304,7 +313,8 @@ class RecordModel extends \BaseModel
         }
     }
     
-    private function insertMdValuesBasic($md_standard, $recno, $uuid=NULL,$lang=NULL,$date=FALSE) {
+    private function insertMdValuesBasic($md_standard, $recno, $uuid=NULL,$lang=NULL,$date=FALSE)
+    {
 		if ($md_standard == 0 || $md_standard == 10) {
             $values = [];
             if ($uuid !== NULL) {
@@ -343,7 +353,8 @@ class RecordModel extends \BaseModel
 		}
     }
     
-    private function setMdFromXml($data, $log=FALSE) {
+    private function setMdFromXml($data, $log=FALSE)
+    {
         $report = array();
         if (array_key_exists('params', $data)
             && array_key_exists('new_md', $data)
@@ -450,10 +461,14 @@ class RecordModel extends \BaseModel
         $md['uuid'] = $this->getUuid();
 		$md['md_standard'] = isset($post['standard']) ? $post['standard'] : 0;
 		$md['data_type'] = -1;
-		$md['create_user'] = $this->user->identity->username;
+		$md['create_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
 		$md['create_date'] = Date("Y-m-d");
-        $md['edit_group'] = isset($post['group_e']) ? $post['group_e'] : $this->user->identity->username;
-        $md['view_group'] = isset($post['group_v']) ? $post['group_v'] : $this->user->identity->username;
+        $md['edit_group'] = isset($post['group_e']) && isset($this->user->identity->username)
+                                ? $post['group_e']
+                                : 'guest';
+        $md['view_group'] = isset($post['group_v']) && isset($this->user->identity->username)
+                                ? $post['group_v'] 
+                                : 'guest';
         $lang_main = (isset($post['lang_main']) && $post['lang_main'] != '') ? $post['lang_main'] : 'eng';
         $langs = isset($post['languages']) ? $post['languages'] : array();
         if(!in_array($lang_main, $langs)){
@@ -633,7 +648,8 @@ class RecordModel extends \BaseModel
         return $this->setNewEditMdRecord($httpRequest);
     }
     
-    private function setGeomMd2recordMd() {
+    private function setGeomMd2recordMd()
+    {
         $x1 = $this->geomMd['x1'];
         $x2 = $this->geomMd['x2'];
         $y1 = $this->geomMd['y1'];
@@ -706,17 +722,20 @@ class RecordModel extends \BaseModel
         $this->recordMd->the_geom = $rs['the_geom'];
     }
     
-    private function setMdTitle($data) {
+    private function setMdTitle($data)
+    {
         $this->titleMd['title'] = $data['md_value'];
     }
     
-    private function setTitleMd2recordMd() {
+    private function setTitleMd2recordMd()
+    {
         $this->recordMd->title = $this->titleMd['title_lang_main'] 
                 ? $this->titleMd['title_lang_main'] 
                 : $this->titleMd['title'];
     }
     
-    private function setValue2RecorMd($data) {
+    private function setValue2RecorMd($data)
+    {
         switch ($this->recordMd->md_standard) {
             case 0:
                 if ($data['md_id'] == 497) {
@@ -856,7 +875,8 @@ class RecordModel extends \BaseModel
     }
     
     // processes record language preferences 
-    private function setLang2RecordMd($select_langs) {
+    private function setLang2RecordMd($select_langs)
+    {
         $md_langs = explode('|', $this->recordMd->lang);
         $common_langs = array_intersect($md_langs, $select_langs);
         if (count($common_langs) === 0) {
@@ -887,7 +907,8 @@ class RecordModel extends \BaseModel
     }
 
     // transaction support ?
-    public function setXmlFromCsw($xml,$params=array()) {
+    public function setXmlFromCsw($xml,$params=array())
+    {
         $mdXml2Array = new MdXml2Array();
         $dataFromXml = $mdXml2Array->xml2array($xml, __DIR__ ."/xsl/update2micka.xsl");
         $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
@@ -978,7 +999,8 @@ class RecordModel extends \BaseModel
         return $report;
     }
     
-    private function setFromMickaLite($post, $liteProfile) {
+    private function setFromMickaLite($post, $liteProfile)
+    {
 		$cswClient = new \CswClient();
         $kote = new \Kote();
         $input = $kote->processForm(beforeSaveRecord($post));
@@ -1086,7 +1108,8 @@ class RecordModel extends \BaseModel
     {
         $xml = $this->recordMd->pxml;
         if ($xsltemplate != '' && $xml != '') {
-            $xml = applyTemplate($xml, $xsltemplate, $this->user->identity->username);
+            $user = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
+            $xml = applyTemplate($xml, $xsltemplate, $user);
             if ($xml != '') {
                 $this->recordMd->pxml = $xml;
             }
