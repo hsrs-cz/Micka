@@ -83,7 +83,7 @@ class ProfilePresenter extends \BasePresenter
     public function actionClone($id)
     {
         $this->template->id = $id;
-        $this->setView('New');
+        $this->setView('new');
     }
 
     /** @resource Admin */
