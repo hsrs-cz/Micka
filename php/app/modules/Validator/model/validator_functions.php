@@ -13,7 +13,8 @@ function isEmail($email)
 
 function getContents($url, $len=1000)
 {
-    $c = curl_init(trim($url));
+    $url = explode("#",$url);
+    $c = curl_init(trim($url[0]));
     curl_setopt($c, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($c, CURLOPT_FOLLOWLOCATION, 1);

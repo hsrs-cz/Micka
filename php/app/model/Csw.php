@@ -1142,7 +1142,8 @@ class Csw{
 
   private function delete(){
   	$export = new MdExport($usr);
-  	$data = $export->getData(array($this->params['QSTR'])); //TODO zaznamy apod ...
+    $export = new \App\Model\MdSearch($this->params['STARTPOSITION'], $this->params['MAXRECORDS'], "date");
+    $xmlstr = $export->getXmlRecords(array($this->params['QSTR']), []);
     $c = new MdImport();
     $result = $c->dataToMd($data,'delete');
     if($this->params['DEBUG']==1) var_dump($result);

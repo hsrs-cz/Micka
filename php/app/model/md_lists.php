@@ -44,7 +44,7 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
             }
             foreach($row as $k=>$v){
                 if($k!='uri'){
-                    echo "$k:'".$v['name']."',";
+                    echo "$k:'".addslashes($v['name'])."',";
                 }
             }
             echo "xxx:'".(string) $row->$mdlang."'});\">".(string) $row->$lang."</a><br>";
@@ -52,29 +52,6 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
         echo "</div>";
         return;
     }
-
-	/*@$xml = simplexml_load_file(APP_DIR . "/model/dict/$type.xml");
-	if(!$xml) die("list <b>$type</b> does not exist");
-	// test jazyka
-	$langBranch = $xml->xpath("//translation[@lang='".$lang."']");
-	if(isset($langBranch[0]) === FALSE) $lang='eng';
-	$pageTitle = $xml->xpath("//translation[@lang='".$lang."']/title");
-    echo '<div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4>'. $pageTitle[0].'</h4>
-        </div><div class="modal-body">';
-	foreach ($xml->xpath("//translation[@lang='".$lang."']/group") as $list) {
-    	echo "<h3>".$list->title.'</h3>';
-    	foreach ($list->entry as $entry){
-    		// pouzije primarne label, kdyz neni, tak hodnotu
-    		$value = $entry['label'];
-    		if(!$value) $value = (string) $entry;
-            $f = (isset($_REQUEST['handler']) && $_REQUEST['handler']) ? $_REQUEST['handler'] : 'false';
-    		if($withValues) echo "<a href=\"javascript:micka.fillValues('".$type."','".$entry['id']."', ".$f.");\">".$value."</a><br>";
-    		else echo "<a href=\"javascript:kw('".$entry['code']."');\">".(string) $entry."</a><br>";
-    	}
-	}
-    echo "</div>";*/
 }
 
 function getCodeListValues($type, $lang, $filter=''){

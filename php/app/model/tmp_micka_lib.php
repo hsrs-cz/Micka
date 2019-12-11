@@ -72,10 +72,11 @@ function getMetadataById($id, $esn='full'){
 }
 
 // pro XSLT - dotaz na metadata
-function getData($s)
+function getData($url)
 {
+    $url = explode("#", $url);
     $dom = new DOMDocument();
-    $ch=curl_init($s);
+    $ch = curl_init($url[0]);
     //curl_setopt($ch, CURLOPT_COOKIE, session_name().'='.session_id() );
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5 ); 
@@ -183,28 +184,7 @@ function setRowZero($arr){
 	return $rs;
 }
 
-/**
- * Převod md_path na "pole"
- *
- * příklad
- * in: '0_0_44_0'
- * out: '[0][0][44][0]'
- *
- * @param string $md_path hodnota z tabulky md_values.md_path
- * @return string
- */
-/*
-function getMdPath($md_path) {
-	$rs = '';
-	if (substr($md_path, strlen($md_path)-1) == '_') {
-		// odstranění posledního podtržítka
-		$md_path = substr($md_path, 0, strlen($md_path)-1);
-	}
-	$rs = str_replace("_", "][", $md_path);
-	$rs = '[' . $rs . ']';
-	return $rs;
-}
-*/
+
 function getMdPath($md_path, $delimiterIn='_') {
     if (substr($md_path, strlen($md_path)-1) == $delimiterIn) {
         $md_path = substr($md_path, 0, strlen($md_path)-1);

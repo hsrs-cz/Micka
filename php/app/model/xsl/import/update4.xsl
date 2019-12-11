@@ -186,11 +186,11 @@
                     <gmd:otherConstraints>
                         <xsl:choose>
                             <xsl:when test="contains(*, 'nejsou známy') or contains(*, 'unknown')">
-                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply"><xsl:value-of select="*"/></gmx:Anchor>
+                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply"><xsl:value-of select="*"/></gmx:Anchor>
                                 <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                             </xsl:when>
                             <xsl:when test="contains(*, 'žádné podmínky') or contains(*, 'no conditions')">
-                                <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown"><xsl:value-of select="*"/></gmx:Anchor>
+                                <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown"><xsl:value-of select="*"/></gmx:Anchor>
                                 <xsl:for-each select="gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                             </xsl:when>
                             <xsl:otherwise>
@@ -214,7 +214,7 @@
                 <xsl:choose>
                     <xsl:when test="contains(*/gmd:otherConstraints/*, 'Bez omezení') or contains(*/gmd:otherConstraints/*, 'no limitations')">
                         <gmd:otherConstraints>
-                            <gmx:Anchor xlink:href="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"><xsl:value-of select="*/gmd:otherConstraints/*"/></gmx:Anchor>
+                            <gmx:Anchor xlink:href="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations"><xsl:value-of select="*/gmd:otherConstraints/*"/></gmx:Anchor>
                             <xsl:for-each select="*/gmd:otherConstraints/gmd:PT_FreeText"><xsl:copy-of select="."/></xsl:for-each>
                         </gmd:otherConstraints>
                     </xsl:when>
