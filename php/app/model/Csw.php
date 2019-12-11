@@ -1141,11 +1141,15 @@ class Csw{
   }
 
   private function delete(){
-  	$export = new MdExport($usr);
+    $recordModel = new \App\Model\RecordModel($this->dbContext, $this->user);
     $export = new \App\Model\MdSearch($this->params['STARTPOSITION'], $this->params['MAXRECORDS'], "date");
     $xmlstr = $export->getXmlRecords(array($this->params['QSTR']), []);
-    $c = new MdImport();
-    $result = $c->dataToMd($data,'delete');
+    $this->xml->loadXML($xmlstr);
+    $result = array();
+    foreach($this->xml->getElementsByTagName('rec') as $rec){
+        $recordModel->deleteMdById($rec->getAttribute('uuid'));
+        $result[] = $rec->getAttribute('uuid');
+    }
     if($this->params['DEBUG']==1) var_dump($result);
     return $result;
   }
