@@ -626,16 +626,12 @@
 				</gmd:temporalElement>
             </xsl:for-each> 
             
-            <xsl:for-each select="identificationInfo/*/extent/verticalElement">
+            <xsl:for-each select="identificationInfo/*/extent/*/verticalElement">
 				<gmd:verticalElement>
       				<gmd:EX_VerticalExtent>
-      					<gmd:minimumValue><gco:Real><xsl:value-of select="minimumValue" /></gco:Real></gmd:minimumValue>
-      					<gmd:maximumValue><gco:Real><xsl:value-of select="maximumValue" /></gco:Real></gmd:maximumValue>
-      					<gmd:verticalCRS>
-        					<gml:VerticalCRS>
-        						<gml:identifier codeSpace="{verticalDatum/datumID/title}"><xsl:value-of select="verticalDatum/datumID/code" /></gml:identifier>
-        					</gml:VerticalCRS>
-                  		</gmd:verticalCRS>
+      					<gmd:minimumValue><gco:Real><xsl:value-of select="*/minimumValue"/></gco:Real></gmd:minimumValue>
+      					<gmd:maximumValue><gco:Real><xsl:value-of select="*/maximumValue"/></gco:Real></gmd:maximumValue>
+        				<gml:verticalCRS xlink:href="{*/verticalCRS/href}" title="{*/verticalCRS/title}"/>
       				</gmd:EX_VerticalExtent>
 				</gmd:verticalElement>
             </xsl:for-each>  

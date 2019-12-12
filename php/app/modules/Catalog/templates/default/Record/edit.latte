@@ -389,6 +389,8 @@
                                             <div style="margin-left:10px;"> {$r['code']}: 
                                             {if $r['level'] == 'c' && $r['pass'] != TRUE}
                                                 <span class="c">{$r['description']}</span>
+                                            {elseif $r['level'] == 'n' && $row['pass'] != TRUE}
+                                                <span class="n">{$r['description']}</span>
                                             {elseif $r['pass'] != TRUE}
                                                 <span class="m">{$r['description']}</span>
                                             {else} 

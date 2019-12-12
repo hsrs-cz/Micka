@@ -196,7 +196,7 @@ class Validator
                 }	 
                 else if($row['level']=='n'){
                     $class="notice";
-                    $notices++;				    
+                    $notices++;
                 }
                 else {
                     $class = "fail";
