@@ -230,14 +230,17 @@ class RecordModel extends \BaseModel
         }
     }
     
-    public function validate($xml, $type='gmd', $lang='eng')
+    public function validate($xml, $type='gmd', $lang='eng', $profile=null)
     {
         $path_validator = realpath($this->appParameters['appDir'] . "/modules/Validator/model/Validator.php");
         if ($path_validator === false) {
             return false;
         }
+        if ($profile === null) {
+            $profile = $this->appParameters['app']['layoutTheme'];
+        }
         require_once $path_validator;
-        $validator = new \ValidatorModule\Validator($type, $lang, $this->appParameters['app']['layoutTheme']);
+        $validator = new \ValidatorModule\Validator($type, $lang, $profile);
         $validator->run($xml);
         return $validator;
     }

@@ -274,7 +274,7 @@ class RecordPresenter extends \BasePresenter
         if (!$md) {
              throw new \Nette\Application\BadRequestException;
         }
-        $validator = $this->recordModel->validate($md->pxml, 'gmd', $this->appLang == 'cze' ? 'cze' : 'eng');
+        $validator = $this->recordModel->validate($md->pxml, 'gmd', $this->appLang == 'cze' ? 'cze' : 'eng', $this->getParam('profile'));
         $this->template->record = $validator->asHTML();
     }
     
