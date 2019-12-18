@@ -57,7 +57,7 @@ class StandardSchemaModel
     
     public function setMdStandard($md_standard)
     {
-        $this->md_standard = $md_standard == 10 ? 0 : $md_standard;
+        $this->md_standard = $md_standard == 10 ? 0 : (integer) $md_standard;
     }
 
     public function getMdStandard($md_standard) {
@@ -70,7 +70,6 @@ class StandardSchemaModel
 
     public function getTree($node)
     {
-        //Debugger::log('getTree node='.$node, 'TREE');
         $rs = [];
         if ($node === NULL) {
             $rs = $this->db->query(
@@ -98,23 +97,13 @@ class StandardSchemaModel
         if (isset($this->dataNode[$node]) === FALSE) {
             $this->dataNode[$node] = $this->db->query($this->sqlGetNode,$this->md_standard,$node)->fetchAll();
         }
-        //dump($this->dataNode); exit;
         return $this->dataNode[$node];
     }
 
     public function getNodeFull($node) {
-        return $this->db->query($this->sqlSelectTree.' WHERE standard_schema.id=?',$node)->fetchAll();
+        return $this->db->query($this->sqlSelectTree.' WHERE standard_schema.md_standard=? AND md_id=?', $this->md_standard, $node)->fetch();
     }
 
-    /*
-    public function getIdNodeByMdid($md_standard,$md_id) {
-        return $this->db->fetchField('
-            SELECT id FROM standard_schema WHERE md_standard=? AND md_id=?
-        ',$md_standard, $md_id);
-        
-    }
-    */
-    
     public function getParentNodes($node)
     {
         $rs = [];
@@ -125,7 +114,6 @@ class StandardSchemaModel
                 $row->md_standard, $row->md_left, $row->md_right
             )->fetchAll();
         }
-        //dump($rs); exit;
         return $rs; 
     }
     
@@ -136,7 +124,6 @@ class StandardSchemaModel
             return $rs;
         }
         $nodeData = $this->getNode($node);
-        //dump($nodeData); exit;
         foreach ($nodeData as $row) {
             $rs = $this->db->query(
                 $this->sqlSelectTree.$this->sqlWhereTreeChilds,

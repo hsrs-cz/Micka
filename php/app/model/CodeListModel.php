@@ -140,4 +140,25 @@ class CodeListModel extends \BaseModel
         }
         return $rs;
     }
+
+    public function getMandatory() 
+    {
+        return $this->db->query("SELECT * FROM mandatory ORDER BY mandt_code")->fetchAll();
+    }
+
+    public function getElements($md_standard)
+    {
+        if ($md_standard == 10) {
+            $md_standard = 0;
+        }
+        return $this->db->query("SELECT * FROM elements WHERE md_standard=? ORDER BY el_name", $md_standard)->fetchAll();
+    }
+
+    public function getElementName($md_standard, $el_id)
+    {
+        if ($md_standard == 10) {
+            $md_standard = 0;
+        }
+        return $this->db->query("SELECT el_name FROM elements WHERE md_standard=? AND el_id=?", $md_standard, $el_id)->fetchField();
+    }
 }
