@@ -805,8 +805,8 @@ class Csw{
             $this->getParamL('ELEMENTSETNAME'),
             $this->appParameters['contact']['org'][$this->params['LANGUAGE']], 
             $this->appParameters['contact']['email'], 
-            $this->appParameters['contact']['title'][$this->params['LANGUAGE']], 
-            $this->appParameters['contact']['abstract'][$this->params['LANGUAGE']], 
+            ($this->params['LANGUAGE']=='all') ? $this->appParameters['contact']['title']['eng'] : $this->appParameters['contact']['title'][$this->params['LANGUAGE']], 
+            ($this->params['LANGUAGE']=='all') ? $this->appParameters['contact']['abstract']['eng'] : $this->appParameters['contact']['abstract'][$this->params['LANGUAGE']], 
             $this->appParameters['contact']['www'],
             $this->mickaURL),
         $schema['header']
