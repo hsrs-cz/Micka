@@ -63,13 +63,13 @@
 	  	</xsl:for-each>
 
         <!-- link itself -->
-        <id><xsl:value-of select="concat($mickaURL, '/record/atom/', gmd:fileIdentifier)"/></id>
+        <id><xsl:value-of select="concat($mickaURL, '/record/atom/', gmd:fileIdentifier/*)"/></id>
 
       	<!-- links to detail Atom description -->
-      	<link rel="alternate" type="application/atom+xml" href="{$mickaURL}/record/atom/{gmd:fileIdentifier}"/>
+      	<link rel="alternate" type="application/atom+xml" href="{$mickaURL}/record/atom/{gmd:fileIdentifier/*}"/>
       	
 	  	<!-- links to ISO metadata and alternative representations -->
-      	<link rel="describedby" type="application/xml" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}"/>
+      	<link rel="describedby" type="application/xml" href="{$mickaURL}/record/xml/{gmd:fileIdentifier/*}"/>
       	
       	<!-- download link for pre-defined dataset -->
       	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">
@@ -113,9 +113,9 @@
 	  			</xsl:call-template>
 	  		</xsl:if>
             <div>Metadata:
-                <a href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-                <a href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-                <a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+                <a href="{$mickaURL}/record/basic/{gmd:fileIdentifier/*}" target="_blank">HTML</a><xsl:text> </xsl:text>
+                <a href="{$mickaURL}/record/xml/{gmd:fileIdentifier/*}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+                <a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier/*}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
             </div>
 	  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	  	</summary>

@@ -60,22 +60,22 @@
 	  			</xsl:call-template>
 	  		</xsl:if>	
 	  		<div>Metadata:
-	  			<a href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-	  			<a href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-	  			<a href="{$mickaURL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+	  			<a href="{$mickaURL}/record/basic/{gmd:fileIdentifier/*}" target="_blank">HTML</a><xsl:text> </xsl:text>
+	  			<a href="{$mickaURL}/record/xml/{gmd:fileIdentifier/*}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+	  			<a href="{$mickaURL}/csw/?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier/*}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
 	  		</div>
 		  	<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	  	</subtitle>
 
 		<!-- link to download service ISO 19139 metadata -->
-   		<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" type="application/xml"/>
-   		<link rel="describedby" href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" type="text/html"/>
+   		<link rel="describedby" href="{$mickaURL}/record/xml/{gmd:fileIdentifier/*}" type="application/xml"/>
+   		<link rel="describedby" href="{$mickaURL}/record/basic/{gmd:fileIdentifier/*}" type="text/html"/>
 	  	
 	  	<!-- Link to Open Search XML description -->
-		<link rel="search" href="{$mickaURL}/opensearch/{gmd:fileIdentifier}" hreflang="{$lang2}" title="OpenSearch" type="application/opensearchdescription+xml"/>
+		<link rel="search" href="{$mickaURL}/opensearch/{gmd:fileIdentifier/*}" hreflang="{$lang2}" title="OpenSearch" type="application/opensearchdescription+xml"/>
 		
 		<!-- self-referencing link to this feed -->
-	    <link rel="self" href="{$mickaURL}/record/atom/{gmd:fileIdentifier}" hreflang="{$lang2}" type="application/atom+xml" title="This document"/>
+	    <link rel="self" href="{$mickaURL}/record/atom/{gmd:fileIdentifier/*}" hreflang="{$lang2}" type="application/atom+xml" title="This document"/>
 
 	  	<!-- links to INSPIRE Spatial Object Type definitions for this pre-defined dataset -->
 	  	<!-- TO BE DONE -->
@@ -151,10 +151,10 @@
                     </xsl:for-each>
                     
                     <!-- link itself -->
-                    <id><xsl:value-of select="concat($mickaURL, '/record/xml/', $md//gmd:fileIdentifier, '?lang=',$LANGUAGE)"/></id>
+                    <id><xsl:value-of select="concat($mickaURL, '/record/xml/', $md//gmd:fileIdentifier/*, '?lang=',$LANGUAGE)"/></id>
                     
                     <!--link to subfeed for the dataset-->
-                    <link rel="alternate" href="{$mickaURL}/record/atom/{$md//gmd:fileIdentifier}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
+                    <link rel="alternate" href="{$mickaURL}/record/atom/{$md//gmd:fileIdentifier/*}" type="application/atom+xml" hreflang="en" title="Feed containing the dataset in several formats"/>
                     
                     <!-- link to dataset metadata record -->
                     <link rel="describedby" href="{@xlink:href}" type="application/xml"/>

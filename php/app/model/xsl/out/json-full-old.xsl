@@ -153,7 +153,28 @@
 		$f['name'] = '<xsl:value-of select="*/gmd:name/*"/>';
 		$f['version'] = '<xsl:value-of select="*/gmd:version/*"/>';
 		$rec['formats'][] = $f;
-	</xsl:for-each>	
+	</xsl:for-each>
+    $rec['lineage'] = <xsl:call-template name="jmulti">
+			   		<xsl:with-param name="el" select="gmd:dataQualityInfo/*/gmd:lineage/*/gmd:statement"/>
+			   		<xsl:with-param name="lang" select="$lang"/>
+			   		<xsl:with-param name="mdlang" select="$mdlang"/>
+			  	</xsl:call-template>
+    $constr = array();
+    <xsl:for-each select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints">
+        $constr[] = <xsl:call-template name="jmulti">
+			   		<xsl:with-param name="el" select="."/>
+			   		<xsl:with-param name="lang" select="$lang"/>
+			   		<xsl:with-param name="mdlang" select="$mdlang"/>
+			  	</xsl:call-template>
+    </xsl:for-each>
+    $rec['constraints'] = $constr;
+    <xsl:if test="gmd:identificationInfo/*/srv:operatesOn">    
+        $op = array();
+        <xsl:for-each select="gmd:identificationInfo/*/srv:operatesOn">
+            $op[] = '<xsl:value-of select="@xlink:href"/>';
+        </xsl:for-each>
+        $rec['coupled'] = $op;
+    </xsl:if>
 	$rec['dateStamp'] = '<xsl:value-of select="gmd:dateStamp/*"/>';
     $json['records'][] = $rec;
 </xsl:template>	
