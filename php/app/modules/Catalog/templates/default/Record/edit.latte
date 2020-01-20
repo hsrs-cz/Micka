@@ -45,13 +45,13 @@
 
                 <div class="collapse navbar-collapse" id="micka-navbar">
                     <ul class="nav navbar-nav">
-                         <li>
-                            <a href="javascript:clickMenu('end')" data-tooltip="tooltip" title="{_messages.frontend.stop_edit}" data-container="body" data-placement="bottom">
-                                <i class="fa fa-check fa-lg"></i> {_messages.frontend.stop}</a>
-                        </li>
                         <li>
                             <a href="javascript:clickMenu('save')" data-tooltip="tooltip" title="{_messages.frontend.save_edit}" data-container="body" data-placement="bottom">
                                 <i class="fa fa-floppy-o fa-lg"></i> {_messages.frontend.save}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:clickMenu('end')" data-tooltip="tooltip" title="{_messages.frontend.stop_edit}" data-container="body" data-placement="bottom">
+                                <i class="fa fa-check fa-lg"></i> {_messages.frontend.stop}</a>
                         </li>
                         <li>
                             <a n:href=":Catalog:Record:cancel $record['uuid'], f=>$detail" data-tooltip="tooltip" title="{_messages.frontend.cancel_edit}" data-container="body" data-placement="bottom">

@@ -1301,11 +1301,11 @@ function crs(obj){
     $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys&handler=crs1&lang='+lang+'&mdlang='+mdlang);
 }
 
-function dName(obj){
-    md_elem = obj.parentNode;
-    md_addMode = false;
+function verticalCRS(obj){
+	md_elem = obj.parentNode;
+    var mdlang = $('#30').val();
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=linkageName&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=verticalSys&handler=verticalCrs1&lang='+lang+'&mdlang='+mdlang);
 }
 
 function crs1(f){
@@ -1318,6 +1318,25 @@ function crs1(f){
         }     
     }
     $('#md-dialog').modal('hide');
+}
+
+function verticalCrs1(f){
+    var inputs = flatNodes(md_elem, "INPUT");
+    for(var i=0;i<inputs.length;i++){
+        v = inputs[i];
+        switch(v.id){
+          case '30020': v.value = f.uri; break; 
+          case '3601':    v.value = f.xxx; break; 
+        }     
+    }
+    $('#md-dialog').modal('hide');
+}
+
+function dName(obj){
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=linkageName&lang='+lang);
 }
 
 function dc_kontakt(obj, type){

@@ -8,7 +8,7 @@ $title = '';
 
 function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
     if(!$handler) $handler="formats1";
-    if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName', 'serviceType'))){
+    if(in_array($type, array('coordSys','verticalSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName', 'serviceType'))){
         $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
         echo '<div class="panel-heading">
