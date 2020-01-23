@@ -460,7 +460,7 @@ SearchForm = function(a,b){
                     if (f.prop('type')=='checkbox') { f.prop('checked', d); }
                     else if(typeof d == 'string') { f.val(d); }
                     else {
-                        if(f[0].length>0){
+                         if(f[0] && f[0].length>0){
                             var vals = [];
                             $.each(d, function(k, v){ vals.push(k); });
                             f.val(vals).trigger('change');
