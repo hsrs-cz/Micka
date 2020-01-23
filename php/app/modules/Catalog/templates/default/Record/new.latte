@@ -22,6 +22,11 @@ var chStandard = function(o){
     document.newRecord.url.value='';
   }
 }
+
+var chLang= function(o){
+    o.parentNode.children[0].checked=true;
+}
+
 </script>
 
 <div class="container panel panel-default">
@@ -132,7 +137,7 @@ var chStandard = function(o){
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="languages[]" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> 
-                        <input type="radio" name="lang_main" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> 
+                        <input type="radio" name="lang_main" value="{$key}" {if $key == $appLang} checked="checked"{/if} onclick="chLang(this)"/> 
                         {$value}
                     </label>
                 </div>
