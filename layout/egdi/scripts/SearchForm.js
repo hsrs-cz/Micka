@@ -38,6 +38,7 @@ SearchForm = function(a,b){
 		addVal('TopicCategory', "#topic");
 		addVal('ServiceType', "#stype");
 		addVal('Subject', "#inspire");
+		addVal('Subject', "#geoera");
 		addVal('Denominator', "#denominator");
 		addVal('OrganisationName', "#contact");
 		addVal('MetadataContact', "#mdcontact");
@@ -203,6 +204,36 @@ SearchForm = function(a,b){
         }
     });
     
+    var lang2 = HS.getLang(2);
+    
+    var geoera = new SparqlClient({
+        url: baseURL + 'registry_client/proxy.php?url=https://resource.geolba.ac.at/PoolParty/sparql/geoera_keyword',
+        //thesaurusUri: 'http://resource.geolba.ac.at/geoera_keyword',
+        qSearch: `PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                SELECT DISTINCT ?id ?prefLabel
+                WHERE { ?id ?x skos:Concept .
+                { ?id skos:prefLabel ?prefLabel . FILTER (regex(str(?prefLabel), '^$term.*', 'i')) }
+                FILTER langMatches (lang(?prefLabel), '${lang2}')
+                } ORDER BY ?prefLabel LIMIT 25`,
+        qHierarchy: `PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+            SELECT ?hierarchy ?id ?prefLabel WHERE
+            { {<$id> skos:broader ?id . ?id skos:prefLabel ?prefLabel . VALUES ?hierarchy {'b'} 
+            FILTER langMatches (lang(?prefLabel), '${lang2}') }
+            UNION { <$id> skos:narrower ?id . ?id skos:prefLabel ?prefLabel . VALUES ?hierarchy  {"n"}
+              FILTER langMatches (lang(?prefLabel), '${lang2}').
+            }}`,
+        qLangs: `PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
+            SELECT * WHERE { <$id> skos:prefLabel ?prefLabel}`,
+        lang: HS.getLang(2),
+        el: '#geoera',
+        minChars: 1, 
+        showTree: true,
+        scope: this,
+        onClose: function(){
+            //this.search();
+        }
+    });
+
 	/*$("#contact").select2({
 		ajax: {
 			url: 'suggest',
@@ -456,21 +487,20 @@ SearchForm = function(a,b){
 			}
 			else {
 				f = $("#"+field);
-                if(f){
-                    if (f.prop('type')=='checkbox') { f.prop('checked', d); }
-                    else if(typeof d == 'string') { f.val(d); }
-                    else {
-                         if(f[0] && f[0].length>0){
-                            var vals = [];
-                            $.each(d, function(k, v){ vals.push(k); });
-                            f.val(vals).trigger('change');
-                        }
-                        else {
-                            $.each(d, function(k, v){ f.append('<option selected value="'+k+'">'+v+'</option>');	});
-                        }
-                    }
-                    f.trigger('change.select2');
-                }
+                if (f.prop('type')=='checkbox') { f.prop('checked', d); }
+                else if (f.prop('type')=='radio') { f.prop('checked', d); }
+				else if(typeof d == 'string') { f.val(d); }
+				else {
+					if(f[0].length>0){
+						var vals = [];
+						$.each(d, function(k, v){ vals.push(k); });
+						f.val(vals).trigger('change');
+					}
+					else {
+						$.each(d, function(k, v){ f.append('<option selected value="'+k+'">'+v+'</option>');});
+					}
+				}
+				f.trigger('change.select2');
 			}
 		});
 		changeType($('#res-type').val());

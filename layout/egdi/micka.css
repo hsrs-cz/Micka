@@ -310,3 +310,8 @@ a.valid2 {
 	border-radius: 4px;
     padding: 5px;
 }
+
+.select2-results__group {
+    color: #337acd !important;
+    background: #EEE;
+}
