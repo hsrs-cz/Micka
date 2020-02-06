@@ -157,3 +157,144 @@ var GemetClient = function(params){
 
 };
 
+
+var SparqlClient = function(params){
+    if(!params.url) {console.log('SparqlClient params.url not defined.'); return; }
+    var url = params.url; 
+    if(!params.lang) {console.log('SparqlClient params.lang not defined.'); return; }
+    var lang = params.lang;
+    if(!params.el) {console.log('SparqlClient params.el not defined.'); return; }
+    var $t = $(params.el);
+    var showTree = params.showTree;
+    var onClose = params.onClose;
+    var scope = params.scope;
+    var qSearch = params.qSearch;
+    var qHierarchy = params.qHierarchy;
+    var qLangs = params.qLangs;
+    
+    // GEMET default
+   // var thesaurus_uri = params.thesaurusUri ? params.thesaurusUri : 'http://www.eionet.europa.eu/gemet/concept/';
+    var minChars = (params.minChars != undefined) ? params.minChars : 3;
+    var sel = 0;
+
+	var templateResult = function(data){
+		return $( '<div class="sel2-level'+ data.level +'">' + data.text +'</div>' );
+	}
+    
+    this.onThesChange = function (e) {
+        sel = 1;
+        e.stopPropagation();
+        var d = [
+            e.params.data,
+            {text: HS.i18n('broader term'), children: []}, 
+            {text: HS.i18n('narrower terms'), children: []}
+        ];
+        $t.select2().empty();
+        $.ajax({
+            url: url,
+            context: this,
+            data: {
+                urle: 1,
+                query: qHierarchy.replace('$id',e.params.data.id).replace('$id',e.params.data.id),
+                format: 'application/json'
+            }
+        })
+        .done(function(data){
+            for(var i=0;i<data.results.bindings.length; i++){
+                if(data.results.bindings[i].hierarchy.value=='b'){
+                    d[1].children.push({id: data.results.bindings[i].id.value, text: data.results.bindings[i].prefLabel.value, level: 1});
+                }
+                else {
+                    d[2].children.push({id: data.results.bindings[i].id.value, text: data.results.bindings[i].prefLabel.value, level: 1});
+                }
+            }
+            $t.select2({
+                data: d,
+                allowClear: true,
+                theme: 'bootstrap',
+                minimumResultsForSearch: Infinity,
+                templateResult: templateResult
+            });
+            $t.select2('open');
+        });
+    };
+    
+    this.onSelect = function(){
+        sel = 0;
+    }
+
+    this.process = function(langs, handler){
+        var terms = {};
+        var uri = $t.val();
+        
+        $.ajax({
+            url: url, 
+            data: {
+                urle: 1,
+                query: qLangs.replace('$id', uri),
+                format: 'application/json'
+            }
+        })
+        .done(function(data){
+            for(var i=0; i<data.results.bindings.length; i++){
+                terms[HS.getCodeFromLanguage(data.results.bindings[i].prefLabel['xml:lang'],3)] = data.results.bindings[i].prefLabel.value;
+            }
+            handler({
+                uri: uri,
+                labels: terms
+            });
+        })
+        .fail(function(data){
+            console.log('fail', data);
+        });
+    };
+    
+    var defCfg = {
+        ajax: {
+            url: url,
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    urle: 1,
+                   query: qSearch.replace('$term',params.term),
+                    format: 'application/json'
+                }
+                return query;
+            },
+            processResults: function(data, page){
+                return {
+                    results: $.map(data.results.bindings, function(rec) {
+                        return { text: rec.prefLabel.value, id: rec.id.value };
+                    })  
+                }    
+            },
+            delay: 200,  
+            cache: false
+        },
+        minimumInputLength: minChars,
+        language: lang,
+        theme: 'bootstrap',
+        allowClear: true 
+    };
+    
+    $t.select2(defCfg);
+    if(showTree){
+        $t.on('select2:selecting', this.onSelect);
+        $t.on('select2:select', this.onThesChange);
+    }
+    // when clearing the field
+    $t.on('select2:unselect', function(e){
+        e.stopPropagation();
+        $t.select2().empty();
+        $t.select2(defCfg);
+        onClose.call(scope);
+    });
+    
+    $t.on('select2:close', function(d){
+        if(sel==1 && onClose){
+            onClose.call(scope);
+        }
+    });
+
+};
+
