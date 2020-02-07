@@ -3,6 +3,9 @@
 # https://nette.org/security-warning
 #
 parameters:
+    mdDataType:
+        0: private
+        1: public
     langCodes: 
         cs: cze
         da: dan

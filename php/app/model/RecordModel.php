@@ -45,8 +45,9 @@ class RecordModel extends \BaseModel
         }
         $this->typeTableMd = $typeTableMd == 'edit_md' ? 'edit_md' : 'md';
         if ($this->typeTableMd == 'edit_md') {
+            $user = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
             $this->recordMd = $this->db->query(
-                "SELECT * FROM edit_md WHERE [edit_user]=%s AND [uuid]=%s", $this->user->getIdentity()->username, $id)->fetch();
+                "SELECT * FROM edit_md WHERE [edit_user]=%s AND [uuid]=%s", $user, $id)->fetch();
         } else {
             $this->recordMd = $this->db->query(
                 "SELECT * FROM md WHERE [uuid]=%s", $id)->fetch();
@@ -160,11 +161,12 @@ class RecordModel extends \BaseModel
     
     private function updateEditMD($recno)
     {
+        $user = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
         $data = [];
         $data['data_type'] = $this->recordMd->data_type; 
         $data['edit_group'] = $this->recordMd->edit_group; 
         $data['view_group'] = $this->recordMd->view_group;
-        $data['last_update_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
+        $data['last_update_user'] = $user;
         $data['last_update_date'] = Date("Y-m-d");
         if ($this->langMd !== NULL) {
             $data['lang'] = $this->langMd; 
@@ -181,7 +183,7 @@ class RecordModel extends \BaseModel
         $data['md_update'] = $this->recordMd->md_update != '' ? $this->recordMd->md_update : NULL;
         //$data['valid'] = $this->recordMd->valid != '' ? $this->recordMd->valid : NULL;
         //$data['prim'] = $this->recordMd->prim != '' ? $this->recordMd->prim : NULL;
-        $this->db->query('UPDATE edit_md SET', $data , 'WHERE [edit_user]=%s AND [recno]=%i', $this->user->getIdentity()->username, $recno);
+        $this->db->query('UPDATE edit_md SET', $data , 'WHERE [edit_user]=%s AND [recno]=%i', $user, $recno);
         $x1 = $data['x1'];
         $x2 = $data['x2'];
         $y1 = $data['y1'];
@@ -437,7 +439,7 @@ class RecordModel extends \BaseModel
         $post = $httpRequest->getPost();
         $date = new \DateTime();
         $md = [];
-        $md['edit_user'] = $this->user->getIdentity()->username;
+        $md['edit_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
         $md['edit_timestamp'] = $date->getTimestamp();
         $md['recno'] = $this->getNewRecno('edit_md');
         $md['md_recno'] = 0;
@@ -546,39 +548,46 @@ class RecordModel extends \BaseModel
 
     public function controlIsEditUse()
     {
-        $date = new \DateTime();
-        $ts_lock = $date->getTimestamp() - $this->recordEditLock;
-        $use = $this->db->query(
-            'SELECT COUNT([recno]) FROM edit_md WHERE [md_recno]=%i AND [edit_timestamp]>%i',
-            $this->recordMd->recno,
-            $ts_lock
-        )->fetchSingle();
-        return $use > 0 ? true : false;
+        if (isset($this->appParameters['editLock']) && $this->appParameters['editLock'] === true) {
+            $date = new \DateTime();
+            $ts_lock = $date->getTimestamp() - $this->recordEditLock;
+            $use = $this->db->query(
+                'SELECT COUNT([recno]) FROM edit_md WHERE [md_recno]=%i AND [edit_timestamp]>%i',
+                $this->recordMd->recno,
+                $ts_lock
+            )->fetchSingle();
+            return $use > 0 ? true : false;
+        } else {
+            return false;
+        }
 
     }
 
     public function deleteExpiredEditRecords()
     {
-        $recno = isset($this->recordMd->recno) && $this->recordMd->recno > 0 ? $this->recordMd->recno : 0;
-        $date = new \DateTime();
-        $ts_lock = $date->getTimestamp() - $this->recordEditLock;
-        $tmp = $this->db->query("
-            SELECT [recno] FROM edit_md WHERE [edit_timestamp]<%i
-            UNION
-            SELECT [recno] FROM edit_md WHERE [edit_user]=%s AND [md_recno]=%i
-        ", $ts_lock, $this->user->identity->username, $recno)->fetchAll();
-        $recno_del = array();
-        foreach($tmp as $row) {
-            $recno_del[] = $row->recno;
+        if (isset($this->user->identity->username)) {
+            $recno = isset($this->recordMd->recno) && $this->recordMd->recno > 0 ? $this->recordMd->recno : 0;
+            $date = new \DateTime();
+            $ts_lock = $date->getTimestamp() - $this->recordEditLock;
+            $tmp = $this->db->query("
+                SELECT [recno] FROM edit_md WHERE [edit_timestamp]<%i
+                UNION
+                SELECT [recno] FROM edit_md WHERE [edit_user]=%s AND [md_recno]=%i
+            ", $ts_lock, $this->user->identity->username, $recno)->fetchAll();
+            $recno_del = array();
+            foreach($tmp as $row) {
+                $recno_del[] = $row->recno;
+            }
+            $this->db->query('DELETE FROM edit_md WHERE [recno] IN %in', $recno_del);
+            $this->db->query('DELETE FROM edit_md_values WHERE [recno] IN %in', $recno_del);
         }
-        $this->db->query('DELETE FROM edit_md WHERE [recno] IN %in', $recno_del);
-        $this->db->query('DELETE FROM edit_md_values WHERE [recno] IN %in', $recno_del);
     }
 
     public function deleteEditRecordByUuid($uuid)
     {
-        $this->db->query('DELETE FROM edit_md_values WHERE [recno] IN(SELECT [recno] FROM edit_md WHERE [uuid]=%s AND [edit_user]=%s)', $uuid, $this->user->identity->username);
-        $this->db->query('DELETE FROM edit_md WHERE [uuid]=%s AND [edit_user]=%s', $uuid, $this->user->identity->username);
+        $user = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
+        $this->db->query('DELETE FROM edit_md_values WHERE [recno] IN(SELECT [recno] FROM edit_md WHERE [uuid]=%s AND [edit_user]=%s)', $uuid, $user);
+        $this->db->query('DELETE FROM edit_md WHERE [uuid]=%s AND [edit_user]=%s', $uuid, $user);
     }
 
     public function getMdTitle($lang)
@@ -1157,8 +1166,9 @@ class RecordModel extends \BaseModel
 
     protected function updateEditMdXml($recno, $xml)
     {
+        $user = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
         $xml = $xml == '' ? NULL : str_replace("'", "&#39;", $xml);
-        $this->db->query("UPDATE edit_md SET pxml=XMLPARSE(DOCUMENT %s) WHERE [edit_user]=%s AND [recno]=%i", $xml, $this->user->getIdentity()->username, $recno);
+        $this->db->query("UPDATE edit_md SET pxml=XMLPARSE(DOCUMENT %s) WHERE [edit_user]=%s AND [recno]=%i", $xml, $user, $recno);
     }
 
     protected function updateMd($editRecno, $recno)

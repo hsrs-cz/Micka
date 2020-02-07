@@ -110,6 +110,9 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->template->action = $this->action;
         $this->template->navigation = [];
         $this->template->hs_initext = '';
+        $this->template->edit_guest = isset($this->context->parameters['editGuest']) && $this->context->parameters['editGuest'] === true
+            ? true
+            : false;
         $this->template->langCodes = $this->langCodes;
         $this->template->pageTitle = isset($this->context->parameters['app']['pageTitle'][$this->appLang]) && $this->context->parameters['app']['pageTitle'][$this->appLang] != ''
             ? $this->context->parameters['app']['pageTitle'][$this->appLang]

@@ -1,5 +1,5 @@
--- ver. 20200101, postgreSQL
--- Table CODELIST
+-- version 20200101 postgreSQL
+-- table CODELIST
 DELETE FROM codelist;
 INSERT INTO codelist VALUES (2408, 700, 'otherRestrictions', '8', 1);
 INSERT INTO codelist VALUES (2502, 1460, 'attributeType', '2', 0);
@@ -742,7 +742,7 @@ INSERT INTO codelist VALUES (63338, 390, 'Croatian', 'hrv', 0);
 INSERT INTO codelist VALUES (63336, 390, 'Serbian', 'srp', 0);
 INSERT INTO codelist VALUES (12, 2, 'false', '0', 1);
 INSERT INTO codelist VALUES (13, 2, 'true', '1', 1);
--- Table CODELIST_MY
+-- table CODELIST_MY
 DELETE FROM codelist_my;
 INSERT INTO codelist_my VALUES (12, 1);
 INSERT INTO codelist_my VALUES (13, 1);
@@ -1018,7 +1018,7 @@ INSERT INTO codelist_my VALUES (30103, 1);
 INSERT INTO codelist_my VALUES (30211, 1);
 INSERT INTO codelist_my VALUES (30212, 1);
 INSERT INTO codelist_my VALUES (30213, 1);
--- Table ELEMENTS
+-- table ELEMENTS
 DELETE FROM elements;
 INSERT INTO elements VALUES (20010, 'featureType', '', 2, 'T', NULL, 0, 0, 1, 0, NULL, 0);
 INSERT INTO elements VALUES (20011, 'typeName', '', 2, 'T', NULL, 0, 0, 0, 0, NULL, 0);
@@ -1646,13 +1646,13 @@ INSERT INTO elements VALUES (2340, 'complianceCode', 'compCode', 0, 'C', 2, 0, 0
 INSERT INTO elements VALUES (20043, 'isAbstract', 'isAbstract', 2, 'C', 2, 0, 0, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (3561, 'verticalCRS', 'vertCRS', 0, 'T', NULL, 0, 0, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (3540, 'EX_VerticalExtent', 'VertExtent', 0, 'T', NULL, 0, 1, 0, 0, NULL, 0);
--- Table MANDATORY
+-- table MANDATORY
 DELETE FROM mandatory;
 INSERT INTO mandatory VALUES ('o', 'optional');
 INSERT INTO mandatory VALUES ('m', 'mandatory');
 INSERT INTO mandatory VALUES ('M', 'mandatory always');
 INSERT INTO mandatory VALUES ('c', 'conditions');
--- Table PACKAGES
+-- table PACKAGES
 DELETE FROM packages;
 INSERT INTO packages VALUES (1, 1, 'MD_Identification', 4751, 0);
 INSERT INTO packages VALUES (3, 3, 'DQ_DataQuality', 50, 0);
@@ -1666,14 +1666,14 @@ INSERT INTO packages VALUES (11, 11, 'MD_ApplicationSchemaInformation', 180, 0);
 INSERT INTO packages VALUES (0, 12, 'MD_Metadata', 0, 0);
 INSERT INTO packages VALUES (12, 1, 'DublinCore', 0, 1);
 INSERT INTO packages VALUES (13, 1, 'FeatureCatalog', 0, 2);
--- Table STANDARD
+-- table STANDARD
 DELETE FROM standard;
 INSERT INTO standard VALUES (0, 1, 'ISO 19115', 'MD', 1);
 INSERT INTO standard VALUES (10, 2, 'ISO 19119', 'MS', 1);
 INSERT INTO standard VALUES (1, 3, 'DUBLIN CORE', 'DC', 1);
 INSERT INTO standard VALUES (2, 4, 'ISO FC', 'FC', 1);
+-- table USERS
 -- Table USERS
 INSERT INTO users (username, password, role_editor, role_publisher, role_admin, groups) VALUES ('admin', '$2y$10$IMSJPUvAZW1Lk4aMk0mZ/.S3WTRQ9IA2KGcYhO7YfakAy6OaQXtWS', true, true, true, 'admin,reader,editor');
 INSERT INTO users (username, password, role_editor, role_publisher, role_admin, groups) VALUES ('reader', '$2y$10$FQSZ1MJ71v40y0bNM0EV6OLZqjUON69c0oh6BcfODdloG.T9Triq2', false, false, false, 'reader');
 INSERT INTO users (username, password, role_editor, role_publisher, role_admin, groups) VALUES ('editor', '$2y$10$NkpqeZM7PZuNprkgBJadG.ai6yBxq/HHLyiwY.osSkk/ej2O5LHUS', true, true, false, 'reader,editor');
-

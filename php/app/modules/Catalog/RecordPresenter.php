@@ -123,7 +123,9 @@ class RecordPresenter extends \BasePresenter
             $this->context->parameters
         );
         $this->template->mdStandard = $mcl->getStandardsLabel($this->appLang, TRUE);
-        $this->template->groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
+        $this->template->groups = isset($this->user->getIdentity()->data['groups']) 
+            ? $this->user->getIdentity()->data['groups']
+            : array('guest');
         $this->template->edit_group = $this->context->parameters['app']['defaultEditGroup'];
         $this->template->view_group = $this->context->parameters['app']['defaultViewGroup'];
         $this->template->mdLangs = $mcl->getLangsLabel($this->appLang);
@@ -242,12 +244,9 @@ class RecordPresenter extends \BasePresenter
                 $this->context->parameters
             );
             
-            $mdDataType = [];
-            if ($this->context->parameters['app']['mdDataType'] != '') {
-                eval('$tmp=['.$this->context->parameters['app']['mdDataType'].'];');
-                foreach ($tmp as $key => $value) {
-                    $mdDataType[$key] = $this->translator->translate('messages.frontend.'.$value);
-                }
+            $mdDataType = array();
+            foreach ($this->context->parameters['mdDataType'] as $key => $value) {
+                $mdDataType[$key] = $this->translator->translate('messages.frontend.'.$value);
             }
             $this->template->record = [
                 'recno'=>$recno,

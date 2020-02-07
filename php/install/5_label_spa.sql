@@ -1,4 +1,4 @@
-DELETE FROM label WHERE AND "lang"='spa';
+DELETE FROM label WHERE "lang"='spa';
 INSERT INTO label VALUES ('BT',1,'spa','De la lista',NULL);
 INSERT INTO label VALUES ('BT',2,'spa','Del mapa',NULL);
 INSERT INTO label VALUES ('BT',3,'spa','Subir',NULL);

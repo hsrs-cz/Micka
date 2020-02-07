@@ -5,11 +5,11 @@
 parameters:
     app:
         # URL
-        mickaUrl = https://www.server.domain/micka
+        #mickaUrl = https://www.server.domain/micka
         # UI theme
         layoutTheme = default
         # UI langauges (must have translation files)
-        langs = 'cze,eng'
+        langs = 'eng,cze,spa'
         # dafult profile used
         startProfil = 5
         #records per page
@@ -24,11 +24,8 @@ parameters:
         directSummary = TRUE 
         directDetail = TRUE 
         directXml = TRUE 
-        formSign = FALSE
         defaultEditGroup = editor
         defaultViewGroup = reader
-        # record indication for access from csw etc.
-        mdDataType = "-1=>'semifinished',0=>'private',1=>'public',2=>'portal'"
         # admin IP list
         adminIP = '127.0.0.1'
         # web proxy address

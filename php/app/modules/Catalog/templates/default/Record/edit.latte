@@ -45,6 +45,7 @@
 
                 <div class="collapse navbar-collapse" id="micka-navbar">
                     <ul class="nav navbar-nav">
+                        {if $user->isInRole('editor')}
                         <li>
                             <a href="javascript:clickMenu('save')" data-tooltip="tooltip" title="{_messages.frontend.save_edit}" data-container="body" data-placement="bottom">
                                 <i class="fa fa-floppy-o fa-lg"></i> {_messages.frontend.save}</a>
@@ -53,6 +54,13 @@
                             <a href="javascript:clickMenu('end')" data-tooltip="tooltip" title="{_messages.frontend.stop_edit}" data-container="body" data-placement="bottom">
                                 <i class="fa fa-check fa-lg"></i> {_messages.frontend.stop}</a>
                         </li>
+                        {/if}
+                        {if $edit_guest === true}
+                        <li>
+                            <a href="javascript:clickMenu('xml')" data-tooltip="tooltip" title="XML" data-container="body" data-placement="bottom">
+                                <i class="fa fa-file-code-o fa-fw"></i> XML</a>
+                        </li>
+                        {/if}
                         <li>
                             <a n:href=":Catalog:Record:cancel $record['uuid'], f=>$detail" data-tooltip="tooltip" title="{_messages.frontend.cancel_edit}" data-container="body" data-placement="bottom">
                                 <i class="fa fa-times fa-lg"></i> {_messages.frontend.cancel}</a>

@@ -35,7 +35,7 @@
 
                 <div class="collapse navbar-collapse" id="micka-navbar">
                     <ul class="nav navbar-nav">
-						{if $user->isInRole('editor')}
+						{if $user->isInRole('editor') || $edit_guest === true}
 							 <li>
 								<a n:href=":Catalog:Record:new" data-tooltip="tooltip" title="{_messages.frontend.new_record}" data-container="body" data-placement="bottom">
 									<i class="fa fa-plus fa-lg"></i> {_messages.frontend.new}</a>
