@@ -1,0 +1,50 @@
+{block content}
+<div class="container panel panel-default">
+    <h1>
+        <a n:href=":Admin:Default:default"><i class="fa fa-arrow-left"></i></a>
+        /
+        {_validator.frontend.title}
+    </h1>
+    <form action="{link :Validator:Default:result}" 
+      method="post"
+      accept="application/xml" 
+      enctype="multipart/form-data">
+      {_validator.frontend.file}: <input type="file" name="dataFile"><br/>
+      {_validator.frontend.url}: <input type="text" name="url" style="width:400px;" value="{$formDefaultUrl}">
+      {_validator.frontend.type}: 
+      <select name="type">
+      	<option value="gmd">{_validator.frontend.typeGmd}</option>
+      	<option value="gmd_inspire">{_validator.frontend.typeGmdInspire}</option>
+      	<option value="wms">{_validator.frontend.typeWms}</option>
+      	<option value="download">{_validator.frontend.typeDownload}</option>
+      </select>
+
+      {_validator.frontend.output}: 
+      <select name="format">
+      	<option value="text/html">{_validator.frontend.outputHtml}</option>
+      	<option value="application/xml">{_validator.frontend.outputXml}</option>
+      	<option value="application/json">{_validator.frontend.outputJson}</option>
+      	<option value="array">{_validator.frontend.outputArray}</option>
+      </select>
+
+      {_validator.frontend.validator}: 
+      <select name="validator">
+      	<option value="cr">{_validator.frontend.validatorLocal}</option>
+      	<option value="jrc">{_validator.frontend.validatorJrc}</option>
+      </select>
+
+      {_validator.frontend.onlyError}: <input type="checkbox" name="short"/>
+      <br/>
+      {_validator.frontend.orViewXml}:<br/>
+      <textarea name="xml" style="width:500px; height:200px;"></textarea>
+      <br/>
+      <input type="submit" value="{_validator.frontend.buttonOk}">
+      <input type="reset" value="{_validator.frontend.buttonReset}">
+    </form>
+    <br>
+</div>
+{/block}
+
+{block content-js}
+    <link rel="stylesheet" href="{$basePath}{$themePath}/validator.css" type="text/css">  
+{/block}

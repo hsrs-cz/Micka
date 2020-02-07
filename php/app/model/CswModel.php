@@ -5,40 +5,27 @@ namespace App\Model;
 use Nette;
 
 
-class CswModel
+class CswModel extends \BaseModel
 {
 	use Nette\SmartObject;
 
-	/** @var Nette\Database\Context */
-	private $db;
-    
-    private $user;
-
-
-	public function __construct(Nette\Database\Context $db) 
-	{
-		$this->db = $db;
-	}
-    
-    public function setIdentity($user)
+    public function oaiHeader($verb)
     {
-        $this->user = $user;
+        $datestamp = date("Y-m-d\TH:i:s"); 
+        return '<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+        <responseDate>'.$datestamp.'</responseDate>
+        <request verb="'.$verb.'">http://'.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'].'</request>';	
     }
 
-    public function oaiHeader($verb){
-      $datestamp = date("Y-m-d\TH:i:s"); 
-      return '<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
-      <responseDate>'.$datestamp.'</responseDate>
-      <request verb="'.$verb.'">http://'.$_SERVER['SERVER_NAME'].$_SERVER['SCRIPT_NAME'].'</request>';	
-    }
-
-    public function error($code, $message){
+    public function error($code, $message)
+    {
         $datestamp = date("Y-m-d\TH:i:s"); 
         header("Content-type: application/xml");
         echo oaiHeader($_GET['verb']).'<error code="'.$code.'">'.$message.'</error></OAI-PMH>';
     }
 
-    public function identify(){
+    public function identify()
+    {
         header("Content-type: application/xml");
         echo oaiHeader($_GET['verb']);
         echo '<Identify>
@@ -52,7 +39,8 @@ class CswModel
             </Identify></OAI-PMH>';
     }
 
-    public function listSets(){
+    public function listSets()
+    {
         $sets = getSets(); 
         header("Content-type: application/xml");
         echo oaiHeader($_GET['verb']);
@@ -63,28 +51,29 @@ class CswModel
         echo "</ListSets></OAI-PMH>";
     }
 
-    public function getSets(){
-      $sql[] = 'SELECT * FROM harvest';
-      array_push($sql, 'ORDER BY name');
-      try {
-          $rs = $this->db->query($sql)->fetchAll();
-          foreach($rs as $row){
-              $result[] =  Array(
-                "id" => $row->name,
-                "source" => $row->source,
-                "type" => $row->type,
-                "h_interval" => $row->h_interval,
-                "HarvestInterval" => $row->period,
-                "handlers" => $row->handlers
-            ); 
-          }
+    public function getSets()
+    {
+        $sql[] = 'SELECT * FROM harvest';
+        array_push($sql, 'ORDER BY name');
+        try {
+            $rs = $this->db->query($sql)->fetchAll();
+            foreach($rs as $row) {
+                $result[] =  Array(
+                    "id" => $row->name,
+                    "source" => $row->source,
+                    "type" => $row->type,
+                    "h_interval" => $row->h_interval,
+                    "HarvestInterval" => $row->period,
+                    "handlers" => $row->handlers
+                ); 
+            }
 
-      }
-      catch (Exception $e) {
-          var_dump($e);
-          $result = false;
-      }
-      return $result;   
+        }
+        catch (Exception $e) {
+            var_dump($e);
+            $result = false;
+        }
+        return $result;   
     }
     
     

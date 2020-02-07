@@ -3,7 +3,7 @@ namespace CatalogModule;
 
 use App\Model;
 
-/** @resource Catalog:Guest */
+/** @resource Guest */
 class DefaultPresenter extends \BasePresenter
 {
 	public function startup()
@@ -11,7 +11,7 @@ class DefaultPresenter extends \BasePresenter
 		parent::startup();
 	}
     
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function renderDefault()
 	{
         $request = $this->context->getByType('Nette\Http\Request')->getQuery();
@@ -30,13 +30,14 @@ class DefaultPresenter extends \BasePresenter
         if(isset($request['query']) === FALSE) {
             $request['query'] = '';
         }
-        
-        $csw = new \Micka\Csw;
+        $csw = new \App\Model\Csw(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
         $params = $csw->dirtyParams($request);
         $this->template->records = $csw->run($params);
         $this->template->urlParams = $this->context->getByType('Nette\Http\Request')->getQuery();
-        //$found = $csw->getCountRecords();;
-        //$this->template->pageTitle .= ': ' . $this->translator->translate('messages.frontend.found') . " $found";
 	}
 
 }

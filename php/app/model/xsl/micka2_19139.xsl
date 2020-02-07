@@ -25,7 +25,7 @@
     <xsl:variable name="clx">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml</xsl:variable>
 
 <xsl:template match="MD_Metadata" 
-	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:gml="http://www.opengis.net/gml/3.2"
 	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0"
     xmlns:gco="http://www.isotc211.org/2005/gco">
 
@@ -61,9 +61,9 @@
    <xsl:variable name="schLoc">
    	 <xsl:choose>
    		<!--xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:when-->
-   		<xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/srv http://schemas.opengis.net/iso/19139/20060504/srv/srv.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:when>
+   		<xsl:when test="identificationInfo/SV_ServiceIdentification != ''">http://www.isotc211.org/2005/gmd https://inspire.ec.europa.eu/draft-schemas/inspire-md-schemas-temp/apiso-inspire/apiso-inspire.xsd</xsl:when>
    		<!--xsl:otherwise>http://www.isotc211.org/2005/gmd http://schemas.opengis.net/iso/19139/20060504/gmd/gmd.xsd http://www.isotc211.org/2005/gmx http://schemas.opengis.net/iso/19139/20060504/gmx/gmx.xsd</xsl:otherwise-->
-   		<xsl:otherwise>http://www.isotc211.org/2005/gmd https://www.isotc211.org/2005/gmd/gmd.xsd http://www.isotc211.org/2005/gmx https://www.isotc211.org/2005/gmx/gmx.xsd</xsl:otherwise>
+   		<xsl:otherwise>http://www.isotc211.org/2005/gmd https://inspire.ec.europa.eu/draft-schemas/inspire-md-schemas-temp/apiso-inspire/apiso-inspire.xsd</xsl:otherwise>
    	</xsl:choose>
   </xsl:variable>
    	
@@ -488,7 +488,7 @@
 		    		</gmd:description>
 			    </xsl:for-each>
 			  
-				<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox">
+				<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox[string-length(westBoundLongitude)!=0]">
 					<gmd:geographicElement>
 						<gmd:EX_GeographicBoundingBox>
 							<gmd:westBoundLongitude>
@@ -626,16 +626,12 @@
 				</gmd:temporalElement>
             </xsl:for-each> 
             
-            <xsl:for-each select="identificationInfo/*/extent/verticalElement">
+            <xsl:for-each select="identificationInfo/*/extent/*/verticalElement">
 				<gmd:verticalElement>
       				<gmd:EX_VerticalExtent>
-      					<gmd:minimumValue><gco:Real><xsl:value-of select="minimumValue" /></gco:Real></gmd:minimumValue>
-      					<gmd:maximumValue><gco:Real><xsl:value-of select="maximumValue" /></gco:Real></gmd:maximumValue>
-      					<gmd:verticalCRS>
-        					<gml:VerticalCRS>
-        						<gml:identifier codeSpace="{verticalDatum/datumID/title}"><xsl:value-of select="verticalDatum/datumID/code" /></gml:identifier>
-        					</gml:VerticalCRS>
-                  		</gmd:verticalCRS>
+      					<gmd:minimumValue><gco:Real><xsl:value-of select="*/minimumValue"/></gco:Real></gmd:minimumValue>
+      					<gmd:maximumValue><gco:Real><xsl:value-of select="*/maximumValue"/></gco:Real></gmd:maximumValue>
+        				<gml:verticalCRS xlink:href="{*/verticalCRS/href}" title="{*/verticalCRS/title}"/>
       				</gmd:EX_VerticalExtent>
 				</gmd:verticalElement>
             </xsl:for-each>  
@@ -676,8 +672,12 @@
                </srv:DCP>
                <srv:connectPoint>
                  <gmd:CI_OnlineResource>
-                   <gmd:linkage><gmd:URL><xsl:value-of select="*/connectPoint/*/linkage"/></gmd:URL></gmd:linkage>
-                   <gmd:protocol><gco:CharacterString><xsl:value-of select="*/connectPoint/*/protocol"/></gco:CharacterString></gmd:protocol>
+                    <gmd:linkage><gmd:URL><xsl:value-of select="*/connectPoint/*/linkage"/></gmd:URL></gmd:linkage>
+                    <xsl:call-template name="txt">
+                        <xsl:with-param name="s" select="*/connectPoint/*"/>
+                        <xsl:with-param name="name" select="'protocol'"/>
+                        <xsl:with-param name="lang" select="$mdLang"/>
+                    </xsl:call-template>
                  </gmd:CI_OnlineResource>
                </srv:connectPoint>
             </srv:SV_OperationMetadata>            
@@ -830,11 +830,11 @@
 								<gmd:CI_OnlineResource>
 									<gmd:linkage>
 										<gmd:URL><xsl:value-of select="*/linkage"/></gmd:URL>
-									</gmd:linkage>								
+									</gmd:linkage>
                                     <xsl:call-template name="txt">
-                			  			<xsl:with-param name="s" select="*"/>                      
-                			  			<xsl:with-param name="name" select="'protocol'"/>                      
-                			  			<xsl:with-param name="lang" select="$mdLang"/>                     
+                			  			<xsl:with-param name="s" select="*"/>
+                			  			<xsl:with-param name="name" select="'protocol'"/>
+                			  			<xsl:with-param name="lang" select="$mdLang"/>
             			  			</xsl:call-template>
 									<xsl:call-template name="txt">
                 			  			<xsl:with-param name="s" select="*"/>
@@ -842,16 +842,16 @@
                 			  			<xsl:with-param name="lang" select="$mdLang"/>                     
             			  			</xsl:call-template>
 									<xsl:call-template name="txt">
-                			  			<xsl:with-param name="s" select="*"/>                      
-                			  			<xsl:with-param name="name" select="'description'"/>                      
-                			  			<xsl:with-param name="lang" select="$mdLang"/>                     
+                			  			<xsl:with-param name="s" select="*"/> 
+                			  			<xsl:with-param name="name" select="'description'"/> 
+                			  			<xsl:with-param name="lang" select="$mdLang"/>
             			  			</xsl:call-template>
 									<gmd:function>
 										<gmd:CI_OnLineFunctionCode codeListValue="{*/function/CI_OnLineFunctionCode}" codeList="{$clx}#CI_OnLineFunctionCode"><xsl:value-of select="CI_OnlineResource/function/CI_OnLineFunctionCode"/></gmd:CI_OnLineFunctionCode>
-									</gmd:function>							
+									</gmd:function>	
 								</gmd:CI_OnlineResource>
 							</gmd:onLine>
-						</xsl:for-each>							            
+						</xsl:for-each>
             			<xsl:for-each select="MD_Distribution/transferOptions/offLine">
 							<gmd:offLine>
 					      <gmd:MD_Medium>
@@ -1132,7 +1132,7 @@
    </xsl:template>
    
    <!-- source -->
-	<xsl:template match="source" xmlns:gml="http://www.opengis.net/gml" >
+	<xsl:template match="source" xmlns:gml="http://www.opengis.net/gml/3.2" >
 			<gmd:source><gmd:LI_Source>
 				<xsl:call-template name="txt">
 				  <xsl:with-param name="s" select="LI_Source"/>
@@ -1405,7 +1405,7 @@
   <xsl:template match="FC_FeatureCatalogue" 
   	xmlns:gfc="http://www.isotc211.org/2005/gfc"
   	xmlns:gmx="http://www.isotc211.org/2005/gmx"
-  	xmlns:gml="http://www.opengis.net/gml"
+  	xmlns:gml="http://www.opengis.net/gml/3.2"
   	xmlns:gco="http://www.isotc211.org/2005/gco"  	
   	>
   	<gfc:FC_FeatureCatalogue xsi:schemaLocation="http://www.isotc211.org/2005/gfc http://www.isotc211.org/2005/gfc/gfc.xsd" uuid="{@uuid}">
@@ -1544,7 +1544,10 @@
   	</gfc:FC_FeatureCatalogue>
   </xsl:template> 
    
-    <xsl:template name="citation" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:gml="http://www.opengis.net/gml">
+    <xsl:template name="citation" 
+        xmlns:gmd="http://www.isotc211.org/2005/gmd" 
+        xmlns:gco="http://www.isotc211.org/2005/gco" 
+        xmlns:gml="http://www.opengis.net/gml/3.2">
         <xsl:param name="cit"/>
         <xsl:param name="cl"/>
         <xsl:param name="mdLang"/>

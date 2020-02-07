@@ -1,0 +1,7 @@
+{
+    "require": {
+        "nette/nette": "2.4",
+        "dibi/dibi": "3.2.3",
+        "kdyby/translation": "2.5.2"
+    }
+}

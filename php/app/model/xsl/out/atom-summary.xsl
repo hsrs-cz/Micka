@@ -63,13 +63,13 @@
 	  	</xsl:for-each>
 
         <!-- link itself -->
-        <id><xsl:value-of select="concat($mickaURL, '/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/2005/Atom&amp;id=', gmd:fileIdentifier, '&amp;lang=',$LANGUAGE)"/></id>
+        <id><xsl:value-of select="concat($mickaURL, '/record/atom/', gmd:fileIdentifier/*)"/></id>
 
       	<!-- links to detail Atom description -->
-      	<link rel="alternate" type="application/atom+xml" href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;id={gmd:fileIdentifier}&amp;language={$LANGUAGE}&amp;outputSchema=http://www.w3.org/2005/Atom"/>
+      	<link rel="alternate" type="application/atom+xml" href="{$mickaURL}/record/atom/{gmd:fileIdentifier/*}"/>
       	
 	  	<!-- links to ISO metadata and alternative representations -->
-      	<link rel="describedby" type="application/xml" href="{$mickaURL}/record/xml/{gmd:fileIdentifier}"/>
+      	<link rel="describedby" type="application/xml" href="{$mickaURL}/record/xml/{gmd:fileIdentifier/*}"/>
       	
       	<!-- download link for pre-defined dataset -->
       	<xsl:for-each select="gmd:distributionInfo/*/gmd:transferOptions/*/gmd:onLine/*/gmd:linkage">
@@ -113,9 +113,9 @@
 	  			</xsl:call-template>
 	  		</xsl:if>
             <div>Metadata:
-                <a href="{$mickaURL}/record/basic/{gmd:fileIdentifier}" target="_blank">HTML</a><xsl:text> </xsl:text>
-                <a href="{$mickaURL}/record/xml/{gmd:fileIdentifier}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
-                <a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
+                <a href="{$mickaURL}/record/basic/{gmd:fileIdentifier/*}" target="_blank">HTML</a><xsl:text> </xsl:text>
+                <a href="{$mickaURL}/record/xml/{gmd:fileIdentifier/*}" title="ISO 19139" target="_blank">XML</a><xsl:text> </xsl:text>
+                <a href="{$mickaURL}/csw?service=CSW&amp;version=2.0.2&amp;request=GetRecordById&amp;outputSchema=http://www.w3.org/ns/dcat%23&amp;id={gmd:fileIdentifier/*}" title="INSPIRE GeoDCAT-AP RDF/XML" target="_blank">GeoDCAT</a>
             </div>
 	  		<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 	  	</summary>
@@ -160,11 +160,13 @@
 
 <xsl:template match="rec/csw:Record" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:dc="http://purl.org/dc/elements/1.1/" 
     xmlns:dct="http://purl.org/dc/terms/" xmlns:ows="http://www.opengis.net/ows">
-    <item>
+    <entry>
+      <!-- link itself -->
+      <id><xsl:value-of select="concat($mickaURL, '/record/atom/', dc:identifier[1])"/></id>
+      <!-- links to detail Atom description -->
+      <link rel="alternate" type="application/atom+xml" href="{$mickaURL}/record/atom/{dc:identifier[1]}"/>
+      <summary><xsl:value-of select="dct:abstract"/></summary>
       <title><xsl:value-of select="dc:title"/></title>
-      <guid isPermaLink="false">urn:uuid:<xsl:value-of select="dc:identifier[1]"/></guid>
-      <link>../reords/basic/<xsl:value-of select="dc:identifier[1]"/></link>
-      <description><xsl:value-of select="dct:abstract"/></description>
       <pubDate><xsl:call-template name="formatDate">
           <xsl:with-param name="DateTime" select="dc:date"/>
         </xsl:call-template> 00:00:00 GMT</pubDate>
@@ -181,7 +183,7 @@
 	       	<xsl:value-of select="substring-after(ows:LowerCorner,' ')"/><xsl:text> </xsl:text><xsl:value-of select="substring-before(ows:LowerCorner,' ')"/>
         </georss:polygon>
       </xsl:for-each>
-    </item>
+    </entry>
 </xsl:template>
 
 <xsl:template match="rec/gfc:FC_FeatureCatalogue" xmlns:gfc="http://www.isotc211.org/2005/gfc">

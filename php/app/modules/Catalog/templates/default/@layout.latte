@@ -1,3 +1,4 @@
+{dump}
 <!DOCTYPE html>
 <html class="x-border-box">
 <head>
@@ -7,12 +8,10 @@
 	<title>{$pageTitle}</title>
 	<link rel="shortcut icon" href="{$basePath}{$themePath}/img/favicon.png">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css"/>
-	<link title="{$pageTitle}" href="csw/opensearch.php" type="application/opensearchdescription+xml" rel="search">
-
+	<link title="{$pageTitle}" href="{$basePath}/opensearch" type="application/opensearchdescription+xml" rel="search">
 	<script language="javascript" src="{$basePath}/thesaurus/HS.js"></script>
-	<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>
-
-	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap/css/bootstrap.min.css" type="text/css"/>
+	{if $appLang != 'eng'}<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>{/if}
+    <link rel="stylesheet" href="{$basePath}/scripts/bootstrap/css/bootstrap.min.css" type="text/css"/>
 	<link rel="stylesheet" href="{$basePath}/scripts/bootstrap/css/bootstrap-theme.min.css" type="text/css"/>	
 	<link rel="stylesheet" href="{$basePath}/scripts/ol5/ol.css" type="text/css"/>
     <link rel="stylesheet" href="{$basePath}/scripts/select2/css/select2.min.css" type="text/css"/>
@@ -42,10 +41,10 @@
 									<i class="fa fa-plus fa-lg"></i> {_messages.frontend.new}</a>
 							</li>
 						{/if}
-						{if $user->isInRole('admin')}
+						{if $user->isLoggedIn()}
 							<li>
 								<a n:href=":Admin:Default:default" data-tooltip="tooltip" title="{_messages.frontend.admin}" data-container="body" data-placement="bottom">
-									<i class="fa fa-cog fa-lg"></i> {_messages.frontend.admin}</a>
+									<i class="fa fa-cog fa-lg"></i> {_messages.management.modules}</a>
 							</li>
 						{/if}
                         <li>

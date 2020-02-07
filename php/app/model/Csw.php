@@ -1,5 +1,6 @@
 <?php
-namespace Micka;
+namespace App\Model;
+
 /*******************************************************
  * OGC Catalog service server - CS-W 2.0.2
  * Help Service Remote Sensing
@@ -11,10 +12,15 @@ namespace Micka;
  * OGC Catalogue service implementation
  *
  */
-class Csw{
-    private $user;
-    private $appParameters;
-    private $dbContext;
+class Csw extends \BaseModel
+{
+    private $mickaURL;
+    private $schemas = array();
+    private $startTime;
+    private $map;
+    private $w_in;
+    private $w_out;
+    private $exceptions;
     var $xp  = null;
     var $xml = null;
     var $xsl = null;
@@ -24,7 +30,7 @@ class Csw{
     var $requestType = null;
     var $input = "";
     var $subset = null;
-    var $headers = array(HTTP_XML);
+    var $headers = array();
     var $isXML = true;
     var $error = null;
 
@@ -152,16 +158,17 @@ class Csw{
             "json" => array(
                 "NS" => 'json',
                 "httpHdr" => array(
-                    "Content-Type: application/json\n"
-               ),
-                    "header" => '{
-                    "title":"[title]","subtitle":"[subtitle]",
-                    "matched": [matched],
-                    "returned": [returned],
-                    "next": [next],
-                    "records":[',
-                    "footer" => "]}",
-                    "template" => "json"
+                    "Content-Type: application/json\n",
+                    "Access-Control-Allow-Origin: *"
+                ),
+                "header" => '{
+                "title":"[title]","subtitle":"[subtitle]",
+                "matched": [matched],
+                "returned": [returned],
+                "next": [next],
+                "records":[',
+                "footer" => "]}",
+                "template" => "json"
             ),
             "sitemap" => array(
                 "NS" => "http://www.sitemaps.org/schemas/sitemap/0.9",
@@ -187,20 +194,17 @@ class Csw{
    *
    * @param string $logpath log file name with path (optional)
    */
-    function __construct($logpath="", $subset=false){
-        //FIXME - remove this temporary parameters
-        global $tmp_nbcontext,$tmp_identity, $tmp_appparameters;
-        $this->user = $tmp_identity;
-        $this->appParameters = $tmp_appparameters;
-        $this->dbContext = $tmp_nbcontext;
-        $this->mickaURL = $this->appParameters['hostUrl'] . $this->appParameters['basePath'] . $this->appParameters['locale'];
-
+    public function __construct($db, $user, $appParameters, $logpath="", $subset=false)
+    {
+        parent::__construct($db, $user, $appParameters);
+        
+        $this->mickaURL = $this->appParameters['basePath'] . $this->appParameters['locale'];
         $this->xml = new \DomDocument;
         $this->xsl = new \DomDocument;
         $this->xp = new \XsltProcessor();
         $this->xp->registerPhpFunctions();
         $this->subset = $subset;
-    	$logpath = CSW_LOG;
+    	$logpath = \Tracy\Debugger::$logDirectory;
         if($logpath) $this->logFile = $logpath."/cswlog";
         foreach($this->sch as $k => $v){
             $this->schemas[$v['NS']] = $v;
@@ -211,6 +215,11 @@ class Csw{
         unset($this->xml); $this->xml=null;
         unset($this->xsl); $this->xsl=null;
         unset($this->xp);  $this->xp=null;
+    }
+
+    public function setIdentity($user)
+    {
+        $this->user = $user;
     }
 
   	private function validip($ip) {
@@ -320,7 +329,6 @@ class Csw{
 	  		$params['ISGET'] = true;
 	  		if(!isset($params['FORMAT']) || strpos($params['FORMAT'],'json')!==false){
 	  			$params['FORMAT'] = "application/json";
-	  			//$params['ELEMENTSETNAME'] = 'full';
 	  		}
 	  		if(!isset($params['USER'])) $params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
 	  		if(isset($params['START'])){
@@ -333,30 +341,28 @@ class Csw{
 	  			$params['MAXRECORDS'] = intval($params['LIMIT']);
 	  		}
 	  	}
-	  	// rss kanál
-	  	else if(isset($params['REQUEST']) && $params['REQUEST']=='rss'){
-	  		$dni = intval($params['DAYS']);
-	  		unset($params['DAYS']);
-	  		$params['REQUEST'] = 'GetRecords';
-	  		$params['CONSTRAINT'] = "modified >= '".date("Y-m-d", time()-($dni*3600*24))."'";
-	  		$params['TYPENAMES'] = 'gmd:MD_Metadata';
-	  		$params['OUTPUTSCHEMA'] = 'http://www.georss.org/georss';
-	  		if(isset($params['START'])){
-	  			$params['STARTPOSITION'] = intval($params['START']);
-	  		}
-	  		if(isset($params['LIMIT'])){
-	  			$params['MAXRECORDS'] = intval($params['LIMIT']);
-	  		}
-	  		if(!isset($params['SORTBY'])){
-	  		    $params['SORTBY'] = "date:D";
-	  		}
-	  		if(!$params['USER']) $params['USER'] = 'dummy';
-	  	}
 	  	else if(isset($params['ID']) && isset($params['FORMAT'])){
 	  		$params['TYPENAMES'] = 'gmd:MD_Metadata';
 	  		$params['REQUEST'] = 'GetRecordById';
 	  	}
-	  	//var_dump($params);
+        $q1 = '';
+        if(isset($params['RESID']) && isset($params['RESID'])){
+            $q1 = " and resourceidentifier=".$params['RESID'];
+        }
+        if(isset($params['BBOX']) && isset($params['BBOX'])){
+            $q1 = " and BBOX=".$params['BBOX'];
+        }
+        if(isset($params['RESNS']) && isset($params['RESNS'])){
+            //TODO dodelat
+            //$q1 = " and BBOX=".$params['BBOX'];
+        }
+	  	//echo "<pre>"; var_dump($params); die();
+        if(isset($params['Q']) && isset($params['Q'])){
+            $params['CONSTRAINT'] = "FullText=".$params['Q'];
+        }
+        if($q1){
+            $params['CONSTRAINT'] = $params['CONSTRAINT'] ? "(".$params['CONSTRAINT'].") and ".$q1: $q1;
+        }
   		return $params;
   	}
 
@@ -374,9 +380,9 @@ class Csw{
   	}
 
   function processParams($params){
-  	if(!isset($params["ISGET"]) || !$params["ISGET"]){
-   		$this->input = file_get_contents('php://input', false, null, null, CSW_MAXFILESIZE); //TODO obslouzit chybu
-  	}
+    if(!isset($params["ISGET"]) || !$params["ISGET"]){
+        $this->input = file_get_contents('php://input', false, null, null, CSW_MAXFILESIZE); //TODO obslouzit chybu
+    }
 
     // POST
     if($this->input){
@@ -388,8 +394,6 @@ class Csw{
 		$processed = $this->xp->transformToXML($this->xml);
 		$IDs = Array();
 		$processed = html_entity_decode($processed);
-		//$processed = str_replace("&amp;", "&", $processed);
-		//echo $processed; die;
 		eval($processed);
 		$this->params = $params;
 		$this->requestType=1;
@@ -444,7 +448,7 @@ class Csw{
     if(isset($params['user']) || isset($this->params['USER']) || isset($this->params['TOKEN'])){ //TODO taky vyresit dvoucestnost params
         // kontrola IP adresy
         // zde je umozneno pro urcite adresy editovat bez prihlaseni jako ADMIN
-        if(strpos(MICKA_ADMIN_IP, $ip)!==false && isset($this->params['USER'])){
+        if(strpos($this->appParameters['app']['adminIP'], $ip)!==false && isset($this->params['USER'])){
             $_SESSION['u'] = $this->params['USER'];
             $_SESSION['ms_groups'] = $this->params['USER'];
             $mickaProj['users'][$_SESSION['u']] = 'rw*';
@@ -458,6 +462,7 @@ class Csw{
     }
     $this->params['timestamp'] = gmdate("Y-m-d\TH:i:s");
     $this->params['mickaURL'] = $this->mickaURL;
+    $this->params['baseURL'] = $this->appParameters['basePath'];
     $this->params['buffered'] = isset($params['buffered']) ? $params['buffered'] : '';
     //$this->params['LANG2'] = ($this->appParameters['appDefaultLocale'] != $this->appParameters['appLocale']) ? $this->appParameters['appLocale'].'/' : '';
     $this->params['viewerURL'] = isset($this->appParameters['map']['viewerURL'])
@@ -467,7 +472,7 @@ class Csw{
         $this->params['CB'] = "";
         if(isset($_SESSION["micka"]["cb"])) $this->params['CB'] .= $_SESSION["micka"]["cb"];
     }
-    if(!isset($this->params['LANGUAGE'])) $this->params['LANGUAGE'] = MICKA_LANG;
+    if(!isset($this->params['LANGUAGE']) && !isset($this->params['isCSW'])) $this->params['LANGUAGE'] = $this->appParameters['appLang'];
     if(!isset($this->params['DEBUG'])) $this->params['DEBUG'] = 0;
     if(!isset($this->params['SOAP'])) $this->params['SOAP'] = false;
     if(!isset($this->params['SORTBY'])) $this->params['SORTBY'] = "";
@@ -514,7 +519,7 @@ class Csw{
     }
     if($this->params['SOAP']) $result = SOAP_HEADER.$result.SOAP_FOOTER;
     if($this->isXML) $result = XML_HEADER.$result;
-    $this->logText .= "|500|".(microtime(true)-$this->startTime);
+    $this->logText .= "|OK|".(microtime(true)-$this->startTime);
     $this->saveLog();
     return $result;
   }
@@ -547,8 +552,8 @@ class Csw{
     	return json_encode($json);
     }
 
-    function asHTML($xml, $template){
-    	//die($xml->saveXML());
+    function asHTML($xml, $template)
+    {
         $u = parse_url($template);
         if(isset($u['scheme']) && ($u['scheme']=='http' || $u['scheme']=='https')){
             $ch = curl_init($template);
@@ -565,23 +570,12 @@ class Csw{
             if(!$this->xsl->loadXML($result)) die("Malformed xsl template ".$template);
     	}
         else {
-            if(!$this->xsl->load(__DIR__ ."/xsl/$template.xsl")) die("html template $template not loaded.");
+            $theme = isset($this->appParameters['app']["layoutTheme"]) ? $this->appParameters['app']["layoutTheme"] : 'default';
+            if(!$this->xsl->load(__DIR__ ."/xsl/profiles/$theme/$template.xsl")) die("html template $template not loaded.");
         }
         $this->xp->importStyleSheet($this->xsl);
-        if(!$this->params['LANGUAGE']) $this->params['LANGUAGE'] = MICKA_LANG;
-        $this->xp->setParameter('', 'LANGUAGE', $this->params['LANGUAGE']);
-        $this->xp->setParameter('', 'lang', $this->params['LANGUAGE']);
-        $this->xp->setParameter('', 'user', $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest');
-        $this->xp->setParameter('', 'theName', "default");
-        $this->xp->setParameter('', 'server', $_SERVER['HTTP_HOST']);
-        $this->xp->setParameter('', 'REWRITE', REWRITE_MODE);
-        //die($this->xsl->saveXML());
-        //die($template);
-        //echo " pred-transf ";
         $output = $this->xp->transformToXML($xml);
-        //echo ('za-transf ');
         $output = str_replace("&amp;", "&", $output);
-        //$this->headers[] = HTTP_HTML;
      	return $output;
     }
 
@@ -593,8 +587,6 @@ class Csw{
 
     function setHeaders($schema){
         if(!$this->params['DEBUG']){
-            //TODO CORS configuration
-            header("Access-Control-Allow-Origin: *");
             foreach($this->schemas[$schema]['httpHdr'] as $header) header($header);
         }
     }
@@ -610,16 +602,15 @@ class Csw{
         if(!$lang || !in_array($lang, $langs)){
             $lang='eng';
         }
-        //dump($this->appParameters); exit;
-        if(MICKA_LANG == 'cze') $olang = 'eng'; else $olang = 'cze';
+        if($this->appParameters['appLang'] == 'cze') $olang = 'eng'; else $olang = 'cze';
         $this->xml->loadXML('<root></root>');
         $this->xsl->load(__DIR__ ."/xsl/getCapabilities.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $params = array(
-            'mickaURL' => $this->appParameters['basePath'],
+            'mickaURL' => $this->mickaURL,
             'cswURL' => $this->appParameters['cswUrl'],
             'LANG' => $lang,
-            'MICKA_LANG' => MICKA_LANG,
+            'MICKA_LANG' => $this->appParameters['appLang'],
             'LANG_OTHER' => $olang,
             'org' => $this->appParameters['contact']['org'][$lang],
             'position' => $this->appParameters['contact']['position'][$lang],
@@ -633,6 +624,7 @@ class Csw{
         $params = array_merge($params,  $this->appParameters['contact']);
         $this->setXSLParams($params);
         $processed = $this->xp->transformToXML($this->xml);
+        header("Content-type: application/xml");
         return $processed;
     }
 
@@ -641,8 +633,8 @@ class Csw{
         $this->xsl->load(__DIR__ . "/xsl/describeRecord.xsl");
         $this->xp->importStyleSheet($this->xsl);
         $processed = $this->xp->transformToXML($this->xml);
-        //header("Content-type: application/xml");
-        //$processed = file_get_contents(PHPPRG_DIR."/../xsl/describeRecord.xml");
+        header("Content-type: application/xml");
+        //$processed = file_get_contents(xsl/describeRecord.xml");
         return $processed;
     }
 
@@ -662,6 +654,7 @@ class Csw{
         return false;
     }
     $typeNames = $this->getParamL('TYPENAMES');
+    $theme = isset($this->appParameters['app']["layoutTheme"]) ? $this->appParameters['app']["layoutTheme"] : 'default';
 
     if($this->params['OUTPUTSCHEMA']){
       	if(!in_array($this->params['OUTPUTSCHEMA'], array_keys($this->schemas))){
@@ -673,7 +666,7 @@ class Csw{
     else {
         $this->params['OUTPUTSCHEMA'] = "http://www.isotc211.org/2005/gmd";
     }
-
+    
     //FIXME - dodelat zpracovani
     //if(!$qstr) $this->exception(2, "Constraint", "Empty request.");
 
@@ -692,7 +685,7 @@ class Csw{
     if($this->params['DEBUG']){
     	var_dump($qstr);
     }
-
+    //else $this->setHeaders($this->params['OUTPUTSCHEMA']);
     $format = isset($this->params['FORMAT']) ? $this->params['FORMAT'] : '';
     if(!isset($this->params['STARTPOSITION'])) $this->params['STARTPOSITION']=1;
     $this->params['SORTORDER'] = "ASC";
@@ -707,8 +700,8 @@ class Csw{
           $sortby = $pom[0].",".$this->params['SORTORDER'];
         }
     }
-    if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= MAXRECORDS;
-    if($this->params['MAXRECORDS']>LIMITMAXRECORDS) $this->params['MAXRECORDS'] = $this->params['MAXRECORDS']= LIMITMAXRECORDS;
+    if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= $this->appParameters['app']['maxRecords'];
+    if($this->params['MAXRECORDS']>$this->appParameters['app']['limitMaxRecords']) $this->params['MAXRECORDS']= $this->appParameters['app']['limitMaxRecords'];
     if(!$this->params['STARTPOSITION'] || $this->params['STARTPOSITION']==0) $this->params['STARTPOSITION'] = 1;
     $resultType = $this->getParamL('RESULTTYPE');
     if(!$resultType) $resultType = 'results';
@@ -721,25 +714,6 @@ class Csw{
       case 'hits': $sablona='micka2cat_hits'; break;
       case 'validate': $sablona='micka2cat_hits'; break;
       case 'results':
-        /*switch ($this->params['OUTPUTSCHEMA']){
-          case $this->schemas['csw']:
-              $sablona="micka2cat_dc";
-              break;
-          case $this->schemas['gmd']:
-              $sablona = "out-iso";
-              break;
-          case $this->schemas['native']: $sablona = "micka2native"; break;
-          case $this->schemas['rss']: $sablona="micka2osrss"; $format=""; break;
-          case $this->schemas['atom']: $sablona="micka2atom"; $format=""; break;
-          case $this->schemas['kml']: $sablona="micka2kml"; $format="kml"; break;
-          case $this->schemas['os']: $sablona="micka2os"; $format=""; break;
-          case $this->schemas['rdf']: $sablona="micka2rdf"; $format=""; break;
-          case $this->schemas['dcat']: $sablona="micka2dcat"; $format=""; break;
-          case $this->schemas['oai_dc']: $sablona="micka2oai_dc"; $format=""; break;
-          case $this->schemas['oai_marc']: $sablona="micka2oai_marc"; $format=""; break;
-          case $this->schemas['marc21']: $sablona="micka2marc21"; $format=""; break;
-          default: $this->exception(3, "OUTPUTSCHEMA", $this->params['OUTPUTSCHEMA']); break;
-        }*/
           $schema = $this->schemas[$this->params['OUTPUTSCHEMA']];
           $sablona = 'out/' . $schema['template'];
           $typeNames = (isset($schema['typeNames'])) ? $schema['typeNames']: ''; //TODO - jeste udleat, pokud neni outputschema
@@ -749,205 +723,140 @@ class Csw{
     }
 
     //---vyber brief / summary / full
-  if($sablona && $resultType=='results' ){
-    switch ($this->getParamL('ELEMENTSETNAME')){
-      case 'brief': $sablona .= '-brief'; break;
-      case 'summary': $sablona .= '-summary'; break;
-      case 'full': $sablona .= '-full'; break;
-      case 'extended': $sablona .= '-extended'; break;
-      default:
-      	$sablona .= '-summary';
-      	$this->params['ELEMENTSETNAME'] = 'summary';
-      break;
-    }
-    $version = $this->params['VERSION'];
-    if($version=="2.0.0") $sablona .= "200";
-  }
-  $this->params['CATCLIENT_PATH'] = CATCLIENT_PATH;
-  $this->params['lang'] = $this->params['LANGUAGE'] ? $this->params['LANGUAGE'] : MICKA_LANG;
+      if($sablona && $resultType=='results' ){
+        switch ($this->getParamL('ELEMENTSETNAME')){
+          case 'brief': $sablona .= '-brief'; break;
+          case 'summary': $sablona .= '-summary'; break;
+          case 'full': $sablona .= '-full'; break;
+          case 'extended': $sablona .= '-extended'; break;
+          default:
+            $sablona .= '-summary';
+            $this->params['ELEMENTSETNAME'] = 'summary';
+          break;
+        }
+        $version = $this->params['VERSION'];
+        if($version=="2.0.0") $sablona .= "200";
+      }
+      //$this->params['CATCLIENT_PATH'] = CATCLIENT_PATH;
+      $this->params['lang'] = $this->params['LANGUAGE'] ? $this->params['LANGUAGE'] : $this->appParameters['appLang'];
 
-  //echo $this->params['FORMAT']; exit;
-  if(strpos($format, 'html')!==false){
-  		$this->headers[0] = HTTP_HTML;
-  		$this->isXML = false;
-  		$sablona = 'micka2htmlList_';
-  		$isHTML = true;
-  }
-  else if(strpos($format, 'csv')!==false){
-      $this->headers[0] = HTTP_CSV;
-      $this->isXML = false;
-      $isHTML = true;
-  }
-  /*else if(strpos($format, 'kml')!==false){
-		$this->headers[0] = "Content-Type: application/vnd.google-earth.kml+xml\n";
-		$this->headers[1] = "Content-Disposition: filename=micka.kml";
-  }*/
+      if(strpos($format, 'html')!==false){
+            $this->headers[0] = HTTP_HTML;
+            $this->isXML = false;
+            $sablona = "profiles/$theme/micka2htmlList_";
+            $isHTML = true;
+      }
+      else if(strpos($format, 'csv')!==false){
+          $this->headers[0] = HTTP_CSV;
+          $this->isXML = false;
+          $isHTML = true;
+      }
 
-  if(isset($this->params['TEMPLATE'])){
-  		$sablona = $this->params['TEMPLATE'];
-  }
+      if(isset($this->params['TEMPLATE'])){
+            $sablona = $this->params['TEMPLATE'];
+      }
+
+      $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
+      $this->xp->importStyleSheet($this->xsl);
+      $this->params['root'] = "csw:GetRecordsResponse";
+      if(!isset($this->params['REQUESTID'])) $this->params['REQUESTID'] = "";
+      $this->params['REWRITE'] = true;
+      $this->params['CONSTRAINT'] = urlencode($this->params['CONSTRAINT']);
+      $this->params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
+
+      $this->setXSLParams($this->params);
+
+      //---- dotaz do Micky po starem pro HTML -----------------------------------
+      if(isset($isHTML) || strpos($format, 'csv')!==false){
+          //$export = new MdExport(MICKA_USER, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
+          //$xmlstr = $export->getXML($qstr, $flatParams, true, true);
+          $class = \App\Model\Micka::getClassName("App\\Model\\MdSearch");
+          $export = new $class($this->db, $this->user, $this->appParameters, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
+          $xmlstr = $export->getXmlRecords($qstr, $flatParams);
+          $this->xml->loadXML($xmlstr);
+          $this->isXML = false;
+          if(strpos($format, 'json')!==false){
+              $output = $this->asJSON($this->xml, $head, $flatParams['extHeader']);
+          }
+          else {
+              $output =$this->xp->transformToXML($this->xml);
+              $output = str_replace("&amp;", "&", $output);
+          }
+          return $output;
+      }
 
 
-  $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
-  $this->xp->importStyleSheet($this->xsl);
-  $this->params['root'] = "csw:GetRecordsResponse";
-  if(!isset($this->params['REQUESTID'])) $this->params['REQUESTID'] = "";
-  $this->params['REWRITE'] = REWRITE_MODE;
-  $this->params['CONSTRAINT'] = urlencode($this->params['CONSTRAINT']);
-  $this->params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
-
-  $this->setXSLParams($this->params);
-
-  //---- dotaz do Micky po starem pro HTML -----------------------------------
-  if(isset($isHTML) || strpos($format, 'csv')!==false){
+      //---- dotaz do Micky cursor -----------------------------------------------
+      // na vstupu index od 1
       //$export = new MdExport(MICKA_USER, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
-      //$xmlstr = $export->getXML($qstr, $flatParams, true, true);
-      $export = new \App\Model\MdSearch($this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
-      $xmlstr = $export->getXmlRecords($qstr, $flatParams);
-      $this->xml->loadXML($xmlstr);
-      $this->isXML = false;
-      if(strpos($format, 'json')!==false){
-          $output = $this->asJSON($this->xml, $head, $flatParams['extHeader']);
+      $class = \App\Model\Micka::getClassName("App\\Model\\MdSearch");
+      $export = new $class($this->db, $this->user, $this->appParameters, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
+      $count = $export->fetchXMLOpen($qstr, $flatParams);
+        if ($count == -1) {
+            $this->exception(3, "Filter", "Invalid filter: ".$qstr);
+        }
+      $returned = min(array($this->params['MAXRECORDS'], $count - $this->params['STARTPOSITION']+1));
+      if($returned < 0) $returned = 0;
+      $next = $this->params['STARTPOSITION'] + $this->params['MAXRECORDS'];
+      if($this->params['OUTPUTSCHEMA']=='json'){
+          $next--;
+      }
+      if($next > $count) $next = 0;
+
+      $result = str_replace(
+        array('[id]', '[timestamp]', '[matched]',
+            '[returned]','[next]','[elementset]',
+            '[authName]', '[authEmail]', '[title]', 
+            '[subtitle]', '[path]', '[mickaURL]'),
+        array($this->params['REQUESTID'], 
+            gmdate("Y-m-d\TH:i:s"), 
+            $count, 
+            $returned, 
+            $next,  
+            $this->getParamL('ELEMENTSETNAME'),
+            $this->appParameters['contact']['org'][$this->params['LANGUAGE']], 
+            $this->appParameters['contact']['email'], 
+            ($this->params['LANGUAGE']=='all') ? $this->appParameters['contact']['title']['eng'] : $this->appParameters['contact']['title'][$this->params['LANGUAGE']], 
+            ($this->params['LANGUAGE']=='all') ? $this->appParameters['contact']['abstract']['eng'] : $this->appParameters['contact']['abstract'][$this->params['LANGUAGE']], 
+            $this->appParameters['contact']['www'],
+            $this->mickaURL),
+        $schema['header']
+      );
+      if(!$this->params['buffered']) {
+          $this->setHeaders($this->params['OUTPUTSCHEMA']);
+          if($this->params['OUTPUTSCHEMA']!='json')echo XML_HEADER;
+          echo $result;
+      }
+      if($count) {
+          $i = 0;
+          while (($xml = $export->fetchXML()) != FALSE) {
+              //echo $xml; exit;
+              $this->xml->loadXML($xml);
+              $output = $this->xp->transformToXML($this->xml);
+              //echo($output); die();
+              if($this->params['OUTPUTSCHEMA']=='json'){
+                  eval($output);
+                  $output = str_replace("\\\\\\", "\\", json_encode($rec));
+                  if($i>0) $output = ",".$output;
+              }
+              if($this->params['buffered']) $result .= $output;
+              else {
+                  echo $output;
+                  ob_flush();
+                  flush();
+              }
+              $i++;
+          }
+          $export->fetchXMLClose();
+      }
+
+      if($this->params['buffered']){
+          return $result . $schema['footer'];
       }
       else {
-          $output =$this->xp->transformToXML($this->xml);
-          $output = str_replace("&amp;", "&", $output);
+          echo $schema['footer']; die;
       }
-      return $output;
   }
-
-
-  //---- dotaz do Micky cursor -----------------------------------------------
-  // na vstupu index od 1
-  //$export = new MdExport(MICKA_USER, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
-  $export = new \App\Model\MdSearch($this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
-  $count = $export->fetchXMLOpen($qstr, $flatParams);
-    if ($count == -1) {
-        $this->exception(3, "Filter", "Invalid filter: ".$qstr);
-    }
-  $returned = min(array($this->params['MAXRECORDS'], $count - $this->params['STARTPOSITION']+1));
-  if($returned < 0) $returned = 0;
-  $next = $this->params['STARTPOSITION'] + $this->params['MAXRECORDS'];
-  if($this->params['OUTPUTSCHEMA']=='json'){
-      $next--;
-  }
-  if($next > $count) $next = 0;
-
-  $result = str_replace(
-    array('[id]', '[timestamp]', '[matched]',
-        '[returned]','[next]','[elementset]',
-        '[authName]', '[authEmail]', '[title]', 
-        '[subtitle]', '[path]', '[mickaURL]'),
-    array($this->params['REQUESTID'], 
-        gmdate("Y-m-d\TH:i:s"), 
-        $count, 
-        $returned, 
-        $next,  
-        $this->getParamL('ELEMENTSETNAME'),
-        $this->appParameters['contact']['org'][$this->params['LANGUAGE']], 
-        $this->appParameters['contact']['email'], 
-        $this->appParameters['contact']['title'][$this->params['LANGUAGE']], 
-        $this->appParameters['contact']['abstract'][$this->params['LANGUAGE']], 
-        $this->appParameters['contact']['www'],
-        $this->mickaURL),
-    $schema['header']
-  );
-  if(!$this->params['buffered']) {
-      $this->setHeaders($this->params['OUTPUTSCHEMA']);
-      if($this->params['OUTPUTSCHEMA']!='json')echo XML_HEADER;
-      echo $result;
-  }
-  if($count) {
-      $i = 0;
-      while (($xml = $export->fetchXML()) != FALSE) {
-          $this->xml->loadXML($xml);
-          $output = $this->xp->transformToXML($this->xml);
-
-          if($this->params['OUTPUTSCHEMA']=='json'){
-              eval($output);
-              $output = json_encode($rec);
-              if($i>0) $output = ",".$output;
-          }
-          if($this->params['buffered']) $result .= $output;
-          else {
-              echo $output;
-              ob_flush();
-              flush();
-          }
-          $i++;
-      }
-      $export->fetchXMLClose();
-  }
-
-  if($this->params['buffered']){
-      return $result . $schema['footer'];
-  }
-  else {
-      echo $schema['footer']; die;
-  }
-  //--------------------------------------------------------------------------
-  //die('konce');
-  if($xml==-1) $this->exception(3, "Filter", "Invalid filter: ".$qstr);
-
-  //---cekani na vzdalene servery - zatim vyrazeno
-  /*if(isset($this->params['HOPCOUNT']) && $this->params['HOPCOUNT']>0){
-    file_put_contents(CSW_TMP."/$cascadeID-local.xml" ,$xmlstr);
-    $status = false;
-    $timestop = time()+CSW_TIMEOUT; // za jak dlouho to ma chcipnout
-    if(!class_exists('CswClient')){
-    	include(PHPPRG_DIR.'/CswClient.php');
-    }
-	$client = new CswClient();
-    while(!$status){
-      $status = true;
-      reset($cswlist);
-      while(list($name, $csw) = each ($cswlist)){
-      	// TODO - tady dodelat
-        $result = CSW_TMP."/$cascadeID-$name.xml";
-        if(!file_exists($result)) $status = false;
-        if($timestop<time()) $status = true; // aby to neviselo
-      }
-      sleep(1);
-    }
-    $this->xml->load(PHPINC_DIR.'/csw/cservers.xml');
-    $this->xsl->load(PHPINC_DIR."/../xsl/cascade.xsl");
-    $this->xp->importStyleSheet($this->xsl);
-    $this->xp->setParameter('', 'cascadeId', CSW_TMP."/".$cascadeID);
-
-    if($status>0){
-      while(list($key, $val) = each ($_SESSION["cswlist"])){
-        @unlink(CSW_TMP."/$id-$key.htm");
-      }
-    }
-  }*/
-  //---prevod XML do katalogu
-  /*  else{
-      	$this->xml->loadXML($xmlstr);
-     	$this->xsl->load(PHPPRG_DIR."/../xsl/$sablona.xsl");
-      	$this->xp->importStyleSheet($this->xsl);
-    }    */
-
-
-    // --- JSON ---
-    if(strpos($format, 'json')!==false){
-        $processed = $this->xp->transformToDoc($this->xml);
-        $output = $this->asJSON($processed, $head, $flatParams['extHeader']);
-        $this->isXML = false;
-    }
-    // --- HTML ---
-    else if(strpos($format, 'html')!==false){
-        $output =$this->xp->transformToXML($this->xml);
-        //$output = htmlspecialchars_decode($output);
-        $output = str_replace("&amp;", "&", $output);
-    }
-    // --- XML ---
-    else {
-        $output =$this->xp->transformToXML($this->xml);
-    }
-
-    //return $output;
-  }
-
 
   function getRecordById(){
         $qstr = "";
@@ -958,16 +867,12 @@ class Csw{
         	$qstr .= "'".urldecode($id)."'";
         }
         if($this->params['DEBUG']==1) var_dump($qstr);
-
-        //---- dotaz do Micky ------------------------------------------------------
-    	//$export = new MdExport($_SESSION['u'], 0, 25, $this->params['SORTBY']);
-    	//echo "<hr>".$qstr."<hr>";
-   		//$xmlstr = $export->getXML(array(), array("ID" =>"($qstr)"), true, true);
-        $export = new \App\Model\MdSearch(0, 25, $this->params['SORTBY']);
-   		$xmlstr = $export->getXmlRecords(array(), array("ID" =>"($qstr)"));
+        //---- database query ------------------------------------------------------
+        $class = \App\Model\Micka::getClassName("App\\Model\\MdSearch");
+        $export = new $class($this->db, $this->user, $this->appParameters, 0, 25, $this->params['SORTBY']);
+        $xmlstr = $export->getXmlRecords(array(), array("ID" =>"($qstr)"));
         //--------------------------------------------------------------------------
         if($xmlstr==-1) $this->exception(3, "Filter", "Invalid filter: ".$xmlstr);
-        //die($this->params['FORMAT']);
         $sablona = "micka2cat_19139";
         if(isset($this->params['OUTPUTSCHEMA']) && $this->params['OUTPUTSCHEMA']){
             if(!in_array($this->params['OUTPUTSCHEMA'], array_keys($this->schemas))){
@@ -989,7 +894,7 @@ class Csw{
                     break;
             }
         }
-        if(strpos($this->params['FORMAT'],'json')!==false){
+        if(isset($this->params['FORMAT']) && strpos($this->params['FORMAT'],'json')!==false){
             $sablona = "out/json";
         }
         switch ($this->getParamL('ELEMENTSETNAME')){ //TODO - nefunguje v sablone
@@ -1005,50 +910,61 @@ class Csw{
         }
 
         $this->logText .= "[ID=".$qstr."]";
-
         //TODO - kaskadovani
         //---prevod XML do katalogu
         $this->xml->loadXML($xmlstr);
-        $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
-        $this->xp->importStyleSheet($this->xsl);
 
         //$this->params['requestId'] = $this->params['REQUESTID'];
         $this->params['root'] = "csw:GetRecordByIdResponse";
         $this->params['elementSet'] = $this->getParamL('ELEMENTSETNAME');
         $this->params['user'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
-        $this->params['USER'] = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
-        $this->params['REWRITE'] = REWRITE_MODE;
-        $this->params['THEME'] = MICKA_THEME;
+        $this->params['USER'] = $this->params['user']; //FIXME
+        $this->params['REWRITE'] = true;
+        $this->params['THEME'] = $this->appParameters['app']['layoutTheme'];
         $this->params['lang'] = $this->getParamL('LANGUAGE');
-        if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= MAXRECORDS;
+        if(!isset($this->params['MAXRECORDS'])) $this->params['MAXRECORDS']= $this->appParameters['app']['maxRecords'];
         if(!isset($this->params['SORTORDER'])) $this->params['SORTORDER']= "ASC";
         $this->setXSLParams($this->params);
 
         // --- HTML ---
-        if($this->params['FORMAT']=='text/html'){
+        if(isset($this->params['FORMAT']) && $this->params['FORMAT']=='text/html'){
             if(isset($this->params['TEMPLATE']) && $this->params['TEMPLATE']) $sablona = $this->params['TEMPLATE'];
             else $sablona = "iso2htmlFull_";
             $output = $this->asHTML($this->xml, $sablona);
             $this->isXML = false;
         }
-        else if(strpos($this->params['FORMAT'],'json')!==false){
+        // --- JSON ---
+        else if(isset($this->params['FORMAT']) && strpos($this->params['FORMAT'],'json')!==false){
+            $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
             $output = $this->xp->transformToXML($this->xml);
-            //die($output);
             eval($output);
             $output = json_encode($rec);
             $this->isXML = false;
         }
         // --- XML ---
         else {
+            $this->setHeaders($this->params['OUTPUTSCHEMA']);
+            $this->xsl->load(__DIR__ . "/xsl/$sablona.xsl");
+            $this->xp->importStyleSheet($this->xsl);
             $output = $this->xp->transformToXML($this->xml);
         }
         return $output;
     }
 
+    
+    // returns title from last XML
+    function getTitle(){
+        $this->xsl->load(__DIR__ . "/xsl/out/json-brief.xsl");
+        $this->xp->importStyleSheet($this->xsl);
+        $output = $this->xp->transformToXML($this->xml);
+        eval($output);
+        return isset($rec['title']) ? $rec['title'] : '';
+    }
+    
+    
   function harvest($io = true){
-    //var_dump($this->params);
-    include(PHPPRG_DIR.'/Harvest.php');
-    include(PHPPRG_DIR.'/CswClient.php');
+    //include($this->appParameters['appDir'].'/Harvest.php');
+    //include($this->appParameters['appDir'].'/Model'.'/CswClient.php');
     $cswFrom = new CSWClient();
     $harvestor = new Harvest($this, $cswFrom);
     // jen vrati hodnoty - nad ramec standardu
@@ -1206,59 +1122,54 @@ class Csw{
     return false;
   }
 
-  /**
-   * Inserts or updates record in the underlying database
-   *
-   * @param string $nodeName Identifier of server which data comes from (used for harvesting)
-   * @param string $viewGroup Name of the group for viewing (used for CENIA filters)
-   * @param boolean $stopOnError If set true, insert no record if error occurs. Otherwise attempts to insert at least valid elements.
-   * @return array Associative array with update results (both successful and failed records)
-   */
-  function update($nodeName='', $editGroup='', $viewGroup='', $public=0, $stopOnError=true, $overwrite='all') {
-    $recordModel = new \App\Model\RecordModel($this->dbContext, $this->user);
-    $recordModel->setAppParameters($this->appParameters);
-    /*
-    $importer = new MetadataImport($this->params['DEBUG']);
-    $md = $importer->xml2array($this->xml, __DIR__ ."/xsl/update2micka.xsl");
-    if($this->params['DEBUG']==2) var_dump($md);
-    $c = new MdImport();
-    $c->setDataType($public); // nastavení veřejného záznamu
-    if($editGroup){
-        $c->group_e = $editGroup;
-    }
-    if($viewGroup){
-        $c->group_v = $viewGroup;
-    }
-    $c->stop_error = $stopOnError; // pokud dojde k chybě při importu pokračuje
-    $c->server_name = $nodeName; // jméno serveru ze kterého se importuje
-    $c->setReportValidType('array', true); // formát validace
-    $result = $c->dataToMd($md, $overwrite);
+    /**
+     * Inserts or updates record in the underlying database
+     *
+     * @param string $nodeName Identifier of server which data comes from (used for harvesting)
+     * @param string $viewGroup Name of the group for viewing (used for CENIA filters)
+     * @param boolean $stopOnError If set true, insert no record if error occurs. Otherwise attempts to insert at least valid elements.
+     * @return array Associative array with update results (both successful and failed records)
      */
-    $params = array();
-    $params['data_type'] = $public;  // nastavení veřejného záznamu
-    if($editGroup){
-        $params['edit_group'] = $editGroup;
+    function update($node=[], $editGroup='', $viewGroup='', $public=0, $stopOnError=true, $overwrite='all')
+    {
+        $class = \App\Model\Micka::getClassName("App\\Model\\RecordModel");
+        $recordModel = new $class($this->db, $this->user, $this->appParameters);
+        $params = array();
+        $params['data_type'] = $public;  // nastavení veřejného záznamu
+        if($editGroup){
+            $params['edit_group'] = $editGroup;
+        }
+        if($viewGroup){
+            $params['view_group'] = $viewGroup;
+        }
+        $params['stop_error'] = $stopOnError; // pokud dojde k chybě při importu pokračuje
+        $params['server_name'] = $node['name']; // jméno serveru ze kterého se importuje
+        $params['server_location'] = $node['source']; // jméno serveru ze kterého se importuje
+        $params['valid_type'] = array('type' => 'array', 'short' => TRUE); // formát validace
+        $params['update_type'] = $overwrite;
+        $result = $recordModel->setXmlFromCsw($this->xml, $params);
+        if (isset($this->params['DEBUG']) && $this->params['DEBUG'] == 1){
+            //var_dump($result);
+        }
+        return $result;
     }
-    if($viewGroup){
-        $params['view_group'] = $viewGroup;
-    }
-    $params['stop_error'] = $stopOnError; // pokud dojde k chybě při importu pokračuje
-    $params['server_name'] = $nodeName; // jméno serveru ze kterého se importuje
-    $params['valid_type'] = array('type' => 'array', 'short' => TRUE); // formát validace
-    $params['update_type'] = $overwrite;
-    $result = $recordModel->setXmlFromCsw($this->xml, $params);
-    if($this->params['DEBUG']==1) var_dump($result);
-    return $result;
-  }
 
-  private function delete(){
-  	$export = new MdExport($usr);
-  	$data = $export->getData(array($this->params['QSTR'])); //TODO zaznamy apod ...
-    $c = new MdImport();
-    $result = $c->dataToMd($data,'delete');
-    if($this->params['DEBUG']==1) var_dump($result);
-    return $result;
-  }
+    private function delete()
+    {
+        $class = \App\Model\Micka::getClassName("App\\Model\\RecordModel");
+        $recordModel = new $class($this->db, $this->user, $this->appParameters);
+        $class = \App\Model\Micka::getClassName("App\\Model\\MdSearch");
+        $export = new $class($this->db, $this->user, $this->appParameters, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], "date");
+        $xmlstr = $export->getXmlRecords(array($this->params['QSTR']), []);
+        $this->xml->loadXML($xmlstr);
+        $result = array();
+        foreach($this->xml->getElementsByTagName('rec') as $rec){
+            $recordModel->deleteMdById($rec->getAttribute('uuid'));
+            $result[] = $rec->getAttribute('uuid');
+        }
+        if($this->params['DEBUG']==1) var_dump($result);
+        return $result;
+    }
 
   //--- vypujceno z importMetadata class - uz nekompatibilni !!!
   function writeNode($path, $node, $idx){
@@ -1406,7 +1317,7 @@ class Csw{
         $this->w_out = array("%", "''");
 
         // fultext in ORACLE XML
-        if(DB_DRIVER == 'oracle' && DB_FULLTEXT == 'ORACLE-CONTEXT'){
+        if($this->db->config['driver'] == 'oracle'){
             $this->map['title'] = "//gmd:identificationInfo/*/gmd:citation/*/gmd:title";
             $this->map['abstract'] = "//gmd:identificationInfo/*/gmd:abstract";
         }

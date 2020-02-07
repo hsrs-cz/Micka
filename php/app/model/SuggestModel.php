@@ -5,25 +5,10 @@ namespace App\Model;
 use Nette;
 
 
-class SuggestModel
+class SuggestModel extends \BaseModel
 {
 	use Nette\SmartObject;
 
-	/** @var Nette\Database\Context */
-	private $db;
-    
-    private $user;
-
-	public function __construct(Nette\Database\Context $db) 
-	{
-		$this->db = $db;
-	}
-    
-    public function setIdentity($user)
-    {
-        $this->user = $user;
-    }
-    
     public function getAnswer($params) {
         $rs = [];
         $org = array();
@@ -43,63 +28,63 @@ class SuggestModel
         $group = implode("','", array_values($group));
         $group = "'" . $group . "'";
         if ($admin === TRUE) {
-            $right = 'md.data_type IS NOT NULL';
+            $right = 'md.[data_type] IS NOT NULL';
         } else {
             $right = $user == 'guest' 
-                    ? 'md.data_type>0'
-                    : "(md.create_user='$user' OR md.view_group IN($group) OR md.edit_group IN($group) OR md.data_type>0)";
+                    ? 'md.[data_type]>0'
+                    : "(md.[create_user]='$user' OR md.[view_group] IN($group) OR md.[edit_group] IN($group) OR md.[data_type]>0)";
         }
 
         switch ($contact_type) {
             case 'mdperson':
                 $query_lang = '';
                 $sql = "
-                    SELECT md_values.recno, md_values.md_path, md_values.md_value, md_values.lang
-                    FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(SUBSTRING(md_values.md_path, 1,17)=SUBSTRING(m.md_path, 1,17) AND md_values.recno=m.recno)
+                    SELECT md_values.[recno], md_values.[md_path], md_values.[md_value], md_values.[lang]
+                    FROM (md JOIN md_values ON md.[recno]=md_values.[recno]) LEFT JOIN md_values m ON(SUBSTR(md_values.[md_path], 1,17)=SUBSTR(m.[md_path], 1,17) AND md_values.[recno]=m.[recno])
                     WHERE 
                 ";
                 if($creator != '') {
                     if ($creator == $user) {
-                        $sql .=  " md.create_user='$creator'";
+                        $sql .=  " md.[create_user]='$creator'";
                     } else {
-                        $sql .= " md.create_user='$creator' AND (md.view_group IN($group) OR md.edit_group IN($group) OR md.data_type>0))";
+                        $sql .= " md.[create_user]='$creator' AND (md.[view_group] IN($group) OR md.[edit_group] IN($group) OR md.[data_type]>0))";
                     }
                 } else {
                     $sql .= " $right";
                 }
                 if($query != '') {
-                    $sql .= " AND md_values.md_value ILIKE '%" . $query . "%'";
+                    $sql .= " AND md_values.[md_value] ILIKE '%" . $query . "%'";
                 }
                 if($contact_role != '') {
-                    $sql .=  " AND md_values.md_id=152 AND m.md_id=992 AND m.md_value='$contact_role'";
+                    $sql .=  " AND md_values.[md_id]=152 AND m.[md_id]=992 AND m.[md_value]='$contact_role'";
                 } else {
-                    $sql .=  " AND md_values.md_id=152 AND m.md_id=992 AND m.md_value IS NOT NULL";
+                    $sql .=  " AND md_values.[md_id]=152 AND m.[md_id]=992 AND m.[md_value] IS NOT NULL";
                 }
                 $result = $this->db->query($sql)->fetchAll();
                 break;
             case 'mdorg':
                 $md_id = 153;
                 $sql = "
-                    SELECT md_values.recno, md_values.md_path, md_values.md_value, md_values.lang
-                    FROM md INNER JOIN md_values ON md.recno = md_values.recno
-                    WHERE md_values.md_id IN ($md_id) AND data_type>0
+                    SELECT md_values.[recno], md_values.[md_path], md_values.[md_value], md_values.[lang]
+                    FROM md INNER JOIN md_values ON md.[recno] = md_values.[recno]
+                    WHERE md_values.[md_id] IN ($md_id) AND [data_type]>0
                 ";
                 if($query_lang != '') {
-                    $sql .= " AND md_values.lang='$query_lang'";
+                    $sql .= " AND md_values.[lang]='$query_lang'";
                 }
                 if($creator != '') {
                     if ($creator == $user) {
-                        $sql .= " AND md.create_user='$creator'";
+                        $sql .= " AND md.[create_user]='$creator'";
                     } else {
-                        $sql .= " AND md.create_user='$creator' AND (md.view_group IN($group) OR md.edit_group IN($group) OR md.data_type>0))";
+                        $sql .= " AND md.[create_user]='$creator' AND (md.[view_group] IN($group) OR md.[edit_group] IN($group) OR md.[data_type]>0))";
                     }
                 } else {
                     $sql .= " AND $right";
                 }
                 if($query != '') {
-                    $sql .= " AND md_values.md_value ILIKE'%" . $query . "%'";
+                    $sql .= " AND md_values.[md_value] ILIKE'%" . $query . "%'";
                 }
-                $sql .= " ORDER BY md_values.md_value";
+                $sql .= " ORDER BY md_values.[md_value]";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
             case 'denom':
@@ -108,12 +93,12 @@ class SuggestModel
                 $query_lang = '';
                 $mask = ", '999999999'";
                 $sql = "
-                    SELECT md_values.md_value 
-                    FROM md JOIN md_values ON md.recno=md_values.recno 
-                    WHERE md_values.md_id=99 AND $right ";
-                    if($query) $sql .= " AND md_values.md_value ILIKE '" . $query . "%' ";
-                    $sql .= "GROUP BY md_values.md_value 
-                    ORDER BY TO_NUMBER(md_value $mask)
+                    SELECT md_values.[md_value] 
+                    FROM md JOIN md_values ON md.[recno]=md_values.[recno] 
+                    WHERE md_values.[md_id]=99 AND $right ";
+                    if($query) $sql .= " AND md_values.[md_value] ILIKE '" . $query . "%' ";
+                    $sql .= "GROUP BY md_values.[md_value] 
+                    ORDER BY TO_NUMBER([md_value] $mask)
                 ";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
@@ -122,45 +107,45 @@ class SuggestModel
                 $creator = '';
                 $orderBy = FALSE;
                 $md_id = $contact_type == 'country' ? '202,5046' : '168';
-                $sql = "SELECT md_values.md_value 
-                    FROM md JOIN md_values ON md.recno=md_values.recno 
-                    WHERE md_values.md_id IN ($md_id) AND $right";
-                if($query) $sql .= " AND md_values.md_value ILIKE '%" . $query . "%' ";
-                $sql .= " GROUP BY md_values.md_value ORDER BY md_value;";
+                $sql = "SELECT md_values.[md_value] 
+                    FROM md JOIN md_values ON md.[recno]=md_values.[recno] 
+                    WHERE md_values.[md_id] IN ($md_id) AND $right";
+                if($query) $sql .= " AND md_values.[md_value] ILIKE '%" . $query . "%' ";
+                $sql .= " GROUP BY md_values.[md_value] ORDER BY [md_value];";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
             case 'keyword':
                 $orderBy = FALSE;
                 $sql = "
-                    SELECT COUNT(*) AS count, md_values.md_value AS keyword 
-                    FROM md INNER JOIN md_values ON md.recno = md_values.recno
-                    WHERE md_values.md_id IN (88,4920) AND md.data_type=1 AND NOT md_values.lang = 'uri'
+                    SELECT COUNT(*) AS [count], md_values.[md_value] AS [keyword] 
+                    FROM md INNER JOIN md_values ON md.[recno] = md_values.[recno]
+                    WHERE md_values.[md_id] IN (88,4920) AND md.[data_type]=1 AND NOT md_values.[lang] = 'uri'
                 ";
                 if($query_lang != '') {
-                    $sql .= " AND md_values.lang='$query_lang'";
+                    $sql .= " AND md_values.[lang]='$query_lang'";
                 }
                 if($creator != '') {
-                    $sql .= " AND md.create_user='$creator'";
+                    $sql .= " AND md.[create_user]='$creator'";
                 }
                 if($query != '') {
-                    $sql .= " AND md_values.md_value ILIKE '%" . $query . "%'";
+                    $sql .= " AND md_values.[md_value] ILIKE '%" . $query . "%'";
                 }
                 $sql .= "
-                    GROUP BY md_values.md_value
-                    ORDER BY count DESC, keyword        
+                    GROUP BY md_values.[md_value]
+                    ORDER BY [count] DESC, [keyword]        
                 ";
                 $result = $this->db->query($sql)->fetchAll();
                 break;
             case 'topics':
                 $sql = "
-                    SELECT codelist_name as recno, label_text as md_value, lang
-                    FROM codelist LEFT JOIN label ON codelist.codelist_id = label.label_join
-                    WHERE el_id=410 AND label_type='CL' AND lang=?
+                    SELECT [codelist_name] as [recno], [label_text] as [md_value], [lang]
+                    FROM codelist LEFT JOIN label ON codelist.[codelist_id] = label.[label_join]
+                    WHERE [el_id]=410 AND [label_type]='CL' AND [lang]=?
                     ";
                 if($query == '') {
                     $result = $this->db->query($sql, $query_lang)->fetchAll();
                 } else {
-                    $result = $this->db->query($sql . " AND label_text ILIKE ?", 
+                    $result = $this->db->query($sql . " AND [label_text] ILIKE ?", 
                             $query_lang,'%'. $query.'%')->fetchAll();
                 }
                 $rs = array();
@@ -174,32 +159,32 @@ class SuggestModel
             case 'title':
                 $l = ''; $l1='';
                 if($query_lang != ''){
-                    $l = " AND md_values.lang='$query_lang'";
-                    $l1 = " AND abstr.lang='$query_lang'";
+                    $l = " AND md_values.[lang]='$query_lang'";
+                    $l1 = " AND abstr.[lang]='$query_lang'";
                 }                  
                 $sql = "
-                    SELECT trim(uuid) as id, md_values.md_value, abstr.md_value as abstract 
+                    SELECT trim([uuid]) as [id], md_values.[md_value], abstr.[md_value] as [abstract] 
                     FROM md 
-                    JOIN md_values ON (md.recno=md_values.recno $l) 
-                    LEFT JOIN md_values as abstr ON (md.recno=abstr.recno AND abstr.md_id IN (4,5061) AND md_standard != 2 $l1)
-                    WHERE md_values.md_id IN (11,5063) AND $right
+                    JOIN md_values ON (md.[recno]=md_values.[recno] $l) 
+                    LEFT JOIN md_values abstr ON (md.[recno]=abstr.[recno] AND abstr.[md_id] IN (4,5061) AND [md_standard] != 2 $l1)
+                    WHERE md_values.[md_id] IN (11,5063) AND $right
                 ";
                 if($creator != '') {
-                    $sql .= " AND md.create_user='$creator'";
+                    $sql .= " AND md.[create_user]='$creator'";
                 }
                 if($params['res']=='fc'){
-                    $sql .= " AND md_standard=2";
+                    $sql .= " AND [md_standard]=2";
                 }
                 if(isset($params['id'])){
-                    $sql .= " AND uuid='".$params['id']."'";
+                    $sql .= " AND [uuid]='".$params['id']."'";
                 }
                 elseif($query != '') {
-                    $sql .= " AND md_values.md_value ILIKE '". $query . "%'";
+                    $sql .= " AND md_values.[md_value] ILIKE '". $query . "%'";
                 }
                 $sql .= "
-                ORDER BY md_value
-                LIMIT 25";
-                $result = $this->db->query($sql)->fetchAll();
+                ORDER BY [md_value]
+                %lmt";
+                $result = $this->db->query($sql, 25)->fetchAll();
                 if($params['f']==1){
                     foreach($result as $row) {
                         $rs[] = array('id'=>$row->id,"text"=>$row->md_value,"title"=>$row->abstract);
@@ -216,8 +201,8 @@ class SuggestModel
                 }
                 break;
             case 'featureType':
-                $result = $this->db->query("SELECT md_value FROM md_values LEFT JOIN md USING (recno) 
-                WHERE md_id=13 AND uuid=?", $params['id'])->fetchAll();
+                $result = $this->db->query("SELECT [md_value] FROM md_values LEFT JOIN md USING ([recno]) 
+                WHERE [md_id]=13 AND [uuid]=?", $params['id'])->fetchAll();
                 foreach($result as $row) {
                     $rs[] = array('id'=>$row->md_value,"title"=>$row->md_value);
                 }
@@ -225,14 +210,14 @@ class SuggestModel
                 return $rs;
                 break;
             case 'serviceType':
-                $sql = "SELECT  count(*) as count, md_value
+                $sql = "SELECT  count(*) as [count], [md_value]
                     FROM md_values
-                    WHERE md_id = 5124 
+                    WHERE [md_id] = 5124 
                     ";
                  if($query == '') {
-                    $result = $this->db->query($sql . ' GROUP by md_value ORDER by md_value')->fetchAll();
+                    $result = $this->db->query($sql . ' GROUP by [md_value] ORDER by [md_value]')->fetchAll();
                 } else {
-                    $result = $this->db->query($sql . " AND md_value ILIKE ?",'%'. $query.'%', ' GROUP by md_value ORDER by md_value')->fetchAll();
+                    $result = $this->db->query($sql . " AND [md_value] ILIKE ?",'%'. $query.'%', ' GROUP by [md_value] ORDER by [md_value]')->fetchAll();
                 }
                 $rs = array();
                 $i = 0;
@@ -244,9 +229,9 @@ class SuggestModel
                 break;
             case 'harvestFrom':
                 if($query != ''){
-                    $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name ILIKE ?", $query.'%')->fetchAll();
+                    $result = $this->db->query("SELECT DISTINCT [server_name] as [name] FROM md WHERE [server_name] ILIKE ? ORDER BY name", $query.'%')->fetchAll();
                 }
-                else $result = $this->db->query("SELECT DISTINCT server_name as name FROM md WHERE server_name != 'local'")->fetchAll();
+                else $result = $this->db->query("SELECT DISTINCT [server_name] as [name] FROM md WHERE [server_name] IS NOT NULL ORDER BY name")->fetchAll();
                 foreach($result as $row) {
                     $rs[] = array('id'=>$row->name,"text"=>$row->name);
                 }
@@ -262,61 +247,61 @@ class SuggestModel
                     $query_lang = '';
                 }
                 $sql = "
-                    SELECT md_values.recno, md_values.md_path, md_values.md_value, md_values.lang
-                    FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(SUBSTRING(md_values.md_path, 1,27)=SUBSTRING(m.md_path, 1,27) AND md_values.recno=m.recno)
-                    WHERE md_values.md_id=$md_id_cont_md AND md.data_type>0
+                    SELECT md_values.[recno], md_values.[md_path], md_values.[md_value], md_values.[lang]
+                    FROM (md JOIN md_values ON md.[recno]=md_values.[recno]) LEFT JOIN md_values m ON(SUBSTR(md_values.[md_path], 1,27)=SUBSTR(m.[md_path], 1,27) AND md_values.[recno]=m.[recno])
+                    WHERE md_values.[md_id]=$md_id_cont_md AND md.[data_type]>0
                 ";
                 if($creator != '') {
                     if ($creator == $user) {
-                        $sql .= " AND md.create_user='$creator'";
+                        $sql .= " AND md.[create_user]='$creator'";
                     } else {
-                        $sql .= " AND md.create_user='$creator' AND (md.view_group IN($group) OR md.edit_group IN($group) OR md.data_type>0))";
+                        $sql .= " AND md.[create_user]='$creator' AND (md.[view_group] IN($group) OR md.[edit_group] IN($group) OR md.[data_type]>0))";
                     }
                 } else {
                     $sql .= " AND $right";
                 }
                 if($query_lang != '') {
-                    $sql .= " AND md_values.lang='$query_lang'";
+                    $sql .= " AND md_values.[lang]='$query_lang'";
                 }
                 if($contact_role == 'custodian' && $contact_type == 'org') {
-                    $sql .= " AND md.prim=1";
+                    $sql .= " AND md.[prim]=1";
                 }
                 if($query != '') {
-                    $sql .= " AND md_values.md_value ILIKE '%" . $query . "%'";
+                    $sql .= " AND md_values.[md_value] ILIKE '%" . $query . "%'";
                 }
                 if($contact_role != '') {
-                    $sql .= " AND m.md_id=1047 AND m.md_value='$contact_role'";
+                    $sql .= " AND m.[md_id]=1047 AND m.[md_value]='$contact_role'";
                 } else {
-                    $sql .= " AND m.md_id=1047 AND m.md_value IS NOT NULL";
+                    $sql .= " AND m.[md_id]=1047 AND m.[md_value] IS NOT NULL";
                 }
                 $sql .= "
                     UNION
-                    SELECT md_values.recno, md_values.md_path, md_values.md_value, md_values.lang
-                    FROM (md JOIN md_values ON md.recno=md_values.recno) LEFT JOIN md_values m ON(SUBSTRING(md_values.md_path, 1,32)=SUBSTRING(m.md_path, 1,32) AND md_values.recno=m.recno)
-                    WHERE md_values.md_id=$md_id_cont_ms AND md.data_type>0
+                    SELECT md_values.[recno], md_values.[md_path], md_values.[md_value], md_values.[lang]
+                    FROM (md JOIN md_values ON md.[recno]=md_values.[recno]) LEFT JOIN md_values m ON(SUBSTR(md_values.[md_path], 1,32)=SUBSTR(m.[md_path], 1,32) AND md_values.[recno]=m.[recno])
+                    WHERE md_values.[md_id]=$md_id_cont_ms AND md.[data_type]>0
                 ";
                 if($creator != '') {
                     if ($creator == $user) {
-                        $sql .= " AND md.create_user='$creator'";
+                        $sql .= " AND md.[create_user]='$creator'";
                     } else {
-                        $sql .= " AND md.create_user='$creator' AND (md.view_group IN($group) OR md.edit_group IN($group) OR md.data_type>0))";
+                        $sql .= " AND md.[create_user]='$creator' AND (md.[view_group] IN($group) OR md.[edit_group] IN($group) OR md.[data_type]>0))";
                     }
                 } else {
                     $sql .= " AND $right";
                 }
                 if($query_lang != '') {
-                    $sql .= " AND md_values.lang='$query_lang'";
+                    $sql .= " AND md_values.[lang]='$query_lang'";
                 }
                 if($contact_role == 'custodian' && $contact_type == 'org') {
-                    $sql .= " AND md.prim=1";
+                    $sql .= " AND md.[prim]=1";
                 }
                 if($query != '') {
-                    $sql .= " AND md_values.md_value ILIKE '%" . $query . "%'";
+                    $sql .= " AND md_values.[md_value] ILIKE '%" . $query . "%'";
                 }
                 if($contact_role != '') {
-                    $sql .= " AND m.md_id=5038 AND m.md_value='$contact_role' ";
+                    $sql .= " AND m.[md_id]=5038 AND m.[md_value]='$contact_role' ";
                 } else {
-                    $sql .= " AND m.md_id=5038 AND m.md_value IS NOT NULL";
+                    $sql .= " AND m.[md_id]=5038 AND m.[md_value] IS NOT NULL";
                 }
                 $result = $this->db->query($sql)->fetchAll();
                 break;

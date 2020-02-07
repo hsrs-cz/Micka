@@ -17,14 +17,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
     public function startup()
 	{
-		parent::startup();
-        
-        global $tmp_nbcontext, $tmp_identity, $tmp_appparameters;
-        $tmp_nbcontext = $this->context->getByType('Nette\Database\Context');
-        $tmp_identity = $this->user;
+        parent::startup();
+        //dump($this->context->parameters);
         $this->context->parameters['appDefaultLocale'] = $this->translator->getDefaultLocale();
         $this->context->parameters['appLocale'] = $this->translator->getLocale();
-        //$tmp_appparameters['appUrl'] = $this->link(':Catalog:Default:default');
         $dir = dirname($this->getReflection()->getFileName());
         $this->layoutTheme = file_exists("$dir/templates/" . $this->context->parameters['app']['layoutTheme'] . "/Default/default.latte")
             ? $this->context->parameters['app']['layoutTheme']
@@ -33,19 +29,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->appLang = isset($this->langCodes[$this->translator->getLocale()])
             ? $this->langCodes[$this->translator->getLocale()]
             : substr($this->context->parameters['app']['langs'],0,3);
+        $this->context->parameters['appLang'] = $this->appLang;
         $this->mickaSession = $this->getSession('mickaSection');
         
-        define("CSW_LOG", __DIR__ . '/../../../log');
-        define("MICKA_ADMIN_IP", '');
         define("MICKA_LANG", $this->appLang);
-        define("DB_DRIVER", 'postgre');
-        define("MAXRECORDS", 10);
-        define("LIMITMAXRECORDS", 100);
-        define("CATCLIENT_PATH", '');
-        define("PHPPRG_DIR", '');
-        define("REWRITE_MODE", TRUE);
-        define("WMS_CLIENT", '');
-        define("MICKA_THEME", 'default');
 
         $url = $this->context->getByType('Nette\Http\Request')->getUrl();
         $locale = $this->translator->getDefaultLocale() == $this->translator->getLocale()
@@ -60,26 +47,27 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->context->parameters['hostUrl'] = isset($this->context->parameters['app']['mickaUrl']) && $this->context->parameters['app']['mickaUrl'] != ''
             ? $this->context->parameters['app']['mickaUrl']
             : $url->hostUrl;
-        $this->context->parameters['basePath'] = rtrim($url->basePath,'/');
+        //$this->context->parameters['basePath'] = rtrim($url->basePath,'/');
+        $this->context->parameters['basePath'] = isset($this->context->parameters['app']['mickaUrl']) && $this->context->parameters['app']['mickaUrl'] != ''
+            ? $this->context->parameters['app']['mickaUrl']
+            : rtrim($url->basePath,'/');
         $this->context->parameters['locale'] = $locale;
         $this->context->parameters['cswUrl'] = strpos($url->path, '/filter/') === false
-            ? $this->context->parameters['hostUrl'] . $this->context->parameters['basePath'] . '/csw/'
+            ? $this->context->parameters['basePath'] . '/csw/'
             : $this->context->parameters['hostUrl'] . $url->path  . '/';
-        $tmp_appparameters = $this->context->parameters;
+        if (isset($this->context->parameters['minUsernameLength']) === false) {
+            $this->context->parameters['minUsernameLength'] = 2;    
+        }
+        if (isset($this->context->parameters['minPasswordLength']) === false) {
+            $this->context->parameters['minPasswordLength'] = 5;    
+        }
 
-        define("CSW_TIMEOUT", 30);
-        define("HTTP_XML", "Content-type: application/xml; charset=utf-8");
-        define("HTTP_SOAP", "Content-type: application/soap+xml; charset=utf-8"); //TODO ověřit
-        define("HTTP_JSON", "Content-type: application/json; charset=utf-8");
-        define("HTTP_HTML", "Content-type: text/html; charset=utf-8");
-        define("HTTP_CSV", "Content-type: text/csv; charset=utf-8");
-        define("HTTP_KML", "Content-type: application/vnd.google-earth.kml+xml");
-        define("HTTP_CORS", "Access-Control-Allow-Origin: *"); // TODO do konfigurace
-
-        define("XML_HEADER", '<?xml version="1.0" encoding="UTF-8"?'.'>');
-        define("SOAP_HEADER", '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Body>');
-        define("SOAP_FOOTER", '</soap:Body></soap:Envelope>');
-        define("CSW_MAXFILESIZE", 5000000);
+        \App\Model\Micka::setDefaultParameters(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
+        //dump($this->context->parameters); $this->terminate();
 	}
     
     /**
@@ -100,7 +88,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         }
     }
     
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
     public function handleChangeLocale($locale)
     {
         $this->translatorSession->setLocale($locale);
@@ -109,9 +97,14 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
 
 	public function beforeRender()
 	{
+        $this->template->basePath = $this->context->parameters['basePath'];
+        $this->template->baseUrl = $this->context->parameters['basePath'];
+        $this->template->baseUri = $this->context->parameters['basePath'];
         $this->template->parameters = $this->context->parameters;
-        $this->template->themePath = '/layout/' . $this->layoutTheme;
-        $this->template->extjsPath = '/wwwlibs/ext/ext-4.2';
+        $this->template->themePath = file_exists($this->context->parameters['wwwDir'] . DIRECTORY_SEPARATOR . 'layout' . DIRECTORY_SEPARATOR . $this->context->parameters['app']['layoutTheme'] . DIRECTORY_SEPARATOR . "micka.css")
+            ? '/layout/' . $this->context->parameters['app']['layoutTheme']
+            : '/layout/' . 'default';
+        $this->template->layoutTheme = $this->layoutTheme;
         $this->template->appLang = $this->appLang;
         $this->template->appLang2 = $this->translator->getLocale();
         $this->template->action = $this->action;

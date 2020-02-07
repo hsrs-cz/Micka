@@ -1,0 +1,41 @@
+{block content}
+<style>
+.contacts label { width: 20%; }
+.contacts input { display:inline-block !important; width:70%;}
+.contacts select { display:inline-block !important; width:150px;}
+</style>
+
+<div class="container panel panel-default">
+
+<script src="{$basePath}/scripts/edit.js"></script>
+<script type="text/javascript">
+    function md_delkont(id) {
+        if(confirm({_messages.frontend.delete_record}+'?')) this.location=("{$basePath|noescape}/admin/identity/delete/"+id);
+    }
+</script>
+
+<h1><a n:href=":Admin:Identity:default"><i class="fa fa-arrow-left"></i></a> / {_messages.management.identity} - {_messages.frontend.new_record2}</h1>
+<br>
+<form action="{link :Admin:Identity:save $editUser->id}" METHOD=POST>
+	<fieldset class="contacts">
+		<div class="form-group"><label><font color="red">{_messages.management.login_name}</font></label><input class="form-control" type=text name="username" value="{$editUser->username}" size="40" maxlength="60"{if $editUser->id>0} readonly{/if}></div>
+		<div class="form-group"><label><font color="red">{_messages.frontend.passwd}</font></label><input class="form-control" type=password name="passwd" value="" size="60" maxlength="120"></div>
+		<div class="form-group"><label>{_messages.management.role_editor}</label><input class="form-control" type="checkbox" name="role_editor" value="1"{if $editUser->role_editor === 1 || $editUser->role_editor === true}checked{/if}></div>
+		<div class="form-group"><label>{_messages.management.role_publisher}</label><input class="form-control" type="checkbox" name="role_publisher" value="1"{if $editUser->role_publisher === 1 || $editUser->role_publisher === true}checked{/if}></div>
+		<div class="form-group"><label>{_messages.management.role_admin}</label><input class="form-control" type="checkbox" name="role_admin" value="1"{if $editUser->role_admin === 1 || $editUser->role_admin === true}checked{/if}></div>
+		<div class="form-group"><label>{_messages.management.groups}</label><input class="form-control" type=text name="groups" value="{$editUser->groups}" size="40" maxlength="70"></div>
+	</fieldset>
+    <br/><br/>
+	<p align="center">
+		<input type=submit class="btn btn-success" value="{_messages.frontend.save}">
+		{if $editUser->id > 0}
+			<input type=button class="btn btn-danger" onClick="javascript:md_delkont({$editUser->id})" value="{_messages.frontend.delete}">
+		{/if}
+	</p>
+</form>
+
+</div>
+{/block}
+
+{block content-js}
+{/block}

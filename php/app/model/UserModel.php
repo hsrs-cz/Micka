@@ -6,23 +6,17 @@ use Nette,
     Nette\Security\Passwords;
 
 
-class UserModel
+class UserModel extends \BaseModel
 {
 	use Nette\SmartObject;
 
-	/** @var Nette\Database\Context */
-	private $db;
-    private $user = NULL;
-    
-	public function __construct(Nette\Database\Context $db) 
-	{
-		$this->db = $db;
-	}
-    
-    private function hashPassword($password) {
+    protected function hashPassword($password)
+    {
         return Passwords::hash($password);
     }
-    private function verifyPassword($password, $hash) {
+
+    protected function verifyPassword($password, $hash)
+    {
         if (Passwords::verify($password, $hash)) {
             return TRUE;
         } else {
@@ -30,21 +24,29 @@ class UserModel
         }
     }
     
-    private function findUserByName($name) {
-        return $this->db->query("SELECT * FROM users WHERE username=?", $name)->fetch();
+    protected function findUserByName($name)
+    {
+        return $this->db->query("SELECT 
+            [id], RTRIM([username]) AS [username], RTRIM([password]) AS [password],
+            [role_editor], [role_publisher], [role_admin],
+            [groups]
+        FROM users WHERE [username]=%s", $name, "ORDER BY [username]")->fetch();
+
     }
     
-    public function getUserByName($name, $password) {
+    public function getUserByName($name, $password)
+    {
         $this->user = $this->findUserByName($name);
-        if ($this->user && $this->verifyPassword($password, rtrim($this->user->password)) === FALSE) {
+        if ($this->user && $this->verifyPassword($password, $this->user->password) === FALSE) {
             $this->user = NULL;
         }
         return $this->user;
     }
     
-    public function getGroupsByUsername($name) {
+    public function getGroupsByUsername($name)
+    {
         $rs = [$name=>$name];
-        if ($this->user && rtrim($this->user->username) == $name) {
+        if ($this->user && $this->user->username == $name) {
             $groups = explode(',', $this->user->groups);
             foreach ($groups as $value) {
                 $rs[$value] = $value;

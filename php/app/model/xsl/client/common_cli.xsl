@@ -6,46 +6,38 @@
 
 <!-- for multiligual elements -->
 <xsl:template name="multi" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <xsl:param name="el"/>
-  <xsl:param name="lang"/>
-  <xsl:param name="mdlang"/>
-  <xsl:variable name="txt" select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]"/>	
-  <xsl:variable name="uri" select="$el/*/@xlink:href"/>	
-  <xsl:choose>
-  	<xsl:when test="string-length($txt)>0">
-  		<xsl:choose>
-  			<xsl:when test="$uri">
-  				<a href="{$uri}" target="_blank">
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$txt"/>
-      			</xsl:call-template>                
-  				</a>
-  			</xsl:when>		
-  			<xsl:otherwise>
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$txt"/>
-      			</xsl:call-template>
-      		</xsl:otherwise>	
-  		</xsl:choose>
-  	</xsl:when>
-  	<xsl:otherwise>
-  		<xsl:choose>
-  			<xsl:when test="$uri">
-  				<a href="{$uri}" target="_blank">
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$el/*"/>
-      			</xsl:call-template>
-                <!--xsl:value-of select="php:function('hsEntitities',string($el/*))"/--> 
-  				</a>
-  			</xsl:when>		
-  			<xsl:otherwise>
-  	  			<xsl:call-template name="lf2br">
-  	    			<xsl:with-param name="str" select="$el/*"/>
-      			</xsl:call-template>
-      		</xsl:otherwise>
-  		</xsl:choose>		
-  	</xsl:otherwise>
-  </xsl:choose>
+    <xsl:param name="el"/>
+    <xsl:param name="lang"/>
+    <xsl:param name="mdlang"/>
+    <xsl:param name="codelist" select="''"/>
+    <xsl:variable name="uri" select="$el/*/@xlink:href"/>
+    <xsl:variable name="txt">
+        <xsl:choose>
+            <xsl:when test="$codelist and $codelist/value[@uri=$uri]">
+                <xsl:value-of select="$codelist/value[@uri=$uri]/*[name()=$lang]"/>
+            </xsl:when>
+            <xsl:when test="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]">
+                <xsl:value-of select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$el/*"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:choose>
+        <xsl:when test="$uri">
+            <a href="{$uri}" target="_blank">
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str" select="normalize-space($txt)"/>
+            </xsl:call-template>
+            </a>
+        </xsl:when>
+        <xsl:otherwise>
+            <xsl:call-template name="lf2br">
+                <xsl:with-param name="str" select="$txt"/>
+            </xsl:call-template>
+        </xsl:otherwise>	
+    </xsl:choose>
 </xsl:template>
 
 <!-- conversion of line breaks to <br> -->
@@ -54,19 +46,19 @@
     <xsl:choose>
         <!-- if the text is link -->
     	<xsl:when test="substring($str,1,4)='http'">
-			<a href="{$str}"><xsl:value-of select="$str"/></a>
+			<a href="{$str}"><xsl:value-of select="php:function('addslashes', $str)"/></a>
         </xsl:when>
         <!-- line breaks to <br> -->
-        <xsl:when test="contains($str,'&#xA;')">
+        <xsl:when test="contains($str,'&#xa;')">
             <xsl:call-template name="lf2br">
                 <xsl:with-param name="str">
-                    <xsl:value-of select="substring-before($str,'&#xA;')"/>
+                    <xsl:value-of select="substring-before($str,'&#xa;')"/>
                 </xsl:with-param>
             </xsl:call-template>
             <br/>
             <xsl:call-template name="lf2br">
                 <xsl:with-param name="str">
-                    <xsl:value-of select="substring-after($str,'&#xA;')"/>
+                    <xsl:value-of select="substring-after($str,'&#xa;')"/>
                 </xsl:with-param>
             </xsl:call-template>
         </xsl:when>
@@ -102,6 +94,24 @@
     </xsl:choose>
 </xsl:template>
 
+<!-- for multiligual elements -->
+<xsl:template name="multi2" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <xsl:param name="el"/>
+    <xsl:param name="lang"/>
+    <xsl:param name="mdlang"/>
+    <xsl:variable name="txt">
+        <xsl:choose>
+            <xsl:when test="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]">
+                <xsl:value-of select="$el/gmd:PT_FreeText/*/gmd:LocalisedCharacterString[contains(@locale,$lang)]"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$el/*"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:variable>
+    <xsl:value-of select="php:function('json_encode', string($txt))"/>
+</xsl:template>
+
 <!-- PAGINATOR -->
 <xsl:template name="paginator">
 	<xsl:param name="matched"/>
@@ -130,21 +140,6 @@
 	</xsl:if> 
 </xsl:template>
 
-	<!-- creation of anchor from url 
-	<xsl:template name="showURL">
-		<xsl:param name="val"/>
-		<xsl:choose>
-			<xsl:when test="substring($val,1,4)='http'">
-				<a href="{$val}"><xsl:value-of select="$val"/></a>
-			</xsl:when>
-			<xsl:otherwise>
-                <xsl:value-of select="$val"/>
-            </xsl:otherwise>  	
-		</xsl:choose>
-	</xsl:template>-->
-
-
-    
 	<!-- conversion & to  \&  - not used -->
 	<xsl:template name="amp2amp">
 		<xsl:param name="str"/>

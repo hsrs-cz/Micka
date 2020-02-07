@@ -7,11 +7,6 @@ use Nette;
 
 class ContactsModel extends \BaseModel
 {
-	public function startup()
-	{
-		parent::startup();
-	}
-    
     private function isRight2MdContacts($right,$contUsername,$contViewGroup,$contEditGroup)
     {
         if ($this->user->isInRole('admin')) {

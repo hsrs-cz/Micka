@@ -4,7 +4,7 @@ namespace AdminModule;
 use App\Model;
 
 /** @resource Admin */
-class ProfilePresenter extends \BasePresenter
+class ProfilePresenter extends \BaseAdminPresenter
 {
     private $mdSchema;
     private $mdProfile;
@@ -12,10 +12,18 @@ class ProfilePresenter extends \BasePresenter
 	public function startup()
 	{
 		parent::startup();
-        $this->mdSchema = new \App\Model\StandardSchemaModel($this->context->getByType('Nette\Database\Context'));
-        $this->mdProfile = new \App\AdminModel\ProfileModel($this->context->getByType('Nette\Database\Context'), $this->user);
+        $this->mdSchema = new \App\Model\StandardSchemaModel(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
+        $this->mdProfile = new \App\AdminModel\ProfileModel(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
         $this->mdProfile->setMpttModel($this->mdSchema);
-	}
+}
 
     /** @resource Admin */
 	public function renderDefault($id)
@@ -55,6 +63,20 @@ class ProfilePresenter extends \BasePresenter
     }
 
     /** @resource Admin */
+    public function actionSetvis($id) 
+    {
+        $node = $this->mdProfile->setVisProfil($id);
+        $this->redirect(':Admin:Profile:default', $node);
+    }
+
+    /** @resource Admin */
+    public function actionUnsetvis($id)
+    {
+        $node = $this->mdProfile->unsetVisProfil($id);
+        $this->redirect(':Admin:Profile:default', $node);
+    }
+
+    /** @resource Admin */
     public function actionAdd()
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
@@ -69,12 +91,10 @@ class ProfilePresenter extends \BasePresenter
             $profil_id = $tmp[2];
         }
         if (isset($post['btn']) && $post['btn'] == 'save') {
-            //dump($this->context->getByType('Nette\Http\Request')->getPost());
             $report = $this->mdProfile->cloneProfil($md_standard, $profil_id, $post);
             if ($report != '') {
                 $this->flashMessage($report);
             }
-            //$this->terminate();
         }
         $this->redirect(':Admin:Profile:default', $md_standard.','.$node);    
     }
@@ -83,7 +103,7 @@ class ProfilePresenter extends \BasePresenter
     public function actionClone($id)
     {
         $this->template->id = $id;
-        $this->setView('New');
+        $this->setView('new');
     }
 
     /** @resource Admin */

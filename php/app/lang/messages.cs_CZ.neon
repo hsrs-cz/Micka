@@ -143,7 +143,7 @@ frontend:
     close: "Zavřít"
     login: "Přihlásit se"
     logout: "Odhlásit se"
-    inside: "Pouze uvnitř"
+    inside: "Pouze uvnitř zadaného rozsahu"
     about: "O aplikaci"
     save: "Uložit"
     save_edit: "Uložit a pokračovat"
@@ -166,13 +166,22 @@ frontend:
     where-tabstract: "V názvu a abstraktu"
 
 management:
-    modules: "Administrace"
+    modules: "Nastavení"
     contacts: "Správa kontaktů"
-    identity: "Práva"
+    identity: "Uživatelé"
     profiles: "Správa profilů"
     profileSelectMDS: "Výběr metadatového standardu"
     profileAdd: "Vytvoření nového profilu"
     summary: "Přehled záznamů"
+    login_name: "Přihlašovací jméno"
+    role_editor: "Editor"
+    role_publisher: "Publisher"
+    role_admin: "Administrátor"
+    groups: "Skupiny"
+    changePasswd: "Změna hesla"
+    currentPasswd: "Současné heslo"
+    newPasswd: "Nové heslo"
+    verifyPasswd: "Potvrzení nového hesla"
 
 lang:
     cze: "Česky"

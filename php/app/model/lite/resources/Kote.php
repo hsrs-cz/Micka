@@ -56,36 +56,37 @@ class Kote{
 	}
 	
 	// --- odesle multipart formular
-	function postFileForm($destination, $fileContent){
-		$showXml = false; //pripraveno
-		$eol = "\r\n";
-		$mime_boundary=md5(time());
-		$data = '--' . $mime_boundary . $eol;
-		$data .= 'Content-Disposition: form-data; name="dataFile"; filename="myMetadataFile.xml"' . $eol; //zavisle na JRC portalu
-	  	$data .= 'Content-Type: text/xml' . $eol . $eol;
-	 	$data .= $fileContent . $eol;
-	  	$data .= "--" . $mime_boundary . "--" . $eol . $eol; // finish with two eol's!!
-	  	$params = array('http' => array(
-	  	         'method' => 'POST',
-	  	         'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol,
-	  	         'content' => $data
-	  	));		
-	  	if($showXml){           
-	  		$params = array('http' => array(
-	  	          'method' => 'POST',
-	  	          'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol
-	  				.'Accept: application/xml' . $eol,
-	  	          'content' => $data
-	  	     ));
-	  	}
-	  	$ctx = stream_context_create($params);
-	  	if($showXml){
-	  		header('Content-Type: application/xml');
-	  	}
-	  	return file_get_contents($destination, FILE_TEXT, $ctx);  
-	}
+    function postFileForm($destination, $fileContent){
+        $showXml = false; //pripraveno
+        $eol = "\r\n";
+        $mime_boundary=md5(time());
+        $data = '--' . $mime_boundary . $eol;
+        $data .= 'Content-Disposition: form-data; name="dataFile"; filename="myMetadataFile.xml"' . $eol; //zavisle na JRC portalu
+        $data .= 'Content-Type: text/xml' . $eol . $eol;
+        $data .= $fileContent . $eol;
+        $data .= "--" . $mime_boundary . "--" . $eol . $eol; // finish with two eol's!!
+        $params = array('http' => array(
+                    'method' => 'POST',
+                    'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol,
+                    'content' => $data
+        ));		
+        if($showXml){           
+            $params = array('http' => array(
+                    'method' => 'POST',
+                    'header' => 'Content-Type: multipart/form-data; boundary=' . $mime_boundary . $eol
+                    .'Accept: application/xml' . $eol,
+                    'content' => $data
+                ));
+        }
+        $ctx = stream_context_create($params);
+        if($showXml){
+            header('Content-Type: application/xml');
+        }
+        return @file_get_contents($destination, FILE_TEXT, $ctx);
+    }
     
     function codeRow($s){
+        if(is_array($s)) return $s;
         return htmlspecialchars(str_replace('\\', '\\\\', trim($s)), ENT_COMPAT);
     }
 	
@@ -100,7 +101,7 @@ class Kote{
                 for($i=0; $i<count($val); $i++){                    
                     if(is_array($val[$i])){
                         foreach($val[$i] as $k2=>$v2){
-                            if($k2 && (($data['locale'] && in_array($k2, $data['locale']))||$k2=='TXT')) {
+                            if($k2 && isset($data['locale']) && (($data['locale'] && in_array($k2, $data['locale']))||$k2=='TXT')) {
                                 if($k2=='TXT') $j++;
                                 $out[$k[0]][$j][$k[1]][$k2] = $this->codeRow($v2);
                             }
@@ -122,7 +123,8 @@ class Kote{
             }
 		}
 
-		//eval ($out); echo "<pre>"; var_dump($out); die();
+		//eval ($out); 
+        //echo "<pre>"; var_dump($out); die();
 		//$md["keywords"] = isset($data["keywords"]) ? explode("\n",$data["keywords"]) : '';
 		//$md["gemet"] = isset($data["gemet"]) ? explode("\n",$data["gemet"]) : '';
 		//$md["inspire"] = isset($data["inspire"]) ? explode("\n",$data["inspire"]) : '';

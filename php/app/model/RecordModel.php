@@ -7,22 +7,26 @@ use Nette;
 
 class RecordModel extends \BaseModel
 {
-    private $appParameters;
-    private $recordMd = NULL;
-    private $recordMdValues = [];
-    private $typeTableMd = 'edit_md';
-    private $geomMd = [];
-    private $titleMd = [];
-    private $langMd = NULL;
-    private $profil_id = -1;
-    private $package_id = -1;
+    protected $recordMd = NULL;
+    protected $recordMdValues = [];
+    protected $typeTableMd = 'edit_md';
+    protected $geomMd = [];
+    protected $titleMd = [];
+    protected $langMd = NULL;
+    protected $profil_id = -1;
+    protected $package_id = -1;
+    protected $recordEditLock = 14400;
     
-    public function setAppParameters($appParameters)
-    {
-        $this->appParameters = $appParameters;
+	public function __construct($db, $user, $appgParameters)
+	{
+        parent::__construct($db, $user, $appgParameters);
+        if (isset($appgParameters['app']['recordEditLock']) && $appgParameters['app']['recordEditLock'] > 3600) {
+            $this->recordEditLock = $appgParameters['app']['recordEditLock'];
+        }
     }
     
-    private function initialVariables() {
+    private function initialVariables()
+    {
         $this->geomMd['x1'] = NULL;
         $this->geomMd['x2'] = NULL;
         $this->geomMd['y1'] = NULL;
@@ -32,7 +36,8 @@ class RecordModel extends \BaseModel
         $this->titleMd['title'] = NULL;
         $this->titleMd['title_lang_main'] = NULL;
     }
-    private function setRecordMdById($id, $typeTableMd, $right)
+
+    protected function setRecordMdById($id, $typeTableMd, $right)
     {
         if ($id == '') {
             $this->recordMd = NULL;
@@ -41,16 +46,20 @@ class RecordModel extends \BaseModel
         $this->typeTableMd = $typeTableMd == 'edit_md' ? 'edit_md' : 'md';
         if ($this->typeTableMd == 'edit_md') {
             $this->recordMd = $this->db->query(
-                "SELECT * FROM edit_md WHERE sid=? AND uuid=?",session_id(),$id)->fetch();
+                "SELECT * FROM edit_md WHERE [edit_user]=%s AND [uuid]=%s", $this->user->getIdentity()->username, $id)->fetch();
         } else {
             $this->recordMd = $this->db->query(
-                "SELECT * FROM md WHERE uuid=?", $id)->fetch();
+                "SELECT * FROM md WHERE [uuid]=%s", $id)->fetch();
         }
         if ($this->recordMd && $right != 'new') {
             if ($this->isRight2MdRecord($right) === FALSE) {
                 $this->recordMd = NULL;
             }
         }
+        if (isset($this->recordMd->uuid)) {
+            $this->recordMd->uuid = rtrim($this->recordMd->uuid);
+        }
+        $this->recordMdValues = array();
         return;
     }
     
@@ -59,12 +68,12 @@ class RecordModel extends \BaseModel
         if ($this->recordMd && count($this->recordMdValues) == 0) {
             $table = $this->typeTableMd == 'edit_md' ? 'edit_md_values' : 'md_values';
             $this->recordMdValues = $this->db->query(
-                "SELECT * FROM $table WHERE recno=? ORDER BY md_path", $this->recordMd->recno)->fetchAll();
+                "SELECT * FROM $table WHERE [recno]=%i ORDER BY [md_path]", $this->recordMd->recno)->fetchAll();
         }
         return;
     }
     
-    private function isRight2MdRecord($right)
+    protected function isRight2MdRecord($right, $table='md')
     {
         if ($this->recordMd === NULL) {
             return FALSE;
@@ -74,36 +83,40 @@ class RecordModel extends \BaseModel
         }
         switch ($right) {
             case 'read':
-                if($this->recordMd->data_type > 0) {
+                if ($this->recordMd->data_type > 0) {
                     return TRUE;
                 }
-                if($this->user->isLoggedIn()) {
-                    if($this->recordMd->create_user == $this->user->getIdentity()->username) {
+                if ($this->user->isLoggedIn()) {
+                    if ($this->recordMd->create_user == $this->user->getIdentity()->username) {
                         return TRUE;
                     }
-                    if($this->user->isLoggedIn()) {
-                        foreach ($this->user->getIdentity()->data['groups'] as $row) {
-                            if ($row == $this->recordMd->view_group) {
-                                return TRUE;
-                            }
-                            if ($row == $this->recordMd->edit_group) {
-                                return TRUE;
-                            }
+                    foreach ($this->user->getIdentity()->data['groups'] as $row) {
+                        if ($row == $this->recordMd->view_group) {
+                            return TRUE;
                         }
+                        if ($row == $this->recordMd->edit_group) {
+                            return TRUE;
+                        }
+                    }
+                } else {
+                    if ($this->recordMd->create_user === 'guest') {
+                        return TRUE;
                     }
                 }
                 return FALSE;
             case 'edit':
-                if($this->user->isLoggedIn()) {
-                    if($this->recordMd->create_user == $this->user->getIdentity()->username) {
+                if ($this->user->isLoggedIn()) {
+                    if ($this->recordMd->create_user == $this->user->getIdentity()->username) {
                         return TRUE;
                     }
-                    if($this->user->isLoggedIn()) {
-                        foreach ($this->user->getIdentity()->data['groups'] as $row) {
-                            if ($row == $this->recordMd->edit_group) {
-                                return TRUE;
-                            }
+                    foreach ($this->user->getIdentity()->data['groups'] as $row) {
+                        if ($row == $this->recordMd->edit_group) {
+                            return TRUE;
                         }
+                    }
+                } else {
+                    if ($this->recordMd->create_user === 'guest') {
+                        return TRUE;
                     }
                 }
                 return FALSE;
@@ -122,19 +135,26 @@ class RecordModel extends \BaseModel
     private function getNewRecno($typeTableMd)
     {
         $table = $typeTableMd == 'edit_md' ? 'edit_md' : 'md';
-        $recno = $this->db->query("SELECT MAX(recno)+1 FROM $table")->fetchField();
+        $recno = $this->db->query("SELECT MAX([recno])+1 FROM $table")->fetchSingle();
         return $recno > 1 ? $recno : 1;
     }
     
-    private function seMdValues($data,$recno=0)
+    protected function seMdValues($data, $recno=0)
     {
-        if (count($data) > 0) {
-            if ($recno > 0) {
-                foreach ($data as $key=>$value) {
-                    $data[$key]['recno'] = $recno;
-                }
+        if (count($data) > 1) {
+            foreach ($data as $value) {
+                $values['recno'][] = $recno > 0 ? $recno : $value['recno'];
+                $values['md_value'][] = $value['md_value'];
+                $values['md_id'][] = $value['md_id'];
+                $values['md_path'][] = $value['md_path'];
+                $values['lang'][] = $value['lang'];
+                $values['package_id'][] = $value['package_id'];
             }
-            $this->db->query("INSERT INTO edit_md_values", $data);
+            $this->db->query("INSERT INTO edit_md_values %m", $values);
+        } elseif (count($data) === 1) {
+            $values = $data[0];
+            $values['recno'] = $recno > 0 ? $recno : $values['recno'];
+            $this->db->query("INSERT INTO edit_md_values %v", $values);
         }
     }
     
@@ -144,7 +164,7 @@ class RecordModel extends \BaseModel
         $data['data_type'] = $this->recordMd->data_type; 
         $data['edit_group'] = $this->recordMd->edit_group; 
         $data['view_group'] = $this->recordMd->view_group;
-        $data['last_update_user'] = $this->user->identity->username;
+        $data['last_update_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
         $data['last_update_date'] = Date("Y-m-d");
         if ($this->langMd !== NULL) {
             $data['lang'] = $this->langMd; 
@@ -161,22 +181,13 @@ class RecordModel extends \BaseModel
         $data['md_update'] = $this->recordMd->md_update != '' ? $this->recordMd->md_update : NULL;
         //$data['valid'] = $this->recordMd->valid != '' ? $this->recordMd->valid : NULL;
         //$data['prim'] = $this->recordMd->prim != '' ? $this->recordMd->prim : NULL;
-        $this->db->query('UPDATE edit_md SET ? WHERE sid=? AND recno=?', $data, session_id(), $recno);
+        $this->db->query('UPDATE edit_md SET', $data , 'WHERE [edit_user]=%s AND [recno]=%i', $this->user->getIdentity()->username, $recno);
         $x1 = $data['x1'];
         $x2 = $data['x2'];
         $y1 = $data['y1'];
         $y2 = $data['y2'];
-        if ($this->recordMd->the_geom != '') {
-            $this->db->query("UPDATE edit_md SET the_geom=ST_GeomFromText(?,0)
-                    WHERE sid='".session_id()."' AND recno=?", $this->recordMd->the_geom, $recno);
-        } elseif ($x1 != NULL && $x2 != NULL && $y1 != NULL && $y2 != NULL) {
-            $this->db->query("UPDATE edit_md SET 
-                    the_geom=ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0)
-                    WHERE sid='".session_id()."' AND recno=?", $recno);
-        }
-        $xml = $this->recordMd->pxml == '' ? NULL : str_replace("'", "&#39;", $this->recordMd->pxml);
-        $this->db->query("UPDATE edit_md SET pxml=XMLPARSE(DOCUMENT ?)
-                WHERE sid='".session_id()."' AND recno=?", $xml, $recno);
+        $this->updateGeom($recno, $x1, $x2, $y1, $y2);
+        $this->updateEditMdXml($recno, $this->recordMd->pxml);
     }
     
     private function setEditMd2Md($editRecno, $recno)
@@ -185,38 +196,21 @@ class RecordModel extends \BaseModel
         if ($recno == 0) {
             $mdRecno = $this->getNewRecno('md');
             $this->db->query("
-                INSERT INTO md (recno,uuid,md_standard,lang,data_type,create_user,create_date,last_update_user,last_update_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid)
-                SELECT ?,uuid,md_standard,lang,data_type,create_user,create_date,last_update_user,last_update_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid
-                FROM edit_md WHERE recno=?"
+                INSERT INTO md ([recno],[uuid],[md_standard],[lang],[data_type],[create_user],[create_date],[last_update_user],[last_update_date],[edit_group],[view_group],[x1],[y1],[x2],[y2],[the_geom],[range_begin],[range_end],[md_update],[title],[server_name],[pxml],[valid])
+                SELECT %i,[uuid],[md_standard],[lang],[data_type],[create_user],[create_date],[last_update_user],[last_update_date],[edit_group],[view_group],[x1],[y1],[x2],[y2],[the_geom],[range_begin],[range_end],[md_update],[title],[server_name],[pxml],[valid]
+                FROM edit_md WHERE [recno]=%i"
                 , $mdRecno, $editRecno);
         } else {
-            $sql = "UPDATE md SET 
-                        last_update_user=edit.last_update_user,
-                        last_update_date=edit.last_update_date,
-                        pxml=edit.pxml,
-                        lang=edit.lang,
-                        data_type=edit.data_type,
-                        edit_group=edit.edit_group, view_group=edit.view_group,
-                        x1=edit.x1, y1=edit.y1, x2=edit.x2, y2=edit.y2, the_geom=edit.the_geom,
-                        range_begin=edit.range_begin, range_end=edit.range_end,
-                        md_update=edit.md_update,
-                        title=edit.title,
-                        valid=edit.valid,
-                        prim=edit.prim
-                    FROM edit_md edit
-                    WHERE edit.recno=? AND md.recno=? AND edit.sid='".session_id()."'";
-            $this->db->query($sql,$editRecno,$recno);
+            $this->updateMd($editRecno, $recno);
         }
         return $mdRecno;
     }
 
-    private function recordValidate($xml)
+    public function recordValidate($xml)
     {
         $this->recordMd->valid = 0;
         $this->recordMd->prim = 0;
-        require_once __DIR__ . '/validator/resources/Validator.php';
-        $validator = new \Validator();
-        $validator->run($xml);
+        $validator = $this->validate($xml);
         $vResult = $validator->getPass();
         if ($vResult) {
             if ($vResult['fail'] == 0) {
@@ -226,62 +220,72 @@ class RecordModel extends \BaseModel
         }
     }
     
-    private function deleteMdValues($recno) {
-        $this->db->query("DELETE FROM md_values WHERE recno=?", $recno);
-        return;
+    public function validate($xml, $type='gmd', $lang='eng', $profile=null)
+    {
+        $path_validator = realpath($this->appParameters['appDir'] . "/modules/Validator/model/Validator.php");
+        if ($path_validator === false) {
+            return false;
+        }
+        if ($profile === null) {
+            $profile = $this->appParameters['app']['layoutTheme'];
+        }
+        require_once $path_validator;
+        $validator = new \ValidatorModule\Validator($type, $lang, $profile);
+        $validator->run($xml);
+        return $validator;
     }
     
-    private function deleteEditMdValuesByProfil($editRecno, $mds, $profil_id, $package_id) {
-        $sql = "DELETE FROM edit_md_values WHERE recno=?";
+    private function deleteMdValues($recno)
+    {
+        $this->db->query("DELETE FROM md_values WHERE [recno]=%i", $recno);
+    }
+    
+    private function deleteEditMdValuesByProfil($editRecno, $mds, $profil_id, $package_id)
+    {
+        $sql = "DELETE FROM edit_md_values WHERE [recno]=%i";
 		if ($mds == 0 || $mds == 10) {
-			$sql .= " AND md_id<>38";
+			$sql .= " AND [md_id]<>38";
             if ($profil_id > -1) {
-                $sql .= " AND md_id IN(
-                    SELECT standard_schema.md_id 
-                    FROM standard_schema INNER JOIN elements ON elements.el_id = standard_schema.el_id
-                    WHERE standard_schema.md_standard=0 AND elements.form_ignore=0 
-                    AND standard_schema.md_id IN(SELECT md_id FROM profil WHERE profil_id=$profil_id))";
+                $sql .= " AND [md_id] IN(
+                    SELECT standard_schema.[md_id] 
+                    FROM standard_schema INNER JOIN elements ON elements.[el_id] = standard_schema.[el_id]
+                    WHERE standard_schema.[md_standard]=0 AND elements.[form_ignore]=0 
+                    AND standard_schema.[md_id] IN(SELECT [md_id] FROM profil WHERE [profil_id]=$profil_id))";
             }
 		}
         if ($package_id > -1) {
-            $sql .= " AND package_id=$package_id";
+            $sql .= " AND [package_id]=$package_id";
         }
         $this->db->query($sql, $editRecno);
-        return;
     }
 
-    private function deleteEditMdValuesByLite($editRecno, $mds, $del_md_id,$table='edit_md_values') {
-		if ($mds == 0 || $mds == 10) {
-            if (isset($del_md_id[38])) {
-                unset($del_md_id[38]);
-            }
-		}
-        $sql = "DELETE FROM $table WHERE recno=? AND md_id IN (?)";
+    private function deleteEditMdValuesByLite($editRecno, $mds, $del_md_id,$table='edit_md_values')
+    {
+        $sql = "DELETE FROM $table WHERE [recno]=%i AND [md_id] IN %in";
         $this->db->query($sql, $editRecno, array_keys($del_md_id));
-        return;
     }
     
     private function setEditMdValues2MdValues($editRecno, $recno)
     {
         $this->db->query("
-            INSERT INTO md_values (recno, md_id, md_value, md_path, lang , package_id)
-            SELECT ?, md_id, md_value, md_path, lang , package_id 
-            FROM edit_md_values WHERE recno=?"
+            INSERT INTO md_values ([recno], [md_id], [md_value], [md_path], [lang] , [package_id])
+            SELECT %i, [md_id], [md_value], [md_path], [lang] , [package_id] 
+            FROM edit_md_values WHERE [recno]=%i"
             , $recno, $editRecno);
-        return;
     }
 
     public function setEditRecord2Md()
     {
-        if (!$this->recordMd || $this->typeTableMd != 'edit_md') {
-            // error
+        if ($this->recordMd === null || $this->typeTableMd != 'edit_md') {
+            throw new \Nette\Application\ApplicationException(
+                'messages.import.incompletInputData');
         }
         $editRecno = $this->recordMd->recno;
         // validate
         if ($this->appParameters['app']['validator'] === true) {
             $this->recordValidate($this->recordMd->pxml);
-            $this->db->query("UPDATE edit_md SET valid=?, prim=? WHERE sid='".session_id()."' AND recno=?",
-                $this->recordMd->valid, $this->recordMd->prim, $editRecno);
+            $this->db->query("UPDATE edit_md SET [valid]=%i, [prim]=%i WHERE [edit_user]=%s AND [recno]=%i",
+                $this->recordMd->valid, $this->recordMd->prim, $this->user->getIdentity()->username, $editRecno);
         }
         $this->setRecordMdById($this->recordMd->uuid, 'md', 'edit');
         if ($this->recordMd) {
@@ -294,46 +298,43 @@ class RecordModel extends \BaseModel
         }
     }
     
-    private function insertMdValuesBasic($md_standard, $recno, $uuid=NULL,$lang=NULL,$date=FALSE) {
+    protected function insertMdValuesBasic($md_standard, $recno, $uuid=NULL,$lang=NULL,$date=FALSE)
+    {
 		if ($md_standard == 0 || $md_standard == 10) {
             $values = [];
             if ($uuid !== NULL) {
-                $values[] = [
-                    'recno'=>$recno,
-                    'md_value'=>$uuid,
-                    'md_id'=>38,
-                    'md_path'=>'0_0_38_0_',
-                    'lang'=>'xxx',
-                    'package_id'=>0
-                ];
+                $values['recno'][] = $recno;
+                $values['md_value'][] = $uuid;
+                $values['md_id'][] = 38;
+                $values['md_path'][] = '0_00_38_00_';
+                $values['lang'][] = 'xxx';
+                $values['package_id'][] = 0;
             }
             if ($lang !== NULL) {
-                $values[] = [
-                    'recno'=>$recno,
-                    'md_value'=>$lang,
-                    'md_id'=>5527,
-                    'md_path'=>'0_0_39_0_5527_0_',
-                    'lang'=>'xxx',
-                    'package_id'=>0
-                ];
+                $values['recno'][] = $recno;
+                $values['md_value'][] = $lang;
+                $values['md_id'][] = 5527;
+                $values['md_path'][] = '0_00_39_00_5527_00_';
+                $values['lang'][] = 'xxx';
+                $values['package_id'][] = 0;
             }
             if ($date === TRUE) {
-                $values[] = [
-                    'recno'=>$recno,
-                    'md_value'=>Date("Y-m-d"),
-                    'md_id'=>44,
-                    'md_path'=>'0_0_44_0_',
-                    'lang'=>'xxx',
-                    'package_id'=>0
-                ];
+                $values['recno'][] = $recno;
+                $values['md_value'][] = Date("Y-m-d");
+                $values['md_id'][] = 44;
+                $values['md_path'][] = '0_00_44_00_';
+                $values['lang'][] = 'xxx';
+                $values['package_id'][] = 0;
             }
             if (count($values) > 0) {
-                $this->db->query("INSERT INTO edit_md_values", $values);
+                $this->db->query("INSERT INTO edit_md_values %m;", $values);
             }
 		}
     }
     
-    private function setMdFromXml($data, $log=FALSE) {
+    private function setMdFromXml($data, $log=FALSE)
+    {
+        $this->initialVariables();
         $report = array();
         if (array_key_exists('params', $data)
             && array_key_exists('new_md', $data)
@@ -421,7 +422,7 @@ class RecordModel extends \BaseModel
             }
         } elseif (array_key_exists('report', $data)) {
             if ($log) {
-                $report[$key]['report'] = 'incompletInputData';
+                $report[]['report'] = 'incompletInputData';
                 return $report;
             } else {
                 throw new \Nette\Application\ApplicationException(
@@ -434,16 +435,23 @@ class RecordModel extends \BaseModel
     private function setNewEditMdRecord($httpRequest)
     {
         $post = $httpRequest->getPost();
+        $date = new \DateTime();
         $md = [];
-        $md['sid'] = session_id();
-		$md['recno'] = $this->getNewRecno('edit_md');
+        $md['edit_user'] = $this->user->getIdentity()->username;
+        $md['edit_timestamp'] = $date->getTimestamp();
+        $md['recno'] = $this->getNewRecno('edit_md');
+        $md['md_recno'] = 0;
         $md['uuid'] = $this->getUuid();
-		$md['md_standard'] = isset($post['standard']) ? $post['standard'] : 0;
+		$md['md_standard'] = isset($post['standard']) ? (integer) $post['standard'] : 0;
 		$md['data_type'] = -1;
-		$md['create_user'] = $this->user->identity->username;
+		$md['create_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
 		$md['create_date'] = Date("Y-m-d");
-        $md['edit_group'] = isset($post['group_e']) ? $post['group_e'] : $this->user->identity->username;
-        $md['view_group'] = isset($post['group_v']) ? $post['group_v'] : $this->user->identity->username;
+        $md['edit_group'] = isset($post['group_e']) && isset($this->user->identity->username)
+                                ? $post['group_e']
+                                : 'guest';
+        $md['view_group'] = isset($post['group_v']) && isset($this->user->identity->username)
+                                ? $post['group_v'] 
+                                : 'guest';
         $lang_main = (isset($post['lang_main']) && $post['lang_main'] != '') ? $post['lang_main'] : 'eng';
         $langs = isset($post['languages']) ? $post['languages'] : array();
         if(!in_array($lang_main, $langs)){
@@ -472,7 +480,11 @@ class RecordModel extends \BaseModel
                             $md['lang'],
                             $lang_main
                         );
-                        $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+                        $arrayMdXml2MdValues = new ArrayMdXml2MdValues(
+                            $this->db,
+                            $this->user,
+                            $this->appParameters
+                        );
                         $arrayMdXml2MdValues->lang = $lang_main;
                         $this->setMdFromXml(['new_md' => $md]
                                 + ['params' => $params]
@@ -491,7 +503,11 @@ class RecordModel extends \BaseModel
                     $md['lang'],
                     $lang_main
                 );
-                $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+                $arrayMdXml2MdValues = new ArrayMdXml2MdValues(
+                    $this->db,
+                    $this->user,
+                    $this->appParameters
+                );
                 $arrayMdXml2MdValues->lang = $lang_main;
                 $this->setMdFromXml(['new_md' => $md]
                         + ['params' => $params]
@@ -527,19 +543,50 @@ class RecordModel extends \BaseModel
         $this->setRecordMdValues();
         return $this->recordMdValues;
     }
-    
-	public function deleteEditRecords()
-	{
-        $this->db->query('DELETE FROM edit_md_values WHERE recno IN(SELECT recno FROM edit_md WHERE sid=?)', session_id());
-        $this->db->query('DELETE FROM edit_md WHERE sid=?', session_id());
-        return;
-	}
-    
+
+    public function controlIsEditUse()
+    {
+        $date = new \DateTime();
+        $ts_lock = $date->getTimestamp() - $this->recordEditLock;
+        $use = $this->db->query(
+            'SELECT COUNT([recno]) FROM edit_md WHERE [md_recno]=%i AND [edit_timestamp]>%i',
+            $this->recordMd->recno,
+            $ts_lock
+        )->fetchSingle();
+        return $use > 0 ? true : false;
+
+    }
+
+    public function deleteExpiredEditRecords()
+    {
+        $recno = isset($this->recordMd->recno) && $this->recordMd->recno > 0 ? $this->recordMd->recno : 0;
+        $date = new \DateTime();
+        $ts_lock = $date->getTimestamp() - $this->recordEditLock;
+        $tmp = $this->db->query("
+            SELECT [recno] FROM edit_md WHERE [edit_timestamp]<%i
+            UNION
+            SELECT [recno] FROM edit_md WHERE [edit_user]=%s AND [md_recno]=%i
+        ", $ts_lock, $this->user->identity->username, $recno)->fetchAll();
+        $recno_del = array();
+        foreach($tmp as $row) {
+            $recno_del[] = $row->recno;
+        }
+        $this->db->query('DELETE FROM edit_md WHERE [recno] IN %in', $recno_del);
+        $this->db->query('DELETE FROM edit_md_values WHERE [recno] IN %in', $recno_del);
+    }
+
+    public function deleteEditRecordByUuid($uuid)
+    {
+        $this->db->query('DELETE FROM edit_md_values WHERE [recno] IN(SELECT [recno] FROM edit_md WHERE [uuid]=%s AND [edit_user]=%s)', $uuid, $this->user->identity->username);
+        $this->db->query('DELETE FROM edit_md WHERE [uuid]=%s AND [edit_user]=%s', $uuid, $this->user->identity->username);
+    }
+
     public function getMdTitle($lang)
     {
         if ($this->recordMd === NULL) {
             return '';
         }
+        $this->setRecordMdValues();
         $title_app = '';
         $title_eng = '';
         $title_other = '';
@@ -566,7 +613,9 @@ class RecordModel extends \BaseModel
 
     public function copyMd2EditMd($mode='edit')
     {
-        $this->deleteEditRecords();
+        $this->deleteExpiredEditRecords();
+        $date = new \DateTime();
+        $ts = $date->getTimestamp();
         $id = '';
         if ($this->recordMd) {
             if ($mode == 'clone') {
@@ -574,30 +623,30 @@ class RecordModel extends \BaseModel
                     $id = $this->getUuid();
                     $editRecno = $this->getNewRecno('edit_md');
                     $this->db->query("
-                        INSERT INTO edit_md (sid,recno,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid)
-                        SELECT ?,?,?,md_standard,lang,-1,?,?,?,?,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid
-                        FROM md WHERE recno=?"
-                        , session_id(), $editRecno, $id, $this->user->identity->username, Date("Y-m-d"),
-                            $this->user->identity->username, $this->user->identity->username, $this->recordMd->recno);
+                        INSERT INTO edit_md ([recno],[md_recno],[uuid],[md_standard],[lang],[data_type],[create_user],[create_date],[edit_group],[view_group],[x1],[y1],[x2],[y2],[the_geom],[range_begin],[range_end],[md_update],[title],[server_name],[pxml],[valid],[edit_user],[edit_timestamp])
+                                  SELECT      %i,     %i,        %s,   [md_standard],[lang], -1,         %s,           %s,           %s,          %s,         [x1],[y1],[x2],[y2],[the_geom],[range_begin],[range_end],[md_update],[title],[server_name],[pxml],[valid], %s,         %i
+                        FROM md WHERE [recno]=%i
+                        ", $editRecno, 0, $id, $this->user->identity->username, Date("Y-m-d"),
+                            $this->user->identity->username, $this->user->identity->username, $this->user->identity->username, $ts, $this->recordMd->recno);
                     $this->db->query("
-                        INSERT INTO edit_md_values (recno, md_id, md_value, md_path, lang , package_id)
-                        SELECT ?, md_id, md_value, md_path, lang , package_id 
-                        FROM md_values WHERE recno=?"
+                        INSERT INTO edit_md_values ([recno], [md_id], [md_value], [md_path], [lang] , [package_id])
+                        SELECT %i, [md_id], [md_value], [md_path], [lang] , [package_id] 
+                        FROM md_values WHERE [recno]=%i"
                         , $editRecno, $this->recordMd->recno);
                 }
             } elseif ($this->isRight2MdRecord('edit')) {
                 $id = $this->recordMd->uuid;
                 $editRecno = $this->getNewRecno('edit_md');
                 $this->db->query("
-                    INSERT INTO edit_md (sid,recno,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid)
-                    SELECT ?,?,uuid,md_standard,lang,data_type,create_user,create_date,edit_group,view_group,x1,y1,x2,y2,the_geom,range_begin,range_end,md_update,title,server_name,pxml,valid
-                    FROM md WHERE recno=?"
-                    , session_id(), $editRecno, $this->recordMd->recno
+                    INSERT INTO edit_md ([recno],[md_recno],[uuid],[md_standard],[lang],[data_type],[create_user],[create_date],[edit_group],[view_group],[x1],[y1],[x2],[y2],[the_geom],[range_begin],[range_end],[md_update],[title],[server_name],[pxml],[valid],[edit_user],[edit_timestamp])
+                                 SELECT   %i,     %i,       [uuid],[md_standard],[lang],[data_type],[create_user],[create_date],[edit_group],[view_group],[x1],[y1],[x2],[y2],[the_geom],[range_begin],[range_end],[md_update],[title],[server_name],[pxml],[valid], %s,         %i
+                    FROM md WHERE [recno]=%i"
+                    , $editRecno, $this->recordMd->recno, $this->user->identity->username, $ts, $this->recordMd->recno
                 );
                 $this->db->query("
-                    INSERT INTO edit_md_values (recno, md_id, md_value, md_path, lang , package_id)
-                    SELECT ?, md_id, md_value, md_path, lang , package_id 
-                    FROM md_values WHERE recno=?"
+                    INSERT INTO edit_md_values ([recno], [md_id], [md_value], [md_path], [lang] , [package_id])
+                    SELECT %i, [md_id], [md_value], [md_path], [lang] , [package_id] 
+                    FROM md_values WHERE [recno]=%i"
                     , $editRecno, $this->recordMd->recno
                 );
             }
@@ -609,8 +658,8 @@ class RecordModel extends \BaseModel
 	{
         $this->setRecordMdById($id, 'md', 'edit');
         if ($this->recordMd) {
-            $this->db->query("DELETE FROM md_values WHERE recno =?", $this->recordMd->recno);
-            $this->db->query("DELETE FROM md WHERE recno=?", $this->recordMd->recno);
+            $this->db->query("DELETE FROM md_values WHERE [recno] =%i", $this->recordMd->recno);
+            $this->db->query("DELETE FROM md WHERE [recno]=%i", $this->recordMd->recno);
         }
         return;
 	}
@@ -618,17 +667,18 @@ class RecordModel extends \BaseModel
     public function createNewMdRecord($httpRequest)
     {
         $this->initialVariables();
-        $this->deleteEditRecords();
+        $this->deleteExpiredEditRecords();
         return $this->setNewEditMdRecord($httpRequest);
     }
     
-    private function setGeomMd2recordMd() {
+    private function setGeomMd2recordMd()
+    {
         $x1 = $this->geomMd['x1'];
         $x2 = $this->geomMd['x2'];
         $y1 = $this->geomMd['y1'];
         $y2 = $this->geomMd['y2'];
-        $poly = $this->geomMd['poly'];
-        $dc_geom = $this->geomMd['dc_geom'];
+        $poly = isset($this->geomMd['poly']) ? $this->geomMd['poly'] : null;
+        $dc_geom = isset($this->geomMd['dc_geom']) ? $this->geomMd['dc_geom'] : null;
         
         $rs = array();
         $rs['x1'] = NULL;
@@ -695,17 +745,20 @@ class RecordModel extends \BaseModel
         $this->recordMd->the_geom = $rs['the_geom'];
     }
     
-    private function setMdTitle($data) {
+    private function setMdTitle($data)
+    {
         $this->titleMd['title'] = $data['md_value'];
     }
     
-    private function setTitleMd2recordMd() {
+    private function setTitleMd2recordMd()
+    {
         $this->recordMd->title = $this->titleMd['title_lang_main'] 
                 ? $this->titleMd['title_lang_main'] 
                 : $this->titleMd['title'];
     }
     
-    private function setValue2RecorMd($data) {
+    private function setValue2RecorMd($data)
+    {
         switch ($this->recordMd->md_standard) {
             case 0:
                 if ($data['md_id'] == 497) {
@@ -840,12 +893,13 @@ class RecordModel extends \BaseModel
                     $this->setValue2RecorMd($data);
                 }
 			}
-		}
+        }
 		return $editMdValues;
     }
     
     // processes record language preferences 
-    private function setLang2RecordMd($select_langs) {
+    private function setLang2RecordMd($select_langs)
+    {
         $md_langs = explode('|', $this->recordMd->lang);
         $common_langs = array_intersect($md_langs, $select_langs);
         if (count($common_langs) === 0) {
@@ -876,15 +930,23 @@ class RecordModel extends \BaseModel
     }
 
     // transaction support ?
-    public function setXmlFromCsw($xml,$params=array()) {
+    public function setXmlFromCsw($xml,$params=array())
+    {
         $mdXml2Array = new MdXml2Array();
         $dataFromXml = $mdXml2Array->xml2array($xml, __DIR__ ."/xsl/update2micka.xsl");
-        $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+        $arrayMdXml2MdValues = new ArrayMdXml2MdValues(
+            $this->db,
+            $this->user,
+            $this->appParameters
+        );
         $arrayMdXml2MdValues->lang = 'eng';
         $editMdValues = $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
-        $md = array();
-        $md['sid'] = session_id();
-		$md['recno'] = $this->getNewRecno('edit_md');
+        $date = new \DateTime();
+        $md = [];
+        $md['edit_user'] = $this->user->getIdentity()->username;
+        $md['edit_timestamp'] = $date->getTimestamp();
+        $md['recno'] = $this->getNewRecno('edit_md');
+        $md['md_recno'] = 0;
 		$md['data_type'] = isset($params['data_type'])
                 ? $params['data_type']
                 : -1;
@@ -904,20 +966,20 @@ class RecordModel extends \BaseModel
             TRUE
         );
         $this->setEditRecord2Md();
-        $this->deleteEditRecords();
+        //$this->deleteExpiredEditRecords();
         return $report;
     }
 
     private function updateDatestamp($recno, $md_standard)
     {
         if ($md_standard == 0 || $md_standard == 10) {
-            $this->db->query("DELETE FROM edit_md_values WHERE md_id=44 AND recno=?", $recno);
+            $this->db->query("DELETE FROM edit_md_values WHERE [md_id]=44 AND [recno]=%i", $recno);
             $date = Date("Y-m-d");
             $data = array();
             $data[0]['recno'] = $recno;
             $data[0]['md_value'] = $date;
             $data[0]['md_id'] = '44';
-            $data[0]['md_path'] = '0_0_44_0';
+            $data[0]['md_path'] = '0_00_44_00';
             $data[0]['lang'] = 'xxx';
             $data[0]['package_id'] = '0';
             $this->seMdValues($data, $recno=0);
@@ -941,7 +1003,11 @@ class RecordModel extends \BaseModel
         if (array_key_exists('mickaLite', $post)) {
             //Micka Lite
             $this->initialVariables();
-            $mcl = new \App\Model\CodeListModel($this->db, $this->user);
+            $mcl = new \App\Model\CodeListModel(
+                $this->db,
+                $this->user,
+                $this->appParameters
+            );
             $liteProfile = $mcl->getLiteProfileById($post['profil'], $appLang, $layoutTheme);
             $editMdValues = $this->setFromMickaLite($post, $liteProfile);
             $this->deleteEditMdValuesByLite(
@@ -967,21 +1033,26 @@ class RecordModel extends \BaseModel
         return $report;
     }
     
-    private function setFromMickaLite($post, $liteProfile) {
+    private function setFromMickaLite($post, $liteProfile)
+    {
 		$cswClient = new \CswClient();
         $kote = new \Kote();
         $input = $kote->processForm(beforeSaveRecord($post));
         $params = Array(
             'datestamp'=>date('Y-m-d'), 
             'lang'=>$post['mdlang'], 
-            'mickaURL'=> MICKA_URL
+            'mickaURL'=> $this->appParameters['hostUrl'] . $this->appParameters['basePath'] . $this->appParameters['locale']
         );
         $mdXml2Array = new MdXml2Array();
         $xml = new \DomDocument;
         if(!$xml->loadXML($input)) die('Bad xml format');
         if (file_exists(__DIR__ . '/lite/profiles/' . $liteProfile . '/form2iso.xsl')) {
             $dataFromXml = $mdXml2Array->xml2array($xml, __DIR__ . '/lite/profiles/' . $liteProfile . '/form2iso.xsl', $params);
-            $arrayMdXml2MdValues = new ArrayMdXml2MdValues($this->db, $this->user);
+            $arrayMdXml2MdValues = new ArrayMdXml2MdValues(
+                $this->db,
+                $this->user,
+                $this->appParameters
+            );
             $arrayMdXml2MdValues->lang = $post['mdlang'];
             return $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
         } else {
@@ -992,11 +1063,11 @@ class RecordModel extends \BaseModel
     private function getIdElements()
     {
         // Move to CodeListModel
-        $data = $this->db->query("SELECT standard_schema.md_id, standard_schema.md_standard,
-            (CASE WHEN standard_schema.md_right-standard_schema.md_left=1 THEN 1 ELSE 0 END) AS is_data,
-            elements.el_name,
-            standard_schema.is_uri
-            FROM elements JOIN standard_schema ON (elements.el_id = standard_schema.el_id)")->fetchAll();
+        $data = $this->db->query("SELECT standard_schema.[md_id], standard_schema.[md_standard],
+            (CASE WHEN standard_schema.[md_right]-standard_schema.[md_left]=1 THEN 1 ELSE 0 END) AS [is_data],
+            elements.[el_name],
+            standard_schema.[is_uri]
+            FROM elements JOIN standard_schema ON (elements.[el_id] = standard_schema.[el_id])")->fetchAll();
 		$rs = [];
         foreach ($data as $row) {
 			$rs[$row->md_standard][$row->md_id][0] = $row->el_name;
@@ -1038,7 +1109,7 @@ class RecordModel extends \BaseModel
                     if ($value == '') {
                         $data_error = 1;
                     }
-                    $eval_text_tmp .= '[' . $value . ']';
+                    $eval_text_tmp .= '["' . $value . '"]';
                 }
             }
             if ($data_error === 1) {
@@ -1056,15 +1127,16 @@ class RecordModel extends \BaseModel
             }
             $eval_text .= $eval_text_tmp;
         }
-        $eval_text .= getMdOtherLangs($this->recordMd->lang, 'xxx', '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['langs']");
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['uuid']='".rtrim($this->recordMd->uuid)."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['langs']='".(substr_count($this->recordMd->lang,'|')+1)."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['updated']='".$this->recordMd->create_date."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x1']='".$this->recordMd->x1."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['x2']='".$this->recordMd->x2."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y1']='".$this->recordMd->y1."';\n";
-        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."'][0]['@attributes']['y2']='".$this->recordMd->y2."';\n";
+        $eval_text .= getMdOtherLangs($this->recordMd->lang, 'xxx', '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['langs']");
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['uuid']='".rtrim($this->recordMd->uuid)."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['langs']='".(substr_count($this->recordMd->lang,'|')+1)."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['updated']='".$this->recordMd->create_date."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['x1']='".$this->recordMd->x1."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['x2']='".$this->recordMd->x2."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['y1']='".$this->recordMd->y1."';\n";
+        $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['y2']='".$this->recordMd->y2."';\n";
         //\Tracy\Debugger::log($eval_text, 'ERROR_MAKE_XML');
+        //echo '<xmp>'; print_r($eval_text); echo '</xmp>'; exit;
         eval ($eval_text);
 		$xml = \Array2XML::createXML('rec', $vysl);
         return $xml->saveXML();
@@ -1074,11 +1146,134 @@ class RecordModel extends \BaseModel
     {
         $xml = $this->recordMd->pxml;
         if ($xsltemplate != '' && $xml != '') {
-            $xml = applyTemplate($xml, $xsltemplate, $this->user->identity->username);
+            $user = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
+            $xml = applyTemplate($xml, $xsltemplate, $user);
             if ($xml != '') {
                 $this->recordMd->pxml = $xml;
             }
         }
 		return;
     }
+
+    protected function updateEditMdXml($recno, $xml)
+    {
+        $xml = $xml == '' ? NULL : str_replace("'", "&#39;", $xml);
+        $this->db->query("UPDATE edit_md SET pxml=XMLPARSE(DOCUMENT %s) WHERE [edit_user]=%s AND [recno]=%i", $xml, $this->user->getIdentity()->username, $recno);
+    }
+
+    protected function updateMd($editRecno, $recno)
+    {
+        $sql = "
+            UPDATE md SET 
+                [last_update_user]=edit.[last_update_user],
+                [last_update_date]=edit.[last_update_date],
+                [pxml]=edit.[pxml],
+                [lang]=edit.[lang],
+                [data_type]=edit.[data_type],
+                [edit_group]=edit.[edit_group], [view_group]=edit.[view_group],
+                [x1]=edit.[x1], [y1]=edit.[y1], [x2]=edit.[x2], [y2]=edit.[y2], [the_geom]=edit.[the_geom],
+                [range_begin]=edit.[range_begin], [range_end]=edit.[range_end],
+                [md_update]=edit.[md_update],
+                [title]=edit.[title],
+                [valid]=edit.[valid],
+                [prim]=edit.[prim]
+            FROM edit_md edit
+            WHERE edit.[recno]=%i AND md.[recno]=%i AND edit.[edit_user]=%s
+        ";
+        $this->db->query($sql, $editRecno, $recno, $this->user->getIdentity()->username);
+    }
+
+    protected function updateGeom($recno, $x1, $x2, $y1, $y2)
+    {
+        if ($this->recordMd->the_geom != '') {
+            $this->db->query("UPDATE edit_md SET [the_geom]=ST_GeomFromText(?,0)
+                    WHERE [edit_user]=%s AND [recno]=%i", $this->recordMd->the_geom, $this->user->getIdentity()->username, $recno);
+        } elseif ($x1 != NULL && $x2 != NULL && $y1 != NULL && $y2 != NULL) {
+            $this->db->query("UPDATE edit_md SET [the_geom]=ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0)
+                    WHERE [edit_user]=%s AND [recno]=%i", $this->user->getIdentity()->username, $recno);
+        }
+    }
+
+    public function updateMdPxml($uuid) {
+        $report = array();
+        $this->findMdById($uuid, 'md', 'edit');
+        if ($this->recordMd === null) {
+                $report['ok'] = 0;
+                $report['uuid'] = $uuid;
+                $report['error'] = 'record not found';
+        } else {
+            $this->recordMd->pxml = $this->xmlFromRecordMdValues();
+            $this->applyXslTemplate2Xml('micka2one19139.xsl');
+            $this->recordMd->pxml = $this->recordMd->pxml == '' ? NULL : str_replace("'", "&#39;", $this->recordMd->pxml);
+            $this->db->query("UPDATE md SET pxml=XMLPARSE(DOCUMENT %s) WHERE [recno]=%i", $this->recordMd->pxml, $this->recordMd->recno);
+            $report['ok'] = 1;
+            $report['uuid'] = $uuid;
+            $report['title'] = $this->recordMd->title;
+        }
+        return $report;
+    }
+
+    public function updateMdValid($uuid) {
+        $report = array();
+        $this->findMdById($uuid, 'md', 'edit');
+        if ($this->recordMd === null) {
+            $report['ok'] = 0;
+            $report['uuid'] = $uuid;
+            $report['error'] = 'record not found';
+        } else {
+            $this->setRecordMdValues();
+            $this->recordValidate($this->recordMd->pxml);
+            $this->db->query("UPDATE md SET [valid]=%i, [prim]=%i WHERE [recno]=%i",
+                $this->recordMd->valid, $this->recordMd->prim, $this->recordMd->recno
+            );
+            $report['ok'] = 1;
+            $report['uuid'] = $uuid;
+            $report['title'] = $this->recordMd->title;
+        }
+        return $report;
+    }
+
+    public function importMd($mdr, $params)
+    {
+        if (isset($params['update_type']) && $params['update_type'] === 'skip') {
+            if ($this->db->query("SELECT COUNT(*) FROM md WHERE [uuid]=%s",$mdr->uuid)->fetchSingle() > 0) {
+                return array(0 => array('uuid' => $mdr->uuid, 'title' => $mdr->title, 'ok' => 0, 'error'=>'skip, record exists'));
+            }
+        }
+        $md = array();
+        $md['recno'] = $this->getNewRecno('edit_md');
+        $md['md_recno'] = 0;
+        $date = new \DateTime();
+        $md['edit_user'] = $this->user->getIdentity()->username;
+        $md['edit_timestamp'] = $date->getTimestamp();
+        $md['data_type'] = $mdr->data_type;
+        $md['create_user'] = $mdr->create_user;
+        $dt = new \DateTime($mdr->create_date->date);
+        $md['create_date'] = $dt->format('Y-m-d');
+        $md['edit_group'] = $mdr->edit_group;
+        $md['view_group'] = $mdr->view_group;
+        $md['server_name'] = $mdr->server_name;
+        $xml = XML_HEADER.ltrim($mdr->pxml);
+        $mdXml2Array = new MdXml2Array();
+        $dataFromXml = $mdXml2Array->importXml(
+            $xml, 
+            $params['type'],
+            $mdr->lang,
+            'eng'
+        );
+        $arrayMdXml2MdValues = new ArrayMdXml2MdValues(
+            $this->db,
+            $this->user,
+            $this->appParameters
+        );
+        $arrayMdXml2MdValues->lang = 'eng';
+        $report = $this->setMdFromXml(['new_md' => $md]
+                + ['params' => $params]
+                + $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml)
+        );
+        $this->setEditRecord2Md();
+        $this->deleteEditRecordByUuid($mdr->uuid);
+        return $report;
+    }
+
 }

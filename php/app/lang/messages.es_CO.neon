@@ -168,6 +168,16 @@ management:
     profileSelectMDS: "ENG: Select metadata standard"
     profileAdd: "ENG: Add profile"
     summary: "Resumen de registros de metadatos"
+    login_name: "ENG: Login name"
+    role_editor: "ENG: Editor"
+    role_publisher: "ENG: Publisher"
+    role_admin: "ENG: Admin"
+    groups: "ENG: Groups"
+    changePasswd: "ENG: Change password"
+    currentPasswd: "ENG: Current password"
+    newPasswd: "ENG: New password"
+    verifyPasswd: "ENG: Confirm password"
+
 
 lang:
     cze: "Checo"

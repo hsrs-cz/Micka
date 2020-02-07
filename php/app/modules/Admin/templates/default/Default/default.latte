@@ -2,14 +2,24 @@
 <div class="container panel panel-default">
 <h1>{_messages.management.modules}</h1>
     <ul>
+        {foreach $addModules as $row}
+            {var $module = $row['module']}
+            {var $presenter = $row['presenter']}
+            {var $action = $row['action']}
+            {var $label = $row['label']}
+            {var $role = $row['role']}
+            {if $user->isInRole($role)}
+                <li>
+                    <a n:href=":{$module}:{$presenter}:{$action}">{_}{$label}{/_}</a>
+                </li>
+            {/if}
+        {/foreach}
         <li>
-            <a n:href=":Admin:Contacts:default">{_messages.management.contacts}</a>
-        </li>
-        <li>
-            <a n:href=":Admin:Identity:default">{_messages.management.identity}</a>
-        </li>
-        <li>
-            <a n:href=":Admin:Profile:default">{_messages.management.profiles}</a>
+            <a n:href=":Admin:Identity:changep">{_messages.management.changePasswd}</a>
         </li>
     </ul>
 </div>
+{/block}
+
+{block content-js}
+{/block}

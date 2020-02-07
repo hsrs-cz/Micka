@@ -20,6 +20,7 @@
 {foreach $pathEl as $row}
     {if $iterator->isLast()}
         <b> {$row->el_name}</b>
+        {var $parent = $row->md_id}
     {else}
         <a n:href=":Admin:Profile:default $mdStandard->md_standard.','.$row->md_id">{$row->el_name}</a>
     {/if}
@@ -36,9 +37,18 @@
             {foreach $profil as $key=>$profile}
                 <th>
                     {$profile['name']}
+                    {if $profile['is_vis'] == 1}
+                        <a n:href=":Admin:Profile:unsetvis $mdStandard->md_standard.','.$key.','.$parent">
+                            <i class="fa fa-check-circle" aria-hidden="true"></i>
+                        </a>
+                    {else}
+                        <a n:href=":Admin:Profile:setvis $mdStandard->md_standard.','.$key.','.$parent">
+                            <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                        </a>
+                    {/if}
                     <a n:href=":Admin:Profile:clone $id.','.$key"><i class="fa fa-clone" aria-hidden="true" title="{_messages.frontend.copy}"></i></a>
                     {if ($mdStandard->md_standard == 0 && $key > 10) || ($mdStandard->md_standard == 10 && $key > 110)}
-                    <a n:href=":Admin:Profile:delete $id.','.$key"><i class="fa fa-trash" aria-hidden="true" title="{_messages.frontend.delete}"></i></a>
+                        <a n:href=":Admin:Profile:delete $id.','.$key"><i class="fa fa-trash" aria-hidden="true" title="{_messages.frontend.delete}"></i></a>
                     {/if}
                 </th>
             {/foreach}
@@ -65,14 +75,22 @@
         {foreach $profil as $key=>$profile}
             <td>
                 {ifset $profile['profil'][$row->md_id]}
-                    <a n:href=":Admin:Profile:unset $mdStandard->md_standard.','.$key.','.$row->md_id">
-                        <i class="fa fa-check-circle" aria-hidden="true"></i>
-                    </a>
+                    {if ($mdStandard->md_standard == 0 && $key > 10) || ($mdStandard->md_standard == 10 && $key > 110)}
+                        <a n:href=":Admin:Profile:unset $mdStandard->md_standard.','.$key.','.$row->md_id">
+                    {/if}
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    {if ($mdStandard->md_standard == 0 && $key > 10) || ($mdStandard->md_standard == 10 && $key > 110)}
+                        </a>
+                    {/if}
                 {else}
                     {if $row->md_left+1 === $row->md_right}
-                        <a n:href=":Admin:Profile:set $mdStandard->md_standard.','.$key.','.$row->md_id">
-                            <i class="fa fa-circle-thin" aria-hidden="true"></i>
-                        </a>
+                        {if ($mdStandard->md_standard == 0 && $key > 10) || ($mdStandard->md_standard == 10 && $key > 110)}
+                            <a n:href=":Admin:Profile:set $mdStandard->md_standard.','.$key.','.$row->md_id">
+                        {/if}
+                        <i class="fa fa-circle-thin" aria-hidden="true"></i>
+                        {if ($mdStandard->md_standard == 0 && $key > 10) || ($mdStandard->md_standard == 10 && $key > 110)}
+                            </a>
+                        {/if}
                     {else}
                         <i class="fa fa-circle-thin" aria-hidden="true"></i>
                     {/if}
@@ -82,6 +100,8 @@
     </tr>
 {/foreach}
 </table>
-<br>
-<br> 
-    
+</div>
+{/block}
+
+{block content-js}
+{/block}

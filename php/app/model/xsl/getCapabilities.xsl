@@ -261,12 +261,12 @@
 	    <ows:Constraint name="WSDL">
             <ows:Value><xsl:value-of select="$cswURL"/>?wsdl</ows:Value>
 	    </ows:Constraint>
-	    <ows:Constraint name="FederatedCatalogues">
-	    	<!-- TODO tahat odjinud -->
+	    <!--<ows:Constraint name="FederatedCatalogues">
+	    	 TODO tahat odjinud 
 	    	<xsl:for-each select="document('../../../config/csw_servers.xml')/cswlist/server">
 		      	<ows:Value><xsl:value-of select="@link" /></ows:Value>
 		    </xsl:for-each>  
-	    </ows:Constraint>
+	    </ows:Constraint>-->
 
 		<inspire_ds:ExtendedCapabilities>
 			<inspire_com:ResourceLocator>

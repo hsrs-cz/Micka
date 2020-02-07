@@ -1,0 +1,66 @@
+#
+# WARNING: it is CRITICAL that this file & directory are NOT accessible directly via a web browser!
+# https://nette.org/security-warning
+#
+parameters:
+    langCodes: 
+        cs: cze
+        da: dan
+        de: ger
+        en: eng
+        es: spa
+        fi: fin
+        fr: fre
+        hu: hun
+        it: ita
+        lv: lav
+        no: nor
+        pl: pol
+        pt: por
+        sk: slo
+        sl: slv
+        sv: swe
+    minPasswordLength: 5
+    minUsernameLength: 2
+    addModules:
+        admin = [
+            Admin:Contacts:default:messages.management.contacts:editor,
+            Admin:Identity:default:messages.management.identity:admin,
+            Admin:Profile:default:messages.management.profiles:admin
+        ]
+
+php:
+    date.timezone: Europe/Prague
+
+application:
+    errorPresenter: Error:Error
+    mapping:
+        *: \*Module\*Presenter
+
+session:
+    expiration: 0
+
+services:
+    router: App\RouterFactory::createRouter
+    - App\Security\AuthorizatorFactory
+    -
+        class: Nette\Security\Permission
+        factory: @App\Security\AuthorizatorFactory::create
+
+extensions:
+    translation: Kdyby\Translation\DI\TranslationExtension
+    dibi: Dibi\Bridges\Nette\DibiExtension22
+
+constants:
+    CSW_TIMEOUT: 30
+    HTTP_XML: "Content-type: application/xml; charset=utf-8"
+    HTTP_SOAP: "Content-type: application/soap+xml; charset=utf-8"
+    HTTP_JSON: "Content-type: application/json; charset=utf-8"
+    HTTP_HTML: "Content-type: text/html; charset=utf-8"
+    HTTP_CSV: "Content-type: text/csv; charset=utf-8"
+    HTTP_KML: "Content-type: application/vnd.google-earth.kml+xml"
+    HTTP_CORS: "Access-Control-Allow-Origin: *"
+    XML_HEADER: '<?xml version="1.0" encoding="UTF-8"?>'
+    SOAP_HEADER: '<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"><soap:Body>'
+    SOAP_FOOTER:  '</soap:Body></soap:Envelope>'
+    CSW_MAXFILESIZE: 5000000

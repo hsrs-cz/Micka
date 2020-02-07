@@ -7,6 +7,7 @@ function getMime($s){
     if(!$m) return '';
     return str_replace('"','',$m[1]);
 }
+
 // --- string without mime
 function noMime($s){
     if(!$s) return '';
@@ -15,53 +16,46 @@ function noMime($s){
     return trim(preg_replace($p, $r, $s));
 }
 
-// pro XSLT - dotaz na metadata
-function getMetadata($s, $esn='summary'){
-    $s = stripslashes($s); // FIXME - nevim, co to udela, pokud je apostrof v retezci
-	$csw = new \Micka\Csw();
-	$params["CONSTRAINT"] = $s;
-	$params['CONSTRAINT_LANGUAGE'] = 'CQL';
-	$params['TYPENAMES'] = 'gmd:MD_Metadata';
-	$params['OUTPUTSCHEMA'] = "http://www.isotc211.org/2005/gmd";
-	$params['SERVICE'] = 'CSW';
-	$params['REQUEST'] = 'GetRecords';
-	$params['VERSION'] = '2.0.2';
-	$params['ISGET'] = true;
-	$params['MAXRECORDS'] = 25;
-	$params['ELEMENTSETNAME'] = $esn;
-	$params['buffered'] = true;
-	$result = $csw->run($params);
-	//file_put_contents(__DIR__ . "/../../log/getMetadata".uniqid().".txt", print_r($params, true).$result);
-	$dom = new DOMDocument();
-	$dom->loadXML($result);
-	return $dom;
+// --- string without mime
+function getCRS($s){
+    if(!$s) return '';
+    $p = '/CRS=EPSG:(.+?)(\s|$|\.|\,)/';
+    preg_match_all($p, $s, $m);
+    if(!$m) return '';
+    $data = '';
+    foreach($m[1] as $item){
+        $data .= "<c>$item</c>";
+    }
+    $dom = new DomDocument;
+    $dom->loadXML('<root>'.$data.'</root>');
+    return $dom;
 }
 
-function getMetadataById($id, $esn='full'){
-    $s = stripslashes($s); // FIXME - nevim, co to udela, pokud je apostrof v retezci
-	$csw = new \Micka\Csw();
-	$params["ID"] = $id;
-	//$params['CONSTRAINT_LANGUAGE'] = 'CQL';
-	//$params['TYPENAMES'] = 'gmd:MD_Metadata';
-	//$params['OUTPUTSCHEMA'] = "http://www.isotc211.org/2005/gmd";
-	$params['SERVICE'] = 'CSW';
-	$params['REQUEST'] = 'GetRecordById';
-	$params['VERSION'] = '2.0.2';
-	$params['ISGET'] = true;
-	$params['ELEMENTSETNAME'] = $esn;
-	$params['buffered'] = true;
-	$result = $csw->run($params);
-	//file_put_contents(__DIR__ . "/../../log/getMetadata.txt", print_r($params, true).$result);
-	$dom = new DOMDocument();
-	$dom->loadXML($result);
-	return $dom;
+function getUuid($s){
+    if(!$s) return '';
+    $p = '/(id|ID)=(.+?)(\s|$|\#|\&)/';
+    preg_match($p, $s, $m);
+    if(!$m) return '';
+    return str_replace('"','',$m[2]);
 }
 
 // pro XSLT - dotaz na metadata
-function getData($s)
+function getMetadata($s, $esn='summary')
 {
+    return \App\Model\Micka::getMetadata($s, $esn);
+}
+
+function getMetadataById($id, $esn='full')
+{
+    return \App\Model\Micka::getMetadataById($id, $esn);
+}
+
+// pro XSLT - dotaz na metadata
+function getData($url)
+{
+    $url = explode("#", $url);
     $dom = new DOMDocument();
-    $ch=curl_init($s);
+    $ch = curl_init($url[0]);
     //curl_setopt($ch, CURLOPT_COOKIE, session_name().'='.session_id() );
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 5 ); 
@@ -74,7 +68,7 @@ function getData($s)
     }
     $result = curl_exec ($ch);
     curl_close ($ch);
-    //file_put_contents(__DIR__ . "/../../log/csw-getData.xml", $s.$result);
+    //file_put_contents(__DIR__ . "/../../log/csw-getData".uniqid().".xml", $s.$result);
     if($result) $dom->loadXML($result);
     return $dom;
 }
@@ -133,14 +127,13 @@ function applyTemplate($xmlSource, $xsltemplate, $user) {
 	return $rs;
 }
 
-function mdControl($xmlSource, $appLang)
+function mdControl($xmlSource, $appLang, $profile='default')
 {
-    //return array(); // TMP
     if ($xmlSource == '') {
         return array();
     }
-    include("validator/resources/Validator.php");
-    $validator = new \Validator("gmd", $appLang);
+    include_once(__DIR__ ."/../modules/Validator/model/Validator.php");
+    $validator = new \ValidatorModule\Validator("gmd", $appLang, $profile);
     $validator->run($xmlSource);
     $a = $validator->asArray();
     for($i=0;$i<count($a);$i++){
@@ -170,26 +163,19 @@ function setRowZero($arr){
 	return $rs;
 }
 
-/**
- * Převod md_path na "pole"
- *
- * příklad
- * in: '0_0_44_0'
- * out: '[0][0][44][0]'
- *
- * @param string $md_path hodnota z tabulky md_values.md_path
- * @return string
- */
-function getMdPath($md_path) {
-	$rs = '';
-	if (substr($md_path, strlen($md_path)-1) == '_') {
-		// odstranění posledního podtržítka
-		$md_path = substr($md_path, 0, strlen($md_path)-1);
-	}
-	$rs = str_replace("_", "][", $md_path);
-	$rs = '[' . $rs . ']';
-	return $rs;
+
+function getMdPath($md_path, $delimiterIn='_') {
+    if (substr($md_path, strlen($md_path)-1) == $delimiterIn) {
+        $md_path = substr($md_path, 0, strlen($md_path)-1);
+    }
+    $path = explode('_', $md_path);
+    $rs = '';
+    foreach ($path as $key => $value) {
+        $rs .= $key % 2 ==0 ? '[' . $value . ']' : '["' . $value . '"]';
+    }
+    return $rs;
 }
+
 
 /**
  * Určení počtu jazyků

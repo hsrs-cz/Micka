@@ -20,13 +20,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-//define('CONNECTION_PROXY', "cache.cgu.cz:8080"); 
 
   function getDataByURL($url){
       $ch = curl_init ($url);
       curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
       curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // potlaèena kontrola certifikátu
+      curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // potlacena kontorla certifikatu
       if(defined('CONNECTION_PROXY')){
           $proxy = CONNECTION_PROXY;
           if(defined('CONNECTION_PORT')) $proxy .= ':'. CONNECTION_PORT;
@@ -41,11 +40,13 @@
 
 $url = $_REQUEST['url'];
 $purl = parse_url($url);
+$encode = (isset($_REQUEST['urle']) && $_REQUEST['urle']) ? true : false;
 if($purl['scheme']=='http' || $purl['scheme']=='https'){
     foreach($_GET as $key => $val){
-        if($key != 'url'){
+        if($key != 'url' && $key!='urle'){
             if(strpos($url, '?')===false) $url .= '?'; else $url .= '&';
-            $url .= $key.'='.$val;
+            if($encode) $url .= $key.'='.urlencode($val);
+            else $url .= $key.'='.$val;
         }
     }
 	$s = getDataByURL($url);

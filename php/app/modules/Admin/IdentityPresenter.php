@@ -1,127 +1,109 @@
 <?php
 namespace AdminModule;
 
-use App\Model,
-    Ublaboo\DataGrid\DataGrid;
-
-/** @resource Admin */
-class IdentityPresenter extends \BasePresenter
+/** @resource User */
+class IdentityPresenter extends \BaseAdminPresenter
 {
     private $identityModel;
     
 	public function startup()
 	{
-		parent::startup();
-        $this->identityModel = new \App\AdminModel\IdentityModel($this->context->getByType('Nette\Database\Context'), $this->user);
-	}
+        parent::startup();
+        $class = \App\Model\Micka::getClassName("App\\AdminModel\\IdentityModel");
+        $this->identityModel = new $class(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
+    }
+    
+    /** @resource Admin */
+    public function renderDefault()
+    {
+        $this->template->users = $this->identityModel->getUserById();
+    }
 
     /** @resource Admin */
-	public function handleDelete($id)
+	public function actionNew()
 	{
-        $this->identityModel->deleteUsersById($id);
-        $this->flashMessage("Record $id deleted","success");
-        $this->redirect(':Admin:Identity:default');
-        /*
-        if ($this->isAjax()) {
-            $this->redrawControl('flashes');
-        } else {
+        $id = 0;
+        $this->redirect(':Admin:Identity:edit', $id);
+    }
+
+    /** @resource Admin */
+    public function renderEdit($id)
+    {
+        if ($id > 0) {
+            $user = $this->identityModel->getUserById($id);
+            if (count($user) === 1) {
+                $this->template->editUser = $user[0];        
+            } else {
+                $id = -1;
+            }
+        } 
+        if ($id == 0) {
+            if ($this->getParameter('clone') != NULL) {
+                $this->template->editUser = $this->identityModel->getCloneUser($this->getParameter('clone'));
+            } else {
+                $this->template->editUser = $this->identityModel->getEmptyUser();
+            }
+        } elseif ($id < 0) {
+            $this->flashMessage($this->translator->translate('messages.apperror.noRecordFound'), 'info');
             $this->redirect(':Admin:Identity:default');
         }
-         */
-	}
+    }
 
     /** @resource Admin */
-	public function createComponentUsersGrid($name)
+    public function actionSave($id)
+    {
+        $post = $this->context->getByType('Nette\Http\Request')->getPost();
+        $status = $this->identityModel->setUser($id, $post);
+        switch ($status) {
+            case 'username':
+            case 'password':
+            case 'exists':
+                $this->flashMessage($this->translator->translate('messages.apperror.cantSaveNew')." ($status)", 'info');
+                $this->redirect(':Admin:Identity:edit', $id);
+            default:
+                $this->redirect(':Admin:Identity:default');
+                break;
+        }
+    }
+
+    /** @resource Admin */
+	public function actionClone($id)
 	{
-        $grid = new DataGrid($this, $name);
-        $grid->setDataSource($this->identityModel->getUsers());
-        $grid->setDefaultSort(['id' => 'ASC'], FALSE);
-        $grid->setDefaultPerPage(10);
-        $grid->setRefreshUrl(FALSE);
-        
-        $p = $this;
-        // edit
-        $grid->addInlineEdit()
-            ->onControlAdd[] = function($container) {
-                $container->addText('password', '');
-                $container->addText('role_editor', '');
-                $container->addText('role_publisher', '');
-                $container->addText('role_admin', '');
-                $container->addText('role_root', '');
-                $container->addText('groups', '');
-            };
-        $grid->getInlineEdit()->onSetDefaults[] = function($container, $item) {
-            $container->setDefaults([
-                'password' => '',
-                'role_editor' => $item->role_editor,
-                'role_publisher' => $item->role_publisher,
-                'role_admin' => $item->role_admin,
-                'role_root' => $item->role_root,
-                'groups' => $item->groups,
-            ]);
-        };
-        $grid->getInlineEdit()->onSubmit[] = function($id, $values) use ($p){
-            $report = $this->identityModel->updateUsersById($id, $values);
-            if ($report != '') {
-                $p->flashMessage($report);
-                $p->redrawControl('flashes');
-            } else {
-                $p->flashMessage("Record was updated", 'success');
-                $p->redrawControl('flashes');
-                $p->redirect(':Admin:Identity:default');
-            }
-        };
-        // add
-        $grid->addInlineAdd()
-            ->onControlAdd[] = function($container) {
-                $container->addText('username', '');
-                $container->addText('password', '');
-                $container->addText('role_editor', '');
-                $container->addText('role_publisher', '');
-                $container->addText('role_admin', '');
-                $container->addText('role_root', '');
-                $container->addText('groups', '');
-            };
-        $grid->getInlineAdd()->onSetDefaults[] = function($container)  use ($p) {
-            $container->setDefaults([
-                'username' => '',
-                'password' => '',
-                'role_editor' => '',
-                'role_publisher' => '',
-                'role_admin' => '',
-                'role_root' => '',
-                'groups' => $p->context->parameters['app']['defaultViewGroup'],
-            ]);
-        };
-        $grid->getInlineAdd()->onSubmit[] = function($values) use ($p) {
-            $report = $this->identityModel->add2Users($values);
-            if ($report != '') {
-                $p->flashMessage($report);
-                $p->redrawControl('flashes');
-            } else {
-                $p->flashMessage("Record was added", 'success');
-                $p->redrawControl('flashes');
-                $p->redirect(':Admin:Identity:default');
-            }
-            //$p->redrawControl('grid');
-        };
+        $this->redirect(':Admin:Identity:edit', [0, 'clone'=>$id]);
+    }
 
-        $grid->addColumnText('id', 'ID')
-            ->setAlign('right');
-        $grid->addColumnText('username', 'Username');
-        $grid->addColumnText('password', 'Password');
-        $grid->addColumnText('role_editor', 'Role editor');
-        $grid->addColumnText('role_publisher', 'Role publisher');
-        $grid->addColumnText('role_admin', 'Role admin');
-        $grid->addColumnText('role_root', 'Role root');
-        $grid->addColumnText('groups', 'Group');
-        $grid->addAction('delete', '', 'delete!')
-            ->setIcon('trash')
-            ->setTitle('Delete')
-            ->setClass('btn btn-xs btn-danger ajax')
-            ->setConfirm('Do you really want to delete %s?', 'username');
+    /** @resource Admin */
+    public function actionDelete($id)
+    {
+        $this->identityModel->deleteUserById($id);
+        $this->redirect(':Admin:Identity:default');
+    }
 
-	}
+    /** @resource User */
+    public function actionChangep()
+    {
+        $this->setView('changepasswd');
+    }
 
-
+    /** @resource User */
+    public function actionSetp()
+    {
+        $post = $this->context->getByType('Nette\Http\Request')->getPost();
+        $status = $this->identityModel->changePassword($post);
+        switch ($status) {
+            case 'ok':
+                $this->flashMessage($this->translator->translate('messages.management.changePasswd') . " - OK", 'info');
+                $this->redirect(':Admin:Default:default');
+                break;
+            default:
+                $this->flashMessage($this->translator->translate('messages.apperror.cantSaveNew') . " ($status)", 'info');
+                $this->redirect(':Admin:Identity:changep');
+                break;
+        }
+        $this->redirect(':Admin:Default:default');
+    }
 }

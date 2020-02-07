@@ -18,32 +18,28 @@ class MdFull  extends \BaseModel
 	private $hierarchy = '';
     private $mark_http = FALSE;
     private $appLang = 'eng';
-
-	public function startup()
-	{
-		parent::startup();
-	}
     
+
 	private function getFullMdValues($recno, $appLang)
 	{
         return $this->db->query("
-        	SELECT md_values.md_value, md_values.md_id, md_values.md_path,  md_values.lang, md_values.package_id, elements.form_code, elements.el_id, elements.from_codelist
-			FROM (elements RIGHT JOIN standard_schema ON elements.el_id = standard_schema.el_id) RIGHT JOIN md_values ON standard_schema.md_id = md_values.md_id
-			WHERE md_values.recno=? AND (md_values.lang='xxx' OR md_values.lang='uri' OR md_values.lang=?)
-            ORDER BY standard_schema.md_left, md_values.md_path
-            ", $recno,$appLang)->fetchAll();
+        	SELECT md_values.[md_value], md_values.[md_id], md_values.[md_path],  md_values.[lang], md_values.[package_id], elements.[form_code], elements.[el_id], elements.[from_codelist]
+			FROM (elements RIGHT JOIN standard_schema ON elements.[el_id] = standard_schema.[el_id]) RIGHT JOIN md_values ON standard_schema.[md_id] = md_values.[md_id]
+			WHERE md_values.[recno]=%i AND (md_values.[lang]='xxx' OR md_values.[lang]='uri' OR md_values.[lang]=%s)
+            ORDER BY standard_schema.[md_left], md_values.[md_path]
+            ", $recno, $appLang)->fetchAll();
 	}
 
 	private function getElementsLabel($mds,$appLang)
 	{
-        $standard_schema = $this->db->query('SELECT md_left, md_right FROM standard_schema WHERE md_id=0 AND md_standard=?', 
+        $standard_schema = $this->db->query('SELECT [md_left], [md_right] FROM standard_schema WHERE [md_id]=0 AND [md_standard]=%i', 
                 $mds == 10 ? 0 : $mds)->fetch();
         $result = $this->db->query("
-			SELECT elements.el_id, elements.el_name, elements.el_short_name, elements.only_value, standard_schema.md_id,
-				standard_schema.md_level, standard_schema.package_id, label.label_text, label.label_help
-			FROM (label INNER JOIN elements ON label.label_join = elements.el_id) INNER JOIN standard_schema ON elements.el_id = standard_schema.el_id
-			WHERE standard_schema.md_left>=?  AND standard_schema.md_right<=? AND label.lang=? AND label.label_type='EL' AND standard_schema.md_standard=?
-            ORDER BY standard_schema.md_left
+			SELECT elements.[el_id], elements.[el_name], elements.[el_short_name], elements.[only_value], standard_schema.[md_id],
+				standard_schema.[md_level], standard_schema.[package_id], label.[label_text], label.[label_help]
+			FROM (label INNER JOIN elements ON label.[label_join] = elements.[el_id]) INNER JOIN standard_schema ON elements.[el_id] = standard_schema.[el_id]
+			WHERE standard_schema.[md_left]>=%i  AND standard_schema.[md_right]<=%i AND label.[lang]=%s AND label.[label_type]='EL' AND standard_schema.[md_standard]=%i
+            ORDER BY standard_schema.[md_left]
 		", $standard_schema->md_left, $standard_schema->md_right, $appLang, $mds == 10 ? 0 : $mds)->fetchAll();
         return $result;
     }
@@ -51,9 +47,9 @@ class MdFull  extends \BaseModel
     private function getCodeListLabel($appLang)
     {
         return $this->db->query("
-            SELECT label.label_text
-            FROM codelist INNER JOIN label ON codelist.codelist_id = label.label_join
-            WHERE label.label_type='CL' AND label.lang=?
+            SELECT label.[label_text]
+            FROM codelist INNER JOIN label ON codelist.[codelist_id] = label.[label_join]
+            WHERE label.[label_type]='CL' AND label.[lang]=%s
 		", $appLang)->fetchAll();
     }
     

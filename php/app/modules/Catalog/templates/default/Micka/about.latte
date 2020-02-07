@@ -1,17 +1,31 @@
+{dump}
 {block content}
-
 <div class="container panel panel-default">
     <h1>{_messages.frontend.about}</h1>
+    <p>
+        <b>
+        {ifset $parameters['contact']['title'][$appLang]}
+            {$parameters['contact']['title'][$appLang]}
+        {else}
+            {$parameters['contact']['title']['eng']}
+        {/ifset}
+        </b><br>
+        {ifset $parameters['contact']['abstract'][$appLang]}
+            {$parameters['contact']['abstract'][$appLang]}
+        {else}
+            {$parameters['contact']['abstract']['eng']}
+        {/ifset}
+    </p>
     <p>
         {_messages.frontend.version}: {$mickaVersion['version']}  (rev. {$mickaVersion['revision']})
     </p>
     <p>
         {_messages.frontend.support}:
-         <a href="mailto:micka@hsr.cz">micka@hsrs.cz</a> |
+         <a href="mailto:{$parameters['contact']['email']}">{$parameters['contact']['email']}</a> |
          <a href="{$basePath}{$themePath}/img/kocka.jpg">micka</a> 
     </p>
     <p>
-        CSW connection point: <a type="button" class="btn btn-warning" href="{$basePath}/csw?service=CSW&request=GetCapabilities" target="_blank">{$basePath}/csw</a>
+        CSW connection point: <a type="button" class="btn btn-warning" href="{$parameters['cswUrl']}?service=CSW&request=GetCapabilities" target="_blank">{$parameters['cswUrl']}</a>
     </p>
 
 </div>

@@ -1,6 +1,78 @@
 {block content}
 <div class="container panel panel-default">
+<style>
+    td { color: #999; }
+    i.fa-check-circle { color: #009800; }
+    td > i.fa-circle-thin { color: #CCC; }
+    td a { color: #AAA; }
+    td a:hover { text-decoration: none; color: #059; }
+
+</style>
+
 <h1><a n:href=":Admin:Default:default"><i class="fa fa-arrow-left"></i></a> / {_messages.management.identity}</h1>
 
-    {control usersGrid}
+<script type="text/javascript">
+    function md_delkont(id) {
+        if(confirm({_messages.frontend.delete_record}+'?')) this.location=("{$basePath|noescape}/admin/identity/delete/"+id);
+    }
+</script>
+
+<table class="table table-hover">
+	<tr>
+		<th>{_messages.management.login_name}</th>
+		<th>{_messages.management.role_editor}</th>
+		<th>{_messages.management.role_publisher}</th>
+		<th>{_messages.management.role_admin}</th>
+		<th>{_messages.management.groups}</th>
+		<th>&nbsp;</th>
+	</tr>
+	{foreach $users as $row}
+	<tr class="rowsel">
+		<td>{$row->username}</td>
+		<td>
+            {if $row->role_editor === 1 || $row->role_editor === true}
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+            {else}
+                <i class="fa fa-circle-thin" aria-hidden="true"></i>
+            {/if}
+        </td>
+		<td>
+            {if $row->role_publisher === 1 || $row->role_publisher === true}
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+            {else}
+                <i class="fa fa-circle-thin" aria-hidden="true"></i>
+            {/if}
+        </td>
+		<td>
+            {if $row->role_admin === 1 || $row->role_admin === true}
+                <i class="fa fa-check-circle" aria-hidden="true"></i>
+            {else}
+                <i class="fa fa-circle-thin" aria-hidden="true"></i>
+            {/if}
+        </td>
+		<td>{$row->groups}</td>
+        <td style="width:100px">
+            <a n:href=":Admin:Identity:edit $row->id" title="{_messages.frontend.edit}">
+                <i class="fa fa-pencil fa-lg"></i>
+            </a>
+            <a n:href=":Admin:Identity:clone $row->id" title="{_messages.frontend.copy}">
+                <i class="fa fa-clone fa-lg"></i>
+            </a>
+            <a href="javascript:md_delkont({$row->id})" title="{_messages.frontend.delete}">
+                <i class="fa fa-trash fa-lg"></i>
+            </a>
+        </td>
+	</tr>
+	{/foreach}
+</table>
+
+<br/>
+<a class="btn btn-primary" n:href=":Admin:Identity:new" title="{_messages.frontend.new_record}">
+    <i class="fa fa-plus fa-fw"></i> {_messages.frontend.new_record}
+</a>
+<br/><br/>
 </div>
+{/block}
+
+{block content-js}
+{/block}

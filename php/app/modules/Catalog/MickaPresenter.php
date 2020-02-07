@@ -3,7 +3,7 @@ namespace CatalogModule;
 
 use App\Model;
 
-/** @resource Catalog:Guest */
+/** @resource Guest */
 class MickaPresenter extends \BasePresenter
 {
 	public function startup()
@@ -11,12 +11,12 @@ class MickaPresenter extends \BasePresenter
 		parent::startup();
 	}
     
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function renderDefault()
 	{
 	}
 
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function actionHelp()
 	{
         if ($this->appLang == 'cze') {
@@ -26,11 +26,10 @@ class MickaPresenter extends \BasePresenter
         }
 	}
     
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function renderAbout()
 	{
-        $micka = new \Micka\Micka;
-        $this->template->mickaVersion = $micka->getMickaVersion();
+        $this->template->mickaVersion = \App\Model\Micka::getMickaVersion();
 	}
     
 }

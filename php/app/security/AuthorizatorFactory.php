@@ -14,7 +14,6 @@ class AuthorizatorFactory
     const ROLE_EDITOR = 'editor';
     const ROLE_PUBLISHER = 'publisher';
     const ROLE_ADMIN = 'admin';
-    const ROLE_ROOT = 'root';
 
 
     public function create()
@@ -26,18 +25,19 @@ class AuthorizatorFactory
         $acl->addRole(self::ROLE_EDITOR, self::ROLE_USER);
         $acl->addRole(self::ROLE_PUBLISHER, self::ROLE_USER);
         $acl->addRole(self::ROLE_ADMIN, [self::ROLE_EDITOR, self::ROLE_PUBLISHER]);
-        $acl->addRole(self::ROLE_ROOT, self::ROLE_ADMIN);
 
-        $acl->addResource('Catalog:Guest');
-        $acl->addResource('Catalog:Editor');
-        $acl->allow(self::ROLE_GUEST, 'Catalog:Guest');
-        $acl->allow(self::ROLE_EDITOR, 'Catalog:Editor');
+        $acl->addResource('Guest');
+        $acl->addResource('User');
+        $acl->addResource('Editor');
+        $acl->addResource('Publisher');
+        $acl->allow(self::ROLE_GUEST, 'Guest');
+        $acl->allow(self::ROLE_USER, 'User');
+        $acl->allow(self::ROLE_EDITOR, 'Editor');
+        $acl->allow(self::ROLE_PUBLISHER, 'Publisher');
 
         $acl->addResource('Admin');
         $acl->allow(self::ROLE_ADMIN, 'Admin');
-        
-        $acl->addResource('Root');
-        $acl->allow(self::ROLE_ROOT, 'Root');
+
         return $acl;
     }
 

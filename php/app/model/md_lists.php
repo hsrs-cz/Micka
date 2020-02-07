@@ -8,7 +8,7 @@ $title = '';
 
 function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
     if(!$handler) $handler="formats1";
-    if(in_array($type, array('coordSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName', 'serviceType'))){
+    if(in_array($type, array('coordSys','verticalSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName', 'serviceType'))){
         $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
         $title = $xml->xpath("//$type/title[@lang='".$lang."']")[0];
         echo '<div class="panel-heading">
@@ -44,7 +44,7 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
             }
             foreach($row as $k=>$v){
                 if($k!='uri'){
-                    echo "$k:'".$v['name']."',";
+                    echo "$k:'".addslashes($v['name'])."',";
                 }
             }
             echo "xxx:'".(string) $row->$mdlang."'});\">".(string) $row->$lang."</a><br>";
@@ -52,29 +52,6 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
         echo "</div>";
         return;
     }
-
-	/*@$xml = simplexml_load_file(APP_DIR . "/model/dict/$type.xml");
-	if(!$xml) die("list <b>$type</b> does not exist");
-	// test jazyka
-	$langBranch = $xml->xpath("//translation[@lang='".$lang."']");
-	if(isset($langBranch[0]) === FALSE) $lang='eng';
-	$pageTitle = $xml->xpath("//translation[@lang='".$lang."']/title");
-    echo '<div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4>'. $pageTitle[0].'</h4>
-        </div><div class="modal-body">';
-	foreach ($xml->xpath("//translation[@lang='".$lang."']/group") as $list) {
-    	echo "<h3>".$list->title.'</h3>';
-    	foreach ($list->entry as $entry){
-    		// pouzije primarne label, kdyz neni, tak hodnotu
-    		$value = $entry['label'];
-    		if(!$value) $value = (string) $entry;
-            $f = (isset($_REQUEST['handler']) && $_REQUEST['handler']) ? $_REQUEST['handler'] : 'false';
-    		if($withValues) echo "<a href=\"javascript:micka.fillValues('".$type."','".$entry['id']."', ".$f.");\">".$value."</a><br>";
-    		else echo "<a href=\"javascript:kw('".$entry['code']."');\">".(string) $entry."</a><br>";
-    	}
-	}
-    echo "</div>";*/
 }
 
 function getCodeListValues($type, $lang, $filter=''){
@@ -151,11 +128,9 @@ function kw(f){
 </script>
 
 <?php
-    $lang = htmlspecialchars($_REQUEST['lang']);
-    $mdlang = htmlspecialchars($_REQUEST['mdlang']);
-    $handler = htmlspecialchars($_REQUEST['handler']) ? htmlspecialchars($_REQUEST['handler']) : false;
-    if(!$lang) $lang='eng';
-    if(!$mdlang) $mdlang='eng';
+    $lang = isset($_REQUEST['lang']) ? htmlspecialchars($_REQUEST['lang']) : 'eng';
+    $mdlang = isset($_REQUEST['mdlang']) ? htmlspecialchars($_REQUEST['mdlang']) : 'eng';
+    $handler = isset($_REQUEST['handler']) ? htmlspecialchars($_REQUEST['handler']) : false;
     if(isset($_REQUEST['multi']) && $_REQUEST['multi']==1) {
         $multi = true;
     } else {

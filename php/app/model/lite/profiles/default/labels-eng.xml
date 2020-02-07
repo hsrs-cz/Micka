@@ -61,10 +61,16 @@
 			<p>Seznam dalších klíčových slov - uveďte každé na nový řádek.</p>
 		</help>
 	</msg>
-	<msg name="date">
-		<label>5a Date</label>
+	<msg name="referenceDate">
+		<label>5a Reference date</label>
 		<help>
-			<h3>5a Reference date</h3>
+			Reference date for the cited resource.
+		</help>
+	</msg>
+	<msg name="date">
+		<label>Date</label>
+		<help>
+			<h3>date</h3>
 			<p>Reference date for the cited resource</p>
 			<p class="pozn"></p>
 		</help>
@@ -245,13 +251,28 @@
 		<label>8.1. Access and use</label>
 		<help>
 			<h3>8.1. Conditions applying to access and use</h3>
-			<p>restrictions on the access and use of a resource or
-metadata.
-			</p>
+			<p>restrictions on the access and use of a resource or metadata.</p>
+		</help>
+	</msg>
+	<msg name="accessCondTxt">
+		<label>8.1. Access and use - text</label>
+		<help>
+			<h3>8.1. Conditions applying to access and use</h3>
+			<p>restrictions on the access and use of a resource or metadata.</p>
 		</help>
 	</msg>
 	<msg name="limitationsAccess">
 		<label>8.2. Licence</label>
+		<help>
+			<h3>8.2. Limitations on public access</h3>
+			<p>access constraints applied to assure the protection of
+privacy or intellectual property, and any special restrictions
+or limitations on obtaining the resource. 
+			</p>
+		</help>
+	</msg>
+	<msg name="limitationsAccessTxt">
+		<label>8.2. Licence - text</label>
 		<help>
 			<h3>8.2. Limitations on public access</h3>
 			<p>access constraints applied to assure the protection of
@@ -750,7 +771,18 @@ against which data is being evaluated.</p>
 			<h3>Text</h3> 
 		</help>
 	</msg>
-
+	<msg name="spatialScope">
+		<label>Spatial scope</label>
+		<help>
+			<h3>Administrative level that the data set intends to cover.</h3>
+		</help>
+	</msg>
+	<msg name="priorityDataset">
+		<label>Priority dataset</label>
+		<help>
+			<h3>todo</h3>
+		</help>
+	</msg>
     <!-- user specified -->
    	<msg name="geology">
 		<label>CGS themes</label>

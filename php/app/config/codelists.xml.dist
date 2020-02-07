@@ -1441,7 +1441,7 @@
     </value>
   	<value name="unknown" code="">
         <cze>NEHODNOCENO</cze>
-		    <eng>NOT EVALUATED</eng>
+		<eng>NOT EVALUATED</eng>
         <spa>NO EVALUADO</spa>
     </value>
   </compliant>
@@ -1635,42 +1635,52 @@
   <specifications>
     <title lang="eng">Specifications</title>
     <title lang="cze">Specifikace</title>
-    <title lang="esp">Especificaciones</title>
-	<!--value name="Oprava nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat"
-        code="Metadata1" publication="2009-12-15">Metadata - corrigendum</value-->
+    <title lang="dan">Specifications</title>
+    <title lang="ger">Specifications</title>
+    <title lang="spa">Especificaciones</title>
 	<value code="Interoperability" uri="https://data.europa.eu/eli/reg/2010/1089" publication="2010-12-08">
-        <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">Interoperabilita 1089/2010</cze>
-		<eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperability 1089/2010</eng>
-        <spa name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">Interoperabilidad 1089/2010</spa>
+        <cze name="Nařízení Komise (EU) č. 1089/2010 ze dne 23. listopadu 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o interoperabilitu sad prostorových dat a služeb prostorových dat">INSPIRE - Interoperabilita 1089/2010</cze>
+        <eng name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">INSPIRE - Interoperability 1089/2010</eng>
+        <dan name="Kommissionens forordning (EU) nr. 1089/2010 af 23. november 2010 om gennemførelse af Europa-Parlamentets og Rådets direktiv 2007/2/EF for så vidt angår interoperabilitet for geodatasæt og -tjenester">INSPIRE - Interoperabilita 1089/2010</dan>
+        <fra name="Règlement (UE) n o 1089/2010 de la Commission du 23 novembre 2010 portant modalités d'application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne l'interopérabilité des séries et des services de données géographiques">INSPIRE - Interoperability 1089/2010</fra>
+        <ger name="Verordnung (EG) Nr. 1089/2010 der Kommission vom 23. November 2010 zur Durchführung der Richtlinie 2007/2/EG des Europäischen Parlaments und des Rates hinsichtlich der Interoperabilität von Geodatensätzen und -diensten">INSPIRE - Interoperabilität 1089/2010</ger>
+        <ita name="Regolamento (UE) n . 1089/2010 della Commissione del 23 novembre 2010 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda l'interoperabilità dei set di dati territoriali e dei servizi di dati territoriali ">INSPIRE - Interoperability 1089/2010</ita>
+        <slo name="Nariadenie Komisie (EÚ) č. 1089/2010 z 23. novembra 2010 , ktorým sa vykonáva smernica Európskeho parlamentu a Rady 2007/2/ES, pokiaľ ide o interoperabilitu súborov a služieb priestorových údajov">INSPIRE - Interoperabilita 1089/2010</slo>
+        <spa name="Commission Regulation (EU) No 1089/2010 of 23 November 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards interoperability of spatial data sets and services">INSPIRE - Interoperabilidad 1089/2010</spa>
     </value>
     <value code="Network" uri="https://data.europa.eu/eli/reg/2009/976"  publication="2009-10-20">
-        <cze name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby">Síťové služby 976/2009</cze>
-		<eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Network services 976/2009</eng>
-        <spa name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">Servicios de Red 976/2009</spa>
+        <cze name="Nařízení Komise (ES) č. 976/2009 ze dne 19. října 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o síťové služby">INSPIRE - Síťové služby 976/2009</cze>
+        <dan name="Kommissionens forordning (EF) n r. 976/2009 af 19. oktober 2009 om gennemførelse af Europa-Parlamentets og Rådets direktiv 2007/2/EF for så vidt angår nettjenesterne">INSPIRE - Network services 976/2009</dan>
+        <eng name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">INSPIRE - Network services 976/2009</eng>
+        <fra name="Règlement (CE) n o 976/2009 de la Commission du 19 octobre 2009 portant modalités d’application de la directive 2007/2/CE du Parlement européen et du Conseil en ce qui concerne les services en réseau">INSPIRE - Network services 976/2009</fra>
+        <ger name="Verordnung (EG) Nr. 976/2009 der Kommission vom 19. Oktober 2009 zur Durchführung der Richtlinie 2007/2/EG des Europäischen Parlaments und des Rates hinsichtlich der Netzdienste">INSPIRE - Rates hinsichtlich der Netzdienste 976/2009</ger>
+        <ita name="Regolamento (CE) n . 976/2009 della Commissione del 19 ottobre 2009 recante attuazione della direttiva 2007/2/CE del Parlamento europeo e del Consiglio per quanto riguarda i servizi di rete">INSPIRE - Network services 976/2009</ita>
+        <slo name="Nariadenie Komisie (ES) č. 976/2009 z 19. októbra 2009 , ktorým sa vykonáva smernica Európskeho parlamentu a Rady 2007/2/ES, pokiaľ ide o sieťové služby">INSPIRE - Síťové služby 976/2009</slo>
+        <spa name="COMMISSION REGULATION (EC) No 976/2009 of 19 October 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the Network Services">INSPIRE - Servicios de Red 976/2009</spa>
     </value>
     <value code="Download" uri="https://data.europa.eu/eli/reg/2010/1088" publication="2010-12-08">
-        <cze name="Nařízení Komise (EU) č. 1088/2010 ze dne 23. listopadu 2010, kterým se mění nařízení (ES) č. 976/2009, pokud jde o služby stahování dat a transformační služby">Stahovací a transformační služby 1088/2010</cze>
-		<eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Download and transformation services 1088/2010</eng>
-        <spa name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">Servicios de descarga y transformación 1088/2010</spa>
+        <cze name="Nařízení Komise (EU) č. 1088/2010 ze dne 23. listopadu 2010, kterým se mění nařízení (ES) č. 976/2009, pokud jde o služby stahování dat a transformační služby">INSPIRE - Stahovací a transformační služby 1088/2010</cze>
+		<eng name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">INSPIRE - Download and transformation services 1088/2010</eng>
+        <spa name="COMMISSION REGULATION (EU) No 1088/2010 of 23 November 2010 amending Regulation (EC) No 976/2009 as regards download services and transformation services">INSPIRE - Servicios de descarga y transformación 1088/2010</spa>
     </value>
 	<value code="Metadata"  uri="https://data.europa.eu/eli/reg/2008/1205" publication="2008-12-04">
-        <cze name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat">Metadata 1205/2008</cze>
-		<eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadata 1205/2008</eng>
-        <spa name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">Metadatos 1205/2008</spa>
+        <cze name="Nařízení Komise (ES) č. 1205/2008 ze dne 3. prosince 2008, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES týkající se metadat">INSPIRE - Metadata 1205/2008</cze>
+		<eng name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">INSPIRE - Metadata 1205/2008</eng>
+        <spa name="COMMISSION REGULATION (EC) No 1205/2008 of 3 December 2008 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards metadata">INSPIRE - Metadatos 1205/2008</spa>
     </value>
     <value code="Access" uri="https://data.europa.eu/eli/reg/2010/268" publication="2010-03-30">
         <cze name="Nařízení Komise (EU) č. 268/2010 ze dne 29. března 2010, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o poskytnutí přístupu k sadám prostorových dat a službám prostorových dat členských států orgánům a subjektům Společenství za harmonizovaných podmínek" >Přístup k datovým sadám a službám 268/2010</cze>
-		<eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
+        <eng name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Access to spatial data sets and services 268/2010</eng>
         <spa name="COMMISSION REGULATION (EU) No 268/2010 of 29 March 2010 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards the access to spatial data sets and services of the Member States by Community institutions and bodies under harmonised conditions">Acceso y acceso a base de datos espaciales 268/2010</spa>
     </value>
     <value code="Monitoring" uri="https://data.europa.eu/eli/dec/2009/442" publication="2009-06-11">
-        <cze name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" >Monitoring a reporting 2009/442/ES</cze>
-        <eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoring and reporting 2009/442/ES</eng>
-        <spa name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">Monitoreo y reporte 2009/442/ES</spa>
+        <cze name="Rozhodnutí Komise ze dne 5. června 2009, kterým se provádí směrnice Evropského parlamentu a Rady 2007/2/ES, pokud jde o sledování a podávání zpráv (oznámeno pod číslem K(2009) 4199) (2009/442/ES)" >INSPIRE - Monitoring a reporting 2009/442/ES</cze>
+        <eng name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">INSPIRE - Monitoring and reporting 2009/442/ES</eng>
+        <spa name="Commission Decision of 5 June 2009 implementing Directive 2007/2/EC of the European Parliament and of the Council as regards monitoring and reporting (notified under document number C(2009) 4199) (2009/442/EC)">INSPIRE - Monitoreo y reporte 2009/442/ES</spa>
     </value>
     <value code="INSPIRE" uri="https://data.europa.eu/eli/dir/2007/2" publication="2007-03-14">
         <cze name="SMĚRNICE EVROPSKÉHO PARLAMENTU A RADY 2007/2/ES ze dne 14. března 2007 o zřízení Infrastruktury pro prostorové informace v Evropském společenství (INSPIRE)" >SMĚRNICE INSPIRE 2007/2/ES</cze>
-		<eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
+        <eng name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">INSPIRE DIRECTIVE 2007/2/ES</eng>
         <spa name="DIRECTIVE 2007/2/EC OF THE EUROPEAN PARLIAMENT AND OF THE COUNCIL of 14 March 2007 establishing an Infrastructure for Spatial Information in the European Community (INSPIRE)">DIRECTIVA INSPIRE 2007/2/ES</spa>
     </value>
   </specifications>
@@ -1678,7 +1688,7 @@
   <serviceType>
     <title lang="eng">Service type</title>
     <title lang="cze">Typ služby</title>
-    <title lang="esp">Service type</title>
+    <title lang="spa">Service type</title>
   	<value name="view" xuri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType/view" code="">
         <cze>prohlížecí</cze>
 		<eng>view</eng>
@@ -1785,6 +1795,7 @@
     <thesaurus uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory" date="2010-01-19" dateType="publication">
         <eng>ISO - 19119 geographic services taxonomy</eng>
         <cze>ISO - 19119 geographic services taxonomy</cze>
+        <ger>ISO - 19119 geographic services taxonomy</ger>
     </thesaurus>
 
     <value id="100" name="humanInteractionService" uri="https://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory/humanInteractionService">
@@ -2579,14 +2590,14 @@
     <title lang="cze">Podmínky pro přístup užití</title>
     <title lang="eng">Access and use conditions</title>
     <title lang="spa">Condiciones de acceso y uso</title>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/noConditionsApply">
         <cze qtip="No conditions apply to access and use.">žádné podmínky neplatí</cze>
-        <eng qtip="No conditions apply to access and use.">no conditions apply to access and use</eng>
+        <eng qtip="No conditions apply to access and use.">no conditions apply</eng>
         <spa qtip="No se aplican condiciones de acceso y uso.">no se aplican condiciones de acceso y utilización</spa>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/ConditionsApplyingToAccessAndUse/conditionsUnknown">
         <cze qtip="The conditions applying to access and use are unknown.">podmínky nejsou známy</cze>
-        <eng qtip="The conditions applying to access and use are unknown.">the conditions applying to access and use are unknown</eng>
+        <eng qtip="The conditions applying to access and use are unknown.">conditions to access and use unknown</eng>
         <spa qtip="Se desconocen las condiciones de acceso y utilización.">se desconocen las condiciones de acceso y utilización.</spa>
     </value>
 	<value name="" uri="http://creativecommons.org/licenses/by/4.0">
@@ -2619,62 +2630,62 @@
         <eng qtip="Attribution – Non Commercial – No Derivatives">Creative Commons BY-NC-ND 4.0</eng>
         <spa qtip="">Creative Commons BY-NC-ND 4.0</spa>
    </value>
-    <value name="" uri="http://creativecommons.org/cc0" qtip="">
+	<!--value name="" uri="http://creativecommons.org/cc0" qtip="">
         <cze qtip="">Creative Commons CC0</cze>
         <eng qtip="">Creative Commons CC0</eng>
         <spa qtip="">Creative Commons CC0</spa>
-    </value>
+    </value-->
 </accessCond>
-
 <!-- 8.2 -->
 <limitationsAccess>
     <title lang="cze">Omezení veřejného přístupu</title>
     <title lang="eng">Limitations on public access</title>
     <title lang="spa">Limitaciones al acceso del público</title>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/noLimitations">
         <cze qtip="There are no limitations on public access to spatial data sets and services.">žádné omezení veřejného přístupu</cze>
-		<eng qtip="There are no limitations on public access to spatial data sets and services.">no limitations on public access to spatial data sets and services</eng>
-        <spa qtip="No existen limitaciones al acceso del público a los conjuntos y servicios de datos espaciales.">ninguna limitación del acceso del público a los conjuntos y servicios de datos espaciales</spa>
+		<eng qtip="There are no limitations on public access to spatial data sets and services.">no limitations to public access</eng>
+        <spa qtip="No existen limitaciones al acceso del público a los conjuntos y servicios de datos espaciales.">ninguna limitación del acceso del público</spa>
     </value>
 	<value name="" uri="http://opendata.gov.cz/definition/opendata">
         <cze qtip="Otevřená data ČR.">Otevřená data ČR</cze>
 		<eng>Open Data of the Czech republic</eng>
         <spa>Datos abiertos de la República Checa</spa>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1a">
         <cze qtip="utajení jednání orgánů veřejné správy stanovené zákonem">veřejný přístup omezen podle Článku 13(1)(a) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of the proceedings of public authorities, where such confidentiality is provided for by law.">public access limited according to Article 13(1)(a) of the INSPIRE Directive</eng>
         <spa qtip="El acceso del público a los conjuntos y servicios de datos espaciales afectaría negativamente a la confidencialidad de los procedimientos de las autoridades públicas, cuando dicha confidencialidad esté prevista por ley.">acceso del público limitado de acuerdo al artículo 13, apartado 1, letra a), de la Directiva INSPIRE</spa>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1b">
         <cze qtip="mezinárodní vztahy, veřejná bezpečnost nebo národní obrana">veřejný přístup omezen podle Článku 13(1)(b) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect international relations, public security or national defence.">public access limited according to Article 13(1)(b) of the INSPIRE Directive</eng>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1c">
         <cze qtip="výkon spravedlnosti, právo na spravedlivé soudní řízení nebo způsobilost orgánu veřejné správy k provádění trestního nebo disciplinárního šetření">veřejný přístup omezen podle Článku 13(1)(c) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the course of justice, the ability of any person to receive a fair trial or the ability of a public authority to conduct an enquiry of a criminal or disciplinary nature.">public access limited according to Article 13(1)(c) of the INSPIRE Directive</eng>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1d">
         <cze qtip="utajení obchodních nebo průmyslových informací stanovené vnitrostátním právem nebo právními předpisy EU">veřejný přístup omezen podle Článku 13(1)(d) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of commercial or industrial information, where such confidentiality is provided for by national or Community law to protect a legitimate economic interest, including the public interest in maintaining statistical confidentiality and tax secrecy.">public access limited according to Article 13(1)(d) of the INSPIRE Directive</eng>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1e">
         <cze qtip="práva duševního vlastnictví">veřejný přístup omezen podle Článku 13(1)(e) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect intellectual property rights.">public access limited according to Article 13(1)(e) of the INSPIRE Directive</eng>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1f">
         <cze qtip="utajení osobních údajů a/nebo spisů týkajících se fyzické osoby">veřejný přístup omezen podle Článku 13(1)(f) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the confidentiality of personal data and/or files relating to a natural person where that person has not consented to the disclosure of the information to the public, where such confidentiality is provided for by national or Community law.">public access limited according to Article 13(1)(f) of the INSPIRE Directive</eng>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1g">
         <cze qtip="zájmy nebo ochrana osoby, která poskytla požadované informace">veřejný přístup omezen podle Článku 13(1)(g) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the interests or protection of any person who supplied the information requested on a voluntary basis without being under, or capable of being put under, a legal obligation to do so, unless that person has consented to the release of the information concerned.">public access limited according to Article 13(1)(g) of the INSPIRE Directive</eng>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h">
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/LimitationsOnPublicAccess/INSPIRE_Directive_Article13_1h">
         <cze qtip="ochrana životního prostředí">veřejný přístup omezen podle Článku 13(1)(h) Směrnice INSPIRE</cze>
 		<eng qtip="Public access to spatial data sets and services would adversely affect the protection of the environment to which such information relates, such as the location of rare species.">public access limited according to Article 13(1)(h) of the INSPIRE Directive</eng>
     </value>
 </limitationsAccess>
+
 
 <format>
     <title lang="cze">Formát zdroje</title>
@@ -2733,16 +2744,16 @@
 </format>
 
 <sds>
-	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable">
+	<value name="" uri="http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-invocable" publication="2010-12-08">
         <cze>vyvolatelné</cze>
 		<eng>invocable</eng>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable">
+	<value name="" uri="http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-interoperable" publication="2010-12-08">
         <cze>interoperabilní</cze>
 		<eng>interoperable</eng>
         <spa>interoperable</spa>
     </value>
-	<value name="" uri="https://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised">
+	<value name="" uri="http://inspire.ec.europa.eu/id/ats/metadata/2.0/sds-harmonised" publication="2010-12-08">
         <cze>harmonizované</cze>
 		<eng>harmonised</eng>
         <spa>harmonizado</spa>
@@ -2764,6 +2775,29 @@
     </value>
 </serviceQuality>
 
+
+<spatialScope>
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/european">
+        <cze qtip="Datová sada má v úmyslu pokrýt Evropu.">Evropský</cze>
+		<eng qtip="The scope of the data set intends to cover Europe.">European</eng>
+    </value>
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/global">
+        <cze qtip="Datová sada má v úmyslu pokrýt celou Zemi.">Celosvětový</cze>
+		<eng qtip="The scope of the data set intends to cover whole World.">Global</eng>
+    </value>
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/local">
+        <cze qtip="Datová sada má v úmyslu pokrýt území jedné nebo několika místních správních jednotek.">Místní</cze>
+		<eng qtip="The scope of the data set intends to cover the territory of one or several local administrative units.">Local</eng>
+    </value>
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/national">
+        <cze qtip="Datová sada má v úmyslu pokrýt území státu.">Národní</cze>
+		<eng qtip="The scope of the data set intends to cover the national territory.">National</eng>
+    </value>
+	<value name="" uri="http://inspire.ec.europa.eu/metadata-codelist/SpatialScope/regional">
+        <cze qtip="Datová sada má v úmyslu pokrýt území jednoho nebo několika správních jednotek na nižší než celostátní úrovni.">Regionální</cze>
+		<eng qtip="The scope of the data set intends to cover the territory of one or several sub-national level administrative units.">Regional</eng>
+    </value>
+</spatialScope>
 <obligatory>
 	<value name="gestor" uri="https://services.cuzk.cz/registry/codelist/ObligatoryProviderRoleValue/Gestor">
         <cze>gestor</cze>
@@ -2791,162 +2825,161 @@
         <spa>Para INSPIRE EU</spa>
     </value>
 </hlname>
-
 <linkageName>
     <title lang="cze">Předdefinovaná jména zdrojů</title>
     <title lang="eng">Resource type predefined names</title>
     <title lang="spa">Nombres predefinidos del tipo de recursos</title>
-    <value code="WEB_cze">
+    <value uri="WEB_cze">
         <eng>Web page (CS)</eng>
         <cze>Webová stránka (CS)</cze>
         <spa>Página Web (CS)</spa>
     </value>
-    <value code="ARCH_cze">
+    <value uri="ARCH_cze">
         <eng>Digital archive (CS)</eng>
         <cze>Digital archive (CS)</cze>
         <spa>Archivo digital (CS)</spa>
     </value>
-    <value code="DVD_cze">
+    <value uri="DVD_cze">
         <eng>DVD/CD (CS)</eng>
         <cze>DVD/CD (CS)</cze>
         <spa>DVD/CD (CS)</spa>
     </value>
-    <value code="WMS_cze">
+    <value uri="WMS_cze">
         <eng>WMS (CS)</eng>
         <cze>WMS (CS)</cze>
         <spa>WMS (CS)</spa>
     </value>
-    <value code="PRINT_cze">
+    <value uri="PRINT_cze">
         <eng>Shop - printed (CS)</eng>
         <cze>Obchod - tisk (CS)</cze>
         <spa>Tienda - impreso (CS)</spa>
     </value>
-    <value code="ESRI-IMS_cze">
+    <value uri="ESRI-IMS_cze">
         <eng>ArcIMS (CS)</eng>
         <cze>ArcIMS (CS)</cze>
         <spa>ArcIMS (CS)</spa>
     </value>
-    <value code="ESRI-SRV_cze">
+    <value uri="ESRI-SRV_cze">
         <eng>ArcGIS (CS)</eng>
         <cze>ArcGIS (CS)</cze>
         <spa>ArcGIS (CS)</spa>
     </value>
-    <value code="MAP_cze">
+    <value uri="MAP_cze">
         <eng>Map application (CS)</eng>
         <cze>Mapová aplikace (CS)</cze>
         <spa>Aplicación de mapa (CS)</spa>
     </value>
-    <value code="DB_cze">
+    <value uri="DB_cze">
         <eng>Database application (CS)</eng>
         <cze>Databázová aplikace (CS)</cze>
         <spa>Aplicación de base de datos (CS)</spa>
     </value>
-    <value code="GREP_cze">
+    <value uri="GREP_cze">
         <eng>Georeport (CS)</eng>
         <cze>Georeport (CS)</cze>
         <spa>Georeporte (CS)</spa>
     </value>
-    <value code="WEB_eng">
+    <value uri="WEB_eng">
         <eng>Web page (EN)</eng>
         <cze>Webová stránka (EN)</cze>
         <spa>Página Web (EN)</spa>
     </value>
-    <value code="ARCH_eng">
+    <value uri="ARCH_eng">
         <eng>Digital archive (EN)</eng>
         <cze>Digitální archív (EN)</cze>
         <spa>Archivo digital (EN)</spa>
     </value>
-    <value code="PRINT_eng">
+    <value uri="PRINT_eng">
         <eng>Shop - printed (EN)</eng>
         <cze>Obchod - tisk (EN)</cze>
         <spa>Tienda - impresa (EN)</spa>
     </value>
-    <value code="DVD_eng">
+    <value uri="DVD_eng">
         <eng>DVD/CD (EN)</eng>
         <cze>DVD/CD (EN)</cze>
         <spa>DVD/CD (EN)</spa>
     </value>
-    <value code="WMS_eng">
+    <value uri="WMS_eng">
         <eng>WMS (EN)</eng>
         <cze>WMS (EN)</cze>
         <spa>WMS (EN)</spa>
     </value>
-    <value code="ESRI-IMS_eng">
+    <value uri="ESRI-IMS_eng">
         <eng>ArcIMS (EN)</eng>
         <cze>ArcIMS (EN)</cze>
         <spa>ArcIMS (EN)</spa>
     </value>
-    <value code="ESRI-SRV_eng">
+    <value uri="ESRI-SRV_eng">
         <eng>ArcGIS (EN)</eng>
         <cze>ArcGIS (EN)</cze>
         <spa>ArcGIS (EN)</spa>
     </value>
-    <value code="MAP_eng">
+    <value uri="MAP_eng">
         <eng>Map application (EN)</eng>
         <cze>Mapová aplikace (EN)</cze>
         <spa>Aplicación de mapa (EN)</spa>
     </value>
-    <value code="DB_eng">
+    <value uri="DB_eng">
         <eng>Database application (EN)</eng>
         <cze>Databázová aplikace (EN)</cze>
         <spa>Aplicación base de datos (EN)</spa>
     </value>
-    <value code="GREP_eng">
+    <value uri="GREP_eng">
         <eng>Georeport (EN)</eng>
         <cze>Georeport (EN)</cze>
         <spa>Georeporte (EN)</spa>
     </value>
-    <value code="CSW">
+    <value uri="CSW">
         <eng>CSW</eng>
         <cze>CSW</cze>
         <spa>CSW</spa>
     </value>
-    <value code="WEB_spa">
+    <value uri="WEB_spa">
         <eng>Web page (ESP)</eng>
         <cze>Webová stránka (ESP)</cze>
         <spa>Página Web (ESP)</spa>
     </value>
-    <value code="ARCH_spa">
+    <value uri="ARCH_spa">
         <eng>Digital archive (ESP)</eng>
         <cze>Digitální archív (ESP)</cze>
         <spa>Archivo digital (ESP)</spa>
     </value>
-    <value code="PRINT_spa">
+    <value uri="PRINT_spa">
         <eng>Shop - printed (ESP)</eng>
         <cze>Obchod - tisk (ESP)</cze>
         <spa>Tienda - impresa (ESP)</spa>
     </value>
-    <value code="DVD_spa">
+    <value uri="DVD_spa">
         <eng>DVD/CD (ESP)</eng>
         <cze>DVD/CD (ESP)</cze>
         <spa>DVD/CD (ESP)</spa>
     </value>
-    <value code="WMS_spa">
+    <value uri="WMS_spa">
         <eng>WMS (ESP)</eng>
         <cze>WMS (ESP)</cze>
         <spa>WMS (ESP)</spa>
     </value>
-    <value code="ESRI-IMS_spa">
+    <value uri="ESRI-IMS_spa">
         <eng>ArcIMS (ESP)</eng>
         <cze>ArcIMS (ESP)</cze>
         <spa>ArcIMS (ESP)</spa>
     </value>
-    <value code="ESRI-SRV_spa">
+    <value uri="ESRI-SRV_spa">
         <eng>ArcGIS (ESP)</eng>
         <cze>ArcGIS (ESP)</cze>
         <spa>ArcGIS (ESP)</spa>
     </value>
-    <value code="MAP_spa">
+    <value uri="MAP_spa">
         <eng>Map application (ESP)</eng>
         <cze>Mapová aplikace (ESP)</cze>
         <spa>Aplicación de mapa (ESP)</spa>
     </value>
-    <value code="DB_spa">
+    <value uri="DB_spa">
         <eng>Database application (ESP)</eng>
         <cze>Databázová aplikace (ESP)</cze>
         <spa>Aplicación base de datos (ESP)</spa>
     </value>
-    <value code="GREP_spa">
+    <value uri="GREP_spa">
         <eng>Georeport (ESP)</eng>
         <cze>Georeport (ESP)</cze>
         <spa>Georeporte (ESP)</spa>

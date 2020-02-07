@@ -5,23 +5,22 @@ use Nette,
     App\Model,
     App\Security\AuthorizatorFactory;
 
-/** @resource Catalog:Guest */
+/** @resource Guest */
 class SignPresenter extends \BasePresenter
 {
-	/** @var Model\UserModel */
-	private $usermodel;
+	private $userModel;
     
-	public function __construct(Model\UserModel $usermodel)
-	{
-		$this->usermodel = $usermodel;
-	}
-
 	public function startup()
 	{
 		parent::startup();
+        $this->userModel = new \App\Model\UserModel(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
 	}
 
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
     public function actionIn()
     {
         if ($this->user->isLoggedIn()) {
@@ -29,7 +28,7 @@ class SignPresenter extends \BasePresenter
         }
     }
 
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
     public function actionOut()
     {
         $this->user->logout(TRUE);
@@ -37,11 +36,11 @@ class SignPresenter extends \BasePresenter
         $this->redirect(':Catalog:Default:default');
     }
 
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
     public function actionLogin()
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
-        $user = $this->usermodel->getUserByName($post['username'], $post['password']);
+        $user = $this->userModel->getUserByName($post['username'], $post['password']);
         if (!$user) {
             $this->flashMessage($this->translator->translate('messages.frontend.error'), 'info');
             $this->redirect(':Catalog:Sign:in');
@@ -57,12 +56,9 @@ class SignPresenter extends \BasePresenter
             if ($user->role_admin) {
                 $role[] = AuthorizatorFactory::ROLE_ADMIN;
             }
-            if ($user->role_root) {
-                $role[] = AuthorizatorFactory::ROLE_ROOT;
-            }
 
             $data = ['username' => rtrim($user->username)];
-            $userGroups = $this->usermodel->getGroupsByUsername($data['username']);
+            $userGroups = $this->userModel->getGroupsByUsername($data['username']);
             $data['groups'] = $userGroups;
             $identity = new Nette\Security\Identity($user->id, $role, $data);
             $this->user->login($identity);

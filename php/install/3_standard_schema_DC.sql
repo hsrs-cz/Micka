@@ -1,0 +1,18 @@
+DELETE FROM standard_schema WHERE "md_standard"='1';
+INSERT INTO standard_schema VALUES (1,0,0,1,34,0,10000,'m',1,1,NULL,12,'0_00','/metadata',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,1,0,2,3,1,10002,'m',1,1,'dc_kontakt(this)|1',12,'0_00_1_00','/metadata/creator',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,2,0,4,5,1,10005,'m',1,NULL,'dc_kontakt(this)|1',12,'0_00_2_00','/metadata/publisher',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,3,0,6,7,1,10006,'m',1,NULL,'dc_kontakt(this)|1',12,'0_00_3_00','/metadata/contributor',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,4,0,8,9,1,10004,'m',1,1,NULL,12,'0_00_4_00','/metadata/description',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,5,0,10,11,1,10003,'o',0,NULL,'dc_subject(this)|1',12,'0_00_5_00','/metadata/subject','keyword   ',NULL,0);
+INSERT INTO standard_schema VALUES (1,6,0,12,13,1,10007,'o',0,NULL,NULL,12,'0_00_6_00','/metadata/date',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,7,0,14,15,1,10008,'o',0,NULL,NULL,12,'0_00_7_00','/metadata/type','type      ',NULL,0);
+INSERT INTO standard_schema VALUES (1,8,0,16,17,1,10009,'o',0,NULL,'dc_format(this)|1',12,'0_00_8_00','/metadata/format','format    ',NULL,0);
+INSERT INTO standard_schema VALUES (1,9,0,18,19,1,10010,'o',0,NULL,NULL,12,'0_00_9_00','/metadata/identifier',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,10,0,20,21,1,10011,'o',0,NULL,NULL,12,'0_00_10_00','/metadata/source',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,11,0,22,23,1,10001,'m',1,NULL,NULL,12,'0_00_11_00','/metadata/title','title     ',NULL,0);
+INSERT INTO standard_schema VALUES (1,12,0,24,25,1,10012,'o',0,NULL,NULL,12,'0_00_12_00','/metadata/language','language  ',NULL,0);
+INSERT INTO standard_schema VALUES (1,13,0,26,27,1,10013,'o',0,NULL,NULL,12,'0_00_13_00','/metadata/relation',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,14,0,28,29,1,10014,'o',0,NULL,'dc_coverage(this)|2',12,'0_00_14_00','/metadata/coverage',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,15,0,30,31,1,10015,'o',0,NULL,NULL,12,'0_00_15_00','/metadata/rights',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (1,38,0,32,33,1,10016,'m',1,1,NULL,12,'0_00_38_00','/metadata/uuid',NULL,NULL,0);

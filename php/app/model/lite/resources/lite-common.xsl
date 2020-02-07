@@ -212,6 +212,9 @@
             <div class="col-xs-12 col-md-4">
                 <label for="{$name}" class="{$class}{$lclassI}" id="V-{$valid}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
                     <xsl:value-of select="$labels/msg[@name=$name]/label"/>
+                    <xsl:if test="$labels/msg[@name=$name]/a">
+                        <xsl:text> </xsl:text><xsl:copy-of select="$labels/msg[@name=$name]/a"/>
+                    </xsl:if>                    
                 </label>
             </div>
 		</xsl:if>
@@ -682,9 +685,21 @@
     <xsl:param name="mdlang" select="'eng'"/>
     <xsl:param name="locale" select="''"/>
     <xsl:element name="{$name}">
-        <gmx:Anchor xlink:href="{$id}"><xsl:value-of select="$locale/item"/>
-            <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$mdlang]/@code2))"/>
-        </gmx:Anchor>
+        <gmx:Anchor xlink:href="{$id}">
+            <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$lang]/@code2))"/>
+            <xsl:if test="$locale">
+                <xsl:for-each select="$locale/item">
+                    <xsl:variable name="l" select="."/>
+                    <gmd:PT_FreeText>
+                        <gmd:textGroup>
+                            <gmd:LocalisedCharacterString locale="#locale-{$l}">
+                                <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$l]/@code2))"/>
+                            </gmd:LocalisedCharacterString>
+                        </gmd:textGroup>
+                    </gmd:PT_FreeText>
+                </xsl:for-each>
+            </xsl:if>
+          </gmx:Anchor>
     </xsl:element>
 </xsl:template>
 

@@ -65,7 +65,8 @@ function md_pridej(obj, clone){
     var elementy = md_getSimilar(dold.parentNode, pom[0]);
     if(!clone) md_removeDuplicates(dnew);
     for(var i=0;i<elementy.length;i++) {
-        md_setName(elementy[i], pom[0]+"_"+i+"_");
+        if(i<10) md_setName(elementy[i], pom[0]+"_0"+i+"_");
+        else md_setName(elementy[i], pom[0]+"_"+i+"_");
     }
     if(!clone){
         // --- vycisteni ---
@@ -145,7 +146,8 @@ function md_smaz(obj){
   if(elementy.length>1) cont.removeChild(toDel);
   var elementy = md_getSimilar(cont, pom[0]);
   for(var i=0;i<elementy.length;i++) {
-      md_setName(elementy[i], pom[0]+"_"+i+"_");
+      if(i<10) md_setName(elementy[i], pom[0]+"_0"+i+"_");
+      else md_setName(elementy[i], pom[0]+"_"+i+"_");
   }
 }
 
@@ -389,7 +391,7 @@ function start(){
 	var parent = document.getElementById("50");
 	if(parent && parent.value){
 		$("#parent-text").html("...");
-		$.ajax(baseUrl + "/csw/?format=json&query=" + encodeURIComponent("identifier="+parent.value))
+		$.ajax(baseUrl + "/csw/?format=json&query=" + encodeURIComponent("identifier="+parent.value) + '&language='+lang)
         .done(function(data){
             $("#parent-text").html(data.title);
         });
@@ -565,7 +567,6 @@ function thes(obj){
   
     $('#thes-gemet-ok').on('click', function(){
         gemet.process(langs.split('|'), function(data){
-            console.log(data);
             fromThesaurus({ //TODO take from thesaurus client
                 thesName: 'GEMET - Concepts, version 3.1',
                 thesDate: (HS.getLang(3)=='cze') ? '20.07.2012' : '2012-07-20',
@@ -580,20 +581,21 @@ function thes(obj){
 
     $('#thes-inspire-ok').on('click', function(){ localThes("#inspire", "inspireKeywords"); });
     $('#thes-geology-ok').on('click', function(){ localThes("#cgs", "cgsThemes"); });
-    $('#thes-inspire-service-ok').on('click', function(){ localThes("#inspire-service", "serviceKeyword"); });
+    $('#thes-inspire-service-ok').on('click', function(){ localThes("#inspire-service", "serviceKeyword", "id"); });
     
-    function localThes(element, type){
+    function localThes(element, type, textItem){
         var uri = $(element).select2('data')[0].uri;
         var url =baseUrl + '/suggest/mdlists?type='+type+'&request=getValue&code='+uri;
         $.ajax({url: url})
         .done(function(data){
-            if(data.results && data.results[0]){ 
+            if(data.results && data.results[0]){
+            var terms = textItem ? data.results[0][textItem] : data.results[0].langs;
                 fromThesaurus({
                     thesName: data.thesaurus.langs,
                     thesDate: data.thesaurus.date,
                     thesUri: data.results[0].uri.substr(0,data.results[0].uri.lastIndexOf("/")),
                     uri: data.results[0].uri,
-                    terms: data.results[0].langs
+                    terms: terms
                 });
                 $("#md-keywords").modal('hide');
                 return;
@@ -676,6 +678,11 @@ function fromThesaurus(data){
   } 
   // if terms are available
   if(data.terms){
+      if(typeof(data.terms)==='string'){
+          var t = {};
+          t[mainLang] = data.terms;
+          data.terms = t;
+      }
 	  for(i=0;i<inputs.length;i++){
 		  for(var l in data.terms) if(inputs[i].id=='530'+l){
 			  inputs[i].value=data.terms[l];
@@ -748,7 +755,7 @@ function fc(obj){
     md_dexpand1(obj.parentNode);
     $("#parent-select").select2({
         ajax: {
-            url: baseUrl + '/csw/?format=application/json&elementsetname=full&lang='+lang,
+            url: baseUrl + '/csw/?format=application/json&elementsetname=full&language='+lang,
             dataType: 'json',
             delay: 300,
             data: function(params){
@@ -848,13 +855,13 @@ function cover1(){
 	var divs = flatNodes(md_elem.parentNode, "DIV");
 	var toClone = null;
 	for(var i=0;i<divs.length;i++){
-		if(divs[i].id=='2078_0_'){
+		if(divs[i].id=='2078_00_'){
 			toClone = divs[i];
 			md_dexpand1(divs[i]);
 			var divs2 = flatNodes(flatNodes(divs[i], "DIV")[0],"DIV");
 			md_dexpand1(divs2[0]);
 		}	
-		else if (divs[i].id=='2078_1_') toClone = null;
+		else if (divs[i].id=='2078_01_') toClone = null;
 	}
 	if(toClone){
 		var a = flatNodes(toClone, "A");
@@ -873,10 +880,10 @@ function cover1(){
 		else if(inputs[i].id=='1020uri') {
 			inputs[i].value='https://publications.europa.eu/resource/authority/country/CZE';
 		}	
-		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_0_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#percent';	
-		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_0_2101')>0) inputs[i].value= $('#cover-perc').val();	
-		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_1_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#km2';	
-		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_1_2101')>0) inputs[i].value= $('#cover-km').val();	
+		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_00_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#percent';	
+		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_00_2101')>0) inputs[i].value= $('#cover-perc').val();	
+		else if(inputs[i].id=='30020' && inputs[i].name.indexOf('2078_01_2101')>0) inputs[i].value='http://geoportal.gov.cz/res/units.xml#km2';	
+		else if(inputs[i].id=='1370' && inputs[i].name.indexOf('2078_01_2101')>0) inputs[i].value= $('#cover-km').val();	
 	}
 	$("#md-dialog").modal('hide');
 	return false;
@@ -897,7 +904,7 @@ function find_parent(obj){
     $("#md-content").html(html);
     $("#parent-select").select2({
         ajax: {
-            url: baseUrl + '/csw/?elementsetname=brief&maxrecords=20&sortby=title&format=application/json&&lang='+lang,
+            url: baseUrl + '/csw/?elementsetname=brief&maxrecords=20&sortby=title&format=application/json&language='+lang,
             dataType: 'json',
             delay: 300,
             data: function(params){
@@ -1294,11 +1301,11 @@ function crs(obj){
     $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys&handler=crs1&lang='+lang+'&mdlang='+mdlang);
 }
 
-function dName(obj){
-    md_elem = obj.parentNode;
-    md_addMode = false;
+function verticalCRS(obj){
+	md_elem = obj.parentNode;
+    var mdlang = $('#30').val();
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=linkageName&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=verticalSys&handler=verticalCrs1&lang='+lang+'&mdlang='+mdlang);
 }
 
 function crs1(f){
@@ -1311,6 +1318,25 @@ function crs1(f){
         }     
     }
     $('#md-dialog').modal('hide');
+}
+
+function verticalCrs1(f){
+    var inputs = flatNodes(md_elem, "INPUT");
+    for(var i=0;i<inputs.length;i++){
+        v = inputs[i];
+        switch(v.id){
+          case '30020': v.value = f.uri; break; 
+          case '3601':    v.value = f.xxx; break; 
+        }     
+    }
+    $('#md-dialog').modal('hide');
+}
+
+function dName(obj){
+    md_elem = obj.parentNode;
+    md_addMode = false;
+    $('#md-dialog').modal();
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=linkageName&lang='+lang);
 }
 
 function dc_kontakt(obj, type){
@@ -1644,7 +1670,7 @@ var checkId = function(o){
 	if(nody[0].value || nody[1].value){
         var q = encodeURIComponent("ResourceIdentifier="+nody[1].value);
 		$.ajax({
-            url: baseUrl + "/csw/?request=GetRecords&format=text/json&query="+q
+            url: baseUrl + "/csw/?request=GetRecords&format=text/json&query="+q+'&language='+lang
         })
         .done(function(r){
             var uuid = document.forms[1].uuid.value;
@@ -1684,7 +1710,7 @@ var md_callBack = function(cb, uuid){
 
 var md_upload = function(obj, mime){
     var f=false;
-	micka.window(obj,'Nahrát soubor', 
+	micka.window(obj,'Vybrat soubor', 
         '<div class="input-group">'
             +'<input id="file-info" type="text" class="form-control" readonly>'
             +'<label class="input-group-btn"><span class="btn btn-primary">Vyber<input name="f" type="file" style="display: none;"/></span></label>'
@@ -1699,11 +1725,12 @@ var md_upload = function(obj, mime){
         $('#upload-confirm').prop('disabled', false);
     });
     $('#upload-confirm').on('click', function(e){
+        alert("Not implemented yet."); return;
         var form = new FormData();
         form.append("file", f, f.name);
         $('#file-progress').css({display:'block'});
         $.ajax({ 
-            url: '?ak=md_upload', 
+            url: baseUrl + '/suggest/files', 
             data: form, 
             processData: false, 
             contentType: false, 

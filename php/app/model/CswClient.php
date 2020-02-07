@@ -2,7 +2,8 @@
 define("OS_DC", "http://www.opengis.net/cat/csw/2.0.2");
 define("OS_GMD", "http://www.isotc211.org/2005/gmd");
 
-class CswClient{ 
+class CswClient
+{ 
   var $xml; 
   var $xsl;
   var $xp;
@@ -16,8 +17,12 @@ class CswClient{
   var $lang='cze';
   var $method="";
   var $resultType = "results";
+  public $sw = '';
+  public $hopCount;
+  public $sortBy;
   
-  function __construct(){
+  function __construct()
+  {
     if(!extension_loaded("xsl")){
     		die("xsl extension must be loaded in php.ini");
 
@@ -90,7 +95,7 @@ class CswClient{
   private function getDataByPost($url, $content, $usr, $pwd){
 	$arURL = parse_url($url);
 	$host = $arURL["host"];
-	$port = $arURL["port"]; 
+	$port = isset($arURL["port"]) ? $arURL["port"] : ''; 
 	if($port == '') $port = 80;
 	$path = $arURL["path"];
 	$method = "POST";

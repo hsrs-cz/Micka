@@ -6,7 +6,6 @@ use Nette;
 
 class ProfileModel  extends \BaseModel
 {
-    private $appParameters;
     private $mdSchema;
     
 	public function startup()
@@ -28,13 +27,12 @@ class ProfileModel  extends \BaseModel
     {
         $sql = "
             SELECT
-                profil_names.profil_id,
-                profil_names.profil_name,
-                profil.profil_id
+                profil_names.[profil_id],
+                profil_names.[profil_name],
+                profil.[profil_id]
             WHERE 
-                profil_names.md_standard=?
-                AND profil_names.is_vis=1
-                AND profil_names.edit_lite_template = ''
+                profil_names.[md_standard]=%i
+                AND profil_names.[is_vis]=1
         ";
         $this->db->query($sql, $md_standard)->fetchPairs('profil_id','md_id');
         
@@ -42,10 +40,10 @@ class ProfileModel  extends \BaseModel
     
     public function getProfilNames($md_standard)
     {
-        $sql = "SELECT profil_id, profil_name
+        $sql = "SELECT [profil_id], [profil_name], [is_vis]
                 FROM profil_names
-                WHERE md_standard=? AND is_vis=1 AND edit_lite_template IS NULL
-                ORDER BY profil_id
+                WHERE [md_standard]=%i
+                ORDER BY [profil_id]
         ";
         return $this->db->query($sql, $md_standard)->fetchAll();
     }
@@ -62,13 +60,14 @@ class ProfileModel  extends \BaseModel
         foreach ($profil_names as $row) {
             $profil_id[] = $row->profil_id;
             $rs[$row->profil_id]['name'] = rtrim($row->profil_name);
+            $rs[$row->profil_id]['is_vis'] = $row->is_vis;
         }
         if (count($profil_id) === 0) {
             return $profil_id;
         }
-        $sql = "SELECT profil_id, md_id 
+        $sql = "SELECT [profil_id], [md_id] 
             FROM profil 
-            WHERE profil_id IN (?) AND md_id IN (?)
+            WHERE [profil_id] IN %in AND [md_id] IN %in
         ";
         $pom = $this->db->query($sql, $profil_id, $md_id)->fetchAll();
         foreach ($pom as $row) {
@@ -119,10 +118,10 @@ class ProfileModel  extends \BaseModel
         if ($name == '') {
             return 'Name is NULL'; // TODO: report
         }
-        if ($this->db->fetchField('SELECT count(*) FROM profil_names WHERE profil_name=?', $name) > 0) {
+        if ($this->db->query('SELECT count(*) FROM profil_names WHERE [profil_name]=%s', $name)->fetchSingle() > 0) {
             return 'Name is exists'; // TODO: report profil exists
         }
-        $id = $this->db->fetchField('SELECT MAX(profil_id) FROM profil_names WHERE md_standard=?', $md_standard);
+        $id = $this->db->query('SELECT MAX([profil_id]) FROM profil_names WHERE [md_standard]=%i', $md_standard)->fetchSingle();
         if ($md_standard == 0) {
             $profil_id_md = $profil_id;
             $profil_id_sv = $profil_id + 100;
@@ -142,24 +141,26 @@ class ProfileModel  extends \BaseModel
             }
         }
         $values = array();
-        $values[0]['profil_id'] = $id_md;
-        $values[0]['profil_order'] = $id_md;
-        $values[0]['profil_name'] = $name;
-        $values[0]['md_standard'] = 0;
-        $values[0]['is_vis'] = 1;
-        $values[0]['is_packages'] = $packages;
-        $values[0]['is_inspire'] = $inspire;
-        $values[1]['profil_id'] = $id_sv;
-        $values[1]['profil_order'] = $id_md;
-        $values[1]['profil_name'] = $name;
-        $values[1]['md_standard'] = 10;
-        $values[1]['is_vis'] = 1;
-        $values[1]['is_packages'] = $packages;
-        $values[1]['is_inspire'] = $inspire;
+        $values['profil_id'] = $id_md;
+        $values['profil_order'] = $id_md;
+        $values['profil_name'] = $name;
+        $values['md_standard'] = 0;
+        $values['is_vis'] = 1;
+        $values['is_packages'] = $packages;
+        $values['is_inspire'] = $inspire;
+        $this->db->query('INSERT INTO profil_names %v', $values);
+        $values = array();
+        $values['profil_id'] = $id_sv;
+        $values['profil_order'] = $id_md;
+        $values['profil_name'] = $name;
+        $values['md_standard'] = 10;
+        $values['is_vis'] = 1;
+        $values['is_packages'] = $packages;
+        $values['is_inspire'] = $inspire;
         //dump($values);
-        $this->db->query('INSERT INTO profil_names ?', $values);
-        $this->db->query('INSERT INTO profil (profil_id, md_id, mandt_code) SELECT ?, md_id, mandt_code FROM profil WHERE profil_id=?', $id_md, $profil_id_md);
-        $this->db->query('INSERT INTO profil (profil_id, md_id, mandt_code) SELECT ?, md_id, mandt_code FROM profil WHERE profil_id=?', $id_sv, $profil_id_sv);
+        $this->db->query('INSERT INTO profil_names %v', $values);
+        $this->db->query('INSERT INTO profil ([profil_id], [md_id], [mandt_code]) SELECT %i, [md_id], [mandt_code] FROM profil WHERE [profil_id]=?', $id_md, $profil_id_md);
+        $this->db->query('INSERT INTO profil ([profil_id], [md_id], [mandt_code]) SELECT %i, [md_id], [mandt_code] FROM profil WHERE [profil_id]=?', $id_sv, $profil_id_sv);
         return '';
     }
     
@@ -174,10 +175,45 @@ class ProfileModel  extends \BaseModel
             $profil[] = $profil_id - 100;
         }
         if (count($profil) === 2) {
-            $this->db->query('DELETE FROM profil WHERE profil_id IN (?)', $profil);
-            $this->db->query('DELETE FROM profil_names WHERE profil_id IN (?)', $profil);
+            $this->db->query('DELETE FROM profil WHERE [profil_id] IN %in', $profil);
+            $this->db->query('DELETE FROM profil_names WHERE [profil_id] IN %in', $profil);
         }
-        return;
+    }
+
+    public function setVisProfil($param)
+    {
+        list($md_standard, $profil_id, $md_id) = explode(',', $param);
+        if ($md_standard == 0 || $md_standard == 10) {
+            $profil = array();
+            $profil[] = $profil_id;
+            if ($profil_id < 100) {
+                $profil[] = $profil_id + 100;
+            } else {
+                $profil[] = $profil_id - 100;
+            }
+            if (count($profil) === 2) {
+                $this->db->query('UPDATE profil_names SET [is_vis]=1 WHERE [profil_id] IN %in ', $profil);
+            }
+        }
+        return $md_standard . ',' . $md_id;
+    }
+
+    public function unsetVisProfil($param)
+    {
+        list($md_standard, $profil_id, $md_id) = explode(',', $param);
+        if ($md_standard == 0 || $md_standard == 10) {
+            $profil = array();
+            $profil[] = $profil_id;
+            if ($profil_id < 100) {
+                $profil[] = $profil_id + 100;
+            } else {
+                $profil[] = $profil_id - 100;
+            }
+            if (count($profil) === 2) {
+                $this->db->query('UPDATE profil_names SET [is_vis]=0 WHERE [profil_id] IN %in ', $profil);
+            }
+        }
+        return $md_standard . ',' . $md_id;
     }
 
     private function setMdId2Profil($profil_id, $id)
@@ -186,14 +222,15 @@ class ProfileModel  extends \BaseModel
         $values = [];
         foreach ($nodes as $node) {
             if ($node->md_id > 0) {
-                $value = [];
-                $value['profil_id'] = $profil_id;
-                $value['md_id'] = $node->md_id;
-                $values[] = $value;
+                $values[] = array('profil_id' => $profil_id, 'md_id' => $node->md_id);
                 $del_md_id[] = $node->md_id;
-                $this->db->query('DELETE FROM profil WHERE profil_id=? AND md_id IN (?)',
-                    $profil_id, $del_md_id);
-                $this->db->query('INSERT INTO profil ?', $values);
+            }
+        }
+        if (count($values) > 0) {
+            $this->db->query('DELETE FROM profil WHERE [profil_id]=? AND [md_id] IN %in',
+                $profil_id, $del_md_id);
+            foreach ($values as $value) {
+                $this->db->query('INSERT INTO profil %v', $value);
             }
         }
         return;
@@ -209,8 +246,7 @@ class ProfileModel  extends \BaseModel
             }
         }
         if (count($del_md_id)) {
-            $this->db->query('DELETE FROM profil WHERE profil_id=? AND md_id IN (?)', 
-            $profil_id, $del_md_id);
+            $this->db->query('DELETE FROM profil WHERE [profil_id]=%i AND [md_id] IN %in', $profil_id, $del_md_id);
         }
         return;
     }

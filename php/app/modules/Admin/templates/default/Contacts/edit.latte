@@ -14,7 +14,7 @@
     }
 </script>
 
-<h1>{_messages.frontend.contacts} - {_messages.frontend.new_record2}</h1>
+<h1><a n:href=":Admin:Contacts:default"><i class="fa fa-arrow-left"></i></a> / {_messages.frontend.contacts} - {_messages.frontend.new_record2}</h1>
 <br>
 <form action="{link :Admin:Contacts:save $id}" METHOD=POST>
 	<fieldset class="contacts">
@@ -51,8 +51,6 @@
     <br/><br/>
 	<p align="center">
 		<input type=submit class="btn btn-success" value="{_messages.frontend.save}">
-		<input type=reset class="btn btn-default" value="{_messages.frontend.reset}">
-		<input type=button class="btn btn-default" onClick="window.location.href='{$basePath|noescape}/admin/contacts/default'" value="{_messages.frontend.back}">
 		{if $id > 0}
 			<input type=button class="btn btn-danger" onClick="javascript:md_delkont({$contact->id})" value="{_messages.frontend.delete}">
 		{/if}
@@ -60,3 +58,7 @@
 </form>
 
 </div>
+{/block}
+
+{block content-js}
+{/block}

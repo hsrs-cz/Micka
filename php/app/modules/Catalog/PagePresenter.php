@@ -3,7 +3,7 @@ namespace CatalogModule;
 
 use App\Model;
 
-/** @resource Catalog:Guest */
+/** @resource Guest */
 class PagePresenter extends \BasePresenter
 {
 	public function startup()

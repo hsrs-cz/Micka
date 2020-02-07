@@ -3,26 +3,23 @@ namespace CatalogModule;
 
 use App\Model;
 
-/** @resource Catalog:Guest */
+/** @resource Guest */
 class SuggestPresenter extends \BasePresenter
 {
-	/** @var Model\SuggestModel */
 	private $suggestModel;
-
-
-	public function __construct(Model\SuggestModel $sm)
-	{
-		$this->suggestModel = $sm;
-	}
-
 
 	public function startup()
 	{
 		parent::startup();
-        $this->suggestModel->setIdentity($this->user);
+        $this->suggestModel = new \App\Model\SuggestModel(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
+
 	}
 
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function renderDefault()
 	{
         $params = [];
@@ -39,7 +36,7 @@ class SuggestPresenter extends \BasePresenter
         ));
 	}
     
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function renderMdLists()
 	{
         $httpRequest =$this->context->getByType('Nette\Http\Request');
@@ -50,7 +47,7 @@ class SuggestPresenter extends \BasePresenter
         $this->terminate();
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Editor */
 	public function renderMdGazcli()
 	{
         define("APP_DIR", $this->context->parameters['appDir']);
@@ -58,14 +55,14 @@ class SuggestPresenter extends \BasePresenter
         $this->terminate();
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Editor */
 	public function renderMdUpload()
 	{
         require $this->context->parameters['appDir'] . '/model/md_upload.php';
         $this->terminate();
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Editor */
 	public function renderMetadata()
 	{
         // direct accesss
@@ -81,30 +78,17 @@ class SuggestPresenter extends \BasePresenter
             $this->suggestModel->getAnswer($params), 
             "application/json;charset=utf-8"
         ));
-        // using catalogue service 
-        /*$params = array('OUTPUTSCHEMA' => 'json', 'QUERY' => '', 'ELEMENTSETNAME' => 'brief');
-        if ($this->getParameter('id') != '') {
-            $params['ID'] = $this->getParameter('id');
-        } else {
-            if ($this->getParameter('type') == 'featureCatalogue') {
-                $params['QUERY'] = "type='featureCatalogue'";
-            }
-            if($this->getParameter('q')){
-                if($params['QUERY'] !='') $params['QUERY'] .= ' AND ';
-                $params['QUERY'] = "Title like '".$this->getParameter('q')."*'";
-            }
-        }
-        $csw = new \Micka\Csw;
-        $params = $csw->dirtyParams($params);
-        //$this->template->records = 
-        $csw->run($params);*/
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Editor */
 	public function renderMdContacts()
 	{
         $this->template->mds = 'MD';
-        $contactsModel = new \App\AdminModel\ContactsModel($this->context->getByType('Nette\Database\Context'), $this->user);
+        $contactsModel = new \App\AdminModel\ContactsModel(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
         if($this->getParameter('format')=='json'){
             $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
                 $contactsModel->findMdContactsByName($this->getParameter('q')), 
@@ -114,6 +98,20 @@ class SuggestPresenter extends \BasePresenter
         else {
             $this->template->contacts = $contactsModel->findMdContacts();
         }
+    }
+
+    /** @resource Editor */
+	public function renderFiles()
+	{
+        $filesModel = new \App\Model\FilesModel(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
+        $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
+                $filesModel->getFiles(), 
+                "application/json;charset=utf-8"
+            ));
     }
     
 }

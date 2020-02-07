@@ -330,19 +330,21 @@ SearchForm = function(){
 			}
 			else {
 				f = $("#"+field);
-                if (f.prop('type')=='checkbox') { f.prop('checked', d); }
-				else if(typeof d == 'string') { f.val(d); }
-				else {
-					if(f[0].length>0){
-						var vals = [];
-						$.each(d, function(k, v){ vals.push(k); });
-						f.val(vals).trigger('change');
-					}
-					else {
-						$.each(d, function(k, v){ f.append('<option selected value="'+k+'">'+v+'</option>');	});
-					}
-				}
-				f.trigger('change.select2');
+                if(f){
+                    if (f.prop('type')=='checkbox') { f.prop('checked', d); }
+                    else if(typeof d == 'string') { f.val(d); }
+                    else {
+                         if(f[0] && f[0].length>0){
+                            var vals = [];
+                            $.each(d, function(k, v){ vals.push(k); });
+                            f.val(vals).trigger('change');
+                        }
+                        else {
+                            $.each(d, function(k, v){ f.append('<option selected value="'+k+'">'+v+'</option>');	});
+                        }
+                    }
+                    f.trigger('change.select2');
+                }
 			}
 		});
 		changeType($('#res-type').val());
@@ -355,6 +357,7 @@ SearchForm = function(){
 		if(typeof v=='string') v = [v]; 
 		if(result) result += " AND ";
 		for(i in v){
+            v[i] = v[i].replace("'", "\\\'");
 			if(like) v[i] = key +" like '*"+v[i]+"*'";
 			else v[i] = key +"='"+v[i]+"'";
 		}

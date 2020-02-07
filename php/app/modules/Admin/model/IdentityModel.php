@@ -4,108 +4,126 @@ use Nette,
     Nette\Security\Passwords;
 
 
-class IdentityModel extends \BaseModel
+class IdentityModel extends \App\Model\UserModel
 {
-    private $minPasswordLength = 4;
-    private $minUsernameLength = 2;
+    protected $minPasswordLength;
+    protected $minUsernameLength;
     
-	public function startup()
-	{
-		parent::startup();
-	}
-    
-    public function getUsers()
+    public function getEmptyUser()
     {
-        $records = $this->db->query("SELECT 
-                id, username, '********' AS password,
-                role_editor, role_publisher, role_admin, role_root,
-                groups
-            FROM users")->fetchAll();
-        foreach ($records as $record) {
-            foreach ($record as $key => $value) {
-                $record->$key = rtrim($value);
-            }
-        }
-        return $records;
+        return (object) array(
+            'id' => 0,
+            'username' => '', 
+            'role_editor' => 1,
+            'role_publisher' => 0,
+            'role_admin' => 0,
+            'groups' => $this->appParameters['app']['defaultViewGroup']  . ',' . $this->appParameters['app']['defaultEditGroup']
+        );
+    }
+
+    public function getUserById($id=0)
+    {
+        return $this->db->query("SELECT 
+                [id], RTRIM([username]) AS [username], 
+                [role_editor], [role_publisher], [role_admin],
+                [groups]
+            FROM users %if", $id>0, "WHERE [id]=%i", $id, "%end ORDER BY [username]")->fetchAll();
     }
     
-    public function deleteUsersById($id)
+    public function setUser($id, $post)
     {
-        return $this->db->query("DELETE FROM users WHERE id=?", $id);
+        $id = (integer) $id;
+        $values = array();
+        if ($id === 0) {
+            if (isset($post['username']) && mb_strlen(trim($post['username'])) < $this->appParameters['minUsernameLength']) {
+                return 'username';
+            } else {
+                $values['username'] = trim($post['username']);
+            }
+            if (isset($post['passwd']) && mb_strlen(trim($post['passwd'])) < $this->appParameters['minPasswordLength']) {
+                return 'password';
+            } else {
+                $values['password'] =  Passwords::hash(trim($post['passwd']));
+            }
+        }
+        $values['role_editor'] = isset($post['role_editor']) ? true : false;
+        $values['role_publisher'] = isset($post['role_publisher']) ? true : false;
+        $values['role_admin'] = isset($post['role_admin']) ? true : false;
+        $values['groups'] = $post['groups'];
+        if ($id === 0 && $this->findUserByName($values['username']) !== null) {
+            return 'exists';
+        }
+        if ($id > 0) {
+            $this->updateUserById($id, $values);
+        } else {
+            $this->createUser($values);
+        }
+        return 'ok';
+    }
+
+    public function deleteUserById($id)
+    {
+        $user = $this->getUserById($id);
+        if (count($user) === 1) {
+            if ($user[0]->username !== $this->user->getIdentity()->username) {
+                $this->db->query("DELETE FROM users WHERE [id]=%i", $id);
+            }
+        }
+    }
+
+    public function getCloneUser($id)
+    {
+        $user = $this->getUserById($id);
+        if (count($user) === 1) {
+            return (object) array(
+                'id' => 0,
+                'username' => '', 
+                'role_editor' => $user[0]->role_editor,
+                'role_publisher' => $user[0]->role_publisher,
+                'role_admin' => $user[0]->role_admin,
+                'groups' => $user[0]->groups
+            );
+        } else {
+            return $this->getEmptyUser();
+        }
     }
     
-    public function updateUsersById($id, $values)
+    public function updateUserById($id, $values)
     {
-        foreach($values as $key => $value) {
-            $value = trim($value);
-            switch ($key) {
-                case 'username':
-                    if (mb_strlen($value) < $this->minPasswordLength) {
-                        return 'error username';
-                    }
-                    break;
-                case 'password':
-                    if (mb_strlen($value) ==  0) {
-                        unset($values[$key]);
-                        break;
-                    } elseif (mb_strlen($value) < $this->minPasswordLength) {
-                        return 'error password';
-                    }
-                    $value = Passwords::hash($value);
-                    break;
-                case 'role_editor':
-                case 'role_publisher':
-                case 'role_admin':
-                case 'role_root':
-                    $value = $value == 1 ? TRUE : FALSE;
-                    break;
-                case 'groups':
-                    if ($value == '') {
-                        $value = NULL;
-                    }
-                    break;
-                default:
-                    return 'error key';
-            }
-            $values[$key] = $value;
-        }
-        $this->db->query('UPDATE users SET ? WHERE id=?', $values, $id);
-        return '';
+        $this->db->query('UPDATE users SET %a WHERE [id]=%i', $values, $id);
     }
-    
-    public function add2Users($values)
+
+    public function createUser($values)
     {
-        foreach($values as $key => $value) {
-            $value = trim($value);
-            switch ($key) {
-                case 'username':
-                    if (mb_strlen($value) < $this->minUsernameLength) {
-                        return 'error username';
-                    }
-                    break;
-                case 'password':
-                    if (mb_strlen($value) < $this->minPasswordLength) {
-                        return 'error password';
-                    }
-                    $value = Passwords::hash($value);
-                    break;
-                case 'role_editor':
-                case 'role_publisher':
-                case 'role_admin':
-                case 'role_root':
-                    $value = $value == 1 ? TRUE : FALSE;
-                    break;
-                case 'groups':
-                    if ($value == '') {
-                        $value = NULL;
-                    }
-                    break;
-                default:
-                    return 'error key';
-            }
-            $values[$key] = $value;
+        $this->db->query("INSERT INTO users %v", $values);
+    }
+
+    public function changePassword($post)
+    {
+        if (isset($post['ap']) === false || isset($post['np1']) === false || isset($post['np2']) === false) {
+            return 'InputDataIsNotComplete';
         }
-        $this->db->query("INSERT INTO users", $values);
-        return '';
+        $post['ap'] = trim($post['ap']);
+        $post['np1'] = trim($post['np1']);
+        $post['np2'] = trim($post['np2']);
+        if ($post['np1'] != $post['np2']) {
+            return 'VerifyPassword';
+        }
+        if (mb_strlen($post['np1']) < $this->appParameters['minPasswordLength']) {
+            return 'MinLengthPassword';
+        }
+        $user = $this->getUserByName($this->user->getIdentity()->username, $post['ap']);
+        if ($user === null) {
+            return 'CurrentPassword';
+        }
+        $id = $this->user->id;
+        if ($id > 0 && $user->id === $id)  {
+            $values = array();
+            $values['password'] =  $this->hashPassword($post['np1']);
+            $this->updateUserById($id, $values);
+            return 'ok';
+        } else {
+            return 'UpdateError';
+        }
     }
 }

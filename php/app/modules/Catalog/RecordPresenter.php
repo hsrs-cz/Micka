@@ -1,25 +1,23 @@
 <?php
 namespace CatalogModule;
 
-use App\Model;
+use App\Model, Nette;
 
-/** @resource Catalog:Guest */
+/** @resource Guest */
 class RecordPresenter extends \BasePresenter
 {
 	/** @var Model\RecordModel */
-	private $recordModel;
+	protected $recordModel;
     
-
-	public function __construct(Model\RecordModel $rm)
-	{
-		$this->recordModel = $rm;
-	}
-
-
 	public function startup()
 	{
-		parent::startup();
-        $this->recordModel->setAppParameters($this->context->parameters);
+        parent::startup();
+        $class = \App\Model\Micka::getClassName("App\\Model\\RecordModel");
+        $this->recordModel = new $class(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
     }
     
     private function restoreUrl($detailId, $f)
@@ -33,7 +31,7 @@ class RecordPresenter extends \BasePresenter
         }
     }
 
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function actionDefault($id)
 	{
         if ($this->getParameter('format') == 'application/xml') {
@@ -47,7 +45,7 @@ class RecordPresenter extends \BasePresenter
         }
 	}
 
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function renderBasic($id)
 	{
         $appLang = $this->getParameter('language') !== NULL
@@ -63,20 +61,19 @@ class RecordPresenter extends \BasePresenter
         $request['version'] = '2.0.2';
         $request['id'] = $id;
         $request['language'] = $appLang;
-        $request['format'] = 'json';
-        $csw = new \Micka\Csw;
-        $mdr = json_decode($csw->run($csw->dirtyParams($request)));
+        $csw = new \App\Model\Csw(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
         $request['format'] = 'text/html';
         $this->template->record = $csw->run($csw->dirtyParams($request));
         $this->template->urlParams = $this->context->getByType('Nette\Http\Request')->getQuery();
         $this->template->appLang = $appLang;
-        $this->template->pageTitle = 
-            $mdr !== null    
-            ? $this->template->pageTitle .= ': ' . $mdr->title
-            : $this->template->pageTitle .= ': ' . $this->translator->translate('messages.apperror.noRecordFound');
+        $this->template->pageTitle .= ': ' . $csw->getTitle();
 	}
     
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
 	public function renderFull($id)
 	{
         $appLang = $this->getParameter('language') !== NULL
@@ -90,15 +87,19 @@ class RecordPresenter extends \BasePresenter
         if (!$mdr) {
             throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
-        $mdf = new \App\Model\MdFull($this->context->getByType('Nette\Database\Context'), $this->user);
+        $mdf = new \App\Model\MdFull(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
         $this->template->values = $mdf->getMdFullView($mdr->recno, $mdr->md_standard, $appLang);
         $this->template->rec = $mdr;
         $this->template->appLang = $appLang;
         $this->template->detail = 'full';
-        $this->template->pageTitle = $this->template->pageTitle .= ': ' . $mdr->title;
+        $this->template->pageTitle .= ': ' . $this->recordModel->getMdTitle($appLang);
 	}
     
-    /** @resource Catalog:Guest */
+    /** @resource Guest */
     public function renderXml($id)
     {
         $mdr = $this->recordModel->findMdById($id,'md','read');
@@ -113,26 +114,30 @@ class RecordPresenter extends \BasePresenter
         
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Guest */
     public function renderNew() 
     {
-        $mcl = new \App\Model\CodeListModel($this->context->getByType('Nette\Database\Context'), $this->user);
+        $mcl = new \App\Model\CodeListModel(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
         $this->template->mdStandard = $mcl->getStandardsLabel($this->appLang, TRUE);
-        $this->template->groups = $this->user->getIdentity()->data['groups'];
+        $this->template->groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
         $this->template->edit_group = $this->context->parameters['app']['defaultEditGroup'];
-        $this->template->view_group = $this->context->parameters['app']['defaultViewGroup'];;
+        $this->template->view_group = $this->context->parameters['app']['defaultViewGroup'];
         $this->template->mdLangs = $mcl->getLangsLabel($this->appLang);
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Guest */
     public function actionCancel($id) 
     {
-        $this->recordModel->deleteEditRecords();
+        $this->recordModel->deleteEditRecordByUuid($id);
         $this->restoreUrl($id, $this->getParam('f'));
         $this->redirect(':Catalog:Default:default');
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Guest */
     public function actionSave($id) 
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
@@ -145,12 +150,31 @@ class RecordPresenter extends \BasePresenter
         }
         switch ($post['afterpost']) {
             case 'end':
-                $this->recordModel->setEditRecord2Md();
-                $this->restoreUrl($this->getParam('id'), $this->getParam('f'));
-                $this->redirect(':Catalog:Default:default');
+                if ($this->user->isLoggedIn()) {
+                    $this->recordModel->setEditRecord2Md();
+                    $this->recordModel->deleteEditRecordByUuid($id);
+                    $this->restoreUrl($this->getParam('id'), $this->getParam('f'));
+                    $this->redirect(':Catalog:Default:default');
+                }
                 break;
             case 'save':
-                $this->recordModel->setEditRecord2Md();
+                if ($this->user->isLoggedIn()) {
+                    $this->recordModel->setEditRecord2Md();
+                }
+                break;
+            case 'xml':
+                $mdr = $this->recordModel->getRecordMd();
+                header("Content-Type: application/force-download");
+                header("Content-Type: application/octet-stream");
+                header("Content-Type: application/download");
+                header('Content-Disposition: attachment; filename=metadata.xml');
+                header("Content-Transfer-Encoding: binary");
+                header("Cache-control: private"); //use this to open files directly
+                header('Expires: 0');
+                header("Pragma: no-cache");
+                header("Connection: close");
+                echo ltrim($mdr->pxml);
+                $this->terminate();
                 break;
             default:
         }
@@ -163,7 +187,7 @@ class RecordPresenter extends \BasePresenter
         $this->redirect(':Catalog:Record:edit', [$id, 'profil'=>$profil, 'package'=>$package, 'f' => $this->getParam('f')]);
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Guest */
     public function actionEdit($id) 
     {
         if($id == 'new') {
@@ -182,6 +206,11 @@ class RecordPresenter extends \BasePresenter
             if ($this->getParameter('profil') == NULL) {
                 $mdr = $this->recordModel->findMdById($id,'md','edit');
                 if ($mdr) {
+                    if ($this->recordModel->controlIsEditUse() === true) {
+                        $this->flashMessage($this->translator->translate('messages.frontend.edited'), 'warning');
+                        $this->restoreUrl($mdr->uuid, $this->getParam('f'));
+                        $this->redirect(':Catalog:Default:default');
+                    }
                     $this->recordModel->copyMd2EditMd();
                 } else {
                     throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
@@ -190,7 +219,7 @@ class RecordPresenter extends \BasePresenter
         }
     }
 
-    /** @resource Catalog:Editor */
+    /** @resource Guest */
     public function renderEdit($id) 
     {
         $rmd = $this->recordModel->findMdById($id,'edit_md','edit');
@@ -207,9 +236,11 @@ class RecordPresenter extends \BasePresenter
             }
             $package = $this->getParameter('package') ? $this->getParameter('package') : -1;
             $md_values = $this->recordModel->getRecordMdValues();
-            $data = new \App\Model\MdEditForm($this->context->getByType('Nette\Database\Context'), $this->user);
-            $data->setAppParameters($this->context->parameters);
-            $data->appLang = $this->appLang;
+            $data = new \App\Model\MdEditForm(
+                $this->context->getByType('\Dibi\Connection'), 
+                $this->user,
+                $this->context->parameters
+            );
             
             $mdDataType = [];
             if ($this->context->parameters['app']['mdDataType'] != '') {
@@ -226,7 +257,11 @@ class RecordPresenter extends \BasePresenter
                 'hierarchy'=>'application',
                 'title'=>$this->recordModel->getMdTitle($md_values,$this->appLang)
                 ];
-            $mcl = new \App\Model\CodeListModel($this->context->getByType('Nette\Database\Context'), $this->user);
+            $mcl = new \App\Model\CodeListModel(
+                $this->context->getByType('\Dibi\Connection'), 
+                $this->user,
+                $this->context->parameters
+            );
             $mcl->setLiteProfiles($this->appLang, $mds, $this->layoutTheme);
             $this->template->dataBox = $data->getEditLiteForm($rmd, $profil, $mcl->getEditLiteProfile($profil));
             $this->template->formData =
@@ -240,9 +275,9 @@ class RecordPresenter extends \BasePresenter
             $this->template->dataType = $rmd->data_type;
             $this->template->view_group = $rmd->view_group;
             $this->template->edit_group = $rmd->edit_group;
-            $this->template->groups = $this->user->getIdentity()->data['groups'];
+            $this->template->groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
             $this->template->mdControl = ($mds == 0 || $mds == 10) 
-                    ? mdControl($rmd->pxml, $this->appLang)
+                    ? mdControl($rmd->pxml, $this->appLang, $this->layoutTheme)
                     : [];
             $this->template->profils = $mcl->getMdProfils($this->appLang,$mds);
             $this->template->packages = $mcl->getMdPackages($this->appLang, $mds, $profil);
@@ -254,20 +289,18 @@ class RecordPresenter extends \BasePresenter
         }
     }
         
-    /** @resource Catalog:Editor */
+    /** @resource Editor */
     public function renderValid($id)
     {
         $md = $this->recordModel->findMdById($id,'md','read');
         if (!$md) {
              throw new \Nette\Application\BadRequestException;
         }
-        require_once $this->context->parameters['appDir'] . '/model/validator/resources/Validator.php';
-        $validator = new \Validator('gmd', $this->appLang == 'cze' ? 'cze' : 'eng');
-        $validator->run($md->pxml);
+        $validator = $this->recordModel->validate($md->pxml, 'gmd', $this->appLang == 'cze' ? 'cze' : 'eng', $this->getParam('profile'));
         $this->template->record = $validator->asHTML();
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Editor */
     public function renderClone($id)
     {
         $mdr = $this->recordModel->findMdById($id,'md','view');
@@ -282,11 +315,34 @@ class RecordPresenter extends \BasePresenter
         }
     }
     
-    /** @resource Catalog:Editor */
+    /** @resource Editor */
     public function renderDelete($id)
     {
         $this->recordModel->deleteMdById($id);
         $this->redirect(':Catalog:Default:default');
     }
+
+    /** @resource Guest */
+	public function renderAtom($id)
+	{
+        $get = $this->context->getByType('Nette\Http\Request')->getQuery();
+        $params = array();
+        $params['SERVICE'] = 'CSW';
+        $params['VERSION'] = '2.0.2';
+        $params['REQUEST'] = 'GetRecordById';
+        $params['DEBUG'] = isset($get['debug']) ? $get['debug'] : 0;
+        $params['ID'] = $id;
+        $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : $this->appLang; 
+        $params['OUTPUTSCHEMA'] = 'http://www.w3.org/2005/Atom';
+        $csw = new \App\Model\Csw(
+            $this->context->getByType('\Dibi\Connection'), 
+            $this->user,
+            $this->context->parameters
+        );
+        $result = $csw->run($params);
+        $csw->setHeader();
+        echo $result;
+        $this->terminate();
+	}
     
 }
