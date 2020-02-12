@@ -68,8 +68,8 @@ function getData($url)
     }
     $result = curl_exec ($ch);
     curl_close ($ch);
-    //file_put_contents(__DIR__ . "/../../log/csw-getData".uniqid().".xml", $s.$result);
-    if($result) $dom->loadXML($result);
+    //file_put_contents(__DIR__ . "/../../log/csw-getData".uniqid().".xml", $url[0]."\n".$result);
+    if($result) @$dom->loadXML($result);
     return $dom;
 }
 

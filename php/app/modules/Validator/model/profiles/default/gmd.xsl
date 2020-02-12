@@ -41,7 +41,7 @@ xmlns:php="http://php.net/xsl">
  
 <validationResult title="{$labels/msg/titleCR}" version="4.2 beta, CENIA 2020">
 
-<!-- identifikace -->
+<!-- identification -->
 <!-- 1.1 -->
 <test code="1.1" level="m">
 	<description><xsl:value-of select="$labels/test[@code='1.1']"/></description>
@@ -659,11 +659,11 @@ xmlns:php="http://php.net/xsl">
     <xpath>identificationInfo/*/resourceConstraints/*/accessConstraints</xpath>
     <xsl:variable name="k" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:useConstraints/*/@codeListValue"/>
     <xsl:if test="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*!=''">
-            <value> 
-                <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*/@xlink:href"/>
-               - <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*"/>
-            </value>
-            <pass>true</pass>
+        <value> 
+            <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*/@xlink:href"/>
+           - <xsl:value-of select="gmd:identificationInfo/*/gmd:resourceConstraints[*/gmd:useConstraints/*/@codeListValue='otherRestrictions']/*/gmd:otherConstraints/*"/>
+        </value>
+        <pass>true</pass>
     </xsl:if>
 </test>
 

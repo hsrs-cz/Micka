@@ -60,8 +60,8 @@ class ArrayMdXml2MdValues extends \BaseModel
             array("/","",""),
             $text 
         );
-        if (strlen($recno) === 2 && $recno{0} === '0') {
-            $recno = $recno{1};
+        if (strlen($recno) === 2 && $recno[0] === '0') {
+            $recno = $recno[1];
         }
         if ($recno > -1) {
             switch ($mode) {
@@ -141,8 +141,8 @@ class ArrayMdXml2MdValues extends \BaseModel
     
 	private function setLangMd($recno) {
         $idx = strlen($recno) === 1 ? "0$recno" : $recno;
-        if (strlen($recno) === 2 && $recno{0} === '0') {
-            $recno = $recno{1};
+        if (strlen($recno) === 2 && $recno[0] === '0') {
+            $recno = $recno[1];
         }
         switch ($this->md_standard) {
             case 0:
@@ -175,8 +175,8 @@ class ArrayMdXml2MdValues extends \BaseModel
 
 	private function setLangsMd($recno, $iso_lang) {
         $idx = strlen($recno) === 1 ? "0$recno" : $recno;
-        if (strlen($recno) === 2 && $recno{0} === '0') {
-            $recno = $recno{1};
+        if (strlen($recno) === 2 && $recno[0] === '0') {
+            $recno = $recno[1];
         }
 		$lang_change = FALSE;
 		$md_lang = array();
@@ -303,7 +303,7 @@ class ArrayMdXml2MdValues extends \BaseModel
         
 		$md_lang[] = $this->md[$recno]['lang'];
 		$md_lang = array_unique($md_lang);
-		$this->md[$recno]['langs'] = implode($md_lang, '|');
+		$this->md[$recno]['langs'] = implode('|', $md_lang);
 	}
     
 	private function processArrayMd($md, $level=0, $elements='', $path_el='', $recno_in='', $path_md='', $md_lang='xxx')
@@ -312,8 +312,8 @@ class ArrayMdXml2MdValues extends \BaseModel
         $el_pom = '';
         foreach ($md as $key => $item) {
             $key2 = strlen($key) === 1 ? "0$key" : $key;
-            if (strlen($key) === 2 && $key{0} === '0') {
-                $key = $key{1};
+            if (strlen($key) === 2 && $key[0] === '0') {
+                $key = $key[1];
             }
             if ($level == 2) {
                 $recno_in = $key;
@@ -348,7 +348,7 @@ class ArrayMdXml2MdValues extends \BaseModel
                     $elements .= "[" . $key . "]";
                     $path_md .= $key2 . "_";
                 } else {
-                    if ($key{0} == '@') { // lang
+                    if ($key[0] == '@') { // lang
                         if (strlen($key) > 1) {
                             $md_lang = substr($key,1);
                         }
@@ -397,8 +397,8 @@ class ArrayMdXml2MdValues extends \BaseModel
 		if (array_key_exists('MD_Metadata', $this->arrayXml)) {
 			foreach ($this->arrayXml['MD_Metadata'] as $idx=>$md) {
                 $recno = $idx;
-                if (strlen($recno) === 2 && $recno{0} === '0') {
-                    $recno = $recno{1};
+                if (strlen($recno) === 2 && $recno[0] === '0') {
+                    $recno = $recno[1];
                 }
 				$this->md[$recno]['iso'] = isset($md['identificationInfo']['00']['SV_ServiceIdentification']) ? 'MS' : 'MD';
 				if ($this->md[$recno]['iso'] == 'MS' 
@@ -419,8 +419,8 @@ class ArrayMdXml2MdValues extends \BaseModel
 		if (array_key_exists('metadata', $this->arrayXml)) {
 			foreach ($this->arrayXml['metadata'] as $idx=>$md) {
                 $recno = $idx;
-                if (strlen($recno) === 2 && $recno{0} === '0') {
-                    $recno = $recno{1};
+                if (strlen($recno) === 2 && $recno[0] === '0') {
+                    $recno = $recno[1];
                 }
 				$this->md[$recno]['iso'] = 'DC';
 				// uuid
@@ -450,8 +450,8 @@ class ArrayMdXml2MdValues extends \BaseModel
 		if (array_key_exists('FC_FeatureCatalogue', $this->arrayXml)) {
 			foreach ($this->arrayXml['FC_FeatureCatalogue'] as $idx=>$md) {
                 $recno = $idx;
-                if (strlen($recno) === 2 && $recno{0} === '0') {
-                    $recno = $recno{1};
+                if (strlen($recno) === 2 && $recno[0] === '0') {
+                    $recno = $recno[1];
                 }
 				$this->md[$recno]['iso'] = 'FC';
 				// uuid

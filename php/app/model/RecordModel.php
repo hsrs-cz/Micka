@@ -459,7 +459,7 @@ class RecordModel extends \BaseModel
         if(!in_array($lang_main, $langs)){
             array_unshift($langs , $lang_main);
         }
-        $md['lang'] = implode($langs,"|");
+        $md['lang'] = implode("|", $langs);
         if ($md['md_standard'] == 99) {
             $params = [];
             $params['type'] = (isset($post['type']) && $post['type'] != '') ? $post['type'] : 'ISO19139';
