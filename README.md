@@ -12,7 +12,7 @@ Geospatial metadata catalogue and metadata editing tool.
 
 ## System requirements
 - Any web server with mod_rewrite enabled
-- PHP min 7.1 with XSL extension
+- PHP min 7.1 with xsl,pgsql and mbstring  extensions
 - PostgreSQL min 10.0 & PostGIS 2.4
 - Composer (https://getcomposer.org/) - for installaton some components.
 
@@ -27,7 +27,7 @@ Geospatial metadata catalogue and metadata editing tool.
 8. Rename `app/config/config.local.neon.dist` to `app/config/config.local.neon` and edit it for access to your database, your contact information etc.
 9. Rename `app/config/config.neon.dist` to `app/config/config.neon`.
 10. Rename `app/config/codelists.xml.dist` to `app/config/codelists.xml`.
-11. Make the directories `php/log` and `php/temp` writable for the web server
+11. Crate the directories `log` and `temp` under the `php` directory and make them writable for the web server
 
 ## Updates
 In new versions the database structure may sometimes change. In mostly cases the data remains unchanged but update scripts should be run to change some tables. Update scripts are named **u&lt;update-date&gt;_&lt;table-name&gt;.sql**
