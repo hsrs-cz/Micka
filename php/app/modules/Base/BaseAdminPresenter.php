@@ -14,21 +14,27 @@ class BaseAdminPresenter extends \BasePresenter
      */
     public function formatLayoutTemplateFiles()
     {
-        $formatLayout = $this->context->parameters['appDir']
-            . DIRECTORY_SEPARATOR . 'Modules'
+        $themeLayoutFile = $this->context->parameters['appDir']
+            . DIRECTORY_SEPARATOR . 'modules'
             . DIRECTORY_SEPARATOR . 'Catalog'
             . DIRECTORY_SEPARATOR . 'templates'
             . DIRECTORY_SEPARATOR . $this->context->parameters['app']['layoutTheme']
             . DIRECTORY_SEPARATOR . '@layout.latte';
-        if (file_exists($formatLayout) === false) {
-            $formatLayout = $this->context->parameters['appDir']
-                . DIRECTORY_SEPARATOR . 'Modules'
-                . DIRECTORY_SEPARATOR . 'Catalog'
-                . DIRECTORY_SEPARATOR . 'templates'
-                . DIRECTORY_SEPARATOR . 'default'
-                . DIRECTORY_SEPARATOR . '@layout.latte';
+        $defaultLayoutFile = $this->context->parameters['appDir']
+            . DIRECTORY_SEPARATOR . 'modules'
+            . DIRECTORY_SEPARATOR . 'Catalog'
+            . DIRECTORY_SEPARATOR . 'templates'
+            . DIRECTORY_SEPARATOR . 'default'
+            . DIRECTORY_SEPARATOR . '@layout.latte';
+        if (file_exists($themeLayoutFile)) {
+            return array($themeLayoutFile);
+        } elseif (file_exists($defaultLayoutFile)) {
+            return array($defaultLayoutFile);
+        } else {
+            echo "<pre>theme: $themeLayoutFile" . PHP_EOL;
+            echo "default: $defaultLayoutFile</pre>";
+            throw new \Nette\Application\ApplicationException("defaultLayoutFile");
         }
-        return array($formatLayout);
     }
 
 }
