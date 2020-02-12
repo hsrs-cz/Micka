@@ -970,13 +970,13 @@ class MdSearch extends \BaseModel
     
 	protected function parserData($data, $con) {
 		$rs = '';
-		if ($data{0} == '%') {
+		if ($data[0] == '%') {
 			$rs = $this->parserSearchText($data, $con);
-		} elseif ($data{0} == '@') {
+		} elseif ($data[0] == '@') {
 			$rs = $this->parserMdMapping($data, $con);
-		} elseif ($data{0} == '/') {
+		} elseif ($data[0] == '/') {
 			$rs = $this->parserXmlPath($data, $con);
-		} elseif ($data{0} == '_') {
+		} elseif ($data[0] == '_') {
 			$rs = $this->parserMdField($data, $con);
 		}
 		return $rs;
@@ -1008,7 +1008,7 @@ class MdSearch extends \BaseModel
 	protected function walkQueryInSimple() {
 		$con = 'AND';
 		foreach ($this->query_in as $field) {
-			if ($field{0} == '%' || $field{0} == '@' || $field{0} == '_' || $field{0} == '/') {
+			if ($field[0] == '%' || $field[0] == '@' || $field[0] == '_' || $field[0] == '/') {
 				$this->parserData($field, $con);
 			} else {
 				$con = strtoupper($field);
@@ -1084,7 +1084,7 @@ class MdSearch extends \BaseModel
 					$this->sql_final[0] .= ')';
 				}
 			} else {
-				if ($field{0} == '%' || $field{0} == '@' || $field{0} == '_' || $field{0} == '/') {
+				if ($field[0] == '%' || $field[0] == '@' || $field[0] == '_' || $field[0] == '/') {
 					$sql_row = $this->parserData($field, NULL);
                     $sql_row = str_replace('#WHEREMD#', '', $sql_row);
 					$grpBy = '';

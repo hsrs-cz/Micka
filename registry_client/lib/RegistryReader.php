@@ -105,17 +105,17 @@ class RegistryReader{
     function flatData($data){
         $result = array();
         foreach($data as $key=>$row){
-            $children = $row['children'];
             $row['level'] = 0;
-            unset($row['children']);
             $result [] = $row;
-            if(isset($children)){
-               foreach ($children as $ch){
+            if(isset($row['children'])){
+                $children = $row['children'];
+                unset($row['children']);
+                foreach ($children as $ch){
                    $ch['parentName'] = $row['text'];
                    $ch['level'] = 1;
                    $result [] = $ch;
-               }
-           }
+                }
+            }
         }
         return $result;    
     }
@@ -134,7 +134,7 @@ class RegistryReader{
                     else {
                         $pom = false;
                         $first = true;
-                        if($row['children']) foreach($row['children'] as $ch){
+                        if(isset($row['children'])) foreach($row['children'] as $ch){
                             if(strpos(strtolower($ch['text']), $q)!==false){
                                 if($first){
                                     $pom = $row;

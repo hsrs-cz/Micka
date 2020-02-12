@@ -401,22 +401,6 @@ class Csw extends \BaseModel
 
     // GET
 	else if(count($params) > 0){
-        // odstranění ošetření dat způsobeného direktivou magic_quotes_gpc
-        if (get_magic_quotes_gpc()) {
-    		$process = array(&$params);
-    		while (list($key, $val) = each($process)) {
-    			foreach ($val as $k => $v) {
-    				unset($process[$key][$k]);
-    				if (is_array($v)) {
-    					$process[$key][($key < 5 ? $k : stripslashes($k))] = $v;
-    					$process[] =& $process[$key][($key < 5 ? $k : stripslashes($k))];
-    				}
-    				else {
-    					$process[$key][stripslashes($k)] = stripslashes($v);
-    				}
-    			}
-    		}
-    	}
     	foreach($params as $k => $v){
     		$params[$k] = urldecode($v);
     	}
