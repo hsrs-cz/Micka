@@ -2,14 +2,9 @@
 <xsl:stylesheet version="1.0" 
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:gmd="http://www.isotc211.org/2005/gmd"
-  xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0" 
-  xmlns:srv="http://www.isotc211.org/2005/srv" 
-  xmlns:ogc="http://www.opengis.net/ogc" 
-  xmlns:ows="http://www.opengis.net/ows" 
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:gmx="http://www.isotc211.org/2005/gmx"  
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:gml="http://www.opengis.net/gml/3.2"  
   xmlns:gco="http://www.isotc211.org/2005/gco"
 >
 <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes"/>
@@ -27,34 +22,13 @@
 
 <xsl:template match="MD_Metadata">
 
-    <xsl:variable name="ser">
-    	<xsl:choose>
-    		<xsl:when test="identificationInfo/SV_ServiceIdentification != ''">srv:SV_ServiceIdentification</xsl:when>
-    		<xsl:otherwise>gmd:MD_DataIdentification</xsl:otherwise>
-    	</xsl:choose>
-    </xsl:variable>	
-
-    <xsl:variable name="mdRecord">
-    	<xsl:choose>
-    		<xsl:when test="string-length(acquisitionInformation)>0">gmi:MI_Metadata</xsl:when>
-    		<xsl:otherwise>gmd:MD_Metadata</xsl:otherwise>
-    	</xsl:choose>
-    </xsl:variable>	
-
-    <xsl:variable name="ext">
-    	<xsl:choose>
-    		<xsl:when test="identificationInfo/SV_ServiceIdentification != ''">srv:extent</xsl:when>
-    		<xsl:otherwise>gmd:extent</xsl:otherwise>
-    	</xsl:choose>
-    </xsl:variable>	
-
-    <xsl:variable name="mdLang">
+    <!--xsl:variable name="mdLang">
       <xsl:choose>
     	<xsl:when test="string-length(language/*)>0"><xsl:value-of select="language/*"/></xsl:when>
     		<xsl:when test="string-length(identificationInfo/*/citation/*/title/@lang)>0"><xsl:value-of select="identificationInfo/*/citation/*/title/@lang"/></xsl:when>
     	<xsl:otherwise>cze</xsl:otherwise>
       </xsl:choose>
-    </xsl:variable>
+    </xsl:variable-->
 
    <xsl:variable name="schLoc">
    	 <xsl:choose>
@@ -64,89 +38,208 @@
    		<xsl:otherwise>http://www.isotc211.org/2005/gmd https://inspire.ec.europa.eu/draft-schemas/inspire-md-schemas-temp/apiso-inspire/apiso-inspire.xsd</xsl:otherwise>
    	</xsl:choose>
   </xsl:variable>
-   	
-  	<xsl:element name="{$mdRecord}">
-  	<xsl:attribute name="xsi:schemaLocation"><xsl:value-of select="$schLoc"/></xsl:attribute>
-	<gmd:fileIdentifier>
-		<gco:CharacterString><xsl:value-of select="@uuid"/></gco:CharacterString>
-	</gmd:fileIdentifier>
-	<gmd:language>
-	  <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
-	</gmd:language>
-	<gmd:characterSet>
-	  <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8">utf-8</gmd:MD_CharacterSetCode>
-	</gmd:characterSet>
 
-    <xsl:call-template name="txt">
-        <xsl:with-param name="s" select="."/>
-        <xsl:with-param name="name" select="'parentIdentifier'"/>
-        <xsl:with-param name="lang" select="$mdLang"/>
-    </xsl:call-template>
-    
-	<gmd:hierarchyLevel>
-  		<gmd:MD_ScopeCode codeList="{$clx}#MD_ScopeCode" codeListValue="{hierarchyLevel/MD_ScopeCode}"><xsl:value-of select="hierarchyLevel/MD_ScopeCode"/></gmd:MD_ScopeCode>
-	</gmd:hierarchyLevel>
-				
-    <xsl:call-template name="txt">
-        <xsl:with-param name="s" select="."/>
-        <xsl:with-param name="name" select="'hierarchyLevelName'"/>
-        <xsl:with-param name="lang" select="$mdLang"/>
-    </xsl:call-template>
+    <xsl:choose>
+        <xsl:when test="string-length(acquisitionInformation)>0">
+            <gmi:MI_Metadata xsi:schemaLocation="{$schLoc}" 
+                xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0" 
+                 xmlns:gml="http://www.opengis.net/gml/3.2"  >
+            <gmd:fileIdentifier>
+                <gco:CharacterString><xsl:value-of select="@uuid"/></gco:CharacterString>
+            </gmd:fileIdentifier>
+            <gmd:language>
+              <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
+            </gmd:language>
+            <gmd:characterSet>
+              <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8">utf-8</gmd:MD_CharacterSetCode>
+            </gmd:characterSet>
 
-	<xsl:for-each select="contact">
-        <gmd:contact>
-            <xsl:call-template name="contact">
-                <xsl:with-param name="org" select="."/>
-                <xsl:with-param name="mdLang" select="$mdLang"/>
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="."/>
+                <xsl:with-param name="name" select="'parentIdentifier'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
             </xsl:call-template>
-        </gmd:contact>
-	</xsl:for-each>
-	<gmd:dateStamp>
-		<gco:Date><xsl:value-of select="dateStamp"/></gco:Date>
-	</gmd:dateStamp>
-	<gmd:metadataStandardName>
-        <xsl:choose>
-            <xsl:when test="metadataStandardName!=''">
-                <gco:CharacterString><xsl:value-of select="metadataStandardName"/></gco:CharacterString>
-            </xsl:when>    
-            <xsl:otherwise>    
-		          <gco:CharacterString>ISO 19115/19119</gco:CharacterString>
+            
+            <gmd:hierarchyLevel>
+                <gmd:MD_ScopeCode codeList="{$clx}#MD_ScopeCode" codeListValue="{hierarchyLevel/MD_ScopeCode}"><xsl:value-of select="hierarchyLevel/MD_ScopeCode"/></gmd:MD_ScopeCode>
+            </gmd:hierarchyLevel>
+                        
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="."/>
+                <xsl:with-param name="name" select="'hierarchyLevelName'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
+            </xsl:call-template>
+
+            <xsl:for-each select="contact">
+                <gmd:contact>
+                    <xsl:call-template name="contact">
+                        <xsl:with-param name="org" select="."/>
+                        <xsl:with-param name="mdLang" select="$mdLang"/>
+                    </xsl:call-template>
+                </gmd:contact>
+            </xsl:for-each>
+            
+            <gmd:dateStamp>
+                <gco:Date><xsl:value-of select="dateStamp"/></gco:Date>
+            </gmd:dateStamp>
+            <gmd:metadataStandardName>
+                <xsl:choose>
+                    <xsl:when test="metadataStandardName!=''">
+                        <gco:CharacterString><xsl:value-of select="metadataStandardName"/></gco:CharacterString>
+                    </xsl:when>    
+                    <xsl:otherwise>    
+                          <gco:CharacterString>ISO 19115/19119</gco:CharacterString>
+                    </xsl:otherwise>
+                 </xsl:choose>         
+            </gmd:metadataStandardName>
+            <gmd:metadataStandardVersion>
+                <xsl:choose>
+                    <xsl:when test="metadataStandardVersion!=''">
+                        <gco:CharacterString><xsl:value-of select="metadataStandardVersion"/></gco:CharacterString>
+                    </xsl:when>    
+                    <xsl:otherwise>    
+                          <gco:CharacterString>2003/cor.1/2006</gco:CharacterString>
+                    </xsl:otherwise>
+                 </xsl:choose>         
+            </gmd:metadataStandardVersion>
+            <xsl:if test="dataSetURI!=''">
+                <gmd:dataSetURI>
+                    <gco:CharacterString><xsl:value-of select="dataSetURI"/></gco:CharacterString>
+                </gmd:dataSetURI>
+            </xsl:if>
+                    
+            <!-- ================================ locale ===============================-->
+            <xsl:for-each select="langs/lang[.!=$mdLang]">
+                <gmd:locale>
+                  <gmd:PT_Locale id="locale-{.}">
+                    <gmd:languageCode>
+                        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{.}"/>
+                    </gmd:languageCode>
+                    <gmd:characterEncoding>
+                        <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8"/>
+                    </gmd:characterEncoding>
+                  </gmd:PT_Locale> 
+                 </gmd:locale>
+            </xsl:for-each>
+            
+                    
+            <xsl:apply-templates select="spatialRepresentationInfo/MD_VectorSpatialRepresentation"/>
+            <xsl:apply-templates select="spatialRepresentationInfo/MD_GridSpatialRepresentation"/>
+            <xsl:apply-templates select="referenceSystemInfo"/>
+            <xsl:apply-templates select="identificationInfo"/>
+            <xsl:apply-templates select="contentInfo"/>
+            <xsl:apply-templates select="distributionInfo"/>
+            <xsl:apply-templates select="dataQualityInfo"/>
+            <xsl:apply-templates select="applicationSchemaInfo"/>
+            <xsl:apply-templates select="acquisitionInformation"/>
+        </gmi:MI_Metadata>
+    </xsl:when>
+
+    <xsl:otherwise>
+        <gmd:MD_Metadata xsi:schemaLocation="{$schLoc}" 
+            xmlns:gco="http://www.isotc211.org/2005/gco"
+            xmlns:gmx="http://www.isotc211.org/2005/gmx"
+            xmlns:srv="http://www.isotc211.org/2005/srv"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+              xmlns:gml="http://www.opengis.net/gml/3.2"  
+        >
+            <gmd:fileIdentifier>
+                <gco:CharacterString><xsl:value-of select="@uuid"/></gco:CharacterString>
+            </gmd:fileIdentifier>
+            <gmd:language>
+              <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
+            </gmd:language>
+            <gmd:characterSet>
+              <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8">utf-8</gmd:MD_CharacterSetCode>
+            </gmd:characterSet>
+
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="."/>
+                <xsl:with-param name="name" select="'parentIdentifier'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
+            </xsl:call-template>
+            
+            <gmd:hierarchyLevel>
+                <gmd:MD_ScopeCode codeList="{$clx}#MD_ScopeCode" codeListValue="{hierarchyLevel/MD_ScopeCode}"><xsl:value-of select="hierarchyLevel/MD_ScopeCode"/></gmd:MD_ScopeCode>
+            </gmd:hierarchyLevel>
+                        
+            <xsl:call-template name="txt">
+                <xsl:with-param name="s" select="."/>
+                <xsl:with-param name="name" select="'hierarchyLevelName'"/>
+                <xsl:with-param name="lang" select="$mdLang"/>
+            </xsl:call-template>
+
+            <xsl:for-each select="contact">
+                <gmd:contact>
+                    <xsl:call-template name="contact">
+                        <xsl:with-param name="org" select="."/>
+                        <xsl:with-param name="mdLang" select="$mdLang"/>
+                    </xsl:call-template>
+                </gmd:contact>
+            </xsl:for-each>
+            
+            <gmd:dateStamp>
+                <gco:Date><xsl:value-of select="dateStamp"/></gco:Date>
+            </gmd:dateStamp>
+            <gmd:metadataStandardName>
+                <xsl:choose>
+                    <xsl:when test="metadataStandardName!=''">
+                        <gco:CharacterString><xsl:value-of select="metadataStandardName"/></gco:CharacterString>
+                    </xsl:when>    
+                    <xsl:otherwise>    
+                          <gco:CharacterString>ISO 19115/19119</gco:CharacterString>
+                    </xsl:otherwise>
+                 </xsl:choose>         
+            </gmd:metadataStandardName>
+            <gmd:metadataStandardVersion>
+                <xsl:choose>
+                    <xsl:when test="metadataStandardVersion!=''">
+                        <gco:CharacterString><xsl:value-of select="metadataStandardVersion"/></gco:CharacterString>
+                    </xsl:when>    
+                    <xsl:otherwise>    
+                          <gco:CharacterString>2003/cor.1/2006</gco:CharacterString>
+                    </xsl:otherwise>
+                 </xsl:choose>         
+            </gmd:metadataStandardVersion>
+            <xsl:if test="dataSetURI!=''">
+                <gmd:dataSetURI>
+                    <gco:CharacterString><xsl:value-of select="dataSetURI"/></gco:CharacterString>
+                </gmd:dataSetURI>
+            </xsl:if>
+                    
+            <!-- ================================ locale ===============================-->
+            <xsl:for-each select="langs/lang[.!=$mdLang]">
+                <gmd:locale>
+                  <gmd:PT_Locale id="locale-{.}">
+                    <gmd:languageCode>
+                        <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{.}"/>
+                    </gmd:languageCode>
+                    <gmd:characterEncoding>
+                        <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8"/>
+                    </gmd:characterEncoding>
+                  </gmd:PT_Locale> 
+                 </gmd:locale>
+            </xsl:for-each>
+            
+                    
+            <xsl:apply-templates select="spatialRepresentationInfo/MD_VectorSpatialRepresentation"/>
+            <xsl:apply-templates select="spatialRepresentationInfo/MD_GridSpatialRepresentation"/>
+            <xsl:apply-templates select="referenceSystemInfo"/>
+            <xsl:apply-templates select="identificationInfo"/>
+            <xsl:apply-templates select="contentInfo"/>
+            <xsl:apply-templates select="distributionInfo"/>
+            <xsl:apply-templates select="dataQualityInfo"/>
+            <xsl:apply-templates select="applicationSchemaInfo"/>
+            <xsl:apply-templates select="acquisitionInformation"/>
+            </gmd:MD_Metadata>
             </xsl:otherwise>
-         </xsl:choose>         
-	</gmd:metadataStandardName>
-	<gmd:metadataStandardVersion>
-        <xsl:choose>
-            <xsl:when test="metadataStandardVersion!=''">
-                <gco:CharacterString><xsl:value-of select="metadataStandardVersion"/></gco:CharacterString>
-            </xsl:when>    
-            <xsl:otherwise>    
-		          <gco:CharacterString>2003/cor.1/2006</gco:CharacterString>
-            </xsl:otherwise>
-         </xsl:choose>         
-	</gmd:metadataStandardVersion>
-	<xsl:if test="dataSetURI!=''">
-	    <gmd:dataSetURI>
-	  		<gco:CharacterString><xsl:value-of select="dataSetURI"/></gco:CharacterString>
-	  	</gmd:dataSetURI>
-	</xsl:if>
-			
-	<!-- ================================ locale ===============================-->
-	<xsl:for-each select="langs/lang[.!=$mdLang]">
-		<gmd:locale>
-		  <gmd:PT_Locale id="locale-{.}">
-	   		<gmd:languageCode>
-	       		<gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{.}"/>
-	   		</gmd:languageCode>
-	   		<gmd:characterEncoding>
-	       		<gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8"/>
-	   		</gmd:characterEncoding>
-		  </gmd:PT_Locale> 
-	     </gmd:locale>
-	</xsl:for-each>
-	
+    	</xsl:choose>
+   	
+   </xsl:template>
+
+
 	<!-- ============================ prostor. reprezentace ========================== -->
-      
-    <xsl:for-each select="spatialRepresentationInfo/gmd:MD_VectorSpatialRepresentation">
+     <xsl:template match="MD_VectorSpatialRepresentation"> 
         <gmd:spatialRepresentationInfo>
   		<gmd:MD_VectorSpatialRepresentation>
   		<xsl:for-each select="topologyLevel">
@@ -167,10 +260,10 @@
   			</gmd:geometricObjects>
   		</xsl:for-each>
   		</gmd:MD_VectorSpatialRepresentation>
-  	</gmd:spatialRepresentationInfo>
-  </xsl:for-each>
-
-  <xsl:for-each select="spatialRepresentationInfo/MD_GridSpatialRepresentation">
+  	    </gmd:spatialRepresentationInfo>
+    </xsl:template>
+    
+    <xsl:template match="MD_GridSpatialRepresentation"> 
 		<gmd:spatialRepresentationInfo>
   		<gmd:MD_GridSpatialRepresentation>
 			<gmd:numerOfDimensions><gco:Integer><xsl:value-of select="numberOfDimensions"/></gco:Integer></gmd:numerOfDimensions>
@@ -199,11 +292,11 @@
 			</gmd:transformationParameterAvailability>
   		</gmd:MD_GridSpatialRepresentation>
   	</gmd:spatialRepresentationInfo>
-  </xsl:for-each>
-			
-	<!-- ================================ ref. system ===============================-->
-	<xsl:for-each select="referenceSystemInfo">
-	  <gmd:referenceSystemInfo>
+    </xsl:template>
+
+	<!-- ================================ CRS =============================== -->
+	<xsl:template match="referenceSystemInfo">
+    	<gmd:referenceSystemInfo>
 		<gmd:MD_ReferenceSystem>
 			<gmd:referenceSystemIdentifier>
 				<gmd:RS_Identifier>
@@ -226,16 +319,31 @@
 			</gmd:referenceSystemIdentifier>
 		</gmd:MD_ReferenceSystem>
 	  </gmd:referenceSystemInfo>
-	</xsl:for-each>
+
+    </xsl:template>
 
 	<!-- ================================ Identifikace =============================== -->
-	<gmd:identificationInfo>
+	<xsl:template match="identificationInfo" xmlns:srv="http://www.isotc211.org/2005/srv"   xmlns:gml="http://www.opengis.net/gml/3.2"  >
+        <xsl:variable name="ser">
+    	<xsl:choose>
+    		<xsl:when test="SV_ServiceIdentification">srv:SV_ServiceIdentification</xsl:when>
+    		<xsl:otherwise>gmd:MD_DataIdentification</xsl:otherwise>
+    	</xsl:choose>
+    </xsl:variable>	
+    <xsl:variable name="ext">
+    	<xsl:choose>
+    		<xsl:when test="SV_ServiceIdentification">srv:extent</xsl:when>
+    		<xsl:otherwise>gmd:extent</xsl:otherwise>
+    	</xsl:choose>
+    </xsl:variable>	
+
+    <gmd:identificationInfo>
     <xsl:element name="{$ser}">
-    	<xsl:attribute name="id">_<xsl:value-of select="@uuid"/></xsl:attribute>
-    	<xsl:attribute name="uuid"><xsl:value-of select="@uuid"/></xsl:attribute>
+    	<xsl:attribute name="id">_<xsl:value-of select="../@uuid"/></xsl:attribute>
+    	<xsl:attribute name="uuid"><xsl:value-of select="../@uuid"/></xsl:attribute>
 			<gmd:citation>
 				<xsl:call-template name="citation">
-					<xsl:with-param name="cit" select="identificationInfo/*/citation/CI_Citation"/>
+					<xsl:with-param name="cit" select="*/citation/CI_Citation"/>
 					<xsl:with-param name="cl" select="$cl"/>                                          
 					<xsl:with-param name="mdLang" select="$mdLang"/>
 					<xsl:with-param name="id" select="concat('cit-',@uuid)"/>
@@ -243,30 +351,30 @@
 			</gmd:citation>
 					
 			<xsl:call-template name="txt">
-			  <xsl:with-param name="s" select="identificationInfo/*"/>
+			  <xsl:with-param name="s" select="*"/>
 			  <xsl:with-param name="name" select="'abstract'"/>
 			  <xsl:with-param name="lang" select="$mdLang"/>
 		    </xsl:call-template>
 		      
 			<xsl:call-template name="txt">
-			  <xsl:with-param name="s" select="identificationInfo/*"/>
+			  <xsl:with-param name="s" select="*"/>
 			  <xsl:with-param name="name" select="'purpose'"/>
 			  <xsl:with-param name="lang" select="$mdLang"/>
 		    </xsl:call-template>
 			
 			<xsl:call-template name="txt">
-			  <xsl:with-param name="s" select="identificationInfo/*"/>
+			  <xsl:with-param name="s" select="*"/>
 			  <xsl:with-param name="name" select="'credit'"/>
 			  <xsl:with-param name="lang" select="$mdLang"/>
 		    </xsl:call-template>
 
-      	  <xsl:for-each select="identificationInfo/*/status">
+      	  <xsl:for-each select="*/status">
 	      	  <gmd:status>
 	         	<gmd:MD_ProgressCode codeListValue="{MD_ProgressCode}" codeList="{$clx}#MD_ProgressCode"><xsl:value-of select="MD_ProgressCode"/></gmd:MD_ProgressCode>
 			  </gmd:status>
 		  </xsl:for-each>
 
-			<xsl:for-each select="identificationInfo/*/pointOfContact">
+			<xsl:for-each select="*/pointOfContact">
 		        <gmd:pointOfContact>
 		       	 	<xsl:call-template name="contact">
 		    		 	  <xsl:with-param name="org" select="."/>
@@ -275,7 +383,7 @@
 		        </gmd:pointOfContact>
 			</xsl:for-each>
 			
-			<xsl:for-each select="identificationInfo/*/resourceMaintenance">
+			<xsl:for-each select="*/resourceMaintenance">
 			   <gmd:resourceMaintenance>
 			     <gmd:MD_MaintenanceInformation>
 			       <gmd:maintenanceAndUpdateFrequency>
@@ -302,7 +410,7 @@
 			   </gmd:resourceMaintenance>
             </xsl:for-each>
 		
-		    <xsl:for-each select="identificationInfo/*/graphicOverview">
+		    <xsl:for-each select="*/graphicOverview">
           		<gmd:graphicOverview>
 				    <gmd:MD_BrowseGraphic>
 					     <gmd:fileName>
@@ -320,7 +428,7 @@
 			    </gmd:graphicOverview>
 			</xsl:for-each>
 			
-			<xsl:for-each select="identificationInfo/*/resourceFormat">
+			<xsl:for-each select="*/resourceFormat">
 				<gmd:resourceFormat>
 					<gmd:MD_Format>
                         <xsl:call-template name="txt">
@@ -335,8 +443,7 @@
 				</gmd:resourceFormat>
 			</xsl:for-each>
 			
-			
-			<xsl:for-each select="identificationInfo/*/descriptiveKeywords/*">
+			<xsl:for-each select="*/descriptiveKeywords/*">
 				<gmd:descriptiveKeywords>
 				  	<gmd:MD_Keywords>
 
@@ -364,7 +471,7 @@
         		</gmd:descriptiveKeywords>
 			</xsl:for-each>
 		
-		<xsl:for-each select="identificationInfo/*/resourceSpecificUsage">
+		<xsl:for-each select="*/resourceSpecificUsage">
 			<gmd:resourceSpecificUsage>
 				<gmd:MD_Usage>
 					<gmd:specificUsage>
@@ -375,7 +482,7 @@
 		</xsl:for-each>
 
 					
-	<xsl:for-each select="identificationInfo/*/resourceConstraints">
+	<xsl:for-each select="*/resourceConstraints">
 		  <xsl:choose>
 		    <xsl:when test="href!=''">
               <gmd:resourceConstraints xlink:type="simple" xlink:href="{href}"/>
@@ -420,7 +527,7 @@
 			</gmd:spatialRepresentationType>
 		</xsl:for-each>
           
-		<xsl:for-each select="identificationInfo/*/spatialResolution">
+		<xsl:for-each select="*/spatialResolution">
           <gmd:spatialResolution>
 			<gmd:MD_Resolution>
 			  <xsl:choose>
@@ -443,25 +550,25 @@
 		  </gmd:spatialResolution>
 	    </xsl:for-each>
 					
-	<xsl:for-each select="identificationInfo/*/language">
+	<xsl:for-each select="*/language">
     	<gmd:language>
 		    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{normalize-space(.)}"><xsl:value-of select="normalize-space(.)"/></gmd:LanguageCode>
 		</gmd:language>
 	</xsl:for-each>
 
-	<xsl:for-each select="identificationInfo/*/characterSet">
+	<xsl:for-each select="*/characterSet">
       <gmd:characterSet>
 	    <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="{MD_CharacterSetCode}"><xsl:value-of select="MD_CharacterSetCode"/></gmd:MD_CharacterSetCode>
 	  </gmd:characterSet>
 	</xsl:for-each>
 					
-	<xsl:for-each select="identificationInfo/*/topicCategory/MD_TopicCategoryCode">
+	<xsl:for-each select="*/topicCategory/MD_TopicCategoryCode">
 		<gmd:topicCategory>
 			<gmd:MD_TopicCategoryCode><xsl:value-of select="."/></gmd:MD_TopicCategoryCode>
 		</gmd:topicCategory>
 	</xsl:for-each>
 		
-    <xsl:for-each select="identificationInfo/*/serviceType">
+    <xsl:for-each select="*/serviceType">
         <srv:serviceType>
             <xsl:choose>
                 <xsl:when test="contains('view download discovery transformation other', LocalName/*)">
@@ -476,13 +583,13 @@
             </xsl:choose>
         </srv:serviceType>
     </xsl:for-each>
-    <xsl:for-each select="identificationInfo/*/serviceTypeVersion">
+    <xsl:for-each select="*/serviceTypeVersion">
         <srv:serviceTypeVersion>
           <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString> 
         </srv:serviceTypeVersion>
     </xsl:for-each>    
 
-		<xsl:for-each select="identificationInfo/*/environmentDescription">
+		<xsl:for-each select="*/environmentDescription">
       		<gmd:environmentDescription>
 		      <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
 			</gmd:environmentDescription> 
@@ -490,13 +597,13 @@
     
 		<xsl:element name="{$ext}">
 			<gmd:EX_Extent>
-			  	<xsl:for-each select="identificationInfo/*/extent/*/description">
+			  	<xsl:for-each select="*/extent/*/description">
 		    		<gmd:description>
 		    			<gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
 		    		</gmd:description>
 			    </xsl:for-each>
 			  
-				<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox[string-length(westBoundLongitude)!=0]">
+				<xsl:for-each select="*/extent/*/geographicElement/EX_GeographicBoundingBox[string-length(westBoundLongitude)!=0]">
 					<gmd:geographicElement>
 						<gmd:EX_GeographicBoundingBox>
 							<gmd:westBoundLongitude>
@@ -515,7 +622,7 @@
 					</gmd:geographicElement>
 				</xsl:for-each>
 			
-			<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_BoundingPolygon">		
+			<xsl:for-each select="*/extent/*/geographicElement/EX_BoundingPolygon">		
 				<gmd:geographicElement>
 					<gmd:EX_BoundingPolygon>
 						<!-- TODO now only for multipolygon -->
@@ -552,7 +659,7 @@
 				</gmd:geographicElement>		
 			</xsl:for-each>
 			
-			<xsl:for-each select="identificationInfo/*/extent/*/geographicElement/EX_GeographicDescription">
+			<xsl:for-each select="*/extent/*/geographicElement/EX_GeographicDescription">
 				<gmd:geographicElement>
 					<gmd:EX_GeographicDescription>
 						<gmd:geographicIdentifier>
@@ -590,7 +697,7 @@
 				</gmd:geographicElement>
 			</xsl:for-each>
 			
-            <xsl:for-each select="identificationInfo/*/extent/*/temporalElement/*/extent/TimePeriod">
+            <xsl:for-each select="*/extent/*/temporalElement/*/extent/TimePeriod">
 				<gmd:temporalElement>
 			  		<gmd:EX_TemporalExtent>
             			<gmd:extent>
@@ -622,7 +729,7 @@
 			  		</gmd:EX_TemporalExtent>
 				</gmd:temporalElement>
             </xsl:for-each>  
-            <xsl:for-each select="identificationInfo/*/extent/*/temporalElement/*/extent/TimeInstant">
+            <xsl:for-each select="*/extent/*/temporalElement/*/extent/TimeInstant">
 				<gmd:temporalElement>
 			  		<gmd:EX_TemporalExtent>
             			<gmd:extent>
@@ -634,7 +741,7 @@
 				</gmd:temporalElement>
             </xsl:for-each> 
             
-            <xsl:for-each select="identificationInfo/*/extent/*/verticalElement">
+            <xsl:for-each select="*/extent/*/verticalElement">
 				<gmd:verticalElement>
       				<gmd:EX_VerticalExtent>
       					<gmd:minimumValue><gco:Real><xsl:value-of select="*/minimumValue"/></gco:Real></gmd:minimumValue>
@@ -648,7 +755,7 @@
 		</xsl:element>  
 
 		<xsl:if test="substring($ser,1,1)='s'">
-		 <xsl:for-each select="identificationInfo/*/coupledResource">
+		 <xsl:for-each select="*/coupledResource">
 			<srv:coupledResource xlink:title="{title}">
 			  <srv:SV_CoupledResource>
 		        <srv:operationName>
@@ -662,7 +769,7 @@
 			</srv:coupledResource>
 		</xsl:for-each>
 		
-	 	<xsl:for-each select="identificationInfo/*/couplingType">
+	 	<xsl:for-each select="*/couplingType">
 		      <srv:couplingType>
 		      		<!-- TODO - codelist najit -->
 				    <srv:SV_CouplingType codeList="{$cl}#SV_CouplingType" codeListValue="{./*}"/>
@@ -695,7 +802,7 @@
         	<srv:containsOperations gco:nilReason="unknown"/>
         </xsl:if>  
 
-		<xsl:for-each select="identificationInfo/*/operatesOn[href!='']">
+		<xsl:for-each select="*/operatesOn[href!='']">
 			<xsl:variable name="myref">
 				<xsl:choose>
 					<xsl:when test="substring-after(href,'#')!=''"><xsl:value-of select="href"/></xsl:when>
@@ -708,10 +815,10 @@
 		</xsl:if>			
 	  </xsl:element>	
 	</gmd:identificationInfo>
-			
-			<!-- ================================ Obsah ===============================-->
-			
-			<xsl:for-each select="contentInfo">
+    </xsl:template>
+    
+    <!-- ================================ Content ===============================-->  
+    <xsl:template match="contentInfo">
 				<gmd:contentInfo>
 					<xsl:for-each select="MD_FeatureCatalogueDescription">
 						<gmd:MD_FeatureCatalogueDescription>
@@ -777,11 +884,11 @@
 					</xsl:for-each>
 					
 				</gmd:contentInfo>
-			</xsl:for-each>
-			
-			<!-- ================================ Distribuce ===============================-->
-			<xsl:for-each select="distributionInfo">
-      		  <gmd:distributionInfo>
+            </xsl:template>
+
+    <!-- ================================ Distribution ===============================-->  
+    <xsl:template match="distributionInfo">     
+        <gmd:distributionInfo>
 				<gmd:MD_Distribution>
 				  <xsl:for-each select="*/distributionFormat">
 					<gmd:distributionFormat>
@@ -873,11 +980,11 @@
 					</gmd:transferOptions>
 				</gmd:MD_Distribution>
 			</gmd:distributionInfo>
-			</xsl:for-each>
-
-			<!-- ================================ Jakost ===================================-->
-			<xsl:for-each select="dataQualityInfo">
-			<gmd:dataQualityInfo>
+ 	</xsl:template>
+    
+   <!-- ================================ Data Quality ===================================-->
+   <xsl:template match="dataQualityInfo">
+   			<gmd:dataQualityInfo>
 				<gmd:DQ_DataQuality>
 					<gmd:scope>
 						<gmd:DQ_Scope>
@@ -1065,12 +1172,11 @@
                     </xsl:if>
 				</gmd:DQ_DataQuality>
 			</gmd:dataQualityInfo>
-			</xsl:for-each>
+   </xsl:template>
 
-			<!-- ================================ Aplikacni schema ===================================-->
-
-			<xsl:for-each select="applicationSchemaInfo">
-			<applicationSchemaInfo>
+    <!-- ================================ Aplikacion schema ===================================-->
+   <xsl:template match="applicationSchemaInfo">
+        <gmd:applicationSchemaInfo>
 				<MD_ApplicationSchemaInfo>
 					<xsl:for-each select="*/name">
 					  <name>
@@ -1103,42 +1209,9 @@
 						</softwareDevelopmentFileFormat>
 					</xsl:for-each>
 				</MD_ApplicationSchemaInfo>
-			</applicationSchemaInfo>
-		  </xsl:for-each>
-			
-			<xsl:if test="$mdRecord='gmi:MI_Metadata'">
-				<xsl:for-each select="acquisitionInformation">
-				<gmi:acquisitionInformation>
-					<gmi:MI_AcquisitionInformation>
-						<xsl:for-each select="*/platform">
-							<gmi:platform>
-								<gmi:MI_Platform>
-									<gmi:identifier>
-										<gmd:RS_Identifier>
-											<gmd:code><gco:CharacterString><xsl:value-of select="*/identifier/*/code"/></gco:CharacterString></gmd:code>
-										</gmd:RS_Identifier>
-									</gmi:identifier>
-									<gmi:description><gco:CharacterString><xsl:value-of select="*/description"/></gco:CharacterString></gmi:description>
-									<xsl:for-each select="*/instrument">
-										<gmi:instrument>
-											<gmi:MI_Instrument>
-												<gmi:identifier><gmd:RS_Identifier>
-													<gmd:code><gco:CharacterString><xsl:value-of select="*/identifier/*/code"/></gco:CharacterString></gmd:code>
-												</gmd:RS_Identifier></gmi:identifier>
-												<gmi:type><gco:CharacterString><xsl:value-of select="*/type"/></gco:CharacterString></gmi:type>
-											</gmi:MI_Instrument>
-										</gmi:instrument>
-									</xsl:for-each>
-								</gmi:MI_Platform>
-							</gmi:platform>
-						</xsl:for-each>
-					</gmi:MI_AcquisitionInformation>
-				</gmi:acquisitionInformation>
-				</xsl:for-each>
-			</xsl:if>
-		</xsl:element>
-   </xsl:template>
-   
+			</gmd:applicationSchemaInfo>
+    </xsl:template>
+    
    <!-- source -->
 	<xsl:template match="source" xmlns:gml="http://www.opengis.net/gml/3.2" >
 			<gmd:source><gmd:LI_Source>
@@ -1347,6 +1420,35 @@
 			   </gmd:LI_Source>
 		   </gmd:source>
 	   </xsl:template>
+
+    <xsl:template match="acquisitionInformation"  xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0" >
+        <gmi:acquisitionInformation>
+            <gmi:MI_AcquisitionInformation>
+                <xsl:for-each select="*/platform">
+                    <gmi:platform>
+                        <gmi:MI_Platform>
+                            <gmi:identifier>
+                                <gmd:RS_Identifier>
+                                    <gmd:code><gco:CharacterString><xsl:value-of select="*/identifier/*/code"/></gco:CharacterString></gmd:code>
+                                </gmd:RS_Identifier>
+                            </gmi:identifier>
+                            <gmi:description><gco:CharacterString><xsl:value-of select="*/description"/></gco:CharacterString></gmi:description>
+                            <xsl:for-each select="*/instrument">
+                                <gmi:instrument>
+                                    <gmi:MI_Instrument>
+                                        <gmi:identifier><gmd:RS_Identifier>
+                                            <gmd:code><gco:CharacterString><xsl:value-of select="*/identifier/*/code"/></gco:CharacterString></gmd:code>
+                                        </gmd:RS_Identifier></gmi:identifier>
+                                        <gmi:type><gco:CharacterString><xsl:value-of select="*/type"/></gco:CharacterString></gmi:type>
+                                    </gmi:MI_Instrument>
+                                </gmi:instrument>
+                            </xsl:for-each>
+                        </gmi:MI_Platform>
+                    </gmi:platform>
+                </xsl:for-each>
+            </gmi:MI_AcquisitionInformation>
+        </gmi:acquisitionInformation>
+	 </xsl:template>
    
 	<xsl:template match="metadata" xmlns:csw="http://www.opengis.net/cat/csw/2.0.2" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:ows="http://www.opengis.net/ows">
       <csw:Record xmlns:dc="http://purl.org/dc/elements/1.1/" 
