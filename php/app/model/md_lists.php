@@ -24,7 +24,8 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
                     echo "$k:'".$v."',";
                 }
             }
-            echo "xxx:'".(string) $row->$mdlang."'});\">".(string) $row->$lang."</a><br>";
+            $name = (isset($row['name']) && $row['name']) ? $row['name'] : (string) $row->$mdlang;
+            echo "xxx:'". $name ."'});\">".(string) $row->$lang."</a><br>";
         }
         echo "</div>";
         return;
@@ -101,7 +102,7 @@ function getCodeListValue($type, $filter=''){
 
 if(isset($_REQUEST['request']) && $_REQUEST['request'] == 'getValues') {
     $type = htmlspecialchars($_REQUEST['type']);
-    $code = htmlspecialchars($_REQUEST['id']);
+    $code = htmlspecialchars(isset($_REQUEST['id']) ? $_REQUEST['id'] : '');
     $lang = htmlspecialchars($_REQUEST['lang']);
     $query = isset($_REQUEST['query']) ? $_REQUEST['query'] : '';
     header("Content-type: application/json; charset=utf-8");

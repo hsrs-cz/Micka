@@ -9,9 +9,10 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:gmx="http://www.isotc211.org/2005/gmx"  
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:gml="http://www.opengis.net/gml/3.2"  
   xmlns:gco="http://www.isotc211.org/2005/gco"
 >
-  <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes"/>
+<xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="yes"/>
   
     <xsl:variable name="mdLang">
       <xsl:choose>
@@ -24,10 +25,7 @@
     <xsl:variable name="cl">http://standards.iso.org/iso/19139/resources/ML_gmxCodelists.xml</xsl:variable>
     <xsl:variable name="clx">http://standards.iso.org/iso/19139/resources/gmxCodelists.xml</xsl:variable>
 
-<xsl:template match="MD_Metadata" 
-	xmlns:gml="http://www.opengis.net/gml/3.2"
-	xmlns:gmi="http://standards.iso.org/iso/19115/-2/gmi/1.0"
-    xmlns:gco="http://www.isotc211.org/2005/gco">
+<xsl:template match="MD_Metadata">
 
     <xsl:variable name="ser">
     	<xsl:choose>
@@ -465,7 +463,17 @@
 		
     <xsl:for-each select="identificationInfo/*/serviceType">
         <srv:serviceType>
-          <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+            <xsl:choose>
+                <xsl:when test="contains('view download discovery transformation other', LocalName/*)">
+                    <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+                </xsl:when>
+                <xsl:when test="contains('WMS WFS WCS CSW WMTS  WPS', LocalName/*)">
+                    <gco:LocalName codeSpace="http://www.opengis.net"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+                </xsl:when>
+                <xsl:otherwise>
+                    <gco:LocalName codeSpace=""><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+                </xsl:otherwise>
+            </xsl:choose>
         </srv:serviceType>
     </xsl:for-each>
     <xsl:for-each select="identificationInfo/*/serviceTypeVersion">

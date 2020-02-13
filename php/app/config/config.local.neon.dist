@@ -4,6 +4,10 @@
 #
 parameters:
     app:
+        # title of the tab
+        pageTitle:
+            cze = Micka
+            eng = Micka         
         # URL
         #mickaUrl = https://www.server.domain/micka
         # UI theme

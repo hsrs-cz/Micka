@@ -98,6 +98,8 @@ class Kote{
                 $k = explode('-', $key);
                 $lastLang = '';
                 $j=-1;
+                //echo $key." "; var_dump($val);
+                if(!is_array($val)) $val = [$val];
                 for($i=0; $i<count($val); $i++){                    
                     if(is_array($val[$i])){
                         foreach($val[$i] as $k2=>$v2){

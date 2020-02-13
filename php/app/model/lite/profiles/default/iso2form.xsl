@@ -369,15 +369,22 @@
             <!-- other KW with thesaurus -->
             <xsl:for-each select="gmd:identificationInfo/*/gmd:descriptiveKeywords/*[not(contains(gmd:thesaurusName/*/gmd:title/*,'19119')) and not(contains(gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE')) and string-length(gmd:thesaurusName/*/gmd:title)>0]">
                 <xsl:variable name="i" select="position()-1"/>
-                <input type="hidden" name="othes-title" value="{gmd:thesaurusName/*/gmd:title}"/>
-                <input type="hidden" name="othes-date" value="{gmd:thesaurusName/*/gmd:date/*/gmd:date/*}"/>
-                <input type="hidden" name="othes-dateType" value="{gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue}"/>
-            
+                <input type="hidden" name="othes-title[{$i}][TXT]" value="{gmd:thesaurusName/*/gmd:title/*}"/>
+                <input type="hidden" name="othes-title[{$i}][uri]" value="{gmd:thesaurusName/*/gmd:title/*/@xlink:href}"/>
+                <xsl:for-each select="gmd:thesaurusName/*/gmd:title/*/gmd:textGroup/*">
+                    <xsl:variable name="p" select="position()-1"/>
+                    <input type="hidden" name="othes-title[{$i}][{substring-after(@locale,'-')}]" value="{.}"/>
+                </xsl:for-each>
+                <input type="hidden" name="othes-date[{$i}]" value="{gmd:thesaurusName/*/gmd:date/*/gmd:date/*}"/>
+                <input type="hidden" name="othes-dateType[{$i}]" value="{gmd:thesaurusName/*/gmd:date/*/gmd:dateType/*/@codeListValue}"/>
+                
                 <xsl:for-each select="gmd:keyword">
-                    <input type="hidden" name="othes[{$i}][kw][{position()-1}][TXT]" value="{gco:CharacterString}"/>
-                    <xsl:for-each select="gmd:PT_FreeText/gmd:textGroup">
-                        <input type="hidden" name="othes[{$i}][kw][{position()-1}][{substring-after(gmd:LocalisedCharacterString/@locale,'-')}]" value="{gmd:LocalisedCharacterString}"/>
-                    </xsl:for-each>
+               		<xsl:variable name="p" select="position()-1"/>
+                  	<input type="hidden" name="othes-kw[{$i}][{$p}][TXT]" value="{*}"/>
+                    <input type="hidden" name="othes-kw[{$i}][{$p}][uri]" value="{*/@xlink:href}"/>
+                  	<xsl:for-each select="gmd:PT_FreeText/gmd:textGroup">
+                  		<input type="hidden" name="othes-kw[{$i}][{$p}][{substring-after(gmd:LocalisedCharacterString/@locale,'-')}]" value="{gmd:LocalisedCharacterString}"/>
+                  	</xsl:for-each>
                 </xsl:for-each>  
             </xsl:for-each>
             
