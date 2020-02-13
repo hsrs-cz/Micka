@@ -388,7 +388,7 @@ class MdSearch extends \BaseModel
 			$pom_like = substr($data, $pos1, ($pos2-$pos1)+1);
 			$pom_b = substr($data, 0, $pos0);
 			$pom_e = substr($data, $pos2+1);
-			if ($pom_like == "'.%'") { // odstranit?
+			if ($pom_like == "'.%'") { // ?
 				$data = '(' . $pom_b . 'md_values.[md_value] IS NOT NULL)';
 			} elseif ($pom_like != "'%'") {
 				$data = $pom_b . $this->setSqlLike('md_values.[md_value]',$pom_like) . $pom_e;
@@ -1273,7 +1273,30 @@ class MdSearch extends \BaseModel
 			$rs['Return'] = $founds;
 		}
 		return $rs;
-	}
+    }
+    
+    protected function getRecordRights($create_user, $view_group, $edit_group, $data_type)
+    {
+        $rights = array('read' => 0, 'edit' => 0);
+        if ($this->user->isInRole('admin')) {
+            return array('read' => 1, 'edit' => 1);
+        }
+        if ($this->isMemberGroup($edit_group) && $this->user->isInRole('editor')) {
+            $rights['edit'] = 1;
+        }
+        if ($this->user->isLoggedIn() && $create_user == $this->user->getIdentity()->username) {
+            $rights['edit'] = 1;
+        }
+        if ($rights['edit'] == 1) {
+            $rights['read'] = 1;
+        }
+        if ($rights['read'] == 0) {
+            if ($this->isMemberGroup($view_group) || $data_type > 0) {
+                $rights['read'] = 1;
+            }
+        }
+        return $rights;
+    }
 
     public function getXmlRecords($in=array(), $params=array()) {
 		$this->setFlatParams($params);
@@ -1289,27 +1312,13 @@ class MdSearch extends \BaseModel
 		}
         $rs = '';
         if ($pom['paginator']['records'] > 0 && $pom['sql'] != '' && $this->hits === FALSE) {
-            //$records = $this->db->query($pom['sql'])->fetchAll();
             $db_rs = $this->db->query($pom['sql']);
             $records = $db_rs->fetchAll();
             if ($this->search_uuid === TRUE) {
                 $numberOfRecods = $this->setNumberOfRecords($this->startPosition+1, count($records));
             }
             foreach ($records as $row) {
-                $row->edit = 0;
-                if ($this->isMemberGroup($row->edit_group) || $this->user->isInRole('admin')) {
-                    $row->edit = 1;
-                }
-                if ($this->user->isLoggedIn() && $row->create_user == $this->user->getIdentity()->username) {
-                    $row->edit = 1;
-                }
-                $row->read = $row->edit == 1 ? 1 : 0;
-                if ($row->read == 0) {
-                    if ($this->isMemberGroup($row->view_group)
-                            || $row->data_type > 0) {
-                        $row->read = 1;
-                    }
-                }
+                $record_rights = $this->getRecordRights($row->create_user, $row->view_group, $row->edit_group, $row->data_type);
                 if ($this->ext_header === TRUE) {
                     $row = $row + $this->getHarvestor($row->server_name);
                 } else {
@@ -1332,8 +1341,8 @@ class MdSearch extends \BaseModel
                         ' server_name="' . $row->server_name . '"' .
                         ' harvest_source="' . $row->harvest_source . '"' .
                         ' harvest_title="' . $row->harvest_title . '"' .
-                        ' read="' . $row->read . '"' .
-                        ' edit="' . $row->edit . '">' .
+                        ' read="' .  $record_rights['read'] . '"' .
+                        ' edit="' .  $record_rights['edit'] . '">' .
                         $this->getPxml($row->pxml) .
                         "</rec>";
             }
@@ -1365,20 +1374,7 @@ class MdSearch extends \BaseModel
         $data = $this->db->query("FETCH $count FROM xml_cursor")->fetchAll();
         if (count($data) > 0) {
             foreach ($data as $row) {
-                $row->edit = 0;
-                if ($this->isMemberGroup($row->edit_group) || $this->user->isInRole('admin')) {
-                    $row->edit = 1;
-                }
-                if ($this->user->isLoggedIn() && $row->create_user == $this->user->getIdentity()->username) {
-                    $row->edit = 1;
-                }
-                $row->read = $row->edit == 1 ? 1 : 0;
-                if ($row->read == 0) {
-                    if ($this->isMemberGroup($row->view_group)
-                            || $row->data_type > 0) {
-                        $row->read = 1;
-                    }
-                }
+                $record_rights = $this->getRecordRights($row->create_user, $row->view_group, $row->edit_group, $row->data_type);
                 if ($this->ext_header === TRUE) {
                     $row = $row + $this->getHarvestor($row->server_name);
                 } else {
@@ -1401,13 +1397,11 @@ class MdSearch extends \BaseModel
                         ' server_name="' . $row->server_name . '"' .
                         ' harvest_source="' . $row->harvest_source . '"' .
                         ' harvest_title="' . $row->harvest_title . '"' .
-                        ' read="' . $row->read . '"' .
-                        ' edit="' . $row->edit . '">' .
+                        ' read="' . $record_rights['read'] . '"' .
+                        ' edit="' . $record_rights['edit'] . '">' .
                         $this->getPxml($row->pxml) .
                         "</rec>";
                 }
-            //$numberOfRecods = ['Matched' => 1, 'Return' => 1, 'Next' => 0];
-            //$result = "<results numberOfRecordsMatched=\"".$numberOfRecods['Matched']."\" numberOfRecordsReturned=\"".$numberOfRecods['Return']."\" nextRecord=\"".$numberOfRecods['Next']."\" elementSet=\"brief\">" . $rs . "</results>";
             $result = $rs;
         }
         return $result;
