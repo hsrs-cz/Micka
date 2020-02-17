@@ -15,8 +15,8 @@ class Micka
     protected static $mickaVersion = [
         'name' => 'Micka',
         'version' => '2020.008',
-        'version_id' => 2020008,
-        'revision' => '2020-02-13.01'
+        'version_id' => 2020009,
+        'revision' => '2020-02-17.01'
     ];
 
     public static function getMickaVersion()
