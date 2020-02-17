@@ -13,7 +13,7 @@ class CswPresenter extends \BasePresenter
 	{
 		parent::startup();
         $this->csw = new \App\Model\CswModel(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
@@ -25,7 +25,7 @@ class CswPresenter extends \BasePresenter
 	public function actionDefault()
 	{
         $csw = new \App\Model\Csw(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
@@ -44,7 +44,7 @@ class CswPresenter extends \BasePresenter
             $params['pwd']  = $_SERVER['PHP_AUTH_PW'];
             
             $usermodel = new Model\UserModel(
-                $this->context->getByType('\Dibi\Connection'), 
+                $this->context->getService('dibi.connection'), 
                 $this->user,
                 $this->context->parameters
             );

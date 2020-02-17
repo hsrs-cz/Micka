@@ -11,7 +11,7 @@ class IdentityPresenter extends \BaseAdminPresenter
         parent::startup();
         $class = \App\Model\Micka::getClassName("App\\AdminModel\\IdentityModel");
         $this->identityModel = new $class(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );

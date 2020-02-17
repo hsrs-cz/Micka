@@ -14,7 +14,7 @@ class RecordPresenter extends \BasePresenter
         parent::startup();
         $class = \App\Model\Micka::getClassName("App\\Model\\RecordModel");
         $this->recordModel = new $class(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
@@ -62,7 +62,7 @@ class RecordPresenter extends \BasePresenter
         $request['id'] = $id;
         $request['language'] = $appLang;
         $csw = new \App\Model\Csw(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
@@ -88,7 +88,7 @@ class RecordPresenter extends \BasePresenter
             throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
         }
         $mdf = new \App\Model\MdFull(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
@@ -118,7 +118,7 @@ class RecordPresenter extends \BasePresenter
     public function renderNew() 
     {
         $mcl = new \App\Model\CodeListModel(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
@@ -239,7 +239,7 @@ class RecordPresenter extends \BasePresenter
             $package = $this->getParameter('package') ? $this->getParameter('package') : -1;
             $md_values = $this->recordModel->getRecordMdValues();
             $data = new \App\Model\MdEditForm(
-                $this->context->getByType('\Dibi\Connection'), 
+                $this->context->getService('dibi.connection'), 
                 $this->user,
                 $this->context->parameters
             );
@@ -257,7 +257,7 @@ class RecordPresenter extends \BasePresenter
                 'title'=>$this->recordModel->getMdTitle($md_values,$this->appLang)
                 ];
             $mcl = new \App\Model\CodeListModel(
-                $this->context->getByType('\Dibi\Connection'), 
+                $this->context->getService('dibi.connection'), 
                 $this->user,
                 $this->context->parameters
             );
@@ -334,7 +334,7 @@ class RecordPresenter extends \BasePresenter
         $params['LANGUAGE'] = isset($get['language']) ? $get['language'] : $this->appLang; 
         $params['OUTPUTSCHEMA'] = 'http://www.w3.org/2005/Atom';
         $csw = new \App\Model\Csw(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );

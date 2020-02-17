@@ -31,7 +31,7 @@ class DefaultPresenter extends \BasePresenter
             $request['query'] = '';
         }
         $csw = new \App\Model\Csw(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );

@@ -14,7 +14,7 @@ class SignPresenter extends \BasePresenter
 	{
 		parent::startup();
         $this->userModel = new \App\Model\UserModel(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );

@@ -13,12 +13,12 @@ class ProfilePresenter extends \BaseAdminPresenter
 	{
 		parent::startup();
         $this->mdSchema = new \App\Model\StandardSchemaModel(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
         $this->mdProfile = new \App\AdminModel\ProfileModel(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
