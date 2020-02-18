@@ -27,7 +27,8 @@ Geospatial metadata catalogue and metadata editing tool.
 8. Rename `app/config/config.local.neon.dist` to `app/config/config.local.neon` and edit it for access to your database, your contact information etc.
 9. Rename `app/config/config.neon.dist` to `app/config/config.neon`.
 10. Rename `app/config/codelists.xml.dist` to `app/config/codelists.xml`.
-11. Create the directories `log` and `temp` under the `php` directory and make them writable for the web server
+11. Rename `app/bootstrap.php.dist` to `app/bootstrap.php`.
+12. Create the directories `log` and `temp` under the `php` directory and make them writable for the web server
 
 ## Updates
 In new versions the database structure may sometimes change. In mostly cases the data remains unchanged but update scripts should be run to change some tables. Update scripts are named **u&lt;update-date&gt;_&lt;table-name&gt;.sql**

@@ -1,3 +1,4 @@
+php/app/bootstrap.php
 php/app/config/config.local.neon
 php/app/config/config.neon
 php/app/config/codelists.xml
@@ -21,5 +22,8 @@ php/app/model/xsl/profiles/*
 php/app/model/xsl/profiles/!default
 php/app/model/lite/profiles/*
 php/app/model/lite/profiles/!default
+php/app/security/*
+php/app/security/!AuthorizatorFactory.php
+php/app/security/!MickaAuthenticator.php
 layout/*
 layout/!default

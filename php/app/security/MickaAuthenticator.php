@@ -8,17 +8,21 @@ use Nette,
 
 class MickaAuthenticator implements Nette\Security\IAuthenticator
 {
-	use Nette\SmartObject;
+    use Nette\SmartObject;
 
-	private $db;
+    private $db;
     private $user = NULL;
+    public $isControlLogin = false;
     
-	//public function __construct(\Dibi\Connection $db) 
-	public function __construct($db) 
-	{
-		$this->db = $db;
+    public function __construct($db) 
+    {
+        $this->db = $db;
     }
     
+    public function controlLogin($httpRequest) 
+    {
+    }
+
     public function authenticate(array $credentials)
     {
         list($username, $password) = $credentials;
