@@ -12,7 +12,7 @@ class SuggestPresenter extends \BasePresenter
 	{
 		parent::startup();
         $this->suggestModel = new \App\Model\SuggestModel(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
@@ -83,12 +83,22 @@ class SuggestPresenter extends \BasePresenter
     /** @resource Editor */
 	public function renderMdContacts()
 	{
+        //dump($this); $this->terminate();
         $this->template->mds = 'MD';
-        $contactsModel = new \App\AdminModel\ContactsModel(
-            $this->context->getByType('\Dibi\Connection'), 
-            $this->user,
-            $this->context->parameters
-        );
+        if ($this->context->hasService('contacts')) {
+            $contactsModel = $this->context->getService('contacts');
+            $contactsModel->setParams(
+                $this->context->getService('dibi2.connection'), 
+                $this->user,
+                $this->context->parameters
+            );
+        } else {
+            $contactsModel = new \App\AdminModel\ContactsModel(
+                $this->context->getService('dibi.connection'), 
+                $this->user,
+                $this->context->parameters
+            );
+        }
         if($this->getParameter('format')=='json'){
             $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
                 $contactsModel->findMdContactsByName($this->getParameter('q')), 
@@ -104,7 +114,7 @@ class SuggestPresenter extends \BasePresenter
 	public function renderFiles()
 	{
         $filesModel = new \App\Model\FilesModel(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );

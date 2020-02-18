@@ -1,4 +1,5 @@
 <?php
+use Tracy\Debugger;
 
 abstract class BasePresenter extends Nette\Application\UI\Presenter
 {
@@ -63,11 +64,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         }
 
         \App\Model\Micka::setDefaultParameters(
-            $this->context->getByType('\Dibi\Connection'), 
+            $this->context->getService('dibi.connection'), 
             $this->user,
             $this->context->parameters
         );
-        //dump($this->context->parameters); $this->terminate();
 	}
     
     /**
