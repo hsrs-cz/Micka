@@ -16,7 +16,7 @@ SearchForm = function(){
 		result = "";
 		var type = $("#res-type").val();
 		if(type=='data') {
-			result = '(type=dataset OR type=series OR type=noGeographicDataset OR type=tile)';
+			result = '(type=dataset OR type=series OR type=nonGeographicDataset OR type=tile)';
 		}
 		else addVal('type', "#res-type");
 		addVal('FullText', "#fulltext");
