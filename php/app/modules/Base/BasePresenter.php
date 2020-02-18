@@ -68,6 +68,10 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             $this->user,
             $this->context->parameters
         );
+
+        if ($this->user->getAuthenticator()->isControlLogin) {
+            $this->user->getAuthenticator()->controlLogin($this->getHttpRequest()); 
+        } 
 	}
     
     /**
