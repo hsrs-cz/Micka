@@ -44,6 +44,7 @@ session:
     expiration: 0
 
 services:
+    authenticator: App\Security\MickaAuthenticator(@dibi.connection)
     router: App\RouterFactory::createRouter
     - App\Security\AuthorizatorFactory
     -
