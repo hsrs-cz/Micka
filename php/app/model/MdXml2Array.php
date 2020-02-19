@@ -311,7 +311,7 @@ class MdXml2Array
         //echo "<pre>".$data; exit;
         eval($data);
         // odstraneni Locale a dateTime
-        for($i=0; $i<count($md['MD_Metadata']); $i++){
+        if(isset($md['MD_Metadata'])) for($i=0; $i<count($md['MD_Metadata']); $i++){
             unset($md['MD_Metadata'][$i]['locale']);
             if(isset($md['MD_Metadata'][$i]['dateStamp']['00']['@']) && strpos($md['MD_Metadata'][$i]['dateStamp']['00']['@'], 'T')){
                 $pom = explode('T',$md['MD_Metadata'][$i]['dateStamp']['00']['@']); // FIXME quick hack

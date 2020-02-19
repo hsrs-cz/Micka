@@ -159,7 +159,7 @@ class ArrayMdXml2MdValues extends \BaseModel
                 break;
             default:
         }
-        if ($this->md[$recno]['lang'] == '') {
+        if (!isset($this->md[$recno]['lang']) || $this->md[$recno]['lang'] == '') {
             $this->md[$recno]['lang'] = $this->lang;
         }
         switch ($this->md[$recno]['lang']) {
@@ -312,8 +312,8 @@ class ArrayMdXml2MdValues extends \BaseModel
         $el_pom = '';
         foreach ($md as $key => $item) {
             $key2 = strlen($key) === 1 ? "0$key" : $key;
-            if (strlen($key) === 2 && $key[0] === '0') {
-                $key = $key[1];
+            if (strlen($key) === 2 && substr((string) $key,0,1) === '0') {
+                $key = substr((string) $key,1,1);
             }
             if ($level == 2) {
                 $recno_in = $key;
@@ -449,6 +449,7 @@ class ArrayMdXml2MdValues extends \BaseModel
 		}
 		if (array_key_exists('FC_FeatureCatalogue', $this->arrayXml)) {
 			foreach ($this->arrayXml['FC_FeatureCatalogue'] as $idx=>$md) {
+                //echo "<pre>"; var_dump($this->arrayXml['FC_FeatureCatalogue'][$idx]); die();
                 $recno = $idx;
                 if (strlen($recno) === 2 && $recno[0] === '0') {
                     $recno = $recno[1];
@@ -457,7 +458,7 @@ class ArrayMdXml2MdValues extends \BaseModel
 				// uuid
 				$this->md[$recno]['uuid'] = '';
 				$z = '';
-				for ($y = 0; $y < count($this->arrayXml['FC_FeatureCatalogue'][$idx]['id']); $y++) {
+				if(isset($this->arrayXml['FC_FeatureCatalogue'][$idx]['id'])) for ($y = 0; $y < count($this->arrayXml['FC_FeatureCatalogue'][$idx]['id']); $y++) {
                     $y2 = strlen($y) === 1 ? "0$y" : $y;
                     if (isset($this->arrayXml['FC_FeatureCatalogue'][$idx]['id'][$y2]['@']) && $this->arrayXml['FC_FeatureCatalogue'][$idx]['id'][$y2]['@'] != '') {
 						$this->md[$recno]['uuid'] = $this->arrayXml['FC_FeatureCatalogue'][$idx]['id'][$y2]['@'];
