@@ -285,9 +285,11 @@ class RecordModel extends \BaseModel
         $editRecno = $this->recordMd->recno;
         // validate
         if ($this->appParameters['app']['validator'] === true) {
-            $this->recordValidate($this->recordMd->pxml);
-            $this->db->query("UPDATE edit_md SET [valid]=%i, [prim]=%i WHERE [edit_user]=%s AND [recno]=%i",
-                $this->recordMd->valid, $this->recordMd->prim, $this->user->getIdentity()->username, $editRecno);
+            if ($this->recordMd->md_standard === 0 || $this->recordMd->md_standard === 10) {
+                $this->recordValidate($this->recordMd->pxml);
+                $this->db->query("UPDATE edit_md SET [valid]=%i, [prim]=%i WHERE [edit_user]=%s AND [recno]=%i",
+                    $this->recordMd->valid, $this->recordMd->prim, $this->user->getIdentity()->username, $editRecno);
+            }
         }
         $this->setRecordMdById($this->recordMd->uuid, 'md', 'edit');
         if ($this->recordMd) {
@@ -1250,6 +1252,18 @@ class RecordModel extends \BaseModel
                 return array(0 => array('uuid' => $mdr->uuid, 'title' => $mdr->title, 'ok' => 0, 'error'=>'skip, record exists'));
             }
         }
+        switch ($mdr->md_standard) {
+            case 0:
+            case 10:
+                $params['type'] = 'iso';
+                break;
+            case 2:
+                $params['type'] = 'fc';
+                break;
+            default:
+                # code...
+                break;
+        }
         $md = array();
         $md['recno'] = $this->getNewRecno('edit_md');
         $md['md_recno'] = 0;
@@ -1276,11 +1290,21 @@ class RecordModel extends \BaseModel
             $this->user,
             $this->appParameters
         );
-        $arrayMdXml2MdValues->lang = 'eng';
+        $arrayMdXml2MdValues->lang = 
+            $mdr->lang !== ''
+            ? substr($mdr->lang, 0, 3)
+            : 'eng';
+        $data = $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml);
+        if ($mdr->md_standard === 2) {
+            if (isset($data['md'][0])) {
+                $data['md'][0]['uuid'] = $mdr->uuid;
+                $md['uuid'] = $mdr->uuid;
+            }
+        }
         $report = $this->setMdFromXml(['new_md' => $md]
                 + ['params' => $params]
-                + $arrayMdXml2MdValues->getMdFromArrayXml($dataFromXml)
-        );
+                + $data
+    )   ;
         $this->setEditRecord2Md();
         $this->deleteEditRecordByUuid($mdr->uuid);
         return $report;

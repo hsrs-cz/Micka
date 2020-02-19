@@ -157,6 +157,13 @@ class ArrayMdXml2MdValues extends \BaseModel
                     ? $this->arrayXml['metadata'][$idx]['language']['00']['@']
                     : '';
                 break;
+            case 2:
+                $this->md[$recno]['lang'] = '';
+                $this->md[$recno]['lang'] = 
+                    isset($this->arrayXml['FC_FeatureCatalogue'][$idx]['language']['00']['LanguageCode']['00']['@'])
+                    ? $this->arrayXml['FC_FeatureCatalogue'][$idx]['language']['00']['LanguageCode']['00']['@']
+                    : '';
+                break;
             default:
         }
         if (!isset($this->md[$recno]['lang']) || $this->md[$recno]['lang'] == '') {
@@ -297,6 +304,43 @@ class ArrayMdXml2MdValues extends \BaseModel
 		case 'DC':
 			break;
 		case 'FC':
+			if (isset($this->arrayXml['FC_FeatureCatalogue'][$idx]['name']['00']) && is_array($this->arrayXml['FC_FeatureCatalogue'][$idx]['name'])) {
+				foreach ($this->arrayXml['FC_FeatureCatalogue'][$idx]['name'] as $value) {
+                    if (is_array($value)) {
+                        $key = key($value);
+                    } else {
+                        $key = '';
+                    }
+					if (substr($key,0,1) == '@') {
+						$l = substr($key,1);
+						if ($lang_change && $l != '') {
+							$this->md[$recno]['lang'] = $l;
+							$this->arrayXml['MD_Metadata'][$idx]['language']['00']['LanguageCode']['00']['@'] = $l;
+						}
+						switch ($l) {
+							case '':
+								if ($value != '') {
+									$l = $this->md[$recno]['lang'];
+								}
+								else {
+                                    $l = '';
+                                    $lang_change = TRUE;
+								}
+								break;
+							case 'en':
+								$l = 'eng';
+								break;
+							case 'fra':
+								$l = 'fre';
+								break;
+							default:
+						}
+						if ($l != '') {
+							$md_lang[] = $l;
+						}
+					}
+				}
+			}
 			break;
 		default:
 		}
