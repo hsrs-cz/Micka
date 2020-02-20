@@ -220,7 +220,7 @@ class MdXml2Array
             $dom = $xml;
         }
         //--- ladeni ---
-        //header('Content-type: application/xml'); echo $xml->saveXML(); exit;
+        //header('Content-type: application/xml'); echo $dom->saveXML(); exit;
         // ---
         //$this->xml = $xml;
         //--- vyreseni locales ---

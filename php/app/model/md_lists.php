@@ -6,7 +6,7 @@
 
 $title = '';
 
-function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
+function getList($type, $lang, $mdlang, $langs, $withValues=false, $handler=""){
     if(!$handler) $handler="formats1";
     if(in_array($type, array('coordSys','verticalSys','format','limitationsAccess', 'accessCond', 'protocol', 'inspireKeywords', 'hlname', 'linkageName', 'serviceType'))){
         $xml = simplexml_load_file(APP_DIR . "/config/codelists.xml");
@@ -21,7 +21,9 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
             else echo "<a href=\"javascript:$handler({value:'".$row['value']."', ";
             foreach($row as $k=>$v){
                 if($k!='uri'){
-                    echo "$k:'".$v."',";
+                    if(in_array($k, $langs)){
+                        echo "$k:'".$v."',";
+                    }
                 }
             }
             $name = (isset($row['name']) && $row['name']) ? $row['name'] : (string) $row->$mdlang;
@@ -45,7 +47,9 @@ function getList($type, $lang, $mdlang, $withValues=false, $handler=""){
             }
             foreach($row as $k=>$v){
                 if($k!='uri'){
-                    echo "$k:'".addslashes($v['name'])."',";
+                    if(in_array($k, $langs)){
+                        echo "$k:'".addslashes($v['name'])."',";
+                    }
                 }
             }
             echo "xxx:'".(string) $row->$mdlang."'});\">".(string) $row->$lang."</a><br>";
@@ -131,11 +135,12 @@ function kw(f){
 <?php
     $lang = isset($_REQUEST['lang']) ? htmlspecialchars($_REQUEST['lang']) : 'eng';
     $mdlang = isset($_REQUEST['mdlang']) ? htmlspecialchars($_REQUEST['mdlang']) : 'eng';
+    $langs = isset($_REQUEST['langs']) ? explode("|",htmlspecialchars($_REQUEST['langs'])) : [$lang, $mdlang];
     $handler = isset($_REQUEST['handler']) ? htmlspecialchars($_REQUEST['handler']) : false;
     if(isset($_REQUEST['multi']) && $_REQUEST['multi']==1) {
         $multi = true;
     } else {
         $multi = false;
     }
-    echo getList(htmlspecialchars($_REQUEST['type']), $lang, $mdlang, $multi, $handler);
+    echo getList(htmlspecialchars($_REQUEST['type']), $lang, $mdlang, $langs, $multi, $handler);
 

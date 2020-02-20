@@ -1223,14 +1223,14 @@ function protocols(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=protocol&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=protocol&lang='+lang+'&langs='+langs);
 }
 
 function specif(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=specifications&handler=specif1&multi=1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=specifications&multi=1&lang='+lang+'&langs='+langs);
 }
 
 function specif1(f){
@@ -1267,7 +1267,7 @@ function hlname(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=hlname&handler=hlname1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=hlname&handler=hlname1&lang='+lang+'&langs='+langs);
 }
 
 function hlname1(f){
@@ -1280,7 +1280,7 @@ function hlname1(f){
 function fspec(obj){
 	md_elem = obj.parentNode;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=inspireKeywords&handler=fspec1&multi=&lang='+lang);    
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=inspireKeywords&handler=fspec1&multi=&lang='+lang+'&langs='+langs);    
 }
 
 function fspec1(f){
@@ -1298,14 +1298,14 @@ function crs(obj){
 	md_elem = obj.parentNode;
     var mdlang = $('#30').val();
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys&handler=crs1&lang='+lang+'&mdlang='+mdlang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys&handler=crs1&lang='+lang+'&mdlang='+mdlang+'&langs='+langs);
 }
 
 function verticalCRS(obj){
 	md_elem = obj.parentNode;
     var mdlang = $('#30').val();
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=verticalSys&handler=verticalCrs1&lang='+lang+'&mdlang='+mdlang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=verticalSys&handler=verticalCrs1&lang='+lang+'&mdlang='+mdlang+'&langs='+langs);
 }
 
 function crs1(f){
@@ -1336,7 +1336,7 @@ function dName(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=linkageName&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=linkageName&lang='+lang+'&langs='+langs);
 }
 
 function dc_kontakt(obj, type){
@@ -1598,7 +1598,7 @@ var md_constraint = function(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=accessCond&multi=1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=accessCond&multi=1&lang='+lang+'&langs='+langs);
  }
 
 var oconstraint = function(obj){
@@ -1611,28 +1611,28 @@ var oconstraint = function(obj){
     else {
         var type='accessCond';
     }
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type='+type+'&multi=1&lang='+lang);        
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type='+type+'&multi=1&lang='+lang+'&langs='+langs);        
 }
 
 var md_serviceType = function(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=serviceType&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=serviceType&lang='+lang+'&langs='+langs);
 }
 
 var md_lineage = function(obj){
     md_elem = obj.parentNode;
     md_addMode = false;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=lineage&multi=1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=lineage&multi=1&lang='+lang+'&langs='+langs);
 }
 
 var md_processStep = function(obj){
     md_elem = obj.parentNode;
     md_addMode = true;
     $("#md-dialog").modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=steps&multi=1&lang='+lang);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=steps&multi=1&lang='+lang+'&langs='+langs);
 }
 
 micka.fillValues = function(listType, code, handler){

@@ -1544,6 +1544,19 @@
   		<gmx:language>
 	  		<gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
   		</gmx:language>
+        <!-- ================================ locale ===============================-->
+        <xsl:for-each select="langs/lang[.!=$mdLang]">
+            <gmx:locale>
+              <gmd:PT_Locale id="locale-{.}">
+                <gmd:languageCode>
+                    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{.}"/>
+                </gmd:languageCode>
+                <gmd:characterEncoding>
+                    <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8"/>
+                </gmd:characterEncoding>
+              </gmd:PT_Locale> 
+             </gmx:locale>
+        </xsl:for-each>
   		<gfc:producer>
 			<xsl:call-template name="contact">
 				<xsl:with-param name="org" select="producer"/>

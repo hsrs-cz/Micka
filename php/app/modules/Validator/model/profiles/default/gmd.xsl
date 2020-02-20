@@ -983,21 +983,19 @@ xmlns:php="http://php.net/xsl">
                  	</xsl:if>
                  </test>
              </xsl:for-each>    
-    	    <xsl:if test="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]//gmd:pass='true'">
-	    	    <test code="b" level="m">
-	    			<description><xsl:value-of select="$labels/test[@code='IOD-1b']"/></description>
-	    			<xpath>http://www.opengis.net/def/crs/EPSG/x/[4258|3034|3035|3045|3046]</xpath>
-	    			<xsl:if test="gmd:referenceSystemInfo[contains(*//gmd:code,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code, '4258') or contains(*//gmd:code, '3034') or contains(*//gmd:code, '3035') or contains(*//gmd:code, '3045') or contains(*//gmd:code, '3046'))]">
-	    	    		<value>
-	                		<xsl:for-each select="gmd:referenceSystemInfo[contains(*//gmd:code,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code, '4258') or contains(*//gmd:code, '3034') or contains(*//gmd:code, '3035') or contains(*//gmd:code, '3045') or contains(*//gmd:code, '3046'))]">                    
-	                    		<xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
-	                    		<xsl:if test="not(position()=last())">&lt;br/&gt;</xsl:if>
-	                		</xsl:for-each>    
-	            		</value>
-			    	    <pass>true</pass>
-			    	</xsl:if>
-			    </test>    	    
-		    </xsl:if>
+             <test code="b" level="m">
+                <description><xsl:value-of select="$labels/test[@code='IOD-1b']"/></description>
+                <xpath>http://www.opengis.net/def/crs/EPSG/x/[4258|3034|3035|3045|3046]</xpath>
+                <xsl:if test="gmd:referenceSystemInfo[contains(*//gmd:code/*/@xlink:href,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code/*/@xlink:href, '4258') or contains(*//gmd:code/*/@xlink:href, '3034') or contains(*//gmd:code/*/@xlink:href, '3035') or contains(*//gmd:code/*/@xlink:href, '3045') or contains(*//gmd:code/*/@xlink:href, '3046'))]">
+                    <value>
+                        <xsl:for-each select="gmd:referenceSystemInfo[contains(*//gmd:code,'http://www.opengis.net/def/crs/EPSG/') and (contains(*//gmd:code, '4258') or contains(*//gmd:code, '3034') or contains(*//gmd:code, '3035') or contains(*//gmd:code, '3045') or contains(*//gmd:code, '3046'))]">                    
+                            <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
+                            <xsl:if test="not(position()=last())">&lt;br/&gt;</xsl:if>
+                        </xsl:for-each>    
+                    </value>
+                    <pass>true</pass>
+                </xsl:if>
+            </test>    	    
     	</xsl:if>	
     </test>
 
