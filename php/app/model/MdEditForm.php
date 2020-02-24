@@ -66,7 +66,10 @@ class MdEditForm  extends \BaseModel
 		";
 		if ($inspire) {
 			$sql .= ' AND codelist.[inspire]=1';
-		}
+        }
+        $sql .= "
+            ORDER BY codelist.[el_id], label.[label_text]
+        ";
 		$records = $this->db->query($sql, $this->appLang)->fetchAll();
 		foreach ($records as $row) {
 			$el_id = $row->el_id;

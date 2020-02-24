@@ -32,6 +32,7 @@ class CodeListModel extends \BaseModel
 			FROM (label INNER JOIN codelist ON label.[label_join] = codelist.[codelist_id])
 			LEFT JOIN codelist_my ON codelist.[codelist_id] = codelist_my.[codelist_id]
             WHERE label.[label_type]='CL' AND codelist.[el_id]=390 AND codelist_my.[is_vis]=1 AND label.[lang]=%s
+            ORDER BY label.[label_text]
 		", $appLang)->fetchPairs();
     }
     
