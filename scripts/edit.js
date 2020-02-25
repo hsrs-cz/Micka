@@ -183,7 +183,14 @@ function elm(name){
 
 function md_scroll(el){
   if(typeof el == 'string'){
-	  var el = document.getElementById(el) || document.getElementById(el.replace('ins', 'V'));
+      if(el.indexOf(',')>-1){
+          var ea = el.split(",");
+          for(var i=0; i<ea.length; i++){
+              el = document.getElementById(ea[i]+'_00_');
+              if(el) break;
+          }
+      }
+	  else el = document.getElementById(el+'_00_') || document.getElementById(el);
   }
   if(el){
 	  var e = el;
@@ -196,15 +203,15 @@ function md_scroll(el){
 		  }
 	  }
 	  el.scrollIntoView(true);
-		if(el.getBoundingClientRect().y && el.getBoundingClientRect().y < h){
+		if(el.parentNode.getBoundingClientRect().y && el.parentNode.getBoundingClientRect().y < h){
 				window.scrollBy(0, -h-10);
 		}
-		else if(el.getBoundingClientRect().top < h){
+		else if(el.parentNode.getBoundingClientRect().top < h){
 				window.scrollBy(0, -h-10);
 		}  
-	  el.parentNode.style.background="#FFBBBB"; //TODO do stylu
+	  el.style.background="#FFFFAA"; //TODO do stylu
 	  setTimeout(function(){
-		  el.parentNode.style.background="";
+		  el.style.background="";
 		  }, 1000);
   }
 }
@@ -1298,7 +1305,7 @@ function crs(obj){
 	md_elem = obj.parentNode;
     var mdlang = $('#30').val();
     $('#md-dialog').modal();
-    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys&handler=crs1&lang='+lang+'&mdlang='+mdlang+'&langs='+langs);
+    $('#md-content').load(baseUrl+'/suggest/mdlists/?type=coordSys,verticalSys&handler=crs1&lang='+lang+'&mdlang='+mdlang+'&langs='+langs);
 }
 
 function verticalCRS(obj){

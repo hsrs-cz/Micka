@@ -746,7 +746,7 @@
       				<gmd:EX_VerticalExtent>
       					<gmd:minimumValue><gco:Real><xsl:value-of select="*/minimumValue"/></gco:Real></gmd:minimumValue>
       					<gmd:maximumValue><gco:Real><xsl:value-of select="*/maximumValue"/></gco:Real></gmd:maximumValue>
-        				<gml:verticalCRS xlink:href="{*/verticalCRS/href}" title="{*/verticalCRS/title}"/>
+        				<gmd:verticalCRS xlink:href="{*/verticalCRS/href}" title="{*/verticalCRS/title}"/>
       				</gmd:EX_VerticalExtent>
 				</gmd:verticalElement>
             </xsl:for-each>  

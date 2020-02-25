@@ -137,10 +137,13 @@ function kw(f){
     $mdlang = isset($_REQUEST['mdlang']) ? htmlspecialchars($_REQUEST['mdlang']) : 'eng';
     $langs = isset($_REQUEST['langs']) ? explode("|",htmlspecialchars($_REQUEST['langs'])) : [$lang, $mdlang];
     $handler = isset($_REQUEST['handler']) ? htmlspecialchars($_REQUEST['handler']) : false;
+    $types = explode(",", htmlspecialchars($_REQUEST['type']));
     if(isset($_REQUEST['multi']) && $_REQUEST['multi']==1) {
         $multi = true;
     } else {
         $multi = false;
     }
-    echo getList(htmlspecialchars($_REQUEST['type']), $lang, $mdlang, $langs, $multi, $handler);
+    foreach($types as $type) {
+        echo getList($type, $lang, $mdlang, $langs, $multi, $handler);
+    }
 

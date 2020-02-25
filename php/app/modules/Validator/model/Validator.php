@@ -122,6 +122,7 @@ class Validator
             foreach ($xml->error as $err){
                 $tests[] = array(
                     'code' => $err->code,
+                    'id' => $err->id,
                     "value" => htmlentities($err->line),
                     'err' => (string) $err->message
                 ); 
@@ -145,6 +146,7 @@ class Validator
         foreach ($xml->test as $t){
             $test = array();
             $test['code'] = (string) $t['code'];
+            $test['id'] = (string) $t['id'];
             $test['level'] = (string) $t['level'];
             $test['description'] = (string) $t->description;
             $test['xpath'] = (string) $t->xpath;
