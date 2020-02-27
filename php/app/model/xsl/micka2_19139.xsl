@@ -521,7 +521,7 @@
   		  </xsl:choose>
       </xsl:for-each> 
 
-		<xsl:for-each select="identificationInfo/MD_DataIdentification/spatialRepresentationType">
+		<xsl:for-each select="*/spatialRepresentationType">
       		<gmd:spatialRepresentationType>
 				<gmd:MD_SpatialRepresentationTypeCode codeListValue="{MD_SpatialRepresentationTypeCode}" codeList="{$clx}#MD_SpatialRepresentationTypeCode"><xsl:value-of select="MD_SpatialRepresentationTypeCode"/></gmd:MD_SpatialRepresentationTypeCode>
 			</gmd:spatialRepresentationType>

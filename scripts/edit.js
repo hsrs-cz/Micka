@@ -186,12 +186,13 @@ function md_scroll(el){
       if(el.indexOf(',')>-1){
           var ea = el.split(",");
           for(var i=0; i<ea.length; i++){
-              el = document.getElementById(ea[i]+'_00_');
+              el = document.getElementById(ea[i]+'_00_') || document.getElementById('V-'+ea[i]);
               if(el) break;
           }
       }
-	  else el = document.getElementById(el+'_00_') || document.getElementById(el);
+	  else el = document.getElementById(el+'_00_')  || document.getElementById('V-'+el) || document.getElementById(el);
   }
+  if(el.id[0]=='V') el = el.parentNode;
   if(el){
 	  var e = el;
 	  var h = document.getElementsByTagName('NAV')[0].offsetHeight;

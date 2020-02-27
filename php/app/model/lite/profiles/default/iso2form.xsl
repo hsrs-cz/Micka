@@ -44,7 +44,7 @@
 	<xsl:call-template name="drawInput">
 		<xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:citation/*/gmd:title"/>
 		<xsl:with-param name="name" select="'title'"/>
-		<xsl:with-param name="valid" select="'1.1'"/>
+		<xsl:with-param name="valid" select="'11'"/>
 		<xsl:with-param name="langs" select="$langs"/>
 		<xsl:with-param name="req" select="1"/>
         <xsl:with-param name="maxlength" select="250"/>
@@ -55,7 +55,7 @@
 		<xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:abstract"/>
 		<xsl:with-param name="name" select="'abstract'"/>
 		<xsl:with-param name="type" select="'textarea'"/>
-		<xsl:with-param name="valid" select="'1.2'"/>
+		<xsl:with-param name="valid" select="'4'"/>
 		<xsl:with-param name="langs" select="$langs"/>
 		<xsl:with-param name="req" select="1"/>
 	</xsl:call-template>
@@ -65,7 +65,7 @@
         <xsl:with-param name="value" select="gmd:hierarchyLevel/*/@codeListValue"/>
         <xsl:with-param name="name" select="'hierarchyLevel'"/>
         <xsl:with-param name="codes" select="$typeList"/>
-        <xsl:with-param name="valid" select="'1.3'"/>
+        <xsl:with-param name="valid" select="'122'"/>
         <xsl:with-param name="class" select="'short'"/>
         <xsl:with-param name="req" select="1"/>
     </xsl:call-template>
@@ -79,7 +79,7 @@
                         <xsl:call-template name="drawLabel">
                             <xsl:with-param name="name" select="'linkage'"/>
                             <xsl:with-param name="class" select="'cond'"/>
-                            <xsl:with-param name="valid" select="'1.4'"/>
+                            <xsl:with-param name="valid" select="'47'"/>
                             <xsl:with-param name="dupl" select="1"/>
                         </xsl:call-template>
                     </div>           
@@ -123,7 +123,7 @@
                             <xsl:with-param name="name" select="'description'"/>
                             <xsl:with-param name="path" select="'linkage-description[]'"/>
                             <xsl:with-param name="class" select="'inp2'"/>
-                            <xsl:with-param name="valid" select="'1.4'"/>
+                            <xsl:with-param name="valid" select="'47'"/>
                         </xsl:call-template>
                         <div class="col-xs-12 col-md-8">
                             <xsl:variable name="value" select="*/gmd:description"/>
@@ -177,7 +177,7 @@
                         <xsl:call-template name="drawLabel">
                             <xsl:with-param name="name" select="'identifier'"/>
                             <xsl:with-param name="class" select="$m"/>
-                            <xsl:with-param name="valid" select="'1.5'"/>
+                            <xsl:with-param name="valid" select="'111'"/>
                             <xsl:with-param name="dupl" select="1"/>
                         </xsl:call-template>
                     </div>
@@ -185,7 +185,7 @@
                     <xsl:call-template name="drawAnchor">
                         <xsl:with-param name="path" select="'identifier'"/>
                         <xsl:with-param name="value" select="*/gmd:code"/>
-                        <xsl:with-param name="valid" select="'1.5'"/>
+                        <xsl:with-param name="valid" select="''"/>
                         <xsl:with-param name="class" select="concat('inp2 ',$m)"/>
                         <!--xsl:with-param name="req" select="not($serv)"/-->
                     </xsl:call-template>
@@ -306,7 +306,7 @@
             <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:language/*/@codeListValue"/>
             <xsl:with-param name="codes" select="'language'"/>
             <xsl:with-param name="multi" select="'2'"/>
-            <xsl:with-param name="valid" select="'1.7'"/>
+            <xsl:with-param name="valid" select="'5'"/>
             <xsl:with-param name="req" select="'1'"/>
         </xsl:call-template>
 
@@ -317,7 +317,7 @@
             <xsl:with-param name="codes" select="'topicCategory'"/>
             <xsl:with-param name="class" select="'mandatory'"/>
             <xsl:with-param name="multi" select="'2'"/> 
-            <xsl:with-param name="valid" select="'2.1'"/>
+            <xsl:with-param name="valid" select="'361'"/>
             <xsl:with-param name="req" select="'1'"/>   
         </xsl:call-template>
     </xsl:if>
@@ -354,7 +354,7 @@
                 <xsl:with-param name="codes" select="'serviceKeyword'"/>
                 <xsl:with-param name="req" select="1"/>
                 <xsl:with-param name="multi" select="1"/>
-                <xsl:with-param name="valid" select="'3'"/>
+                <xsl:with-param name="valid" select="'84'"/>
             </xsl:call-template>
 
             <!-- INSPIRE themes --> 
@@ -363,7 +363,7 @@
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*,'GEMET - INSPIRE')]/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="'2'"/>
-                <xsl:with-param name="valid" select="'3.1'"/>
+                <xsl:with-param name="valid" select="'84'"/>
             </xsl:call-template> 
             
             <!-- other KW with thesaurus -->
@@ -398,7 +398,7 @@
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:descriptiveKeywords[contains(*/gmd:thesaurusName/*/gmd:title/*, 'GEMET - INSPIRE')]/*/gmd:keyword"/>
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="'2'"/>
-                <xsl:with-param name="valid" select="'3'"/>
+                <xsl:with-param name="valid" select="'84'"/>
             </xsl:call-template> 
     
             <!-- Spatial scope -->
@@ -484,7 +484,7 @@
         <xsl:call-template name="drawLabel">
             <xsl:with-param name="name" select="'spatialExt'"/>
             <xsl:with-param name="class" select="concat('cond ',$m)"/>
-            <xsl:with-param name="valid" select="'4.1'"/>
+            <xsl:with-param name="valid" select="'494'"/>
         </xsl:call-template>	
 	
         <div class="col-xs-12 col-md-8">
@@ -561,7 +561,7 @@
                     <xsl:with-param name="path" select="'date-date[]'"/>
                     <xsl:with-param name="value" select="*/gmd:date"/>
                     <xsl:with-param name="type" select="'date'"/>
-                    <xsl:with-param name="valid" select="'5a'"/>
+                    <xsl:with-param name="valid" select="'14'"/>
                     <xsl:with-param name="class" select="'mandatory inp2'"/>
                     <xsl:with-param name="req" select="'1'"/>
                 </xsl:call-template>
@@ -583,7 +583,7 @@
                 <xsl:call-template name="drawLabel">
                     <xsl:with-param name="name" select="'timeExtent'"/>
                     <xsl:with-param name="class" select="'cond'"/>
-                    <xsl:with-param name="valid" select="'5b'"/>
+                    <xsl:with-param name="valid" select="'490'"/>
                 </xsl:call-template>	
             
                 <div class="col-xs-12 col-md-8">
@@ -605,7 +605,7 @@
             <xsl:with-param name="langs" select="$langs"/>
 		    <xsl:with-param name="type" select="'textarea'"/> 
             <xsl:with-param name="req" select="1"/>
-            <xsl:with-param name="valid" select="'6.1'"/>
+            <xsl:with-param name="valid" select="'52'"/>
 		</xsl:call-template>
 
         <!-- 12 data quality scope -->
@@ -623,7 +623,7 @@
             <xsl:call-template name="drawLabel">
                 <xsl:with-param name="name" select="'scale'"/>
                 <xsl:with-param name="class" select="'cond '"/>
-                <xsl:with-param name="valid" select="'6.2'"/>
+                <xsl:with-param name="valid" select="'96'"/>
             </xsl:call-template>			
             
             <div class="col-xs-12 col-md-8">
@@ -663,7 +663,7 @@
                                 <xsl:with-param name="name" select="'Conformity'"/>
                                 <xsl:with-param name="class" select="'mand'"/>
                                 <xsl:with-param name="dupl" select="1"/>
-                                <xsl:with-param name="valid" select="'7.1'"/>
+                                <xsl:with-param name="valid" select="'2503'"/>
                             </xsl:call-template>		
                         </div>
                         
@@ -697,7 +697,7 @@
 	    <xsl:with-param name="codes" select="'accessCond'"/>
 	    <xsl:with-param name="multi" select="'2'"/>
         <xsl:with-param name="class" select="'mand'"/>
-	    <xsl:with-param name="valid" select="'8.1'"/>
+	    <xsl:with-param name="valid" select="'4711'"/>
 	</xsl:call-template>    
     
   	<!-- Conditions applying to access and use --> 
@@ -716,7 +716,7 @@
 	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints  and */@xlink:href]"/>
 	    <xsl:with-param name="codes" select="'limitationsAccess'"/>
 	    <xsl:with-param name="multi" select="'2'"/>
-	    <xsl:with-param name="valid" select="'8.2'"/>
+	    <xsl:with-param name="valid" select="'4710'"/>
         <xsl:with-param name="class" select="'mand'"/>	
     </xsl:call-template>
 
@@ -736,7 +736,7 @@
             <xsl:call-template name="party">
                 <xsl:with-param name="root" select="."/>
                 <xsl:with-param name="name" select="'dataContact'"/>
-                <xsl:with-param name="valid" select="'9.1'"/>
+                <xsl:with-param name="valid" select="'80'"/>
                 <xsl:with-param name="langs" select="$langs"/>
             </xsl:call-template>
         </xsl:if>
@@ -745,7 +745,7 @@
             <xsl:call-template name="party">
                 <xsl:with-param name="root" select="."/>
                 <xsl:with-param name="name" select="'dataContact'"/>
-                <xsl:with-param name="valid" select="'9.1'"/>
+                <xsl:with-param name="valid" select="'80'"/>
                 <xsl:with-param name="langs" select="$langs"/>
             </xsl:call-template>
         </xsl:for-each>
@@ -758,7 +758,7 @@
                 <xsl:with-param name="root" select="."/>
                 <xsl:with-param name="name" select="'contact'"/>
                 <xsl:with-param name="langs" select="$langs"/>
-                <xsl:with-param name="valid" select="'10.1'"/>
+                <xsl:with-param name="valid" select="'124'"/>
                 <xsl:with-param name="role" select="'mdrole'"/>
             </xsl:call-template>
         </xsl:if>
@@ -768,7 +768,7 @@
                 <xsl:with-param name="root" select="."/>
                 <xsl:with-param name="name" select="'contact'"/>
                 <xsl:with-param name="langs" select="$langs"/>
-                <xsl:with-param name="valid" select="'10.1'"/>
+                <xsl:with-param name="valid" select="'124'"/>
                 <xsl:with-param name="role" select="'mdrole'"/>
             </xsl:call-template>
         </xsl:for-each>
@@ -795,16 +795,18 @@
     
     <!-- Interoperability elements -->
     
-    <!-- IOD-1 spatial reference system  -->
+                                            
     <xsl:choose>
         <xsl:when test="$serv">
-            <xsl:call-template name="drawInput">
+           
+           <!-- IOD-1 spatial reference system  -->
+           <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'coorSys'"/>
                 <xsl:with-param name="value" select="gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code"/>
                 <xsl:with-param name="codes" select="'coordSys'"/>
-                <xsl:with-param name="class" select="'mandatory'"/>
+                                                                   
                 <xsl:with-param name="multi" select="'2'"/> 
-                <xsl:with-param name="valid" select="'IOD-1'"/>
+                <xsl:with-param name="valid" select="'8'"/>
             </xsl:call-template>
 
             <div id="IOS">
@@ -888,6 +890,7 @@
                 </div>
             </div>
         </xsl:when>
+        
         <xsl:otherwise>
             <xsl:call-template name="drawInput">
                 <xsl:with-param name="name" select="'coorSys'"/>
@@ -895,7 +898,7 @@
                 <xsl:with-param name="codes" select="'coordSys'"/>
                 <xsl:with-param name="class" select="'mandatory'"/>
                 <xsl:with-param name="multi" select="'2'"/> 
-                <xsl:with-param name="valid" select="'IOD-1'"/>
+                <xsl:with-param name="valid" select="'8'"/>
                 <xsl:with-param name="req" select="'1'"/>   
             </xsl:call-template>
 
@@ -909,6 +912,7 @@
                                     <xsl:with-param name="name" select="'encoding'"/>
                                     <xsl:with-param name="dupl" select="1"/>
                                     <xsl:with-param name="class" select="'mand'"/>
+                                    <xsl:with-param name="valid" select="4741"/>
                                 </xsl:call-template>	
                             </div>
                             <xsl:call-template name="drawInput">
@@ -917,7 +921,7 @@
                                 <xsl:with-param name="value" select="*/gmd:name"/>
                                 <xsl:with-param name="codes" select="'format'"/>
                                 <xsl:with-param name="class" select="'inp2 short'"/>
-                                <xsl:with-param name="valid" select="'IOD-3'"/>
+                                <xsl:with-param name="multi" select="0"/>
                                 <xsl:with-param name="tags" select="1"/>
                             </xsl:call-template>
                             <xsl:call-template name="drawInput">
@@ -951,7 +955,7 @@
                             <xsl:call-template name="drawLabel">
                                 <xsl:with-param name="name" select="'Topological'"/>
                                 <xsl:with-param name="class" select="'info'"/>
-                                <xsl:with-param name="valid" select="'IOD-4'"/>
+                                <xsl:with-param name="valid" select="'1631'"/>
                                 <xsl:with-param name="dupl" select="1"/>
                             </xsl:call-template>		
                         </div>
@@ -974,6 +978,7 @@
                             <xsl:with-param name="path" select="'topological-mtype[]'"/>
                             <xsl:with-param name="value" select="gmd:evaluationMethodType/*"/>
                             <xsl:with-param name="codes" select="'evaluationMethodType'"/>
+                            <xsl:with-param name="multi" select="0"/>
                             <xsl:with-param name="class" select="'inp2 short'"/>
                         </xsl:call-template>
 
@@ -1102,7 +1107,7 @@
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:characterSet/*/@codeListValue"/>
                 <xsl:with-param name="codes" select="'characterSet'"/>
                 <xsl:with-param name="multi" select="'2'"/>
-                <xsl:with-param name="valid" select="'IOD-5'"/>
+                <xsl:with-param name="valid" select="'364'"/>
                 <xsl:with-param name="class" select="'cond'"/>
             </xsl:call-template>
 
@@ -1113,7 +1118,7 @@
                 <xsl:with-param name="codes" select="'spatialRepresentationType'"/>
                 <xsl:with-param name="multi" select="'2'"/>
                 <xsl:with-param name="req" select="1"/>
-                <xsl:with-param name="valid" select="'IOD-6'"/>
+                <xsl:with-param name="valid" select="'106'"/>
             </xsl:call-template>
 
         </xsl:otherwise> 
@@ -1282,7 +1287,7 @@
             <xsl:with-param name="codes" select="'obligatory'"/>
             <xsl:with-param name="class" select="'short'"/>
             <xsl:with-param name="multi" select="0"/>
-            <xsl:with-param name="valid" select="'CZ-13'"/>
+            <xsl:with-param name="valid" select="'117'"/>
         </xsl:call-template>
     </xsl:if>
 
