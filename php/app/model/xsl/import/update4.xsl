@@ -180,8 +180,11 @@
             <gmd:MD_LegalConstraints>
                 <gmd:useLimitation></gmd:useLimitation>
                 <gmd:useConstraints>
-                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode">otherRestrictions</gmd:MD_RestrictionCode>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
                 </gmd:useConstraints>
+                <gmd:accessConstraints>
+                    <gmd:MD_RestrictionCode codeListValue=""></gmd:MD_RestrictionCode>
+                </gmd:accessConstraints>
                 <xsl:for-each select="*/gmd:useLimitation">
                     <gmd:otherConstraints>
                         <xsl:choose>
@@ -201,6 +204,15 @@
                 </xsl:for-each>
             </gmd:MD_LegalConstraints>
         </gmd:resourceConstraints>
+        <xsl:if test="*/gmd:otherConstraints/* or */gmd:accessConstraints/*">
+            <gmd:resourceConstraints>
+                <gmd:MD_LegalConstraints>
+                    <xsl:copy-of select="*/gmd:useConstraints"/>
+                    <xsl:copy-of select="*/gmd:accessConstraints"/>
+                    <xsl:copy-of select="*/gmd:otherConstraints"/>
+                </gmd:MD_LegalConstraints>
+            </gmd:resourceConstraints>       
+        </xsl:if>
 	</xsl:template>
 
 	<!-- 8.2 -->
@@ -209,7 +221,7 @@
             <gmd:MD_LegalConstraints>
                 <gmd:useLimitation></gmd:useLimitation>
                 <gmd:accessConstraints>
-                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions" codeList="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19139_Schemas/resources/codelist/ML_gmxCodelists.xml#MD_RestrictionCode">otherRestrictions</gmd:MD_RestrictionCode>
+                    <gmd:MD_RestrictionCode codeListValue="otherRestrictions">otherRestrictions</gmd:MD_RestrictionCode>
                 </gmd:accessConstraints>
                 <xsl:choose>
                     <xsl:when test="contains(*/gmd:otherConstraints/*, 'Bez omezení') or contains(*/gmd:otherConstraints/*, 'no limitations')">
@@ -262,6 +274,11 @@
             </xsl:otherwise>
         </xsl:choose>
 	</xsl:template>
+
+
+	<xsl:template match="srv:coupledResource">
+        <!-- vyhodi zbytecne elementy -->
+	</xsl:template>	
 
 	<xsl:template match="gmd:metadataStandardName">
         <gmd:metadataStandardName>

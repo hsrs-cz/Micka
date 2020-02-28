@@ -11,7 +11,7 @@
   
     <xsl:variable name="mdLang">
       <xsl:choose>
-    	<xsl:when test="string-length(language/*)>0"><xsl:value-of select="language/*"/></xsl:when>
+    	<xsl:when test="string-length(//language/*)>0"><xsl:value-of select="//language/*"/></xsl:when>
     		<xsl:when test="string-length(*/identificationInfo/*/citation/*/title/@lang)>0"><xsl:value-of select="identificationInfo/*/citation/*/title/@lang"/></xsl:when>
     	<xsl:otherwise>cze</xsl:otherwise>
       </xsl:choose>

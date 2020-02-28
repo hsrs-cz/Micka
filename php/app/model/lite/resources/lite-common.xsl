@@ -308,7 +308,7 @@
 
 			<!-- REGISTRY -->
             <xsl:when test="$uri!=''">
-                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="{$MICKA_URL}/registry_client?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
+                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="../../registry_client?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
