@@ -54,7 +54,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
             : rtrim($url->basePath,'/');
         $this->context->parameters['locale'] = $locale;
         $this->context->parameters['cswUrl'] = strpos($url->path, '/filter/') === false
-            ? $this->context->parameters['basePath'] . '/csw/'
+            ? $this->context->parameters['hostUrl'] . $this->context->parameters['basePath'] . '/csw/'
             : $this->context->parameters['hostUrl'] . $url->path  . '/';
         if (isset($this->context->parameters['minUsernameLength']) === false) {
             $this->context->parameters['minUsernameLength'] = 2;    
