@@ -19,7 +19,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     public function startup()
 	{
         parent::startup();
-        //dump($this->context->parameters);
         $this->context->parameters['appDefaultLocale'] = $this->translator->getDefaultLocale();
         $this->context->parameters['appLocale'] = $this->translator->getLocale();
         $dir = dirname($this->getReflection()->getFileName());
@@ -48,7 +47,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->context->parameters['hostUrl'] = isset($this->context->parameters['app']['mickaUrl']) && $this->context->parameters['app']['mickaUrl'] != ''
             ? $this->context->parameters['app']['mickaUrl']
             : $url->hostUrl;
-        //$this->context->parameters['basePath'] = rtrim($url->basePath,'/');
         $this->context->parameters['basePath'] = isset($this->context->parameters['app']['mickaUrl']) && $this->context->parameters['app']['mickaUrl'] != ''
             ? $this->context->parameters['app']['mickaUrl']
             : rtrim($url->basePath,'/');
@@ -56,12 +54,6 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         $this->context->parameters['cswUrl'] = strpos($url->path, '/filter/') === false
             ? $this->context->parameters['hostUrl'] . $this->context->parameters['basePath'] . '/csw/'
             : $this->context->parameters['hostUrl'] . $url->path  . '/';
-        if (isset($this->context->parameters['minUsernameLength']) === false) {
-            $this->context->parameters['minUsernameLength'] = 2;    
-        }
-        if (isset($this->context->parameters['minPasswordLength']) === false) {
-            $this->context->parameters['minPasswordLength'] = 5;    
-        }
 
         \App\Model\Micka::setDefaultParameters(
             $this->context->getService('dibi.connection'), 
@@ -70,7 +62,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
         );
 
         if ($this->user->getAuthenticator()->isControlLogin) {
-            $this->user->getAuthenticator()->controlLogin($this->getHttpRequest()); 
+            $this->user->getAuthenticator()->controlLogin($this->getHttpRequest(), $this->user);
         } 
 	}
     

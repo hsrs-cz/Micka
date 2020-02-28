@@ -9,6 +9,12 @@ class IdentityPresenter extends \BaseAdminPresenter
 	public function startup()
 	{
         parent::startup();
+        if (isset($this->context->parameters['minUsernameLength']) === false) {
+            $this->context->parameters['minUsernameLength'] = 2;    
+        }
+        if (isset($this->context->parameters['minPasswordLength']) === false) {
+            $this->context->parameters['minPasswordLength'] = 5;    
+        }
         $class = \App\Model\Micka::getClassName("App\\AdminModel\\IdentityModel");
         $this->identityModel = new $class(
             $this->context->getService('dibi.connection'), 

@@ -1,23 +1,20 @@
 {block content}
 <div class="container panel panel-default">
 <h1>{_messages.management.modules}</h1>
-    <ul>
-        {foreach $addModules as $row}
+    {if count($addModules) > 0} 
+    {foreach $addModules as $row}
+        {first}<ul>{/first}
             {var $module = $row['module']}
             {var $presenter = $row['presenter']}
             {var $action = $row['action']}
             {var $label = $row['label']}
             {var $role = $row['role']}
-            {if $user->isInRole($role)}
-                <li>
-                    <a n:href=":{$module}:{$presenter}:{$action}">{_}{$label}{/_}</a>
-                </li>
-            {/if}
-        {/foreach}
-        <li>
-            <a n:href=":Admin:Identity:changep">{_messages.management.changePasswd}</a>
-        </li>
-    </ul>
+            <li><a n:href=":{$module}:{$presenter}:{$action}">{_}{$label}{/_}</a></li>
+        {last}</ul>{/last}
+    {/foreach}
+    {else}
+        {_messages.frontend.no_found}
+    {/if}
 </div>
 {/block}
 

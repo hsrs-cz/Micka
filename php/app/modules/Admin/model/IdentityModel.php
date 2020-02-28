@@ -6,9 +6,6 @@ use Nette,
 
 class IdentityModel extends \App\Model\UserModel
 {
-    protected $minPasswordLength;
-    protected $minUsernameLength;
-    
     public function getEmptyUser()
     {
         return (object) array(

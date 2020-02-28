@@ -29,7 +29,8 @@ parameters:
         admin = [
             Admin:Contacts:default:messages.management.contacts:editor,
             Admin:Identity:default:messages.management.identity:admin,
-            Admin:Profile:default:messages.management.profiles:admin
+            Admin:Profile:default:messages.management.profiles:admin,
+            Admin:Identity:changep:messages.management.changePasswd:user
         ]
 
 php:
