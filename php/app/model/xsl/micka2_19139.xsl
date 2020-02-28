@@ -521,7 +521,7 @@
   		  </xsl:choose>
       </xsl:for-each> 
 
-		<xsl:for-each select="identificationInfo/MD_DataIdentification/spatialRepresentationType">
+		<xsl:for-each select="*/spatialRepresentationType">
       		<gmd:spatialRepresentationType>
 				<gmd:MD_SpatialRepresentationTypeCode codeListValue="{MD_SpatialRepresentationTypeCode}" codeList="{$clx}#MD_SpatialRepresentationTypeCode"><xsl:value-of select="MD_SpatialRepresentationTypeCode"/></gmd:MD_SpatialRepresentationTypeCode>
 			</gmd:spatialRepresentationType>
@@ -746,7 +746,7 @@
       				<gmd:EX_VerticalExtent>
       					<gmd:minimumValue><gco:Real><xsl:value-of select="*/minimumValue"/></gco:Real></gmd:minimumValue>
       					<gmd:maximumValue><gco:Real><xsl:value-of select="*/maximumValue"/></gco:Real></gmd:maximumValue>
-        				<gml:verticalCRS xlink:href="{*/verticalCRS/href}" title="{*/verticalCRS/title}"/>
+        				<gmd:verticalCRS xlink:href="{*/verticalCRS/href}" title="{*/verticalCRS/title}"/>
       				</gmd:EX_VerticalExtent>
 				</gmd:verticalElement>
             </xsl:for-each>  
@@ -1544,6 +1544,19 @@
   		<gmx:language>
 	  		<gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{$mdLang}"><xsl:value-of select="$mdLang"/></gmd:LanguageCode>
   		</gmx:language>
+        <!-- ================================ locale ===============================-->
+        <xsl:for-each select="langs/lang[.!=$mdLang]">
+            <gmx:locale>
+              <gmd:PT_Locale id="locale-{.}">
+                <gmd:languageCode>
+                    <gmd:LanguageCode codeList="http://www.loc.gov/standards/iso639-2/" codeListValue="{.}"/>
+                </gmd:languageCode>
+                <gmd:characterEncoding>
+                    <gmd:MD_CharacterSetCode codeList="{$cl}#MD_CharacterSetCode" codeListValue="utf8"/>
+                </gmd:characterEncoding>
+              </gmd:PT_Locale> 
+             </gmx:locale>
+        </xsl:for-each>
   		<gfc:producer>
 			<xsl:call-template name="contact">
 				<xsl:with-param name="org" select="producer"/>

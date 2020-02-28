@@ -370,14 +370,14 @@ against which data is being evaluated.</p>
 	<msg name="dqScope">
 		<label>12 Data quality scope</label>
 		<help>
-			<h3>12 Data quality scope</h3>
+			<h3>12 Data quality scope:</h3>
 			<p>Oblast dat, jichž se údržba týká, např. dlaždice. Není-li uvedeno, je míněná celá datová sada.</p>
 		</help>
 	</msg>
 	<msg name="maintenanceNote">
-		<label>CZ-6 Údržba - poznámka</label>
+		<label>CZ-6 Maintenance Note</label>
 		<help>
-			<h3>CZ-6 Maintenance Note</h3>
+			<h3>CZ-6 Maintenance Note:</h3>
 			<p>Additional information about the maintenance of the resource.</p>
 		</help>
 	</msg>
@@ -385,21 +385,21 @@ against which data is being evaluated.</p>
 	<msg name="spatial">
 		<label>CZ-3 Spatial Representation</label>
 		<help>
-			<h3>CZ-3 Spatial Representation Type</h3>
+			<h3>CZ-3 Spatial Representation Type:</h3>
 			<p>Method used for spatial representation of resource.</p>
 		</help>
 	</msg>
 	<msg name="language">
 		<label>1.7 Language</label>
 		<help>
-			<h3>1.7 Resource language</h3>
+			<h3>1.7 Resource language:</h3>
 			<p>Language(s) used within the datasets / series</p> 
 		</help>
 	</msg>
 	<msg name="characterSet">
-		<label>CZ-8 Character set</label>
+		<label>IOD-5 Character set</label>
 		<help>
-			<h3>CZ-8 Resource character set</h3>
+			<h3>IOD-5 Resource character set:</h3>
 			<p>Characters set which data are coded.</p> 
 		</help>
 	</msg>

@@ -24,6 +24,8 @@
 	width: 240px;
 	max-height: 600px;
 	overflow: auto;
+    font-size: 10pt;
+    overflow-x: hidden;
 }
 
 div.md-validrow {border:1px solid transparent; cursor:pointer; border-top: 1px solid #E0E0E0} 

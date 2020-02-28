@@ -40,7 +40,7 @@
                          <span class="icon-bar"></span>
                          <span class="icon-bar"></span>
                    </button>
-                    <div class="navbar-brand" data-tooltip="tooltip" data-container="body" data-placement="bottom" title="Micka">Micka</div>
+                    <div class="navbar-brand navbar-edit" data-tooltip="tooltip" data-container="body" data-placement="bottom" title="Micka">Micka</div>
                 </div>
 
                 <div class="collapse navbar-collapse" id="micka-navbar">
@@ -377,7 +377,7 @@
                 <div style="clear: both; margin-top:5px;"></div>
                 {foreach $mdControl as $row}
                     {if $row['level']!='i' && $row['deepPass'] != TRUE}
-                        <div class="md-validrow" onclick="md_scroll('ins-{$row['code']|noescape}')">
+                        <div class="md-validrow" onclick="md_scroll('{(isset($row['id'])? $row['id']: 0)|noescape}')">
                             <div class="valid-id">{$row['code']}</div>
                             <div class="valid-txt">
                                 {if $row['level'] == 'c' && $row['pass'] != TRUE}
@@ -397,7 +397,7 @@
                                             <div style="margin-left:10px;"> {$r['code']}: 
                                             {if $r['level'] == 'c' && $r['pass'] != TRUE}
                                                 <span class="c">{$r['description']}</span>
-                                            {elseif $r['level'] == 'n' && $row['pass'] != TRUE}
+                                            {elseif $r['level'] == 'n' && $r['pass'] != TRUE}
                                                 <span class="n">{$r['description']}</span>
                                             {elseif $r['pass'] != TRUE}
                                                 <span class="m">{$r['description']}</span>
@@ -418,14 +418,14 @@
 
 
 <script language="javascript" src="{$basePath}/thesaurus/HS.js"></script>
-{if $appLang != 'eng'}<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>{/if}
+<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>
 <script src="{$basePath}/scripts/jquery/jquery-1.11.1.min.js"></script>
 <script src="{$basePath}/scripts/ol5/ol.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/select2/js/select2.full.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/select2/js/i18n/{$appLang2}.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/bootstrap/js/bootstrap.min.js" ></script>
 <script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js" ></script>
-{if $appLang != 'eng'}<script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.{$appLang2}.min.js" ></script>{/if}
+<script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.{$appLang2}.min.js" ></script>       
 <script type="text/javascript" src="{$basePath}/scripts/OverMap.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/edit.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/GemetClient.js"></script>

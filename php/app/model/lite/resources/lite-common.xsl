@@ -34,6 +34,7 @@
             <xsl:call-template name="drawLabel">
                 <xsl:with-param name="name" select="$name"/>
                 <xsl:with-param name="class" select="'mand'"/>
+                <xsl:with-param name="valid" select="$valid"/>
                 <xsl:with-param name="dupl" select="1"/>
             </xsl:call-template>
         </div>        
@@ -52,7 +53,6 @@
         <div class="row">
             <xsl:call-template name="drawLabel">
                 <xsl:with-param name="name" select="'individualName'"/>
-                <xsl:with-param name="valid" select="$valid"/>
                 <xsl:with-param name="class" select="'inp2'"/>
             </xsl:call-template>
             <div class="col-xs-12 col-md-8">
@@ -82,7 +82,7 @@
                     <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
                     <xsl:with-param name="action" select="'getParty(this)'"/>
                     <xsl:with-param name="langs" select="$langs"/>
-                    <xsl:with-param name="valid" select="$valid"/>
+                    <!--xsl:with-param name="valid" select="$valid"/-->
                     <xsl:with-param name="req" select="1"/>
                 </xsl:call-template>
             </xsl:when>
@@ -93,7 +93,7 @@
                     <xsl:with-param name="value" select="$root/*/gmd:organisationName"/>
                     <xsl:with-param name="class" select="'inpS mandatory inp2'"/>
                     <xsl:with-param name="langs" select="$langs"/>
-                    <xsl:with-param name="valid" select="$valid"/>
+                    <!--xsl:with-param name="valid" select="$valid"/-->
                     <xsl:with-param name="req" select="1"/>
                 </xsl:call-template>    
             </xsl:otherwise>
@@ -209,8 +209,8 @@
     
 	<div id="{$path}" class="row">
 		<xsl:if test="$labels/msg[@name=$name]/label!=''">
-            <div class="col-xs-12 col-md-4">
-                <label for="{$name}" class="{$class}{$lclassI}" id="V-{$valid}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
+            <div class="col-xs-12 col-md-4"  id="V-{$valid}">
+                <label for="{$name}" class="{$class}{$lclassI}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
                     <xsl:value-of select="$labels/msg[@name=$name]/label"/>
                     <xsl:if test="$labels/msg[@name=$name]/a">
                         <xsl:text> </xsl:text><xsl:copy-of select="$labels/msg[@name=$name]/a"/>
@@ -508,7 +508,7 @@
 	<xsl:if test="$labels/msg[@name=$name]/label!=''">
         <xsl:variable name="id">
             <xsl:choose>
-                <xsl:when test="$valid">V-<xsl:value-of select="$valid"/></xsl:when>
+                <xsl:when test="$valid"><xsl:value-of select="$valid"/></xsl:when>
                 <xsl:otherwise><xsl:value-of select="$name"/></xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
@@ -524,8 +524,8 @@
 	<xsl:param name="valid"/>
     <xsl:param name="dupl" select="0"/>
 	<xsl:if test="$labels/msg[@name=$name]/label">
-        <div class="col-xs-12 col-md-4">
-            <label for="{$name}" class="{$class}" id="V-{$valid}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
+        <div class="col-xs-12 col-md-4" id="V-{$valid}">
+            <label for="{$name}" class="{$class}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
                 <xsl:value-of select="$labels/msg[@name=$name]/label"/>
             </label>
             <xsl:if test="$dupl=1">
