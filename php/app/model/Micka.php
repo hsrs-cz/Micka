@@ -16,7 +16,7 @@ class Micka
         'name' => 'Micka',
         'version' => '2020.010',
         'version_id' => 2020010,
-        'revision' => '2020-02-18.01'
+        'revision' => '2020-03-04.01'
     ];
 
     public static function getMickaVersion()
