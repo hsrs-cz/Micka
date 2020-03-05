@@ -90,7 +90,11 @@ class CswPresenter extends \BasePresenter
     /** @resource Guest */
 	public function actionAll()
 	{
-        $csw = new \Micka\Csw;
+        $csw = new \App\Model\Csw(
+            $this->context->getService('dibi.connection'), 
+            $this->user,
+            $this->context->parameters
+        );
 
         $params = array();
         $params['SERVICE'] = 'CSW';
@@ -126,7 +130,13 @@ class CswPresenter extends \BasePresenter
                 $params['format'] = array_key_exists('format', $params) ? $params['format'] : 'text/html';
                 $params['buffered'] = array_key_exists('buffered', $params) ? $params['buffered'] : 1;
                 $params['query'] = array_key_exists('query', $params) ? $params['query'] : '';
-                $csw = new \Micka\Csw("", $cswFilters[$id]);
+                $csw = new \App\Model\Csw(
+                    $this->context->getService('dibi.connection'), 
+                    $this->user,
+                    $this->context->parameters,
+                    "",
+                    $cswFilters[$id]
+                );
                 $result = $csw->run($params);
                 $csw->setHeader();
                 echo $result;
@@ -140,7 +150,13 @@ class CswPresenter extends \BasePresenter
     /** @resource Guest */
 	public function actionInspire()
 	{
-        $csw = new \Micka\Csw("", "_FORINSPIRE_=1"); //TODO do konfigurace
+        $csw = new \App\Model\Csw(
+            $this->context->getService('dibi.connection'), 
+            $this->user,
+            $this->context->parameters,
+            "",
+            "_FORINSPIRE_=1"
+        ); //TODO do konfigurace
 
         // pokud jsou entity
         $params=array();
@@ -171,7 +187,13 @@ class CswPresenter extends \BasePresenter
     /** @resource Guest */
 	public function actionOai()
 	{
-        $csw = new \Micka\Csw("", "_FORINSPIRE_=1"); //TODO do konfigurace
+        $csw = new \App\Model\Csw(
+            $this->context->getService('dibi.connection'), 
+            $this->user,
+            $this->context->parameters,
+            "",
+            "_FORINSPIRE_=1"
+        ); //TODO do konfigurace
         
         $csw->headers[] = "Content-type: application/xml";
         // --- zpracovani parametru ---
@@ -282,7 +304,11 @@ class CswPresenter extends \BasePresenter
     /** @resource Guest */
 	public function renderOpensearch($id)
 	{
-        $csw = new \Micka\Csw();
+        $csw = new \App\Model\Csw(
+            $this->context->getService('dibi.connection'), 
+            $this->user,
+            $this->context->parameters
+        );
         $get = $this->context->getByType('Nette\Http\Request')->getQuery();
 
         // description dokument
@@ -394,7 +420,13 @@ class CswPresenter extends \BasePresenter
     /** @resource Guest */
 	public function renderSubset()
 	{
-        $csw = new Csw("", '_DATA_TYPE_=2');
+        $csw = new \App\Model\Csw(
+            $this->context->getService('dibi.connection'), 
+            $this->user,
+            $this->context->parameters,
+            "",
+            '_DATA_TYPE_=2'
+        );
 
         // pokud jsou entity
         $params=array();
