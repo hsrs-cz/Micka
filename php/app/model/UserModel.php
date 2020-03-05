@@ -30,7 +30,7 @@ class UserModel extends \BaseModel
             [id], RTRIM([username]) AS [username], RTRIM([password]) AS [password],
             [role_editor], [role_publisher], [role_admin],
             [groups]
-        FROM users WHERE [username]=%s", $name, "ORDER BY [username]")->fetch();
+        FROM users WHERE [username]=%s", $name)->fetch();
 
     }
     

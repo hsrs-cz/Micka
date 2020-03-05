@@ -47,7 +47,7 @@ class IdentityModel extends \App\Model\UserModel
         $values['role_publisher'] = isset($post['role_publisher']) ? true : false;
         $values['role_admin'] = isset($post['role_admin']) ? true : false;
         $values['groups'] = $post['groups'];
-        if ($id === 0 && $this->findUserByName($values['username']) !== null) {
+        if ($id === 0 && is_object($this->findUserByName($values['username']))) {
             return 'exists';
         }
         if ($id > 0) {

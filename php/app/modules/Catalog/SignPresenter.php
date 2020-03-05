@@ -44,13 +44,23 @@ class SignPresenter extends \BasePresenter
     {
         $post = $this->context->getByType('Nette\Http\Request')->getPost();
         if (isset($post['username']) === false || isset($post['password']) === false) {
-            $this->flashMessage($this->translator->translate('default.flash.login_error'), 'info');
+            $this->flashMessage(
+                $this->translator->translate('messages.frontend.login2')
+                . ': '
+                . $this->translator->translate('messages.frontend.error'),
+                'info'
+            );
             $this->redirect(':Catalog:Sign:in');
         }
         $this->getUser()->login($post['username'], $post['password']);
         if ($this->user->getId() === null) {
             $this->user->logout(true);
-            $this->flashMessage($this->translator->translate('default.flash.login_error'), 'info');
+            $this->flashMessage(
+                $this->translator->translate('messages.frontend.login2')
+                . ': '
+                . $this->translator->translate('messages.frontend.error'),
+                'info'
+            );
             $this->redirect(':Catalog:Sign:in');
         } else {
             $this->redirect(':Catalog:Default:default');
