@@ -17,9 +17,9 @@ function getRemoteData($uri, $config=false, $lang='en'){
             $result[$row['value']['id']] = array(
                 "id" => $row['value']['id'],
                 "text"=>$row['value']['label']['text'],
-                "title" => $row['value']['definition']['text'],
-                "parentId" =>  $row['value']['parents'] ? $row['value']['parents'][0]['parent']['id'] : false,
-                "parentName" => $row['value']['parents'] ? $row['value']['parents'][0]['parent']['definition']['text'] : false  
+                "title" =>  isset($row['value']['definition']) ? $row['value']['definition']['text']: false,
+                "parentId" =>  isset($row['value']['parents']) ? $row['value']['parents'][0]['parent']['id'] : false,
+                "parentName" => isset($row['value']['parents']) ? $row['value']['parents'][0]['parent']['label']['text'] : false  
             );   
         }
         return array(

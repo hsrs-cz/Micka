@@ -1,11 +1,10 @@
 <?php
-session_start();
 
 function getDataByURL($url){
   $ch = curl_init ($url);
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
   curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // potlaèena kontrola certifikátu
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // potlaÄena kontrola certifikÃ¡tu
   if(defined('CONNECTION_PROXY')){
       $proxy = CONNECTION_PROXY;
       if(defined('CONNECTION_PORT')) $proxy .= ':'. CONNECTION_PORT;
@@ -30,20 +29,23 @@ class RegistryReader{
     *************************************************************/
     function __construct($lang){
         $this->lang = $lang;
+        $this->cached = 0;
         $this->dir = __DIR__ . '/..' ;
     }
     
-    function getData($uri){
+    function getData($uri, $qstr='', $id=''){
+        $lang = $this->lang;
         $_uri = str_replace(array("/", ":"), array("_", "_"), $uri . '.' . $this->lang . '.json');
         $data = null;
-        $this->cached = 0;
+        require_once(__DIR__ ."/../cfg/cfg.php");
         // 1. snazi se ze session
         /*if($_SESSION['regreader'][$_uri]){
             $data = $_SESSION['regreader'][$_uri];
             $this->cached=2;
         }
         // 2. snazi se z cache
-        else*/{
+        else*/
+        if(!isset($config[$uri]['nocache']) || $config[$uri]['nocache']!=true){
             $data = @file_get_contents($this->dir .'/cache/' . $_uri);
             if($data){
                 $data = json_decode($data,1)['result'];
@@ -54,40 +56,41 @@ class RegistryReader{
      
         // 3. nacte z URL
         if(!$data){
-            require_once(__DIR__ ."/../cfg/cfg.php");
-            $adapter = $config[$uri]["adapter"] ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
+            $adapter = isset($config[$uri]["adapter"]) ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
             require_once($this->dir ."/lib/".$adapter);
-            $data = getRemoteData($uri, $config[$uri], $this->lang);
-            
+            $data = getRemoteData($uri, $config[$uri], $this->lang, $qstr);
+
             // vyfiltruje podle konfigurace
             $d = array();
-            $uri = $data['id'];
+            $id = $data['id'];
             foreach($data['result'] as $key => $row){
-                if($config[$uri] && $config[$uri]['include']){
-                     if(in_array($key, $config[$uri]['exclude'])) $d[$key] = $row;
+                if(isset($config[$id]) && isset($config[$id]['include'])){
+                    if(in_array($key, $config[$id]['include'])) $d[$key] = $row;
                 }    
-                elseif($config[$uri] && $config[$uri]['exclude']){
-                    if(!in_array($key, $config[$uri]['exclude'])) $d[$key] = $row;
+                elseif(isset($config[$id]) && isset($config[$id]['exclude'])){
+                    if(!in_array($key, $config[$id]['exclude'])) $d[$key] = $row;
                 }
                 else $d[$key] = $row;
             }
             $data = $d;
-            
+           
             // vytvoreni hierarchie
             $d = array();
             foreach ($data as $key=>$row){
-                if($row['parentId']){
+                if(isset($row['parentId']) && $row['parentId']){
                     $parentId = $row['parentId'];
-                    if(!$d[$parentId]){
+                    if(!isset($d[$parentId])){
                         $d[$parentId] = array("id"=>false);
                     }
                     $d[$parentId]['children'][$key] = $row;
                 }
                 else {
-                    if($d[$key]){
-                        $ch = $row['children'];
+                    if(isset($d[$key])){
                         $d[$key] = $row;
-                        $d['children'] = $ch;
+                        if(isset($row['children'])){
+                            $ch = $row['children'];
+                            $d['children'] = $ch;
+                        }
                     }
                     else $d[$key] = $row;
                 }
@@ -96,8 +99,11 @@ class RegistryReader{
             foreach ($d as $key=>$row){
                 if($row['id']) $data[$key] = $row;
             }
-            file_put_contents($this->dir .'/cache/' . $_uri, json_encode(array("id"=>$uri, "result"=>$data)));
-            $_SESSION['regreader'][$_uri] = $data;
+            //echo "<pre>";var_dump($data); die();
+            if(!isset($config[$uri]['nocache']) || $config[$uri]['nocache']!=true){
+                file_put_contents($this->dir .'/cache/' . $_uri, json_encode(array("id"=>$uri, "result"=>$data)));
+                $_SESSION['regreader'][$_uri] = $data;
+            }
         }
         $this->data = $data;    
     }
@@ -105,10 +111,10 @@ class RegistryReader{
     function flatData($data){
         $result = array();
         foreach($data as $key=>$row){
-            $row['level'] = 0;
             $result [] = $row;
             if(isset($row['children'])){
                 $children = $row['children'];
+                $row['level'] = 0;
                 unset($row['children']);
                 foreach ($children as $ch){
                    $ch['parentName'] = $row['text'];
@@ -121,7 +127,7 @@ class RegistryReader{
     }
 
     function query($q, $deep=false){
-        if($deep) {
+       if($deep) {
             if($q){
                 $data = $this->data;
                 $q = strtolower($q);
@@ -154,7 +160,7 @@ class RegistryReader{
         }
         else {
             $data = $this->data;
-            if($q){
+             if($q){
                 $q = strtolower($q);
                 $d = array();
                 foreach($data as $row){
@@ -172,7 +178,7 @@ class RegistryReader{
         if($deep) {
             if($id){
                 $data = $this->data;
-                $q = strtolower($q);
+                //$q = strtolower($q);
                 $d = array();
                 foreach($data as $key=>$row){
                     if($key == $id){
@@ -199,7 +205,7 @@ class RegistryReader{
             $data = $this->flatData($this->data);
             //var_dump($data);
             if($id){
-                $q = strtolower($q);
+                //$q = strtolower($q);
                 $d = array();
                 foreach($data as $row){
                     if($row['id'] == $id){
@@ -211,4 +217,14 @@ class RegistryReader{
             return $data;
         }        
     }
+    
+   function getTranslations($uri, $id){
+        $qstr= ''; $lang='';
+        require_once(__DIR__ ."/../cfg/cfg.php");
+        $adapter = isset($config[$uri]["adapter"]) ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
+        require_once($this->dir ."/lib/".$adapter);
+        $data = getTranslations($uri, $config[$uri], $this->lang, $qstr, $id);
+        return $data;
+    }
+    
 }

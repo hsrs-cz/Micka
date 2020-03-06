@@ -1,17 +1,23 @@
 <?php
+session_start();
 require_once('lib/RegistryReader.php');
 
 $uri = htmlspecialchars($_GET['uri']);
-$lang = htmlspecialchars($_GET['lang']);
+$lang = isset($_GET['lang']) ? htmlspecialchars($_GET['lang']): 'en';
+$query = isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '';
+
 if(!$lang) $lang = 'en';
 $r = new RegistryReader($lang);
-$r->getData($uri);
 
-if(isset($_GET['id'])){
-       $data = $r->queryById(htmlspecialchars($_GET['id']));
+if(isset($_GET['translations']) && $_GET['translations']){
+    $data = $r->getTranslations($uri, htmlspecialchars($_GET['translations']));
+}
+else if(isset($_GET['id']) && $_GET['id']){
+    $r->getData($uri);
+    $data = $r->queryById(htmlspecialchars($_GET['id']));
 }
 else {
-    $query = isset($_GET['q']) ? htmlspecialchars($_GET['q']) : '';
+    $r->getData($uri, $query); 
     $data = $r->query($query, true);
 }
 

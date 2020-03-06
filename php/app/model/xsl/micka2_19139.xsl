@@ -1702,6 +1702,11 @@
                     </gmd:CI_Date>
                 </gmd:date>
             </xsl:for-each>
+            <xsl:for-each select="$cit/edition">
+                <gmd:edition>
+                    <gco:CharacterString><xsl:value-of select="."/></gco:CharacterString>
+                </gmd:edition>
+            </xsl:for-each>            
             <xsl:for-each select="$cit/identifier">
                 <gmd:identifier>
                     <xsl:choose>

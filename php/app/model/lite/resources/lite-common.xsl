@@ -329,9 +329,13 @@
                             <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
-                    
                     <xsl:for-each select="$value">
-                        <option value="{*/@xlink:href}" selected="selected"><xsl:value-of select="*"/></option>
+                        <option value="{*/@xlink:href}" selected="selected">
+                            <xsl:choose>
+                                <xsl:when test="*/gmd:textGroup/*[@locale=concat('#locale-',$lang)]"><xsl:value-of select="*/gmd:textGroup/*[@locale=concat('#locale-',$lang)]"/></xsl:when>
+                                <xsl:otherwise><xsl:value-of select="*"/></xsl:otherwise>
+                            </xsl:choose>
+                        </option>
                     </xsl:for-each>
                 </select>
 			</xsl:when>
@@ -694,6 +698,36 @@
                         <gmd:textGroup>
                             <gmd:LocalisedCharacterString locale="#locale-{$l}">
                                 <xsl:value-of select="php:function('getRegistryText', string($uri), string($id), string($codeLists/language/value[@name=$l]/@code2))"/>
+                            </gmd:LocalisedCharacterString>
+                        </gmd:textGroup>
+                    </gmd:PT_FreeText>
+                </xsl:for-each>
+            </xsl:if>
+          </gmx:Anchor>
+    </xsl:element>
+</xsl:template>
+
+<xsl:template name="registryTranslationsOut">
+	<xsl:param name="name"/>
+	<xsl:param name="uri"/>
+	<xsl:param name="id"/>
+    <xsl:param name="mdlang" select="'eng'"/>
+    <xsl:param name="locale" select="''"/>
+    
+    <xsl:variable name="transl" select="php:function('getRegistryTranslations', string($uri), string($id))"/>
+    <xsl:variable name="lang2" select="$codeLists/language/value[@name=$mdlang]/@code2"/>
+    
+    <xsl:element name="{$name}">
+        <gmx:Anchor xlink:href="{$id}">
+            <xsl:value-of select="$transl/results/*[name()=$lang2]"/>
+            <xsl:if test="$locale">
+                <xsl:for-each select="$locale/item">
+                    <xsl:variable name="l" select="."/>
+                    <gmd:PT_FreeText>
+                        <gmd:textGroup>
+                            <gmd:LocalisedCharacterString locale="#locale-{$l}">
+                                <xsl:variable name="l2" select="$codeLists/language/value[@name=$l]/@code2"/>
+                                <xsl:value-of select="$transl/results/*[name()=$l2]"/>
                             </gmd:LocalisedCharacterString>
                         </gmd:textGroup>
                     </gmd:PT_FreeText>

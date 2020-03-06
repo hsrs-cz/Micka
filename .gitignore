@@ -5,7 +5,7 @@ php/app/config/codelists.xml
 php/app/config/index.include.php
 php/app/lang/*
 php/app/lang/!messages.*
-php/www/registry_client/cache/*
+registry_client/cache/*
 php/log/*
 php/temp/*
 php/vendor/*

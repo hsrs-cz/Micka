@@ -2,12 +2,13 @@
 
 function getRemoteData($uri, $config=false, $lang='en'){
     $url = $config['url'];
+    echo $url; die;
     $ch = curl_init ($url);
     //curl_setopt ($ch, CURLOPT_HTTPHEADER, $headers);
     curl_setopt ($ch, CURLOPT_RETURNTRANSFER, true);
     $data= curl_exec ($ch);
     curl_close ($ch);
-    //echo $data; die;
+    echo $data; die;
 
 
     $data = getDataByURL($url);

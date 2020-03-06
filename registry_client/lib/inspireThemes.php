@@ -16,12 +16,12 @@ function getRemoteData($uri, $config=false, $lang='en'){
             "id" => $row['theme']['id'],
             "text"=>$row['theme']['label']['text'],
             "title" => $row['theme']['definition']['text'],
-            "parentId" =>  $row['theme']['parents'] ? $row['theme']['parents'][0]['parent']['id'] : false,
-            "parentName" => $row['theme']['parents'] ? $row['theme']['parents'][0]['parent']['definition']['text'] : false  
-        );   
+            "parentId" =>  isset($row['theme']['parents']) ? $row['theme']['parents'][0]['parent']['id'] : false,
+            "parentName" => isset($row['theme']['parents']) ? $row['theme']['parents'][0]['parent']['definition']['text'] : false  
+        );  
     }
     return array(
-        "id" => $data['codelist']['id'],
+        "id" => isset($data['codelist']['id']) ? $data['codelist']['id']: null ,
         "result" => $result
     );
 }

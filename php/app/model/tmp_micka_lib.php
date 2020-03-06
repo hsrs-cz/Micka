@@ -531,3 +531,19 @@ function getRegistryText($uri, $id, $lang='en'){
     $data = $r->queryById($id);
     return $data[0]['text'];
 }
+
+function getRegistryTranslations($uri, $id){
+    require_once(__DIR__ .'/../../../registry_client/lib/RegistryReader.php');
+    $r = new RegistryReader('en');
+    $data =  $r->getTranslations($uri, $id);
+    //echo "<pre>"; var_dump($data); die();
+    $o = "<results>";
+    foreach($data as $key=>$val){
+        $o .= "<$key>$val</$key>";
+    }
+    $o .= "</results>";
+    //file_put_contents(__DIR__ . "/../../log/registry".uniqid().".xml", $o);
+    $dom = new DOMDocument();
+    @$dom->loadXML($o);
+    return $dom;
+}
