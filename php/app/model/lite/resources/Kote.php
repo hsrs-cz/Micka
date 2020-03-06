@@ -98,9 +98,8 @@ class Kote{
                 $k = explode('-', $key);
                 $lastLang = '';
                 $j=-1;
-                //echo $key." "; var_dump($val);
                 if(!is_array($val)) $val = [$val];
-                for($i=0; $i<count($val); $i++){                    
+                for($i=0; $i<count($val); $i++){ 
                     if(is_array($val[$i])){
                         foreach($val[$i] as $k2=>$v2){
                             if($k2 && isset($data['locale']) && (($data['locale'] && in_array($k2, $data['locale']))||$k2=='TXT')) {

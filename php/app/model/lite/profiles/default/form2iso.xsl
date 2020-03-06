@@ -113,7 +113,7 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
          </xsl:choose>         
 	</gmd:metadataStandardVersion>
 
-	<xsl:for-each select="locale">
+	<xsl:for-each select="locale/item">
 		<gmd:locale>
 			<gmd:PT_Locale id="locale-{.}">
 				<gmd:languageCode>
