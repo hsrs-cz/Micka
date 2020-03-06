@@ -527,16 +527,16 @@
 	<xsl:param name="class" select="''"/>
 	<xsl:param name="valid"/>
     <xsl:param name="dupl" select="0"/>
-	<xsl:if test="$labels/msg[@name=$name]/label">
-        <div class="col-xs-12 col-md-4" id="V-{$valid}">
+    <div class="col-xs-12 col-md-4" id="V-{$valid}">
+        <xsl:if test="$labels/msg[@name=$name]/label">
             <label for="{$name}" class="{$class}" data-tooltip="tooltip" data-original-title="{$labels/msg[@name=$name]/help}">
                 <xsl:value-of select="$labels/msg[@name=$name]/label"/>
             </label>
-            <xsl:if test="$dupl=1">
-                <span class="duplicate"></span>
-            </xsl:if>
-        </div>
-	</xsl:if>
+        </xsl:if>
+        <xsl:if test="$dupl=1">
+            <span class="duplicate"></span>
+        </xsl:if>
+    </div>
 </xsl:template>
 
 <xsl:template name="drawHelp">
