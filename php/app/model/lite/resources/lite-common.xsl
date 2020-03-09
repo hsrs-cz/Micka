@@ -66,7 +66,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 </xsl:variable>
-                <select class="person sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="zodpovědná osoba" data-ajax--url="../../suggest/mdcontacts?format=json">
+                <select class="person sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="{$labels/msg[@name='sel']/*} ..." data-ajax--url="../../suggest/mdcontacts?format=json">
                     <option value="{$nc}"><xsl:value-of select="$root/*/gmd:individualName/*"/></option>
                 </select>
                 <input class="hperson" type="hidden" name="{concat($name,'-individualNameTxt[]')}" value="{$root/*/gmd:individualName/*}"/>
