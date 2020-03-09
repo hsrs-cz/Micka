@@ -699,6 +699,9 @@ Zdroj může být v souladu s více než jedním prováděcím pravidlem. Pokud 
     <msg name="sel">
         <label>Vyberte</label>
     </msg>
+    <msg name="multisel">
+        <label>Vyberte (lze více hodnot) ...</label>
+    </msg>
   	<msg name="fc">
 		<label>Katalog geoprvků</label>
 		<help>

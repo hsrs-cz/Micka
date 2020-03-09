@@ -747,6 +747,9 @@ against which data is being evaluated.</p>
     <msg name="sel">
         <label>Select</label>
     </msg>
+    <msg name="multisel">
+        <label>Select (multi)</label>
+    </msg>
   	<msg name="fc">
 		<label>Feature catalogue</label>
 		<help>

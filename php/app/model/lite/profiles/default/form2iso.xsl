@@ -493,13 +493,19 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                     </gmd:resourceConstraints>
                     
                     <xsl:if test="$serv='gmd'">
-                        <gmd:spatialRepresentationType>
-                            <gmd:MD_SpatialRepresentationTypeCode codeListValue="{spatial}" codeList="{$cl}#MD_SpatialRepresentationTypeCode">
-                                <xsl:value-of select="spatial"/>
-                            </gmd:MD_SpatialRepresentationTypeCode>
+                        <xsl:for-each select="spatial/item">
+                            <gmd:spatialRepresentationType>
+                                <gmd:MD_SpatialRepresentationTypeCode codeListValue="{.}" codeList="{$cl}#MD_SpatialRepresentationTypeCode">
+                                    <xsl:value-of select="."/>
+                                </gmd:MD_SpatialRepresentationTypeCode>
+                            </gmd:spatialRepresentationType>
+                        </xsl:for-each>
+                        
+                         <gmd:spatialRepresentationType>
+                             <gmd:MD_SpatialRepresentationTypeCode codeListValue="" codeList="{$cl}#MD_SpatialRepresentationTypeCode"></gmd:MD_SpatialRepresentationTypeCode>
                         </gmd:spatialRepresentationType>
-                    
-                        <xsl:for-each select="denominator/item">
+
+                       <xsl:for-each select="denominator/item">
                             <gmd:spatialResolution>
                                 <gmd:MD_Resolution>
                                     <gmd:equivalentScale>

@@ -219,6 +219,7 @@
                 <xsl:with-param name="name" select="'operatesOn'"/>
                 <xsl:with-param name="class" select="'cond'"/>
                 <xsl:with-param name="valid" select="'1.6'"/>
+                <xsl:with-param name="valid" select="'5120'"/>
             </xsl:call-template>
             <div class="col-xs-12 col-md-8">
                 <select name="operateson[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true" data-ajax--url="../../suggest/metadata?lang={$mlang}&amp;type=query&amp;f=1">
@@ -655,7 +656,7 @@
     <!-- 7 -->
     <xsl:if test="gmd:hierarchyLevel/*/@codeListValue!='application'">
         <div>
-            <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'https://data.europa.eu/eli/')]|/.">
+            <xsl:for-each select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result[contains(*/gmd:specification/*/gmd:title/*/@xlink:href,'https://data.europa.eu/eli/')]|.">
                 <xsl:if test="string-length(*/gmd:specification)&gt;0 or position()=last()">
                     <fieldset>
                         <div class="row">
@@ -1117,7 +1118,7 @@
                 <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:spatialRepresentationType/*/@codeListValue"/>
                 <xsl:with-param name="codes" select="'spatialRepresentationType'"/>
                 <xsl:with-param name="multi" select="'2'"/>
-                <xsl:with-param name="req" select="1"/>
+                <xsl:with-param name="class" select="'mand'"/>
                 <xsl:with-param name="valid" select="'106'"/>
             </xsl:call-template>
 
@@ -1156,6 +1157,7 @@
                     <xsl:with-param name="name" select="'Maintenance'"/>
                     <xsl:with-param name="class" select="'mand'"/>
                     <xsl:with-param name="dupl" select="1"/>
+                    <xsl:with-param name="valid" select="'81'"/>
                 </xsl:call-template>
                 </div>
             
@@ -1167,7 +1169,6 @@
                     <xsl:with-param name="path" select="'maintenance-frequency[]'"/> 
                     <xsl:with-param name="mand" select="''"/>
                     <xsl:with-param name="class" select="'short inp2'"/>
-                    <xsl:with-param name="valid" select="'CZ-4'"/>
                 </xsl:call-template>
               
                 <xsl:call-template name="drawInput">
@@ -1176,7 +1177,6 @@
                     <xsl:with-param name="path" select="'maintenance-user[]'"/>	
                     <xsl:with-param name="class" select="'short inp2'"/>
                     <xsl:with-param name="type" select="'plain'"/>
-                    <xsl:with-param name="valid" select="'CZ-4'"/>
                 </xsl:call-template>
               
                 <!-- other maintenance fields 
@@ -1196,7 +1196,6 @@
                     <xsl:with-param name="path" select="'maintenance-note[]'"/>
                     <xsl:with-param name="multi" select="1"/> <!-- TODO zatim ... -->
                     <xsl:with-param name="class" select="'inp2'"/>
-                    <xsl:with-param name="valid" select="'CZ-6'"/>
                 </xsl:call-template>
             </fieldset>
         </xsl:if>
@@ -1208,7 +1207,7 @@
         <xsl:with-param name="name" select="'purpose'"/>
         <xsl:with-param name="type" select="'textarea'"/>
         <xsl:with-param name="langs" select="$langs"/>
-        <xsl:with-param name="valid" select="'CZ-7'"/>
+        <xsl:with-param name="valid" select="'77'"/>
     </xsl:call-template> 
 
 </xsl:if>
@@ -1220,7 +1219,7 @@
             <xsl:with-param name="value" select="gmd:identificationInfo/*/srv:couplingType/*/@codeListValue"/>
             <xsl:with-param name="codes" select="'couplingType'"/>
             <xsl:with-param name="class" select="'short'"/>
-            <xsl:with-param name="valid" select="'CZ-9'"/>
+            <xsl:with-param name="valid" select="5528"/>
         </xsl:call-template>
     </xsl:if>
 
