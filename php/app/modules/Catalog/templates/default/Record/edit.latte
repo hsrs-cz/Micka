@@ -86,6 +86,10 @@
         {/foreach}
 
 <script type="text/javascript">
+    var chLang= function(o) {
+        o.parentNode.children[0].checked=true;
+    }
+
 	md_recno = {$record['recno']}; //FIXME - remove 
 	lang = {$appLang};
 	langs = {$record['langs']};
@@ -183,8 +187,8 @@
         <input type="hidden" name="nextpackage" value="{$selectPackage}">
         <input type="hidden" name="uuid" value="{$record['uuid']}">
 
-        {if $user->isLoggedIn() && $user->isInRole('publisher')}
-            <div style="margin-bottom:3px; font-weight: bold;">
+        <div style="margin-bottom:3px; font-weight: bold;">
+            {if $user->isLoggedIn() && $user->isInRole('editor')}
                 {_messages.frontend.record}: 
                 <select name="data_type">
                     {foreach $MdDataTypes as $key => $value}
@@ -216,7 +220,12 @@
                     <i class="fa fa-folder-open fa-lg"></i>
                 </a>
             </div>
-        {/if}
+            {/if}
+            {_messages.frontend.language}:
+            <a type="button" href="#" class="open" data-toggle="modal" data-target="#md-languages-dialog" data-tooltip="tooltip" title="Vybrat">
+                <i class="fa fa-folder-open fa-lg"></i>
+            </a>
+        </div>
 
         <div id="md-languages-dialog" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -226,6 +235,8 @@
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="select_langs[]" value="{$key}" {foreach $selectLanguages as $lang}{if $key == $lang}checked="checked"{/if}{/foreach} />{$value}
+                                    <input type="radio" name="lang_prim" value="{$key}" {if $key == $lang} checked="checked"{/if} onclick="chLang(this)"/> 
+                                    {$value}
                                 </label>
                             </div>
                         {/foreach}
@@ -418,14 +429,14 @@
 
 
 <script language="javascript" src="{$basePath}/thesaurus/HS.js"></script>
-<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>
+{if $appLang != 'eng'}<script language="javascript" src="{$basePath}/scripts/locale/labels-{$appLang}.js"></script>{/if}
 <script src="{$basePath}/scripts/jquery/jquery-1.11.1.min.js"></script>
 <script src="{$basePath}/scripts/ol5/ol.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/select2/js/select2.full.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/select2/js/i18n/{$appLang2}.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/bootstrap/js/bootstrap.min.js" ></script>
 <script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/js/bootstrap-datepicker.min.js" ></script>
-<script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.{$appLang2}.min.js" ></script>       
+{if $appLang != 'eng'}<script type="text/javascript" src="{$basePath}/scripts/bootstrap-datepicker/locales/bootstrap-datepicker.{$appLang2}.min.js" ></script>{/if}
 <script type="text/javascript" src="{$basePath}/scripts/OverMap.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/edit.js"></script>
 <script type="text/javascript" src="{$basePath}/scripts/GemetClient.js"></script>
