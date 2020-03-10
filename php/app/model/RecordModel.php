@@ -18,8 +18,8 @@ class RecordModel extends \BaseModel
     protected $package_id = -1;
     protected $recordEditLock = 14400;
     
-	public function __construct($db, $user, $appgParameters)
-	{
+    public function __construct($db, $user, $appgParameters)
+    {
         parent::__construct($db, $user, $appgParameters);
         if (isset($appgParameters['app']['recordEditLock']) && $appgParameters['app']['recordEditLock'] > 3600) {
             $this->recordEditLock = $appgParameters['app']['recordEditLock'];
@@ -246,8 +246,8 @@ class RecordModel extends \BaseModel
     private function deleteEditMdValuesByProfil($editRecno, $mds, $profil_id, $package_id)
     {
         $sql = "DELETE FROM edit_md_values WHERE [recno]=%i";
-		if ($mds == 0 || $mds == 10) {
-			$sql .= " AND [md_id]<>38";
+        if ($mds == 0 || $mds == 10) {
+            $sql .= " AND [md_id]<>38";
             if ($profil_id > -1) {
                 $sql .= " AND [md_id] IN(
                     SELECT standard_schema.[md_id] 
@@ -255,7 +255,7 @@ class RecordModel extends \BaseModel
                     WHERE standard_schema.[md_standard]=0 AND elements.[form_ignore]=0 
                     AND standard_schema.[md_id] IN(SELECT [md_id] FROM profil WHERE [profil_id]=$profil_id))";
             }
-		}
+        }
         if ($package_id > -1) {
             $sql .= " AND [package_id]=$package_id";
         }
@@ -305,7 +305,7 @@ class RecordModel extends \BaseModel
     
     protected function insertMdValuesBasic($md_standard, $recno, $uuid=NULL,$lang=NULL,$date=FALSE)
     {
-		if ($md_standard == 0 || $md_standard == 10) {
+        if ($md_standard == 0 || $md_standard == 10) {
             $values = [];
             if ($uuid !== NULL) {
                 $values['recno'][] = $recno;
@@ -334,7 +334,7 @@ class RecordModel extends \BaseModel
             if (count($values) > 0) {
                 $this->db->query("INSERT INTO edit_md_values %m;", $values);
             }
-		}
+        }
     }
     
     private function setMdFromXml($data, $log=FALSE)
@@ -447,10 +447,10 @@ class RecordModel extends \BaseModel
         $md['recno'] = $this->getNewRecno('edit_md');
         $md['md_recno'] = 0;
         $md['uuid'] = $this->getUuid();
-		$md['md_standard'] = isset($post['standard']) ? (integer) $post['standard'] : 0;
-		$md['data_type'] = -1;
-		$md['create_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
-		$md['create_date'] = Date("Y-m-d");
+        $md['md_standard'] = isset($post['standard']) ? (integer) $post['standard'] : 0;
+        $md['data_type'] = -1;
+        $md['create_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
+        $md['create_date'] = Date("Y-m-d");
         $md['edit_group'] = isset($post['group_e']) && isset($this->user->identity->username)
                                 ? $post['group_e']
                                 : 'guest';
@@ -522,7 +522,7 @@ class RecordModel extends \BaseModel
                 // empty
             }
             return;
-	    }
+        }
         $this->db->query("INSERT INTO edit_md", $md);
         $this->insertMdValuesBasic($md['md_standard'], $md['recno'], $md['uuid'], $lang_main,TRUE);
         $this->setRecordMdById($md['uuid'], 'edit_md','new');
@@ -682,15 +682,15 @@ class RecordModel extends \BaseModel
         return $id;
     }
     
-	public function deleteMdById($id)
-	{
+    public function deleteMdById($id)
+    {
         $this->setRecordMdById($id, 'md', 'edit');
         if ($this->recordMd) {
             $this->db->query("DELETE FROM md_values WHERE [recno] =%i", $this->recordMd->recno);
             $this->db->query("DELETE FROM md WHERE [recno]=%i", $this->recordMd->recno);
         }
         return;
-	}
+    }
     
     public function createNewMdRecord($httpRequest)
     {
@@ -858,45 +858,46 @@ class RecordModel extends \BaseModel
     private function getMdValuesFromForm($formData, $appLang)
     {
         $this->initialVariables();
-        
         $editMdValues = [];
-		foreach ($formData as $key => $value) {
-			if ( $key == 'nextpackage' ||
-				 $key == 'nextprofil' ||
-				 $key == 'afterpost' ||
-				 $key == 'uuid' ||
-				 $key == 'ende') {
-				continue;
-			}
-			if ($key == 'data_type') {
+        foreach ($formData as $key => $value) {
+            if ( $key == 'nextpackage' ||
+                    $key == 'nextprofil' ||
+                    $key == 'afterpost' ||
+                    $key == 'uuid' ||
+                    $key == 'select_langs' ||
+                    $key == 'lang_prim' ||
+                    $key == 'ende') {
+                continue;
+            }
+            if ($key == 'data_type') {
                 $this->recordMd->data_type = $value;
-				continue;
-			}
-			if ($key == 'edit_group') {
+                continue;
+            }
+            if ($key == 'edit_group') {
                 $this->recordMd->edit_group = $value;
-				continue;
-			}
-			if ($key == 'view_group') {
+                continue;
+            }
+            if ($key == 'view_group') {
                 $this->recordMd->view_group = $value;
-				continue;
-			}
-			if ($key == 'package') {
-                $this->package_id = is_numeric($value) ? (int)$value : -1;
-				continue;
-			}
-			if ($key == 'profil') {
+                continue;
+            }
+            if ($key == 'package') {
+                $this->package_id = is_numeric($value) ? (int) $value : -1;
+                continue;
+            }
+            if ($key == 'profil') {
                 $this->profil_id =  is_numeric($value) ? (int) $value : -1;
-				continue;
-			}
-			if ($value != '') {
-				if (strpos($key, 'RB_') !== FALSE) {
-					continue;
-				}
-				$pom = explode('|', $key);
-				//form_code|lang|package_id|md_path
-				if (count($pom) != 4) {
-					continue;
-				}
+                continue;
+            }
+            if ($value != '') {
+                if (strpos($key, 'RB_') !== FALSE) {
+                    continue;
+                }
+                $pom = explode('|', $key);
+                //form_code|lang|package_id|md_path
+                if (count($pom) != 4) {
+                    continue;
+                }
                 if ($pom[0] == 'R') {
                     continue;
                 }
@@ -920,12 +921,11 @@ class RecordModel extends \BaseModel
                     array_push($editMdValues, $data);
                     $this->setValue2RecorMd($data);
                 }
-			}
+            }
         }
-		return $editMdValues;
+        return $editMdValues;
     }
     
-    // processes record language preferences 
     private function setLang2RecordMd($select_langs, $lang_prim)
     {
         $this->langPrim = $lang_prim;
@@ -1031,13 +1031,11 @@ class RecordModel extends \BaseModel
         }
         if (isset($post['select_langs'])) {
             $select_langs = $post['select_langs'];
-            unset($post['select_langs']);
         } else {
             $select_langs = [];
         }
         if (isset($post['lang_prim'])) {
             $lang_prim = $post['lang_prim'];
-            unset($post['lang_prim']);
         } else {
             $lang_prim = '';
         }
@@ -1094,11 +1092,40 @@ class RecordModel extends \BaseModel
             $this->seMdValues($data, 0);
         }
     }
+
+    private function beforeLiteFormProcess($data) {
+        if (is_array($data)) {
+            if (array_key_exists('mickaLite', $data)) unset($data['mickaLite']);
+            if (array_key_exists('afterpost', $data)) unset($data['afterpost']);
+            if (array_key_exists('profil', $data)) unset($data['profil']);
+            if (array_key_exists('package', $data)) unset($data['package']);
+            if (array_key_exists('nextprofil', $data)) unset($data['nextprofil']);
+            if (array_key_exists('nextpackage', $data)) unset($data['nextpackage']);
+            if (array_key_exists('uuid', $data)) unset($data['uuid']);
+            if (isset($data['data_type']) && $data['data_type'] != '') {
+                $this->recordMd->data_type = (integer) $data['data_type'];
+                unset($data['data_type']);
+            }
+            if (isset($data['edit_group']) && $data['edit_group'] != '') {
+                $this->recordMd->edit_group = $data['edit_group'];
+                unset($data['edit_group']);
+            }
+            if (isset($data['view_group']) && $data['view_group'] != '') {
+                $this->recordMd->view_group = $data['view_group'];
+                unset($data['view_group']);
+            }
+            if (array_key_exists('select_langs', $data)) unset($data['select_langs']);
+            if (array_key_exists('lang_prim', $data)) unset($data['lang_prim']);
+            if (array_key_exists('ende', $data)) unset($data['ende']);
+        }
+        return $data;
+    }
+    
     private function setFromMickaLite($post, $liteProfile)
     {
-		$cswClient = new \CswClient();
+        $cswClient = new \CswClient();
         $kote = new \Kote();
-        $input = $kote->processForm(beforeSaveRecord($post));
+        $input = $kote->processForm($this->beforeLiteFormProcess($post));
         $params = Array(
             'datestamp'=>date('Y-m-d'), 
             'lang'=>$post['mdlang'], 
@@ -1129,14 +1156,14 @@ class RecordModel extends \BaseModel
             elements.[el_name],
             standard_schema.[is_uri]
             FROM elements JOIN standard_schema ON (elements.[el_id] = standard_schema.[el_id])")->fetchAll();
-		$rs = [];
+        $rs = [];
         foreach ($data as $row) {
-			$rs[$row->md_standard][$row->md_id][0] = $row->el_name;
+            $rs[$row->md_standard][$row->md_id][0] = $row->el_name;
             $rs[$row->md_standard][$row->md_id][1] = $row->is_uri;
             $rs[$row->md_standard][$row->md_id]['is_data'] = $row->is_data;
-		}
-		return $rs;
-	}
+        }
+        return $rs;
+    }
     
     private function xmlFromRecordMdValues()
     {
@@ -1145,10 +1172,10 @@ class RecordModel extends \BaseModel
         }
         $this->setRecordMdValues();
         $elements_label = $this->getIdElements();
-		$eval_text = '';
+        $eval_text = '';
         $i = 0;
         $mds = $this->recordMd->md_standard == 10 ? 0 : $this->recordMd->md_standard;
-		foreach ($this->recordMdValues as $row) {
+        foreach ($this->recordMdValues as $row) {
             if ($elements_label[$mds][$row->md_id]['is_data'] === 0) {
                 \Tracy\Debugger::log('md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_MAKE_XML');
                 continue;
@@ -1199,7 +1226,7 @@ class RecordModel extends \BaseModel
         //\Tracy\Debugger::log($eval_text, 'ERROR_MAKE_XML');
         //echo '<xmp>'; print_r($eval_text); echo '</xmp>'; exit;
         eval ($eval_text);
-		$xml = \Array2XML::createXML('rec', $vysl);
+        $xml = \Array2XML::createXML('rec', $vysl);
         return $xml->saveXML();
     }
     
@@ -1213,7 +1240,7 @@ class RecordModel extends \BaseModel
                 $this->recordMd->pxml = $xml;
             }
         }
-		return;
+        return;
     }
 
     protected function updateEditMdXml($recno, $xml)

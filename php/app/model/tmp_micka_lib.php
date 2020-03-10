@@ -435,24 +435,6 @@ function gpc_addslashes($str) {
 	return $str;
 }
 
-function beforeSaveRecord($data) {
-	if (is_array($data)) {
-		if (array_key_exists('ak', $data)) unset($data['ak']);
-		if (array_key_exists('w', $data)) unset($data['w']);
-		if (array_key_exists('iframe', $data)) unset($data['iframe']);
-		if (array_key_exists('block', $data)) unset($data['block']);
-		if (array_key_exists('nextblock', $data)) unset($data['nextblock']);
-		if (array_key_exists('profil', $data)) unset($data['profil']);
-		if (array_key_exists('nextprofil', $data)) unset($data['nextprofil']);
-		if (array_key_exists('recno', $data)) unset($data['recno']);
-		if (array_key_exists('uuid', $data)) unset($data['uuid']);
-		if (array_key_exists('mds', $data)) unset($data['mds']);
-		if (array_key_exists('public', $data)) unset($data['public']);
-		if (array_key_exists('ende', $data)) unset($data['ende']);
-	}
-	return $data;
-}
-
 function getSortBy($in='', $ret='array') {
 	if ($in != '') {
 		$sort_by = $in;
