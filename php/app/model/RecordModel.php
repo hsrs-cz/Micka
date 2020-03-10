@@ -941,7 +941,7 @@ class RecordModel extends \BaseModel
             if (($key = array_search($lang_prim, $md_langs)) !== false) {
                 unset($md_langs[$key]);
             }
-            $this->langMd = $lang_prim . '|' . implode('|', $md_langs);
+            $this->langMd = count($md_langs) === 0 ? $lang_prim : $lang_prim . '|' . implode('|', $md_langs);
             return [];
         }
         $report = [];
@@ -960,8 +960,7 @@ class RecordModel extends \BaseModel
         if (($key = array_search($lang_prim, $select_langs)) !== false) {
             unset($select_langs[$key]);
         }
-        $this->langMd = $lang_prim . '|' . implode('|', $select_langs);
-        //dump($this->langPrim, $this->langMd); exit;
+        $this->langMd = count($select_langs) === 0 ? $lang_prim : $lang_prim . '|' . implode('|', $select_langs);
         return $report;
     }
 
@@ -1248,12 +1247,13 @@ class RecordModel extends \BaseModel
 
     protected function updateGeom($recno, $x1, $x2, $y1, $y2)
     {
+        $username = $this->user->isLoggedIn() ? $this->user->getIdentity()->username : 'guest';
         if ($this->recordMd->the_geom != '') {
             $this->db->query("UPDATE edit_md SET [the_geom]=ST_GeomFromText(?,0)
-                    WHERE [edit_user]=%s AND [recno]=%i", $this->recordMd->the_geom, $this->user->getIdentity()->username, $recno);
+                    WHERE [edit_user]=%s AND [recno]=%i", $this->recordMd->the_geom, $username, $recno);
         } elseif ($x1 != NULL && $x2 != NULL && $y1 != NULL && $y2 != NULL) {
             $this->db->query("UPDATE edit_md SET [the_geom]=ST_GeomFromText('MULTIPOLYGON((($x1 $y1,$x1 $y2,$x2 $y2,$x2 $y1,$x1 $y1)))',0)
-                    WHERE [edit_user]=%s AND [recno]=%i", $this->user->getIdentity()->username, $recno);
+                    WHERE [edit_user]=%s AND [recno]=%i", $username, $recno);
         }
     }
 
