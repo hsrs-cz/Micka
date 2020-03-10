@@ -13,6 +13,7 @@ class RecordModel extends \BaseModel
     protected $geomMd = [];
     protected $titleMd = [];
     protected $langMd = NULL;
+    protected $langPrim = NULL;
     protected $profil_id = -1;
     protected $package_id = -1;
     protected $recordEditLock = 14400;
@@ -622,6 +623,22 @@ class RecordModel extends \BaseModel
         return $rs;
     }
 
+    public function getPrimLang()
+    {
+        if ($this->recordMd === NULL) {
+            return '';
+        }
+        $this->setRecordMdValues();
+        $rs = substr($this->recordMd->lang, 0, 3);
+        foreach ($this->recordMdValues as $row) {
+            if ($row->md_id == 5527) {
+                $rs = $row->md_value;
+                $break;
+            }
+        }
+        return $rs;
+    }
+
     public function copyMd2EditMd($mode='edit')
     {
         $this->deleteExpiredEditRecords();
@@ -909,8 +926,9 @@ class RecordModel extends \BaseModel
     }
     
     // processes record language preferences 
-    private function setLang2RecordMd($select_langs)
+    private function setLang2RecordMd($select_langs, $lang_prim)
     {
+        $this->langPrim = $lang_prim;
         $md_langs = explode('|', $this->recordMd->lang);
         $common_langs = array_intersect($md_langs, $select_langs);
         if (count($common_langs) === 0) {
@@ -920,9 +938,12 @@ class RecordModel extends \BaseModel
         $del_langs = array_diff($md_langs, $select_langs);
 
         if (count($add_langs) === 0 && count($del_langs) === 0) {
+            if (($key = array_search($lang_prim, $md_langs)) !== false) {
+                unset($md_langs[$key]);
+            }
+            $this->langMd = $lang_prim . '|' . implode('|', $md_langs);
             return [];
         }
-        
         $report = [];
         if (count($add_langs) > 0) {
             $report = [
@@ -936,7 +957,11 @@ class RecordModel extends \BaseModel
                 'type' => 'info'
             ];
         }
-        $this->langMd = implode('|', $select_langs);
+        if (($key = array_search($lang_prim, $select_langs)) !== false) {
+            unset($select_langs[$key]);
+        }
+        $this->langMd = $lang_prim . '|' . implode('|', $select_langs);
+        //dump($this->langPrim, $this->langMd); exit;
         return $report;
     }
 
@@ -1011,6 +1036,12 @@ class RecordModel extends \BaseModel
         } else {
             $select_langs = [];
         }
+        if (isset($post['lang_prim'])) {
+            $lang_prim = $post['lang_prim'];
+            unset($post['lang_prim']);
+        } else {
+            $lang_prim = '';
+        }
         if (array_key_exists('mickaLite', $post)) {
             //Micka Lite
             $this->initialVariables();
@@ -1037,13 +1068,33 @@ class RecordModel extends \BaseModel
             $this->seMdValues($editMdValues);
         }
         $this->updateDatestamp($this->recordMd->recno, $this->recordMd->md_standard);
-        $report = $this->setLang2RecordMd($select_langs);
+        $report = $this->setLang2RecordMd($select_langs, $lang_prim);
+        if ($this->recordMd->lang != $this->langMd) {
+            $this->recordMd->lang = $this->langMd;
+        }
+        if ($this->langPrim !== null) {
+            $this->setLangPrim2EditMdValues();
+        }
         $this->recordMd->pxml = $this->xmlFromRecordMdValues();
         $this->applyXslTemplate2Xml('micka2one19139.xsl');
         $this->updateEditMD($this->recordMd->recno);
         return $report;
     }
     
+    private function setLangPrim2EditMdValues()
+    {
+        if ($this->recordMd->md_standard == 0 || $this->recordMd->md_standard == 10) {
+            $this->db->query("DELETE FROM edit_md_values WHERE [md_id]=5527 AND [recno]=%i", $this->recordMd->recno);
+            $data = array();
+            $data[0]['recno'] = $this->recordMd->recno;
+            $data[0]['md_value'] = $this->langPrim;
+            $data[0]['md_id'] = '5527';
+            $data[0]['md_path'] = '0_00_39_00_5527_00_';
+            $data[0]['lang'] = 'xxx';
+            $data[0]['package_id'] = '0';
+            $this->seMdValues($data, 0);
+        }
+    }
     private function setFromMickaLite($post, $liteProfile)
     {
 		$cswClient = new \CswClient();

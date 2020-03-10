@@ -215,11 +215,6 @@
                         {/if}
                     {/foreach}
                 </select>
-                {_messages.frontend.language}:
-                <a type="button" href="#" class="open" data-toggle="modal" data-target="#md-languages-dialog" data-tooltip="tooltip" title="Vybrat">
-                    <i class="fa fa-folder-open fa-lg"></i>
-                </a>
-            </div>
             {/if}
             {_messages.frontend.language}:
             <a type="button" href="#" class="open" data-toggle="modal" data-target="#md-languages-dialog" data-tooltip="tooltip" title="Vybrat">
@@ -230,15 +225,21 @@
         <div id="md-languages-dialog" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div id="md-content" class="modal-content panel-default">
+                    <div class="panel-heading">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4>{_messages.frontend.language} / {_messages.frontend.primary}</h4>
+                    </div>
                     <div class="modal-body">                
                         {foreach $allLanguages as $key => $value}
+                            {continueIf $key == 'zxx'}
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" name="select_langs[]" value="{$key}" {foreach $selectLanguages as $lang}{if $key == $lang}checked="checked"{/if}{/foreach} />{$value}
-                                    <input type="radio" name="lang_prim" value="{$key}" {if $key == $lang} checked="checked"{/if} onclick="chLang(this)"/> 
+                                    <input type="checkbox" name="select_langs[]" value="{$key}" {foreach $selectLanguages as $lang}{if $key == $lang}checked="checked"{/if}{/foreach} />
+                                    <input type="radio" name="lang_prim" value="{$key}" {if $key == $primLanguage} checked="checked"{/if} onclick="chLang(this)"/> 
                                     {$value}
                                 </label>
                             </div>
+
                         {/foreach}
                     </div>
                     <div class="modal-footer">
@@ -311,8 +312,11 @@
                             <span class="c"></span>
                         {/if}
                         {if $form['el_id'] == 20}
-                            {* fileIdentifier - pouze pro čtení *}
+                            {* fileIdentifier - readonly *}
                             <span class="{$form['form_code']}" id="{$form['el_id']}{$recordlang}">{$form['value']}</span>
+                        {elseif $form['el_id'] == 30}
+                            {* language *}
+                            <span class="{$form['form_code']}" id="{$form['el_id']}{$recordlang}">{ifset $allLanguages[$form['value']]}{$allLanguages[$form['value']]}{else}{$form['value']}{/ifset}</span>
                         {else}
                             {if $form['value_lang'] != 'xxx'}
                                 <span class="flg"><img src='{$basePath}{$themePath}/img/flags/{$form['value_lang']}.png' title="{$form['value_lang']}"></span>

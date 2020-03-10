@@ -282,6 +282,7 @@ class RecordPresenter extends \BasePresenter
             $this->template->packages = $mcl->getMdPackages($this->appLang, $mds, $profil);
             $this->template->allLanguages = $mcl->getLangsLabel($this->appLang);
             $this->template->selectLanguages = explode('|',$rmd->lang);
+            $this->template->primLanguage = $this->recordModel->getPrimLang();
             $this->template->detail = $this->getParam('f');
         } else {
             throw new \Nette\Application\ApplicationException('messages.apperror.noRecordFound');
