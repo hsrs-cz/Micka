@@ -147,9 +147,11 @@ class RecordPresenter extends \BasePresenter
             throw new \Nette\Application\ApplicationException('messages.apperror.postIncomplete');
         }
         $report = $this->recordModel->setFormMdValues($id, $post, $this->appLang, $this->layoutTheme);
-        if (count($report) > 0) {
-            $this->flashMessage($report['message'], $report['type']);
+        /*
+        foreach ($report as $row) {
+            $this->flashMessage($row['message'] . ': ' . $row['value'], $row['type']);
         }
+        */
         switch ($post['afterpost']) {
             case 'end':
                 if ($this->user->isLoggedIn()) {

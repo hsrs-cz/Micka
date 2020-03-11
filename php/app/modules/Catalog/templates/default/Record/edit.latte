@@ -80,26 +80,31 @@
             </div>        
         </nav>
 
-        {* FLASH *}
-        {foreach $flashes as $flash}
-            <div class="container alert alert-{$flash->type} alert-dismissible" role="alert">{$flash->message}</div>
-        {/foreach}
-
 <script type="text/javascript">
     var chLang= function(o) {
         o.parentNode.children[0].checked=true;
     }
 
-	md_recno = {$record['recno']}; //FIXME - remove 
-	lang = {$appLang};
-	langs = {$record['langs']};
-	md_elem = null;
-	md_partyType = null;
+    md_recno = {$record['recno']}; //FIXME - remove 
+    lang = {$appLang};
+    langs = {$record['langs']};
+    md_elem = null;
+    md_partyType = null;
     baseUrl = "{$baseUrl|noescape}";
     mds = {$record['mds']};
 </script>
 
 <div id="main" class="container panel panel-default" style="padding: 50px 220px 15px 15px">
+    {* FLASH *}
+    {foreach $flashes as $flash}
+        <div class="container alert alert-{$flash->type} alert-dismissible" role="alert">
+            {$flash->message}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+
+        </div>
+    {/foreach}
     <h3>{_messages.frontend.new_record2}</h3>
 
     <h1>
@@ -138,31 +143,31 @@
                     </div>
 
                     {* INSPIRE theme *}
-					<label for="inspire" class="control-label">{_messages.frontend.inspire-theme}</label>
-					<div class="input-group">
-						<select id="inspire" class="form-control" data-placeholder="INSPIRE"></select>
-                       <span class="input-group-btn">
+                    <label for="inspire" class="control-label">{_messages.frontend.inspire-theme}</label>
+                    <div class="input-group">
+                        <select id="inspire" class="form-control" data-placeholder="INSPIRE"></select>
+                        <span class="input-group-btn">
                             <button id="thes-inspire-ok" class="btn btn-default" type="button">{_messages.frontend.fill}</button>
                         </span>
-					</div>
-					
-					{*  GEMET *}
-					<label for="gemet" class="control-label">GEMET</label>
-					<div class="input-group">
-						<select id="gemet" class="form-control" data-placeholder="GEMET"></select>
+                    </div>
+                    
+                    {*  GEMET *}
+                    <label for="gemet" class="control-label">GEMET</label>
+                    <div class="input-group">
+                        <select id="gemet" class="form-control" data-placeholder="GEMET"></select>
                         <span class="input-group-btn">
                             <button id="thes-gemet-ok" class="btn btn-default" type="button">{_messages.frontend.fill}</button>
                         </span>
-					</div> 
+                    </div> 
 
-					{*  GEOLOGY *}
-					<label for="message-text" class="control-label">CGS</label>
-					<div class="input-group">
-						<select id="cgs" class="form-control" data-placeholder="Vyberte téma CGS"></select>
+                    {*  GEOLOGY *}
+                    <label for="message-text" class="control-label">CGS</label>
+                    <div class="input-group">
+                        <select id="cgs" class="form-control" data-placeholder="Vyberte téma CGS"></select>
                         <span class="input-group-btn">
                             <button id="thes-geology-ok" class="btn btn-default" type="button">{_messages.frontend.fill}</button>
                         </span>
-					</div> 
+                    </div> 
 
                 </div>
             </div>
@@ -455,7 +460,7 @@
 {else}
     <script type="text/javascript" src="{$basePath}/scripts/lite.js"></script>
     <script>
-	$(document).ready(function() {
+    $(document).ready(function() {
         HS.setLang({$appLang});
         lite.init();
         
@@ -476,7 +481,7 @@
         });
 
         
-	});
+    });
     </script>
 {/if} 
 
