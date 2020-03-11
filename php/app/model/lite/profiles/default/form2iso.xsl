@@ -452,13 +452,13 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
 					</xsl:if>
 
                     <!-- 8.2 Limitations -->
-                    <xsl:if test="limitationsAccess or limitationsAccessTxt/*">
+                    <xsl:if test="limitationsAccessCode or limitationsAccessTxt/*">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>
                                 <gmd:accessConstraints>
                                     <gmd:MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
                                 </gmd:accessConstraints>	
-                                <xsl:for-each select="limitationsAccess/item">
+                                <xsl:for-each select="limitationsAccessCode/item">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'otherConstraints'"/>
                                         <xsl:with-param name="codes" select="$codeLists/limitationsAccess"/>
@@ -474,15 +474,6 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                         </gmd:resourceConstraints>
 					</xsl:if>
                     
-                    <gmd:resourceConstraints>
-                        <gmd:MD_LegalConstraints>
-                            <gmd:accessConstraints>
-                                <gmd:MD_RestrictionCode codeListValue=""/>
-                            </gmd:accessConstraints>
-                            <gmd:otherConstraints></gmd:otherConstraints>
-                        </gmd:MD_LegalConstraints>
-                    </gmd:resourceConstraints>
-
                     <gmd:resourceConstraints>
                         <gmd:MD_LegalConstraints>
                             <gmd:accessConstraints>

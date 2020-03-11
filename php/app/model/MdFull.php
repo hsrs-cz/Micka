@@ -57,7 +57,7 @@ class MdFull  extends \BaseModel
     {
 		foreach ($values as $key => $item) {
 			if (is_array($item)) {
-				if ($key{0} != 'P' && $key > $min_id) {
+				if (((string)$key)[0] != 'P' && $key > $min_id) {
 					$zaznam = array();
 					$zaznam['hodnota'] = '';
 					$zaznam['id'] = $key;
@@ -84,7 +84,7 @@ class MdFull  extends \BaseModel
 				}
 				$this->print_array($item, $level + 1, 0, $level_inc, $lang);
 			} else {
-                if ($key{0} == 'L') {
+                if ($key[0] == 'L') {
                     $lang = substr($key, 1);
                 }
 				if ($this->smaz == 1) array_splice($this->detail,-1,1);
