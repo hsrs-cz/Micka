@@ -932,7 +932,7 @@ class RecordModel extends \BaseModel
         $md_langs = explode('|', $this->recordMd->lang);
         $common_langs = array_intersect($md_langs, $select_langs);
         if (count($common_langs) === 0) {
-            return ['message' => '0 lang', 'type' => 'error'];
+            return [0 => ['message' => 'nullLangs','value' => '', 'type' => 'error']];
         }
         $add_langs = array_diff($select_langs, $common_langs);
         $del_langs = array_diff($md_langs, $select_langs);
@@ -946,14 +946,17 @@ class RecordModel extends \BaseModel
         }
         $report = [];
         if (count($add_langs) > 0) {
-            $report = [
-                'message' => 'add_langs:',
+            $report[] = [
+                'message' => 'addLangs',
+                'value' => implode(', ', $add_langs),
                 'type' => 'info'
             ];
         }
         if (count($del_langs) > 0) {
-            $report = [
-                'message' => 'del_langs:',
+            $this->db->query("DELETE FROM edit_md_values WHERE [recno]=%i AND [lang] IN (%s)", $this->recordMd->recno, $del_langs);
+            $report[] = [
+                'message' => 'deleteLangs',
+                'value' => implode(', ', $del_langs),
                 'type' => 'info'
             ];
         }
