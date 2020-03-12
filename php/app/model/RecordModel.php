@@ -16,6 +16,7 @@ class RecordModel extends \BaseModel
     protected $langPrim = NULL;
     protected $profil_id = -1;
     protected $package_id = -1;
+    protected $validReport = array();
     protected $recordEditLock = 14400;
     
     public function __construct($db, $user, $appgParameters)
@@ -60,6 +61,9 @@ class RecordModel extends \BaseModel
         }
         if (isset($this->recordMd->uuid)) {
             $this->recordMd->uuid = rtrim($this->recordMd->uuid);
+        }
+        if (isset($this->recordMd->md_standard)) {
+            $this->recordMd->md_standard = (integer) $this->recordMd->md_standard;
         }
         $this->recordMdValues = array();
         return;
@@ -221,6 +225,7 @@ class RecordModel extends \BaseModel
             }
             $this->recordMd->prim = $vResult['primary'];
         }
+        $this->validReport = $validator->asArray();
     }
     
     public function validate($xml, $type='gmd', $lang='eng', $profile=null)
@@ -1004,6 +1009,7 @@ class RecordModel extends \BaseModel
             TRUE
         );
         $this->setEditRecord2Md();
+        $report[0]['valid'] = $this->validReport;
         //$this->deleteExpiredEditRecords();
         return $report;
     }
