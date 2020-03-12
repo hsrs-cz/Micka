@@ -122,7 +122,6 @@
                  </gmd:locale>
             </xsl:for-each>
             
-                    
             <xsl:apply-templates select="spatialRepresentationInfo/MD_VectorSpatialRepresentation"/>
             <xsl:apply-templates select="spatialRepresentationInfo/MD_GridSpatialRepresentation"/>
             <xsl:apply-templates select="referenceSystemInfo"/>

@@ -13,7 +13,7 @@
   xmlns:gmx="http://www.isotc211.org/2005/gmx" 
 >
 
-<!-- provides conversion from old ISO 19139 metadata to Anchor-based new INSPIRE profile -->
+<!-- provides conversion from old ISO 19139 metadata to Anchor-based INSPIRE 2.x metadata only Czech records -->
 
 <xsl:output method="xml" encoding="UTF-8" omit-xml-declaration="no"/>
 <xsl:variable name="cl" select="document('../../../config/codelists.xml')/map" />   
