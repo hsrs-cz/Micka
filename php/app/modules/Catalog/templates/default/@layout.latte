@@ -3,7 +3,7 @@
 <html class="x-border-box">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+    {ifset httprefresh}{include httprefresh}{else}<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />{/ifset}
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>{$pageTitle}</title>
     <link rel="shortcut icon" href="{$basePath}{$themePath}/img/favicon.png">
@@ -21,7 +21,6 @@
 </head>
 <body id="micka-body">
     <div class="page-container">
-
         <nav class="navbar navbar-inverse xnavbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -32,7 +31,6 @@
                     </button>
                     <a class="navbar-brand" n:href=":Catalog:Default:default" data-tooltip="tooltip" data-container="body" data-placement="bottom" title="Micka">Micka</a>
                 </div>
-
                 <div class="collapse navbar-collapse" id="micka-navbar">
                     <ul class="nav navbar-nav">
                         {if $user->isInRole('editor') || $edit_guest === true}
@@ -56,7 +54,6 @@
                                 <i class="fa fa-info-circle fa-lg"></i> {_messages.frontend.about}</a>
                         </li>            
                     </ul>
-                    
                     <ul class="nav navbar-nav navbar-right">
                         <li>
                             <a n:href=":Catalog:Csw:default 'service'=>'CSW','request'=>'GetRecords','query'=>'','format'=>'application/xml','outputSchema'=>'http://www.w3.org/2005/Atom','sortby'=>'date:D','language'=>$appLang" target="_blank" data-tooltip="tooltip" title="{_messages.frontend.changes}" data-container="body" data-placement="bottom"><i class="fa fa-rss fa-lg"></i></a>
