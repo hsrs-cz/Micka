@@ -120,6 +120,7 @@ frontend:
     mdcontact: "Kontakt - metadata"
     mdparty: "Organizace - metadata"
     copy: "Zkopírovat"
+    select: "vyberte"
     map: "Mapa"
 
     full_metadata: "Detail"
@@ -159,7 +160,7 @@ frontend:
     for_inspire: "Pro INSPIRE"
     status: "Stav záznamu"
     contact2micka: "do MicKy"
-    select: "vyberte"
+    fromList: "Vybrat"
     packages: "Balíčky"
     where-all: "Všude"
     where-title: "V názvu"
