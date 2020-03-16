@@ -114,16 +114,25 @@ xspan.locale {
 }
 
 .cze {background-image: url(img/flags/cze.png); }
+.bul {background-image: url(img/flags/bul.png); }
+.dan {background-image: url(img/flags/dan.png); }
 .eng {background-image: url(img/flags/eng.png); }
-.fra {background-image: url(img/flags/fra.png); }
+.est {background-image: url(img/flags/est.png); }
+.fre {background-image: url(img/flags/fre.png); }
+.fin {background-image: url(img/flags/fin.png); }
 .ger {background-image: url(img/flags/ger.png); }
 .hun {background-image: url(img/flags/hun.png); }
 .ita {background-image: url(img/flags/ita.png); }
+.lav {background-image: url(img/flags/lav.png); }
+.lit {background-image: url(img/flags/lit.png); }
+.mlt {background-image: url(img/flags/mlt.png); }
 .nor {background-image: url(img/flags/nor.png); }
 .pol {background-image: url(img/flags/pol.png); }
+.por {background-image: url(img/flags/por.png); }
 .rum {background-image: url(img/flags/rum.png); }
 .spa {background-image: url(img/flags/spa.png); }
 .slo {background-image: url(img/flags/slo.png); }
+.slv {background-image: url(img/flags/slv.png); }
 .srp {background-image: url(img/flags/srp.png); }
 .swe {background-image: url(img/flags/swe.png); }
 
@@ -186,4 +195,8 @@ label.cond {
     /*border: solid #EEE;*/
     /*border-width: 1px 0 1px 0;*/
     /*background: #FFE;*/
+}
+
+.navbar-brand:hover {
+    color: #9d9d9d !important;
 }

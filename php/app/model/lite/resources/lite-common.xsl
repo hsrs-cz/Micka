@@ -326,6 +326,9 @@
                             <xsl:when test="$placeholder">
                                 <xsl:value-of select="$placeholder"/>
                             </xsl:when>
+                            <xsl:when test="$multi &gt; 1">
+                                <xsl:value-of select="$labels/msg[@name='multisel']/*"/> ...
+                            </xsl:when>
                             <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>
                     </xsl:attribute>
@@ -360,6 +363,15 @@
                         <xsl:choose>
                             <xsl:when test="$placeholder">
                                 <xsl:value-of select="$placeholder"/>
+                            </xsl:when>
+                            <xsl:when test="$tags=1 and $multi = 0">
+                                <xsl:value-of select="$labels/msg[@name='esel']/*"/> ...
+                            </xsl:when>
+                             <xsl:when test="$tags=1">
+                                <xsl:value-of select="$labels/msg[@name='emultisel']/*"/> ...
+                            </xsl:when>
+                            <xsl:when test="$multi &gt; 1">
+                                <xsl:value-of select="$labels/msg[@name='multisel']/*"/> ...
                             </xsl:when>
                             <xsl:otherwise><xsl:value-of select="$labels/msg[@name='sel']/*"/> ...</xsl:otherwise>
                         </xsl:choose>

@@ -85,6 +85,14 @@ Kde je to vhodné, může tento prvek uvádět, zda byl datový soubor ověřen 
             <p class="pozn">Nemůže existovat více než jedno datum poslední revize. </p>
 		</help>
 	</msg>
+	<msg name="missingDate">
+		<label>Pokyny k vyplnění</label>
+		<help>
+            Pokud data mají jen jeden datový údaj (typicky letecký snímek), ponechte druhé datum prázdné.
+            Pokud je počáteční nebo koncové datum neukončené, vložte do odpovídajícího pole "?".
+            Pokud je koncový údaj sátle probíhající, vložte do pole řetězec "now".
+		</help>
+	</msg>
 	<msg name="coorSys">
 		<label>IOD-1 Souřadnicový ref. systém</label>
 		<help>
