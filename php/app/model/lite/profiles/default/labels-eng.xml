@@ -82,6 +82,14 @@
 			<p>Event type</p>
 		</help>
 	</msg>
+	<msg name="missingDate">
+		<label>Filling instructions</label>
+		<help>
+            To enter instant date leave the second field empty. 
+            In case the time period is open-ended with either the start or the end date unknown, 
+            enter "?" to the corresponding field. If the temporal extent is on-going, enter "now" to the corresponding field. 
+		</help>
+	</msg>
 	<msg name="coorSys">
 		<label>CZ-4 Reference system</label>
 		<help>

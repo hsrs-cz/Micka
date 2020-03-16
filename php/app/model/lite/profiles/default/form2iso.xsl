@@ -429,13 +429,13 @@ xsi:schemaLocation="http://www.isotc211.org/2005/gmd http://www.bnhelp.cz/metada
                     </xsl:if>
 
 					<!-- 8.1 Conditions Access and use -->
-                    <xsl:if test="accessCond or accessCondTxt/*">
+                    <xsl:if test="accessCondCode or accessCondTxt/*">
                         <gmd:resourceConstraints>
                             <gmd:MD_LegalConstraints>
                                 <gmd:useConstraints>
                                     <gmd:MD_RestrictionCode codeList="{$cl}#MD_RestrictionCode" codeListValue="otherRestrictions"/>
                                 </gmd:useConstraints>
-                                <xsl:for-each select="accessCond/item">
+                                <xsl:for-each select="accessCondCode/item">
                                     <xsl:call-template name="uriOut">
                                         <xsl:with-param name="name" select="'otherConstraints'"/>
                                         <xsl:with-param name="codes" select="$codeLists/accessCond"/>

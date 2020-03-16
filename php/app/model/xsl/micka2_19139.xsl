@@ -708,6 +708,9 @@
                                     <xsl:when test="beginPosition='now'">
                                         <gml:beginPosition indeterminatePosition="now"/>
                                     </xsl:when>
+                                    <xsl:when test="beginPosition='?'">
+                                        <gml:beginPosition indeterminatePosition="unknown"/>
+                                    </xsl:when>
                                     <xsl:otherwise>
                                         <gml:beginPosition><xsl:value-of select="beginPosition"/></gml:beginPosition>
                                     </xsl:otherwise>
@@ -715,6 +718,9 @@
                                 <xsl:choose>
                                     <xsl:when test="endPosition='now'">
                                         <gml:endPosition indeterminatePosition="now"/>
+                                    </xsl:when>
+                                   <xsl:when test="endPosition='?'">
+                                        <gml:endPosition indeterminatePosition="unknown"/>
                                     </xsl:when>
                                     <xsl:when test="endPosition='undefined' or string-length(endPosition)=0">
                                         <gml:endPosition indeterminatePosition="undefined"/>
