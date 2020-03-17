@@ -108,7 +108,7 @@
                         <xsl:with-param name="name" select="'name'"/>
                         <xsl:with-param name="path" select="'linkage-name[]'"/>
                         <xsl:with-param name="value" select="*/gmd:name"/>
-                        <xsl:with-param name="class" select="'cond inp2'"/>
+                        <xsl:with-param name="class" select="'inp2'"/>
                         <xsl:with-param name="tags" select="1"/>
                     </xsl:call-template>
                     <!--xsl:call-template name="drawInput">
@@ -186,7 +186,7 @@
                         <xsl:with-param name="path" select="'identifier'"/>
                         <xsl:with-param name="value" select="*/gmd:code"/>
                         <xsl:with-param name="valid" select="''"/>
-                        <xsl:with-param name="class" select="concat('inp2 ',$m)"/>
+                        <xsl:with-param name="class" select="cond inp2"/>
                         <!--xsl:with-param name="req" select="not($serv)"/-->
                     </xsl:call-template>
                     
@@ -345,6 +345,14 @@
     </xsl:if>
     
     <!-- 3.1 keywords -->
+    <fieldset>
+        <div class="row">
+            <xsl:call-template name="drawLabel">
+                <xsl:with-param name="name" select="'keywords'"/>
+                <xsl:with-param name="class" select="'mand wide'"/>
+            </xsl:call-template>
+        </div>
+
     <xsl:choose>
         <xsl:when test="$serv">
    	  	
@@ -356,6 +364,7 @@
                 <xsl:with-param name="req" select="1"/>
                 <xsl:with-param name="multi" select="1"/>
                 <xsl:with-param name="valid" select="'84'"/>
+                <xsl:with-param name="class" select="'inp2'"/>
             </xsl:call-template>
 
             <!-- INSPIRE themes --> 
@@ -365,6 +374,7 @@
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="'2'"/>
                 <xsl:with-param name="valid" select="'84'"/>
+                <xsl:with-param name="class" select="'inp2'"/>
             </xsl:call-template> 
             
             <!-- other KW with thesaurus -->
@@ -400,6 +410,7 @@
                 <xsl:with-param name="codes" select="'inspireKeywords'"/>
                 <xsl:with-param name="multi" select="'2'"/>
                 <xsl:with-param name="valid" select="'84'"/>
+                <xsl:with-param name="class" select="'inp2 cond'"/>
             </xsl:call-template> 
     
             <!-- Spatial scope -->
@@ -409,6 +420,7 @@
                 <xsl:with-param name="codes" select="'spatialScope'"/>
                 <xsl:with-param name="multi" select="0"/>
                 <xsl:with-param name="valid" select="'3'"/>
+                <xsl:with-param name="class" select="'inp2 cond'"/>
             </xsl:call-template> 
 
             <!-- Priority Dataset -->
@@ -418,6 +430,7 @@
                 <xsl:with-param name="uri" select="'http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset'"/>
                 <xsl:with-param name="multi" select="2"/>
                 <xsl:with-param name="valid" select="'3'"/>
+                <xsl:with-param name="class" select="'inp2 cond'"/>
             </xsl:call-template> 
 
        		<!-- ostatni KW s thesaurem-->
@@ -445,6 +458,7 @@
 
         </xsl:otherwise>
     </xsl:choose>
+    </fieldset>
 
     <!-- other free KW -->
     <div>
@@ -589,9 +603,22 @@
             
                 <div class="col-xs-12 col-md-8">
                     <div>
-                       <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-from[]" value="{php:function('iso2date', string(*/gmd:extent/*/*[1]),$mlang)}{*/gmd:extent/*/*[1]/@indeterminatePosition}"/> 
-                      - <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-to[]"  value="{php:function('iso2date', string(*/gmd:extent/*/*[2]),$mlang)}{*/gmd:extent/*/*[2]/@indeterminatePosition}"/> 
-                        <xsl:text> </xsl:text><span class="duplicate"></span>
+                        <xsl:variable name="m1">
+                            <xsl:choose>
+                                <xsl:when test="*/gmd:extent/*/*[1]/@indeterminatePosition='unknown'">?</xsl:when>
+                                <xsl:when test="*/gmd:extent/*/*[1]/@indeterminatePosition='now'">now</xsl:when>
+                            </xsl:choose>
+                        </xsl:variable>
+                        <xsl:variable name="m2">
+                            <xsl:choose>
+                                <xsl:when test="*/gmd:extent/*/*[2]/@indeterminatePosition='unknown'">?</xsl:when>
+                                <xsl:when test="*/gmd:extent/*/*[2]/@indeterminatePosition='now'">now</xsl:when>
+                            </xsl:choose>
+                        </xsl:variable>
+                       <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-from[]" value="{php:function('iso2date', string(*/gmd:extent/*/*[1]),$mlang)}{$m1}"/> 
+                      - <input class="D form-control hsf" style="display:inline-block" data-provide="datepicker" name="tempExt-to[]"  value="{php:function('iso2date', string(*/gmd:extent/*/*[2]),$mlang)}{$m2}"/> 
+                        <xsl:text> </xsl:text><span class="duplicate"></span><xsl:text> </xsl:text>
+                        <span data-tooltip="tooltip" data-original-title="{$labels/msg[@name='missingDate']/help}" style="color:red"><xsl:value-of select="$labels/msg[@name='missingDate']/label"/></span>
                     </div>
                 </div>        
             </div>
@@ -619,38 +646,48 @@
             <xsl:with-param name="valid" select="'6.1'"/>
 		</xsl:call-template>
     
-        <!-- 6.2 denominator -->
-        <div class="row">
-            <xsl:call-template name="drawLabel">
-                <xsl:with-param name="name" select="'scale'"/>
-                <xsl:with-param name="class" select="'cond '"/>
-                <xsl:with-param name="valid" select="'96'"/>
-            </xsl:call-template>			
-            
-            <div class="col-xs-12 col-md-8">
-                <select name="denominator[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
-                    <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator">
-                        <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
-                    </xsl:for-each>
-                </select>
-            </div>
-        </div>
+  <fieldset>
+                         
+            <div class="row">
+                <xsl:call-template name="drawLabel">
+                    <xsl:with-param name="name" select="'resolution'"/>
+                    <xsl:with-param name="class" select="'mand wide'"/>
+                </xsl:call-template>			
+             </div>
 
-        <!-- 6.2 distance --> 	
-        <div class="row">
-            <xsl:call-template name="drawLabel">
-                <xsl:with-param name="name" select="'distance'"/>
-                <xsl:with-param name="class" select="'cond '"/>
-            </xsl:call-template>			
-            
-            <div class="col-xs-12 col-md-8">
-                <select name="distance[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true">
-                    <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:distance">
-                        <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
-                    </xsl:for-each>
-                </select>
+            <!-- 6.2 denominator -->
+            <div class="row">
+                <xsl:call-template name="drawLabel">
+                    <xsl:with-param name="name" select="'scale'"/>
+                    <xsl:with-param name="class" select="'cond  inp2'"/>
+                    <xsl:with-param name="valid" select="'96'"/>
+                </xsl:call-template>			
+                
+                <div class="col-xs-12 col-md-8">
+                    <select name="denominator[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true" data-placeholder="{$labels/msg[@name='emultisel']/*}">
+                        <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:equivalentScale/*/gmd:denominator">
+                            <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
+                        </xsl:for-each>
+                    </select>
+                </div>
             </div>
-        </div>
+
+            <!-- 6.2 distance --> 	
+            <div class="row">
+                <xsl:call-template name="drawLabel">
+                    <xsl:with-param name="name" select="'distance'"/>
+                    <xsl:with-param name="class" select="'cond inp2'"/>
+                </xsl:call-template>			
+                
+                <div class="col-xs-12 col-md-8">
+                    <select name="distance[]" class="sel2" multiple="multiple" data-tags="true" data-allow-clear="true" data-placeholder="{$labels/msg[@name='emultisel']/*}">
+                        <xsl:for-each select="gmd:identificationInfo/*/gmd:spatialResolution/*/gmd:distance">
+                            <option value="{.}" selected="selected"><xsl:value-of select="."/></option>
+                        </xsl:for-each>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
     </xsl:if>
     
     <!-- 7 -->
@@ -691,46 +728,67 @@
         </div>
     </xsl:if>
     
-  	<!-- Conditions applying to access and use --> 
-	<xsl:call-template name="drawInput">
-	  	<xsl:with-param name="name" select="'accessCond'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints  and */@xlink:href]"/>
-	    <xsl:with-param name="codes" select="'accessCond'"/>
-	    <xsl:with-param name="multi" select="'2'"/>
-        <xsl:with-param name="class" select="'mand'"/>
-	    <xsl:with-param name="valid" select="'4711'"/>
-	</xsl:call-template>    
-    
-  	<!-- Conditions applying to access and use --> 
-	<xsl:call-template name="drawInput">
-	  	<xsl:with-param name="name" select="'accessCondTxt'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints  and not(*/@xlink:href)]"/>
-        <xsl:with-param name="class" select="'mand'"/>
-	    <xsl:with-param name="valid" select="'8.1'"/>
-        <xsl:with-param name="type" select="'textarea'"/>
-        <xsl:with-param name="langs" select="$langs"/>        
-	</xsl:call-template>    
+    <fieldset>
+        <div class="row">
+            <xsl:call-template name="drawLabel">
+                <xsl:with-param name="name" select="'accessCond'"/>
+                <xsl:with-param name="class" select="'mand'"/>
+                <xsl:with-param name="valid" select="4711"/>
+            </xsl:call-template>	
+        </div>
+        <!-- Conditions applying to access and use --> 
+        <xsl:call-template name="drawInput">
+            <xsl:with-param name="name" select="'accessCondCode'"/>
+            <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints  and */@xlink:href]"/>
+            <xsl:with-param name="codes" select="'accessCond'"/>
+            <xsl:with-param name="multi" select="'2'"/>
+            <xsl:with-param name="class" select="'cond inp2'"/>
+                                                   
+        </xsl:call-template>    
+        
+        <!-- Conditions applying to access and use --> 
+        <xsl:call-template name="drawInput">
+            <xsl:with-param name="name" select="'accessCondTxt'"/>
+            <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:useConstraints  and not(*/@xlink:href)]"/>
+            <xsl:with-param name="class" select="'cond inp2'"/>
+            <xsl:with-param name="valid" select="'8.1'"/>
+            <xsl:with-param name="type" select="'textarea'"/>
+            <xsl:with-param name="langs" select="$langs"/>        
+        </xsl:call-template>    
+    </fieldset>
 
-  	<!-- Limitation on public access --> 
-	<xsl:call-template name="drawInput">
-	  	<xsl:with-param name="name" select="'limitationsAccess'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints  and */@xlink:href]"/>
-	    <xsl:with-param name="codes" select="'limitationsAccess'"/>
-	    <xsl:with-param name="multi" select="'2'"/>
-	    <xsl:with-param name="valid" select="'4710'"/>
-        <xsl:with-param name="class" select="'mand'"/>	
-    </xsl:call-template>
+    <fieldset>
+        <div class="row">
+            <xsl:call-template name="drawLabel">
+                <xsl:with-param name="name" select="'limitationsAccess'"/>
+                <xsl:with-param name="class" select="'mand'"/>
+                                                                
+                <xsl:with-param name="valid" select="4710"/>
+                                                   
+                                                       
+            </xsl:call-template>	
+        </div>
 
-  	<!-- Limitation on public access - text --> 
-	<xsl:call-template name="drawInput">
-	  	<xsl:with-param name="name" select="'limitationsAccessTxt'"/>
-	    <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints  and not(*/@xlink:href)]"/>
-        <xsl:with-param name="type" select="'textarea'"/> 
-        <xsl:with-param name="class" select="'mand'"/>
-	    <xsl:with-param name="valid" select="'8.2'"/>
-        <xsl:with-param name="langs" select="$langs"/>
-	</xsl:call-template>
+        <!-- Limitation on public access --> 
+        <xsl:call-template name="drawInput">
+            <xsl:with-param name="name" select="'limitationsAccessCode'"/>
+            <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints  and */@xlink:href]"/>
+            <xsl:with-param name="codes" select="'limitationsAccess'"/>
+            <xsl:with-param name="multi" select="'2'"/>
+            <xsl:with-param name="class" select="'mand inp2'"/>	
+            <xsl:with-param name="req" select="'1'"/>
+        </xsl:call-template>
 
+        <!-- Limitation on public access - text --> 
+        <xsl:call-template name="drawInput">
+            <xsl:with-param name="name" select="'limitationsAccessTxt'"/>
+            <xsl:with-param name="value" select="gmd:identificationInfo/*/gmd:resourceConstraints/*/gmd:otherConstraints[../gmd:accessConstraints  and not(*/@xlink:href)]"/>
+            <xsl:with-param name="type" select="'textarea'"/> 
+            <xsl:with-param name="class" select="'inp2'"/>
+            <xsl:with-param name="valid" select="'8.2'"/>
+            <xsl:with-param name="langs" select="$langs"/>
+        </xsl:call-template>
+    </fieldset>
 	<!-- 9. Responsible party -->
     <div>
         <xsl:if test="string-length(gmd:identificationInfo/*/gmd:pointOfContact)=0">
@@ -775,14 +833,15 @@
         </xsl:for-each>
     </div>
     
-    <!-- 10.3 metadata language -->
+   <!-- 10.3 metadata language 
 	<xsl:call-template name="drawInput">
 	  	<xsl:with-param name="name" select="'mdlang'"/>
 	    <xsl:with-param name="value" select="gmd:language/*/@codeListValue"/>
 	    <xsl:with-param name="codes" select="'language'"/>
 	    <xsl:with-param name="multi" select="1"/>
 	    <xsl:with-param name="class" select="'mandatory short'"/>
-	</xsl:call-template>
+	</xsl:call-template>-->
+    <input type="hidden" name="mdlang" value="{gmd:language/*/@codeListValue}"/>
 
 	<!-- 11 file identifier -->
     <xsl:call-template name="drawInput">
@@ -992,12 +1051,12 @@
                             <xsl:with-param name="type" select="'textarea'"/>
                         </xsl:call-template>
 
-                        <xsl:call-template name="drawInput">
+                       <xsl:call-template name="drawInput">
                             <xsl:with-param name="name" select="'topologicalDate'"/>
                             <xsl:with-param name="path" select="'topological-date[]'"/>
-                            <xsl:with-param name="value" select="substring-before(gmd:dateTime,'T')"/>
+                            <xsl:with-param name="value" select="gmd:dateTime/*"/>
                             <xsl:with-param name="class" select="'date inp2'"/>
-                            <xsl:with-param name="type" select="'date'"/>
+                            <xsl:with-param name="type" select="'datetime'"/>
                         </xsl:call-template>
 
                         <div class="row">

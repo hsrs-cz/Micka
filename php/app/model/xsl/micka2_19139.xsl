@@ -722,9 +722,6 @@
                                    <xsl:when test="endPosition='?'">
                                         <gml:endPosition indeterminatePosition="unknown"/>
                                     </xsl:when>
-                                    <xsl:when test="endPosition='undefined' or string-length(endPosition)=0">
-                                        <gml:endPosition indeterminatePosition="undefined"/>
-                                    </xsl:when>
                                     <xsl:otherwise>
                                         <gml:endPosition><xsl:value-of select="endPosition"/></gml:endPosition>
                                     </xsl:otherwise>
@@ -781,7 +778,7 @@
 		      </srv:couplingType>
 		</xsl:for-each>
 		        
-        <xsl:for-each select="identificationInfo/SV_ServiceIdentification/containsOperations">
+        <xsl:for-each select="*/containsOperations">
           <srv:containsOperations>
             <srv:SV_OperationMetadata>
               <srv:operationName>
@@ -803,7 +800,7 @@
             </srv:SV_OperationMetadata>            
           </srv:containsOperations>
         </xsl:for-each>
-        <xsl:if test="not(identificationInfo/SV_ServiceIdentification/containsOperations)">
+        <xsl:if test="not(*/containsOperations)">
         	<srv:containsOperations gco:nilReason="unknown"/>
         </xsl:if>  
 

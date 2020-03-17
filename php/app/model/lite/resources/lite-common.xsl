@@ -288,6 +288,34 @@
 				</input>			
 			</xsl:when>
 
+			<!-- DATETIME  -->
+			<xsl:when test="$type='datetime'">
+				<input name="{$pth}" class="form-control hsf D {$class}" style="display:inline;" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" xpattern="^(19|20)\d\d([-](0[1-9]|1[012]))?([-](0[1-9]|[12][0-9]|3[01]))?$">
+					<xsl:if test="$req">
+						<xsl:attribute name="required">required</xsl:attribute>
+					</xsl:if>
+				</input>
+                <xsl:variable name="dtTime">
+                    <xsl:if test="contains($value, 'T')"><xsl:value-of select="substring-after($value, 'T')"/></xsl:if>
+                </xsl:variable>
+                <xsl:choose>
+                    <xsl:when test="contains($pth, '[]')">
+                        <input name="{substring-before($pth,'[')}T[]" class="form-control D hsf {$class}" style="display:inline;" value="{$dtTime}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9]|)">
+                            <xsl:if test="$req">
+                                <xsl:attribute name="required">required</xsl:attribute>
+                            </xsl:if>
+                        </input>	                                   
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <input name="{$pth}T" class="form-control hsf D {$class}" style="display:inline;" value="{$dtTime}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9]|)">
+                            <xsl:if test="$req">
+                                <xsl:attribute name="required">required</xsl:attribute>
+                            </xsl:if>
+                        </input>	               
+                    </xsl:otherwise>                
+                </xsl:choose>
+			</xsl:when>
+
 			<!-- REAL -->
 			<xsl:when test="$type='real'">
 				<input name="{$pth}" class="form-control hsf num short {$class}" value="{$value}" pattern="[-+]?[0-9]*\.?[0-9]*">

@@ -146,7 +146,7 @@ class Validator
         foreach ($xml->test as $t){
             $test = array();
             $test['code'] = (string) $t['code'];
-            $test['id'] = (string) $t['id'];
+            $test['id'] = isset($t['id']) ? (string) $t['id'] :  (string) $t['code'];
             $test['level'] = (string) $t['level'];
             $test['description'] = (string) $t->description;
             $test['xpath'] = (string) $t->xpath;

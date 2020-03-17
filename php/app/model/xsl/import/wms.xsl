@@ -382,7 +382,11 @@
                         </gmd:keyword>
                         <gmd:thesaurusName>
                           <gmd:CI_Citation>
-                            <gmd:title><xsl:value-of select="inspire_common:OriginatingControlledVocabulary/inspire_common:Title"/></gmd:title>
+                            <gmd:title>
+                                <gmx:Anchor xlink:href="https://www.eionet.europa.eu/gemet/inspire_themes">
+                                    <xsl:value-of select="inspire_common:OriginatingControlledVocabulary/inspire_common:Title"/>
+                                </gmx:Anchor>
+                            </gmd:title>
                             <gmd:date>
                               <gmd:CI_Date>
                                 <gmd:date><xsl:choose>
@@ -461,10 +465,16 @@
                                         </gmd:linkage>
                                         <xsl:choose>
                                             <xsl:when test="substring-after(translate(name(../../../.),$upper,$lower),'get')!=''">
-                                                <gmd:protocol>OGC:WMS-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(name(),$upper,$lower)" />-<xsl:value-of select="substring-after(translate(name(../../../.),$upper,$lower),'get')"/></gmd:protocol>
+                                                <gmd:protocol>
+                                                    <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-{//@version}-http-{translate(name(),$upper,$lower)}-{substring-after(translate(name(../../../.),$upper,$lower),'get')}">OGC:WMS-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(name(),$upper,$lower)" />-<xsl:value-of select="substring-after(translate(name(../../../.),$upper,$lower),'get')"/>
+                                                    </gmx:Anchor>
+                                                </gmd:protocol>
                                             </xsl:when>
                                             <xsl:otherwise>
-                                                <gmd:protocol>OGC:WMS-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(name(),$upper,$lower)" />-<xsl:value-of select="translate(name(../../../.),$upper,$lower)"/></gmd:protocol>
+                                                <gmd:protocol>
+                                                    <gmx:Anchor xlink:href="http://services.cuzk.cz/registry/codelist/OnlineResourceProtocolValue/OGC:WMS-{//@version}-http-{translate(name(),$upper,$lower)}">OGC:WMS-<xsl:value-of select="//@version"/>-http-<xsl:value-of select="translate(name(),$upper,$lower)" />-<xsl:value-of select="translate(name(../../../.),$upper,$lower)"/>
+                                                    </gmx:Anchor>
+                                                </gmd:protocol>
                                             </xsl:otherwise>
                                         </xsl:choose>		
                                     </srv:CI_OnlineResource>

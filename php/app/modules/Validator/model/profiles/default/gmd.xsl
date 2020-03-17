@@ -367,7 +367,6 @@ xmlns:php="http://php.net/xsl">
         </xsl:if>
 	</xsl:when>
 
-
 	<xsl:otherwise>
 		<test code="3" id="84">
 		 	<description><xsl:value-of select="$labels/test[@code='3']"/></description>
@@ -928,7 +927,7 @@ xmlns:php="http://php.net/xsl">
 <xsl:if test="$srv">
     <xsl:if test="$serviceType='other'">
         <test code="IOS-1" level="m">
-            <xsl:variable name="k" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title/*/@xlink:href"/>
+            <xsl:variable name="k" select="gmd:dataQualityInfo/*/gmd:report/gmd:DQ_DomainConsistency/gmd:result/gmd:DQ_ConformanceResult/gmd:specification/*/gmd:title[contains(*/@xlink:href, 'sds-')]/*/@xlink:href"/>
             <description><xsl:value-of select="$labels/test[@code='IOS-1']"/></description>
             <xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/DQ_ConformanceResult/specification/*/title = invocable|interoperable|harmonised</xpath>
             <xsl:choose>
