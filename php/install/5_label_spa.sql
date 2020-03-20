@@ -731,6 +731,7 @@ INSERT INTO label VALUES ('CL',63436,'spa','Zhuang',NULL);
 INSERT INTO label VALUES ('CL',63437,'spa','Zande',NULL);
 INSERT INTO label VALUES ('CL',63438,'spa','Zulu',NULL);
 INSERT INTO label VALUES ('CL',63439,'spa','Zuni',NULL);
+INSERT INTO label VALUES ('CL',63440,'spa','No linguistic content',NULL);
 INSERT INTO label VALUES ('CL',100081,'spa','Colección',NULL);
 INSERT INTO label VALUES ('CL',100082,'spa','Conjunto de datos',NULL);
 INSERT INTO label VALUES ('CL',100083,'spa','Evento',NULL);

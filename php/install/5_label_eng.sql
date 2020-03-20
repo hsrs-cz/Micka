@@ -731,6 +731,7 @@ INSERT INTO label VALUES ('CL',63436,'eng','Zhuang',NULL);
 INSERT INTO label VALUES ('CL',63437,'eng','Zande',NULL);
 INSERT INTO label VALUES ('CL',63438,'eng','Zulu',NULL);
 INSERT INTO label VALUES ('CL',63439,'eng','Zuni',NULL);
+INSERT INTO label VALUES ('CL',63440,'eng','No linguistic content',NULL);
 INSERT INTO label VALUES ('CL',100081,'eng','Collection','A collection is an aggregation of items. The term collection means that the resource is described as a group; its parts may be separately described and navigated.');
 INSERT INTO label VALUES ('CL',100082,'eng','Dataset','A dataset is information encoded in a defined structure (for example, lists, tables, and databases), intended to be useful for direct machine processing.');
 INSERT INTO label VALUES ('CL',100083,'eng','Event','An event is a non-persistent, time-based occurrence. Metadata for an event provides descriptive information that is the basis for discovery of the purpose, location, duration, responsible agents, and links to related events and resources. The resource of type event may not be retrievable if the described instantiation has expired or is yet to occur. Examples - exhibition, web-cast, conference, workshop, open-day, performance, battle, trial, wedding, tea-party, conflagration.');

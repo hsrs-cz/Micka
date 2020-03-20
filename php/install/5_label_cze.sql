@@ -731,6 +731,7 @@ INSERT INTO label VALUES ('CL',63436,'cze','Zhuang',NULL);
 INSERT INTO label VALUES ('CL',63437,'cze','Zande',NULL);
 INSERT INTO label VALUES ('CL',63438,'cze','Zulu',NULL);
 INSERT INTO label VALUES ('CL',63439,'cze','Zuni',NULL);
+INSERT INTO label VALUES ('CL',63440,'cze','Žádný',NULL);
 INSERT INTO label VALUES ('CL',100081,'cze','Skupina','A collection is an aggregation of items. The term collection means that the resource is described as a group; its parts may be separately described and navigated.');
 INSERT INTO label VALUES ('CL',100082,'cze','Datová sada','A dataset is information encoded in a defined structure (for example, lists, tables, and databases), intended to be useful for direct machine processing.');
 INSERT INTO label VALUES ('CL',100083,'cze','Událost','An event is a non-persistent, time-based occurrence. Metadata for an event provides descriptive information that is the basis for discovery of the purpose, location, duration, responsible agents, and links to related events and resources. The resource of type event may not be retrievable if the described instantiation has expired or is yet to occur. Examples - exhibition, web-cast, conference, workshop, open-day, performance, battle, trial, wedding, tea-party, conflagration.');

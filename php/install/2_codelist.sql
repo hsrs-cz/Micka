@@ -1,4 +1,4 @@
--- version 20200101 postgreSQL
+-- version 20200320 postgreSQL
 -- table CODELIST
 DELETE FROM codelist;
 INSERT INTO codelist VALUES (2408, 700, 'otherRestrictions', '8', 1);
@@ -695,6 +695,7 @@ INSERT INTO codelist VALUES (63436, 390, 'Zhuang', 'zha', 0);
 INSERT INTO codelist VALUES (63437, 390, 'Zande', 'znd', 0);
 INSERT INTO codelist VALUES (63438, 390, 'Zulu', 'zul', 0);
 INSERT INTO codelist VALUES (63439, 390, 'Zuni', 'zun', 0);
+INSERT INTO codelist VALUES (63440, 390, 'No linguistic content', 'zxx', 1);
 INSERT INTO codelist VALUES (63111, 390, 'English', 'eng', 1);
 INSERT INTO codelist VALUES (63091, 390, 'Czech', 'cze', 1);
 INSERT INTO codelist VALUES (63134, 390, 'German', 'ger', 1);
@@ -1018,6 +1019,7 @@ INSERT INTO codelist_my VALUES (30103, 1);
 INSERT INTO codelist_my VALUES (30211, 1);
 INSERT INTO codelist_my VALUES (30212, 1);
 INSERT INTO codelist_my VALUES (30213, 1);
+INSERT INTO codelist_my VALUES (63440, 1);
 -- table ELEMENTS
 DELETE FROM elements;
 INSERT INTO elements VALUES (20010, 'featureType', '', 2, 'T', NULL, 0, 0, 1, 0, NULL, 0);
@@ -1078,7 +1080,7 @@ INSERT INTO elements VALUES (1425, 'MD_MaintenanceInformation', 'MD_MaintenanceI
 INSERT INTO elements VALUES (3250, 'graphicsFile', 'asGraFile', 0, 'T', NULL, 0, 0, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (2680, 'MD_PortrayalCatalogueReference', 'PortCatRef', 0, 'T', NULL, 0, 1, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (780, 'DQ_DataQuality', 'DataQual', 0, 'T', NULL, 0, 1, 0, 0, NULL, 0);
-INSERT INTO elements VALUES (33, 'LanguageCode', 'LanguageCode', 0, 'C', -390, 1, 0, 0, 0, NULL, 0);
+INSERT INTO elements VALUES (33, 'LanguageCode', 'LanguageCode', 0, 'T', -390, 1, 0, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (30, 'language', 'mdLang', 0, 'T', NULL, 0, 0, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (30021, 'type', '', 0, 'T', NULL, 0, 0, 0, 0, NULL, 1);
 INSERT INTO elements VALUES (1430, 'maintenanceAndUpdateFrequency', 'maintFreq', 0, 'T', NULL, 0, 0, 0, 0, NULL, 0);
