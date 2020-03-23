@@ -113,28 +113,37 @@ xspan.locale {
     padding-left: 12px;
 }
 
-.cze {background-image: url(img/flags/cze.png); }
+.alb {background-image: url(img/flags/alb.png); }
+.bos {background-image: url(img/flags/bos.png); }
 .bul {background-image: url(img/flags/bul.png); }
+.cro {background-image: url(img/flags/cro.png); }
+.cze {background-image: url(img/flags/cze.png); }
 .dan {background-image: url(img/flags/dan.png); }
+.dut {background-image: url(img/flags/dut.png); }
 .eng {background-image: url(img/flags/eng.png); }
 .est {background-image: url(img/flags/est.png); }
-.fre {background-image: url(img/flags/fre.png); }
 .fin {background-image: url(img/flags/fin.png); }
+.fre {background-image: url(img/flags/fre.png); }
 .ger {background-image: url(img/flags/ger.png); }
+.gle {background-image: url(img/flags/gle.png); }
+.gre {background-image: url(img/flags/gre.png); }
 .hun {background-image: url(img/flags/hun.png); }
+.ice {background-image: url(img/flags/ice.png); }
 .ita {background-image: url(img/flags/ita.png); }
 .lav {background-image: url(img/flags/lav.png); }
 .lit {background-image: url(img/flags/lit.png); }
+.lux {background-image: url(img/flags/lux.png); }
 .mlt {background-image: url(img/flags/mlt.png); }
 .nor {background-image: url(img/flags/nor.png); }
 .pol {background-image: url(img/flags/pol.png); }
 .por {background-image: url(img/flags/por.png); }
 .rum {background-image: url(img/flags/rum.png); }
-.spa {background-image: url(img/flags/spa.png); }
 .slo {background-image: url(img/flags/slo.png); }
 .slv {background-image: url(img/flags/slv.png); }
+.spa {background-image: url(img/flags/spa.png); }
 .srp {background-image: url(img/flags/srp.png); }
 .swe {background-image: url(img/flags/swe.png); }
+.ukr {background-image: url(img/flags/ukr.png); }
 
 input.txt, textarea.txt {
     padding-left: 23px;

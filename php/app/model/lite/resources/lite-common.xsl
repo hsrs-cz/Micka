@@ -412,6 +412,9 @@
 
                     <!-- codelist loop -->
                     <xsl:for-each select="$codeLists/*[name()=$codes]/value">
+                        <!-- alphabetical sorting - if possible
+                        <xsl:sort select="*[name()=$lang]"/>
+                        -->
                         <xsl:variable name="r" select="."/>
                         <xsl:variable name="c">
                             <xsl:choose>

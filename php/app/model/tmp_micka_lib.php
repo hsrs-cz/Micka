@@ -47,7 +47,9 @@ function getMetadata($s, $esn='summary')
 
 function getMetadataById($id, $esn='full')
 {
-    return \App\Model\Micka::getMetadataById($id, $esn);
+    $data =  \App\Model\Micka::getMetadataById($id, $esn);
+    if(!$data) $data = new DomDocument();
+    return $data;
 }
 
 // pro XSLT - dotaz na metadata
