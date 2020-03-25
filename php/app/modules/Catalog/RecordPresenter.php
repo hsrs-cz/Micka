@@ -282,7 +282,7 @@ class RecordPresenter extends \BasePresenter
                     : [];
             $this->template->profils = $mcl->getMdProfils($this->appLang,$mds);
             $this->template->packages = $mcl->getMdPackages($this->appLang, $mds, $profil);
-            $this->template->allLanguages = $mcl->getLangsLabel($this->appLang);
+            $this->template->allLanguages = $mcl->getLangsLabel($this->appLang, $md_langs);
             $this->template->selectLanguages = explode('|',$rmd->lang);
             $this->template->primLanguage = $this->recordModel->getPrimLang();
             $this->template->detail = $this->getParam('f');
