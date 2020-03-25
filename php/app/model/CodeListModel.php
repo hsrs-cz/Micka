@@ -25,15 +25,23 @@ class CodeListModel extends \BaseModel
         return $tbl1+$tbl2;
     }
     
-    public function getLangsLabel($appLang) 
+    public function getLangsLabel($appLang, $langs=null) 
     {
-        return $this->db->query("
+        $rs_langs = $this->db->query("
 			SELECT codelist.[codelist_domain], label.[label_text]
 			FROM (label INNER JOIN codelist ON label.[label_join] = codelist.[codelist_id])
 			LEFT JOIN codelist_my ON codelist.[codelist_id] = codelist_my.[codelist_id]
             WHERE label.[label_type]='CL' AND codelist.[el_id]=390 AND codelist_my.[is_vis]=1 AND label.[lang]=%s
             ORDER BY label.[label_text]
-		", $appLang)->fetchPairs();
+        ", $appLang)->fetchPairs();
+        if ($langs !== null) {
+            foreach (explode( '|', $langs) as $row) {
+                if (array_key_exists($row, $rs_langs) === false) {
+                    $rs_langs[$row] = $row;
+                }
+            }
+        }
+        return $rs_langs;
     }
     
     public function getMdProfils($appLang, $mds=0) 

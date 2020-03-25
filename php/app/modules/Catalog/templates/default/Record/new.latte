@@ -134,6 +134,7 @@ var chLang= function(o){
         <div class="form-block">
             <h4>{_messages.frontend.language} / {_messages.frontend.primary}</h4>
             {foreach $mdLangs as $key => $value}
+                {continueIf $key == 'zxx'}
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" name="languages[]" value="{$key}" {if $key == $appLang} checked="checked"{/if} /> 
