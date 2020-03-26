@@ -58,7 +58,7 @@ class RegistryReader{
         if(!$data){
             $adapter = isset($config[$uri]["adapter"]) ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
             require_once($this->dir ."/lib/".$adapter);
-            $data = getRemoteData($uri, $config[$uri], $this->lang, $qstr);
+            $data = $getRemoteData($uri, $config[$uri], $this->lang, $qstr);
 
             // vyfiltruje podle konfigurace
             $d = array();
@@ -220,10 +220,10 @@ class RegistryReader{
     
    function getTranslations($uri, $id){
         $qstr= ''; $lang='';
-        require_once(__DIR__ ."/../cfg/cfg.php");
+        require(__DIR__ ."/../cfg/cfg.php");
         $adapter = isset($config[$uri]["adapter"]) ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
-        require_once($this->dir ."/lib/".$adapter);
-        $data = getTranslations($uri, $config[$uri], $this->lang, $qstr, $id);
+        require($this->dir ."/lib/".$adapter);
+        $data = $getTranslations($uri, $config[$uri], $this->lang, $qstr, $id);
         return $data;
     }
     

@@ -165,6 +165,7 @@ var SparqlClient = function(params){
     var lang = params.lang;
     if(!params.el) {console.log('SparqlClient params.el not defined.'); return; }
     var $t = $(params.el);
+    var format = params.format ? params.format : 'application/json';
     var showTree = params.showTree;
     var onClose = params.onClose;
     var scope = params.scope;
@@ -196,7 +197,7 @@ var SparqlClient = function(params){
             data: {
                 urle: 1,
                 query: qHierarchy.replace('$id',e.params.data.id).replace('$id',e.params.data.id),
-                format: 'application/json'
+                format: format
             }
         })
         .done(function(data){
@@ -232,7 +233,7 @@ var SparqlClient = function(params){
             data: {
                 urle: 1,
                 query: qLangs.replace('$id', uri),
-                format: 'application/json'
+                format: format
             }
         })
         .done(function(data){
@@ -257,7 +258,7 @@ var SparqlClient = function(params){
                 var query = {
                     urle: 1,
                    query: qSearch.replace('$term',params.term),
-                    format: 'application/json'
+                    format: format
                 }
                 return query;
             },

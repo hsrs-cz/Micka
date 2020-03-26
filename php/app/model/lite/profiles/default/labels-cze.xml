@@ -219,21 +219,31 @@ Příklad: D2.8.I.7 Data Specification on Transport Networks – version 3.1).
 	</msg>
 	<msg name="accessCond">
 		<label>8.1 Podmínky pro přístup a užití</label>
-		<help>Podmínky a licence vztahující se k přístupu a užití datové sady. Vyberte z číselníku nebo zadejte text a potvrďte ENTER.</help>
+		<help>Podmínky a licence vztahující se k přístupu a užití datové sady. Vyberte z číselníku nebo zadejte volný text. Musí být vyplněna alespoň jedna z těchto položek.</help>
+	</msg>
+	<msg name="accessCondCode">
+		<label>Z číselníku</label>
+		<help>Podmínky a licence vztahující se k přístupu a užití datové sady.</help>
 	</msg>
 	<msg name="accessCondTxt">
-		<label>8.1 text</label>
+		<label>Textový popis</label>
 		<help>Podmínky a licence vztahující se k přístupu a užití datové sady. Zadejte volný text.</help>
 	</msg>
 	<msg name="limitationsAccess">
 		<label>8.2 Omezení veřejného přístupu</label>
 		<help>Omezení veřejného přístupu k datové sadě (např. ochrana soukromí nebo duševního vlastnictví). Vyberte z číselníku. 
-            Položka "žádné omezení" nebo následující INSPIRE položka umsí být vyplněna!
+            Položka "bez omezení veřejného přístupu" nebo následující INSPIRE položka musí být vyplněna!
+        </help>
+	</msg>
+	<msg name="limitationsAccessCode">
+		<label>Z číselníku</label>
+		<help>Omezení veřejného přístupu k datové sadě (např. ochrana soukromí nebo duševního vlastnictví). Vyberte z číselníku. 
+            Položka "žádné omezení" nebo následující INSPIRE položka musí být vyplněna! Pokud zadáte volný text, musí být zde vyplněna položka "bez omezení veřejného přístupu".
         </help>
 	</msg>
 	<msg name="limitationsAccessTxt">
-		<label>8.2 text</label>
-		<help>Omezení veřejného přístupu k datové sadě. Zadejte volný text.</help>
+		<label>Textový popis</label>
+		<help>Omezení veřejného přístupu k datové sadě. Zadejte volný text. Pokud zadáte volný text, musí být zde vyplněna položka "bez omezení veřejného přístupu".</help>
 	</msg>
 	<msg name="linkage">
 		<label>1.4 Odkaz</label>

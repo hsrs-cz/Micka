@@ -35,20 +35,28 @@ $config=array(
                 }  "
     ),
 
-    // --- nemci
-    "http://resource.geolba.ac.at/lithology"=>array(
-            "adapter" => "skos",
-            "url" => "http://resource.geolba.ac.at/PoolParty/sparql/lithology",
-            "sparql" => "PREFIX dcterms:<http://purl.org/dc/terms/>
-                PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
-                SELECT ?URI ?prefLabelDE ?date
-            WHERE
-            {
-            ?URI a skos:Concept . ?URI skos:prefLabel ?prefLabelDE . FILTER(lang(?prefLabelDE)='de') .
-            ?URI dcterms:modified ?date
-            }
-            ORDER BY DESC (?date)
-            LIMIT 100"
+    // --- GeoERA
+    "https://data.geoscience.earth/ncl/geoera/keyword"=>array(
+            "adapter" => "geoera",
+            "url" => "https://data.geoscience.earth/ncl/system/query",
+            "format" => "json",
+            "nocache" => true,
+            "sparql" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                SELECT DISTINCT ?Concept ?prefLabel ?broader
+                WHERE
+                { ?Concept ?x skos:Concept .
+                  ?Concept skos:broader ?broader .
+                { ?Concept skos:prefLabel ?prefLabel . FILTER (regex(str(?prefLabel), '^$qstr.*', 'i')) }
+                FILTER langMatches (lang(?prefLabel), '$lang')
+                } ORDER BY ?prefLabel LIMIT 50 OFFSET 0",
+            "hierarchy" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
+                SELECT ?hierarchy ?id ?prefLabel WHERE { {
+                <http://resource.geolba.ac.at/geoera_keyword/radioactivity0> skos:broader ?id . ?id skos:prefLabel ?prefLabel . VALUES ?hierarchy {'b'} 
+                FILTER langMatches (lang(?prefLabel), '$lang') } 
+                UNION { <http://resource.geolba.ac.at/geoera_keyword/radioactivity0> skos:narrower ?id . ?id skos:prefLabel ?prefLabel . 
+                VALUES ?hierarchy {'n'} FILTER langMatches (lang(?prefLabel), '$lang'). }}",
+            "translations" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
+            SELECT * WHERE { <$id> skos:prefLabel ?prefLabel}"
     ),
 
     // --- EU Countries
@@ -60,6 +68,6 @@ $config=array(
     // ---- priorityDataset
     "http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset"=>array(
         "adapter"=> "inspireRegistry"
-    ),
+    )
     
 );

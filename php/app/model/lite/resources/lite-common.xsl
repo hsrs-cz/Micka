@@ -17,6 +17,21 @@
 <!-- GLOBAL VARIABLES -->
 <xsl:variable name="codeLists" select="document('../../../config/codelists.xml')/map" />
 
+<xsl:variable name="datePattern">
+    <xsl:choose>
+        <xsl:when test="$lang='cze'">^((0[1-9]|[12]\d|3[01]).(0[1-9]|1[0-2]).[12]\d{3})$</xsl:when>
+        <xsl:otherwise>^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$</xsl:otherwise>
+    </xsl:choose>
+</xsl:variable>
+
+<xsl:variable name="datePattern2">
+    <xsl:choose>
+        <xsl:when test="$lang='cze'">^(((((0[1-9]|[12]\d|3[01]).)?(0[1-9]|1[0-2]).)?[12]\d{3})|now|\?)$</xsl:when>
+        <xsl:otherwise>^(([12]\d{3}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?)|now|\?)$</xsl:otherwise>
+    </xsl:choose>
+</xsl:variable>
+
+
 <!-- ZOBRAZENI ORGANIZACE -->
 <xsl:template name="party">
 	<xsl:param name="root"/>
@@ -66,7 +81,7 @@
                     </xsl:otherwise>
                 </xsl:choose>
                 </xsl:variable>
-                <select class="person sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="{$labels/msg[@name='sel']/*} ..." data-ajax--url="../../suggest/mdcontacts?format=json">
+                <select class="person sel2" name="{concat($name,'-individualName[]')}" data-tags="true" data-allow-clear="true" data-placeholder="{$labels/msg[@name='esel']/*} ..." data-ajax--url="../../suggest/mdcontacts?format=json">
                     <option value="{$nc}"><xsl:value-of select="$root/*/gmd:individualName/*"/></option>
                 </select>
                 <input class="hperson" type="hidden" name="{concat($name,'-individualNameTxt[]')}" value="{$root/*/gmd:individualName/*}"/>
@@ -228,7 +243,7 @@
 		</xsl:choose></xsl:variable>
         
         <xsl:variable name="pth"><xsl:value-of select="$path"/><xsl:if test="$multi &gt; 1">[]</xsl:if></xsl:variable>
-        
+                
 		<div class="col-xs-12 col-md-8 {$cl}">
 			<xsl:choose>
 
@@ -281,7 +296,7 @@
 
 			<!-- DATE  -->
 			<xsl:when test="$type='date'">
-				<input name="{$pth}" class="form-control hsf D {$class}" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" xpattern="^(19|20)\d\d([-](0[1-9]|1[012]))?([-](0[1-9]|[12][0-9]|3[01]))?$">
+				<input name="{$pth}" class="form-control hsf D {$class}" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" pattern="{$datePattern}">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>
@@ -290,7 +305,7 @@
 
 			<!-- DATETIME  -->
 			<xsl:when test="$type='datetime'">
-				<input name="{$pth}" class="form-control hsf D {$class}" style="display:inline;" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" xpattern="^(19|20)\d\d([-](0[1-9]|1[012]))?([-](0[1-9]|[12][0-9]|3[01]))?$">
+				<input name="{$pth}" class="form-control hsf D {$class}" style="display:inline;" value="{php:function('iso2date', string($value),$lang)}" data-provide="datepicker" pattern="{$datePattern}">
 					<xsl:if test="$req">
 						<xsl:attribute name="required">required</xsl:attribute>
 					</xsl:if>

@@ -288,9 +288,9 @@ function clickMenu(afterpost, target){
   		form.submit();
   	}
   	else {
-  		for(f=0; f < form.elements.length; f++){
-  			if(!form.elements[f].validity.valid){
-  				md_scroll(form.elements[f]);
+  		for(var i=0; i < form.elements.length; i++){
+  			if(!form.elements[i].validity.valid){
+  				md_scroll(form.elements[i]);
   				break;
   			}
   		}
@@ -348,13 +348,13 @@ function chVal(e){
   }
   else if(this.className=='D'){
     if(lang=='cze'){
-      var r = /^(((0?[1-9]|[12][0-9]|3[01])\.)?((0?[1-9]|1[0-2])\.)?)((18|19|20|99)\d{2})$/
-      var msg = 'Špatný formát data. Musí být RRRR nebo MM.RRRR nebo DD.MM.RRRR';      
+      var r = /^((((0?[1-9]|[12][0-9]|3[01])\.)?((0?[1-9]|1[0-2])\.)?)((18|19|20|99)\d{2})|now|\?)$/
+      var msg = 'Špatný formát data. Povolené tvary: "RRRR", "MM.RRRR", "DD.MM.RRRR", "now", "?"';      
     }  
     else //if(lang=='en')
     {
-      var r = /^((18|19|20|99)\d{2})(-(0?[1-9]|1[0-2])(-(0?[1-9]|[12][0-9]|3[01]))?)?$/
-      var msg = 'Bad date format: YYYY or YYYY-MM or YYYY-MM-DD allowed.';
+      var r = /^(((18|19|20|99)\d{2})(-(0?[1-9]|1[0-2])(-(0?[1-9]|[12][0-9]|3[01]))?)?|now|\?)$/
+      var msg = 'Bad date format. Allowed values: "YYYY" or "YYYY-MM" or "YYYY-MM-DD", "now" or "?" allowed.';
     }
     if(r.exec(this.value)) return true;
     else{
@@ -362,7 +362,6 @@ function chVal(e){
       return false;
     }
   }
-
 }
 
 function chTextArea(e){

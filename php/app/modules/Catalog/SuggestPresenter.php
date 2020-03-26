@@ -87,7 +87,7 @@ class SuggestPresenter extends \BasePresenter
         if ($this->user->isLoggedIn() === false) {
             if($this->getParameter('format')=='json'){
                 $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
-                    array('result' => array()), 
+                    array('results' => array()), 
                     "application/json;charset=utf-8"
                 ));
             }

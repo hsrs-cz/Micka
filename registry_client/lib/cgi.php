@@ -1,6 +1,6 @@
 <?php
 
-function getRemoteData($uri, $config, $lang){
+function _cgiGet($uri, $config, $lang){
     $headers=array( "Accept: application/sparql-results+json" );
     $url = $config['url'] . "?query=" . rawurlencode($config['sparql']);    
     $ch = curl_init ($url);
@@ -27,3 +27,4 @@ function getRemoteData($uri, $config, $lang){
     );
 }
 
+$getRemoteData = '_cgiGet';

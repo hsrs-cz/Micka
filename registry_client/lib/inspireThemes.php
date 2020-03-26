@@ -1,6 +1,6 @@
 <?php
 
-function getRemoteData($uri, $config=false, $lang='en'){
+function _inspireThemeGet($uri, $config=false, $lang='en'){
     $url = $uri . substr($uri, strrpos($uri, '/')) . '.' . $lang . '.json';
     $json = getDataByURL($url);
     if(!$json){
@@ -25,3 +25,21 @@ function getRemoteData($uri, $config=false, $lang='en'){
         "result" => $result
     );
 }
+
+function _inspireThemeGetTranslations($uri, $config, $id){
+    $url = $config['url']."?query=".urlencode($config['translations'])."&format=".$config['format'];
+    $json = getDataByURL($url);
+    if(!$json){
+        die('not found: '. $url);
+    }
+    $data = json_decode($json,1);
+    $result = array();
+    foreach ($data['results']['bindings'] as $row){
+        $result[$row['prefLabel']["xml:lang"]] = $row['prefLabel']['value'];
+    }
+    return $result;
+}
+
+
+$getRemoteData = '_inspireThemeGet';
+$getTranslations = '_inspireThemeGetTranslations';
