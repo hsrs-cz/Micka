@@ -755,6 +755,7 @@ INSERT INTO label VALUES ('EL',30,'spa','idioma',NULL);
 INSERT INTO label VALUES ('EL',31,'spa','Código ISO',NULL);
 INSERT INTO label VALUES ('EL',32,'spa','Nombre ISO',NULL);
 INSERT INTO label VALUES ('EL',33,'spa','Código del Lenguaje',NULL);
+INSERT INTO label VALUES ('EL',34,'spa','Código del Lenguaje',NULL);
 INSERT INTO label VALUES ('EL',40,'spa','Conjunto de caracteres',NULL);
 INSERT INTO label VALUES ('EL',41,'spa','MD_CharacterSetCode_CodeList',NULL);
 INSERT INTO label VALUES ('EL',42,'spa','MD_CharacterSetCode_DomainCodes',NULL);

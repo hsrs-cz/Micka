@@ -1081,6 +1081,7 @@ INSERT INTO elements VALUES (3250, 'graphicsFile', 'asGraFile', 0, 'T', NULL, 0,
 INSERT INTO elements VALUES (2680, 'MD_PortrayalCatalogueReference', 'PortCatRef', 0, 'T', NULL, 0, 1, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (780, 'DQ_DataQuality', 'DataQual', 0, 'T', NULL, 0, 1, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (33, 'LanguageCode', 'LanguageCode', 0, 'T', -390, 1, 0, 0, 0, NULL, 0);
+INSERT INTO elements VALUES (34, 'LanguageCode', 'LanguageCode', 0, 'C', -390, 1, 0, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (30, 'language', 'mdLang', 0, 'T', NULL, 0, 0, 0, 0, NULL, 0);
 INSERT INTO elements VALUES (30021, 'type', '', 0, 'T', NULL, 0, 0, 0, 0, NULL, 1);
 INSERT INTO elements VALUES (1430, 'maintenanceAndUpdateFrequency', 'maintFreq', 0, 'T', NULL, 0, 0, 0, 0, NULL, 0);

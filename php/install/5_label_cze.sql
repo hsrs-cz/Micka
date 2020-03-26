@@ -755,6 +755,7 @@ INSERT INTO label VALUES ('EL',30,'cze','jazyk metadat','jazyk použitý pro dok
 INSERT INTO label VALUES ('EL',31,'cze','isoCode','This is help for field');
 INSERT INTO label VALUES ('EL',32,'cze','isoName','This is help for field');
 INSERT INTO label VALUES ('EL',33,'cze','LanguageCode',NULL);
+INSERT INTO label VALUES ('EL',34,'cze','LanguageCode',NULL);
 INSERT INTO label VALUES ('EL',40,'cze','znaková sada metadat','úplný název normy kódování znaků použité pro množinu metadat');
 INSERT INTO label VALUES ('EL',41,'cze','MD_CharacterSetCode_CodeList',NULL);
 INSERT INTO label VALUES ('EL',42,'cze','MD_CharacterSetCode_DomainCodes',NULL);

@@ -639,7 +639,7 @@ INSERT INTO standard_schema VALUES (0,618,98,1267,1272,6,5012,'m',1,1,NULL,1,'0_
 INSERT INTO standard_schema VALUES (0,619,618,1268,1269,7,5017,'o',0,1,NULL,1,'0_00_4751_00_1_00_96_00_5427_00_98_00_618_00_619_00','/MD_Metadata/identificationInfo/MD_DataIdentification/spatialResolution/MD_Resolution/distance/uom/uomName',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,620,618,1270,1271,7,5018,'o',0,1,NULL,1,'0_00_4751_00_1_00_96_00_5427_00_98_00_618_00_620_00','/MD_Metadata/identificationInfo/MD_DataIdentification/spatialResolution/MD_Resolution/distance/uom/uomSymbol',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,5,1,1276,1279,3,390,'M',1,NULL,NULL,1,'0_00_4751_00_1_00_5_00','/MD_Metadata/identificationInfo/MD_DataIdentification/language',NULL,'1.7  ',0);
-INSERT INTO standard_schema VALUES (0,5539,5,1277,1278,4,33,'o',1,1,NULL,1,'0_00_4751_00_1_00_5_00_5539_00','/MD_Metadata/identificationInfo/MD_DataIdentification/language/LanguageCode',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (0,5539,5,1277,1278,4,34,'o',1,1,NULL,1,'0_00_4751_00_1_00_5_00_5539_00','/MD_Metadata/identificationInfo/MD_DataIdentification/language/LanguageCode',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,364,1,1280,1285,3,400,'c',1,NULL,NULL,1,'0_00_4751_00_1_00_364_00','/MD_Metadata/identificationInfo/MD_DataIdentification/characterSet',NULL,'IO-5 ',0);
 INSERT INTO standard_schema VALUES (0,365,364,1281,1282,4,401,'c',1,1,NULL,1,'0_00_4751_00_1_00_364_00_365_00','/MD_Metadata/identificationInfo/MD_DataIdentification/characterSet/MD_CharacterSetCode',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,366,364,1283,1284,4,402,'c',1,1,NULL,1,'0_00_4751_00_1_00_364_00_366_00','/MD_Metadata/identificationInfo/MD_DataIdentification/characterSet/MD_CharacterSetCode_DomainCodes',NULL,NULL,0);
@@ -1317,7 +1317,7 @@ INSERT INTO standard_schema VALUES (0,107,0,2628,3031,1,160,'o',0,NULL,NULL,7,'0
 INSERT INTO standard_schema VALUES (0,303,107,2629,2756,2,2330,'c',1,1,'fc(this)|2',7,'0_00_107_00_303_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,305,303,2630,2631,3,2340,'o',0,1,NULL,7,'0_00_107_00_303_00_305_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/complianceCode',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,306,303,2632,2639,3,2350,'o',0,NULL,NULL,7,'0_00_107_00_303_00_306_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/language',NULL,NULL,0);
-INSERT INTO standard_schema VALUES (0,307,306,2633,2634,4,33,'c',1,1,NULL,7,'0_00_107_00_303_00_306_00_307_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/language/LanguageCode',NULL,NULL,0);
+INSERT INTO standard_schema VALUES (0,307,306,2633,2634,4,34,'c',1,1,NULL,7,'0_00_107_00_303_00_306_00_307_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/language/LanguageCode',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,308,306,2635,2636,4,392,'c',1,1,NULL,7,'0_00_107_00_303_00_306_00_308_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/language/isoName',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,309,306,2637,2638,4,393,'c',1,1,NULL,7,'0_00_107_00_303_00_306_00_309_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/language/otherLang',NULL,NULL,0);
 INSERT INTO standard_schema VALUES (0,310,303,2640,2641,3,2360,'m',1,1,NULL,7,'0_00_107_00_303_00_310_00','/MD_Metadata/contentInfo/MD_FeatureCatalogueDescription/includedWithDataset',NULL,NULL,0);

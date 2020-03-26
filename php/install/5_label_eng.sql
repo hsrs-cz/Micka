@@ -755,6 +755,7 @@ INSERT INTO label VALUES ('EL',30,'eng','language','language used for documentin
 INSERT INTO label VALUES ('EL',31,'eng','isoCode','This is help for field');
 INSERT INTO label VALUES ('EL',32,'eng','isoName','This is help for field');
 INSERT INTO label VALUES ('EL',33,'eng','LanguageCode',NULL);
+INSERT INTO label VALUES ('EL',34,'eng','LanguageCode',NULL);
 INSERT INTO label VALUES ('EL',40,'eng','character Set','full name of the character coding standard used for the metadata set');
 INSERT INTO label VALUES ('EL',41,'eng','MD_CharacterSetCode_CodeList',NULL);
 INSERT INTO label VALUES ('EL',42,'eng','MD_CharacterSetCode_DomainCodes',NULL);
