@@ -41,6 +41,12 @@ class CodeListModel extends \BaseModel
                 }
             }
         }
+        // lang zxx first
+        if (isset($rs_langs['zxx'])) {
+            $zxx = ['zxx' => $rs_langs['zxx']]; 
+            unset($rs_langs['zxx']);
+            $rs_langs = $zxx + $rs_langs;
+        }
         return $rs_langs;
     }
     

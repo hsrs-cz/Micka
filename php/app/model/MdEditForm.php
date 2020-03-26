@@ -77,7 +77,16 @@ class MdEditForm  extends \BaseModel
 			$this->code_list_array[$el_id][$cl_id]['t'] = $row->label_text;
 			$this->code_list_array[$el_id][$cl_id]['d'] = $row->codelist_domain;
 			$this->code_list_array[$el_id][$cl_id]['n'] = $row->codelist_name;
-		}
+        }
+        // lang zxx first
+        if (isset($this->code_list_array[390][63440])) {
+            $cl = [390 => $this->code_list_array[390]];
+            $zxx = [63440 => $cl[390][63440]];
+            unset($this->code_list_array[390]);
+            unset($cl[390][63440]);
+            $cl[390] = $zxx + $cl[390];
+            $this->code_list_array = $this->code_list_array + $cl;
+        }
 	}
 
     private function setButtonLabelArray()

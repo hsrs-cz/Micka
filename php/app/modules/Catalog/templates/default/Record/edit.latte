@@ -194,7 +194,7 @@
 
         <div style="margin-bottom:3px; font-weight: bold;">
             {if $user->isLoggedIn() && $user->isInRole('editor')}
-                {_messages.frontend.record}: 
+                {_messages.frontend.recordStatus}: 
                 <select name="data_type">
                     {foreach $MdDataTypes as $key => $value}
                         <option value="{$key}" {if $key == $dataType} selected="true"{/if}>{$value}</option>
@@ -221,8 +221,8 @@
                     {/foreach}
                 </select>
             {/if}
-            {_messages.frontend.language}:
-            <a type="button" href="#" class="open" data-toggle="modal" data-target="#md-languages-dialog" data-tooltip="tooltip" title="{_messages.frontend.fromList}">
+            {_messages.frontend.metadataLanguage}:
+            <a type="button" href="#" class="open" data-toggle="modal" data-target="#md-languages-dialog" data-tooltip="tooltip" title="{_messages.frontend.langsFromList}">
                 <i class="fa fa-folder-open fa-lg"></i>
             </a>
         </div>
