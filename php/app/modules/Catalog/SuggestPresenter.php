@@ -80,33 +80,44 @@ class SuggestPresenter extends \BasePresenter
         ));
     }
     
-    /** @resource Editor */
+    /** @resource Guest */
 	public function renderMdContacts()
 	{
-        //dump($this); $this->terminate();
         $this->template->mds = 'MD';
-        if ($this->context->hasService('contacts')) {
-            $contactsModel = $this->context->getService('contacts');
-            $contactsModel->setParams(
-                $this->context->getService('dibi2.connection'), 
-                $this->user,
-                $this->context->parameters
-            );
+        if ($this->user->isLoggedIn() === false) {
+            if($this->getParameter('format')=='json'){
+                $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
+                    array('result' => array()), 
+                    "application/json;charset=utf-8"
+                ));
+            }
+            else {
+                $this->template->contacts = array();
+            }
         } else {
-            $contactsModel = new \App\AdminModel\ContactsModel(
-                $this->context->getService('dibi.connection'), 
-                $this->user,
-                $this->context->parameters
-            );
-        }
-        if($this->getParameter('format')=='json'){
-            $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
-                $contactsModel->findMdContactsByName($this->getParameter('q')), 
-                "application/json;charset=utf-8"
-            ));
-        }
-        else {
-            $this->template->contacts = $contactsModel->findMdContacts();
+            if ($this->context->hasService('contacts')) {
+                $contactsModel = $this->context->getService('contacts');
+                $contactsModel->setParams(
+                    $this->context->getService('dibi2.connection'), 
+                    $this->user,
+                    $this->context->parameters
+                );
+            } else {
+                $contactsModel = new \App\AdminModel\ContactsModel(
+                    $this->context->getService('dibi.connection'), 
+                    $this->user,
+                    $this->context->parameters
+                );
+            }
+            if($this->getParameter('format')=='json'){
+                $this->sendResponse( new \Nette\Application\Responses\JsonResponse(
+                    $contactsModel->findMdContactsByName($this->getParameter('q')), 
+                    "application/json;charset=utf-8"
+                ));
+            }
+            else {
+                $this->template->contacts = $contactsModel->findMdContacts();
+            }
         }
     }
 
