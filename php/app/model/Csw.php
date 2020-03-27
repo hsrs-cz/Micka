@@ -757,6 +757,9 @@ class Csw extends \BaseModel
           $class = \App\Model\Micka::getClassName("App\\Model\\MdSearch");
           $export = new $class($this->db, $this->user, $this->appParameters, $this->params['STARTPOSITION'], $this->params['MAXRECORDS'], $sortby);
           $xmlstr = $export->getXmlRecords($qstr, $flatParams);
+          if ($xmlstr === -1) {
+            return -1;
+          }
           $this->xml->loadXML($xmlstr);
           $this->isXML = false;
           if(strpos($format, 'json')!==false){
@@ -1136,6 +1139,10 @@ class Csw extends \BaseModel
             //var_dump($result);
         }
         return $result;
+    }
+
+    public function getXml() {
+        return $this->xml;
     }
 
     private function delete()

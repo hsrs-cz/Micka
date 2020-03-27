@@ -194,6 +194,7 @@ apperror:
     noRecordFound: "Lo sentimos, el registro no fue encontrado."
     noProfileFound: "Lo sentimos, el perfil no fue encontrado."
     cantSaveNew: "Lo sentimos, no puede guardar este nuevo registro."
+    badRequest: "ENG: Bad request"
 
 import:
     recordUpdateSkip: "El registro ya existe. Importación detenida."

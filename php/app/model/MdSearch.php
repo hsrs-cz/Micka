@@ -189,7 +189,7 @@ class MdSearch extends \BaseModel
                 $records = $this->db->query($sql)->fetchSingle();
             } catch (\Dibi\Exception $e) {
                 \Tracy\Debugger::log($e, 'SQL_ERROR');
-                $records = 0;
+                return -1;
             }
 
             if ($records > 0) {
@@ -1248,7 +1248,7 @@ class MdSearch extends \BaseModel
         }
         $founds = $this->getPaginator($sql, $this->maxRecords, $this->page_number);
         if ($founds == -1) {
-            
+            return -1;
         }
         else {
             $rs['paginator'] = $founds;
@@ -1365,7 +1365,7 @@ class MdSearch extends \BaseModel
                 $records = $db_rs->fetchAll();
             } catch (\Dibi\Exception $e) {
                 \Tracy\Debugger::log($e, 'SQL_ERROR');
-                $records = [];
+                return -1;
             }
             if ($this->search_uuid === TRUE) {
                 $numberOfRecods = $this->setNumberOfRecords($this->startPosition+1, count($records));

@@ -198,6 +198,7 @@ apperror:
     noRecordFound: "Požadovaný záznam nebyl nalezen."
     noProfileFound: "Požadovaný profil nebyl nalezen."
     cantSaveNew: "Nepodařilo se vytvořit nový záznam."
+    badRequest: "Chybný dotaz"
 
 import:
     recordUpdateSkip: "Záznam již existuje. Import zastaven."
