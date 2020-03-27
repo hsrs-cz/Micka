@@ -185,7 +185,13 @@ class MdSearch extends \BaseModel
             $limit_find = 20;
         }
         if ($sql != '') {
-            $records = $this->db->query($sql)->fetchSingle();
+            try {
+                $records = $this->db->query($sql)->fetchSingle();
+            } catch (\Dibi\Exception $e) {
+                \Tracy\Debugger::log($e, 'SQL_ERROR');
+                $records = 0;
+            }
+
             if ($records > 0) {
                 $rs['records'] = $records;
                 $rs['pages'] = Ceil($records/$limit_find);
@@ -1354,8 +1360,13 @@ class MdSearch extends \BaseModel
         }
         $rs = '';
         if ($pom['paginator']['records'] > 0 && $pom['sql'] != '' && $this->hits === FALSE) {
-            $db_rs = $this->db->query($pom['sql']);
-            $records = $db_rs->fetchAll();
+            try {
+                $db_rs = $this->db->query($pom['sql']);
+                $records = $db_rs->fetchAll();
+            } catch (\Dibi\Exception $e) {
+                \Tracy\Debugger::log($e, 'SQL_ERROR');
+                $records = [];
+            }
             if ($this->search_uuid === TRUE) {
                 $numberOfRecods = $this->setNumberOfRecords($this->startPosition+1, count($records));
             }
@@ -1388,7 +1399,9 @@ class MdSearch extends \BaseModel
                         $this->getPxml($row->pxml) .
                         "</rec>";
             }
-            $db_rs->free();
+            if (count($records) > 0) {
+                $db_rs->free();
+            }
             unset($records);
         }
         $result = "<results numberOfRecordsMatched=\"".$numberOfRecods['Matched']."\" numberOfRecordsReturned=\"".$numberOfRecods['Return']."\" nextRecord=\"".$numberOfRecods['Next']."\" elementSet=\"brief\">";
