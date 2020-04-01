@@ -18,6 +18,7 @@ php/app/modules/Catalog/templates/*
 php/app/modules/Catalog/templates/!default
 php/app/modules/!Error/*
 php/app/modules/!Validator/*
+php/app/modules/!Registryclient/*
 php/app/model/xsl/profiles/*
 php/app/model/xsl/profiles/!default
 php/app/model/lite/profiles/*
