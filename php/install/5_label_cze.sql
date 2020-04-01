@@ -1176,7 +1176,7 @@ INSERT INTO label VALUES ('EL',3580,'cze','výškové datum','poskytuje informac
 INSERT INTO label VALUES ('EL',3581,'cze','datum ID',NULL);
 INSERT INTO label VALUES ('EL',3582,'cze','autorita',NULL);
 INSERT INTO label VALUES ('EL',3583,'cze','kód',NULL);
-INSERT INTO label VALUES ('EL',3584,'cze','jmenný prostor',NULL);
+INSERT INTO label VALUES ('EL',3584,'cze','jmenný prostor','Řetězec označující autoritu, která kódy přiděluje.');
 INSERT INTO label VALUES ('EL',3590,'cze','Citace','normalizovaný odkaz na zdroj');
 INSERT INTO label VALUES ('EL',3600,'cze','název','název, pod nímž je citovaný zdroj znám ');
 INSERT INTO label VALUES ('EL',3601,'cze','název','název, pod nímž je citovaný zdroj znám ');

@@ -1,0 +1,2 @@
+update label set label_help='Řetězec označující autoritu, která kódy přiděluje.' where label_join=3584 and lang='cze';
+update label set label_help='String identifying the authority that assigns the code.' where label_join=3584 and lang='eng';

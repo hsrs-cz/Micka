@@ -1175,7 +1175,7 @@ INSERT INTO label VALUES ('EL',3580,'spa','Datum vertical',NULL);
 INSERT INTO label VALUES ('EL',3581,'spa','Identificador del Datum',NULL);
 INSERT INTO label VALUES ('EL',3582,'spa','responsable',NULL);
 INSERT INTO label VALUES ('EL',3583,'spa','código',NULL);
-INSERT INTO label VALUES ('EL',3584,'spa','Código del sitio',NULL);
+INSERT INTO label VALUES ('EL',3584,'spa','Código del sitio','ENG: String identifying the authority that assigns the code.');
 INSERT INTO label VALUES ('EL',3590,'spa','Referencias',NULL);
 INSERT INTO label VALUES ('EL',3600,'spa','Nombre',NULL);
 INSERT INTO label VALUES ('EL',3601,'spa','nombre',NULL);

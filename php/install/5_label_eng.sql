@@ -1176,7 +1176,7 @@ INSERT INTO label VALUES ('EL',3580,'eng','Vertical Datum','provides information
 INSERT INTO label VALUES ('EL',3581,'eng','datumID',NULL);
 INSERT INTO label VALUES ('EL',3582,'eng','authority',NULL);
 INSERT INTO label VALUES ('EL',3583,'eng','code',NULL);
-INSERT INTO label VALUES ('EL',3584,'eng','Code Space',NULL);
+INSERT INTO label VALUES ('EL',3584,'eng','Code Space','String identifying the authority that assigns the code.');
 INSERT INTO label VALUES ('EL',3590,'eng','Citation','standardized resource reference');
 INSERT INTO label VALUES ('EL',3600,'eng','Title','name by which the cited resource is known');
 INSERT INTO label VALUES ('EL',3601,'eng','title','name by which the cited resource is known');
