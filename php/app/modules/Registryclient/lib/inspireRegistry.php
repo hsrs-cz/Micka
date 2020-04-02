@@ -13,7 +13,7 @@ if(!function_exists('_inspireGet')){
         $data = json_decode($json, 1);
         $result = array();
         foreach($data as $key=>$data){
-            // only one item
+            // only one item !!!
             foreach($data['containeditems'] as $row){ 
                 $result[$row['value']['id']] = array(
                     "id" => $row['value']['id'],

@@ -517,7 +517,7 @@ function getRegistryText($uri, $id, $lang='en'){
 }
 
 function getRegistryTranslations($uri, $id){
-    require_once(__DIR__ .'/../../../registry_client/lib/RegistryReader.php');
+    require_once(__DIR__ .'/../modules/Registryclient/lib/RegistryReader.php');
     $r = new RegistryReader('en');
     $data =  $r->getTranslations($uri, $id);
     //echo "<pre>"; var_dump($data); die();

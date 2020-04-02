@@ -144,9 +144,9 @@ xmlns:php="http://php.net/xsl">
 
 <!-- 1.5 -->
 <test code="1.5" id="111,5068">
-    <xsl:if test="$srv">
+    <!--xsl:if test="$srv">
         <xsl:attribute name="level">n</xsl:attribute>
-    </xsl:if>
+    </xsl:if-->
     <description><xsl:value-of select="$labels/test[@code='1.5']"/></description>
     <xpath>identificationInfo[1]/*/citation/*/identifier</xpath>
     <xsl:if test="string-length(normalize-space(gmd:identificationInfo/*/gmd:citation/*/gmd:identifier/*/gmd:code))>0 or gmd:identificationInfo/*/gmd:citation/*/gmd:identifier[*/gmd:code/*/@xlink:href]/*/gmd:code/*/@xlink:href">
@@ -441,7 +441,7 @@ xmlns:php="http://php.net/xsl">
         <xsl:when test="string-length(normalize-space(gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox))>0 ">
             <xsl:for-each select="gmd:identificationInfo/*/srv:extent/*/gmd:geographicElement/gmd:EX_GeographicBoundingBox">
 
-                    <test code="4.1" id="5132">
+                    <test code="4.1" id="5132,494" level="c">
                         <description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
                         <xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox"/>]</xpath>
                         <xsl:choose>
@@ -469,7 +469,7 @@ xmlns:php="http://php.net/xsl">
         </xsl:when>
 
         <xsl:otherwise>
-            <test code="4.1" id="5132">
+            <test code="4.1" id="5132,494" level="c">
                 <description><xsl:value-of select="$labels/test[@code='4.1']"/></description>
                 <xpath>identificationInfo/*/extent/*/geographicElement/EX_GeographicBoundingBox</xpath>
             </test>	
@@ -1012,7 +1012,7 @@ xmlns:php="http://php.net/xsl">
 
 <xsl:if test="not($srv)">
     <!--  xsl:variable name="rep" select="gmd:dataQualityInfo/*/gmd:report[php:function('mb_strtoupper', normalize-space(gmd:DQ_DomainConsistency/gmd:result/*/gmd:specification/*/gmd:title/gco:CharacterString))=php:function('mb_strtoupper', $spec)]"/-->
-    <test code="IOD-1" id="8" level="c">
+    <test code="IOD-1" id="8" level="m">
     	<description><xsl:value-of select="$labels/test[@code='IOD-1']"/></description>
     	<xpath>referenceSystemInfo/*/referenceSystemIdentifier/*/code</xpath>
     	<xsl:if test="string-length(normalize-space(gmd:referenceSystemInfo/*/gmd:referenceSystemIdentifier/*/gmd:code))>0">
@@ -1021,13 +1021,13 @@ xmlns:php="http://php.net/xsl">
              <xsl:for-each select="gmd:referenceSystemInfo">
              	<test code="a" level="m">
              		<description><xsl:value-of select="$labels/test[@code='IOD-1a']"/></description>
-  				<xpath>http://www.opengis.net/def/crs/*</xpath>
-  				<xsl:if test="contains(*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href,'http://www.opengis.net/def/crs/')">
-                    <value>
-                        <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href"/>
-                  		- <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
-                  	</value>
-                  	<pass>true</pass>
+                    <xpath>http://www.opengis.net/def/crs/*</xpath>
+                    <xsl:if test="contains(*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href,'http://www.opengis.net/def/crs/')">
+                        <value>
+                            <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code/*/@xlink:href"/>
+                            - <xsl:value-of select="*/gmd:referenceSystemIdentifier/*/gmd:code"/>
+                        </value>
+                        <pass>true</pass>
                  	</xsl:if>
                  </test>
              </xsl:for-each>    
@@ -1173,7 +1173,7 @@ xmlns:php="http://php.net/xsl">
     	</xsl:choose>
     </test>
 
-	<test code="CZ-7" id="77" level="c">
+	<test code="CZ-7" id="77" level="n">
 		<description><xsl:value-of select="$labels/test[@code='CZ-7']"/></description>
 		<xpath>gmd:identificationInfo/*/gmd:purpose</xpath>
 		<xsl:choose>

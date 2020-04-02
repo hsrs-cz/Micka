@@ -510,7 +510,7 @@ function thes(obj){
     var thes = {};
     
     var gemet = new GemetClient({
-        url: baseUrl + '/registry_client/proxy.php?url=http://www.eionet.europa.eu/gemet/',
+        url: baseUrl + '/registry_client/proxy/?url=http://www.eionet.europa.eu/gemet/',
         lang: HS.getLang(2),
         el: '#gemet',
         showTree: true

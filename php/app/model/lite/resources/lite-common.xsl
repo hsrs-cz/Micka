@@ -19,18 +19,17 @@
 
 <xsl:variable name="datePattern">
     <xsl:choose>
-        <xsl:when test="$lang='cze'">^((0[1-9]|[12]\d|3[01]).(0[1-9]|1[0-2]).[12]\d{3})$</xsl:when>
+        <xsl:when test="$lang='cze'">^((0?[1-9]|[12]\d|3[01]).(0?[1-9]|1[0-2]).[12]\d{3})$</xsl:when>
         <xsl:otherwise>^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$</xsl:otherwise>
     </xsl:choose>
 </xsl:variable>
 
 <xsl:variable name="datePattern2">
     <xsl:choose>
-        <xsl:when test="$lang='cze'">^(((((0[1-9]|[12]\d|3[01]).)?(0[1-9]|1[0-2]).)?[12]\d{3})|now|\?)$</xsl:when>
+        <xsl:when test="$lang='cze'">^(((((0?[1-9]|[12]\d|3[01]).)?(0?[1-9]|1[0-2]).)?[12]\d{3})|now|\?)$</xsl:when>
         <xsl:otherwise>^(([12]\d{3}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?)|now|\?)$</xsl:otherwise>
     </xsl:choose>
 </xsl:variable>
-
 
 <!-- ZOBRAZENI ORGANIZACE -->
 <xsl:template name="party">
@@ -43,7 +42,6 @@
 	<xsl:param name="role" select="'role'"/>
 	
 	<!-- validace --> 
-
 	<fieldset>
         <div class="row">
             <xsl:call-template name="drawLabel">
@@ -54,7 +52,7 @@
             </xsl:call-template>
         </div>        
 		<xsl:variable name="getParty">
-		  <xsl:if test="$publisher=1">getParty(this);</xsl:if>
+            <xsl:if test="$publisher=1">getParty(this);</xsl:if>
 		</xsl:variable>
 
         <!--xsl:call-template name="drawInput">
@@ -351,7 +349,7 @@
 
 			<!-- REGISTRY -->
             <xsl:when test="$uri!=''">
-                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="../../registry_client?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
+                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="../../registry_client/?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>

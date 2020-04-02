@@ -170,6 +170,10 @@ label.inp2 {
     width:180px;
 }
 
+.medium {
+    width:300px;
+}
+
 .tiny {
     width: 90px;
     display: inline-block !important;
