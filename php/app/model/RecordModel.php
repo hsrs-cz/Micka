@@ -1185,6 +1185,10 @@ class RecordModel extends \BaseModel
         $i = 0;
         $mds = $this->recordMd->md_standard == 10 ? 0 : $this->recordMd->md_standard;
         foreach ($this->recordMdValues as $row) {
+            if (isset($elements_label[$mds][$row->md_id]) === false) {
+                \Tracy\Debugger::log('md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_MAKE_XML');
+                continue;
+            }
             if ($elements_label[$mds][$row->md_id]['is_data'] === 0) {
                 \Tracy\Debugger::log('md_id='.$row->md_id.', md_path='.$row->md_path, 'ERROR_MAKE_XML');
                 continue;
