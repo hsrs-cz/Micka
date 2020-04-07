@@ -36,14 +36,17 @@ class DefaultPresenter extends \BasePresenter
         $uri = $httpRequest->getQuery('uri') !== null ? $httpRequest->getQuery('uri') : "http://inspire.ec.europa.eu/theme";
         $lang = $httpRequest->getQuery('lang') !== null ? $httpRequest->getQuery('lang') : 'en';
         $query = $httpRequest->getQuery('q') !== null ? $httpRequest->getQuery('q') : '';
-        $translations = $httpRequest->getQuery('translations');
+        $req = $httpRequest->getQuery('request');
         $id = $httpRequest->getQuery('id');
-        $r = new \RegistryReader($lang);
-        $r->tempDir = realpath($this->context->parameters['tempDir']) . DIRECTORY_SEPARATOR . 'registry_client';
+        $r = new \RegistryReader($lang, $this->context->parameters['tempDir'] . DIRECTORY_SEPARATOR . 'registry');
 
-        if($translations !== null) {
-            $data = $r->getTranslations($uri, $translations);
-        } else {
+        if($req == 'transl') {
+            $data = $r->getTranslations($uri, $id);
+        }
+        else  if($req == 'hierarchy') {
+            $data = $r->getHierarchy($uri, $id);            
+        } 
+        else {
             if ($id !== null) {
                 $r->getData($uri);
                 $data = $r->queryById($id);

@@ -40,7 +40,31 @@ if(!function_exists('_geoeraGet')){
         }
         return $result;
     }
+
+    function _geoeraGetHierarchy($uri, $config, $id){
+        $url = $config['url']."?query=".urlencode($config['hierarchy'])."&format=".$config['format'];
+        $json = getDataByURL($url);
+        if(!$json){
+            die('not found: '. $url);
+        }
+        $data = json_decode($json,1);
+        $result = array();
+        $result = array();
+        foreach($data['results']['bindings'] as $row){ 
+            $result[] = array(
+                "id" => $row['Concept']['value'],
+                "text"=>$row['prefLabel']['value'],
+                "hierarchy"=>$row['hierarchy']['value']//,
+                //"title" => $row['theme']['definition']['text'],
+                //"parentId" =>  $row['broader']['value'],
+                //"parentName" => isset($row['theme']['parents']) ? $row['theme']['parents'][0]['parent']['definition']['text'] : false  
+            );   
+        }
+        return $result;
+    }
+    
 }
 
 $getRemoteData = '_geoeraGet';
 $getTranslations = '_geoeraGetTranslations';
+$getHierarchy = '_geoeraGetHierarchy';

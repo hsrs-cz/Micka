@@ -87,7 +87,7 @@
 			   			<a class='map' href="{$viewerURL}{php:function('urlencode', substring-before($wmsURL,'#'))}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
 					</xsl:when>
 					<xsl:otherwise>
-						<a class='map' href="{$viewerURL}{php:function('urlencode', $wmsURL)}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
+						<a class='map' href="{$viewerURL}{php:function('urlencode', string($wmsURL))}" target="wmsviewer" data-tooltip="tooltip" data-original-title="{$msg[@eng='map']}"><i class="fa fa-map-o fa-fw"></i></a>
 					</xsl:otherwise>
 				</xsl:choose>
 				<xsl:text> </xsl:text>
@@ -230,7 +230,7 @@
                                         </a>
                                     </xsl:when>
                                     <xsl:otherwise>
-                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{php:function('urlencode', */gmd:linkage/*)}" target="wmsviewer">
+                                        <a class='map' resource="{*/gmd:linkage}" href="{$viewerURL}{php:function('urlencode', string(*/gmd:linkage/*))}" target="wmsviewer">
                                             <span style="color:#ff6600; font-size:18px;"><i class="fa fa-map"></i></span><xsl:text> </xsl:text>
                                             <xsl:value-of select="$label1"/>
                                         </a>

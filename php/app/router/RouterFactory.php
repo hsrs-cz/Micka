@@ -64,7 +64,7 @@ class RouterFactory
             $router[] = new Route($mickaUrl . '[<locale=' . $locale . '>/]record/atom[/<id>]', ['module' => 'Catalog', 'presenter' => 'Record', 'action' => 'atom']);
             $router[] = new Route($mickaUrl . '[<locale=' . $locale . '>/]about', ['module' => 'Catalog', 'presenter' => 'Micka', 'action' => 'about']);
             $router[] = new Route($mickaUrl . '[<locale=' . $locale . '>/]help', ['module' => 'Catalog', 'presenter' => 'Micka', 'action' => 'help']);
-            $router[] = new Route($mickaUrl . 'registry_client', ['module' => 'Registryclient', 'presenter' => 'Default', 'action' => 'default']);
+            $router[] = new Route($mickaUrl . 'registry_client/', ['module' => 'Registryclient', 'presenter' => 'Default', 'action' => 'default']);
             $router[] = new Route($mickaUrl . 'registry_client/proxy/', ['module' => 'Registryclient', 'presenter' => 'Default', 'action' => 'proxy']);
             $router[] = new Route($mickaUrl . '[<locale=' . $locale . '>/]<module=Catalog>/<presenter=Default>/<action=default>', 'Catalog:Default:default');
         }

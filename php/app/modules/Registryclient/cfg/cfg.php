@@ -49,14 +49,15 @@ $config=array(
                 { ?Concept skos:prefLabel ?prefLabel . FILTER (regex(str(?prefLabel), '^$qstr.*', 'i')) }
                 FILTER langMatches (lang(?prefLabel), '$lang')
                 } ORDER BY ?prefLabel LIMIT 50 OFFSET 0",
-            "hierarchy" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
-                SELECT ?hierarchy ?id ?prefLabel WHERE { {
-                <http://resource.geolba.ac.at/geoera_keyword/radioactivity0> skos:broader ?id . ?id skos:prefLabel ?prefLabel . VALUES ?hierarchy {'b'} 
-                FILTER langMatches (lang(?prefLabel), '$lang') } 
-                UNION { <http://resource.geolba.ac.at/geoera_keyword/radioactivity0> skos:narrower ?id . ?id skos:prefLabel ?prefLabel . 
-                VALUES ?hierarchy {'n'} FILTER langMatches (lang(?prefLabel), '$lang'). }}",
-            "translations" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
-            SELECT * WHERE { <$id> skos:prefLabel ?prefLabel}"
+            "hierarchy" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
+                SELECT ?hierarchy ?Concept ?prefLabel WHERE
+                { {<$id> skos:broader ?Concept . ?Concept skos:prefLabel ?prefLabel . VALUES ?hierarchy {'b'} 
+                FILTER langMatches (lang(?prefLabel), '$lang') }
+                UNION { <$id> skos:narrower ?Concept . ?Concept skos:prefLabel ?prefLabel . VALUES ?hierarchy  {'n'}
+                  FILTER langMatches (lang(?prefLabel), '$lang').
+                }}",
+                "translations" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
+                SELECT * WHERE { <$id> skos:prefLabel ?prefLabel}" 
     ),
     
     // --- GeoERA projects
@@ -74,10 +75,10 @@ $config=array(
                 FILTER langMatches (lang(?prefLabel), '$lang')
                 } ORDER BY ?prefLabel LIMIT 50 OFFSET 0",
             "hierarchy" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
-                SELECT ?hierarchy ?id ?prefLabel WHERE { {
-                <http://resource.geolba.ac.at/geoera_keyword/radioactivity0> skos:broader ?id . ?id skos:prefLabel ?prefLabel . VALUES ?hierarchy {'b'} 
+                SELECT ?hierarchy ?Concept ?prefLabel WHERE { {
+                <$id> skos:broader ?Concept . ?Concept skos:prefLabel ?prefLabel . VALUES ?hierarchy {'b'} 
                 FILTER langMatches (lang(?prefLabel), '$lang') } 
-                UNION { <http://resource.geolba.ac.at/geoera_keyword/radioactivity0> skos:narrower ?id . ?id skos:prefLabel ?prefLabel . 
+                UNION { <$id> skos:narrower ?Concept . ?Concept skos:prefLabel ?prefLabel . 
                 VALUES ?hierarchy {'n'} FILTER langMatches (lang(?prefLabel), '$lang'). }}",
             "translations" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
             SELECT * WHERE { <$id> skos:prefLabel ?prefLabel}"        
@@ -91,6 +92,11 @@ $config=array(
 
     // ---- priorityDataset
     "http://inspire.ec.europa.eu/metadata-codelist/PriorityDataset"=>array(
+        "adapter"=> "inspireRegistry"
+    ),
+
+    // ---- spatial data services
+    "http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceCategory"=>array(
         "adapter"=> "inspireRegistry"
     )
     

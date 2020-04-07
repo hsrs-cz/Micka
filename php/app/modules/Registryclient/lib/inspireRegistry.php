@@ -43,6 +43,7 @@ if(!function_exists('_inspireGet')){
         }
         return $result;
     }
+
 }
 
 $getRemoteData = '_inspireGet';

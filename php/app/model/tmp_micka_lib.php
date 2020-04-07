@@ -509,7 +509,7 @@ function dateCz2Iso($datum) {
 }
 
 function getRegistryText($uri, $id, $lang='en'){
-    require_once(__DIR__ .'/../../../registry_client/lib/RegistryReader.php');
+    require_once(__DIR__ .'/../modules/Registryclient/lib/RegistryReader.php');
     $r = new RegistryReader($lang);
     $r->getData($uri);
     $data = $r->queryById($id);

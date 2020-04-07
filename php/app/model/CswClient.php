@@ -475,7 +475,14 @@ class CswClient
         return "";
     }
     $this->xsl->load($template);
-    $this->xp->importStyleSheet($this->xsl);
+    libxml_use_internal_errors(true);
+    $result = $this->xp->importStyleSheet($this->xsl);
+    if (!$result) {
+        foreach (libxml_get_errors() as $error) {
+            echo "Libxml error: {$error->message}\n";
+        }
+        die();
+    }
     if(count($params) > 0){
         $this->xp->setParameter("", $params);
     }   

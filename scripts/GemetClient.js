@@ -185,11 +185,25 @@ var SparqlClient = function(params){
     this.onThesChange = function (e) {
         sel = 1;
         e.stopPropagation();
-        var d = [
-            e.params.data,
-            {text: HS.i18n('broader term'), children: []}, 
-            {text: HS.i18n('narrower terms'), children: []}
-        ];
+        let self = this;
+        if(e.params.data.prepared){
+            $t.select2(defCfg);
+            return;
+        }
+        else{
+            e.params.data.selected=false
+            e.params.data.prepared=true;
+            var d = [];
+            for(const el of $t.select2('data')){
+                if(el.id != e.params.data.id) {
+                    //el.disabled= true;
+                    d.push(el);
+                }
+            }
+            d.push(e.params.data);
+            d.push({text: HS.i18n('broader term'), children: []});
+            d.push({text: HS.i18n('narrower terms'), children: []});
+        }
         $t.select2().empty();
         $.ajax({
             url: url,
@@ -203,10 +217,10 @@ var SparqlClient = function(params){
         .done(function(data){
             for(var i=0;i<data.results.bindings.length; i++){
                 if(data.results.bindings[i].hierarchy.value=='b'){
-                    d[1].children.push({id: data.results.bindings[i].id.value, text: data.results.bindings[i].prefLabel.value, level: 1});
+                    d[d.length-2].children.push({id: data.results.bindings[i].id.value, text: data.results.bindings[i].prefLabel.value, level: 1});
                 }
                 else {
-                    d[2].children.push({id: data.results.bindings[i].id.value, text: data.results.bindings[i].prefLabel.value, level: 1});
+                    d[d.length-1].children.push({id: data.results.bindings[i].id.value, text: data.results.bindings[i].prefLabel.value, level: 1});
                 }
             }
             $t.select2({
@@ -227,7 +241,7 @@ var SparqlClient = function(params){
     this.process = function(langs, handler){
         var terms = {};
         var uri = $t.val();
-        
+        console.log('process');
         $.ajax({
             url: url, 
             data: {
@@ -257,7 +271,7 @@ var SparqlClient = function(params){
             data: function (params) {
                 var query = {
                     urle: 1,
-                   query: qSearch.replace('$term',params.term),
+                    query: qSearch.replace('$term',params.term),
                     format: format
                 }
                 return query;
@@ -286,7 +300,6 @@ var SparqlClient = function(params){
     // when clearing the field
     $t.on('select2:unselect', function(e){
         e.stopPropagation();
-        $t.select2().empty();
         $t.select2(defCfg);
         onClose.call(scope);
     });
@@ -299,3 +312,156 @@ var SparqlClient = function(params){
 
 };
 
+var RegistryClient = function(params){
+    if(!params.el) {console.log('RegistryClient params.el not defined.'); return false; }
+    var $t = $(params.el);
+    if(!$t) {console.log('RegistryClient params.el not found.'); return false; }
+    var lang = params.lang ? params.lang : 'eng';
+    if($t.attr('data-ajax--url')) {
+        var url = $t.attr('data-ajax--url');
+        $t.removeAttr('data-ajax--url');
+    }
+    else {
+        if(!params.url) {console.log('RegistryClient params.url not defined.'); return; }
+        if(!params.thesaurusUri) {console.log('RegistryClient params.thesaurusUri not defined.'); return; }
+        if(!params.lang) {console.log('RegistryClient params.lang not defined.'); return; }
+        var url = params.url + '?uri='+params.thesaurusUri+'&lang='+params.lang;
+    }
+    var format = params.format ? params.format : 'application/json';
+    var showTree = params.showTree;
+    var onClose = params.onClose;
+    var scope = params.scope;
+    var qSearch = params.qSearch;
+    var qHierarchy = params.qHierarchy;
+    var qLangs = params.qLangs;
+    
+    var minChars = (params.minChars != undefined) ? params.minChars : 3;
+    var sel = 0;
+
+	var templateResult = function(data){
+		return $( '<div class="sel2-level'+ data.level +'">' + data.text +'</div>' );
+	}
+    
+    this.onThesChange = function (e) {
+        sel = 1;
+        e.stopPropagation();
+        let self = this;
+        if(e.params.data.prepared){
+            $t.select2(defCfg);
+            return;
+        }
+        else{
+            e.params.data.selected=false
+            e.params.data.prepared=true;
+            e.params.data.level='A';
+            var d = [];
+            for(const el of $t.select2('data')){
+                if(el.id != e.params.data.id) {
+                    el.level='H';
+                    d.push(el);
+                }
+            }
+            d.push(e.params.data);
+            d.push({text: HS.i18n('broader term'), children: []});
+            d.push({text: HS.i18n('narrower terms'), children: []});
+        }
+        $t.select2().empty();
+        $.ajax({
+            url: url,
+            context: this,
+            data: {
+                id: e.params.data.id,
+                request: 'hierarchy'
+            }
+        })
+        .done(function(data){
+            for(var i=0;i<data.results.length; i++){
+                data.results[i].level=1;
+                if(data.results[i].hierarchy=='b'){
+                    d[d.length-2].children.push(data.results[i]);
+                }
+                else {
+                    d[d.length-1].children.push(data.results[i]);
+                }
+            }
+            $t.select2({
+                data: d,
+                allowClear: true,
+                theme: 'bootstrap',
+                minimumResultsForSearch: Infinity,
+                templateResult: templateResult
+            });
+            $t.select2('open');
+        });
+    };
+    
+    this.onSelect = function(){
+        sel = 0;
+    }
+
+    // TODO - zatim nevyresene
+    this.process = function(langs, handler){
+        var terms = {};
+        var uri = $t.val();
+        console.log(uri);
+        $.ajax({
+            url: url, 
+            data: {
+                uri: thesaurusUri,
+                request: 'trasl',
+                id: uri
+            }
+        })
+        .done(function(data){
+            for(var i=0; i<data.results.bindings.length; i++){
+                terms[HS.getCodeFromLanguage(data.results.bindings[i].prefLabel['xml:lang'],3)] = data.results.bindings[i].prefLabel.value;
+            }
+            handler({
+                uri: uri,
+                labels: terms
+            });
+        })
+        .fail(function(data){
+            console.log('fail', data);
+        });
+    };
+    
+    var defCfg = {
+        ajax: {
+            url: url ,
+            dataType: 'json',
+            data: function (params) {
+                var query = {
+                    q: params.term/*,
+                    uri: thesaurusUri*/
+                }
+                return query;
+            },
+            delay: 200,  
+            cache: false
+        },
+        minimumInputLength: minChars,
+        language: lang,
+        theme: 'bootstrap',
+        allowClear: true 
+    };
+    
+    $t.select2(defCfg);
+    if(showTree){
+        $t.on('select2:selecting', this.onSelect);
+        $t.on('select2:select', this.onThesChange);
+    }
+    // when clearing the field
+    $t.on('select2:unselect', function(e){
+        e.stopPropagation();
+        $t.select2(defCfg);
+        if(onClose) onClose.call(scope);
+    });
+    
+    $t.on('select2:close', function(d){
+        if(sel==1 && onClose){
+            onClose.call(scope);
+        }
+    });
+
+};

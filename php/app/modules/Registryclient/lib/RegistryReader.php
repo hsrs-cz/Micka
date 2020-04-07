@@ -22,17 +22,17 @@ class RegistryReader{
     private $lang = null;
     public $cached = 0;
     private $dir;
-    public $tempDir;
+    private $tempDir;
 
     /*************************************************************
     * Constructor
     * 
     * @param  uri of the resource
     *************************************************************/
-    function __construct($lang){
+    function __construct($lang, $tempDir=''){
         $this->lang = $lang;
         $this->dir = __DIR__ . '/..' ;
-        $this->tempDir = __DIR__ . '/..' ;
+        $this->tempDir = $tempDir ? $tempDir : __DIR__ . '/../../../../temp/registry' ;
     }
     
     function getData($uri, $qstr='', $id=''){
@@ -48,7 +48,7 @@ class RegistryReader{
         // 2. snazi se z cache
         else*/
         if(!isset($config[$uri]['nocache']) || $config[$uri]['nocache']!=true){
-            $data = @file_get_contents($this->tempDir .'/cache/' . $_uri);
+            $data = @file_get_contents($this->tempDir .'/' . $_uri);
             if($data){
                 $data = json_decode($data,1)['result'];
                 $_SESSION['regreader'][$_uri] = $data;
@@ -59,7 +59,7 @@ class RegistryReader{
         // 3. nacte z URL
         if(!$data){
             $adapter = isset($config[$uri]["adapter"]) ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
-            require_once($this->dir ."/lib/".$adapter);
+            require($this->dir ."/lib/".$adapter);
             $data = $getRemoteData($uri, $config[$uri], $this->lang, $qstr);
 
             // vyfiltruje podle konfigurace
@@ -77,8 +77,8 @@ class RegistryReader{
             $data = $d;
            
             // vytvoreni hierarchie
-            $d = array();
-            foreach ($data as $key=>$row){
+            //$d = array();
+            /*foreach ($data as $key=>$row){
                 if(isset($row['parentId']) && $row['parentId']){
                     $parentId = $row['parentId'];
                     if(!isset($d[$parentId])){
@@ -100,13 +100,13 @@ class RegistryReader{
             $data  = array();
             foreach ($d as $key=>$row){
                 if($row['id']) $data[$key] = $row;
-            }
+            }*/
             //echo "<pre>";var_dump($data); die();
             if(!isset($config[$uri]['nocache']) || $config[$uri]['nocache']!=true) {
-                if (file_exists($this->tempDir .'/cache/') === false) {
-                    mkdir($this->tempDir . DIRECTORY_SEPARATOR . 'cache', 0777, true);
+                if (file_exists($this->tempDir ) === false) {
+                    mkdir($this->tempDir, 0777, true);
                 }    
-                file_put_contents($this->tempDir .'/cache/' . $_uri, json_encode(array("id"=>$uri, "result"=>$data)));
+                file_put_contents($this->tempDir .'/' . $_uri, json_encode(array("id"=>$uri, "result"=>$data)));
                 $_SESSION['regreader'][$_uri] = $data;
             }
         }
@@ -116,6 +116,9 @@ class RegistryReader{
     function flatData($data){
         $result = array();
         foreach($data as $key=>$row){
+            if($row['parentId']){
+                $row['level'] = 1;
+            }
             $result [] = $row;
             if(isset($row['children'])){
                 $children = $row['children'];
@@ -229,6 +232,38 @@ class RegistryReader{
         $adapter = isset($config[$uri]["adapter"]) ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
         require($this->dir ."/lib/".$adapter);
         $data = $getTranslations($uri, $config[$uri], $this->lang, $qstr, $id);
+        return $data;
+    }
+
+   function getHierarchy($uri, $id){
+        $qstr= ''; $lang=$this->lang;       
+        require(__DIR__ ."/../cfg/cfg.php");
+        $adapter = isset($config[$uri]["adapter"]) ? $config[$uri]["adapter"].".php" : "inspireRegistry.php";
+        if($adapter=='inspireRegistry.php'){
+            $this->getData($uri);
+            $data = [];
+            if($this->data[$id]['parentId']){
+            $data[0] = [
+                'id' => $this->data[$this->data[$id]['parentId']]['id'],
+                'text' => $this->data[$this->data[$id]['parentId']]['text'],
+                'hierarchy' =>'b'
+            ];
+            }
+            foreach($this->data as $row){
+                if($row['parentId']==$id) {
+                    $row['hierarchy'] = 'n';
+                    $data[] = [
+                        'id' => $row['id'],
+                        'text' => $row['text'],
+                        'hierarchy' =>'n'
+                    ];
+                }
+            }
+        }
+        else {
+            require($this->dir ."/lib/".$adapter);
+            $data = $getHierarchy($uri, $config[$uri], $id, $this->lang);            
+        }
         return $data;
     }
     

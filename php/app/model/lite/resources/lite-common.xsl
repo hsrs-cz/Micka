@@ -349,7 +349,13 @@
 
 			<!-- REGISTRY -->
             <xsl:when test="$uri!=''">
-                <select id="{$name}-sel" name="{$pth}" class="sel2 {$class}" data-ajax--url="../../registry_client/?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
+                <xsl:variable name="rclass">
+                    <xsl:choose>
+                        <xsl:when test="contains($class,'hierarchy')"></xsl:when>
+                        <xsl:otherwise>sel2</xsl:otherwise>
+                    </xsl:choose>
+                </xsl:variable>
+                <select id="{$name}-sel" name="{$pth}" class="{$rclass} {$class}" data-ajax--url="../../registry_client/?uri={$uri}&amp;lang={$codeLists/language/value[@name=$lang]/@code2}">
                     <xsl:if test="$req">
                         <xsl:attribute name="required">required</xsl:attribute>
                     </xsl:if>
@@ -775,7 +781,10 @@
     
     <xsl:element name="{$name}">
         <gmx:Anchor xlink:href="{$id}">
-            <xsl:value-of select="$transl/results/*[name()=$lang2]"/>
+            <xsl:choose>
+                <xsl:when test="$transl/results/*[name()=$lang2]"><xsl:value-of select="$transl/results/*[name()=$lang2]"/></xsl:when>
+                <xsl:otherwise><xsl:value-of select="$transl/results/*[name()='en']"/></xsl:otherwise> 
+            </xsl:choose>
             <xsl:if test="$locale">
                 <xsl:for-each select="$locale/item">
                     <xsl:variable name="l" select="."/>
@@ -783,8 +792,12 @@
                         <gmd:textGroup>
                             <gmd:LocalisedCharacterString locale="#locale-{$l}">
                                 <xsl:variable name="l2" select="$codeLists/language/value[@name=$l]/@code2"/>
-                                <xsl:value-of select="$transl/results/*[name()=$l2]"/>
-                            </gmd:LocalisedCharacterString>
+                                <!-- if language not  found, place english -->
+                                <xsl:choose>
+                                    <xsl:when test="$transl/results/*[name()=$l2]"><xsl:value-of select="$transl/results/*[name()=$l]"/></xsl:when>
+                                    <xsl:otherwise><xsl:value-of select="$transl/results/*[name()='en']"/></xsl:otherwise> 
+                                </xsl:choose>
+                           </gmd:LocalisedCharacterString>
                         </gmd:textGroup>
                     </gmd:PT_FreeText>
                 </xsl:for-each>
