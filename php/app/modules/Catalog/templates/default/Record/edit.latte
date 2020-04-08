@@ -182,7 +182,7 @@
     {if $dataBox == ''}
         <form id="md_inpform" class="md_inpform" action="{link Record:save $record['uuid'], f=>$detail}" method="post">
     {else}
-        <form id="md_inpform" action="{link Record:save $record['uuid']}" method="post">
+        <form id="md_inpform" action="{link Record:save $record['uuid'], f=>$detail}" method="post">
         <input type="hidden" name="mickaLite" value="true">
     {/if}
         <input type="hidden" name="afterpost" value="end">
