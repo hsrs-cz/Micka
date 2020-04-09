@@ -116,7 +116,7 @@ class RegistryReader{
     function flatData($data){
         $result = array();
         foreach($data as $key=>$row){
-            if($row['parentId']){
+            if(isset($row['parentId']) && $row['parentId']){
                 $row['level'] = 1;
             }
             $result [] = $row;

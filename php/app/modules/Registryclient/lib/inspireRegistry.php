@@ -14,14 +14,16 @@ if(!function_exists('_inspireGet')){
         $result = array();
         foreach($data as $key=>$data){
             // only one item !!!
-            foreach($data['containeditems'] as $row){ 
-                $result[$row['value']['id']] = array(
-                    "id" => $row['value']['id'],
-                    "text"=>$row['value']['label']['text'],
-                    "title" =>  isset($row['value']['definition']) ? $row['value']['definition']['text']: false,
-                    "parentId" =>  isset($row['value']['parents']) ? $row['value']['parents'][0]['parent']['id'] : false,
-                    "parentName" => isset($row['value']['parents']) ? $row['value']['parents'][0]['parent']['label']['text'] : false  
-                );   
+            foreach($data['containeditems'] as $row){
+                if($row['value']['status']['id']=='http://inspire.ec.europa.eu/registry/status/valid'){
+                    $result[$row['value']['id']] = array(
+                        "id" => $row['value']['id'],
+                        "text"=>$row['value']['label']['text'],
+                        "title" =>  isset($row['value']['definition']) ? $row['value']['definition']['text']: false,
+                        "parentId" =>  isset($row['value']['parents']) ? $row['value']['parents'][0]['parent']['id'] : false,
+                        "parentName" => isset($row['value']['parents']) ? $row['value']['parents'][0]['parent']['label']['text'] : false  
+                    );
+                }
             }
             return array(
                 "id" => $data['id'],

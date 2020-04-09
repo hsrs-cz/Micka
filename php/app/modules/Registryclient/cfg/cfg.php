@@ -48,6 +48,7 @@ $config=array(
                   ?Concept skos:broader ?broader .
                 { ?Concept skos:prefLabel ?prefLabel . FILTER (regex(str(?prefLabel), '^$qstr.*', 'i')) }
                 FILTER langMatches (lang(?prefLabel), '$lang')
+                FILTER(regex(str(?Concept), 'ncl/geoera/'))
                 } ORDER BY ?prefLabel LIMIT 50 OFFSET 0",
             "hierarchy" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#>
                 SELECT ?hierarchy ?Concept ?prefLabel WHERE
@@ -70,9 +71,12 @@ $config=array(
                 SELECT DISTINCT ?Concept ?prefLabel ?broader
                 WHERE
                 { ?Concept ?x skos:Concept .
+                <http://resource.geolba.ac.at/egs/16> skos:narrower+ ?Concept . 
+                ?Concept skos:prefLabel ?projectcode .
                   ?Concept skos:broader ?broader .
                 { ?Concept skos:prefLabel ?prefLabel . FILTER (regex(str(?prefLabel), '^$qstr.*', 'i')) }
                 FILTER langMatches (lang(?prefLabel), '$lang')
+                FILTER(regex(str(?Concept), '/egs/'))
                 } ORDER BY ?prefLabel LIMIT 50 OFFSET 0",
             "hierarchy" => "PREFIX skos:<http://www.w3.org/2004/02/skos/core#> 
                 SELECT ?hierarchy ?Concept ?prefLabel WHERE { {
@@ -84,7 +88,8 @@ $config=array(
             SELECT * WHERE { <$id> skos:prefLabel ?prefLabel}"        
     ),
 
-    // --- EU Countries
+
+    // --- EU Countries 
     "https://publications.europa.eu/resource/authority/country"=>array(
         "adapter"=> "skos",
         "url" => "http://publications.europa.eu/mdr/resource/authority/country/skos/countries-skos.rdf"
