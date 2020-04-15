@@ -26,7 +26,7 @@ class RecordModel extends \BaseModel
             $this->recordEditLock = $appgParameters['app']['recordEditLock'];
         }
     }
-    
+
     private function initialVariables()
     {
         $this->geomMd['x1'] = NULL;
@@ -445,6 +445,9 @@ class RecordModel extends \BaseModel
     private function setNewEditMdRecord($httpRequest)
     {
         $post = $httpRequest->getPost();
+        if (count($post) === 0 && count($httpRequest->getQuery()) > 0) {
+            $post = $httpRequest->getQuery();
+        }
         $date = new \DateTime();
         $md = [];
         $md['edit_user'] = isset($this->user->identity->username) ? $this->user->identity->username : 'guest';
@@ -1236,9 +1239,8 @@ class RecordModel extends \BaseModel
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['x2']='".$this->recordMd->x2."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['y1']='".$this->recordMd->y1."';\n";
         $eval_text .= '$vysl' . "['".$elements_label[$mds][0][0]."']['00']['@attributes']['y2']='".$this->recordMd->y2."';\n";
-        //\Tracy\Debugger::log($eval_text, 'ERROR_MAKE_XML');
-        //echo '<xmp>'; print_r($eval_text); echo '</xmp>'; exit;
         eval ($eval_text);
+        unset($eval_text);
         $xml = \Array2XML::createXML('rec', $vysl);
         return $xml->saveXML();
     }
@@ -1253,6 +1255,7 @@ class RecordModel extends \BaseModel
                 $this->recordMd->pxml = $xml;
             }
         }
+        unset($xml);
         return;
     }
 

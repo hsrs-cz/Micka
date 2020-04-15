@@ -199,9 +199,13 @@ class RecordPresenter extends \BasePresenter
             $this->recordModel->createNewMdRecord($httpRequest);
             $mdr = $this->recordModel->getRecordMd();
             if ($mdr) {
-                $profil = $mdr->md_standard == 10 
+                if ($this->getParameter('profil') !== NULL) {
+                    $profil = $this->getParameter('profil');
+                } else {
+                    $profil = $mdr->md_standard == 10 
                         ? $this->context->parameters['app']['startProfil']+100 
                         : $this->context->parameters['app']['startProfil'];
+                }
                 $this->redirect(':Catalog:Record:edit', [rtrim($mdr->uuid), 'profil'=>$profil, 'package'=>-1, 'f' => $this->getParam('f')]);
             } else {
                 throw new \Nette\Application\ApplicationException('messages.apperror.cantSaveNew');
@@ -276,7 +280,14 @@ class RecordPresenter extends \BasePresenter
             $this->template->dataType = $rmd->data_type;
             $this->template->view_group = $rmd->view_group;
             $this->template->edit_group = $rmd->edit_group;
-            $this->template->groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
+            $groups = isset($this->user->getIdentity()->data['groups']) ? $this->user->getIdentity()->data['groups'] : array();
+            if (in_array($rmd->view_group, $groups) === false) {
+                $groups[] = $rmd->view_group;
+            }
+            if (in_array($rmd->edit_group, $groups) === false) {
+                $groups[] = $rmd->edit_group;
+            }
+            $this->template->groups = $groups;
             $this->template->mdControl = ($mds == 0 || $mds == 10) 
                     ? mdControl($rmd->pxml, $this->appLang, $this->layoutTheme)
                     : [];
