@@ -14,9 +14,9 @@ class Micka
     protected static $dbDriver;
     protected static $mickaVersion = [
         'name' => 'Micka',
-        'version' => '2020.013',
-        'version_id' => 2020013,
-        'revision' => '2020-03-31.01'
+        'version' => '2020.014',
+        'version_id' => 2020014,
+        'revision' => '2020-04-15.01'
     ];
 
     public static function getMickaVersion()
