@@ -573,8 +573,8 @@
                 <xsl:when test="contains('view download discovery transformation other', LocalName/*)">
                     <gco:LocalName codeSpace="http://inspire.ec.europa.eu/metadata-codelist/SpatialDataServiceType"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
                 </xsl:when>
-                <xsl:when test="contains('WMS WFS WCS CSW WMTS  WPS', LocalName/*)">
-                    <gco:LocalName codeSpace="http://www.opengis.net"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
+                <xsl:when test="contains('WMS WFS WCS CSW WMTS WPS', LocalName/*)">
+                    <gco:LocalName codeSpace="http://www.opengis.net/def/serviceType/ogc/"><xsl:value-of select="LocalName/*"/></gco:LocalName> 
                 </xsl:when>
                 <xsl:otherwise>
                     <gco:LocalName codeSpace=""><xsl:value-of select="LocalName/*"/></gco:LocalName> 

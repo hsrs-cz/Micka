@@ -13,7 +13,7 @@
   outputFormat="application/xml" 
   service="CSW" 
   xsi:schemaLocation="http://www.opengis.net/cat/csw/2.0.2 http://schemas.opengis.net/csw/2.0.2/CSW-discovery.xsd" 
-  version="2.0.2" debug='{$debug}'> 
+  version="2.0.2"> 
 
   <Id><xsl:value-of select="$id"/></Id>  
 </GetRecordById>

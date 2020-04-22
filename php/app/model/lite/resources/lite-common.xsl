@@ -19,8 +19,8 @@
 
 <xsl:variable name="datePattern">
     <xsl:choose>
-        <xsl:when test="$lang='cze'">^((0?[1-9]|[12]\d|3[01]).(0?[1-9]|1[0-2]).[12]\d{3})$</xsl:when>
-        <xsl:otherwise>^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))$</xsl:otherwise>
+        <xsl:when test="$lang='cze'">^((((0?[1-9]|[12]\d|3[01]).)?(0?[1-9]|1[0-2]).)?[12]\d{3})$</xsl:when>
+        <xsl:otherwise>^([12]\d{3}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?)$</xsl:otherwise>
     </xsl:choose>
 </xsl:variable>
 

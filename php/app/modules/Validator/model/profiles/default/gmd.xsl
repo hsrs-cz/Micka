@@ -628,7 +628,7 @@ xmlns:php="http://php.net/xsl">
         <xpath>dataQualityInfo/*/report/DQ_DomainConsistency/result/</xpath>
         <xsl:variable name="spec">
             <xsl:choose>
-                <xsl:when test="$srv">
+                <xsl:when test="$srv and contains('view|download|discovery|transformation',$serviceType)">
                     <xsl:value-of select="$codelists/specifications/value[@code='Network']/@uri"/>
                 </xsl:when>	
                 <xsl:otherwise>
@@ -1323,24 +1323,38 @@ xmlns:php="http://php.net/xsl">
 
 </xsl:template>
 
-<!-- kontrola tvaru data -->
+<!-- date chcek -->
 <xsl:template name="chd">
 	<xsl:param name="d"/>
-        <xsl:variable name="y" select="substring-before($d, '-')"/>
-        <xsl:variable name="rest" select="substring-after($d, '-')"/>
-        <xsl:variable name="m" select="substring-before($rest, '-')"/>
-        <xsl:variable name="day">
-            <xsl:choose>
-                <xsl:when test="contains($rest, 'T')"><xsl:value-of select="substring-before(substring-after($rest, '-'),'T')"/></xsl:when>
-                <xsl:otherwise><xsl:value-of select="substring-after($rest, '-')"/></xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-        <xsl:if test="string-length($y)=4 and $y &lt; 3000">
-            <xsl:if test="string-length($m)=2 and $m &gt; 0 and $m &lt; 13">
-                <xsl:if test="string-length($day)=2 and $day &gt; 0 and $day &lt; 32">true</xsl:if>
-            </xsl:if>
-        </xsl:if>
+	<xsl:choose>
+		<!-- Y only -->
+		<xsl:when test="string-length($d)=4 and $d &lt; 10000">true</xsl:when>
+		<xsl:otherwise>
+			<xsl:variable name="y" select="substring-before($d, '-')"/>
+			<xsl:variable name="rest" select="substring-after($d, '-')"/>
+			<xsl:choose>
+				<!-- Y + M -->
+				<xsl:when test="string-length($rest)=2 and $rest &gt; 0 and $rest &lt; 13">true</xsl:when>
+				<!-- Y + M + D -->
+				<xsl:otherwise>
+					<xsl:variable name="m" select="substring-before($rest, '-')"/>
+					<xsl:variable name="day">
+						<xsl:choose>
+							<xsl:when test="contains($rest, 'T')"><xsl:value-of select="substring-before(substring-after($rest, '-'),'T')"/></xsl:when>
+							<xsl:otherwise><xsl:value-of select="substring-after($rest, '-')"/></xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					<xsl:if test="string-length($y)=4 and $y &lt; 10000">
+						<xsl:if test="string-length($m)=2 and $m &gt; 0 and $m &lt; 13">
+							<xsl:if test="string-length($day)=2 and $day &gt; 0 and $day &lt; 32">true</xsl:if>
+						</xsl:if>
+					</xsl:if>				
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
+
 
 </xsl:stylesheet>
 

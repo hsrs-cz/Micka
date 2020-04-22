@@ -20,7 +20,7 @@
   maxRecords="{$maxRecords}" startPosition="{$startPosition}" 
   outputFormat="application/xml" 
   service="CSW" 
-  resultType="results" version="2.0.2" requestId="{$id}" debug="{$debug}"> 
+  resultType="results" version="2.0.2" requestId="{$id}"> 
 
 	<xsl:if test="$hopCount>0"><DistributedSearch hopCount="{$hopCount}"/></xsl:if>
 	<!--<csw:ResponseHandler>http://www.bnhelp.cz</csw:ResponseHandler>-->
