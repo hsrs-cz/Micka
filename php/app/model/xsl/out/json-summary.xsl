@@ -106,6 +106,9 @@
         $rec['updateFrequency'] = "<xsl:value-of select="gmd:identificationInfo/*/gmd:resourceMaintenance/*/gmd:maintenanceAndUpdateFrequency/*/@codeListValue"/>";
     </xsl:if>
     $rec['dateStamp'] = "<xsl:value-of select="gmd:dateStamp"/>";
+    <xsl:if test="../@for_inspire">
+        $rec['inspire'] = "<xsl:value-of select="../@for_inspire"/>";
+    </xsl:if>
         
 
     $json['records'][] =$rec;
