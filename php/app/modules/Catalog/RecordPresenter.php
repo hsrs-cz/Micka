@@ -316,7 +316,7 @@ class RecordPresenter extends \BasePresenter
     /** @resource Editor */
     public function renderClone($id)
     {
-        $mdr = $this->recordModel->findMdById($id,'md','view');
+        $mdr = $this->recordModel->findMdById($id,'md','read');
         if ($mdr) {
             $uuid = $this->recordModel->copyMd2EditMd('clone');
             $profil = $mdr->md_standard == 10 
