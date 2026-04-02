@@ -285,7 +285,7 @@ class Csw extends \BaseModel
         xsi:schemaLocation="http://www.opengis.net/ows/1.1 http://schemas.opengis.net/ows/1.1.0/owsExceptionReport.xsd">';
         if($locator) $locator = ' locator="'.$locator.'"';
         $s = '<ows:Exception exceptionCode="'.$errCode[$code].'"'.$locator.'>';
-        if($text) $s .= "<ows:ExceptionText>$text</ows:ExceptionText>";
+        if($text) $s .= "<ows:ExceptionText>.htmlspecialchars($text).</ows:ExceptionText>";
         if(isset($this->params['SOAP'])&& $this->params['SOAP']){
         	$message = XML_HEADER.SOAP_HEADER."
         	<soap:Fault>
